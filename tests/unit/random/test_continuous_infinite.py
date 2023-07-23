@@ -38,8 +38,8 @@ def test_rand_cauchy_loc(loc: float) -> None:
 
 def test_rand_cauchy_scale() -> None:
     assert not torch.allclose(
-        rand_cauchy((100000,), scale=1.0, generator=get_torch_generator(1)).std(None),
-        rand_cauchy((100000,), scale=0.1, generator=get_torch_generator(1)).std(None),
+        rand_cauchy((100000,), scale=1.0, generator=get_torch_generator(1)).std(),
+        rand_cauchy((100000,), scale=0.1, generator=get_torch_generator(1)).std(),
         atol=TOLERANCE,
     )
 
@@ -95,10 +95,10 @@ def test_cauchy_scale() -> None:
     assert not torch.allclose(
         cauchy(
             torch.zeros(100000), torch.full((100000,), 1.0), generator=get_torch_generator(1)
-        ).std(None),
+        ).std(),
         cauchy(
             torch.zeros(100000), torch.full((100000,), 0.1), generator=get_torch_generator(1)
-        ).std(None),
+        ).std(),
         atol=TOLERANCE,
     )
 
@@ -136,7 +136,7 @@ def test_rand_normal_1d() -> None:
     assert values.shape == (100000,)
     assert values.dtype == torch.float
     assert values.mean().allclose(torch.tensor(0.0), atol=TOLERANCE)
-    assert values.std(None).allclose(torch.tensor(1.0), atol=TOLERANCE)
+    assert values.std().allclose(torch.tensor(1.0), atol=TOLERANCE)
 
 
 def test_rand_normal_2d() -> None:
@@ -144,7 +144,7 @@ def test_rand_normal_2d() -> None:
     assert values.shape == (10000, 10)
     assert values.dtype == torch.float
     assert values.mean().allclose(torch.tensor(0.0), atol=TOLERANCE)
-    assert values.std(None).allclose(torch.tensor(1.0), atol=TOLERANCE)
+    assert values.std().allclose(torch.tensor(1.0), atol=TOLERANCE)
 
 
 @mark.parametrize("mean", (-1.0, 0.0, 1.0))
@@ -153,7 +153,7 @@ def test_rand_normal_mean(mean: float) -> None:
     assert values.shape == (100000,)
     assert values.dtype == torch.float
     assert values.mean().allclose(torch.tensor(mean), atol=TOLERANCE)
-    assert values.std(None).allclose(torch.tensor(1.0), atol=TOLERANCE)
+    assert values.std().allclose(torch.tensor(1.0), atol=TOLERANCE)
 
 
 @mark.parametrize("std", (0.1, 0.5, 1.0))
@@ -162,7 +162,7 @@ def test_rand_normal_std(std: float) -> None:
     assert values.shape == (100000,)
     assert values.dtype == torch.float
     assert values.mean().allclose(torch.tensor(0.0), atol=TOLERANCE)
-    assert values.std(None).allclose(torch.tensor(std), atol=TOLERANCE)
+    assert values.std().allclose(torch.tensor(std), atol=TOLERANCE)
 
 
 @mark.parametrize("std", (0.0, -1.0))
@@ -203,7 +203,7 @@ def test_normal_1d() -> None:
     assert values.shape == (100000,)
     assert values.dtype == torch.float
     assert values.mean().allclose(torch.tensor(0.0), atol=TOLERANCE)
-    assert values.std(None).allclose(torch.tensor(1.0), atol=TOLERANCE)
+    assert values.std().allclose(torch.tensor(1.0), atol=TOLERANCE)
 
 
 def test_normal_2d() -> None:
@@ -211,7 +211,7 @@ def test_normal_2d() -> None:
     assert values.shape == (1000, 100)
     assert values.dtype == torch.float
     assert values.mean().allclose(torch.tensor(0.0), atol=TOLERANCE)
-    assert values.std(None).allclose(torch.tensor(1.0), atol=TOLERANCE)
+    assert values.std().allclose(torch.tensor(1.0), atol=TOLERANCE)
 
 
 @mark.parametrize("mean", (-1.0, 0.0, 1.0))
@@ -222,7 +222,7 @@ def test_normal_mean(mean: float) -> None:
     assert values.shape == (100000,)
     assert values.dtype == torch.float
     assert values.mean().allclose(torch.tensor(mean), atol=TOLERANCE)
-    assert values.std(None).allclose(torch.tensor(1.0), atol=TOLERANCE)
+    assert values.std().allclose(torch.tensor(1.0), atol=TOLERANCE)
 
 
 @mark.parametrize("std", (0.1, 0.5, 1.0))
@@ -233,7 +233,7 @@ def test_normal_std(std: float) -> None:
     assert values.shape == (100000,)
     assert values.dtype == torch.float
     assert values.mean().allclose(torch.tensor(0.0), atol=TOLERANCE)
-    assert values.std(None).allclose(torch.tensor(std), atol=TOLERANCE)
+    assert values.std().allclose(torch.tensor(std), atol=TOLERANCE)
 
 
 def test_normal_mock() -> None:
