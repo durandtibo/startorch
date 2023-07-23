@@ -1,16 +1,17 @@
+from __future__ import annotations
+
 __all__ = ["cauchy", "normal", "rand_cauchy", "rand_normal"]
 
-from typing import Optional, Union
 
 import torch
 from torch import Tensor
 
 
 def rand_cauchy(
-    size: Union[list[int], tuple[int, ...]],
+    size: list[int] | tuple[int, ...],
     loc: float = 0.0,
     scale: float = 1.0,
-    generator: Optional[torch.Generator] = None,
+    generator: torch.Generator | None = None,
 ) -> torch.Tensor:
     r"""Creates a sequence of continuous variables sampled from a Cauchy
     distribution.
@@ -33,7 +34,7 @@ def rand_cauchy(
 
     Raises:
     ------
-        RuntimeError if the scale is not a positive number.
+        RuntimeError if the ``scale`` parameter is not valid.
 
     Example usage:
 
@@ -51,7 +52,7 @@ def rand_cauchy(
     return sequence
 
 
-def cauchy(loc: Tensor, scale: Tensor, generator: Optional[torch.Generator] = None) -> Tensor:
+def cauchy(loc: Tensor, scale: Tensor, generator: torch.Generator | None = None) -> Tensor:
     r"""Creates a tensor filled with values sampled from a Cauchy
     distribution.
 
@@ -78,7 +79,8 @@ def cauchy(loc: Tensor, scale: Tensor, generator: Optional[torch.Generator] = No
 
     Raises:
     ------
-        RuntimeError if the parameters are not valid.
+        RuntimeError if the ``loc`` and ``scale`` parameters are not
+            valid.
 
     Example usage:
 
@@ -101,10 +103,10 @@ def cauchy(loc: Tensor, scale: Tensor, generator: Optional[torch.Generator] = No
 
 
 def rand_normal(
-    size: Union[list[int], tuple[int, ...]],
+    size: list[int] | tuple[int, ...],
     mean: float = 0.0,
     std: float = 1.0,
-    generator: Optional[torch.Generator] = None,
+    generator: torch.Generator | None = None,
 ) -> Tensor:
     r"""Creates a tensor filled with values sampled from a Normal
     distribution.
@@ -126,7 +128,7 @@ def rand_normal(
 
     Raises:
     ------
-        RuntimeError if the parameters are not valid.
+        RuntimeError if the ``std`` parameter is not valid.
 
     Example usage:
 
@@ -142,7 +144,7 @@ def rand_normal(
     return torch.randn(size, generator=generator).mul(std).add(mean)
 
 
-def normal(mean: Tensor, std: Tensor, generator: Optional[torch.Generator] = None) -> Tensor:
+def normal(mean: Tensor, std: Tensor, generator: torch.Generator | None = None) -> Tensor:
     r"""Creates a tensor filled with values sampled from a Normal
     distribution.
 
@@ -163,7 +165,8 @@ def normal(mean: Tensor, std: Tensor, generator: Optional[torch.Generator] = Non
 
     Raises:
     ------
-        RuntimeError if the parameters are not valid.
+        RuntimeError if the ``mean`` and ``std`` parameters are not
+            valid.
 
     Example usage:
 
