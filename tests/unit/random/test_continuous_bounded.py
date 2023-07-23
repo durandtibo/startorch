@@ -673,7 +673,7 @@ def test_rand_trunc_half_normal_1d() -> None:
     assert values.shape == (100000,)
     assert values.dtype == torch.float
     assert values.mean().allclose(torch.tensor(math.sqrt(2 / math.pi)), atol=TOLERANCE)
-    assert values.std(None).allclose(torch.tensor(math.sqrt(1 - 2 / math.pi)), atol=TOLERANCE)
+    assert values.std(dim=None).allclose(torch.tensor(math.sqrt(1 - 2 / math.pi)), atol=TOLERANCE)
     assert values.min() >= 0.0
     assert values.max() <= 5.0
 
@@ -683,7 +683,7 @@ def test_rand_trunc_half_normal_2d() -> None:
     assert values.shape == (1000, 100)
     assert values.dtype == torch.float
     assert values.mean().allclose(torch.tensor(math.sqrt(2 / math.pi)), atol=TOLERANCE)
-    assert values.std(None).allclose(torch.tensor(math.sqrt(1 - 2 / math.pi)), atol=TOLERANCE)
+    assert values.std(dim=None).allclose(torch.tensor(math.sqrt(1 - 2 / math.pi)), atol=TOLERANCE)
     assert values.min() >= 0.0
     assert values.max() <= 5.0
 
@@ -694,7 +694,9 @@ def test_rand_trunc_half_normal_std(std: float) -> None:
     assert values.shape == (100000,)
     assert values.dtype == torch.float
     assert values.mean().allclose(torch.tensor(std * math.sqrt(2 / math.pi)), atol=TOLERANCE)
-    assert values.std(None).allclose(torch.tensor(std * math.sqrt(1 - 2 / math.pi)), atol=TOLERANCE)
+    assert values.std(dim=None).allclose(
+        torch.tensor(std * math.sqrt(1 - 2 / math.pi)), atol=TOLERANCE
+    )
     assert values.min() >= 0.0
     assert values.max() <= 5.0
 
@@ -746,7 +748,7 @@ def test_trunc_half_normal_1d() -> None:
     assert values.shape == (100000,)
     assert values.dtype == torch.float
     assert values.mean().allclose(torch.tensor(math.sqrt(2 / math.pi)), atol=TOLERANCE)
-    assert values.std(None).allclose(torch.tensor(math.sqrt(1 - 2 / math.pi)), atol=TOLERANCE)
+    assert values.std(dim=None).allclose(torch.tensor(math.sqrt(1 - 2 / math.pi)), atol=TOLERANCE)
     assert values.min() >= 0.0
     assert values.max() <= 100.0
 
@@ -760,7 +762,7 @@ def test_trunc_half_normal_2d() -> None:
     assert values.shape == (1000, 100)
     assert values.dtype == torch.float
     assert values.mean().allclose(torch.tensor(math.sqrt(2 / math.pi)), atol=TOLERANCE)
-    assert values.std(None).allclose(torch.tensor(math.sqrt(1 - 2 / math.pi)), atol=TOLERANCE)
+    assert values.std(dim=None).allclose(torch.tensor(math.sqrt(1 - 2 / math.pi)), atol=TOLERANCE)
     assert values.min() >= 0.0
     assert values.max() <= 100.0
 
@@ -775,7 +777,9 @@ def test_trunc_half_normal_std(std: float) -> None:
     assert values.shape == (1000000,)
     assert values.dtype == torch.float
     assert values.mean().allclose(torch.tensor(std * math.sqrt(2 / math.pi)), atol=TOLERANCE)
-    assert values.std(None).allclose(torch.tensor(std * math.sqrt(1 - 2 / math.pi)), atol=TOLERANCE)
+    assert values.std(dim=None).allclose(
+        torch.tensor(std * math.sqrt(1 - 2 / math.pi)), atol=TOLERANCE
+    )
     assert values.min() >= 0.0
     assert values.max() <= 100.0
 
@@ -861,7 +865,7 @@ def test_rand_trunc_log_normal_1d() -> None:
     assert values.dtype == torch.float
     assert values.mean().allclose(torch.tensor(0.5).exp(), rtol=TOLERANCE)
     assert values.median().allclose(torch.tensor(1.0), rtol=TOLERANCE)
-    assert values.std(None).allclose(
+    assert values.std(dim=None).allclose(
         torch.tensor(1.0).exp().sub(1.0).mul(torch.tensor(1.0).exp()).sqrt(), rtol=TOLERANCE
     )
     assert values.min() >= 0.0
@@ -876,7 +880,7 @@ def test_rand_trunc_log_normal_2d() -> None:
     assert values.dtype == torch.float
     assert values.mean().allclose(torch.tensor(0.5).exp(), rtol=TOLERANCE)
     assert values.median().allclose(torch.tensor(1.0), rtol=TOLERANCE)
-    assert values.std(None).allclose(
+    assert values.std(dim=None).allclose(
         torch.tensor(1.0).exp().sub(1.0).mul(torch.tensor(1.0).exp()).sqrt(), rtol=TOLERANCE
     )
     assert values.min() >= 0.0
@@ -896,7 +900,7 @@ def test_rand_trunc_log_normal_mean(mean: float) -> None:
     assert values.dtype == torch.float
     assert values.mean().allclose(torch.tensor(mean + 0.5).exp(), rtol=TOLERANCE)
     assert values.median().allclose(torch.tensor(mean).exp(), rtol=TOLERANCE)
-    assert values.std(None).allclose(
+    assert values.std(dim=None).allclose(
         torch.tensor(1.0).exp().sub(1.0).mul(torch.tensor(2.0 * mean + 1.0).exp()).sqrt(),
         rtol=TOLERANCE,
     )
@@ -913,7 +917,7 @@ def test_rand_trunc_log_normal_std(std: float) -> None:
     assert values.dtype == torch.float
     assert values.mean().allclose(torch.tensor(0.5 * std**2).exp(), rtol=TOLERANCE)
     assert values.median().allclose(torch.tensor(1.0), rtol=TOLERANCE)
-    assert values.std(None).allclose(
+    assert values.std(dim=None).allclose(
         torch.tensor(std**2).exp().sub(1.0).mul(torch.tensor(std**2).exp()).sqrt(),
         rtol=TOLERANCE,
     )
@@ -983,7 +987,7 @@ def test_trunc_log_normal_1d() -> None:
     assert values.dtype == torch.float
     assert values.mean().allclose(torch.tensor(0.5).exp(), atol=TOLERANCE)
     assert values.median().allclose(torch.tensor(1.0), rtol=TOLERANCE)
-    assert values.std(None).allclose(
+    assert values.std(dim=None).allclose(
         torch.tensor(1.0).exp().sub(1.0).mul(torch.tensor(1.0).exp()).sqrt(), atol=TOLERANCE
     )
     assert values.min() >= 0.0
@@ -1002,7 +1006,7 @@ def test_trunc_log_normal_2d() -> None:
     assert values.dtype == torch.float
     assert values.mean().allclose(torch.tensor(0.5).exp(), atol=TOLERANCE)
     assert values.median().allclose(torch.tensor(1.0), rtol=TOLERANCE)
-    assert values.std(None).allclose(
+    assert values.std(dim=None).allclose(
         torch.tensor(1.0).exp().sub(1.0).mul(torch.tensor(1.0).exp()).sqrt(), atol=TOLERANCE
     )
     assert values.min() >= 0.0
@@ -1022,7 +1026,7 @@ def test_trunc_log_normal_mean(mean: float) -> None:
     assert values.dtype == torch.float
     assert values.mean().allclose(torch.tensor(mean + 0.5).exp(), atol=TOLERANCE)
     assert values.median().allclose(torch.tensor(mean).exp(), rtol=TOLERANCE)
-    assert values.std(None).allclose(
+    assert values.std(dim=None).allclose(
         torch.tensor(1.0).exp().sub(1.0).mul(torch.tensor(2.0 * mean + 1.0).exp()).sqrt(),
         atol=TOLERANCE,
     )
@@ -1043,7 +1047,7 @@ def test_trunc_log_normal_std(std: float) -> None:
     assert values.dtype == torch.float
     assert values.mean().allclose(torch.tensor(0.5 * std**2).exp(), atol=TOLERANCE)
     assert values.median().allclose(torch.tensor(1.0), rtol=TOLERANCE)
-    assert values.std(None).allclose(
+    assert values.std(dim=None).allclose(
         torch.tensor(std**2).exp().sub(1.0).mul(torch.tensor(std**2).exp()).sqrt(),
         atol=TOLERANCE,
     )
@@ -1196,7 +1200,7 @@ def test_rand_trunc_normal_1d() -> None:
     assert values.shape == (100000,)
     assert values.dtype == torch.float
     assert values.mean().allclose(torch.tensor(0.0), atol=TOLERANCE)
-    assert values.std(None).allclose(torch.tensor(1.0), atol=TOLERANCE)
+    assert values.std(dim=None).allclose(torch.tensor(1.0), atol=TOLERANCE)
     assert values.min() >= -100.0
     assert values.max() <= 100.0
 
@@ -1208,7 +1212,7 @@ def test_rand_trunc_normal_2d() -> None:
     assert values.shape == (1000, 100)
     assert values.dtype == torch.float
     assert values.mean().allclose(torch.tensor(0.0), atol=TOLERANCE)
-    assert values.std(None).allclose(torch.tensor(1.0), atol=TOLERANCE)
+    assert values.std(dim=None).allclose(torch.tensor(1.0), atol=TOLERANCE)
     assert values.min() >= -100.0
     assert values.max() <= 100.0
 
@@ -1225,7 +1229,7 @@ def test_rand_trunc_normal_mean(mean: float) -> None:
     assert values.shape == (100000,)
     assert values.dtype == torch.float
     assert values.mean().allclose(torch.tensor(mean), atol=TOLERANCE)
-    assert values.std(None).allclose(torch.tensor(1.0), atol=TOLERANCE)
+    assert values.std(dim=None).allclose(torch.tensor(1.0), atol=TOLERANCE)
     assert values.min() >= mean - 100.0
     assert values.max() <= mean + 100.0
 
@@ -1238,7 +1242,7 @@ def test_rand_trunc_normal_std(std: float) -> None:
     assert values.shape == (100000,)
     assert values.dtype == torch.float
     assert values.mean().allclose(torch.tensor(0.0), atol=TOLERANCE)
-    assert values.std(None).allclose(torch.tensor(std), atol=TOLERANCE)
+    assert values.std(dim=None).allclose(torch.tensor(std), atol=TOLERANCE)
     assert values.min() >= -100.0
     assert values.max() <= 100.0
 
@@ -1303,7 +1307,7 @@ def test_trunc_normal_1d() -> None:
     assert values.shape == (100000,)
     assert values.dtype == torch.float
     assert values.mean().allclose(torch.tensor(0.0), atol=TOLERANCE)
-    assert values.std(None).allclose(torch.tensor(1.0), atol=TOLERANCE)
+    assert values.std(dim=None).allclose(torch.tensor(1.0), atol=TOLERANCE)
     assert values.min() >= -100.0
     assert values.max() <= 100.0
 
@@ -1319,7 +1323,7 @@ def test_trunc_normal_2d() -> None:
     assert values.shape == (1000, 100)
     assert values.dtype == torch.float
     assert values.mean().allclose(torch.tensor(0.0), atol=TOLERANCE)
-    assert values.std(None).allclose(torch.tensor(1.0), atol=TOLERANCE)
+    assert values.std(dim=None).allclose(torch.tensor(1.0), atol=TOLERANCE)
     assert values.min() >= -100.0
     assert values.max() <= 100.0
 
@@ -1336,7 +1340,7 @@ def test_trunc_normal_mean(mean: float) -> None:
     assert values.shape == (100000,)
     assert values.dtype == torch.float
     assert values.mean().allclose(torch.tensor(mean), atol=TOLERANCE)
-    assert values.std(None).allclose(torch.tensor(1.0), atol=TOLERANCE)
+    assert values.std(dim=None).allclose(torch.tensor(1.0), atol=TOLERANCE)
     assert values.min() >= mean - 100.0
     assert values.max() <= mean + 100.0
 
@@ -1353,7 +1357,7 @@ def test_trunc_normal_std(std: float) -> None:
     assert values.shape == (100000,)
     assert values.dtype == torch.float
     assert values.mean().allclose(torch.tensor(0.0), atol=TOLERANCE)
-    assert values.std(None).allclose(torch.tensor(std), atol=TOLERANCE)
+    assert values.std(dim=None).allclose(torch.tensor(std), atol=TOLERANCE)
     assert values.min() >= -100.0
     assert values.max() <= 100.0
 
