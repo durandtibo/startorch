@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "startorch"
-version = "0.0.1a8"
+version = "0.0.1a9"
 description = "synthetic time-series generator in PyTorch"
 readme = "README.md"
 authors = ["Thibaut Durand <durand.tibo+gh@gmail.com>"]
@@ -30,6 +30,7 @@ packages = [
 [tool.poetry.dependencies]
 # Core dependencies
 coola = ">=0.0.15,<1.0"
+objectory = ">=0.0.6,<1.0"
 python = "^3.9"
 #redcat = ">=0.0.6,<1.0"
 torch = ">=1.10,<3.0"
