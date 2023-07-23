@@ -1,0 +1,100 @@
+name: Nightly Package Tests
+on:
+  schedule:
+    - cron: '0 10 * * *' # run at 10 AM UTC
+  workflow_dispatch:  # to trigger manually
+
+jobs:
+  package:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      max-parallel: 8
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, macos-latest ]
+        python-version: [ '3.9', '3.10', '3.11' ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install package
+        run: |
+          pip install "startorch[all]"
+
+      - name: Run short experiment
+        run: |
+          python -c "import startorch; import torch;" \
+            "assert isinstance(startorch.random.uniform(0.0, 10.0), torch.Tensor); "
+
+  package-minimal:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      max-parallel: 8
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, macos-latest ]
+        python-version: [ '3.9', '3.10', '3.11' ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install package
+        run: |
+          pip install startorch
+
+      - name: Run short experiment
+        run: |
+          python -c "import startorch; import torch;" \
+            "assert isinstance(startorch.random.uniform(0.0, 10.0), torch.Tensor); "
+
+  package-torch:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      max-parallel: 8
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest ]
+        python-version: [ '3.9', '3.10', '3.11' ]
+        pytorch-version: [ 2.0.1, 1.13.1, 1.12.1, 1.11.0, 1.10.0 ]
+        exclude:
+          - pytorch-version: 1.10.0
+            python-version: 3.10
+          - pytorch-version: 1.10.0
+            python-version: 3.11
+          - pytorch-version: 1.11.0
+            python-version: 3.11
+          - pytorch-version: 1.12.1
+            python-version: 3.11
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install package
+        run: |
+          pip install startorch torch==${{ matrix.pytorch-version }}
+
+      - name: Run short experiment
+        run: |
+          python -c "import startorch; import torch;" \
+            "assert isinstance(startorch.random.uniform(0.0, 10.0), torch.Tensor); "
