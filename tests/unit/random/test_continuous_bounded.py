@@ -694,9 +694,7 @@ def test_rand_trunc_half_normal_std(std: float) -> None:
     assert values.shape == (100000,)
     assert values.dtype == torch.float
     assert values.mean().allclose(torch.tensor(std * math.sqrt(2 / math.pi)), atol=TOLERANCE)
-    assert values.std().allclose(
-        torch.tensor(std * math.sqrt(1 - 2 / math.pi)), atol=TOLERANCE
-    )
+    assert values.std().allclose(torch.tensor(std * math.sqrt(1 - 2 / math.pi)), atol=TOLERANCE)
     assert values.min() >= 0.0
     assert values.max() <= 5.0
 
@@ -777,9 +775,7 @@ def test_trunc_half_normal_std(std: float) -> None:
     assert values.shape == (1000000,)
     assert values.dtype == torch.float
     assert values.mean().allclose(torch.tensor(std * math.sqrt(2 / math.pi)), atol=TOLERANCE)
-    assert values.std().allclose(
-        torch.tensor(std * math.sqrt(1 - 2 / math.pi)), atol=TOLERANCE
-    )
+    assert values.std().allclose(torch.tensor(std * math.sqrt(1 - 2 / math.pi)), atol=TOLERANCE)
     assert values.min() >= 0.0
     assert values.max() <= 100.0
 
