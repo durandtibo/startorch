@@ -15,7 +15,7 @@ __all__ = [
     "rand_log_normal",
     "rand_log_uniform",
     "rand_normal",
-    # "rand_poisson",
+    "rand_poisson",
     "rand_trunc_cauchy",
     "rand_trunc_exponential",
     "rand_trunc_half_cauchy",
@@ -52,6 +52,7 @@ from startorch.random.bounded import (
     trunc_normal,
     uniform,
 )
+from startorch.random.discrete import rand_poisson
 from startorch.random.infinite import cauchy, normal, rand_cauchy, rand_normal
 from startorch.random.semi_infinite import (
     exponential,
@@ -63,5 +64,3 @@ from startorch.random.semi_infinite import (
     rand_half_normal,
     rand_log_normal,
 )
-
-# from startorch.random.discrete_infinite import rand_poisson
