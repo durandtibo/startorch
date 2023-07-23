@@ -1,20 +1,20 @@
 __all__ = [
     "asinh_uniform",
-    # "cauchy",
+    "cauchy",
     # "exponential",
     # "half_cauchy",
     # "half_normal",
     # "log_normal",
     "log_uniform",
-    # "normal",
+    "normal",
     "rand_asinh_uniform",
-    # "rand_cauchy",
+    "rand_cauchy",
     # "rand_exponential",
     # "rand_half_cauchy",
     # "rand_half_normal",
     # "rand_log_normal",
     "rand_log_uniform",
-    # "rand_normal",
+    "rand_normal",
     # "rand_poisson",
     "rand_trunc_cauchy",
     "rand_trunc_exponential",
@@ -52,8 +52,13 @@ from startorch.random.continuous_bounded import (
     trunc_normal,
     uniform,
 )
+from startorch.random.continuous_infinite import (
+    cauchy,
+    normal,
+    rand_cauchy,
+    rand_normal,
+)
 
-# from startorch.random.continuous_infinite import cauchy, normal, rand_cauchy, rand_normal
 # from startorch.random.continuous_semi_infinite import (
 #     exponential,
 #     half_cauchy,
