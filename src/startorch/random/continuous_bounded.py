@@ -74,9 +74,10 @@ def rand_trunc_cauchy(
 
         >>> import torch
         >>> from startorch.random import rand_trunc_cauchy
-        >>> rand_trunc_cauchy((2, 3), loc=1.0, scale=2.0, min_value=-3.0, max_value=3.0)
-        tensor([[ 0.5955,  0.9858,  0.6341],
-                [ 1.1433,  1.8038, -1.7982]])
+        >>> rand_trunc_cauchy(
+        ...     (2, 3), loc=1.0, scale=2.0, min_value=-3.0, max_value=3.0
+        ... )  # doctest:+ELLIPSIS
+        tensor([[...]])
     """
     if max_value < min_value:
         raise ValueError(
@@ -131,8 +132,8 @@ def trunc_cauchy(
         ...     scale=torch.tensor([1.0, 3.0, 5.0]),
         ...     min_value=torch.tensor([-5.0, -10.0, -15.0]),
         ...     max_value=torch.tensor([5.0, 10.0, 15.0]),
-        ... )
-        tensor([-1.9500,  8.5750,  0.6428])
+        ... )  # doctest:+ELLIPSIS
+        tensor([...])
     """
     if not shapes_are_equal((loc, scale, min_value, max_value)):
         raise ValueError(
@@ -184,9 +185,8 @@ def rand_trunc_exponential(
 
         >>> import torch
         >>> from startorch.random import rand_trunc_exponential
-        >>> rand_trunc_exponential((2, 3), rate=1.0, max_value=3.0)
-        tensor([[0.1212, 0.0921, 0.0426],
-                [0.6428, 1.0243, 0.1785]])
+        >>> rand_trunc_exponential((2, 3), rate=1.0, max_value=3.0)  # doctest:+ELLIPSIS
+        tensor([[...]])
     """
     if max_value <= 0:
         raise ValueError(f"`max_value` has to be greater than 0 (received: {max_value})")
@@ -230,8 +230,8 @@ def trunc_exponential(
         >>> trunc_exponential(
         ...     rate=torch.tensor([1.0, 3.0, 5.0]),
         ...     max_value=torch.tensor([5.0, 10.0, 15.0]),
-        ... )
-        tensor([1.9935, 0.0539, 0.0246])
+        ... )  # doctest:+ELLIPSIS
+        tensor([...])
     """
     if rate.shape != max_value.shape:
         raise ValueError(
@@ -280,9 +280,8 @@ def rand_trunc_half_cauchy(
 
         >>> import torch
         >>> from startorch.random import rand_trunc_half_cauchy
-        >>> rand_trunc_half_cauchy((2, 3), scale=1.0, max_value=3.0)
-        tensor([[0.7117, 1.6812, 1.4947],
-                [1.1281, 2.3008, 1.5985]])
+        >>> rand_trunc_half_cauchy((2, 3), scale=1.0, max_value=3.0)  # doctest:+ELLIPSIS
+        tensor([[...]])
     """
     if max_value <= 0:
         raise ValueError(f"`max_value` has to be greater than 0 (received: {max_value})")
@@ -326,8 +325,8 @@ def trunc_half_cauchy(
         >>> trunc_half_cauchy(
         ...     scale=torch.tensor([1.0, 3.0, 5.0]),
         ...     max_value=torch.tensor([5.0, 10.0, 15.0]),
-        ... )
-        tensor([-1.9500,  8.5750,  0.6428])
+        ... )  # doctest:+ELLIPSIS
+        tensor([...])
     """
     if scale.shape != max_value.shape:
         raise ValueError(
@@ -376,9 +375,8 @@ def rand_trunc_half_normal(
 
         >>> import torch
         >>> from startorch.random import rand_trunc_half_normal
-        >>> rand_trunc_half_normal((2, 3), std=1.0, max_value=3.0)
-        tensor([[1.6366, 0.0052, 0.8419],
-                [1.4075, 1.1386, 1.2300]])
+        >>> rand_trunc_half_normal((2, 3), std=1.0, max_value=3.0)  # doctest:+ELLIPSIS
+        tensor([[...]])
     """
     if max_value <= 0:
         raise ValueError(f"`max_value` has to be greater than 0 (received: {max_value})")
@@ -421,8 +419,8 @@ def trunc_half_normal(
         >>> from startorch.random import trunc_half_normal
         >>> trunc_half_normal(
         ...     std=torch.tensor([1.0, 3.0, 5.0]), max_value=torch.tensor([5.0, 10.0, 15.0])
-        ... )
-        tensor([0.6635, 1.7488, 1.8769])
+        ... )  # doctest:+ELLIPSIS
+        tensor([...])
     """
     if std.shape != max_value.shape:
         raise ValueError(
@@ -475,9 +473,10 @@ def rand_trunc_log_normal(
 
         >>> import torch
         >>> from startorch.random import rand_trunc_log_normal
-        >>> rand_trunc_log_normal((2, 3), mean=0.0, std=1.0, min_value=1.0, max_value=4.0)
-        tensor([[1.9750, 1.1945, 3.3436],
-                [1.6238, 2.0012, 1.1396]])
+        >>> rand_trunc_log_normal(
+        ...     (2, 3), mean=0.0, std=1.0, min_value=1.0, max_value=4.0
+        ... )  # doctest:+ELLIPSIS
+        tensor([[...]])
     """
     if max_value < min_value:
         raise ValueError(
@@ -532,8 +531,8 @@ def trunc_log_normal(
         ...     std=torch.tensor([1.0, 3.0, 5.0]),
         ...     min_value=torch.tensor([0.0, 1.0, 2.0]),
         ...     max_value=torch.tensor([5.0, 10.0, 15.0]),
-        ... )
-        tensor([0.1436, 2.0687, 7.7095])
+        ... )  # doctest:+ELLIPSIS
+        tensor([...])
     """
     if not shapes_are_equal((mean, std, min_value, max_value)):
         raise ValueError(
@@ -592,9 +591,10 @@ def rand_trunc_normal(
 
         >>> import torch
         >>> from startorch.random import rand_trunc_normal
-        >>> rand_trunc_normal((2, 3), mean=1.0, std=2.0, min_value=-5.0, max_value=5.0)
-        tensor([[ 1.7693,  1.3568,  0.6892],
-                [ 3.0405,  0.0994, -1.4873]])
+        >>> rand_trunc_normal(
+        ...     (2, 3), mean=1.0, std=2.0, min_value=-5.0, max_value=5.0
+        ... )  # doctest:+ELLIPSIS
+        tensor([[...]])
     """
     if max_value < min_value:
         raise ValueError(
@@ -649,8 +649,8 @@ def trunc_normal(
         ...     std=torch.tensor([1.0, 3.0, 5.0]),
         ...     min_value=torch.tensor([-5.0, -10.0, -15.0]),
         ...     max_value=torch.tensor([5.0, 10.0, 15.0]),
-        ... )
-        tensor([-0.5025,  3.5988, -2.9550])
+        ... )  # doctest:+ELLIPSIS
+        tensor([...])
     """
     if not shapes_are_equal((mean, std, min_value, max_value)):
         raise ValueError(
@@ -703,9 +703,8 @@ def rand_uniform(
 
         >>> import torch
         >>> from startorch.random import rand_uniform
-        >>> rand_uniform((2, 3), low=-1.0, high=2.0)
-        tensor([[ 1.2994, -0.8192,  1.9177],
-                [ 1.9427,  1.1661, -0.5566]])
+        >>> rand_uniform((2, 3), low=-1.0, high=2.0)  # doctest:+ELLIPSIS
+        tensor([[...]])
     """
     if high < low:
         raise ValueError(f"`high` ({high}) has to be greater or equal to `low` ({low})")
@@ -750,8 +749,10 @@ def uniform(low: Tensor, high: Tensor, generator: torch.Generator | None = None)
 
         >>> import torch
         >>> from startorch.random import uniform
-        >>> uniform(low=torch.tensor([-1.0, 0.0, 1.0]), high=torch.tensor([1.0, 3.0, 5.0]))
-        tensor([-0.7108,  1.0425,  1.4660])
+        >>> uniform(
+        ...     low=torch.tensor([-1.0, 0.0, 1.0]), high=torch.tensor([1.0, 3.0, 5.0])
+        ... )  # doctest:+ELLIPSIS
+        tensor([...])
     """
     if low.shape != high.shape:
         raise ValueError(
@@ -797,9 +798,8 @@ def rand_log_uniform(
     .. code-block:: pycon
 
         >>> from startorch.random import rand_log_uniform
-        >>> rand_log_uniform((2, 3), low=0.1, high=1000.0)
-        tensor([[59.2475,  7.4292, 85.4240],
-                [ 0.3656,  1.3131, 83.1452]])
+        >>> rand_log_uniform((2, 3), low=0.1, high=1000.0)  # doctest:+ELLIPSIS
+        tensor([[...]])
     """
     if high < low:
         raise ValueError(f"`high` ({high}) has to be greater or equal to `low` ({low})")
@@ -838,8 +838,10 @@ def log_uniform(low: Tensor, high: Tensor, generator: torch.Generator | None = N
     .. code-block:: pycon
 
         >>> from startorch.random import log_uniform
-        >>> log_uniform(low=torch.tensor([0.01, 0.1, 1.0]), high=torch.tensor([1.0, 10.0, 100.0]))
-        tensor([ 0.2028,  0.8238, 45.3870])
+        >>> log_uniform(
+        ...     low=torch.tensor([0.01, 0.1, 1.0]), high=torch.tensor([1.0, 10.0, 100.0])
+        ... )  # doctest:+ELLIPSIS
+        tensor([...])
     """
     if low.shape != high.shape:
         raise ValueError(
@@ -887,9 +889,8 @@ def rand_asinh_uniform(
     .. code-block:: pycon
 
         >>> from startorch.random import rand_asinh_uniform
-        >>> rand_asinh_uniform((2, 3), low=-1000.0, high=1000.0)
-        tensor([[ -32.9101,   -2.1051,  564.9307],
-                [-156.8264, -104.7816,   -4.7174]])
+        >>> rand_asinh_uniform((2, 3), low=-1000.0, high=1000.0)  # doctest:+ELLIPSIS
+        tensor([[...]])
     """
     if high < low:
         raise ValueError(f"`high` ({high}) has to be greater or equal to `low` ({low})")
@@ -932,9 +933,8 @@ def asinh_uniform(low: Tensor, high: Tensor, generator: torch.Generator | None =
         >>> asinh_uniform(
         ...     low=torch.tensor([-10.0, 0.0, 1.0]),
         ...     high=torch.tensor([1.0, 10.0, 100.0]),
-        ... )
-        tensor([[59.2475,  7.4292, 85.4240],
-                [ 0.3656,  1.3131, 83.1452]])
+        ... )  # doctest:+ELLIPSIS
+        tensor([...])
     """
     if low.shape != high.shape:
         raise ValueError(
