@@ -1526,7 +1526,7 @@ def test_rand_uniform_high(high: float) -> None:
 
 def test_rand_uniform_mock() -> None:
     with patch(
-        "startorch.random.continuous_bounded.torch.rand",
+        "startorch.random.bounded.torch.rand",
         Mock(return_value=torch.tensor([0.0, 0.5, 1.0])),
     ):
         assert rand_uniform(size=(3,), low=1, high=5, generator=get_torch_generator(1)).equal(
@@ -1598,7 +1598,7 @@ def test_uniform_high(high: float) -> None:
 
 def test_uniform_mock() -> None:
     with patch(
-        "startorch.random.continuous_bounded.torch.rand",
+        "startorch.random.bounded.torch.rand",
         Mock(return_value=torch.tensor([0.0, 0.5, 1.0])),
     ):
         assert uniform(
@@ -1679,7 +1679,7 @@ def test_rand_log_uniform_high(high: float) -> None:
 
 def test_rand_log_uniform_mock() -> None:
     with patch(
-        "startorch.random.continuous_bounded.torch.rand",
+        "startorch.random.bounded.torch.rand",
         Mock(return_value=torch.tensor([0.0, 0.5, 1.0])),
     ):
         assert rand_log_uniform(
@@ -1769,7 +1769,7 @@ def test_log_uniform_high(high: float) -> None:
 
 def test_log_uniform_mock() -> None:
     with patch(
-        "startorch.random.continuous_bounded.torch.rand",
+        "startorch.random.bounded.torch.rand",
         Mock(return_value=torch.tensor([0.0, 0.5, 1.0])),
     ):
         assert log_uniform(
@@ -1868,7 +1868,7 @@ def test_rand_asinh_uniform_high(high: float) -> None:
 
 def test_rand_asinh_uniform_mock() -> None:
     with patch(
-        "startorch.random.continuous_bounded.torch.rand",
+        "startorch.random.bounded.torch.rand",
         Mock(return_value=torch.tensor([0.0, 0.5, 1.0])),
     ):
         assert rand_asinh_uniform(
@@ -1954,7 +1954,7 @@ def test_asinh_uniform_high(high: float) -> None:
 
 def test_asinh_uniform_mock() -> None:
     with patch(
-        "startorch.random.continuous_bounded.torch.rand",
+        "startorch.random.bounded.torch.rand",
         Mock(return_value=torch.tensor([0.0, 0.5, 1.0])),
     ):
         assert asinh_uniform(

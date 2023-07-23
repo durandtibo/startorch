@@ -32,7 +32,7 @@ __all__ = [
     "uniform",
 ]
 
-from startorch.random.continuous_bounded import (
+from startorch.random.bounded import (
     asinh_uniform,
     log_uniform,
     rand_asinh_uniform,
@@ -52,13 +52,8 @@ from startorch.random.continuous_bounded import (
     trunc_normal,
     uniform,
 )
-from startorch.random.continuous_infinite import (
-    cauchy,
-    normal,
-    rand_cauchy,
-    rand_normal,
-)
-from startorch.random.continuous_semi_infinite import (
+from startorch.random.infinite import cauchy, normal, rand_cauchy, rand_normal
+from startorch.random.semi_infinite import (
     exponential,
     half_cauchy,
     half_normal,

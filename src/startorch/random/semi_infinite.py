@@ -41,7 +41,7 @@ def rand_exponential(
 
     Raises:
     ------
-        RuntimeError if the ``rate`` parameter is not valid.
+        ValueError if the ``rate`` parameter is not valid.
 
     Example usage:
 
@@ -53,7 +53,7 @@ def rand_exponential(
         tensor([[...]])
     """
     if rate <= 0:
-        raise RuntimeError(f"rate has to be greater than 0 (received: {rate})")
+        raise ValueError(f"rate has to be greater than 0 (received: {rate})")
     tensor = torch.zeros(*size, dtype=torch.float)
     tensor.exponential_(rate, generator=generator)
     return tensor
@@ -84,7 +84,7 @@ def exponential(rate: torch.Tensor, generator: torch.Generator | None = None) ->
 
     Raises:
     ------
-        RuntimeError if the ``rate`` parameter is not valid.
+        ValueError if the ``rate`` parameter is not valid.
 
     Example usage:
 
@@ -97,7 +97,7 @@ def exponential(rate: torch.Tensor, generator: torch.Generator | None = None) ->
     """
     rate = rate.float()
     if torch.any(rate <= 0.0):
-        raise RuntimeError("rate values have to be greater than 0 (>0)")
+        raise ValueError("rate values have to be greater than 0 (>0)")
     return torch.zeros_like(rate).exponential_(generator=generator) / rate
 
 
@@ -125,7 +125,7 @@ def rand_half_cauchy(
 
     Raises:
     ------
-        RuntimeError if the ``scale`` parameter is not valid.
+        ValueError if the ``scale`` parameter is not valid.
 
     Example usage:
 
@@ -163,7 +163,7 @@ def half_cauchy(scale: Tensor, generator: Generator | None = None) -> Tensor:
 
     Raises:
     ------
-        RuntimeError if the ``scale`` parameter is not valid.
+        ValueError if the ``scale`` parameter is not valid.
 
     Example usage:
 
@@ -200,7 +200,7 @@ def rand_half_normal(
 
     Raises:
     ------
-        RuntimeError if the ``std`` parameter is not valid.
+        ValueError if the ``std`` parameter is not valid.
 
     Example usage:
 
@@ -212,7 +212,7 @@ def rand_half_normal(
         tensor([[...]])
     """
     if std <= 0:
-        raise RuntimeError(f"std has to be greater than 0 (received: {std})")
+        raise ValueError(f"std has to be greater than 0 (received: {std})")
     return rand_normal(size=size, mean=0.0, std=std, generator=generator).abs()
 
 
@@ -240,7 +240,7 @@ def half_normal(std: Tensor, generator: Generator | None = None) -> Tensor:
 
     Raises:
     ------
-        RuntimeError if the ``std`` parameter is not valid.
+        ValueError if the ``std`` parameter is not valid.
 
     Example usage:
 
@@ -280,7 +280,7 @@ def rand_log_normal(
 
     Raises:
     ------
-        RuntimeError if the ``mean`` and ``std`` parametera are not
+        ValueError if the ``mean`` and ``std`` parametera are not
             valid.
 
     Example usage:
@@ -293,7 +293,7 @@ def rand_log_normal(
         tensor([[...]])
     """
     if std <= 0:
-        raise RuntimeError(f"std has to be greater than 0 (received: {std})")
+        raise ValueError(f"std has to be greater than 0 (received: {std})")
     tensor = torch.zeros(*size, dtype=torch.float)
     tensor.log_normal_(mean=mean, std=std, generator=generator)
     return tensor
@@ -326,7 +326,7 @@ def log_normal(mean: Tensor, std: Tensor, generator: Generator | None = None) ->
 
     Raises:
     ------
-        RuntimeError if the ``mean`` and ``std`` parametera are not
+        ValueError if the ``mean`` and ``std`` parametera are not
             valid.
 
     Example usage:
