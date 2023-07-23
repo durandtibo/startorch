@@ -34,7 +34,7 @@ def rand_cauchy(
 
     Raises:
     ------
-        RuntimeError if the ``scale`` parameter is not valid.
+        ValueError if the ``scale`` parameter is not valid.
 
     Example usage:
 
@@ -46,7 +46,7 @@ def rand_cauchy(
         tensor([[...]])
     """
     if scale <= 0:
-        raise RuntimeError(f"scale has to be greater than 0 (received: {scale})")
+        raise ValueError(f"scale has to be greater than 0 (received: {scale})")
     sequence = torch.zeros(*size, dtype=torch.float)
     sequence.cauchy_(median=loc, sigma=scale, generator=generator)
     return sequence
@@ -79,7 +79,7 @@ def cauchy(loc: Tensor, scale: Tensor, generator: torch.Generator | None = None)
 
     Raises:
     ------
-        RuntimeError if the ``loc`` and ``scale`` parameters are not
+        ValueError if the ``loc`` and ``scale`` parameters are not
             valid.
 
     Example usage:
@@ -94,11 +94,9 @@ def cauchy(loc: Tensor, scale: Tensor, generator: torch.Generator | None = None)
         tensor([...])
     """
     if loc.shape != scale.shape:
-        raise RuntimeError(
-            f"The shapes of loc and scale do not match ({loc.shape} vs {scale.shape})"
-        )
+        raise ValueError(f"The shapes of loc and scale do not match ({loc.shape} vs {scale.shape})")
     if torch.any(scale <= 0.0):
-        raise RuntimeError(f"scale has to be greater than 0 (received: {scale})")
+        raise ValueError(f"scale has to be greater than 0 (received: {scale})")
     return rand_cauchy(loc.shape, generator=generator).mul(scale).add(loc)
 
 
@@ -128,7 +126,7 @@ def rand_normal(
 
     Raises:
     ------
-        RuntimeError if the ``std`` parameter is not valid.
+        ValueError if the ``std`` parameter is not valid.
 
     Example usage:
 
@@ -140,7 +138,7 @@ def rand_normal(
         tensor([[...]])
     """
     if std <= 0.0:
-        raise RuntimeError(f"std has to be greater than 0 (received: {std})")
+        raise ValueError(f"std has to be greater than 0 (received: {std})")
     return torch.randn(size, generator=generator).mul(std).add(mean)
 
 
@@ -165,7 +163,7 @@ def normal(mean: Tensor, std: Tensor, generator: torch.Generator | None = None) 
 
     Raises:
     ------
-        RuntimeError if the ``mean`` and ``std`` parameters are not
+        ValueError if the ``mean`` and ``std`` parameters are not
             valid.
 
     Example usage:
@@ -180,7 +178,7 @@ def normal(mean: Tensor, std: Tensor, generator: torch.Generator | None = None) 
         tensor([...])
     """
     if mean.shape != std.shape:
-        raise RuntimeError(f"The shapes of mean and std do not match ({mean.shape} vs {std.shape})")
+        raise ValueError(f"The shapes of mean and std do not match ({mean.shape} vs {std.shape})")
     if torch.any(std <= 0.0):
-        raise RuntimeError(f"std has to be greater than 0 (received: {std})")
+        raise ValueError(f"std has to be greater than 0 (received: {std})")
     return torch.randn(mean.shape, generator=generator).mul(std).add(mean)
