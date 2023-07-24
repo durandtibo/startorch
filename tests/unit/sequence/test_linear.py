@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import torch
 from pytest import mark
 from redcat import BatchedTensorSeq
