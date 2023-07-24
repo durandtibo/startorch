@@ -15,6 +15,7 @@ __all__ = [
     "RandUniform",
     "TruncCauchy",
     "setup_sequence_generator",
+    "RandWienerProcess",
 ]
 
 from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_generator
@@ -31,4 +32,7 @@ from startorch.sequence.dtype import LongSequenceGenerator as Long
 from startorch.sequence.linear import LinearSequenceGenerator as Linear
 from startorch.sequence.uniform import RandIntSequenceGenerator as RandInt
 from startorch.sequence.uniform import RandUniformSequenceGenerator as RandUniform
+from startorch.sequence.wiener import (
+    RandWienerProcessSequenceGenerator as RandWienerProcess,
+)
 from startorch.sequence.wrapper import BaseWrapperSequenceGenerator
