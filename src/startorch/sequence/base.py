@@ -29,6 +29,7 @@ class BaseSequenceGenerator(ABC, metaclass=AbstractFactory):
         All the sequences in the batch must have the same length.
 
         Args:
+        ----
             seq_len (int): Specifies the sequence length.
             batch_size (int, optional): Specifies the batch size.
                 Default: ``1``
@@ -36,10 +37,21 @@ class BaseSequenceGenerator(ABC, metaclass=AbstractFactory):
                 an optional random number generator. Default: ``None``
 
         Returns:
+        -------
             ``BatchedTensorSeq``: A batch of sequences. The data in the
                 batch are represented by a ``torch.Tensor`` of shape
                 ``(batch_size, sequence_length, *)`` where `*` means
                 any number of dimensions.
+
+        Example usage:
+
+        .. code-block:: pycon
+
+            >>> import torch
+            >>> from startorch.sequence import RandUniform
+            >>> generator = RandUniform()
+            >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+            tensor([[...]], batch_dim=0, seq_dim=1)
         """
 
 
@@ -50,11 +62,20 @@ def setup_sequence_generator(generator: BaseSequenceGenerator | dict) -> BaseSeq
     using the ``BaseSequenceGenerator`` factory function.
 
     Args:
+    ----
         generator (``BaseSequenceGenerator`` or dict): Specifies a
             sequence generator or its configuration.
 
     Returns:
         ``BaseSequenceGenerator``: A sequence generator.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> from startorch.sequence import setup_sequence_generator
+        >>> setup_sequence_generator({"_target_": "startorch.sequence.RandUniform"})
+        RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
     """
     if isinstance(generator, dict):
         logger.info(
