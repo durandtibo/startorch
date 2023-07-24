@@ -23,10 +23,6 @@ class ConstantSequenceGenerator(BaseWrapperSequenceGenerator):
 
         >>> from startorch.sequence import Constant, RandUniform
         >>> generator = Constant(RandUniform())
-        >>> generator
-        ConstantSequenceGenerator(
-          (generator): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
-        )
         >>> generator.generate(seq_len=6, batch_size=2)  # doctest:+ELLIPSIS
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
@@ -47,6 +43,7 @@ class FullSequenceGenerator(BaseSequenceGenerator):
     seed has no effect.
 
     Args:
+    ----
         value (float): Specifies the value.
         feature_size (tuple or list or int, optional): Specifies the
             feature size. Default: ``1``

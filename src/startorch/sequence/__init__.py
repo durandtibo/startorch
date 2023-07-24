@@ -5,6 +5,7 @@ __all__ = [
     "BaseWrapperSequenceGenerator",
     "Constant",
     "Full",
+    "Linear",
     "RandUniform",
     "setup_sequence_generator",
 ]
@@ -12,5 +13,6 @@ __all__ = [
 from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_generator
 from startorch.sequence.constant import ConstantSequenceGenerator as Constant
 from startorch.sequence.constant import FullSequenceGenerator as Full
+from startorch.sequence.linear import LinearSequenceGenerator as Linear
 from startorch.sequence.uniform import RandUniformSequenceGenerator as RandUniform
 from startorch.sequence.wrapper import BaseWrapperSequenceGenerator
