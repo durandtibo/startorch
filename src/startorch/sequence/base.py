@@ -22,7 +22,7 @@ class BaseSequenceGenerator(ABC, metaclass=AbstractFactory):
 
     @abstractmethod
     def generate(
-        self, seq_len: int, batch_size: int = 1, generator: Generator | None = None
+        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchedTensorSeq:
         r"""Generates a batch of sequences.
 
@@ -32,8 +32,8 @@ class BaseSequenceGenerator(ABC, metaclass=AbstractFactory):
             seq_len (int): Specifies the sequence length.
             batch_size (int, optional): Specifies the batch size.
                 Default: ``1``
-            generator (``torch.Generator`` or None, optional): Specifies
-                an optional random generator. Default: ``None``
+            rng (``torch.Generator`` or None, optional): Specifies
+                an optional random number generator. Default: ``None``
 
         Returns:
             ``BatchedTensorSeq``: A batch of sequences. The data in the
