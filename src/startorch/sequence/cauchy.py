@@ -22,6 +22,7 @@ class CauchySequenceGenerator(BaseSequenceGenerator):
     Cauchy distribution.
 
     Args:
+    ----
         loc (``BaseSequenceGenerator`` or dict): Specifies a sequence
             generator (or its configuration) to generate the location.
         scale (``BaseSequenceGenerator`` or dict): Specifies a sequence
@@ -70,6 +71,7 @@ class RandCauchySequenceGenerator(BaseSequenceGenerator):
     Cauchy distribution.
 
     Args:
+    ----
         loc (float, optional): Specifies the location/median of the
             Cauchy distribution. Default: ``0.0``
         scale (float, optional): Specifies the scale of the
@@ -124,6 +126,7 @@ class RandTruncCauchySequenceGenerator(BaseSequenceGenerator):
     truncated Cauchy distribution.
 
     Args:
+    ----
         loc (float, optional): Specifies the location/median of the
             Cauchy distribution. Default: ``0.0``
         scale (float, optional): Specifies the scale of the
@@ -194,6 +197,7 @@ class TruncCauchySequenceGenerator(BaseSequenceGenerator):
     Cauchy distribution.
 
     Args:
+    ----
         loc (``BaseSequenceGenerator`` or dict): Specifies a sequence
             generator (or its configuration) to generate the location.
         scale (``BaseSequenceGenerator`` or dict): Specifies a sequence
