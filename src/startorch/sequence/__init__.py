@@ -10,14 +10,18 @@ __all__ = [
     "Full",
     "Linear",
     "Long",
+    "Normal",
     "Poisson",
     "RandCauchy",
     "RandInt",
+    "RandNormal",
     "RandPoisson",
     "RandTruncCauchy",
+    "RandTruncNormal",
     "RandUniform",
     "RandWienerProcess",
     "TruncCauchy",
+    "TruncNormal",
     "setup_sequence_generator",
 ]
 
@@ -33,6 +37,12 @@ from startorch.sequence.constant import FullSequenceGenerator as Full
 from startorch.sequence.dtype import FloatSequenceGenerator as Float
 from startorch.sequence.dtype import LongSequenceGenerator as Long
 from startorch.sequence.linear import LinearSequenceGenerator as Linear
+from startorch.sequence.normal import NormalSequenceGenerator as Normal
+from startorch.sequence.normal import RandNormalSequenceGenerator as RandNormal
+from startorch.sequence.normal import (
+    RandTruncNormalSequenceGenerator as RandTruncNormal,
+)
+from startorch.sequence.normal import TruncNormalSequenceGenerator as TruncNormal
 from startorch.sequence.poisson import PoissonSequenceGenerator as Poisson
 from startorch.sequence.poisson import RandPoissonSequenceGenerator as RandPoisson
 from startorch.sequence.range import ArangeSequenceGenerator as Arange
