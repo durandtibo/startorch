@@ -67,6 +67,7 @@ def setup_sequence_generator(generator: BaseSequenceGenerator | dict) -> BaseSeq
             sequence generator or its configuration.
 
     Returns:
+    -------
         ``BaseSequenceGenerator``: A sequence generator.
 
     Example usage:

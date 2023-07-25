@@ -33,6 +33,16 @@ class BaseTensorGenerator(ABC, metaclass=AbstractFactory):
         -------
             ``torch.Tensor``: The generated tensor with the specified
                 size.
+
+        Example usage:
+
+        .. code-block:: pycon
+
+            >>> import torch
+            >>> from startorch.tensor import RandUniform
+            >>> generator = RandUniform()
+            >>> generator.generate(size=(4, 12))  # doctest:+ELLIPSIS
+            tensor([[...]])
         """
 
 
@@ -50,6 +60,14 @@ def setup_tensor_generator(generator: BaseTensorGenerator | dict) -> BaseTensorG
     Returns:
     -------
         ``BaseTensorGenerator``: A tensor generator.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> from startorch.tensor import setup_tensor_generator
+        >>> setup_tensor_generator({"_target_": "startorch.tensor.RandUniform"})
+        RandUniformTensorGenerator(low=0.0, high=1.0)
     """
     if isinstance(generator, dict):
         logger.info(

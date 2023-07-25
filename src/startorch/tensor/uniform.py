@@ -15,6 +15,7 @@ class RandUniformTensorGenerator(BaseTensorGenerator):
     distribution.
 
     Args:
+    ----
         low (float, optional): Specifies the minimum value
             (inclusive). Default: ``0.0``
         high (float, optional): Specifies the maximum value
@@ -49,6 +50,7 @@ class UniformTensorGenerator(BaseTensorGenerator):
     distribution.
 
     Args:
+    ----
         low (``BaseTensorGenerator`` or dict): Specifies a tensor
             generator (or its configuration) to generate the minimum
             value (inclusive).

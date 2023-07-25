@@ -23,6 +23,7 @@ class PoissonSequenceGenerator(BaseSequenceGenerator):
     in the sequence. The rate values should be greater than 0.
 
     Args:
+    ----
         rate (``BaseSequenceGenerator`` or dict): Specifies the
             rate generator or its configuration. The rate generator
             should return valid rate values.
@@ -66,6 +67,7 @@ class PoissonSequenceGenerator(BaseSequenceGenerator):
         Poisson distribution are sampled from a uniform distribution.
 
         Args:
+        ----
             min_rate (float, optional): Specifies the minimum rate
                 value. Default: ``0.01``
             max_rate (float, optional): Specifies the maximum rate
@@ -98,6 +100,7 @@ class RandPoissonSequenceGenerator(BaseSequenceGenerator):
     Poisson distribution.
 
     Args:
+    ----
         rate (float, optional): Specifies the rate of the Poisson
             distribution. This value has to be greater than 0.
             Default: ``1.0``
