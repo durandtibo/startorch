@@ -21,6 +21,15 @@ class RandWienerProcessSequenceGenerator(BaseSequenceGenerator):
     ----
         step_size (float, optional): Specifies the time
             step size. Default: ``1.0``
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> from startorch.sequence import RandWienerProcess
+        >>> generator = RandWienerProcess()
+        >>> generator.generate(seq_len=6, batch_size=2)  # doctest:+ELLIPSIS
+        tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
     def __init__(self, step_size: float = 1.0) -> None:

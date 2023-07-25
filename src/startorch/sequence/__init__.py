@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 __all__ = [
+    "Arange",
     "BaseSequenceGenerator",
     "BaseWrapperSequenceGenerator",
     "Cauchy",
@@ -30,6 +31,7 @@ from startorch.sequence.constant import FullSequenceGenerator as Full
 from startorch.sequence.dtype import FloatSequenceGenerator as Float
 from startorch.sequence.dtype import LongSequenceGenerator as Long
 from startorch.sequence.linear import LinearSequenceGenerator as Linear
+from startorch.sequence.range import ArangeSequenceGenerator as Arange
 from startorch.sequence.uniform import RandIntSequenceGenerator as RandInt
 from startorch.sequence.uniform import RandUniformSequenceGenerator as RandUniform
 from startorch.sequence.wiener import (
