@@ -1490,6 +1490,13 @@ def test_trunc_normal_different_random_seeds() -> None:
 ##################################
 
 
+def test_rand_uniform() -> None:
+    tensor = rand_uniform((10,))
+    assert torch.is_tensor(tensor)
+    assert tensor.shape == (10,)
+    assert tensor.dtype == torch.float
+
+
 def test_rand_uniform_1d() -> None:
     values = rand_uniform((100000,), generator=get_torch_generator(1))
     assert values.shape == (100000,)
