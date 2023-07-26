@@ -29,7 +29,18 @@ from startorch.sequence.wrapper import BaseWrapperSequenceGenerator
 
 class AbsSequenceGenerator(BaseWrapperSequenceGenerator):
     r"""Implements a sequence generator that computes the absolute value
-    of a generated sequence."""
+    of a generated sequence.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> import torch
+        >>> from startorch.sequence import Abs, RandNormal
+        >>> generator = Abs(RandNormal())
+        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        tensor([[...]], batch_dim=0, seq_dim=1)
+    """
 
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
@@ -46,6 +57,16 @@ class AddSequenceGenerator(BaseSequenceGenerator):
     ----
         sequences (``Sequence``): Specifies the sequence generators or
             their configuration.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> import torch
+        >>> from startorch.sequence import Add, RandUniform, RandNormal
+        >>> generator = Add([RandUniform(), RandNormal()])
+        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
     def __init__(
@@ -80,6 +101,16 @@ class AddScalarSequenceGenerator(BaseWrapperSequenceGenerator):
         sequence (``BaseSequenceGenerator`` or dict):
             Specifies the sequence generator or its configuration.
         value (int or float): Specifies the scalar value to add.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> import torch
+        >>> from startorch.sequence import AddScalar, RandUniform, RandNormal
+        >>> generator = AddScalar(RandUniform(), 42.0)
+        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
     def __init__(
@@ -116,6 +147,16 @@ class ClampSequenceGenerator(BaseWrapperSequenceGenerator):
             If ``min_value`` is ``None``, there is no lower bound.
         max (int, float or ``None``): Specifies the upper bound.
             If ``max_value`` is ``None``, there is no upper bound.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> import torch
+        >>> from startorch.sequence import Clamp, RandNormal
+        >>> generator = Clamp(RandNormal(), -1.0, 1.0)
+        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
     def __init__(
@@ -146,7 +187,18 @@ class ClampSequenceGenerator(BaseWrapperSequenceGenerator):
 
 class CumsumSequenceGenerator(BaseWrapperSequenceGenerator):
     r"""Implements a sequence generator that computes the cumulative sum
-    of a generated sequence."""
+    of a generated sequence.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> import torch
+        >>> from startorch.sequence import Cumsum, RandUniform
+        >>> generator = Cumsum(RandUniform())
+        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        tensor([[...]], batch_dim=0, seq_dim=1)
+    """
 
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
@@ -177,6 +229,16 @@ class DivSequenceGenerator(BaseSequenceGenerator):
                 towards zero.
             - ``"floor"``: floor division.
             Default: ``None``
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> import torch
+        >>> from startorch.sequence import Div, RandUniform, RandNormal
+        >>> generator = Div(RandNormal(), RandUniform(1.0, 10.0))
+        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
     def __init__(
@@ -213,7 +275,18 @@ class DivSequenceGenerator(BaseSequenceGenerator):
 
 class ExpSequenceGenerator(BaseWrapperSequenceGenerator):
     r"""Implements a sequence generator that computes the exponential of
-    a batch of sequences."""
+    a batch of sequences.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> import torch
+        >>> from startorch.sequence import Exp, RandUniform, RandNormal
+        >>> generator = Exp(RandUniform())
+        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        tensor([[...]], batch_dim=0, seq_dim=1)
+    """
 
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
@@ -273,7 +346,18 @@ class FmodSequenceGenerator(BaseSequenceGenerator):
 
 class LogSequenceGenerator(BaseWrapperSequenceGenerator):
     r"""Implements a sequence generator that computes the logarithm of a
-    batch of sequences."""
+    batch of sequences.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> import torch
+        >>> from startorch.sequence import Log, RandUniform, RandNormal
+        >>> generator = Log(RandUniform(1.0, 10.0))
+        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        tensor([[...]], batch_dim=0, seq_dim=1)
+    """
 
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
@@ -290,6 +374,16 @@ class MulSequenceGenerator(BaseSequenceGenerator):
     Args:
     ----
         sequences (``Sequence``): Specifies the sequence generators.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> import torch
+        >>> from startorch.sequence import Mul, RandUniform, RandNormal
+        >>> generator = Mul([RandUniform(), RandNormal()])
+        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
     def __init__(
@@ -324,6 +418,16 @@ class MulScalarSequenceGenerator(BaseWrapperSequenceGenerator):
         sequence (``BaseSequenceGenerator`` or dict):
             Specifies the sequence generator or its configuration.
         value (int or float): Specifies the scalar value to multiply.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> import torch
+        >>> from startorch.sequence import MulScalar, RandUniform, RandNormal
+        >>> generator = MulScalar(RandUniform(), 2.0)
+        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
     def __init__(
@@ -348,7 +452,18 @@ class MulScalarSequenceGenerator(BaseWrapperSequenceGenerator):
 
 class NegSequenceGenerator(BaseWrapperSequenceGenerator):
     r"""Implements a sequence generator that computes the negation of a
-    generated sequence."""
+    generated sequence.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> import torch
+        >>> from startorch.sequence import Neg, RandUniform, RandNormal
+        >>> generator = Neg(RandUniform())
+        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        tensor([[...]], batch_dim=0, seq_dim=1)
+    """
 
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
@@ -357,8 +472,19 @@ class NegSequenceGenerator(BaseWrapperSequenceGenerator):
 
 
 class SqrtSequenceGenerator(BaseWrapperSequenceGenerator):
-    r"""Implements a sequence generator that computes the squared root
-    of a batch of sequences."""
+    r"""Implements a sequence generator that computes the squared root of
+    a batch of sequences.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> import torch
+        >>> from startorch.sequence import Sqrt, RandUniform, RandNormal
+        >>> generator = Sqrt(RandUniform(1.0, 4.0))
+        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        tensor([[...]], batch_dim=0, seq_dim=1)
+    """
 
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
@@ -379,6 +505,16 @@ class SubSequenceGenerator(BaseSequenceGenerator):
         sequence2 (``BaseSequenceGenerator`` or dict):
             Specifies the second sequence generator or its
             configuration.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> import torch
+        >>> from startorch.sequence import Sub, RandUniform, RandNormal
+        >>> generator = Sub(RandUniform(), RandNormal())
+        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
     def __init__(
