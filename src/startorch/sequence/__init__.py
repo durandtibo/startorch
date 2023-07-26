@@ -18,6 +18,7 @@ __all__ = [
     "Full",
     "Linear",
     "Log",
+    "LogNormal",
     "Long",
     "Mul",
     "MulScalar",
@@ -26,15 +27,18 @@ __all__ = [
     "Poisson",
     "RandCauchy",
     "RandInt",
+    "RandLogNormal",
     "RandNormal",
     "RandPoisson",
     "RandTruncCauchy",
+    "RandTruncLogNormal",
     "RandTruncNormal",
     "RandUniform",
     "RandWienerProcess",
     "Sqrt",
     "Sub",
     "TruncCauchy",
+    "TruncLogNormal",
     "TruncNormal",
     "setup_sequence_generator",
 ]
@@ -51,6 +55,14 @@ from startorch.sequence.constant import FullSequenceGenerator as Full
 from startorch.sequence.dtype import FloatSequenceGenerator as Float
 from startorch.sequence.dtype import LongSequenceGenerator as Long
 from startorch.sequence.linear import LinearSequenceGenerator as Linear
+from startorch.sequence.lognormal import LogNormalSequenceGenerator as LogNormal
+from startorch.sequence.lognormal import RandLogNormalSequenceGenerator as RandLogNormal
+from startorch.sequence.lognormal import (
+    RandTruncLogNormalSequenceGenerator as RandTruncLogNormal,
+)
+from startorch.sequence.lognormal import (
+    TruncLogNormalSequenceGenerator as TruncLogNormal,
+)
 from startorch.sequence.math import AbsSequenceGenerator as Abs
 from startorch.sequence.math import AddScalarSequenceGenerator as AddScalar
 from startorch.sequence.math import AddSequenceGenerator as Add
