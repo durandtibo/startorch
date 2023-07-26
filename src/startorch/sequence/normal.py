@@ -22,6 +22,7 @@ class NormalSequenceGenerator(BaseSequenceGenerator):
     Normal distribution.
 
     Args:
+    ----
         mean (``BaseSequenceGenerator`` or dict): Specifies a sequence
             generator (or its configuration) to generate the mean.
         std (``BaseSequenceGenerator`` or dict): Specifies a sequence
@@ -68,6 +69,7 @@ class RandNormalSequenceGenerator(BaseSequenceGenerator):
     sampling values from a Normal distribution.
 
     Args:
+    ----
         mean (float, optional): Specifies the mean of the Normal
             distribution. Default: ``0.0``
         std (float, optional): Specifies the standard deviation of the
@@ -122,6 +124,7 @@ class RandTruncNormalSequenceGenerator(BaseSequenceGenerator):
     sampling values from a truncated Normal distribution.
 
     Args:
+    ----
         mean (float, optional): Specifies the mean of the Normal
             distribution. Default: ``0.0``
         std (float, optional): Specifies the standard deviation of
@@ -191,6 +194,7 @@ class TruncNormalSequenceGenerator(BaseSequenceGenerator):
     truncated Normal distribution.
 
     Args:
+    ----
         mean (``BaseSequenceGenerator`` or dict): Specifies a sequence
             generator (or its configuration) to generate the mean.
         std (``BaseSequenceGenerator`` or dict): Specifies a sequence

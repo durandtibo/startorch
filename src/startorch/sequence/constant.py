@@ -30,7 +30,7 @@ class ConstantSequenceGenerator(BaseWrapperSequenceGenerator):
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchedTensorSeq:
-        return self._generator.generate(seq_len=1, batch_size=batch_size, rng=rng).repeat_along_seq(
+        return self._sequence.generate(seq_len=1, batch_size=batch_size, rng=rng).repeat_along_seq(
             seq_len
         )
 

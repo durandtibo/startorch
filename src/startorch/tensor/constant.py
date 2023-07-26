@@ -14,6 +14,7 @@ class FullTensorGenerator(BaseTensorGenerator):
     value.
 
     Args:
+    ----
         value (bool or int or float): Specifies the fill value.
         dtype (``torch.dtype`` or ``None``): Specifies the target
             dtype. ``None`` means the data type is infered from the
