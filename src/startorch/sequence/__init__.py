@@ -41,6 +41,7 @@ __all__ = [
     "TruncLogNormal",
     "TruncNormal",
     "setup_sequence_generator",
+    "SineWave",
 ]
 
 from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_generator
@@ -88,6 +89,7 @@ from startorch.sequence.poisson import RandPoissonSequenceGenerator as RandPoiss
 from startorch.sequence.range import ArangeSequenceGenerator as Arange
 from startorch.sequence.uniform import RandIntSequenceGenerator as RandInt
 from startorch.sequence.uniform import RandUniformSequenceGenerator as RandUniform
+from startorch.sequence.wave import SineWaveSequenceGenerator as SineWave
 from startorch.sequence.wiener import (
     RandWienerProcessSequenceGenerator as RandWienerProcess,
 )
