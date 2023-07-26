@@ -37,7 +37,7 @@ def test_sine_wave_generate(batch_size: int, seq_len: int, feature_size: int) ->
         frequency=RandUniform(low=-1.0, high=1.0, feature_size=feature_size),
         phase=RandUniform(low=-1.0, high=1.0, feature_size=feature_size),
         amplitude=RandUniform(low=-1.0, high=1.0, feature_size=feature_size),
-    ).generate(batch_size=batch_size, seq_len=seq_len, rng=get_torch_generator(42))
+    ).generate(batch_size=batch_size, seq_len=seq_len)
     assert isinstance(batch, BatchedTensorSeq)
     assert batch.batch_size == batch_size
     assert batch.seq_len == seq_len
