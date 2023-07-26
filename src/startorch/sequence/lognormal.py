@@ -27,6 +27,7 @@ class LogNormalSequenceGenerator(BaseSequenceGenerator):
     log-Normal distribution.
 
     Args:
+    ----
         mean (``BaseSequenceGenerator`` or dict): Specifies a sequence
             generator (or its configuration) to generate the mean
             of the underlying Normal distribution.
@@ -74,6 +75,7 @@ class RandLogNormalSequenceGenerator(BaseSequenceGenerator):
     log-Normal distribution.
 
     Args:
+    ----
         mean (float, optional): Specifies the mean of the underlying
             Normal distribution. Default: ``0.0``
         std (float, optional): Specifies the standard deviation of the
@@ -128,6 +130,7 @@ class RandTruncLogNormalSequenceGenerator(BaseSequenceGenerator):
     sampling values from a truncated log-Normal distribution.
 
     Args:
+    ----
         mean (float, optional): Specifies the mean of the
             log-Normal distribution. Default: ``0.0``
         std (float, optional): Specifies the standard deviation of
@@ -197,6 +200,7 @@ class TruncLogNormalSequenceGenerator(BaseSequenceGenerator):
     truncated log-Normal distribution.
 
     Args:
+    ----
         mean (``BaseSequenceGenerator`` or dict): Specifies a sequence
             generator (or its configuration) to generate the mean of
             the underlying Normal distribution.

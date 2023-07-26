@@ -86,7 +86,7 @@ class PoissonSequenceGenerator(BaseSequenceGenerator):
 
         return cls(
             rate=ConstantSequenceGenerator(
-                generator=RandUniformSequenceGenerator(
+                sequence=RandUniformSequenceGenerator(
                     low=min_rate,
                     high=max_rate,
                     feature_size=feature_size,

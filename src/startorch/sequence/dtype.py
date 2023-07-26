@@ -24,7 +24,7 @@ class FloatSequenceGenerator(BaseWrapperSequenceGenerator):
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchedTensorSeq:
-        return self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).float()
+        return self._sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).float()
 
 
 class LongSequenceGenerator(BaseWrapperSequenceGenerator):
@@ -43,4 +43,4 @@ class LongSequenceGenerator(BaseWrapperSequenceGenerator):
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchedTensorSeq:
-        return self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).long()
+        return self._sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).long()

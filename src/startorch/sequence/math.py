@@ -34,7 +34,7 @@ class AbsSequenceGenerator(BaseWrapperSequenceGenerator):
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchedTensorSeq:
-        return self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).abs()
+        return self._sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).abs()
 
 
 class AddSequenceGenerator(BaseSequenceGenerator):
@@ -43,7 +43,9 @@ class AddSequenceGenerator(BaseSequenceGenerator):
     ``sequence = sequence_1 + sequence_2 + ... + sequence_n``
 
     Args:
-        sequences (``Sequence``): Specifies the sequence generators.
+    ----
+        sequences (``Sequence``): Specifies the sequence generators or
+            their configuration.
     """
 
     def __init__(
@@ -74,6 +76,7 @@ class AddScalarSequenceGenerator(BaseWrapperSequenceGenerator):
     generated batch of sequences.
 
     Args:
+    ----
         sequence (``BaseSequenceGenerator`` or dict):
             Specifies the sequence generator or its configuration.
         value (int or float): Specifies the scalar value to add.
@@ -84,17 +87,17 @@ class AddScalarSequenceGenerator(BaseWrapperSequenceGenerator):
         sequence: BaseSequenceGenerator | dict,
         value: int | float,
     ) -> None:
-        super().__init__(generator=sequence)
+        super().__init__(sequence=sequence)
         self._value = value
 
     def __repr__(self) -> str:
-        args = str_indent(str_mapping({"sequence": self._generator, "value": self._value}))
+        args = str_indent(str_mapping({"sequence": self._sequence, "value": self._value}))
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchedTensorSeq:
-        sequence = self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
+        sequence = self._sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
         sequence.add_(self._value)
         return sequence
 
@@ -106,6 +109,7 @@ class ClampSequenceGenerator(BaseWrapperSequenceGenerator):
     Note: ``min_value`` and ``max_value`` cannot be both ``None``.
 
     Args:
+    ----
         sequence (``BaseSequenceGenerator`` or dict):
             Specifies the sequence generator or its configuration.
         min (int, float or ``None``): Specifies the lower bound.
@@ -120,7 +124,7 @@ class ClampSequenceGenerator(BaseWrapperSequenceGenerator):
         min: int | float | None,  # noqa: A002
         max: int | float | None,  # noqa: A002
     ) -> None:
-        super().__init__(generator=sequence)
+        super().__init__(sequence=sequence)
         if min is None and max is None:
             raise ValueError("`min` and `max` cannot be both None")
         self._min = min
@@ -128,14 +132,14 @@ class ClampSequenceGenerator(BaseWrapperSequenceGenerator):
 
     def __repr__(self) -> str:
         args = str_indent(
-            str_mapping({"sequence": self._generator, "min": self._min, "max": self._max})
+            str_mapping({"sequence": self._sequence, "min": self._min, "max": self._max})
         )
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchedTensorSeq:
-        return self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).clamp(
+        return self._sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).clamp(
             min=self._min, max=self._max
         )
 
@@ -147,7 +151,7 @@ class CumsumSequenceGenerator(BaseWrapperSequenceGenerator):
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchedTensorSeq:
-        return self._generator.generate(
+        return self._sequence.generate(
             seq_len=seq_len, batch_size=batch_size, rng=rng
         ).cumsum_along_seq()
 
@@ -159,6 +163,7 @@ class DivSequenceGenerator(BaseSequenceGenerator):
     ``sequence = dividend / divisor`` (a.k.a. true division)
 
     Args:
+    ----
         dividend (``Sequence``): (``BaseSequenceGenerator`` or dict):
             Specifies the dividend sequence generator or its
             configuration.
@@ -213,7 +218,7 @@ class ExpSequenceGenerator(BaseWrapperSequenceGenerator):
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchedTensorSeq:
-        return self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).exp()
+        return self._sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).exp()
 
 
 class FmodSequenceGenerator(BaseSequenceGenerator):
@@ -221,6 +226,7 @@ class FmodSequenceGenerator(BaseSequenceGenerator):
     remainder of division.
 
     Args:
+    ----
         dividend (``BaseSequenceGenerator`` or dict):
             Specifies the sequence generator (or its configuration) that
             generates the dividend values.
@@ -272,7 +278,7 @@ class LogSequenceGenerator(BaseWrapperSequenceGenerator):
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchedTensorSeq:
-        return self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).log()
+        return self._sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).log()
 
 
 class MulSequenceGenerator(BaseSequenceGenerator):
@@ -282,6 +288,7 @@ class MulSequenceGenerator(BaseSequenceGenerator):
     ``sequence = sequence_1 * sequence_2 * ... * sequence_n``
 
     Args:
+    ----
         sequences (``Sequence``): Specifies the sequence generators.
     """
 
@@ -313,6 +320,7 @@ class MulScalarSequenceGenerator(BaseWrapperSequenceGenerator):
     a generated batch of sequences.
 
     Args:
+    ----
         sequence (``BaseSequenceGenerator`` or dict):
             Specifies the sequence generator or its configuration.
         value (int or float): Specifies the scalar value to multiply.
@@ -323,17 +331,17 @@ class MulScalarSequenceGenerator(BaseWrapperSequenceGenerator):
         sequence: BaseSequenceGenerator | dict,
         value: int | float,
     ) -> None:
-        super().__init__(generator=sequence)
+        super().__init__(sequence=sequence)
         self._value = value
 
     def __repr__(self) -> str:
-        args = str_indent(str_mapping({"sequence": self._generator, "value": self._value}))
+        args = str_indent(str_mapping({"sequence": self._sequence, "value": self._value}))
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchedTensorSeq:
-        sequence = self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
+        sequence = self._sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
         sequence.mul_(self._value)
         return sequence
 
@@ -345,7 +353,7 @@ class NegSequenceGenerator(BaseWrapperSequenceGenerator):
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchedTensorSeq:
-        return -self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
+        return -self._sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
 
 
 class SqrtSequenceGenerator(BaseWrapperSequenceGenerator):
@@ -355,7 +363,7 @@ class SqrtSequenceGenerator(BaseWrapperSequenceGenerator):
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchedTensorSeq:
-        return self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).sqrt()
+        return self._sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).sqrt()
 
 
 class SubSequenceGenerator(BaseSequenceGenerator):
@@ -364,6 +372,7 @@ class SubSequenceGenerator(BaseSequenceGenerator):
     ``sequence = sequence_1 - sequence_2``
 
     Args:
+    ----
         sequence1 (``BaseSequenceGenerator`` or dict):
             Specifies the first sequence generator or its
             configuration.
