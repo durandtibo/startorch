@@ -39,6 +39,16 @@ class AsinhUniformSequenceGenerator(BaseSequenceGenerator):
         high (``BaseSequenceGenerator`` or dict): Specifies a sequence
             generator (or its configuration) to generate the maximum
             value (exclusive).
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> import torch
+        >>> from startorch.sequence import AsinhUniform, RandUniform
+        >>> generator = AsinhUniform(low=RandUniform(-1.0, 0.0), high=RandUniform(0.0, 1.0))
+        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
     def __init__(
@@ -77,6 +87,16 @@ class LogUniformSequenceGenerator(BaseSequenceGenerator):
         high (``BaseSequenceGenerator`` or dict): Specifies a sequence
             generator (or its configuration) to generate the maximum
             value (exclusive).
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> import torch
+        >>> from startorch.sequence import LogUniform, RandUniform
+        >>> generator = LogUniform(low=RandUniform(0.0, 1.0), high=RandUniform(5.0, 10.0))
+        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
     def __init__(
@@ -113,6 +133,16 @@ class RandAsinhUniformSequenceGenerator(BaseSequenceGenerator):
         high (float): Specifies the maximum value (exclusive).
         feature_size (tuple or list or int, optional): Specifies the
             feature size. Default: ``1``
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> import torch
+        >>> from startorch.sequence import RandAsinhUniform
+        >>> generator = RandAsinhUniform(low=1.0, high=10.0)
+        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
     def __init__(
@@ -210,6 +240,16 @@ class RandLogUniformSequenceGenerator(BaseSequenceGenerator):
         high (float): Specifies the maximum value (exclusive).
         feature_size (tuple or list or int, optional): Specifies the
             feature size. Default: ``1``
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> import torch
+        >>> from startorch.sequence import RandLogUniform
+        >>> generator = RandLogUniform(low=1.0, high=10.0)
+        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
     def __init__(
@@ -311,6 +351,16 @@ class UniformSequenceGenerator(BaseSequenceGenerator):
         high (``BaseSequenceGenerator`` or dict): Specifies a sequence
             generator (or its configuration) to generate the maximum
             value (exclusive).
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> import torch
+        >>> from startorch.sequence import Uniform, RandUniform
+        >>> generator = Uniform(low=RandUniform(-1.0, 0.0), high=RandUniform(0.0, 1.0))
+        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
     def __init__(
