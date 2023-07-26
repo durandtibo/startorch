@@ -5,6 +5,7 @@ __all__ = [
     "Add",
     "AddScalar",
     "Arange",
+    "AsinhUniform",
     "BaseSequenceGenerator",
     "BaseWrapperSequenceGenerator",
     "Cauchy",
@@ -19,15 +20,18 @@ __all__ = [
     "Linear",
     "Log",
     "LogNormal",
+    "LogUniform",
     "Long",
     "Mul",
     "MulScalar",
     "Neg",
     "Normal",
     "Poisson",
+    "RandAsinhUniform",
     "RandCauchy",
     "RandInt",
     "RandLogNormal",
+    "RandLogUniform",
     "RandNormal",
     "RandPoisson",
     "RandTruncCauchy",
@@ -35,13 +39,14 @@ __all__ = [
     "RandTruncNormal",
     "RandUniform",
     "RandWienerProcess",
+    "SineWave",
     "Sqrt",
     "Sub",
     "TruncCauchy",
     "TruncLogNormal",
     "TruncNormal",
+    "Uniform",
     "setup_sequence_generator",
-    "SineWave",
 ]
 
 from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_generator
@@ -87,8 +92,15 @@ from startorch.sequence.normal import TruncNormalSequenceGenerator as TruncNorma
 from startorch.sequence.poisson import PoissonSequenceGenerator as Poisson
 from startorch.sequence.poisson import RandPoissonSequenceGenerator as RandPoisson
 from startorch.sequence.range import ArangeSequenceGenerator as Arange
+from startorch.sequence.uniform import AsinhUniformSequenceGenerator as AsinhUniform
+from startorch.sequence.uniform import LogUniformSequenceGenerator as LogUniform
+from startorch.sequence.uniform import (
+    RandAsinhUniformSequenceGenerator as RandAsinhUniform,
+)
 from startorch.sequence.uniform import RandIntSequenceGenerator as RandInt
+from startorch.sequence.uniform import RandLogUniformSequenceGenerator as RandLogUniform
 from startorch.sequence.uniform import RandUniformSequenceGenerator as RandUniform
+from startorch.sequence.uniform import UniformSequenceGenerator as Uniform
 from startorch.sequence.wave import SineWaveSequenceGenerator as SineWave
 from startorch.sequence.wiener import (
     RandWienerProcessSequenceGenerator as RandWienerProcess,

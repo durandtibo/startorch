@@ -44,7 +44,7 @@ def test_abs_str() -> None:
 @mark.parametrize("feature_size", SIZES)
 def test_abs_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     generator = Abs(RandNormal(feature_size=feature_size))
-    batch = generator.generate(batch_size=batch_size, seq_len=seq_len, rng=get_torch_generator(42))
+    batch = generator.generate(batch_size=batch_size, seq_len=seq_len)
     assert isinstance(batch, BatchedTensorSeq)
     assert batch.batch_size == batch_size
     assert batch.seq_len == seq_len
@@ -117,9 +117,7 @@ def test_add_sequences_empty() -> None:
 @mark.parametrize("batch_size", SIZES)
 @mark.parametrize("seq_len", SIZES)
 def test_add_generate(batch_size: int, seq_len: int) -> None:
-    batch = Add((RandUniform(), RandUniform())).generate(
-        seq_len=seq_len, batch_size=batch_size, rng=get_torch_generator(42)
-    )
+    batch = Add((RandUniform(), RandUniform())).generate(seq_len=seq_len, batch_size=batch_size)
     assert isinstance(batch, BatchedTensorSeq)
     assert batch.batch_size == batch_size
     assert batch.seq_len == seq_len
@@ -163,7 +161,7 @@ def test_add_scalar_str() -> None:
 @mark.parametrize("feature_size", SIZES)
 def test_add_scalar_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     batch = AddScalar(RandUniform(feature_size=feature_size), value=1.0).generate(
-        batch_size=batch_size, seq_len=seq_len, rng=get_torch_generator(42)
+        batch_size=batch_size, seq_len=seq_len
     )
     assert isinstance(batch, BatchedTensorSeq)
     assert batch.batch_size == batch_size
@@ -241,7 +239,7 @@ def test_clamp_incorrect_min_max() -> None:
 @mark.parametrize("feature_size", SIZES)
 def test_clamp_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     batch = Clamp(RandNormal(feature_size=feature_size), min=-2, max=2).generate(
-        batch_size=batch_size, seq_len=seq_len, rng=get_torch_generator(42)
+        batch_size=batch_size, seq_len=seq_len
     )
     assert isinstance(batch, BatchedTensorSeq)
     assert batch.batch_size == batch_size
@@ -253,9 +251,7 @@ def test_clamp_generate(batch_size: int, seq_len: int, feature_size: int) -> Non
 @mark.parametrize("min_value", (-1.0, -2.0))
 @mark.parametrize("max_value", (1.0, 2.0))
 def test_clamp_generate_min_max_float(min_value: float, max_value: float) -> None:
-    batch = Clamp(RandNormal(), min=min_value, max=max_value).generate(
-        batch_size=10, seq_len=10, rng=get_torch_generator(42)
-    )
+    batch = Clamp(RandNormal(), min=min_value, max=max_value).generate(batch_size=10, seq_len=10)
     assert batch.min() >= min_value
     assert batch.max() <= max_value
 
@@ -264,7 +260,7 @@ def test_clamp_generate_min_max_float(min_value: float, max_value: float) -> Non
 @mark.parametrize("max_value", (1.0, 2.0))
 def test_clamp_generate_min_max_long(min_value: int, max_value: int) -> None:
     batch = Clamp(RandInt(low=-5, high=20), min=min_value, max=max_value).generate(
-        batch_size=10, seq_len=10, rng=get_torch_generator(42)
+        batch_size=10, seq_len=10
     )
     assert batch.min() >= min_value
     assert batch.max() <= max_value
@@ -273,9 +269,7 @@ def test_clamp_generate_min_max_long(min_value: int, max_value: int) -> None:
 @mark.parametrize("min_value", (-1.0, -2.0))
 def test_clamp_generate_only_min_value(min_value: float) -> None:
     assert (
-        Clamp(RandNormal(), min=min_value, max=None)
-        .generate(batch_size=10, seq_len=10, rng=get_torch_generator(42))
-        .min()
+        Clamp(RandNormal(), min=min_value, max=None).generate(batch_size=10, seq_len=10).min()
         >= min_value
     )
 
@@ -283,9 +277,7 @@ def test_clamp_generate_only_min_value(min_value: float) -> None:
 @mark.parametrize("max_value", (-1.0, -2.0))
 def test_clamp_generate_only_max_value(max_value: float) -> None:
     assert (
-        Clamp(RandNormal(), min=None, max=max_value)
-        .generate(batch_size=10, seq_len=10, rng=get_torch_generator(42))
-        .max()
+        Clamp(RandNormal(), min=None, max=max_value).generate(batch_size=10, seq_len=10).max()
         <= max_value
     )
 
@@ -318,7 +310,7 @@ def test_cumsum_str() -> None:
 @mark.parametrize("feature_size", SIZES)
 def test_cumsum_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     batch = Cumsum(RandUniform(feature_size=feature_size)).generate(
-        batch_size=batch_size, seq_len=seq_len, rng=get_torch_generator(42)
+        batch_size=batch_size, seq_len=seq_len
     )
     assert isinstance(batch, BatchedTensorSeq)
     assert batch.batch_size == batch_size
@@ -370,7 +362,7 @@ def test_div_generate(batch_size: int, seq_len: int) -> None:
     batch = Div(
         dividend=RandUniform(low=0.1, high=2.0),
         divisor=RandUniform(low=0.1, high=2.0),
-    ).generate(seq_len=seq_len, batch_size=batch_size, rng=get_torch_generator(42))
+    ).generate(seq_len=seq_len, batch_size=batch_size)
     assert isinstance(batch, BatchedTensorSeq)
     assert batch.batch_size == batch_size
     assert batch.seq_len == seq_len
@@ -433,7 +425,7 @@ def test_exp_str() -> None:
 def test_exp_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     assert (
         Exp(Full(value=0.0, feature_size=feature_size))
-        .generate(batch_size=batch_size, seq_len=seq_len, rng=get_torch_generator(42))
+        .generate(batch_size=batch_size, seq_len=seq_len)
         .equal(BatchedTensorSeq(torch.ones(batch_size, seq_len, feature_size, dtype=torch.float)))
     )
 
@@ -475,7 +467,7 @@ def test_fmod_generate_divisor_generator(batch_size: int, seq_len: int, feature_
             dividend=Full(5.0, feature_size=feature_size),
             divisor=Full(10.0, feature_size=feature_size),
         )
-        .generate(seq_len=seq_len, batch_size=batch_size, rng=get_torch_generator(42))
+        .generate(seq_len=seq_len, batch_size=batch_size)
         .equal(
             BatchedTensorSeq(
                 torch.full((batch_size, seq_len, feature_size), 5.0, dtype=torch.float)
@@ -490,7 +482,7 @@ def test_fmod_generate_divisor_generator(batch_size: int, seq_len: int, feature_
 def test_fmod_generate_divisor_number(batch_size: int, seq_len: int, feature_size: int) -> None:
     assert (
         Fmod(dividend=Full(5.0, feature_size=feature_size), divisor=10.0)
-        .generate(seq_len=seq_len, batch_size=batch_size, rng=get_torch_generator(42))
+        .generate(seq_len=seq_len, batch_size=batch_size)
         .equal(
             BatchedTensorSeq(
                 torch.full((batch_size, seq_len, feature_size), 5.0, dtype=torch.float)
@@ -532,7 +524,7 @@ def test_log_str() -> None:
 def test_log_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     assert (
         Log(Full(value=1.0, feature_size=feature_size))
-        .generate(batch_size=batch_size, seq_len=seq_len, rng=get_torch_generator(42))
+        .generate(batch_size=batch_size, seq_len=seq_len)
         .equal(BatchedTensorSeq(torch.zeros(batch_size, seq_len, feature_size, dtype=torch.float)))
     )
 
@@ -589,9 +581,7 @@ def test_mul_sequences_empty() -> None:
 @mark.parametrize("batch_size", SIZES)
 @mark.parametrize("seq_len", SIZES)
 def test_mul_generate(batch_size: int, seq_len: int) -> None:
-    batch = Mul((RandUniform(), RandUniform())).generate(
-        seq_len=seq_len, batch_size=batch_size, rng=get_torch_generator(42)
-    )
+    batch = Mul((RandUniform(), RandUniform())).generate(seq_len=seq_len, batch_size=batch_size)
     assert isinstance(batch, BatchedTensorSeq)
     assert batch.batch_size == batch_size
     assert batch.seq_len == seq_len
@@ -635,7 +625,7 @@ def test_mul_scalar_str() -> None:
 @mark.parametrize("feature_size", SIZES)
 def test_mul_scalar_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     batch = MulScalar(RandUniform(feature_size=feature_size), value=2.0).generate(
-        batch_size=batch_size, seq_len=seq_len, rng=get_torch_generator(42)
+        batch_size=batch_size, seq_len=seq_len
     )
     assert isinstance(batch, BatchedTensorSeq)
     assert batch.batch_size == batch_size
@@ -698,7 +688,7 @@ def test_neg_str() -> None:
 @mark.parametrize("feature_size", SIZES)
 def test_neg_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     generator = Neg(RandUniform(feature_size=feature_size))
-    batch = generator.generate(batch_size=batch_size, seq_len=seq_len, rng=get_torch_generator(42))
+    batch = generator.generate(batch_size=batch_size, seq_len=seq_len)
     assert isinstance(batch, BatchedTensorSeq)
     assert batch.batch_size == batch_size
     assert batch.seq_len == seq_len
@@ -747,7 +737,7 @@ def test_sqrt_str() -> None:
 def test_sqrt_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     assert (
         Sqrt(Full(value=4.0, feature_size=feature_size))
-        .generate(batch_size=batch_size, seq_len=seq_len, rng=get_torch_generator(42))
+        .generate(batch_size=batch_size, seq_len=seq_len)
         .equal(
             BatchedTensorSeq(
                 torch.full((batch_size, seq_len, feature_size), 2.0, dtype=torch.float)
@@ -785,7 +775,7 @@ def test_sub_str() -> None:
 @mark.parametrize("seq_len", SIZES)
 def test_sub_generate(batch_size: int, seq_len: int) -> None:
     batch = Sub(sequence1=RandUniform(), sequence2=RandUniform()).generate(
-        seq_len=seq_len, batch_size=batch_size, rng=get_torch_generator(42)
+        seq_len=seq_len, batch_size=batch_size
     )
     assert isinstance(batch, BatchedTensorSeq)
     assert batch.batch_size == batch_size
