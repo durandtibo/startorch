@@ -22,6 +22,7 @@ __all__ = [
     "Fmod",
     "Full",
     "HalfCauchy",
+    "HalfNormal",
     "Linear",
     "Log",
     "LogNormal",
@@ -36,6 +37,7 @@ __all__ = [
     "RandCauchy",
     "RandExponential",
     "RandHalfCauchy",
+    "RandHalfNormal",
     "RandInt",
     "RandLogNormal",
     "RandLogUniform",
@@ -44,6 +46,7 @@ __all__ = [
     "RandTruncCauchy",
     "RandTruncExponential",
     "RandTruncHalfCauchy",
+    "RandTruncHalfNormal",
     "RandTruncLogNormal",
     "RandTruncNormal",
     "RandUniform",
@@ -57,6 +60,7 @@ __all__ = [
     "TruncCauchy",
     "TruncExponential",
     "TruncHalfCauchy",
+    "TruncHalfNormal",
     "TruncLogNormal",
     "TruncNormal",
     "Uniform",
@@ -93,6 +97,16 @@ from startorch.sequence.halfcauchy import (
 )
 from startorch.sequence.halfcauchy import (
     TruncHalfCauchySequenceGenerator as TruncHalfCauchy,
+)
+from startorch.sequence.halfnormal import HalfNormalSequenceGenerator as HalfNormal
+from startorch.sequence.halfnormal import (
+    RandHalfNormalSequenceGenerator as RandHalfNormal,
+)
+from startorch.sequence.halfnormal import (
+    RandTruncHalfNormalSequenceGenerator as RandTruncHalfNormal,
+)
+from startorch.sequence.halfnormal import (
+    TruncHalfNormalSequenceGenerator as TruncHalfNormal,
 )
 from startorch.sequence.linear import LinearSequenceGenerator as Linear
 from startorch.sequence.lognormal import LogNormalSequenceGenerator as LogNormal
