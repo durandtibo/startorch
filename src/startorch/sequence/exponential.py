@@ -32,6 +32,7 @@ class ExponentialSequenceGenerator(BaseSequenceGenerator):
     value in the sequence.
 
     Args:
+    ----
         rate (``BaseSequenceGenerator`` or dict):
             Specifies the rate generator or its configuration.
             The rate generator should return valid rate values.
@@ -98,6 +99,7 @@ class ExponentialSequenceGenerator(BaseSequenceGenerator):
         One rate is sampled per sequence.
 
         Args:
+        ----
             min_rate (float, optional): Specifies the minimum rate
                 value. Default: ``0.01``
             max_rate (float, optional): Specifies the maximum rate
@@ -106,6 +108,7 @@ class ExponentialSequenceGenerator(BaseSequenceGenerator):
                 feature size. Default: ``1``
 
         Returns:
+        -------
             ``ExponentialSequenceGenerator``: A sequence generator where
                 the rates for each sequence are sampled from a
                 uniform distribution.
@@ -129,6 +132,7 @@ class RandExponentialSequenceGenerator(BaseSequenceGenerator):
     an Exponential distribution.
 
     Args:
+    ----
         rate (float, optional): Specifies the rate of the Exponential
             distribution. Default: ``1.0``
         feature_size (tuple or list or int, optional): Specifies the
@@ -178,6 +182,7 @@ class RandTruncExponentialSequenceGenerator(BaseSequenceGenerator):
     a truncated Exponential distribution.
 
     Args:
+    ----
         rate (float, optional): Specifies the rate of the Exponential
             distribution. Default: ``1.0``
         max_value (float, optional): Specifies the maximum value.
@@ -234,6 +239,7 @@ class TruncExponentialSequenceGenerator(BaseSequenceGenerator):
     an Exponential distribution.
 
     Args:
+    ----
         rate (``BaseSequenceGenerator`` or dict): Specifies a sequence
             generator (or its configuration) to generate the rate.
         max_value (``BaseSequenceGenerator`` or dict): Specifies a

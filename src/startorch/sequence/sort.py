@@ -14,11 +14,22 @@ class SortSequenceGenerator(BaseWrapperSequenceGenerator):
     r"""Implements a sequence generator that sorts a generated sequence.
 
     Args:
+    ----
         sequence (``BaseSequenceGenerator`` or dict):
             Specifies the sequence generator or its configuration.
         descending (bool, optional): Controls the sorting order.
             If ``True``, the elements are sorted in
             descending order by value. Default: ``False``
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> import torch
+        >>> from startorch.sequence import RandUniform, Sort
+        >>> generator = Sort(RandUniform())
+        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
     def __init__(

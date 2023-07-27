@@ -50,6 +50,7 @@ __all__ = [
     "Sort",
     "Sqrt",
     "Sub",
+    "Time",
     "TruncCauchy",
     "TruncExponential",
     "TruncLogNormal",
@@ -112,6 +113,7 @@ from startorch.sequence.poisson import PoissonSequenceGenerator as Poisson
 from startorch.sequence.poisson import RandPoissonSequenceGenerator as RandPoisson
 from startorch.sequence.range import ArangeSequenceGenerator as Arange
 from startorch.sequence.sort import SortSequenceGenerator as Sort
+from startorch.sequence.time import TimeSequenceGenerator as Time
 from startorch.sequence.trigo import AcoshSequenceGenerator as Acosh
 from startorch.sequence.trigo import AsinhSequenceGenerator as Asinh
 from startorch.sequence.trigo import CoshSequenceGenerator as Cosh
