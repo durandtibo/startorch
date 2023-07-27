@@ -9,7 +9,7 @@ from redcat import BatchedTensorSeq
 from startorch.sequence import Cumsum, Full, RandUniform, SineWave
 from startorch.utils.seed import get_torch_generator
 
-SIZES = (1, 2)
+SIZES = (1, 2, 4)
 
 
 ##############################
