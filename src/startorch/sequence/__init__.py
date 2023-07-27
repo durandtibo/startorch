@@ -65,6 +65,7 @@ __all__ = [
     "TruncNormal",
     "Uniform",
     "setup_sequence_generator",
+    "TensorSequence",
 ]
 
 from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_generator
@@ -141,6 +142,7 @@ from startorch.sequence.poisson import PoissonSequenceGenerator as Poisson
 from startorch.sequence.poisson import RandPoissonSequenceGenerator as RandPoisson
 from startorch.sequence.range import ArangeSequenceGenerator as Arange
 from startorch.sequence.sort import SortSequenceGenerator as Sort
+from startorch.sequence.tensor import TensorSequenceGenerator as TensorSequence
 from startorch.sequence.time import TimeSequenceGenerator as Time
 from startorch.sequence.trigo import AcoshSequenceGenerator as Acosh
 from startorch.sequence.trigo import AsinhSequenceGenerator as Asinh
