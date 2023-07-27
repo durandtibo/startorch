@@ -2,18 +2,22 @@ from __future__ import annotations
 
 __all__ = [
     "Abs",
+    "Acosh",
     "Add",
     "AddScalar",
     "Arange",
+    "Asinh",
     "AsinhUniform",
     "BaseSequenceGenerator",
     "BaseWrapperSequenceGenerator",
     "Cauchy",
     "Clamp",
     "Constant",
+    "Cosh",
     "Cumsum",
     "Div",
     "Exp",
+    "Exponential",
     "Float",
     "Fmod",
     "Full",
@@ -29,28 +33,29 @@ __all__ = [
     "Poisson",
     "RandAsinhUniform",
     "RandCauchy",
+    "RandExponential",
     "RandInt",
     "RandLogNormal",
     "RandLogUniform",
     "RandNormal",
     "RandPoisson",
     "RandTruncCauchy",
+    "RandTruncExponential",
     "RandTruncLogNormal",
     "RandTruncNormal",
     "RandUniform",
     "RandWienerProcess",
     "SineWave",
+    "Sinh",
+    "Sort",
     "Sqrt",
     "Sub",
     "TruncCauchy",
+    "TruncExponential",
     "TruncLogNormal",
     "TruncNormal",
     "Uniform",
     "setup_sequence_generator",
-    "Acosh",
-    "Asinh",
-    "Cosh",
-    "Sinh",
 ]
 
 from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_generator
@@ -64,6 +69,16 @@ from startorch.sequence.constant import ConstantSequenceGenerator as Constant
 from startorch.sequence.constant import FullSequenceGenerator as Full
 from startorch.sequence.dtype import FloatSequenceGenerator as Float
 from startorch.sequence.dtype import LongSequenceGenerator as Long
+from startorch.sequence.exponential import ExponentialSequenceGenerator as Exponential
+from startorch.sequence.exponential import (
+    RandExponentialSequenceGenerator as RandExponential,
+)
+from startorch.sequence.exponential import (
+    RandTruncExponentialSequenceGenerator as RandTruncExponential,
+)
+from startorch.sequence.exponential import (
+    TruncExponentialSequenceGenerator as TruncExponential,
+)
 from startorch.sequence.linear import LinearSequenceGenerator as Linear
 from startorch.sequence.lognormal import LogNormalSequenceGenerator as LogNormal
 from startorch.sequence.lognormal import RandLogNormalSequenceGenerator as RandLogNormal
@@ -96,6 +111,7 @@ from startorch.sequence.normal import TruncNormalSequenceGenerator as TruncNorma
 from startorch.sequence.poisson import PoissonSequenceGenerator as Poisson
 from startorch.sequence.poisson import RandPoissonSequenceGenerator as RandPoisson
 from startorch.sequence.range import ArangeSequenceGenerator as Arange
+from startorch.sequence.sort import SortSequenceGenerator as Sort
 from startorch.sequence.trigo import AcoshSequenceGenerator as Acosh
 from startorch.sequence.trigo import AsinhSequenceGenerator as Asinh
 from startorch.sequence.trigo import CoshSequenceGenerator as Cosh
