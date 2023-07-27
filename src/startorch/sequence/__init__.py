@@ -2,15 +2,18 @@ from __future__ import annotations
 
 __all__ = [
     "Abs",
+    "Acosh",
     "Add",
     "AddScalar",
     "Arange",
+    "Asinh",
     "AsinhUniform",
     "BaseSequenceGenerator",
     "BaseWrapperSequenceGenerator",
     "Cauchy",
     "Clamp",
     "Constant",
+    "Cosh",
     "Cumsum",
     "Div",
     "Exp",
@@ -40,6 +43,8 @@ __all__ = [
     "RandUniform",
     "RandWienerProcess",
     "SineWave",
+    "Sinh",
+    "Sort",
     "Sqrt",
     "Sub",
     "TruncCauchy",
@@ -47,10 +52,6 @@ __all__ = [
     "TruncNormal",
     "Uniform",
     "setup_sequence_generator",
-    "Acosh",
-    "Asinh",
-    "Cosh",
-    "Sinh",
 ]
 
 from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_generator
@@ -96,6 +97,7 @@ from startorch.sequence.normal import TruncNormalSequenceGenerator as TruncNorma
 from startorch.sequence.poisson import PoissonSequenceGenerator as Poisson
 from startorch.sequence.poisson import RandPoissonSequenceGenerator as RandPoisson
 from startorch.sequence.range import ArangeSequenceGenerator as Arange
+from startorch.sequence.sort import SortSequenceGenerator as Sort
 from startorch.sequence.trigo import AcoshSequenceGenerator as Acosh
 from startorch.sequence.trigo import AsinhSequenceGenerator as Asinh
 from startorch.sequence.trigo import CoshSequenceGenerator as Cosh
