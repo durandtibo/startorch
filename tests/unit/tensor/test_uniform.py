@@ -394,8 +394,8 @@ def test_uniform_generate(size: tuple[int, ...]) -> None:
     assert tensor.max() < 2.0
 
 
-# def test_uniform_generate_value_1()->None:  # TODO
-#     assert Uniform(low=Full(1.0), high=Full(1.0)).generate(size=(4, 12)).allclose(torch.ones(4, 12))
+def test_uniform_generate_value_1() -> None:
+    assert Uniform(low=Full(1.0), high=Full(1.0)).generate(size=(4, 12)).allclose(torch.ones(4, 12))
 
 
 def test_uniform_generate_same_random_seed() -> None:

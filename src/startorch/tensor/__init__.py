@@ -1,33 +1,59 @@
 from __future__ import annotations
 
 __all__ = [
+    "Acosh",
+    "Asinh",
     "AsinhUniform",
+    "Atanh",
     "BaseTensorGenerator",
     "BaseWrapperTensorGenerator",
+    "Cosh",
     "Full",
     "LogUniform",
     "Normal",
+    "Poisson",
     "RandAsinhUniform",
     "RandInt",
     "RandLogUniform",
     "RandNormal",
+    "RandPoisson",
     "RandTruncNormal",
     "RandUniform",
+    "Sinh",
+    "Tanh",
     "TruncNormal",
     "Uniform",
     "setup_tensor_generator",
-    "Acosh",
-    "Asinh",
-    "Atanh",
-    "Cosh",
-    "Sinh",
-    "Tanh",
-    "Poisson",
-    "RandPoisson",
+    "Abs",
+    "AddScalar",
+    "Add",
+    "Clamp",
+    "Div",
+    "Exp",
+    "Fmod",
+    "Log",
+    "MulScalar",
+    "Mul",
+    "Neg",
+    "Sqrt",
+    "Sub",
 ]
 
 from startorch.tensor.base import BaseTensorGenerator, setup_tensor_generator
 from startorch.tensor.constant import FullTensorGenerator as Full
+from startorch.tensor.math import AbsTensorGenerator as Abs
+from startorch.tensor.math import AddScalarTensorGenerator as AddScalar
+from startorch.tensor.math import AddTensorGenerator as Add
+from startorch.tensor.math import ClampTensorGenerator as Clamp
+from startorch.tensor.math import DivTensorGenerator as Div
+from startorch.tensor.math import ExpTensorGenerator as Exp
+from startorch.tensor.math import FmodTensorGenerator as Fmod
+from startorch.tensor.math import LogTensorGenerator as Log
+from startorch.tensor.math import MulScalarTensorGenerator as MulScalar
+from startorch.tensor.math import MulTensorGenerator as Mul
+from startorch.tensor.math import NegTensorGenerator as Neg
+from startorch.tensor.math import SqrtTensorGenerator as Sqrt
+from startorch.tensor.math import SubTensorGenerator as Sub
 from startorch.tensor.normal import NormalTensorGenerator as Normal
 from startorch.tensor.normal import RandNormalTensorGenerator as RandNormal
 from startorch.tensor.normal import RandTruncNormalTensorGenerator as RandTruncNormal
