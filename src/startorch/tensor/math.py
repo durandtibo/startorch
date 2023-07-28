@@ -48,6 +48,7 @@ class AddScalarTensorGenerator(BaseWrapperTensorGenerator):
     generated batch of tensors.
 
     Args:
+    ----
         tensor (``BaseTensorGenerator`` or dict):
             Specifies the tensor generator or its configuration.
         value (int or float): Specifies the scalar value to add.
@@ -86,7 +87,12 @@ class AddTensorGenerator(BaseTensorGenerator):
     ``tensor = tensor_1 + tensor_2 + ... + tensor_n``
 
     Args:
+    ----
         tensors (``Tensor``): Specifies the tensor generators.
+
+    Raises:
+    ------
+        ValueError if no sequence generator is provided.
 
     Example usage:
 
@@ -123,12 +129,17 @@ class ClampTensorGenerator(BaseWrapperTensorGenerator):
     Note: ``min_value`` and ``max_value`` cannot be both ``None``.
 
     Args:
+    ----
         tensor (``BaseTensorGenerator`` or dict):
             Specifies the tensor generator or its configuration.
         min_value (int, float or ``None``): Specifies the lower bound.
             If ``min_value`` is ``None``, there is no lower bound.
         max_value (int, float or ``None``): Specifies the upper bound.
             If ``max_value`` is ``None``, there is no upper bound.
+
+    Raises:
+    ------
+        ValueError if both ``min`` and ``max`` are ``None``
 
     Example usage:
 
@@ -171,6 +182,7 @@ class DivTensorGenerator(BaseTensorGenerator):
     ``tensor = dividend / divisor`` (a.k.a. true division)
 
     Args:
+    ----
         dividend (``Tensor``): (``BaseTensorGenerator`` or dict):
             Specifies the dividend tensor generator or its
             configuration.
@@ -282,13 +294,46 @@ class FmodTensorGenerator(BaseTensorGenerator):
         return tensor
 
 
+class LogTensorGenerator(BaseWrapperTensorGenerator):
+    r"""Implements a tensor generator that computes the logarithm of a
+    tensor.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> from startorch.tensor import Log, RandUniform
+        >>> generator = Log(RandUniform(low=1.0, high=100.0))
+        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        tensor([[...]])
+    """
+
+    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+        return self._tensor.generate(size=size, rng=rng).log()
+
+
 class MulTensorGenerator(BaseTensorGenerator):
     r"""Implements a tensor generator that multiplies multiple tensors.
 
     ``tensor = tensor_1 * tensor_2 * ... * tensor_n``
 
     Args:
+    ----
         generators (``Sequence``): Specifies the tensor generators.
+
+    Raises:
+    ------
+        ValueError if no sequence generator is provided.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> import torch
+        >>> from startorch.tensor import Mul, RandUniform, RandNormal
+        >>> generator = Mul([RandUniform(), RandNormal()])
+        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        tensor([[...]])
     """
 
     def __init__(self, generators: Sequence[BaseTensorGenerator | dict]) -> None:
@@ -314,9 +359,20 @@ class MulScalarTensorGenerator(BaseWrapperTensorGenerator):
     generated batch of tensors.
 
     Args:
+    ----
         tensor (``BaseTensorGenerator`` or dict):
             Specifies the tensor generator or its configuration.
         value (int or float): Specifies the scalar value to multiply.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> import torch
+        >>> from startorch.tensor import MulScalar, RandUniform, RandNormal
+        >>> generator = MulScalar(RandUniform(), 42)
+        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        tensor([[...]])
     """
 
     def __init__(
@@ -339,28 +395,21 @@ class MulScalarTensorGenerator(BaseWrapperTensorGenerator):
 
 class NegTensorGenerator(BaseWrapperTensorGenerator):
     r"""Implements a tensor generator that computes the negation of a
-    generated tensor."""
-
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
-        return -self._tensor.generate(size=size, rng=rng)
-
-
-class LogTensorGenerator(BaseWrapperTensorGenerator):
-    r"""Implements a tensor generator that computes the logarithm of a
-    tensor.
+    generated tensor.
 
     Example usage:
 
     .. code-block:: pycon
 
-        >>> from startorch.tensor import Log, RandUniform
-        >>> generator = Log(RandUniform(low=1.0, high=100.0))
+        >>> import torch
+        >>> from startorch.tensor import Neg, RandNormal
+        >>> generator = Neg(RandNormal())
         >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
         tensor([[...]])
     """
 
     def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
-        return self._tensor.generate(size=size, rng=rng).log()
+        return -self._tensor.generate(size=size, rng=rng)
 
 
 class SqrtTensorGenerator(BaseWrapperTensorGenerator):
