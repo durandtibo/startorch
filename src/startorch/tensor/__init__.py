@@ -15,10 +15,12 @@ __all__ = [
     "Cosh",
     "Div",
     "Exp",
+    "Float",
     "Fmod",
     "Full",
     "Log",
     "LogUniform",
+    "Long",
     "Mul",
     "MulScalar",
     "Neg",
@@ -49,6 +51,8 @@ from startorch.tensor.cauchy import RandCauchyTensorGenerator as RandCauchy
 from startorch.tensor.cauchy import RandTruncCauchyTensorGenerator as RandTruncCauchy
 from startorch.tensor.cauchy import TruncCauchyTensorGenerator as TruncCauchy
 from startorch.tensor.constant import FullTensorGenerator as Full
+from startorch.tensor.dtype import FloatTensorGenerator as Float
+from startorch.tensor.dtype import LongTensorGenerator as Long
 from startorch.tensor.math import AbsTensorGenerator as Abs
 from startorch.tensor.math import AddScalarTensorGenerator as AddScalar
 from startorch.tensor.math import AddTensorGenerator as Add
