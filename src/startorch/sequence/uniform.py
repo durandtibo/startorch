@@ -33,6 +33,7 @@ class AsinhUniformSequenceGenerator(BaseSequenceGenerator):
     values from an asinh-uniform distribution.
 
     Args:
+    ----
         low (``BaseSequenceGenerator`` or dict): Specifies a sequence
             generator (or its configuration) to generate the minimum
             value (inclusive).
@@ -81,6 +82,7 @@ class LogUniformSequenceGenerator(BaseSequenceGenerator):
     values from a log-uniform distribution.
 
     Args:
+    ----
         low (``BaseSequenceGenerator`` or dict): Specifies a sequence
             generator (or its configuration) to generate the minimum
             value (inclusive).
@@ -129,10 +131,15 @@ class RandAsinhUniformSequenceGenerator(BaseSequenceGenerator):
     values from an asinh-uniform distribution.
 
     Args:
+    ----
         low (float): Specifies the minimum value (inclusive).
         high (float): Specifies the maximum value (exclusive).
         feature_size (tuple or list or int, optional): Specifies the
             feature size. Default: ``1``
+
+    Raises:
+    ------
+        ValueError if ``high`` is lower than ``low``.
 
     Example usage:
 
@@ -188,6 +195,10 @@ class RandIntSequenceGenerator(BaseSequenceGenerator):
         feature_size (tuple or list or int, optional): Specifies the
             feature size. Default: ``tuple()``
 
+    Raises:
+    ------
+        ValueError if ``high`` is lower than ``low``.
+
     Example usage:
 
     .. code-block:: pycon
@@ -236,10 +247,15 @@ class RandLogUniformSequenceGenerator(BaseSequenceGenerator):
     values from a log-uniform distribution.
 
     Args:
+    ----
         low (float): Specifies the minimum value (inclusive).
         high (float): Specifies the maximum value (exclusive).
         feature_size (tuple or list or int, optional): Specifies the
             feature size. Default: ``1``
+
+    Raises:
+    ------
+        ValueError if ``high`` is lower than ``low``.
 
     Example usage:
 
@@ -296,6 +312,10 @@ class RandUniformSequenceGenerator(BaseSequenceGenerator):
             (exclusive). Default: ``1.0``
         feature_size (tuple or list or int, optional): Specifies the
             feature size. Default: ``1``
+
+    Raises:
+    ------
+        ValueError if ``high`` is lower than ``low``.
 
     Example usage:
 

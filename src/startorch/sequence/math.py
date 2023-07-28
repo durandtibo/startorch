@@ -58,6 +58,10 @@ class AddSequenceGenerator(BaseSequenceGenerator):
         sequences (``Sequence``): Specifies the sequence generators or
             their configuration.
 
+    Raises:
+    ------
+        ValueError if no sequence generator is provided.
+
     Example usage:
 
     .. code-block:: pycon
@@ -147,6 +151,10 @@ class ClampSequenceGenerator(BaseWrapperSequenceGenerator):
             If ``min_value`` is ``None``, there is no lower bound.
         max (int, float or ``None``): Specifies the upper bound.
             If ``max_value`` is ``None``, there is no upper bound.
+
+    Raises:
+    ------
+        ValueError if both ``min`` and ``max`` are ``None``
 
     Example usage:
 
@@ -374,6 +382,10 @@ class MulSequenceGenerator(BaseSequenceGenerator):
     Args:
     ----
         sequences (``Sequence``): Specifies the sequence generators.
+
+    Raises:
+    ------
+        ValueError if no sequence generator is provided.
 
     Example usage:
 

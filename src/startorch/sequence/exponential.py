@@ -138,6 +138,10 @@ class RandExponentialSequenceGenerator(BaseSequenceGenerator):
         feature_size (tuple or list or int, optional): Specifies the
             feature size. Default: ``1``
 
+    Raises:
+    ------
+        ValueError if ``rate`` is not a positive number.
+
     Example usage:
 
     .. code-block:: pycon
@@ -189,6 +193,11 @@ class RandTruncExponentialSequenceGenerator(BaseSequenceGenerator):
             Default: ``5.0``
         feature_size (tuple or list or int, optional): Specifies the
             feature size. Default: ``1``
+
+    Raises:
+    ------
+        ValueError if ``rate`` is not a positive number.
+        ValueError if ``max_value`` is not a positive number.
 
     Example usage:
 
