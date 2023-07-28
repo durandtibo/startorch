@@ -10,6 +10,7 @@ __all__ = [
     "Atanh",
     "BaseTensorGenerator",
     "BaseWrapperTensorGenerator",
+    "Cauchy",
     "Clamp",
     "Cosh",
     "Div",
@@ -24,22 +25,29 @@ __all__ = [
     "Normal",
     "Poisson",
     "RandAsinhUniform",
+    "RandCauchy",
     "RandInt",
     "RandLogUniform",
     "RandNormal",
     "RandPoisson",
+    "RandTruncCauchy",
     "RandTruncNormal",
     "RandUniform",
     "Sinh",
     "Sqrt",
     "Sub",
     "Tanh",
+    "TruncCauchy",
     "TruncNormal",
     "Uniform",
     "setup_tensor_generator",
 ]
 
 from startorch.tensor.base import BaseTensorGenerator, setup_tensor_generator
+from startorch.tensor.cauchy import CauchyTensorGenerator as Cauchy
+from startorch.tensor.cauchy import RandCauchyTensorGenerator as RandCauchy
+from startorch.tensor.cauchy import RandTruncCauchyTensorGenerator as RandTruncCauchy
+from startorch.tensor.cauchy import TruncCauchyTensorGenerator as TruncCauchy
 from startorch.tensor.constant import FullTensorGenerator as Full
 from startorch.tensor.math import AbsTensorGenerator as Abs
 from startorch.tensor.math import AddScalarTensorGenerator as AddScalar
