@@ -22,6 +22,8 @@ __all__ = [
     "Cosh",
     "Sinh",
     "Tanh",
+    "Poisson",
+    "RandPoisson",
 ]
 
 from startorch.tensor.base import BaseTensorGenerator, setup_tensor_generator
@@ -30,6 +32,8 @@ from startorch.tensor.normal import NormalTensorGenerator as Normal
 from startorch.tensor.normal import RandNormalTensorGenerator as RandNormal
 from startorch.tensor.normal import RandTruncNormalTensorGenerator as RandTruncNormal
 from startorch.tensor.normal import TruncNormalTensorGenerator as TruncNormal
+from startorch.tensor.poisson import PoissonTensorGenerator as Poisson
+from startorch.tensor.poisson import RandPoissonTensorGenerator as RandPoisson
 from startorch.tensor.trigo import AcoshTensorGenerator as Acosh
 from startorch.tensor.trigo import AsinhTensorGenerator as Asinh
 from startorch.tensor.trigo import AtanhTensorGenerator as Atanh
