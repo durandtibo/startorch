@@ -8,6 +8,7 @@ __all__ = [
     "Arange",
     "Asinh",
     "AsinhUniform",
+    "Atanh",
     "BaseSequenceGenerator",
     "BaseWrapperSequenceGenerator",
     "Cauchy",
@@ -57,6 +58,7 @@ __all__ = [
     "Sort",
     "Sqrt",
     "Sub",
+    "Tanh",
     "TensorSequence",
     "Time",
     "TruncCauchy",
@@ -152,8 +154,10 @@ from startorch.sequence.tensor import TensorSequenceGenerator as TensorSequence
 from startorch.sequence.time import TimeSequenceGenerator as Time
 from startorch.sequence.trigo import AcoshSequenceGenerator as Acosh
 from startorch.sequence.trigo import AsinhSequenceGenerator as Asinh
+from startorch.sequence.trigo import AtanhSequenceGenerator as Atanh
 from startorch.sequence.trigo import CoshSequenceGenerator as Cosh
 from startorch.sequence.trigo import SinhSequenceGenerator as Sinh
+from startorch.sequence.trigo import TanhSequenceGenerator as Tanh
 from startorch.sequence.uniform import AsinhUniformSequenceGenerator as AsinhUniform
 from startorch.sequence.uniform import LogUniformSequenceGenerator as LogUniform
 from startorch.sequence.uniform import (
