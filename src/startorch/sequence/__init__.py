@@ -30,6 +30,7 @@ __all__ = [
     "Long",
     "Mul",
     "MulScalar",
+    "Multinomial",
     "Neg",
     "Normal",
     "Poisson",
@@ -56,6 +57,7 @@ __all__ = [
     "Sort",
     "Sqrt",
     "Sub",
+    "TensorSequence",
     "Time",
     "TruncCauchy",
     "TruncExponential",
@@ -64,11 +66,15 @@ __all__ = [
     "TruncLogNormal",
     "TruncNormal",
     "Uniform",
+    "UniformCategorical",
     "setup_sequence_generator",
-    "TensorSequence",
 ]
 
 from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_generator
+from startorch.sequence.categorical import MultinomialSequenceGenerator as Multinomial
+from startorch.sequence.categorical import (
+    UniformCategoricalSequenceGenerator as UniformCategorical,
+)
 from startorch.sequence.cauchy import CauchySequenceGenerator as Cauchy
 from startorch.sequence.cauchy import RandCauchySequenceGenerator as RandCauchy
 from startorch.sequence.cauchy import (
