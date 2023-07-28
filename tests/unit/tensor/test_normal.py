@@ -183,7 +183,7 @@ def test_rand_trunc_normal_incorrect_min_max_value() -> None:
 
 @mark.parametrize("size", SIZES)
 def test_rand_trunc_normal_generate(size: tuple[int, ...]) -> None:
-    tensor = RandNormal().generate(size)
+    tensor = RandTruncNormal().generate(size)
     assert tensor.shape == size
     assert tensor.dtype == torch.float
     assert tensor.min() >= -3.0
