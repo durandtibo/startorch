@@ -6,16 +6,24 @@ __all__ = [
     "BaseWrapperTensorGenerator",
     "Full",
     "LogUniform",
+    "Normal",
     "RandAsinhUniform",
     "RandInt",
     "RandLogUniform",
+    "RandNormal",
+    "RandTruncNormal",
     "RandUniform",
+    "TruncNormal",
     "Uniform",
     "setup_tensor_generator",
 ]
 
 from startorch.tensor.base import BaseTensorGenerator, setup_tensor_generator
 from startorch.tensor.constant import FullTensorGenerator as Full
+from startorch.tensor.normal import NormalTensorGenerator as Normal
+from startorch.tensor.normal import RandNormalTensorGenerator as RandNormal
+from startorch.tensor.normal import RandTruncNormalTensorGenerator as RandTruncNormal
+from startorch.tensor.normal import TruncNormalTensorGenerator as TruncNormal
 from startorch.tensor.uniform import AsinhUniformTensorGenerator as AsinhUniform
 from startorch.tensor.uniform import LogUniformTensorGenerator as LogUniform
 from startorch.tensor.uniform import RandAsinhUniformTensorGenerator as RandAsinhUniform
