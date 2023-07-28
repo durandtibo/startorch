@@ -107,6 +107,10 @@ class RandPoissonSequenceGenerator(BaseSequenceGenerator):
         feature_size (tuple or list or int, optional): Specifies the
             feature size. Default: ``1``
 
+    Raises:
+    ------
+        ValueError if ``rate`` is not a positive number.
+
     Example usage:
 
     .. code-block:: pycon

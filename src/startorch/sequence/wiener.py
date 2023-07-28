@@ -22,6 +22,10 @@ class RandWienerProcessSequenceGenerator(BaseSequenceGenerator):
         step_size (float, optional): Specifies the time
             step size. Default: ``1.0``
 
+    Raises:
+    ------
+        ValueError if ``step_size`` is not a positive number.
+
     Example usage:
 
     .. code-block:: pycon
@@ -78,6 +82,18 @@ def wiener_process(
     -------
         ``torch.Tensor`` of shape ``(batch size, sequence length)``
             and type float: A batch of Wiener processes.
+
+    Raises:
+    ------
+        ValueError if ``step_size`` is not a positive number.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> from startorch.sequence.wiener import wiener_process
+        >>> wiener_process(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        tensor([[...]])
     """
     if step_size < 0:
         raise ValueError(f"step_size has to be greater than 0 (received: {step_size})")

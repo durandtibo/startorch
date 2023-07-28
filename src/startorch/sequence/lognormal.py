@@ -83,6 +83,10 @@ class RandLogNormalSequenceGenerator(BaseSequenceGenerator):
         feature_size (tuple or list or int, optional): Specifies the
             feature size. Default: ``1``
 
+    Raises:
+    ------
+        ValueError if ``std`` is not a positive number.
+
     Example usage:
 
     .. code-block:: pycon
@@ -141,6 +145,11 @@ class RandTruncLogNormalSequenceGenerator(BaseSequenceGenerator):
             Default: ``5.0``
         feature_size (tuple or list or int, optional): Specifies the
             feature size. Default: ``1``
+
+    Raises:
+    ------
+        ValueError if ``std`` is not a positive number.
+        ValueError if ``max_value`` is lower than ``min_value``.
 
     Example usage:
 
