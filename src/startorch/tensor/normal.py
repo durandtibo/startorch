@@ -20,6 +20,7 @@ class NormalTensorGenerator(BaseTensorGenerator):
     Normal distribution.
 
     Args:
+    ----
         mean (``BaseTensorGenerator`` or dict): Specifies a tensor
             generator (or its configuration) to generate the mean.
         std (``BaseTensorGenerator`` or dict): Specifies a tensor
@@ -60,10 +61,15 @@ class RandNormalTensorGenerator(BaseTensorGenerator):
     sampling values from a Normal distribution.
 
     Args:
+    ----
         mean (float, optional): Specifies the mean of the Normal
             distribution. Default: ``0.0``
         std (float, optional): Specifies the standard deviation of the
             Normal distribution. Default: ``1.0``
+
+    Raises:
+    ------
+        ValueError if ``std`` is not a postive number.
 
     Example usage:
 
@@ -99,6 +105,7 @@ class RandTruncNormalTensorGenerator(BaseTensorGenerator):
     sampling values from a truncated Normal distribution.
 
     Args:
+    ----
         mean (float, optional): Specifies the mean of the Normal
             distribution. Default: ``0.0``
         std (float, optional): Specifies the standard deviation of
@@ -107,6 +114,11 @@ class RandTruncNormalTensorGenerator(BaseTensorGenerator):
             Default: ``-3.0``
         max_value (float, optional): Specifies the maximum value.
             Default: ``3.0``
+
+    Raises:
+    ------
+        ValueError if ``std`` is not a postive number.
+        ValueError if ``max_value`` is lower than ``min_value``.
 
     Example usage:
 
@@ -159,6 +171,7 @@ class TruncNormalTensorGenerator(BaseTensorGenerator):
     truncated Normal distribution.
 
     Args:
+    ----
         mean (``BaseTensorGenerator`` or dict): Specifies a sequence
             generator (or its configuration) to generate the mean.
         std (``BaseTensorGenerator`` or dict): Specifies a sequence

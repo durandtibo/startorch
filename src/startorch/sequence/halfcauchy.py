@@ -30,15 +30,6 @@ class HalfCauchySequenceGenerator(BaseSequenceGenerator):
     ----
         scale (``BaseSequenceGenerator`` or dict): Specifies a sequence
             generator (or its configuration) to generate the scale.
-        random_seed (int, optional): Specifies the random seed.
-            Default: ``10370908567997914551``
-        auto_set_random_seed (bool, optional): If
-            ``auto_set_random_seed=True``, the random seed of
-            the ``scale`` sequence generator is also set
-            to ``random_seed``. If ``auto_set_random_seed=False``,
-            the random seed is not used and the user is responsible
-            to set the random seed of the ``scale``
-            sequence generator. Default: ``True``
 
     Example usage:
 
@@ -128,6 +119,7 @@ class RandTruncHalfCauchySequenceGenerator(BaseSequenceGenerator):
     truncated half-Cauchy distribution.
 
     Args:
+    ----
         scale (float, optional): Specifies the scale of the
             distribution. Default: ``1.0``
         max_value (float, optional): Specifies the maximum value.
@@ -189,6 +181,7 @@ class TruncHalfCauchySequenceGenerator(BaseSequenceGenerator):
     half-Cauchy distribution.
 
     Args:
+    ----
         scale (``BaseSequenceGenerator`` or dict): Specifies a sequence
             generator (or its configuration) to generate the scale.
         max_value (``BaseSequenceGenerator`` or dict): Specifies a

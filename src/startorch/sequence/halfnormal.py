@@ -27,6 +27,7 @@ class HalfNormalSequenceGenerator(BaseSequenceGenerator):
     half-Normal distribution.
 
     Args:
+    ----
         std (``BaseSequenceGenerator`` or dict): Specifies a sequence
             generator (or its configuration) to generate the standard
             deviation.
@@ -65,11 +66,15 @@ class RandHalfNormalSequenceGenerator(BaseSequenceGenerator):
     half-Normal distribution.
 
     Args:
+    ----
         std (float, optional): Specifies the std of the distribution.
             Default: ``1.0``
         feature_size (tuple or list or int, optional): Specifies the
             feature size. Default: ``1``
 
+    Raises:
+    ------
+        ValueError if ``std`` is not a positive number.
 
     Example usage:
 
@@ -110,12 +115,18 @@ class RandTruncHalfNormalSequenceGenerator(BaseSequenceGenerator):
     truncated half-Normal distribution.
 
     Args:
+    ----
         std (float, optional): Specifies the std of the distribution.
             Default: ``1.0``
         max_value (float, optional): Specifies the maximum value.
             Default: ``3.0``
         feature_size (tuple or list or int, optional): Specifies the
             feature size. Default: ``1``
+
+    Raises:
+    ------
+        ValueError if ``std`` is not a positive number.
+        ValueError if ``max_value`` is not a positive number.
 
     Example usage:
 
@@ -166,6 +177,7 @@ class TruncHalfNormalSequenceGenerator(BaseSequenceGenerator):
     half-Normal distribution.
 
     Args:
+    ----
         std (``BaseSequenceGenerator`` or dict): Specifies a sequence
             generator (or its configuration) to generate the std.
         max_value (``BaseSequenceGenerator`` or dict): Specifies a

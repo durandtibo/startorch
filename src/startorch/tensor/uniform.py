@@ -30,6 +30,7 @@ class AsinhUniformTensorGenerator(BaseTensorGenerator):
     values from an asinh-uniform distribution.
 
     Args:
+    ----
         low (``BaseTensorGenerator`` or dict): Specifies a tensor
             generator (or its configuration) to generate the minimum
             value (inclusive).
@@ -75,6 +76,7 @@ class LogUniformTensorGenerator(BaseTensorGenerator):
     values from a log-uniform distribution.
 
     Args:
+    ----
         low (``BaseSequenceGenerator`` or dict): Specifies a tensor
             generator (or its configuration) to generate the minimum
             value (inclusive).
@@ -120,6 +122,7 @@ class RandAsinhUniformTensorGenerator(BaseTensorGenerator):
     uniform distribution.
 
     Args:
+    ----
         low (float): Specifies the minimum value (inclusive).
         high (float): Specifies the maximum value (exclusive).
 
@@ -157,6 +160,7 @@ class RandIntTensorGenerator(BaseTensorGenerator):
     uniform distribution.
 
     Args:
+    ----
         low (int, optional): Specifies the minimum value
             (inclusive).
         high (int, optional): Specifies the maximum value
@@ -191,6 +195,7 @@ class RandLogUniformTensorGenerator(BaseTensorGenerator):
     values from a log-uniform distribution.
 
     Args:
+    ----
         low (float): Specifies the minimum value (inclusive).
         high (float): Specifies the maximum value (exclusive).
 
