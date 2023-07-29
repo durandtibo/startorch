@@ -6,7 +6,13 @@ import torch
 from pytest import mark, raises
 from torch import Tensor
 
-from startorch.utils.weight import prepare_probabilities
+from startorch.tensor import RandNormal, RandUniform
+from startorch.utils.weight import (
+    GENERATOR,
+    WEIGHT,
+    prepare_probabilities,
+    prepare_weighted_generators,
+)
 
 ###########################################
 #     Tests for prepare_probabilities     #
@@ -50,3 +56,46 @@ def test_prepare_probabilities_incorrect_weights_not_positive() -> None:
 def test_prepare_probabilities_incorrect_weights_sum_zero() -> None:
     with raises(ValueError, match="The sum of the weights has to be greater than 0"):
         prepare_probabilities(torch.zeros(5))
+
+
+#################################################
+#     Tests for prepare_weighted_generators     #
+#################################################
+
+
+@mark.parametrize(
+    "generators",
+    (
+        (
+            {WEIGHT: 2.0, GENERATOR: RandUniform()},
+            {WEIGHT: 1.0, GENERATOR: RandNormal()},
+        ),
+        [
+            {WEIGHT: 2.0, GENERATOR: RandUniform()},
+            {WEIGHT: 1.0, GENERATOR: RandNormal()},
+        ],
+        (
+            {WEIGHT: 2.0, GENERATOR: RandUniform()},
+            {GENERATOR: RandNormal()},
+        ),
+    ),
+)
+def test_prepare_weighted_generators_2_generators(generators: Sequence[dict]) -> None:
+    generators, weights = prepare_weighted_generators(generators)
+    assert len(generators) == 2
+    assert isinstance(generators[0], RandUniform)
+    assert isinstance(generators[1], RandNormal)
+    assert weights == (2.0, 1.0)
+
+
+def test_prepare_weighted_generators_missing_weight() -> None:
+    generators, weights = prepare_weighted_generators(
+        ({GENERATOR: RandUniform()}, {GENERATOR: RandNormal()})
+    )
+    assert weights == (1.0, 1.0)
+
+
+def test_prepare_weighted_generators_empty() -> None:
+    generators, weights = prepare_weighted_generators([])
+    assert generators == ()
+    assert weights == ()
