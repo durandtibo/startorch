@@ -95,7 +95,7 @@ def test_rand_cauchy_scale_default() -> None:
 
 @mark.parametrize("scale", (0.0, -1.0))
 def test_rand_cauchy_incorrect_scale(scale: float) -> None:
-    with raises(ValueError):
+    with raises(ValueError, match="scale has to be greater than 0"):
         RandCauchy(scale=scale)
 
 
@@ -193,7 +193,7 @@ def test_rand_trunc_cauchy_scale_default() -> None:
 
 @mark.parametrize("scale", (0.0, -1.0))
 def test_rand_trunc_cauchy_incorrect_scale(scale: float) -> None:
-    with raises(ValueError):
+    with raises(ValueError, match="scale has to be greater than 0"):
         RandTruncCauchy(scale=scale)
 
 
@@ -216,7 +216,7 @@ def test_rand_trunc_cauchy_max_value_default() -> None:
 
 
 def test_rand_trunc_cauchy_incorrect_min_max() -> None:
-    with raises(ValueError):
+    with raises(ValueError, match="max_value (.*) has to be greater or equal to min_value"):
         RandTruncCauchy(min_value=1.0, max_value=-1.0)
 
 

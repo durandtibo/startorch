@@ -110,7 +110,7 @@ def test_add_3_sequences() -> None:
 
 
 def test_add_sequences_empty() -> None:
-    with raises(ValueError):
+    with raises(ValueError, match="No sequence generator."):
         Add(sequences=[])
 
 
@@ -230,7 +230,7 @@ def test_clamp_max(max_value: float) -> None:
 
 
 def test_clamp_incorrect_min_max() -> None:
-    with raises(ValueError):
+    with raises(ValueError, match="`min` and `max` cannot be both None"):
         Clamp(RandNormal(), min=None, max=None)
 
 
@@ -574,7 +574,7 @@ def test_mul_3_sequences() -> None:
 
 
 def test_mul_sequences_empty() -> None:
-    with raises(ValueError):
+    with raises(ValueError, match="No sequence generator."):
         Mul(sequences=[])
 
 

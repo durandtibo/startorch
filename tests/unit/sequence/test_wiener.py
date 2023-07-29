@@ -29,7 +29,7 @@ def test_rand_wiener_process_step_size(step_size: float) -> None:
 
 @mark.parametrize("step_size", (-0.01, -1.0))
 def test_rand_wiener_process_incorrect_min_max_value(step_size: float) -> None:
-    with raises(ValueError):
+    with raises(ValueError, match="step_size has to be greater than 0"):
         RandWienerProcess(step_size=step_size)
 
 

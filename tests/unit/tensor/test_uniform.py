@@ -262,7 +262,7 @@ def test_rand_log_uniform_high(high: float) -> None:
 
 
 def test_rand_log_uniform_incorrect_min_high() -> None:
-    with raises(ValueError):
+    with raises(ValueError, match="high (.*) has to be greater or equal to low"):
         RandLogUniform(low=2.0, high=1.0)
 
 

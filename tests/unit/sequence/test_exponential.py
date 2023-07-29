@@ -101,7 +101,7 @@ def test_rand_exponential_rate_default() -> None:
 
 @mark.parametrize("rate", (0.0, -1.0))
 def test_rand_exponential_incorrect_rate(rate: float) -> None:
-    with raises(ValueError):
+    with raises(ValueError, match="rate has to be greater than 0"):
         RandExponential(rate=rate)
 
 
@@ -193,7 +193,7 @@ def test_rand_trunc_exponential_rate_default() -> None:
 
 @mark.parametrize("rate", (0.0, -1.0))
 def test_rand_trunc_exponential_incorrect_rate(rate: float) -> None:
-    with raises(ValueError):
+    with raises(ValueError, match="rate has to be greater than 0"):
         RandTruncExponential(rate=rate)
 
 
@@ -208,7 +208,7 @@ def test_rand_trunc_exponential_max_value_default() -> None:
 
 @mark.parametrize("max_value", (0.0, -1.0))
 def test_rand_trunc_exponential_incorrect_max_value(max_value: float) -> None:
-    with raises(ValueError):
+    with raises(ValueError, match="max_value has to be greater than 0"):
         RandTruncExponential(max_value=max_value)
 
 
