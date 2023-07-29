@@ -29,6 +29,7 @@ class ExponentialTensorGenerator(BaseTensorGenerator):
     value in the sequence.
 
     Args:
+    ----
         rate (``BaseTensorGenerator`` or dict):
             Specifies the rate generator or its configuration.
             The rate generator should return valid rate values.
@@ -60,8 +61,13 @@ class RandExponentialTensorGenerator(BaseTensorGenerator):
     an Exponential distribution.
 
     Args:
+    ----
         rate (float, optional): Specifies the rate of the Exponential
             distribution. Default: ``1.0``
+
+    Raises:
+    ------
+        ValueError if ``rate`` is not a positive number.
 
     Example usage:
 
@@ -91,10 +97,16 @@ class RandTruncExponentialTensorGenerator(BaseTensorGenerator):
     a truncated Exponential distribution.
 
     Args:
+    ----
         rate (float, optional): Specifies the rate of the Exponential
             distribution. Default: ``1.0``
         max_value (float, optional): Specifies the maximum value.
             Default: ``5.0``
+
+    Raises:
+    ------
+        ValueError if ``rate`` is not a positive number.
+        ValueError if ``max_value`` is not a positive number.
 
     Example usage:
 
@@ -132,6 +144,7 @@ class TruncExponentialTensorGenerator(BaseTensorGenerator):
     an Exponential distribution.
 
     Args:
+    ----
         rate (``BaseTensorGenerator`` or dict): Specifies a sequence
             generator (or its configuration) to generate the rate.
         max_value (``BaseTensorGenerator`` or dict): Specifies a

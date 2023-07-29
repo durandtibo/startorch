@@ -73,15 +73,26 @@ class ExponentialSequenceGenerator(BaseSequenceGenerator):
         from an Exponential distribution with a fixed rate.
 
         Args:
+        ----
             rate (float, optional): Specifies the rate of the
                 Exponential distribution. Default: ``1.0``
             feature_size (tuple or list or int, optional): Specifies the
                 feature size. Default: ``1``
 
         Returns:
+        -------
             ``ExponentialSequenceGenerator``: A sequence generator where
                 the rates of the Exponential distribution are a fixed
                 given value.
+
+        Example usage:
+
+        .. code-block:: pycon
+
+            >>> from startorch.sequence import Exponential, RandUniform
+            >>> generator = Exponential.create_fixed_rate(rate=1.0)
+            >>> generator.generate(seq_len=6, batch_size=2)  # doctest:+ELLIPSIS
+            tensor([[...]], batch_dim=0, seq_dim=1)
         """
         return cls(FullSequenceGenerator(value=rate, feature_size=feature_size))
 
@@ -112,6 +123,15 @@ class ExponentialSequenceGenerator(BaseSequenceGenerator):
             ``ExponentialSequenceGenerator``: A sequence generator where
                 the rates for each sequence are sampled from a
                 uniform distribution.
+
+        Example usage:
+
+        .. code-block:: pycon
+
+            >>> from startorch.sequence import Exponential, RandUniform
+            >>> generator = Exponential.create_uniform_rate(min_rate=0.1, max_rate=1.0)
+            >>> generator.generate(seq_len=6, batch_size=2)  # doctest:+ELLIPSIS
+            tensor([[...]], batch_dim=0, seq_dim=1)
         """
         # The import is here to do not generate circular dependencies
         from startorch.sequence.uniform import RandUniformSequenceGenerator
