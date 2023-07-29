@@ -77,7 +77,7 @@ def test_rand_poisson_rate_default() -> None:
 
 @mark.parametrize("rate", (0.0, -1.0))
 def test_rand_poisson_rate_incorrect(rate: float) -> None:
-    with raises(ValueError):
+    with raises(ValueError, match="rate has to be greater than 0"):
         RandPoisson(rate=rate)
 
 
