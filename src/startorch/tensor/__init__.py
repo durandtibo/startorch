@@ -18,6 +18,7 @@ __all__ = [
     "Float",
     "Fmod",
     "Full",
+    "HalfCauchy",
     "Log",
     "LogNormal",
     "LogUniform",
@@ -29,12 +30,14 @@ __all__ = [
     "Poisson",
     "RandAsinhUniform",
     "RandCauchy",
+    "RandHalfCauchy",
     "RandInt",
     "RandLogNormal",
     "RandLogUniform",
     "RandNormal",
     "RandPoisson",
     "RandTruncCauchy",
+    "RandTruncHalfCauchy",
     "RandTruncLogNormal",
     "RandTruncNormal",
     "RandUniform",
@@ -43,6 +46,7 @@ __all__ = [
     "Sub",
     "Tanh",
     "TruncCauchy",
+    "TruncHalfCauchy",
     "TruncLogNormal",
     "TruncNormal",
     "Uniform",
@@ -57,6 +61,14 @@ from startorch.tensor.cauchy import TruncCauchyTensorGenerator as TruncCauchy
 from startorch.tensor.constant import FullTensorGenerator as Full
 from startorch.tensor.dtype import FloatTensorGenerator as Float
 from startorch.tensor.dtype import LongTensorGenerator as Long
+from startorch.tensor.halfcauchy import HalfCauchyTensorGenerator as HalfCauchy
+from startorch.tensor.halfcauchy import RandHalfCauchyTensorGenerator as RandHalfCauchy
+from startorch.tensor.halfcauchy import (
+    RandTruncHalfCauchyTensorGenerator as RandTruncHalfCauchy,
+)
+from startorch.tensor.halfcauchy import (
+    TruncHalfCauchyTensorGenerator as TruncHalfCauchy,
+)
 from startorch.tensor.lognormal import LogNormalTensorGenerator as LogNormal
 from startorch.tensor.lognormal import RandLogNormalTensorGenerator as RandLogNormal
 from startorch.tensor.lognormal import (
