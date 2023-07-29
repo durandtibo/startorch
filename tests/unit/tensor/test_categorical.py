@@ -1,7 +1,10 @@
 from __future__ import annotations
 
+from collections.abc import Sequence
+
 import torch
 from pytest import mark, raises
+from torch import Tensor
 
 from startorch.tensor import Multinomial, UniformCategorical
 from startorch.utils.seed import get_torch_generator
@@ -18,9 +21,12 @@ def test_multinomial_str() -> None:
     assert str(Multinomial(torch.ones(10))).startswith("MultinomialTensorGenerator(")
 
 
+@mark.parametrize(
+    "weights", [torch.ones(10), [1, 1, 1, 1, 1, 1, 1, 1, 1, 1], (1, 1, 1, 1, 1, 1, 1, 1, 1, 1)]
+)
 @mark.parametrize("size", SIZES)
-def test_multinomial_generate(size: tuple[int, ...]) -> None:
-    tensor = Multinomial(torch.ones(10)).generate(size)
+def test_multinomial_generate(weights: Tensor | Sequence, size: tuple[int, ...]) -> None:
+    tensor = Multinomial(weights).generate(size)
     assert tensor.shape == size
     assert tensor.dtype == torch.long
     assert tensor.min() >= 0
