@@ -15,6 +15,7 @@ __all__ = [
     "Cosh",
     "Div",
     "Exp",
+    "Exponential",
     "Float",
     "Fmod",
     "Full",
@@ -30,6 +31,7 @@ __all__ = [
     "Poisson",
     "RandAsinhUniform",
     "RandCauchy",
+    "RandExponential",
     "RandHalfCauchy",
     "RandInt",
     "RandLogNormal",
@@ -37,6 +39,7 @@ __all__ = [
     "RandNormal",
     "RandPoisson",
     "RandTruncCauchy",
+    "RandTruncExponential",
     "RandTruncHalfCauchy",
     "RandTruncLogNormal",
     "RandTruncNormal",
@@ -46,6 +49,7 @@ __all__ = [
     "Sub",
     "Tanh",
     "TruncCauchy",
+    "TruncExponential",
     "TruncHalfCauchy",
     "TruncLogNormal",
     "TruncNormal",
@@ -61,6 +65,16 @@ from startorch.tensor.cauchy import TruncCauchyTensorGenerator as TruncCauchy
 from startorch.tensor.constant import FullTensorGenerator as Full
 from startorch.tensor.dtype import FloatTensorGenerator as Float
 from startorch.tensor.dtype import LongTensorGenerator as Long
+from startorch.tensor.exponential import ExponentialTensorGenerator as Exponential
+from startorch.tensor.exponential import (
+    RandExponentialTensorGenerator as RandExponential,
+)
+from startorch.tensor.exponential import (
+    RandTruncExponentialTensorGenerator as RandTruncExponential,
+)
+from startorch.tensor.exponential import (
+    TruncExponentialTensorGenerator as TruncExponential,
+)
 from startorch.tensor.halfcauchy import HalfCauchyTensorGenerator as HalfCauchy
 from startorch.tensor.halfcauchy import RandHalfCauchyTensorGenerator as RandHalfCauchy
 from startorch.tensor.halfcauchy import (
