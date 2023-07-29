@@ -27,6 +27,7 @@ __all__ = [
     "Long",
     "Mul",
     "MulScalar",
+    "Multinomial",
     "Neg",
     "Normal",
     "Poisson",
@@ -58,10 +59,15 @@ __all__ = [
     "TruncLogNormal",
     "TruncNormal",
     "Uniform",
+    "UniformCategorical",
     "setup_tensor_generator",
 ]
 
 from startorch.tensor.base import BaseTensorGenerator, setup_tensor_generator
+from startorch.tensor.categorical import MultinomialTensorGenerator as Multinomial
+from startorch.tensor.categorical import (
+    UniformCategoricalTensorGenerator as UniformCategorical,
+)
 from startorch.tensor.cauchy import CauchyTensorGenerator as Cauchy
 from startorch.tensor.cauchy import RandCauchyTensorGenerator as RandCauchy
 from startorch.tensor.cauchy import RandTruncCauchyTensorGenerator as RandTruncCauchy
