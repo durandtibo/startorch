@@ -8,9 +8,9 @@ import torch
 from coola.utils.format import str_indent
 from torch import Generator, Tensor
 
-from startorch.tensor.base import BaseTensorGenerator
-from startorch.tensor.preparation import prepare_weighted_generators
-from startorch.utils.format import str_pretty_weighted_modules
+from startorch.tensor.base import BaseTensorGenerator, setup_tensor_generator
+from startorch.utils.format import str_weighted_modules
+from startorch.utils.weight import prepare_weighted_generators
 
 
 class MultinomialChoiceTensorGenerator(BaseTensorGenerator):
@@ -32,11 +32,12 @@ class MultinomialChoiceTensorGenerator(BaseTensorGenerator):
             If this key is absent, the weight is set to ``1.0``.
 
     Args:
+    ----
         generators (tuple or list): Specifies the tensor
             generators and their weights. See above to learn
             about the expected format.
 
-    Sequence usage:
+    Example usage:
 
     .. code-block:: pycon
 
@@ -53,21 +54,16 @@ class MultinomialChoiceTensorGenerator(BaseTensorGenerator):
 
     def __init__(self, generators: Sequence[dict[str, BaseTensorGenerator | dict]]) -> None:
         super().__init__()
-        self._generators, self._weights = prepare_weighted_generators(generators)
+        generators, weights = prepare_weighted_generators(generators)
+        self._generators = tuple(setup_tensor_generator(generator) for generator in generators)
+        self._weights = torch.as_tensor(weights, dtype=torch.float)
 
     def __repr__(self) -> str:
         generators_str = str_indent(
-            str_pretty_weighted_modules(modules=self._generators, weights=self._weights),
-            num_spaces=4,
+            str_weighted_modules(modules=self._generators, weights=self._weights)
         )
-        return (
-            f"{self.__class__.__qualname__}(\n"
-            f"  generators:\n    {generators_str}\n"
-            f"  random_seed={self.get_random_seed()},\n"
-            f"  auto_set_random_seed={self._auto_set_random_seed},\n"
-            ")"
-        )
+        return f"{self.__class__.__qualname__}(\n  {generators_str}\n)"
 
     def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
         index = torch.multinomial(self._weights, num_samples=1, generator=rng).item()
-        return self._generators[index].generate(size)
+        return self._generators[index].generate(size=size, rng=rng)

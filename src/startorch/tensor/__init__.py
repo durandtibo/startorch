@@ -28,6 +28,7 @@ __all__ = [
     "Mul",
     "MulScalar",
     "Multinomial",
+    "MultinomialChoice",
     "Neg",
     "Normal",
     "Poisson",
@@ -72,6 +73,9 @@ from startorch.tensor.cauchy import CauchyTensorGenerator as Cauchy
 from startorch.tensor.cauchy import RandCauchyTensorGenerator as RandCauchy
 from startorch.tensor.cauchy import RandTruncCauchyTensorGenerator as RandTruncCauchy
 from startorch.tensor.cauchy import TruncCauchyTensorGenerator as TruncCauchy
+from startorch.tensor.choice import (
+    MultinomialChoiceTensorGenerator as MultinomialChoice,
+)
 from startorch.tensor.constant import FullTensorGenerator as Full
 from startorch.tensor.dtype import FloatTensorGenerator as Float
 from startorch.tensor.dtype import LongTensorGenerator as Long
