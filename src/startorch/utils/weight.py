@@ -1,11 +1,15 @@
 from __future__ import annotations
 
-__all__ = ["prepare_probabilities"]
+__all__ = ["prepare_probabilities", "prepare_weighted_generators"]
 
 from collections.abc import Sequence
+from typing import Any
 
 import torch
 from torch import Tensor
+
+GENERATOR = "generator"
+WEIGHT = "weight"
 
 
 def prepare_probabilities(weights: Tensor | Sequence[int | float]) -> torch.Tensor:
@@ -31,7 +35,6 @@ def prepare_probabilities(weights: Tensor | Sequence[int | float]) -> torch.Tens
 
     .. code-block:: pycon
 
-        >>> import torch
         >>> from startorch.utils.weight import prepare_probabilities
         >>> prepare_probabilities([1, 1, 1, 1])
         tensor([0.2500, 0.2500, 0.2500, 0.2500])
@@ -50,3 +53,51 @@ def prepare_probabilities(weights: Tensor | Sequence[int | float]) -> torch.Tens
             f"weights: {weights})"
         )
     return weights.float() / weights.sum()
+
+
+def prepare_weighted_generators(
+    generators: Sequence[dict],
+) -> tuple[tuple[Any, ...], tuple[float, ...]]:
+    r"""Prepare the tensor generators.
+
+    Each dictionary in the input tuple/list should have the
+    following items:
+
+        - a key ``'generator'`` which indicates the tensor generator
+            or its configuration.
+        - an optional key ``'weight'`` with a float value which
+            indicates the weight of the tensor generator.
+            If this key is absent, the weight is set to ``1.0``.
+
+    Args:
+    ----
+        generators (tuple or list): Specifies the tensor generators
+            and their weights. See above to learn about the
+            expected format.
+
+    Returns:
+    -------
+        tuple with two values:
+            - a tuple of generators or their configurations
+            - a tuple of floats
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> from startorch.utils.weight import prepare_weighted_generators
+        >>> from startorch.tensor import RandUniform, RandNormal
+        >>> prepare_weighted_generators(
+        ...     (
+        ...         {"weight": 2.0, "generator": RandUniform()},
+        ...         {"weight": 1.0, "generator": RandNormal()},
+        ...     )
+        ... )
+        ((RandUniformTensorGenerator(low=0.0, high=1.0), RandNormalTensorGenerator(mean=0.0, std=1.0)), (2.0, 1.0))
+    """
+    gens = []
+    weights = []
+    for generator in generators:
+        gens.append(generator[GENERATOR])
+        weights.append(float(generator.get(WEIGHT, 1.0)))
+    return tuple(gens), tuple(weights)
