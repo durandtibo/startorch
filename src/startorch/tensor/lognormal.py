@@ -25,6 +25,7 @@ class LogNormalTensorGenerator(BaseTensorGenerator):
     log-Normal distribution.
 
     Args:
+    ----
         mean (``BaseTensorGenerator`` or dict): Specifies a tensor
             generator (or its configuration) to generate the mean
             of the underlying Normal distribution.
@@ -63,13 +64,18 @@ class LogNormalTensorGenerator(BaseTensorGenerator):
 
 class RandLogNormalTensorGenerator(BaseTensorGenerator):
     r"""Implements a class to generate tensor by sampling values from a
-    log- Normal distribution.
+    log-Normal distribution.
 
     Args:
+    ----
         mean (float, optional): Specifies the mean of the underlying
             Normal distribution. Default: ``0.0``
         std (float, optional): Specifies the standard deviation of the
             underlying Normal distribution. Default: ``1.0``
+
+    Raises:
+    ------
+        ValueError if ``std`` is not a positive number.
 
     Example usage:
 
@@ -105,6 +111,7 @@ class RandTruncLogNormalTensorGenerator(BaseTensorGenerator):
     sampling values from a truncated log-Normal distribution.
 
     Args:
+    ----
         mean (float, optional): Specifies the mean of the
             log-Normal distribution. Default: ``0.0``
         std (float, optional): Specifies the standard deviation of
@@ -113,6 +120,11 @@ class RandTruncLogNormalTensorGenerator(BaseTensorGenerator):
             Default: ``0.0``
         max_value (float, optional): Specifies the maximum value.
             Default: ``5.0``
+
+    Raises:
+    ------
+        ValueError if ``std`` is not a positive number.
+        ValueError if ``max_value`` is lower than ``min_value``.
 
     Example usage:
 
@@ -161,6 +173,7 @@ class TruncLogNormalTensorGenerator(BaseTensorGenerator):
     truncated log-Normal distribution.
 
     Args:
+    ----
         mean (``BaseTensorGenerator`` or dict): Specifies a tensor
             generator (or its configuration) to generate the mean of
             the underlying Normal distribution.

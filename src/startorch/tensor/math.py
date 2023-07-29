@@ -252,6 +252,7 @@ class FmodTensorGenerator(BaseTensorGenerator):
     remainder of division.
 
     Args:
+    ----
         dividend (``BaseTensorGenerator`` or dict):
             Specifies the tensor generator (or its configuration) that
             generates the dividend values.
@@ -436,6 +437,7 @@ class SubTensorGenerator(BaseTensorGenerator):
     ``tensor = tensor_1 - tensor_2``
 
     Args:
+    ----
         tensor1 (``BaseTensorGenerator`` or dict):
             Specifies the first tensor generator or its
             configuration.
