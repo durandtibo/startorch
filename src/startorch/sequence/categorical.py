@@ -3,6 +3,7 @@ from __future__ import annotations
 __all__ = ["MultinomialSequenceGenerator", "UniformCategoricalSequenceGenerator"]
 
 import math
+from collections.abc import Sequence
 
 import torch
 from redcat import BatchedTensorSeq
@@ -10,6 +11,7 @@ from torch import Generator
 
 from startorch.sequence.base import BaseSequenceGenerator
 from startorch.utils.conversion import to_tuple
+from startorch.utils.weight import prepare_probabilities
 
 
 class MultinomialSequenceGenerator(BaseSequenceGenerator):
@@ -38,7 +40,7 @@ class MultinomialSequenceGenerator(BaseSequenceGenerator):
 
     def __init__(
         self,
-        weights: torch.Tensor,
+        weights: torch.Tensor | Sequence[int | float],
         feature_size: tuple[int, ...] | list[int] | int = 1,
     ) -> None:
         super().__init__()
@@ -127,38 +129,6 @@ class MultinomialSequenceGenerator(BaseSequenceGenerator):
                 an exponential pattern.
         """
         return cls(weights=torch.arange(num_categories).float().mul(-scale).exp())
-
-
-def prepare_probabilities(weights: torch.Tensor) -> torch.Tensor:
-    r"""Converts un-normalized positive weights to probabilities.
-
-    Args:
-    ----
-        weights (``torch.Tensor`` of shape ``(num_categories,)`` and
-            type float): Specifies the vector of weights associated to
-            each category. The weights have to be positive.
-
-    Returns:
-    -------
-        ``torch.Tensor`` of type float and shape ``(num_categories,)``:
-            The vector of probability associated at each category.
-
-    Raises:
-    ------
-        ValueError if the weights are not valid.
-    """
-    if weights.ndim != 1:
-        raise ValueError(f"weights has to be a 1D tensor (received a {weights.ndim}D tensor)")
-    if weights.min() < 0:
-        raise ValueError(
-            f"The values in weights have to be positive (min: {weights.min()}  weights: {weights})"
-        )
-    if weights.sum() == 0:
-        raise ValueError(
-            f"The sum of the weights has to be greater than 0 (sum: {weights.sum()}  "
-            f"weights: {weights})"
-        )
-    return weights.float() / weights.sum()
 
 
 class UniformCategoricalSequenceGenerator(BaseSequenceGenerator):

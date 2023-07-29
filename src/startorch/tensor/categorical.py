@@ -3,12 +3,13 @@ from __future__ import annotations
 __all__ = ["MultinomialTensorGenerator", "UniformCategoricalTensorGenerator"]
 
 import math
+from collections.abc import Sequence
 
 import torch
 from torch import Generator, Tensor
 
-from startorch.sequence.categorical import prepare_probabilities
 from startorch.tensor.base import BaseTensorGenerator
+from startorch.utils.weight import prepare_probabilities
 
 
 class MultinomialTensorGenerator(BaseTensorGenerator):
@@ -33,7 +34,7 @@ class MultinomialTensorGenerator(BaseTensorGenerator):
         tensor([[...]])
     """
 
-    def __init__(self, weights: torch.Tensor) -> None:
+    def __init__(self, weights: torch.Tensor | Sequence[int | float]) -> None:
         super().__init__()
         self._probabilities = prepare_probabilities(weights)
 
