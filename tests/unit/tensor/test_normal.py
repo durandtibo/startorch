@@ -89,7 +89,7 @@ def test_rand_normal_std_default() -> None:
 
 @mark.parametrize("std", (0.0, -1.0))
 def test_rand_normal_incorrect_std(std: float) -> None:
-    with raises(ValueError):
+    with raises(ValueError, match="std has to be greater than 0"):
         RandNormal(std=std)
 
 
@@ -154,7 +154,7 @@ def test_rand_trunc_normal_std_default() -> None:
 
 @mark.parametrize("std", (0.0, -1.0))
 def test_rand_trunc_normal_incorrect_std(std: float) -> None:
-    with raises(ValueError):
+    with raises(ValueError, match="std has to be greater than 0"):
         RandTruncNormal(std=std)
 
 
@@ -177,7 +177,7 @@ def test_rand_trunc_normal_max_value_default() -> None:
 
 
 def test_rand_trunc_normal_incorrect_min_max_value() -> None:
-    with raises(ValueError):
+    with raises(ValueError, match="max_value (.*) has to be greater or equal to min_value"):
         RandTruncNormal(min_value=3, max_value=2)
 
 
