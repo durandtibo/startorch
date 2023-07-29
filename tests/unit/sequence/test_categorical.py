@@ -1,14 +1,16 @@
 from __future__ import annotations
 
+from collections.abc import Sequence
+
 import torch
 from pytest import mark, raises
 from redcat import BatchedTensorSeq
+from torch import Tensor
 
 from startorch.sequence import Multinomial, UniformCategorical
-from startorch.sequence.categorical import prepare_probabilities
 from startorch.utils.seed import get_torch_generator
 
-SIZES = (1, 2)
+SIZES = (1, 2, 4)
 
 
 #################################
@@ -20,10 +22,15 @@ def test_multinomial_str() -> None:
     assert str(Multinomial(torch.ones(10))).startswith("MultinomialSequenceGenerator(")
 
 
+@mark.parametrize(
+    "weights", [torch.ones(10), [1, 1, 1, 1, 1, 1, 1, 1, 1, 1], (1, 1, 1, 1, 1, 1, 1, 1, 1, 1)]
+)
 @mark.parametrize("batch_size", SIZES)
 @mark.parametrize("seq_len", SIZES)
-def test_multinomial_generate_feature_size_default(batch_size: int, seq_len: int) -> None:
-    batch = Multinomial(torch.ones(10)).generate(batch_size=batch_size, seq_len=seq_len)
+def test_multinomial_generate_feature_size_default(
+    weights: Tensor | Sequence, batch_size: int, seq_len: int
+) -> None:
+    batch = Multinomial(weights).generate(batch_size=batch_size, seq_len=seq_len)
     assert isinstance(batch, BatchedTensorSeq)
     assert batch.batch_size == batch_size
     assert batch.seq_len == seq_len
@@ -113,47 +120,6 @@ def test_multinomial_generate_predefined_settings(
     assert batch.data.dtype == torch.long
     assert batch.min() >= 0
     assert batch.max() < 10
-
-
-###########################################
-#     Tests for prepare_probabilities     #
-###########################################
-
-
-@mark.parametrize(
-    "weights,probabilities",
-    (
-        (torch.ones(1), torch.ones(1)),
-        (torch.ones(2), 0.5 * torch.ones(2)),
-        (torch.ones(4), 0.25 * torch.ones(4)),
-        (torch.ones(8), 0.125 * torch.ones(8)),
-        (0.1 * torch.ones(4), 0.25 * torch.ones(4)),
-        (
-            torch.tensor([1, 2, 4, 7], dtype=torch.float),
-            torch.tensor(
-                [0.07142857142857142, 0.14285714285714285, 0.2857142857142857, 0.5],
-                dtype=torch.float,
-            ),
-        ),
-    ),
-)
-def test_prepare_probabilities(weights: torch.Tensor, probabilities: torch.Tensor) -> None:
-    assert torch.allclose(prepare_probabilities(weights), probabilities)
-
-
-def test_prepare_probabilities_incorrect_weights_dimensions() -> None:
-    with raises(ValueError, match="weights has to be a 1D tensor"):
-        prepare_probabilities(torch.ones(4, 5))
-
-
-def test_prepare_probabilities_incorrect_weights_not_positive() -> None:
-    with raises(ValueError, match="The values in weights have to be positive"):
-        prepare_probabilities(torch.tensor([-1, 2, 4, 7], dtype=torch.float))
-
-
-def test_prepare_probabilities_incorrect_weights_sum_zero() -> None:
-    with raises(ValueError, match="The sum of the weights has to be greater than 0"):
-        prepare_probabilities(torch.zeros(5))
 
 
 ########################################
