@@ -11,6 +11,7 @@ __all__ = [
     "Atanh",
     "BaseSequenceGenerator",
     "BaseWrapperSequenceGenerator",
+    "Cat2",
     "Cauchy",
     "Clamp",
     "Constant",
@@ -121,6 +122,7 @@ from startorch.sequence.halfnormal import (
 from startorch.sequence.halfnormal import (
     TruncHalfNormalSequenceGenerator as TruncHalfNormal,
 )
+from startorch.sequence.joining import Cat2SequenceGenerator as Cat2
 from startorch.sequence.linear import LinearSequenceGenerator as Linear
 from startorch.sequence.lognormal import LogNormalSequenceGenerator as LogNormal
 from startorch.sequence.lognormal import RandLogNormalSequenceGenerator as RandLogNormal
