@@ -9,6 +9,7 @@ __all__ = [
     "Asinh",
     "AsinhUniform",
     "Atanh",
+    "AutoRegressive",
     "BaseSequenceGenerator",
     "BaseWrapperSequenceGenerator",
     "Cat2",
@@ -74,6 +75,7 @@ __all__ = [
     "setup_sequence_generator",
 ]
 
+from startorch.sequence.ar import AutoRegressiveSequenceGenerator as AutoRegressive
 from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_generator
 from startorch.sequence.categorical import MultinomialSequenceGenerator as Multinomial
 from startorch.sequence.categorical import (
