@@ -76,5 +76,5 @@ def setup_tensor_generator(generator: BaseTensorGenerator | dict) -> BaseTensorG
         )
         generator = BaseTensorGenerator.factory(**generator)
     if not isinstance(generator, BaseTensorGenerator):
-        logger.warning(f"generator is not a BaseTensorGenerator (received: {type(generator)})")
+        logger.warning(f"generator is not a `BaseTensorGenerator` (received: {type(generator)})")
     return generator
