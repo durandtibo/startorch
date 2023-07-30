@@ -2,11 +2,18 @@
 
 <p align="center">
     <a href="https://github.com/durandtibo/startorch/actions">
-        <img alt="CI" src="https://github.com/durandtibo/startorch/workflows/CI/badge.svg?event=push&branch=main">
+        <img alt="CI" src="https://github.com/durandtibo/startorch/workflows/CI/badge.svg">
     </a>
     <a href="https://durandtibo.github.io/startorch/">
-        <img alt="CI" src="https://github.com/durandtibo/startorch/workflows/Documentation/badge.svg?event=push&branch=main">
+        <img alt="Documentation" src="https://github.com/durandtibo/startorch/workflows/Documentation/badge.svg">
     </a>
+    <a href="https://github.com/durandtibo/startorch/actions">
+        <img alt="Nightly Tests" src="https://github.com/durandtibo/startorch/workflows/Nightly%20Tests/badge.svg">
+    </a>
+    <a href="https://github.com/durandtibo/startorch/actions">
+        <img alt="Nightly Package Tests" src="https://github.com/durandtibo/startorch/workflows/Nightly%20Package%20Tests/badge.svg">
+    </a>
+    <br/>
     <a href="https://codecov.io/gh/durandtibo/startorch">
         <img alt="Codecov" src="https://codecov.io/gh/durandtibo/startorch/branch/main/graph/badge.svg">
     </a>

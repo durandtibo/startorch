@@ -32,6 +32,7 @@ __all__ = [
     "Mul",
     "MulScalar",
     "Multinomial",
+    "MultinomialChoice",
     "Neg",
     "Normal",
     "Poisson",
@@ -83,6 +84,9 @@ from startorch.sequence.cauchy import (
     RandTruncCauchySequenceGenerator as RandTruncCauchy,
 )
 from startorch.sequence.cauchy import TruncCauchySequenceGenerator as TruncCauchy
+from startorch.sequence.choice import (
+    MultinomialChoiceSequenceGenerator as MultinomialChoice,
+)
 from startorch.sequence.constant import ConstantSequenceGenerator as Constant
 from startorch.sequence.constant import FullSequenceGenerator as Full
 from startorch.sequence.dtype import FloatSequenceGenerator as Float
