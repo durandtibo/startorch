@@ -17,6 +17,7 @@ class TensorSequenceGenerator(BaseSequenceGenerator):
     tensor generator.
 
     Args:
+    ----
         tensor (``BaseTensorGenerator`` or dict): Specifies a tensor
             generator (or its configuration).
         feature_size (tuple or list or int, optional): Specifies the

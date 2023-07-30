@@ -33,9 +33,9 @@ def test_multinomial_choice_generators() -> None:
             {WEIGHT: 1.0, GENERATOR: RandNormal()},
         )
     )
-    assert len(generator._generators) == 2
-    assert isinstance(generator._generators[0], RandUniform)
-    assert isinstance(generator._generators[1], RandNormal)
+    assert len(generator._tensors) == 2
+    assert isinstance(generator._tensors[0], RandUniform)
+    assert isinstance(generator._tensors[1], RandNormal)
 
 
 def test_multinomial_choice_weights() -> None:

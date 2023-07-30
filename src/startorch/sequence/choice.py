@@ -33,11 +33,12 @@ class MultinomialChoiceSequenceGenerator(BaseSequenceGenerator):
             If this key is absent, the weight is set to ``1.0``.
 
     Args:
+    ----
         sequences (sequence): Specifies the sequence
             generators and their weights. See above to learn
             about the expected format.
 
-    Sequence usage:
+    Example usage:
 
     .. code-block:: pycon
 
@@ -59,10 +60,8 @@ class MultinomialChoiceSequenceGenerator(BaseSequenceGenerator):
         self._weights = torch.as_tensor(weights, dtype=torch.float)
 
     def __repr__(self) -> str:
-        generators_str = str_indent(
-            str_weighted_modules(modules=self._sequences, weights=self._weights)
-        )
-        return f"{self.__class__.__qualname__}(\n  {generators_str}\n)"
+        args = str_indent(str_weighted_modules(modules=self._sequences, weights=self._weights))
+        return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
