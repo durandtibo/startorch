@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "startorch"
-version = "0.0.1"
+version = "0.0.2a0"
 description = "synthetic time-series generator in PyTorch"
 readme = "README.md"
 authors = ["Thibaut Durand <durand.tibo+gh@gmail.com>"]
@@ -36,10 +36,14 @@ redcat = ">=0.0.6,<1.0"
 torch = ">=2.0,<3.0"
 
 # Optional dependencies
-
+matplotlib = { version = "^3.7", optional = true }
 
 [tool.poetry.extras]
-all = []
+all = ["matplotlib"]
+
+[tool.poetry.group.exp.dependencies]
+jupyterlab = "^4.0"
+seaborn = "^0.12"
 
 [tool.poetry.group.docs.dependencies]
 mkdocs-material = "^9.1"

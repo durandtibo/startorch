@@ -34,7 +34,7 @@ jobs:
       - name: Install packages
         run: |
           poetry run make config-poetry
-          poetry run make install-all
+          poetry run make install
 
       - name: Show installed packages
         run: |
@@ -101,7 +101,7 @@ jobs:
       - name: Install packages
         run: |
           poetry run make config-poetry
-          poetry run make install-all
+          poetry run make install
 
       - name: Show installed packages
         run: |
@@ -145,7 +145,7 @@ jobs:
       - name: Install packages
         run: |
           poetry run make config-poetry
-          poetry run make install
+          poetry run make install-min
 
       - name: Show installed packages
         run: |
