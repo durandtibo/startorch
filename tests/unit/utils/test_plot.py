@@ -3,7 +3,7 @@ from __future__ import annotations
 from unittest.mock import Mock, patch
 
 from coola import objects_are_equal
-from pytest import mark
+from pytest import mark, raises
 
 from startorch.sequence import BaseSequenceGenerator, RandNormal, RandUniform
 from startorch.testing import matplotlib_available
@@ -52,6 +52,12 @@ def test_hist_sequence_rng(seed: int) -> None:
         )
 
 
+@patch("startorch.utils.imports.is_matplotlib_available", lambda *args, **kwargs: False)
+def test_hist_sequence_no_matplotlib() -> None:
+    with raises(RuntimeError, match="`matplotlib` package is required but not installed."):
+        hist_sequence(RandUniform())
+
+
 ###################################
 #     Tests for plot_sequence     #
 ###################################
@@ -88,3 +94,9 @@ def test_plot_sequence_rng(seed: int) -> None:
         assert objects_are_equal(
             ax.plot.call_args_list[0].args[0], ax.plot.call_args_list[1].args[0]
         )
+
+
+@patch("startorch.utils.imports.is_matplotlib_available", lambda *args, **kwargs: False)
+def test_plot_sequence_no_matplotlib() -> None:
+    with raises(RuntimeError, match="`matplotlib` package is required but not installed."):
+        plot_sequence(RandUniform())
