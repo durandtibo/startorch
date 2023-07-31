@@ -92,6 +92,25 @@ def test_scale_batch_log1p() -> None:
     )
 
 
+def test_scale_batch_log2() -> None:
+    assert scale_batch(BatchedTensor(torch.arange(10).add(1).view(2, 5)), scale="log2").equal(
+        BatchedTensor(
+            torch.tensor(
+                [
+                    [0.0, 1.0, 1.5849624872207642, 2.0, 2.321928024291992],
+                    [
+                        2.5849626064300537,
+                        2.8073549270629883,
+                        3.0,
+                        3.1699249744415283,
+                        3.321928024291992,
+                    ],
+                ]
+            )
+        )
+    )
+
+
 def test_scale_batch_asinh() -> None:
     assert scale_batch(BatchedTensor(torch.arange(10).view(2, 5)), scale="asinh").equal(
         BatchedTensor(

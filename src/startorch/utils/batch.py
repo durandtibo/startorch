@@ -30,17 +30,9 @@ def scale_batch(batch: BatchedTensor, scale: str = "identity") -> BatchedTensor:
         tensor([[0.0000, 0.8814, 1.4436, 1.8184, 2.0947],
                 [2.3124, 2.4918, 2.6441, 2.7765, 2.8934]], batch_dim=0)
     """
+    valid = {"identity", "log", "log10", "log2", "log1p", "asinh"}
+    if scale not in valid:
+        raise RuntimeError(f"Incorrect scale: {scale}. Valid scales are: {valid}")
     if scale == "identity":
         return batch
-    if scale == "log":
-        return batch.log()
-    if scale == "log10":
-        return batch.log10()
-    if scale == "log1p":
-        return batch.log1p()
-    if scale == "asinh":
-        return batch.asinh()
-    raise RuntimeError(
-        f"Incorrect scale: {scale}. Valid scales are: 'identity', 'log', 'log10', "
-        f"'log1p' and 'asinh'"
-    )
+    return getattr(batch, scale)()
