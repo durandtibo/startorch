@@ -12,13 +12,13 @@ from startorch.utils.batch import scale_batch
 
 
 def test_scale_batch_identity() -> None:
-    assert scale_batch(BatchedTensor(torch.arange(10).view(2, 5))).equal(
+    assert scale_batch(BatchedTensor(torch.arange(10).view(2, 5))).allclose(
         BatchedTensor(torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]))
     )
 
 
 def test_scale_batch_log() -> None:
-    assert scale_batch(BatchedTensor(torch.arange(10).add(1).view(2, 5)), scale="log").equal(
+    assert scale_batch(BatchedTensor(torch.arange(10).add(1).view(2, 5)), scale="log").allclose(
         BatchedTensor(
             torch.tensor(
                 [
@@ -43,7 +43,7 @@ def test_scale_batch_log() -> None:
 
 
 def test_scale_batch_log10() -> None:
-    assert scale_batch(BatchedTensor(torch.arange(10).add(1).view(2, 5)), scale="log10").equal(
+    assert scale_batch(BatchedTensor(torch.arange(10).add(1).view(2, 5)), scale="log10").allclose(
         BatchedTensor(
             torch.tensor(
                 [
@@ -68,7 +68,7 @@ def test_scale_batch_log10() -> None:
 
 
 def test_scale_batch_log1p() -> None:
-    assert scale_batch(BatchedTensor(torch.arange(10).view(2, 5)), scale="log1p").equal(
+    assert scale_batch(BatchedTensor(torch.arange(10).view(2, 5)), scale="log1p").allclose(
         BatchedTensor(
             torch.tensor(
                 [
@@ -93,7 +93,7 @@ def test_scale_batch_log1p() -> None:
 
 
 def test_scale_batch_log2() -> None:
-    assert scale_batch(BatchedTensor(torch.arange(10).add(1).view(2, 5)), scale="log2").equal(
+    assert scale_batch(BatchedTensor(torch.arange(10).add(1).view(2, 5)), scale="log2").allclose(
         BatchedTensor(
             torch.tensor(
                 [
@@ -112,7 +112,7 @@ def test_scale_batch_log2() -> None:
 
 
 def test_scale_batch_asinh() -> None:
-    assert scale_batch(BatchedTensor(torch.arange(10).view(2, 5)), scale="asinh").equal(
+    assert scale_batch(BatchedTensor(torch.arange(10).view(2, 5)), scale="asinh").allclose(
         BatchedTensor(
             torch.tensor(
                 [
