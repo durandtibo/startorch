@@ -8,11 +8,48 @@ from pytest import mark
 from startorch.sequence import BaseSequenceGenerator, RandNormal, RandUniform
 from startorch.testing import matplotlib_available
 from startorch.utils.imports import is_matplotlib_available
-from startorch.utils.plot import plot_sequence
+from startorch.utils.plot import hist_sequence, plot_sequence
 from startorch.utils.seed import get_torch_generator
 
 if is_matplotlib_available():
     from matplotlib import pyplot as plt
+
+###################################
+#     Tests for hist_sequence     #
+###################################
+
+
+@matplotlib_available
+@mark.parametrize("generator", (RandUniform(), RandNormal()))
+def test_hist_sequence_generator(generator: BaseSequenceGenerator) -> None:
+    assert isinstance(hist_sequence(generator), plt.Figure)
+
+
+@mark.parametrize("seq_len", (1, 2, 4))
+def test_hist_sequence_seq_len(seq_len: int) -> None:
+    ax = Mock()
+    with patch("startorch.utils.plot.plt.subplots", lambda *args, **kwargs: (Mock(), ax)):
+        hist_sequence(RandUniform(), seq_len=seq_len, batch_size=1)
+        assert ax.hist.call_args_list[0].args[0].shape[0] == seq_len
+
+
+@mark.parametrize("batch_size", (1, 2, 4))
+def test_hist_sequence_batch_size(batch_size: int) -> None:
+    ax = Mock()
+    with patch("startorch.utils.plot.plt.subplots", lambda *args, **kwargs: (Mock(), ax)):
+        hist_sequence(RandUniform(), seq_len=1, batch_size=batch_size)
+        assert ax.hist.call_args_list[0].args[0].shape[0] == batch_size
+
+
+@mark.parametrize("seed", (1, 2, 4))
+def test_hist_sequence_rng(seed: int) -> None:
+    ax = Mock()
+    with patch("startorch.utils.plot.plt.subplots", lambda *args, **kwargs: (Mock(), ax)):
+        hist_sequence(RandUniform(), rng=seed)
+        hist_sequence(RandUniform(), rng=get_torch_generator(seed))
+        assert objects_are_equal(
+            ax.hist.call_args_list[0].args[0], ax.hist.call_args_list[1].args[0]
+        )
 
 
 ###################################
