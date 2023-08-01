@@ -25,6 +25,7 @@ def hist_sequence(
     rng: int | Generator = 13683624337160779813,
     figsize: tuple[int, int] = (16, 5),
     scale: str = "identity",
+    **kwargs,
 ) -> plt.Figure:
     r"""Plots the distribution from a sequence generator.
 
@@ -43,6 +44,7 @@ def hist_sequence(
             Default: ``13683624337160779813``
         figsize (tuple, optional): Specifies the figure size.
             Default: ``(16, 5)``
+        **kwargs: Additional keyword arguments for ``plt.hist``.
 
     Returns:
     -------
@@ -64,7 +66,7 @@ def hist_sequence(
     batch = sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
     batch = scale_batch(batch, scale=scale)
     fig, ax = plt.subplots(figsize=figsize)
-    ax.hist(batch.data.flatten().numpy(), bins=bins)
+    ax.hist(batch.data.flatten().numpy(), bins=bins, **kwargs)
     return fig
 
 
@@ -76,6 +78,7 @@ def plot_sequence(
     figsize: tuple[int, int] = (16, 5),
     xscale: str = "linear",
     yscale: str = "linear",
+    **kwargs,
 ) -> plt.Figure:
     r"""Plots some sequences generated from a sequence generator.
 
@@ -96,6 +99,7 @@ def plot_sequence(
             Default: ``linear``
         yscale (str, optional): Specifies the y-axis scale.
             Default: ``linear``
+        **kwargs: Additional keyword arguments for ``plt.plot``.
 
     Returns:
     -------
@@ -117,7 +121,7 @@ def plot_sequence(
     fig, ax = plt.subplots(figsize=figsize)
     batch = sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
     for i in range(batch.batch_size):
-        ax.plot(batch.select_along_batch(i).data.flatten().numpy(), marker="o")
+        ax.plot(batch.select_along_batch(i).data.flatten().numpy(), marker="o", **kwargs)
     ax.set_xscale(xscale)
     ax.set_yscale(yscale)
     return fig
