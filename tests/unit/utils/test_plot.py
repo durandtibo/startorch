@@ -25,6 +25,12 @@ def test_hist_sequence_generator(generator: BaseSequenceGenerator) -> None:
     assert isinstance(hist_sequence(generator), plt.Figure)
 
 
+@matplotlib_available
+@mark.parametrize("scale", ("identity", "log", "log10", "log2", "log1p", "asinh"))
+def test_hist_sequence_scale(scale: str) -> None:
+    assert isinstance(hist_sequence(RandUniform(), scale=scale), plt.Figure)
+
+
 @mark.parametrize("seq_len", (1, 2, 4))
 def test_hist_sequence_seq_len(seq_len: int) -> None:
     ax = Mock()
