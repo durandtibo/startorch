@@ -1,8 +1,49 @@
 from __future__ import annotations
 
-__all__ = ["scale_batch"]
+__all__ = ["merge_batches", "scale_batch"]
+
+from collections.abc import Sequence
 
 from redcat import BatchedTensor
+
+
+def merge_batches(batches: Sequence[BatchedTensor]) -> BatchedTensor:
+    r"""Merges batches into a single batch.
+
+    Args:
+    ----
+        batches (``Sequence``): Specifies the batches to merge.
+
+    Returns:
+    -------
+        ``BatchedTensor``: The "merged" batch.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> import torch
+        >>> from redcat import BatchedTensor
+        >>> from startorch.utils.batch import merge_batches
+        >>> batch = merge_batches(
+        ...     [
+        ...         BatchedTensor(torch.arange(6).view(2, 3)),
+        ...         BatchedTensor(torch.ones(2, 3)),
+        ...         BatchedTensor(torch.zeros(1, 3)),
+        ...     ]
+        ... )
+        >>> batch
+        tensor([[0., 1., 2.],
+                [3., 4., 5.],
+                [1., 1., 1.],
+                [1., 1., 1.],
+                [0., 0., 0.]], batch_dim=0)
+    """
+    if not batches:
+        raise RuntimeError("No batch is provided")
+    batch = batches[0].clone()
+    batch.extend(batches[1:])
+    return batch
 
 
 def scale_batch(batch: BatchedTensor, scale: str = "identity") -> BatchedTensor:
