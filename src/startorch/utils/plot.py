@@ -7,6 +7,7 @@ from unittest.mock import Mock
 from torch import Generator
 
 from startorch.sequence.base import BaseSequenceGenerator
+from startorch.utils.batch import scale_batch
 from startorch.utils.imports import check_matplotlib, is_matplotlib_available
 from startorch.utils.seed import get_torch_generator
 
@@ -23,6 +24,7 @@ def hist_sequence(
     batch_size: int = 10000,
     rng: int | Generator = 13683624337160779813,
     figsize: tuple[int, int] = (16, 5),
+    scale: str = "identity",
 ) -> plt.Figure:
     r"""Plots the distribution from a sequence generator.
 
@@ -38,7 +40,7 @@ def hist_sequence(
             Default: ``1``
         rng (``torch.Generator`` or int): Specifies a random number
             generator or a random seed.
-            Default: ```13683624337160779813``
+            Default: ``13683624337160779813``
         figsize (tuple, optional): Specifies the figure size.
             Default: ``(16, 5)``
 
@@ -60,6 +62,7 @@ def hist_sequence(
         rng = get_torch_generator(random_seed=rng)
 
     batch = sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
+    batch = scale_batch(batch, scale=scale)
     fig, ax = plt.subplots(figsize=figsize)
     ax.hist(batch.data.flatten().numpy(), bins=bins)
     return fig
@@ -71,6 +74,8 @@ def plot_sequence(
     batch_size: int = 1,
     rng: int | Generator = 13683624337160779813,
     figsize: tuple[int, int] = (16, 5),
+    xscale: str = "linear",
+    yscale: str = "linear",
 ) -> plt.Figure:
     r"""Plots some sequences generated from a sequence generator.
 
@@ -84,9 +89,13 @@ def plot_sequence(
             Default: ``1``
         rng (``torch.Generator`` or int): Specifies a random number
             generator or a random seed.
-            Default: ```13683624337160779813``
+            Default: ``13683624337160779813``
         figsize (tuple, optional): Specifies the figure size.
             Default: ``(16, 5)``
+        xscale (str, optional): Specifies the x-axis scale.
+            Default: ``linear``
+        yscale (str, optional): Specifies the y-axis scale.
+            Default: ``linear``
 
     Returns:
     -------
@@ -109,4 +118,6 @@ def plot_sequence(
     batch = sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
     for i in range(batch.batch_size):
         ax.plot(batch.select_along_batch(i).data.flatten().numpy(), marker="o")
+    ax.set_xscale(xscale)
+    ax.set_yscale(yscale)
     return fig
