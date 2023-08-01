@@ -7,7 +7,7 @@ from unittest.mock import Mock
 from torch import Generator
 
 from startorch.sequence.base import BaseSequenceGenerator
-from startorch.utils.batch import scale_batch
+from startorch.utils.batch import merge_batches, scale_batch
 from startorch.utils.imports import check_matplotlib, is_matplotlib_available
 from startorch.utils.seed import get_torch_generator
 
@@ -22,6 +22,7 @@ def hist_sequence(
     bins: int = 500,
     seq_len: int = 1000,
     batch_size: int = 10000,
+    num_batches: int = 1,
     rng: int | Generator = 13683624337160779813,
     figsize: tuple[int, int] = (16, 5),
     scale: str = "identity",
@@ -63,7 +64,12 @@ def hist_sequence(
     if not isinstance(rng, Generator):
         rng = get_torch_generator(random_seed=rng)
 
-    batch = sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
+    batch = merge_batches(
+        [
+            sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
+            for _ in range(num_batches)
+        ]
+    )
     batch = scale_batch(batch, scale=scale)
     fig, ax = plt.subplots(figsize=figsize)
     ax.hist(batch.data.flatten().numpy(), bins=bins, **kwargs)
@@ -74,6 +80,7 @@ def plot_sequence(
     sequence: BaseSequenceGenerator,
     seq_len: int = 128,
     batch_size: int = 1,
+    num_batches: int = 1,
     rng: int | Generator = 13683624337160779813,
     figsize: tuple[int, int] = (16, 5),
     xscale: str = "linear",
@@ -89,6 +96,8 @@ def plot_sequence(
         seq_len (int, optional): Specifies the sequence length.
             Default: ``128``
         batch_size (int, optional): Specifies the batch size.
+            Default: ``1``
+        num_batches (int, optional): Specifies the number of batches.
             Default: ``1``
         rng (``torch.Generator`` or int): Specifies a random number
             generator or a random seed.
@@ -119,9 +128,10 @@ def plot_sequence(
         rng = get_torch_generator(random_seed=rng)
 
     fig, ax = plt.subplots(figsize=figsize)
-    batch = sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
-    for i in range(batch.batch_size):
-        ax.plot(batch.select_along_batch(i).data.flatten().numpy(), marker="o", **kwargs)
+    for _ in range(num_batches):
+        batch = sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
+        for i in range(batch.batch_size):
+            ax.plot(batch.select_along_batch(i).data.flatten().numpy(), marker="o", **kwargs)
     ax.set_xscale(xscale)
     ax.set_yscale(yscale)
     return fig
