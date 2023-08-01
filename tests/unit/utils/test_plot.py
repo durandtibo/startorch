@@ -47,6 +47,14 @@ def test_hist_sequence_batch_size(batch_size: int) -> None:
         assert ax.hist.call_args_list[0].args[0].shape[0] == batch_size
 
 
+@mark.parametrize("num_batches", (1, 2, 4))
+def test_hist_sequence_num_batches(num_batches: int) -> None:
+    ax = Mock()
+    with patch("startorch.utils.plot.plt.subplots", lambda *args, **kwargs: (Mock(), ax)):
+        hist_sequence(RandUniform(), seq_len=1, batch_size=1, num_batches=num_batches)
+        assert ax.hist.call_args_list[0].args[0].shape[0] == num_batches
+
+
 @mark.parametrize("seed", (1, 2, 4))
 def test_hist_sequence_rng(seed: int) -> None:
     ax = Mock()
@@ -89,6 +97,14 @@ def test_plot_sequence_batch_size(batch_size: int) -> None:
     with patch("startorch.utils.plot.plt.subplots", lambda *args, **kwargs: (Mock(), ax)):
         plot_sequence(RandUniform(), batch_size=batch_size)
         assert len(ax.plot.call_args_list) == batch_size
+
+
+@mark.parametrize("num_batches", (1, 2, 4))
+def test_plot_sequence_num_batches(num_batches: int) -> None:
+    ax = Mock()
+    with patch("startorch.utils.plot.plt.subplots", lambda *args, **kwargs: (Mock(), ax)):
+        plot_sequence(RandUniform(), batch_size=1, num_batches=num_batches)
+        assert len(ax.plot.call_args_list) == num_batches
 
 
 @mark.parametrize("seed", (1, 2, 4))
