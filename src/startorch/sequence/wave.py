@@ -38,12 +38,12 @@ class SineWaveSequenceGenerator(BaseSequenceGenerator):
     .. code-block:: pycon
 
         >>> import torch
-        >>> from startorch.sequence import SineWave, RandUniform
+        >>> from startorch.sequence import Arange, SineWave, RandUniform, Constant, RandLogUniform
         >>> generator = SineWave(
-        ...     value=RandUniform(low=-1.0, high=1.0),
-        ...     frequency=RandUniform(low=-1.0, high=1.0),
-        ...     phase=RandUniform(low=-1.0, high=1.0),
-        ...     amplitude=RandUniform(low=-1.0, high=1.0),
+        ...     value=Arange(),
+        ...     frequency=Constant(RandLogUniform(low=0.01, high=0.1)),
+        ...     phase=Constant(RandUniform(low=-1.0, high=1.0)),
+        ...     amplitude=Constant(RandLogUniform(low=0.1, high=1.0)),
         ... )
         >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
         tensor([[...]], batch_dim=0, seq_dim=1)
