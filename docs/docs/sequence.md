@@ -219,8 +219,8 @@ from startorch.sequence import BaseSequenceGenerator
 
 class FortyTwoSequenceGenerator(BaseSequenceGenerator):
     def __init__(
-            self,
-            feature_size: tuple[int, ...] | list[int] | int = 1,
+        self,
+        feature_size: tuple[int, ...] | list[int] | int = 1,
     ) -> None:
         super().__init__()
         self._feature_size = to_tuple(feature_size)
@@ -229,7 +229,7 @@ class FortyTwoSequenceGenerator(BaseSequenceGenerator):
         return f"{self.__class__.__qualname__}(feature_size={self._feature_size})"
 
     def generate(
-            self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
+        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchedTensorSeq:
         return BatchedTensorSeq(
             torch.full((batch_size, seq_len) + self._feature_size, 42.0)
