@@ -62,16 +62,16 @@ distribution.
 
 <table>
   <tr>
-    <td><img src="../assets/figures/uniform.png" width="300" align="center"></td>
-    <td><img src="../assets/figures/log-uniform.png" width="300" align="center"></td>
+    <td><img src="https://durandtibo.github.io/startorch/assets/figures/uniform.png" width="300" align="center"></td>
+    <td><img src="https://durandtibo.github.io/startorch/assets/figures/log-uniform.png" width="300" align="center"></td>
   </tr>
   <tr>
     <td align="center">uniform</td>
     <td align="center">log-uniform</td>
   </tr>
   <tr>
-    <td><img src="../assets/figures/sinewave.png" width="300" align="center"></td>
-    <td><img src="../assets/figures/wiener.png" width="300" align="center"></td>
+    <td><img src="https://durandtibo.github.io/startorch/assets/figures/sinewave.png" width="300" align="center"></td>
+    <td><img src="https://durandtibo.github.io/startorch/assets/figures/wiener.png" width="300" align="center"></td>
   </tr>
   <tr>
     <td align="center">sine wave</td>
@@ -95,7 +95,7 @@ generator = RandNormal(mean=0.0, std=1.0)
 batch = generator.generate(seq_len=128, batch_size=4)
 ```
 
-<div align="center"><img src="../assets/figures/normal.png" width="640" align="center"></div>
+<div align="center"><img src="https://durandtibo.github.io/startorch/assets/figures/normal.png" width="640" align="center"></div>
 
 It is possible to combine multiple generators to build a more complex generator.
 The example below shows how to build a generator that sums multiple the output of three sine wave
@@ -136,7 +136,7 @@ generator = Add(
 batch = generator.generate(seq_len=128, batch_size=4)
 ```
 
-<div align="center"><img src="../assets/figures/add3sinewaves.png" width="640" align="center"></div>
+<div align="center"><img src="https://durandtibo.github.io/startorch/assets/figures/add3sinewaves.png" width="640" align="center"></div>
 
 ## API stability
 
