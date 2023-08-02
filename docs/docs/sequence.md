@@ -167,7 +167,7 @@ generator = Add(
 batch = generator.generate(seq_len=128, batch_size=4)
 ```
 
-<div align="center"><img src="../assets/figures/add3sinewaves.png" width="640" align="center"></div>
+<div align="center"><img src="https://durandtibo.github.io/startorch/assets/figures/add3sinewaves.png" width="640" align="center"></div>
 
 ## Randomness
 
@@ -219,8 +219,8 @@ from startorch.sequence import BaseSequenceGenerator
 
 class FortyTwoSequenceGenerator(BaseSequenceGenerator):
     def __init__(
-        self,
-        feature_size: tuple[int, ...] | list[int] | int = 1,
+            self,
+            feature_size: tuple[int, ...] | list[int] | int = 1,
     ) -> None:
         super().__init__()
         self._feature_size = to_tuple(feature_size)
@@ -229,7 +229,7 @@ class FortyTwoSequenceGenerator(BaseSequenceGenerator):
         return f"{self.__class__.__qualname__}(feature_size={self._feature_size})"
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
+            self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchedTensorSeq:
         return BatchedTensorSeq(
             torch.full((batch_size, seq_len) + self._feature_size, 42.0)
@@ -268,7 +268,7 @@ generator = RandUniform(low=-5, high=5)
 generator.generate(seq_len=128, batch_size=4)
 ```
 
-<div align="center"><img src="../assets/figures/rand_uniform_5.png" width="640" align="center"></div>
+<div align="center"><img src="https://durandtibo.github.io/startorch/assets/figures/rand_uniform_5.png" width="640" align="center"></div>
 
 - `Uniform` example
 
@@ -279,7 +279,7 @@ generator = Uniform(low=RandUniform(-1.0, 0.0), high=RandUniform(0.0, 1.0))
 generator.generate(seq_len=128, batch_size=4)
 ```
 
-<div align="center"><img src="../assets/figures/uniform_1.png" width="640" align="center"></div>
+<div align="center"><img src="https://durandtibo.github.io/startorch/assets/figures/uniform_1.png" width="640" align="center"></div>
 
 
 `TruncXXX` indicates the sequence generator sampled value from a truncated distribution.
@@ -295,7 +295,7 @@ generator = RandCauchy()
 generator.generate(seq_len=128, batch_size=4)
 ```
 
-<div align="center"><img src="../assets/figures/rand_cauchy.png" width="640" align="center"></div>
+<div align="center"><img src="https://durandtibo.github.io/startorch/assets/figures/rand_cauchy.png" width="640" align="center"></div>
 
 - `RandTruncCauchy` example
 
@@ -306,4 +306,4 @@ generator = RandTruncCauchy()
 generator.generate(seq_len=128, batch_size=4)
 ```
 
-<div align="center"><img src="../assets/figures/rand_trunc_cauchy.png" width="640" align="center"></div>
+<div align="center"><img src="https://durandtibo.github.io/startorch/assets/figures/rand_trunc_cauchy.png" width="640" align="center"></div>
