@@ -64,16 +64,16 @@ distribution.
 
 <table align="center">
   <tr>
-    <td><img src="https://durandtibo.github.io/startorch/assets/figures/uniform.png" width="300" align="center"></td>
-    <td><img src="https://durandtibo.github.io/startorch/assets/figures/log-uniform.png" width="300" align="center"></td>
+    <td><img src="https://durandtibo.github.io/startorch/assets/figures/uniform.png" width="400" align="center"></td>
+    <td><img src="https://durandtibo.github.io/startorch/assets/figures/log-uniform.png" width="400" align="center"></td>
   </tr>
   <tr>
     <td align="center">uniform</td>
     <td align="center">log-uniform</td>
   </tr>
   <tr>
-    <td><img src="https://durandtibo.github.io/startorch/assets/figures/sinewave.png" width="300" align="center"></td>
-    <td><img src="https://durandtibo.github.io/startorch/assets/figures/wiener.png" width="300" align="center"></td>
+    <td><img src="https://durandtibo.github.io/startorch/assets/figures/sinewave.png" width="400" align="center"></td>
+    <td><img src="https://durandtibo.github.io/startorch/assets/figures/wiener.png" width="400" align="center"></td>
   </tr>
   <tr>
     <td align="center">sine wave</td>
