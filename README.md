@@ -49,31 +49,43 @@
     <br/>
 </p>
 
+---
+
 ## Overview
 
-Synthetic time-series generator in PyTorch
+Collecting datasets to train Machine Learning models can be time consuming.
+Another alternative is to use synthetic datasets.
+`startorch` is a Python library to generate synthetic time-series.
+As the name suggest, `startorch` relies mostly on PyTorch to generate the time series and to control
+the randomness.
+`startorch` is built to be modular, flexible and extensible.
+Below show some generated sequences by `startorch` where the values are sampled from different
+distribution.
 
-## Installation
+<table align="center">
+  <tr>
+    <td><img src="https://durandtibo.github.io/startorch/assets/figures/uniform.png" width="300" align="center"></td>
+    <td><img src="https://durandtibo.github.io/startorch/assets/figures/log-uniform.png" width="300" align="center"></td>
+  </tr>
+  <tr>
+    <td align="center">uniform</td>
+    <td align="center">log-uniform</td>
+  </tr>
+  <tr>
+    <td><img src="https://durandtibo.github.io/startorch/assets/figures/sinewave.png" width="300" align="center"></td>
+    <td><img src="https://durandtibo.github.io/startorch/assets/figures/wiener.png" width="300" align="center"></td>
+  </tr>
+  <tr>
+    <td align="center">sine wave</td>
+    <td align="center">Wiener process</td>
+  </tr>
+</table>
 
-We highly recommend installing
-a [virtual environment](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/).
-`startorch` can be installed from pip using the following command:
-
-```shell
-pip install startorch
-```
-
-To make the package as slim as possible, only the minimal packages required to use `startorch` are
-installed.
-To include all the packages, you can use the following command:
-
-```shell
-pip install startorch[all]
-```
-
-Please check the [get started page](https://durandtibo.github.io/startorch/get_started) to see how
-to
-install only some specific packages or other alternatives to install the library.
+- [Documentation](https://durandtibo.github.io/startorch/)
+- [Installation](https://durandtibo.github.io/startorch/get_started/)
+- [Contributing](#contributing)
+- [API stability](#api-stability)
+- [License](#license)
 
 ## Contributing
 

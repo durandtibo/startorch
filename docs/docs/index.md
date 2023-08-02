@@ -60,7 +60,7 @@ The user is responsible to define the recipe to generate the time series.
 Below show some generated sequences by `startorch` where the values are sampled from different
 distribution.
 
-<table>
+<table align="center">
   <tr>
     <td><img src="https://durandtibo.github.io/startorch/assets/figures/uniform.png" width="300" align="center"></td>
     <td><img src="https://durandtibo.github.io/startorch/assets/figures/log-uniform.png" width="300" align="center"></td>
