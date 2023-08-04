@@ -44,7 +44,7 @@ def test_periodic_generate(
     assert batch.data.dtype == torch.float
 
 
-@mark.parametrize("generator", (RandUniform(), Repeat(RandUniform())))
+@mark.parametrize("sequence", (RandUniform(), Repeat(RandUniform())))
 def test_periodic_generate_period_4(
     sequence: BaseSequenceGenerator | BasePeriodicSequenceGenerator,
 ) -> None:
