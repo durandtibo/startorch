@@ -22,13 +22,15 @@ if is_matplotlib_available():
 @matplotlib_available
 @mark.parametrize("generator", (RandUniform(), RandNormal()))
 def test_hist_sequence_generator(generator: BaseSequenceGenerator) -> None:
-    assert isinstance(hist_sequence(generator), plt.Figure)
+    assert isinstance(hist_sequence(generator, batch_size=2, seq_len=6), plt.Figure)
 
 
 @matplotlib_available
 @mark.parametrize("scale", ("identity", "log", "log10", "log2", "log1p", "asinh"))
 def test_hist_sequence_scale(scale: str) -> None:
-    assert isinstance(hist_sequence(RandUniform(), scale=scale), plt.Figure)
+    assert isinstance(
+        hist_sequence(RandUniform(), batch_size=2, seq_len=6, scale=scale), plt.Figure
+    )
 
 
 @patch("startorch.utils.imports.is_matplotlib_available", lambda *args, **kwargs: True)
@@ -84,7 +86,7 @@ def test_hist_sequence_no_matplotlib() -> None:
 @matplotlib_available
 @mark.parametrize("generator", (RandUniform(), RandNormal()))
 def test_plot_sequence_generator(generator: BaseSequenceGenerator) -> None:
-    assert isinstance(plot_sequence(generator), plt.Figure)
+    assert isinstance(plot_sequence(generator, batch_size=2, seq_len=6), plt.Figure)
 
 
 @patch("startorch.utils.imports.is_matplotlib_available", lambda *args, **kwargs: True)
