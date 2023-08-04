@@ -37,6 +37,7 @@ __all__ = [
     "MultinomialChoice",
     "Neg",
     "Normal",
+    "Periodic",
     "Poisson",
     "RandAsinhUniform",
     "RandCauchy",
@@ -154,6 +155,7 @@ from startorch.sequence.normal import (
     RandTruncNormalSequenceGenerator as RandTruncNormal,
 )
 from startorch.sequence.normal import TruncNormalSequenceGenerator as TruncNormal
+from startorch.sequence.periodic import PeriodicSequenceGenerator as Periodic
 from startorch.sequence.poisson import PoissonSequenceGenerator as Poisson
 from startorch.sequence.poisson import RandPoissonSequenceGenerator as RandPoisson
 from startorch.sequence.range import ArangeSequenceGenerator as Arange
