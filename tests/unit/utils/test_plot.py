@@ -22,15 +22,18 @@ if is_matplotlib_available():
 @matplotlib_available
 @mark.parametrize("generator", (RandUniform(), RandNormal()))
 def test_hist_sequence_generator(generator: BaseSequenceGenerator) -> None:
-    assert isinstance(hist_sequence(generator), plt.Figure)
+    assert isinstance(hist_sequence(generator, batch_size=2, seq_len=6), plt.Figure)
 
 
 @matplotlib_available
 @mark.parametrize("scale", ("identity", "log", "log10", "log2", "log1p", "asinh"))
 def test_hist_sequence_scale(scale: str) -> None:
-    assert isinstance(hist_sequence(RandUniform(), scale=scale), plt.Figure)
+    assert isinstance(
+        hist_sequence(RandUniform(), batch_size=2, seq_len=6, scale=scale), plt.Figure
+    )
 
 
+@patch("startorch.utils.imports.is_matplotlib_available", lambda *args, **kwargs: True)
 @mark.parametrize("seq_len", (1, 2, 4))
 def test_hist_sequence_seq_len(seq_len: int) -> None:
     ax = Mock()
@@ -39,6 +42,7 @@ def test_hist_sequence_seq_len(seq_len: int) -> None:
         assert ax.hist.call_args_list[0].args[0].shape[0] == seq_len
 
 
+@patch("startorch.utils.imports.is_matplotlib_available", lambda *args, **kwargs: True)
 @mark.parametrize("batch_size", (1, 2, 4))
 def test_hist_sequence_batch_size(batch_size: int) -> None:
     ax = Mock()
@@ -47,6 +51,7 @@ def test_hist_sequence_batch_size(batch_size: int) -> None:
         assert ax.hist.call_args_list[0].args[0].shape[0] == batch_size
 
 
+@patch("startorch.utils.imports.is_matplotlib_available", lambda *args, **kwargs: True)
 @mark.parametrize("num_batches", (1, 2, 4))
 def test_hist_sequence_num_batches(num_batches: int) -> None:
     ax = Mock()
@@ -55,6 +60,7 @@ def test_hist_sequence_num_batches(num_batches: int) -> None:
         assert ax.hist.call_args_list[0].args[0].shape[0] == num_batches
 
 
+@patch("startorch.utils.imports.is_matplotlib_available", lambda *args, **kwargs: True)
 @mark.parametrize("seed", (1, 2, 4))
 def test_hist_sequence_rng(seed: int) -> None:
     ax = Mock()
@@ -80,9 +86,10 @@ def test_hist_sequence_no_matplotlib() -> None:
 @matplotlib_available
 @mark.parametrize("generator", (RandUniform(), RandNormal()))
 def test_plot_sequence_generator(generator: BaseSequenceGenerator) -> None:
-    assert isinstance(plot_sequence(generator), plt.Figure)
+    assert isinstance(plot_sequence(generator, batch_size=2, seq_len=6), plt.Figure)
 
 
+@patch("startorch.utils.imports.is_matplotlib_available", lambda *args, **kwargs: True)
 @mark.parametrize("seq_len", (1, 2, 4))
 def test_plot_sequence_seq_len(seq_len: int) -> None:
     ax = Mock()
@@ -91,6 +98,7 @@ def test_plot_sequence_seq_len(seq_len: int) -> None:
         assert ax.plot.call_args_list[0].args[0].shape[0] == seq_len
 
 
+@patch("startorch.utils.imports.is_matplotlib_available", lambda *args, **kwargs: True)
 @mark.parametrize("batch_size", (1, 2, 4))
 def test_plot_sequence_batch_size(batch_size: int) -> None:
     ax = Mock()
@@ -99,6 +107,7 @@ def test_plot_sequence_batch_size(batch_size: int) -> None:
         assert len(ax.plot.call_args_list) == batch_size
 
 
+@patch("startorch.utils.imports.is_matplotlib_available", lambda *args, **kwargs: True)
 @mark.parametrize("num_batches", (1, 2, 4))
 def test_plot_sequence_num_batches(num_batches: int) -> None:
     ax = Mock()
@@ -107,6 +116,7 @@ def test_plot_sequence_num_batches(num_batches: int) -> None:
         assert len(ax.plot.call_args_list) == num_batches
 
 
+@patch("startorch.utils.imports.is_matplotlib_available", lambda *args, **kwargs: True)
 @mark.parametrize("seed", (1, 2, 4))
 def test_plot_sequence_rng(seed: int) -> None:
     ax = Mock()

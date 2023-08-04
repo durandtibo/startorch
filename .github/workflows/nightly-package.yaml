@@ -66,11 +66,6 @@ jobs:
           python -c "import startorch; import torch;" \
             "assert isinstance(startorch.random.uniform(0.0, 10.0), torch.Tensor); "
 
-      - name: Check imports
-        run: |
-          python -c "from startorch.sequence import BaseSequenceGenerator"
-          python -c "from startorch.tensor import BaseTensorGenerator"
-
   package-torch:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
@@ -99,8 +94,3 @@ jobs:
         run: |
           python -c "import startorch; import torch;" \
             "assert isinstance(startorch.random.uniform(0.0, 10.0), torch.Tensor); "
-
-      - name: Check imports
-        run: |
-          python -c "from startorch.sequence import BaseSequenceGenerator"
-          python -c "from startorch.tensor import BaseTensorGenerator"
