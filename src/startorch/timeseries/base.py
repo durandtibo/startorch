@@ -89,8 +89,12 @@ def setup_timeseries_generator(
     """
     if isinstance(generator, dict):
         logger.info(
-            "Initializing a time series generator from its configuration... "
+            "Initializing a time-series generator from its configuration... "
             f"{str_target_object(generator)}"
         )
         generator = BaseTimeSeriesGenerator.factory(**generator)
+    if not isinstance(generator, BaseTimeSeriesGenerator):
+        logger.warning(
+            f"generator is not a `BaseTimeSeriesGenerator` (received: {type(generator)})"
+        )
     return generator

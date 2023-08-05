@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 __all__ = ["merge_multiple_timeseries_by_time", "truncate_timeseries_by_length"]
 
 import torch
