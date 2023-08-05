@@ -62,10 +62,15 @@ def merge_multiple_timeseries_by_time(
         ...         },
         ...     ]
         ... )
-        {
-            'time': torch.tensor([[[5.], [6.], [10.], [12.], [15.], [16.], [20.], [24.], [25.]]]),
-            'value': torch.tensor([[11, 21, 12, 22, 13, 23, 14, 24, 15]]),
-        }
+        {'time': tensor([[[ 5.],
+                 [ 6.],
+                 [10.],
+                 [12.],
+                 [15.],
+                 [16.],
+                 [20.],
+                 [24.],
+                 [25.]]]), 'value': tensor([[11, 21, 12, 22, 13, 23, 14, 24, 15]])}
     """
     all_time_second = torch.cat([ts[time_key] for ts in timeseries], dim=1)
     sorted_values, indices = torch.sort(all_time_second, dim=1, stable=True)
@@ -119,7 +124,6 @@ def truncate_timeseries_by_length(
         >>> import torch
         >>> from startorch import constants as ct
         >>> from startorch.timeseries import truncate_timeseries_by_length
-        # let's assume that we want to merge two time series.
         >>> truncate_timeseries_by_length(
         ...     {
         ...         ct.TIME: torch.tensor([[[5], [10], [15], [20], [25]]], dtype=torch.float),
@@ -127,10 +131,9 @@ def truncate_timeseries_by_length(
         ...     },
         ...     max_seq_len=3,
         ... )
-        {
-            'time': torch.tensor([[[5.], [10.], [15.]]]),
-            'value': torch.tensor([[11, 12, 13]]),
-        }
+        {'time': tensor([[[ 5.],
+                 [10.],
+                 [15.]]]), 'value': tensor([[11, 12, 13]])}
     """
     if max_seq_len < 1:
         raise RuntimeError(
