@@ -43,6 +43,17 @@ class BasePeriodicSequenceGenerator(ABC, metaclass=AbstractFactory):
                 batch are represented by a ``torch.Tensor`` of shape
                 ``(batch_size, sequence_length, *)`` where `*` means
                 any number of dimensions.
+
+        Example usage:
+
+        .. code-block:: pycon
+
+            >>> import torch
+            >>> from startorch.periodic.sequence import Repeat
+            >>> from startorch.sequence import RandUniform
+            >>> generator = Repeat(RandUniform())
+            >>> generator.generate(seq_len=12, period=4, batch_size=4)  # doctest:+ELLIPSIS
+            tensor([[...]], batch_dim=0, seq_dim=1)
         """
 
 
@@ -62,6 +73,21 @@ def setup_periodic_sequence_generator(
     Returns:
     -------
         ``BasePeriodicSequenceGenerator``: A periodic sequence generator.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> from startorch.periodic.sequence import setup_periodic_sequence_generator
+        >>> setup_periodic_sequence_generator(
+        ...     {
+        ...         "_target_": "startorch.periodic.sequence.Repeat",
+        ...         "sequence": {"_target_": "startorch.sequence.RandUniform"},
+        ...     }
+        ... )
+        RepeatPeriodicSequenceGenerator(
+          (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+        )
     """
     if isinstance(generator, dict):
         logger.info(
@@ -69,4 +95,8 @@ def setup_periodic_sequence_generator(
             f"{str_target_object(generator)}"
         )
         generator = BasePeriodicSequenceGenerator.factory(**generator)
+    if not isinstance(generator, BasePeriodicSequenceGenerator):
+        logger.warning(
+            f"generator is not a `BasePeriodicSequenceGenerator` (received: {type(generator)})"
+        )
     return generator
