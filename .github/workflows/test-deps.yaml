@@ -44,7 +44,7 @@ jobs:
       - name: Run unit tests
         run: |
           poetry run make unit-test-cov
-        
+
 
   objectory:
     runs-on: ${{ matrix.os }}
@@ -86,7 +86,7 @@ jobs:
       - name: Run unit tests
         run: |
           poetry run make unit-test-cov
-          
+
 
   redcat:
     runs-on: ${{ matrix.os }}
@@ -97,7 +97,7 @@ jobs:
       matrix:
         os: [ ubuntu-latest ]
         python-version: [ '3.9', '3.10', '3.11' ]
-        redcat-version: [ 0.0.8, 0.0.7 ]
+        redcat-version: [ 0.0.7 ]
 
     steps:
       - name: Checkout
@@ -128,7 +128,7 @@ jobs:
       - name: Run unit tests
         run: |
           poetry run make unit-test-cov
-  
+
 
   torch:
     runs-on: ${{ matrix.os }}
