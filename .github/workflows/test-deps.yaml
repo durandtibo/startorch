@@ -181,7 +181,7 @@ jobs:
       matrix:
         os: [ ubuntu-latest ]
         python-version: [ '3.9', '3.10', '3.11' ]
-        matplotlib-version: [ 3.8.0, 3.7.3, 3.6.3, 3.5.3 ]
+        matplotlib-version: [ 3.8.0, 3.7.3, 3.6.3 ]
 
     steps:
       - name: Checkout
