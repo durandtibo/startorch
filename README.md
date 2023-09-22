@@ -89,9 +89,11 @@ distribution.
 
 ## Dependencies
 
-| `startorch` | `coola`            | `objectory`      | `redcat`          | `torch`      | `python`      |
-|-------------|--------------------|------------------|-------------------|--------------|---------------|
-| `0.0.3`     | `>=0.0.20,<0.0.21` | `>=0.0.7,<0.0.8` | `>=0.0.9,<0.0.10` | `>=2.0,<2.1` | `>=3.9,<3.12` |
+| `startorch` | `coola`            | `objectory`      | `redcat`          | `torch`      | `matplotlib` | `python`      |
+|-------------|--------------------|------------------|-------------------|--------------|--------------|---------------|
+| `0.0.3`     | `>=0.0.20,<0.0.24` | `>=0.0.7,<0.0.8` | `>=0.0.9,<0.0.10` | `>=2.0,<2.1` | `>=3.5,<3.9` | `>=3.9,<3.12` |
+
+<sup>*</sup> indicates an optional dependency
 
 ## Contributing
 
@@ -103,8 +105,7 @@ Please check the instructions in [CONTRIBUTING.md](.github/CONTRIBUTING.md).
 release to the next.
 In fact, it is very likely that the API will change multiple times before a stable 1.0.0 release.
 In practice, this means that upgrading `startorch` to a new version will possibly break any code
-that
-was using the old version of `startorch`.
+that was using the old version of `startorch`.
 
 ## License
 
