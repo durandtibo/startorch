@@ -32,6 +32,8 @@ class RandWienerProcessSequenceGenerator(BaseSequenceGenerator):
 
         >>> from startorch.sequence import RandWienerProcess
         >>> generator = RandWienerProcess()
+        >>> generator
+        RandWienerProcessSequenceGenerator(time_step_size=1.0)
         >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """

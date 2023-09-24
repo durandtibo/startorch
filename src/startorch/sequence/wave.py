@@ -45,6 +45,19 @@ class SineWaveSequenceGenerator(BaseSequenceGenerator):
         ...     phase=Constant(RandUniform(low=-1.0, high=1.0)),
         ...     amplitude=Constant(RandLogUniform(low=0.1, high=1.0)),
         ... )
+        >>> generator
+        SineWaveSequenceGenerator(
+          (value): ArangeSequenceGenerator(feature_size=(1,))
+          (frequency): ConstantSequenceGenerator(
+              (sequence): RandLogUniformSequenceGenerator(low=0.01, high=0.1, feature_size=(1,))
+            )
+          (phase): ConstantSequenceGenerator(
+              (sequence): RandUniformSequenceGenerator(low=-1.0, high=1.0, feature_size=(1,))
+            )
+          (amplitude): ConstantSequenceGenerator(
+              (sequence): RandLogUniformSequenceGenerator(low=0.1, high=1.0, feature_size=(1,))
+            )
+        )
         >>> generator.generate(seq_len=12, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """

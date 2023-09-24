@@ -37,6 +37,10 @@ class HalfCauchySequenceGenerator(BaseSequenceGenerator):
 
         >>> from startorch.sequence import HalfCauchy, RandUniform
         >>> generator = HalfCauchy(scale=RandUniform(low=1.0, high=2.0))
+        >>> generator
+        HalfCauchySequenceGenerator(
+          (scale): RandUniformSequenceGenerator(low=1.0, high=2.0, feature_size=(1,))
+        )
         >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
@@ -81,6 +85,8 @@ class RandHalfCauchySequenceGenerator(BaseSequenceGenerator):
 
         >>> from startorch.sequence import RandHalfCauchy
         >>> generator = RandHalfCauchy(scale=1.0)
+        >>> generator
+        RandHalfCauchySequenceGenerator(scale=1.0, feature_size=(1,))
         >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
@@ -138,6 +144,8 @@ class RandTruncHalfCauchySequenceGenerator(BaseSequenceGenerator):
 
         >>> from startorch.sequence import RandTruncHalfCauchy
         >>> generator = RandTruncHalfCauchy(scale=1.0, max_value=5.0)
+        >>> generator
+        RandTruncHalfCauchySequenceGenerator(scale=1.0, max_value=5.0, feature_size=(1,))
         >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
@@ -197,6 +205,11 @@ class TruncHalfCauchySequenceGenerator(BaseSequenceGenerator):
         ...     scale=RandUniform(low=1.0, high=2.0),
         ...     max_value=RandUniform(low=5.0, high=10.0),
         ... )
+        >>> generator
+        TruncHalfCauchySequenceGenerator(
+          (scale): RandUniformSequenceGenerator(low=1.0, high=2.0, feature_size=(1,))
+          (max_value): RandUniformSequenceGenerator(low=5.0, high=10.0, feature_size=(1,))
+        )
         >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """

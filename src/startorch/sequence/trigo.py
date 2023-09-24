@@ -26,6 +26,10 @@ class AcoshSequenceGenerator(BaseWrapperSequenceGenerator):
         >>> import torch
         >>> from startorch.sequence import Acosh, RandUniform
         >>> generator = Acosh(RandUniform())
+        >>> generator
+        AcoshSequenceGenerator(
+          (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+        )
         >>> generator.generate(seq_len=12, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
@@ -47,6 +51,10 @@ class AsinhSequenceGenerator(BaseWrapperSequenceGenerator):
         >>> import torch
         >>> from startorch.sequence import Asinh, RandUniform
         >>> generator = Asinh(RandUniform())
+        >>> generator
+        AsinhSequenceGenerator(
+          (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+        )
         >>> generator.generate(seq_len=12, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
@@ -68,6 +76,10 @@ class AtanhSequenceGenerator(BaseWrapperSequenceGenerator):
         >>> import torch
         >>> from startorch.sequence import Atanh, RandUniform
         >>> generator = Atanh(RandUniform())
+        >>> generator
+        AtanhSequenceGenerator(
+          (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+        )
         >>> generator.generate(seq_len=12, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
@@ -89,6 +101,10 @@ class CoshSequenceGenerator(BaseWrapperSequenceGenerator):
         >>> import torch
         >>> from startorch.sequence import Cosh, RandUniform
         >>> generator = Cosh(RandUniform())
+        >>> generator
+        CoshSequenceGenerator(
+          (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+        )
         >>> generator.generate(seq_len=12, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
@@ -110,6 +126,10 @@ class SinhSequenceGenerator(BaseWrapperSequenceGenerator):
         >>> import torch
         >>> from startorch.sequence import Sinh, RandUniform
         >>> generator = Sinh(RandUniform())
+        >>> generator
+        SinhSequenceGenerator(
+          (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+        )
         >>> generator.generate(seq_len=12, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
@@ -131,6 +151,10 @@ class TanhSequenceGenerator(BaseWrapperSequenceGenerator):
         >>> import torch
         >>> from startorch.sequence import Tanh, RandUniform
         >>> generator = Tanh(RandUniform())
+        >>> generator
+        TanhSequenceGenerator(
+          (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+        )
         >>> generator.generate(seq_len=12, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """

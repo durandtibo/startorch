@@ -43,6 +43,11 @@ class LogNormalSequenceGenerator(BaseSequenceGenerator):
         >>> generator = LogNormal(
         ...     mean=RandUniform(low=-1.0, high=1.0), std=RandUniform(low=1.0, high=2.0)
         ... )
+        >>> generator
+        LogNormalSequenceGenerator(
+          (mean): RandUniformSequenceGenerator(low=-1.0, high=1.0, feature_size=(1,))
+          (std): RandUniformSequenceGenerator(low=1.0, high=2.0, feature_size=(1,))
+        )
         >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
@@ -93,6 +98,8 @@ class RandLogNormalSequenceGenerator(BaseSequenceGenerator):
 
         >>> from startorch.sequence import RandLogNormal
         >>> generator = RandLogNormal(mean=0.0, std=1.0)
+        >>> generator
+        RandLogNormalSequenceGenerator(mean=0.0, std=1.0, feature_size=(1,))
         >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
@@ -157,6 +164,8 @@ class RandTruncLogNormalSequenceGenerator(BaseSequenceGenerator):
 
         >>> from startorch.sequence import RandTruncLogNormal
         >>> generator = RandTruncLogNormal(mean=0.0, std=1.0, min_value=0.0, max_value=1.0)
+        >>> generator
+        RandTruncLogNormalSequenceGenerator(mean=0.0, std=1.0, min_value=0.0, max_value=1.0, feature_size=(1,))
         >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
@@ -227,13 +236,20 @@ class TruncLogNormalSequenceGenerator(BaseSequenceGenerator):
 
     .. code-block:: pycon
 
-        >>> from startorch.sequence import RandUniform, TruncNormal
-        >>> generator = TruncNormal(
+        >>> from startorch.sequence import RandUniform, TruncLogNormal
+        >>> generator = TruncLogNormal(
         ...     mean=RandUniform(low=-1.0, high=1.0),
         ...     std=RandUniform(low=1.0, high=2.0),
         ...     min_value=RandUniform(low=0.0, high=2.0),
         ...     max_value=RandUniform(low=5.0, high=10.0),
         ... )
+        >>> generator
+        TruncLogNormalSequenceGenerator(
+          (mean): RandUniformSequenceGenerator(low=-1.0, high=1.0, feature_size=(1,))
+          (std): RandUniformSequenceGenerator(low=1.0, high=2.0, feature_size=(1,))
+          (min_value): RandUniformSequenceGenerator(low=0.0, high=2.0, feature_size=(1,))
+          (max_value): RandUniformSequenceGenerator(low=5.0, high=10.0, feature_size=(1,))
+        )
         >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
