@@ -4,7 +4,35 @@ from objectory import OBJECT_TARGET
 from pytest import LogCaptureFixture
 
 from startorch.sequence import RandInt, RandUniform, UniformCategorical
-from startorch.timeseries import TimeSeries, setup_timeseries_generator
+from startorch.timeseries import (
+    TimeSeries,
+    is_timeseries_generator_config,
+    setup_timeseries_generator,
+)
+
+####################################################
+#     Tests for is_timeseries_generator_config     #
+####################################################
+
+
+def test_is_timeseries_generator_config_true() -> None:
+    assert is_timeseries_generator_config(
+        {
+            OBJECT_TARGET: "startorch.timeseries.TimeSeries",
+            "sequences": {
+                "value": {
+                    OBJECT_TARGET: "startorch.sequence.UniformCategorical",
+                    "num_categories": 10,
+                },
+                "time": {OBJECT_TARGET: "startorch.sequence.RandUniform"},
+            },
+        }
+    )
+
+
+def test_is_timeseries_generator_config_false() -> None:
+    assert not is_timeseries_generator_config({OBJECT_TARGET: "torch.nn.Identity"})
+
 
 ################################################
 #     Tests for setup_timeseries_generator     #

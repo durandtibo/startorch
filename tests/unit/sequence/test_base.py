@@ -5,8 +5,25 @@ import logging
 from objectory import OBJECT_TARGET
 from pytest import LogCaptureFixture
 
-from startorch.sequence import RandUniform, setup_sequence_generator
+from startorch.sequence import (
+    RandUniform,
+    is_sequence_generator_config,
+    setup_sequence_generator,
+)
 from startorch.tensor import RandInt
+
+##################################################
+#     Tests for is_sequence_generator_config     #
+##################################################
+
+
+def test_is_sequence_generator_config_true() -> None:
+    assert is_sequence_generator_config({OBJECT_TARGET: "startorch.sequence.RandUniform"})
+
+
+def test_is_sequence_generator_config_false() -> None:
+    assert not is_sequence_generator_config({OBJECT_TARGET: "torch.nn.Identity"})
+
 
 ##############################################
 #     Tests for setup_sequence_generator     #
