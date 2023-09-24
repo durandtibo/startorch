@@ -33,7 +33,7 @@ class AcoshTensorGenerator(BaseWrapperTensorGenerator):
     """
 
     def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
-        return self._tensor.generate(size=size, rng=rng).acosh()
+        return self._generator.generate(size=size, rng=rng).acosh()
 
 
 class AsinhTensorGenerator(BaseWrapperTensorGenerator):
@@ -55,7 +55,7 @@ class AsinhTensorGenerator(BaseWrapperTensorGenerator):
     """
 
     def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
-        return self._tensor.generate(size=size, rng=rng).asinh()
+        return self._generator.generate(size=size, rng=rng).asinh()
 
 
 class AtanhTensorGenerator(BaseWrapperTensorGenerator):
@@ -77,7 +77,7 @@ class AtanhTensorGenerator(BaseWrapperTensorGenerator):
     """
 
     def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
-        return self._tensor.generate(size=size, rng=rng).atanh()
+        return self._generator.generate(size=size, rng=rng).atanh()
 
 
 class CoshTensorGenerator(BaseWrapperTensorGenerator):
@@ -99,7 +99,7 @@ class CoshTensorGenerator(BaseWrapperTensorGenerator):
     """
 
     def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
-        return self._tensor.generate(size=size, rng=rng).cosh()
+        return self._generator.generate(size=size, rng=rng).cosh()
 
 
 class SinhTensorGenerator(BaseWrapperTensorGenerator):
@@ -121,7 +121,7 @@ class SinhTensorGenerator(BaseWrapperTensorGenerator):
     """
 
     def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
-        return self._tensor.generate(size=size, rng=rng).sinh()
+        return self._generator.generate(size=size, rng=rng).sinh()
 
 
 class TanhTensorGenerator(BaseWrapperTensorGenerator):
@@ -143,4 +143,4 @@ class TanhTensorGenerator(BaseWrapperTensorGenerator):
     """
 
     def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
-        return self._tensor.generate(size=size, rng=rng).tanh()
+        return self._generator.generate(size=size, rng=rng).tanh()

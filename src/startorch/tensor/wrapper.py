@@ -17,10 +17,10 @@ class BaseWrapperTensorGenerator(BaseTensorGenerator):
             Specifies the tensor generator or its configuration.
     """
 
-    def __init__(self, tensor: BaseTensorGenerator | dict) -> None:
+    def __init__(self, generator: BaseTensorGenerator | dict) -> None:
         super().__init__()
-        self._tensor = setup_tensor_generator(tensor)
+        self._generator = setup_tensor_generator(generator)
 
     def __repr__(self) -> str:
-        args = str_indent(str_mapping({"tensor": self._tensor}))
+        args = str_indent(str_mapping({"tensor": self._generator}))
         return f"{self.__class__.__qualname__}(\n  {args}\n)"

@@ -49,7 +49,7 @@ class AbsSequenceGenerator(BaseWrapperSequenceGenerator):
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchedTensorSeq:
-        return self._sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).abs()
+        return self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).abs()
 
 
 class AddSequenceGenerator(BaseSequenceGenerator):
@@ -133,20 +133,20 @@ class AddScalarSequenceGenerator(BaseWrapperSequenceGenerator):
 
     def __init__(
         self,
-        sequence: BaseSequenceGenerator | dict,
+        generator: BaseSequenceGenerator | dict,
         value: int | float,
     ) -> None:
-        super().__init__(sequence=sequence)
+        super().__init__(generator=generator)
         self._value = value
 
     def __repr__(self) -> str:
-        args = str_indent(str_mapping({"sequence": self._sequence, "value": self._value}))
+        args = str_indent(str_mapping({"sequence": self._generator, "value": self._value}))
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchedTensorSeq:
-        sequence = self._sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
+        sequence = self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
         sequence.add_(self._value)
         return sequence
 
@@ -189,11 +189,11 @@ class ClampSequenceGenerator(BaseWrapperSequenceGenerator):
 
     def __init__(
         self,
-        sequence: BaseSequenceGenerator | dict,
+        generator: BaseSequenceGenerator | dict,
         min: int | float | None,  # noqa: A002
         max: int | float | None,  # noqa: A002
     ) -> None:
-        super().__init__(sequence=sequence)
+        super().__init__(generator=generator)
         if min is None and max is None:
             raise ValueError("`min` and `max` cannot be both None")
         self._min = min
@@ -201,14 +201,14 @@ class ClampSequenceGenerator(BaseWrapperSequenceGenerator):
 
     def __repr__(self) -> str:
         args = str_indent(
-            str_mapping({"sequence": self._sequence, "min": self._min, "max": self._max})
+            str_mapping({"sequence": self._generator, "min": self._min, "max": self._max})
         )
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchedTensorSeq:
-        return self._sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).clamp(
+        return self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).clamp(
             min=self._min, max=self._max
         )
 
@@ -235,7 +235,7 @@ class CumsumSequenceGenerator(BaseWrapperSequenceGenerator):
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchedTensorSeq:
-        return self._sequence.generate(
+        return self._generator.generate(
             seq_len=seq_len, batch_size=batch_size, rng=rng
         ).cumsum_along_seq()
 
@@ -333,7 +333,7 @@ class ExpSequenceGenerator(BaseWrapperSequenceGenerator):
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchedTensorSeq:
-        return self._sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).exp()
+        return self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).exp()
 
 
 class FmodSequenceGenerator(BaseSequenceGenerator):
@@ -418,7 +418,7 @@ class LogSequenceGenerator(BaseWrapperSequenceGenerator):
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchedTensorSeq:
-        return self._sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).log()
+        return self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).log()
 
 
 class MulSequenceGenerator(BaseSequenceGenerator):
@@ -502,20 +502,20 @@ class MulScalarSequenceGenerator(BaseWrapperSequenceGenerator):
 
     def __init__(
         self,
-        sequence: BaseSequenceGenerator | dict,
+        generator: BaseSequenceGenerator | dict,
         value: int | float,
     ) -> None:
-        super().__init__(sequence=sequence)
+        super().__init__(generator=generator)
         self._value = value
 
     def __repr__(self) -> str:
-        args = str_indent(str_mapping({"sequence": self._sequence, "value": self._value}))
+        args = str_indent(str_mapping({"sequence": self._generator, "value": self._value}))
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchedTensorSeq:
-        sequence = self._sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
+        sequence = self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
         sequence.mul_(self._value)
         return sequence
 
@@ -542,7 +542,7 @@ class NegSequenceGenerator(BaseWrapperSequenceGenerator):
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchedTensorSeq:
-        return -self._sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
+        return -self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
 
 
 class SqrtSequenceGenerator(BaseWrapperSequenceGenerator):
@@ -567,7 +567,7 @@ class SqrtSequenceGenerator(BaseWrapperSequenceGenerator):
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchedTensorSeq:
-        return self._sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).sqrt()
+        return self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).sqrt()
 
 
 class SubSequenceGenerator(BaseSequenceGenerator):

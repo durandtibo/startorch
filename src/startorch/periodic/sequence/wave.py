@@ -49,13 +49,13 @@ class SineWavePeriodicSequenceGenerator(BasePeriodicSequenceGenerator):
         >>> generator
         SineWavePeriodicSequenceGenerator(
           (value): RepeatPeriodicSequenceGenerator(
-              (sequence): RandUniformSequenceGenerator(low=-1.0, high=1.0, feature_size=(1,))
+              (generator): RandUniformSequenceGenerator(low=-1.0, high=1.0, feature_size=(1,))
             )
           (phase): RepeatPeriodicSequenceGenerator(
-              (sequence): RandUniformSequenceGenerator(low=-1.0, high=1.0, feature_size=(1,))
+              (generator): RandUniformSequenceGenerator(low=-1.0, high=1.0, feature_size=(1,))
             )
           (amplitude): RepeatPeriodicSequenceGenerator(
-              (sequence): RandUniformSequenceGenerator(low=-1.0, high=1.0, feature_size=(1,))
+              (generator): RandUniformSequenceGenerator(low=-1.0, high=1.0, feature_size=(1,))
             )
         )
         >>> generator.generate(seq_len=12, period=4, batch_size=4)

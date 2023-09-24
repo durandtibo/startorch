@@ -26,7 +26,7 @@ class FloatTensorGenerator(BaseWrapperTensorGenerator):
     """
 
     def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
-        return self._tensor.generate(size=size, rng=rng).float()
+        return self._generator.generate(size=size, rng=rng).float()
 
 
 class LongTensorGenerator(BaseWrapperTensorGenerator):
@@ -48,4 +48,4 @@ class LongTensorGenerator(BaseWrapperTensorGenerator):
     """
 
     def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
-        return self._tensor.generate(size=size, rng=rng).long()
+        return self._generator.generate(size=size, rng=rng).long()
