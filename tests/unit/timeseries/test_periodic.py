@@ -4,7 +4,7 @@ from unittest.mock import Mock
 
 import torch
 from pytest import mark
-from redcat import BatchedTensorSeq, BatchDict
+from redcat import BatchDict, BatchedTensorSeq
 
 from startorch import constants as ct
 from startorch.periodic.timeseries import BasePeriodicTimeSeriesGenerator, Repeat

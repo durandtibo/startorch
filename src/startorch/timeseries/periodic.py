@@ -35,16 +35,25 @@ class PeriodicTimeSeriesGenerator(BaseTimeSeriesGenerator):
 
     .. code-block:: pycon
 
-        >>> from startorch.timeseries import Periodic, RandUniform
+        >>> from startorch.timeseries import Periodic, TimeSeries
+        >>> from startorch.sequence import RandUniform
         >>> from startorch.tensor import RandInt
-        >>> generator = Periodic(sequence=RandUniform(), period=RandInt(2, 5))
+        >>> generator = Periodic(
+        ...     TimeSeries({"value": RandUniform(), "time": RandUniform()}), period=RandInt(2, 5)
+        ... )
         >>> generator
         PeriodicTimeSeriesGenerator(
-          (sequence): RandUniformTimeSeriesGenerator(low=0.0, high=1.0, feature_size=(1,))
+          (sequence): TimeSeriesGenerator(
+              (value): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+              (time): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+            )
           (period): RandIntTensorGenerator(low=2, high=5)
         )
         >>> generator.generate(seq_len=10, batch_size=2)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+        BatchDict(
+          (value): tensor([[...]], batch_dim=0, seq_dim=1)
+          (time): tensor([[...]], batch_dim=0, seq_dim=1)
+        )
     """
 
     def __init__(
