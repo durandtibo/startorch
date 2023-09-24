@@ -48,6 +48,11 @@ class AsinhUniformSequenceGenerator(BaseSequenceGenerator):
         >>> import torch
         >>> from startorch.sequence import AsinhUniform, RandUniform
         >>> generator = AsinhUniform(low=RandUniform(-1.0, 0.0), high=RandUniform(0.0, 1.0))
+        >>> generator
+        AsinhUniformSequenceGenerator(
+          (low): RandUniformSequenceGenerator(low=-1.0, high=0.0, feature_size=(1,))
+          (high): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+        )
         >>> generator.generate(seq_len=12, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
@@ -97,6 +102,11 @@ class LogUniformSequenceGenerator(BaseSequenceGenerator):
         >>> import torch
         >>> from startorch.sequence import LogUniform, RandUniform
         >>> generator = LogUniform(low=RandUniform(0.0, 1.0), high=RandUniform(5.0, 10.0))
+        >>> generator
+        LogUniformSequenceGenerator(
+          (low): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+          (high): RandUniformSequenceGenerator(low=5.0, high=10.0, feature_size=(1,))
+        )
         >>> generator.generate(seq_len=12, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
@@ -148,6 +158,8 @@ class RandAsinhUniformSequenceGenerator(BaseSequenceGenerator):
         >>> import torch
         >>> from startorch.sequence import RandAsinhUniform
         >>> generator = RandAsinhUniform(low=1.0, high=10.0)
+        >>> generator
+        RandAsinhUniformSequenceGenerator(low=1.0, high=10.0, feature_size=(1,))
         >>> generator.generate(seq_len=12, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
@@ -206,6 +218,8 @@ class RandIntSequenceGenerator(BaseSequenceGenerator):
         >>> import torch
         >>> from startorch.sequence import RandInt
         >>> generator = RandInt(0, 100)
+        >>> generator
+        RandIntSequenceGenerator(low=0, high=100, feature_size=())
         >>> generator.generate(seq_len=12, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
@@ -264,6 +278,8 @@ class RandLogUniformSequenceGenerator(BaseSequenceGenerator):
         >>> import torch
         >>> from startorch.sequence import RandLogUniform
         >>> generator = RandLogUniform(low=1.0, high=10.0)
+        >>> generator
+        RandLogUniformSequenceGenerator(low=1.0, high=10.0, feature_size=(1,))
         >>> generator.generate(seq_len=12, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
@@ -324,6 +340,8 @@ class RandUniformSequenceGenerator(BaseSequenceGenerator):
         >>> import torch
         >>> from startorch.sequence import RandUniform
         >>> generator = RandUniform()
+        >>> generator
+        RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
         >>> generator.generate(seq_len=12, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
@@ -379,6 +397,11 @@ class UniformSequenceGenerator(BaseSequenceGenerator):
         >>> import torch
         >>> from startorch.sequence import Uniform, RandUniform
         >>> generator = Uniform(low=RandUniform(-1.0, 0.0), high=RandUniform(0.0, 1.0))
+        >>> generator
+        UniformSequenceGenerator(
+          (low): RandUniformSequenceGenerator(low=-1.0, high=0.0, feature_size=(1,))
+          (high): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+        )
         >>> generator.generate(seq_len=12, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """

@@ -26,6 +26,8 @@ class ArangeSequenceGenerator(BaseSequenceGenerator):
 
         >>> from startorch.sequence import Arange
         >>> generator = Arange(feature_size=())
+        >>> generator
+        ArangeSequenceGenerator(feature_size=())
         >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[0, 1, 2, 3, 4, 5],
                 [0, 1, 2, 3, 4, 5]], batch_dim=0, seq_dim=1)

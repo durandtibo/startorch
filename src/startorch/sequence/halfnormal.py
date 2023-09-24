@@ -38,6 +38,10 @@ class HalfNormalSequenceGenerator(BaseSequenceGenerator):
 
         >>> from startorch.sequence import HalfNormal, RandUniform
         >>> generator = HalfNormal(std=RandUniform(low=1.0, high=2.0))
+        >>> generator
+        HalfNormalSequenceGenerator(
+          (std): RandUniformSequenceGenerator(low=1.0, high=2.0, feature_size=(1,))
+        )
         >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
@@ -82,6 +86,8 @@ class RandHalfNormalSequenceGenerator(BaseSequenceGenerator):
 
         >>> from startorch.sequence import RandHalfNormal
         >>> generator = RandHalfNormal(std=1.0)
+        >>> generator
+        RandHalfNormalSequenceGenerator(std=1.0, feature_size=(1,))
         >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
@@ -134,6 +140,8 @@ class RandTruncHalfNormalSequenceGenerator(BaseSequenceGenerator):
 
         >>> from startorch.sequence import RandTruncHalfNormal
         >>> generator = RandTruncHalfNormal(std=1.0, max_value=1.0)
+        >>> generator
+        RandTruncHalfNormalSequenceGenerator(std=1.0, max_value=1.0, feature_size=(1,))
         >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
@@ -193,6 +201,11 @@ class TruncHalfNormalSequenceGenerator(BaseSequenceGenerator):
         ...     std=RandUniform(low=1.0, high=2.0),
         ...     max_value=RandUniform(low=5.0, high=10.0),
         ... )
+        >>> generator
+        TruncHalfNormalSequenceGenerator(
+          (std): RandUniformSequenceGenerator(low=1.0, high=2.0, feature_size=(1,))
+          (max_value): RandUniformSequenceGenerator(low=5.0, high=10.0, feature_size=(1,))
+        )
         >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """

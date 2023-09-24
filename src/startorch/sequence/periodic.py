@@ -35,6 +35,11 @@ class PeriodicSequenceGenerator(BaseSequenceGenerator):
         >>> from startorch.sequence import Periodic, RandUniform
         >>> from startorch.tensor import RandInt
         >>> generator = Periodic(sequence=RandUniform(), period=RandInt(2, 5))
+        >>> generator
+        PeriodicSequenceGenerator(
+          (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+          (period): RandIntTensorGenerator(low=2, high=5)
+        )
         >>> generator.generate(seq_len=10, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """

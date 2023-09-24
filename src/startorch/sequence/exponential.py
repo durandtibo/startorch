@@ -43,6 +43,10 @@ class ExponentialSequenceGenerator(BaseSequenceGenerator):
 
         >>> from startorch.sequence import Exponential, RandUniform
         >>> generator = Exponential(rate=RandUniform(low=1.0, high=10.0))
+        >>> generator
+        ExponentialSequenceGenerator(
+          (rate): RandUniformSequenceGenerator(low=1.0, high=10.0, feature_size=(1,))
+        )
         >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
@@ -91,6 +95,10 @@ class ExponentialSequenceGenerator(BaseSequenceGenerator):
 
             >>> from startorch.sequence import Exponential, RandUniform
             >>> generator = Exponential.create_fixed_rate(rate=1.0)
+            >>> generator
+            ExponentialSequenceGenerator(
+              (rate): FullSequenceGenerator(value=1.0, feature_size=(1,))
+            )
             >>> generator.generate(seq_len=6, batch_size=2)
             tensor([[...]], batch_dim=0, seq_dim=1)
         """
@@ -130,6 +138,12 @@ class ExponentialSequenceGenerator(BaseSequenceGenerator):
 
             >>> from startorch.sequence import Exponential, RandUniform
             >>> generator = Exponential.create_uniform_rate(min_rate=0.1, max_rate=1.0)
+            >>> generator
+            ExponentialSequenceGenerator(
+              (rate): ConstantSequenceGenerator(
+                  (sequence): RandUniformSequenceGenerator(low=0.1, high=1.0, feature_size=(1,))
+                )
+            )
             >>> generator.generate(seq_len=6, batch_size=2)
             tensor([[...]], batch_dim=0, seq_dim=1)
         """
@@ -168,6 +182,8 @@ class RandExponentialSequenceGenerator(BaseSequenceGenerator):
 
         >>> from startorch.sequence import RandExponential
         >>> generator = RandExponential(rate=1.0)
+        >>> generator
+        RandExponentialSequenceGenerator(rate=1.0, feature_size=(1,))
         >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
@@ -225,6 +241,8 @@ class RandTruncExponentialSequenceGenerator(BaseSequenceGenerator):
 
         >>> from startorch.sequence import RandTruncExponential
         >>> generator = RandTruncExponential(rate=1.0, max_value=3.0)
+        >>> generator
+        RandTruncExponentialSequenceGenerator(rate=1.0, max_value=3.0, feature_size=(1,))
         >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
@@ -284,6 +302,11 @@ class TruncExponentialSequenceGenerator(BaseSequenceGenerator):
         ...     rate=RandUniform(low=1.0, high=10.0),
         ...     max_value=RandUniform(low=1.0, high=100.0),
         ... )
+        >>> generator
+        TruncExponentialSequenceGenerator(
+          (rate): RandUniformSequenceGenerator(low=1.0, high=10.0, feature_size=(1,))
+          (max_value): RandUniformSequenceGenerator(low=1.0, high=100.0, feature_size=(1,))
+        )
         >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """

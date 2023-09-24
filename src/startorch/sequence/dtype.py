@@ -17,7 +17,12 @@ class FloatSequenceGenerator(BaseWrapperSequenceGenerator):
     .. code-block:: pycon
 
         >>> from startorch.sequence import Float, RandInt
-        >>> Float(RandInt(low=0, high=10)).generate(seq_len=6, batch_size=2)
+        >>> generator = Float(RandInt(low=0, high=10))
+        >>> generator
+        FloatSequenceGenerator(
+          (sequence): RandIntSequenceGenerator(low=0, high=10, feature_size=())
+        )
+        >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
@@ -36,7 +41,12 @@ class LongSequenceGenerator(BaseWrapperSequenceGenerator):
     .. code-block:: pycon
 
         >>> from startorch.sequence import Long, RandUniform
-        >>> Long(RandUniform(low=0, high=10)).generate(seq_len=6, batch_size=2)
+        >>> generator = Long(RandUniform(low=0, high=10))
+        >>> generator
+        LongSequenceGenerator(
+          (sequence): RandUniformSequenceGenerator(low=0.0, high=10.0, feature_size=(1,))
+        )
+        >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 

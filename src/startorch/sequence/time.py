@@ -31,6 +31,10 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
         >>> import torch
         >>> from startorch.sequence import RandUniform, Time
         >>> generator = Time(RandUniform())
+        >>> generator
+        TimeSequenceGenerator(
+          (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+        )
         >>> generator.generate(seq_len=12, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
@@ -65,6 +69,18 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
             >>> import torch
             >>> from startorch.sequence import RandUniform, Time
             >>> generator = Time.create_exponential_constant_time_diff()
+            >>> generator
+            TimeSequenceGenerator(
+              (sequence): CumsumSequenceGenerator(
+                  (sequence): ConstantSequenceGenerator(
+                      (sequence): ExponentialSequenceGenerator(
+                          (rate): ConstantSequenceGenerator(
+                              (sequence): RandUniformSequenceGenerator(low=1.0, high=1.0, feature_size=(1,))
+                            )
+                        )
+                    )
+                )
+            )
             >>> generator.generate(seq_len=12, batch_size=4)
             tensor([[...]], batch_dim=0, seq_dim=1)
         """
@@ -104,6 +120,16 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
             >>> import torch
             >>> from startorch.sequence import RandUniform, Time
             >>> generator = Time.create_exponential_time_diff()
+            >>> generator
+            TimeSequenceGenerator(
+              (sequence): CumsumSequenceGenerator(
+                  (sequence): ExponentialSequenceGenerator(
+                      (rate): ConstantSequenceGenerator(
+                          (sequence): RandUniformSequenceGenerator(low=1.0, high=1.0, feature_size=(1,))
+                        )
+                    )
+                )
+            )
             >>> generator.generate(seq_len=12, batch_size=4)
             tensor([[...]], batch_dim=0, seq_dim=1)
         """
@@ -141,6 +167,14 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
             >>> import torch
             >>> from startorch.sequence import RandUniform, Time
             >>> generator = Time.create_poisson_constant_time_diff()
+            >>> generator
+            TimeSequenceGenerator(
+              (sequence): CumsumSequenceGenerator(
+                  (sequence): ConstantSequenceGenerator(
+                      (sequence): RandPoissonSequenceGenerator(rate=1.0, feature_size=(1,))
+                    )
+                )
+            )
             >>> generator.generate(seq_len=12, batch_size=4)
             tensor([[...]], batch_dim=0, seq_dim=1)
         """
@@ -173,6 +207,12 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
             >>> import torch
             >>> from startorch.sequence import RandUniform, Time
             >>> generator = Time.create_poisson_time_diff()
+            >>> generator
+            TimeSequenceGenerator(
+              (sequence): CumsumSequenceGenerator(
+                  (sequence): RandPoissonSequenceGenerator(rate=1.0, feature_size=(1,))
+                )
+            )
             >>> generator.generate(seq_len=12, batch_size=4)
             tensor([[...]], batch_dim=0, seq_dim=1)
         """
@@ -215,6 +255,14 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
             >>> import torch
             >>> from startorch.sequence import RandUniform, Time
             >>> generator = Time.create_uniform_constant_time_diff()
+            >>> generator
+            TimeSequenceGenerator(
+              (sequence): CumsumSequenceGenerator(
+                  (sequence): ConstantSequenceGenerator(
+                      (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+                    )
+                )
+            )
             >>> generator.generate(seq_len=12, batch_size=4)
             tensor([[...]], batch_dim=0, seq_dim=1)
         """
@@ -269,6 +317,12 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
             >>> import torch
             >>> from startorch.sequence import RandUniform, Time
             >>> generator = Time.create_uniform_time_diff()
+            >>> generator
+            TimeSequenceGenerator(
+              (sequence): CumsumSequenceGenerator(
+                  (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+                )
+            )
             >>> generator.generate(seq_len=12, batch_size=4)
             tensor([[...]], batch_dim=0, seq_dim=1)
         """
@@ -318,6 +372,12 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
             >>> import torch
             >>> from startorch.sequence import RandUniform, Time
             >>> generator = Time.create_uniform_time()
+            >>> generator
+            TimeSequenceGenerator(
+              (sequence): SortSequenceGenerator(
+                  (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+                )
+            )
             >>> generator.generate(seq_len=12, batch_size=4)
             tensor([[...]], batch_dim=0, seq_dim=1)
         """

@@ -35,6 +35,12 @@ class Cat2SequenceGenerator(BaseSequenceGenerator):
         >>> generator = Cat2(
         ...     generator1=RandUniform(), generator2=RandNormal(), changepoint=RandInt(0, 12)
         ... )
+        >>> generator
+        Cat2SequenceGenerator(
+          (generator1): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+          (generator2): RandNormalSequenceGenerator(mean=0.0, std=1.0, feature_size=(1,))
+          (changepoint): RandIntTensorGenerator(low=0, high=12)
+        )
         >>> generator.generate(seq_len=12, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
