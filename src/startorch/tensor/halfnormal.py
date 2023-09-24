@@ -36,6 +36,10 @@ class HalfNormalTensorGenerator(BaseTensorGenerator):
 
         >>> from startorch.tensor import HalfNormal, RandUniform
         >>> generator = HalfNormal(std=RandUniform(low=1.0, high=2.0))
+        >>> generator
+        HalfNormalTensorGenerator(
+          (std): RandUniformTensorGenerator(low=1.0, high=2.0)
+        )
         >>> generator.generate(size=(2, 6))
         tensor([[...]])
     """
@@ -74,6 +78,8 @@ class RandHalfNormalTensorGenerator(BaseTensorGenerator):
 
         >>> from startorch.tensor import RandHalfNormal
         >>> generator = RandHalfNormal(std=1.0)
+        >>> generator
+        RandHalfNormalTensorGenerator(std=1.0)
         >>> generator.generate(size=(2, 6))
         tensor([[...]])
     """
@@ -117,6 +123,8 @@ class RandTruncHalfNormalTensorGenerator(BaseTensorGenerator):
 
         >>> from startorch.tensor import RandTruncHalfNormal
         >>> generator = RandTruncHalfNormal(std=1.0, max_value=1.0)
+        >>> generator
+        RandTruncHalfNormalTensorGenerator(std=1.0, max_value=1.0)
         >>> generator.generate(size=(2, 6))
         tensor([[...]])
     """
@@ -163,6 +171,11 @@ class TruncHalfNormalTensorGenerator(BaseTensorGenerator):
         ...     std=RandUniform(low=1.0, high=2.0),
         ...     max_value=RandUniform(low=5.0, high=10.0),
         ... )
+        >>> generator
+        TruncHalfNormalTensorGenerator(
+          (std): RandUniformTensorGenerator(low=1.0, high=2.0)
+          (max_value): RandUniformTensorGenerator(low=5.0, high=10.0)
+        )
         >>> generator.generate(size=(2, 6))
         tensor([[...]])
     """
