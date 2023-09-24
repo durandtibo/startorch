@@ -42,7 +42,7 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchedTensorSeq:
-        return self._sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
+        return self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
 
     @classmethod
     def create_exponential_constant_time_diff(cls, rate: float = 1.0) -> TimeSequenceGenerator:

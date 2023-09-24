@@ -4,7 +4,7 @@ __all__ = ["FullTensorGenerator"]
 
 
 import torch
-from torch import Generator, Tensor, full
+from torch import Generator, Tensor
 
 from startorch.tensor.base import BaseTensorGenerator
 
@@ -42,4 +42,4 @@ class FullTensorGenerator(BaseTensorGenerator):
         return f"{self.__class__.__qualname__}(value={self._value}, dtype={self._dtype})"
 
     def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
-        return full(size=size, fill_value=self._value, dtype=self._dtype)
+        return torch.full(size=size, fill_value=self._value, dtype=self._dtype)

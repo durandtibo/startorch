@@ -38,15 +38,15 @@ class SortSequenceGenerator(BaseWrapperSequenceGenerator):
 
     def __init__(
         self,
-        sequence: BaseSequenceGenerator | dict,
+        generator: BaseSequenceGenerator | dict,
         descending: bool = False,
     ) -> None:
-        super().__init__(sequence)
+        super().__init__(generator)
         self._descending = bool(descending)
 
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchedTensorSeq:
-        return self._sequence.generate(
+        return self._generator.generate(
             seq_len=seq_len, batch_size=batch_size, rng=rng
         ).sort_along_seq(self._descending)[0]

@@ -17,10 +17,10 @@ class BaseWrapperSequenceGenerator(BaseSequenceGenerator):
             Specifies the sequence generator or its configuration.
     """
 
-    def __init__(self, sequence: BaseSequenceGenerator | dict) -> None:
+    def __init__(self, generator: BaseSequenceGenerator | dict) -> None:
         super().__init__()
-        self._sequence = setup_sequence_generator(sequence)
+        self._generator = setup_sequence_generator(generator)
 
     def __repr__(self) -> str:
-        args = str_indent(str_mapping({"sequence": self._sequence}))
+        args = str_indent(str_mapping({"sequence": self._generator}))
         return f"{self.__class__.__qualname__}(\n  {args}\n)"

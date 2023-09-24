@@ -37,7 +37,7 @@ class AcoshSequenceGenerator(BaseWrapperSequenceGenerator):
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchedTensorSeq:
-        return self._sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).acosh()
+        return self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).acosh()
 
 
 class AsinhSequenceGenerator(BaseWrapperSequenceGenerator):
@@ -62,7 +62,7 @@ class AsinhSequenceGenerator(BaseWrapperSequenceGenerator):
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchedTensorSeq:
-        return self._sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).asinh()
+        return self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).asinh()
 
 
 class AtanhSequenceGenerator(BaseWrapperSequenceGenerator):
@@ -87,7 +87,7 @@ class AtanhSequenceGenerator(BaseWrapperSequenceGenerator):
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchedTensorSeq:
-        return self._sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).atanh()
+        return self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).atanh()
 
 
 class CoshSequenceGenerator(BaseWrapperSequenceGenerator):
@@ -112,7 +112,7 @@ class CoshSequenceGenerator(BaseWrapperSequenceGenerator):
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchedTensorSeq:
-        return self._sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).cosh()
+        return self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).cosh()
 
 
 class SinhSequenceGenerator(BaseWrapperSequenceGenerator):
@@ -137,7 +137,7 @@ class SinhSequenceGenerator(BaseWrapperSequenceGenerator):
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchedTensorSeq:
-        return self._sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).sinh()
+        return self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).sinh()
 
 
 class TanhSequenceGenerator(BaseWrapperSequenceGenerator):
@@ -162,4 +162,4 @@ class TanhSequenceGenerator(BaseWrapperSequenceGenerator):
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchedTensorSeq:
-        return self._sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).tanh()
+        return self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).tanh()

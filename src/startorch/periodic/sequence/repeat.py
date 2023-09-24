@@ -32,25 +32,25 @@ class RepeatPeriodicSequenceGenerator(BasePeriodicSequenceGenerator):
         >>> generator = Repeat(RandUniform())
         >>> generator
         RepeatPeriodicSequenceGenerator(
-          (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+          (generator): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
         )
         >>> generator.generate(seq_len=12, period=4, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
-    def __init__(self, sequence: BaseSequenceGenerator | dict) -> None:
+    def __init__(self, generator: BaseSequenceGenerator | dict) -> None:
         super().__init__()
-        self._sequence = setup_sequence_generator(sequence)
+        self._generator = setup_sequence_generator(generator)
 
     def __repr__(self) -> str:
-        args = str_indent(str_mapping({"sequence": self._sequence}))
+        args = str_indent(str_mapping({"generator": self._generator}))
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(
         self, seq_len: int, period: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchedTensorSeq:
         return (
-            self._sequence.generate(seq_len=period, batch_size=batch_size, rng=rng)
+            self._generator.generate(seq_len=period, batch_size=batch_size, rng=rng)
             .repeat_along_seq(math.ceil(seq_len / period))
             .slice_along_seq(stop=seq_len)
         )

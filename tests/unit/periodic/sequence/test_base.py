@@ -21,7 +21,7 @@ def test_setup_periodic_sequence_generator_dict() -> None:
         setup_periodic_sequence_generator(
             {
                 OBJECT_TARGET: "startorch.periodic.sequence.Repeat",
-                "sequence": {OBJECT_TARGET: "startorch.sequence.RandUniform"},
+                "generator": {OBJECT_TARGET: "startorch.sequence.RandUniform"},
             }
         ),
         Repeat,

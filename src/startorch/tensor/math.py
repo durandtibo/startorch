@@ -44,7 +44,7 @@ class AbsTensorGenerator(BaseWrapperTensorGenerator):
     """
 
     def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
-        return self._tensor.generate(size=size, rng=rng).abs()
+        return self._generator.generate(size=size, rng=rng).abs()
 
 
 class AddScalarTensorGenerator(BaseWrapperTensorGenerator):
@@ -74,18 +74,18 @@ class AddScalarTensorGenerator(BaseWrapperTensorGenerator):
 
     def __init__(
         self,
-        tensor: BaseTensorGenerator | dict,
+        generator: BaseTensorGenerator | dict,
         value: int | float,
     ) -> None:
-        super().__init__(tensor=tensor)
+        super().__init__(generator=generator)
         self._value = value
 
     def __repr__(self) -> str:
-        args = str_indent(str_mapping({"tensor": self._tensor, "value": self._value}))
+        args = str_indent(str_mapping({"tensor": self._generator, "value": self._value}))
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
-        tensor = self._tensor.generate(size=size, rng=rng)
+        tensor = self._generator.generate(size=size, rng=rng)
         tensor.add_(self._value)
         return tensor
 
@@ -173,11 +173,11 @@ class ClampTensorGenerator(BaseWrapperTensorGenerator):
 
     def __init__(
         self,
-        tensor: BaseTensorGenerator | dict,
+        generator: BaseTensorGenerator | dict,
         min_value: int | float | None,
         max_value: int | float | None,
     ) -> None:
-        super().__init__(tensor=tensor)
+        super().__init__(generator=generator)
         if min_value is None and max_value is None:
             raise ValueError("`min_value` and `max_value` cannot be both None")
         self._min_value = min_value
@@ -186,13 +186,17 @@ class ClampTensorGenerator(BaseWrapperTensorGenerator):
     def __repr__(self) -> str:
         args = str_indent(
             str_mapping(
-                {"tensor": self._tensor, "min_value": self._min_value, "max_value": self._max_value}
+                {
+                    "tensor": self._generator,
+                    "min_value": self._min_value,
+                    "max_value": self._max_value,
+                }
             )
         )
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
-        return self._tensor.generate(size=size, rng=rng).clamp(self._min_value, self._max_value)
+        return self._generator.generate(size=size, rng=rng).clamp(self._min_value, self._max_value)
 
 
 class DivTensorGenerator(BaseTensorGenerator):
@@ -273,7 +277,7 @@ class ExpTensorGenerator(BaseWrapperTensorGenerator):
     """
 
     def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
-        return self._tensor.generate(size=size, rng=rng).exp()
+        return self._generator.generate(size=size, rng=rng).exp()
 
 
 class FmodTensorGenerator(BaseTensorGenerator):
@@ -353,7 +357,7 @@ class LogTensorGenerator(BaseWrapperTensorGenerator):
     """
 
     def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
-        return self._tensor.generate(size=size, rng=rng).log()
+        return self._generator.generate(size=size, rng=rng).log()
 
 
 class MulTensorGenerator(BaseTensorGenerator):
@@ -430,18 +434,18 @@ class MulScalarTensorGenerator(BaseWrapperTensorGenerator):
 
     def __init__(
         self,
-        tensor: BaseTensorGenerator | dict,
+        generator: BaseTensorGenerator | dict,
         value: int | float,
     ) -> None:
-        super().__init__(tensor=tensor)
+        super().__init__(generator=generator)
         self._value = value
 
     def __repr__(self) -> str:
-        args = str_indent(str_mapping({"tensor": self._tensor}))
+        args = str_indent(str_mapping({"tensor": self._generator}))
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
-        tensor = self._tensor.generate(size=size, rng=rng)
+        tensor = self._generator.generate(size=size, rng=rng)
         tensor.mul_(self._value)
         return tensor
 
@@ -466,7 +470,7 @@ class NegTensorGenerator(BaseWrapperTensorGenerator):
     """
 
     def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
-        return -self._tensor.generate(size=size, rng=rng)
+        return -self._generator.generate(size=size, rng=rng)
 
 
 class SqrtTensorGenerator(BaseWrapperTensorGenerator):
@@ -488,7 +492,7 @@ class SqrtTensorGenerator(BaseWrapperTensorGenerator):
     """
 
     def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
-        return self._tensor.generate(size=size, rng=rng).sqrt()
+        return self._generator.generate(size=size, rng=rng).sqrt()
 
 
 class SubTensorGenerator(BaseTensorGenerator):

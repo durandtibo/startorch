@@ -15,7 +15,7 @@ class FakeWrapper(BaseWrapperTensorGenerator):
     ``BaseWrapperTensorGenerator``."""
 
     def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
-        return self._tensor.generate(size, rng=rng)
+        return self._generator.generate(size, rng=rng)
 
 
 def test_base_wrapper_str() -> None:

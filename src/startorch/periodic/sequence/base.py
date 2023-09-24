@@ -29,7 +29,7 @@ class BasePeriodicSequenceGenerator(ABC, metaclass=AbstractFactory):
         >>> generator = Repeat(RandUniform())
         >>> generator
         RepeatPeriodicSequenceGenerator(
-          (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+          (generator): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
         )
         >>> generator.generate(seq_len=12, period=4, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
@@ -98,11 +98,11 @@ def setup_periodic_sequence_generator(
         >>> setup_periodic_sequence_generator(
         ...     {
         ...         "_target_": "startorch.periodic.sequence.Repeat",
-        ...         "sequence": {"_target_": "startorch.sequence.RandUniform"},
+        ...         "generator": {"_target_": "startorch.sequence.RandUniform"},
         ...     }
         ... )
         RepeatPeriodicSequenceGenerator(
-          (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+          (generator): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
         )
     """
     if isinstance(generator, dict):
