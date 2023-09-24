@@ -67,7 +67,6 @@ class BasePeriodicSequenceGenerator(ABC, metaclass=AbstractFactory):
             >>> from startorch.periodic.sequence import Repeat
             >>> from startorch.sequence import RandUniform
             >>> generator = Repeat(RandUniform())
-            >>> generator
             >>> generator.generate(seq_len=12, period=4, batch_size=4)
             tensor([[...]], batch_dim=0, seq_dim=1)
         """
