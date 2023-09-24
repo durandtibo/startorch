@@ -24,7 +24,7 @@ class AcoshTensorGenerator(BaseWrapperTensorGenerator):
 
         >>> from startorch.tensor import Acosh, RandUniform
         >>> generator = Acosh(RandUniform(low=1.0, high=5.0))
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 
@@ -42,7 +42,7 @@ class AsinhTensorGenerator(BaseWrapperTensorGenerator):
 
         >>> from startorch.tensor import Asinh, RandUniform
         >>> generator = Asinh(RandUniform(low=0.0, high=1000.0))
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 
@@ -60,7 +60,7 @@ class AtanhTensorGenerator(BaseWrapperTensorGenerator):
 
         >>> from startorch.tensor import Atanh, RandUniform
         >>> generator = Atanh(RandUniform(low=-0.5, high=0.5))
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 
@@ -78,7 +78,7 @@ class CoshTensorGenerator(BaseWrapperTensorGenerator):
 
         >>> from startorch.tensor import Cosh, RandUniform
         >>> generator = Cosh(RandUniform())
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 
@@ -96,7 +96,7 @@ class SinhTensorGenerator(BaseWrapperTensorGenerator):
 
         >>> from startorch.tensor import RandUniform, Sinh
         >>> generator = Sinh(RandUniform(low=0.0, high=1.0))
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 
@@ -114,7 +114,7 @@ class TanhTensorGenerator(BaseWrapperTensorGenerator):
 
         >>> from startorch.tensor import RandUniform, Tanh
         >>> generator = Tanh(RandUniform(low=0.0, high=1.0))
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 

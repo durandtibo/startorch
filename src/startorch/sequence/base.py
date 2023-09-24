@@ -18,6 +18,18 @@ class BaseSequenceGenerator(ABC, metaclass=AbstractFactory):
     r"""Defines the base class to generate sequences.
 
     A child class has to implement the ``generate`` method.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> import torch
+        >>> from startorch.sequence import RandUniform
+        >>> generator = RandUniform()
+        >>> generator
+        RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+        >>> generator.generate(seq_len=12, batch_size=4)
+        tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
     @abstractmethod
@@ -50,7 +62,7 @@ class BaseSequenceGenerator(ABC, metaclass=AbstractFactory):
             >>> import torch
             >>> from startorch.sequence import RandUniform
             >>> generator = RandUniform()
-            >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+            >>> generator.generate(seq_len=12, batch_size=4)
             tensor([[...]], batch_dim=0, seq_dim=1)
         """
 

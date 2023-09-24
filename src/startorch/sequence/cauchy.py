@@ -37,7 +37,12 @@ class CauchySequenceGenerator(BaseSequenceGenerator):
         ...     loc=RandUniform(low=-1.0, high=1.0),
         ...     scale=RandUniform(low=1.0, high=2.0),
         ... )
-        >>> generator.generate(seq_len=6, batch_size=2)  # doctest:+ELLIPSIS
+        >>> generator
+        CauchySequenceGenerator(
+          (loc): RandUniformSequenceGenerator(low=-1.0, high=1.0, feature_size=(1,))
+          (scale): RandUniformSequenceGenerator(low=1.0, high=2.0, feature_size=(1,))
+        )
+        >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
@@ -89,7 +94,9 @@ class RandCauchySequenceGenerator(BaseSequenceGenerator):
 
         >>> from startorch.sequence import RandCauchy
         >>> generator = RandCauchy(loc=0.0, scale=1.0)
-        >>> generator.generate(seq_len=6, batch_size=2)  # doctest:+ELLIPSIS
+        >>> generator
+        RandCauchySequenceGenerator(loc=0.0, scale=1.0, feature_size=(1,))
+        >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
@@ -153,7 +160,9 @@ class RandTruncCauchySequenceGenerator(BaseSequenceGenerator):
 
         >>> from startorch.sequence import RandTruncCauchy
         >>> generator = RandTruncCauchy(loc=0.0, scale=1.0, min_value=-5.0, max_value=5.0)
-        >>> generator.generate(seq_len=6, batch_size=2)  # doctest:+ELLIPSIS
+        >>> generator
+        RandTruncCauchySequenceGenerator(loc=0.0, scale=1.0, min_value=-5.0, max_value=5.0, feature_size=(1,))
+        >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
@@ -229,7 +238,14 @@ class TruncCauchySequenceGenerator(BaseSequenceGenerator):
         ...     min_value=RandUniform(low=-10.0, high=-5.0),
         ...     max_value=RandUniform(low=5.0, high=10.0),
         ... )
-        >>> generator.generate(seq_len=6, batch_size=2)  # doctest:+ELLIPSIS
+        >>> generator
+        TruncCauchySequenceGenerator(
+          (loc): RandUniformSequenceGenerator(low=-1.0, high=1.0, feature_size=(1,))
+          (scale): RandUniformSequenceGenerator(low=1.0, high=2.0, feature_size=(1,))
+          (min_value): RandUniformSequenceGenerator(low=-10.0, high=-5.0, feature_size=(1,))
+          (max_value): RandUniformSequenceGenerator(low=5.0, high=10.0, feature_size=(1,))
+        )
+        >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 

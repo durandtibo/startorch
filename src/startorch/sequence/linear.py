@@ -41,7 +41,7 @@ class LinearSequenceGenerator(BaseSequenceGenerator):
         ...     slope=RandUniform(low=1.0, high=2.0),
         ...     intercept=RandUniform(low=-10.0, high=-5.0),
         ... )
-        >>> generator.generate(seq_len=6, batch_size=2)  # doctest:+ELLIPSIS
+        >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 

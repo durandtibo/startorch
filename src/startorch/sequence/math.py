@@ -38,7 +38,7 @@ class AbsSequenceGenerator(BaseWrapperSequenceGenerator):
         >>> import torch
         >>> from startorch.sequence import Abs, RandNormal
         >>> generator = Abs(RandNormal())
-        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        >>> generator.generate(seq_len=12, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
@@ -69,7 +69,7 @@ class AddSequenceGenerator(BaseSequenceGenerator):
         >>> import torch
         >>> from startorch.sequence import Add, RandUniform, RandNormal
         >>> generator = Add([RandUniform(), RandNormal()])
-        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        >>> generator.generate(seq_len=12, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
@@ -113,7 +113,7 @@ class AddScalarSequenceGenerator(BaseWrapperSequenceGenerator):
         >>> import torch
         >>> from startorch.sequence import AddScalar, RandUniform, RandNormal
         >>> generator = AddScalar(RandUniform(), 42.0)
-        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        >>> generator.generate(seq_len=12, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
@@ -163,7 +163,7 @@ class ClampSequenceGenerator(BaseWrapperSequenceGenerator):
         >>> import torch
         >>> from startorch.sequence import Clamp, RandNormal
         >>> generator = Clamp(RandNormal(), -1.0, 1.0)
-        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        >>> generator.generate(seq_len=12, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
@@ -204,7 +204,7 @@ class CumsumSequenceGenerator(BaseWrapperSequenceGenerator):
         >>> import torch
         >>> from startorch.sequence import Cumsum, RandUniform
         >>> generator = Cumsum(RandUniform())
-        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        >>> generator.generate(seq_len=12, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
@@ -245,7 +245,7 @@ class DivSequenceGenerator(BaseSequenceGenerator):
         >>> import torch
         >>> from startorch.sequence import Div, RandUniform, RandNormal
         >>> generator = Div(RandNormal(), RandUniform(1.0, 10.0))
-        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        >>> generator.generate(seq_len=12, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
@@ -292,7 +292,7 @@ class ExpSequenceGenerator(BaseWrapperSequenceGenerator):
         >>> import torch
         >>> from startorch.sequence import Exp, RandUniform, RandNormal
         >>> generator = Exp(RandUniform())
-        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        >>> generator.generate(seq_len=12, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
@@ -319,12 +319,12 @@ class FmodSequenceGenerator(BaseSequenceGenerator):
 
         >>> from startorch.sequence import Fmod, RandUniform
         >>> generator = Fmod(dividend=RandUniform(low=-100, high=100), divisor=10.0)
-        >>> generator.generate(seq_len=6, batch_size=2)  # doctest:+ELLIPSIS
+        >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
         >>> generator = Fmod(
         ...     dividend=RandUniform(low=-100, high=100), divisor=RandUniform(low=1, high=10)
         ... )
-        >>> generator.generate(seq_len=6, batch_size=2)  # doctest:+ELLIPSIS
+        >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
@@ -363,7 +363,7 @@ class LogSequenceGenerator(BaseWrapperSequenceGenerator):
         >>> import torch
         >>> from startorch.sequence import Log, RandUniform, RandNormal
         >>> generator = Log(RandUniform(1.0, 10.0))
-        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        >>> generator.generate(seq_len=12, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
@@ -394,7 +394,7 @@ class MulSequenceGenerator(BaseSequenceGenerator):
         >>> import torch
         >>> from startorch.sequence import Mul, RandUniform, RandNormal
         >>> generator = Mul([RandUniform(), RandNormal()])
-        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        >>> generator.generate(seq_len=12, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
@@ -438,7 +438,7 @@ class MulScalarSequenceGenerator(BaseWrapperSequenceGenerator):
         >>> import torch
         >>> from startorch.sequence import MulScalar, RandUniform, RandNormal
         >>> generator = MulScalar(RandUniform(), 2.0)
-        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        >>> generator.generate(seq_len=12, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
@@ -473,7 +473,7 @@ class NegSequenceGenerator(BaseWrapperSequenceGenerator):
         >>> import torch
         >>> from startorch.sequence import Neg, RandUniform, RandNormal
         >>> generator = Neg(RandUniform())
-        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        >>> generator.generate(seq_len=12, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
@@ -494,7 +494,7 @@ class SqrtSequenceGenerator(BaseWrapperSequenceGenerator):
         >>> import torch
         >>> from startorch.sequence import Sqrt, RandUniform, RandNormal
         >>> generator = Sqrt(RandUniform(1.0, 4.0))
-        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        >>> generator.generate(seq_len=12, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
@@ -525,7 +525,7 @@ class SubSequenceGenerator(BaseSequenceGenerator):
         >>> import torch
         >>> from startorch.sequence import Sub, RandUniform, RandNormal
         >>> generator = Sub(RandUniform(), RandNormal())
-        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        >>> generator.generate(seq_len=12, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 

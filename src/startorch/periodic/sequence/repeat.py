@@ -30,7 +30,11 @@ class RepeatPeriodicSequenceGenerator(BasePeriodicSequenceGenerator):
         >>> from startorch.periodic.sequence import Repeat
         >>> from startorch.sequence import RandUniform
         >>> generator = Repeat(RandUniform())
-        >>> generator.generate(seq_len=12, period=4, batch_size=4)  # doctest:+ELLIPSIS
+        >>> generator
+        RepeatPeriodicSequenceGenerator(
+          (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+        )
+        >>> generator.generate(seq_len=12, period=4, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 

@@ -43,7 +43,7 @@ class ExponentialSequenceGenerator(BaseSequenceGenerator):
 
         >>> from startorch.sequence import Exponential, RandUniform
         >>> generator = Exponential(rate=RandUniform(low=1.0, high=10.0))
-        >>> generator.generate(seq_len=6, batch_size=2)  # doctest:+ELLIPSIS
+        >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
@@ -91,7 +91,7 @@ class ExponentialSequenceGenerator(BaseSequenceGenerator):
 
             >>> from startorch.sequence import Exponential, RandUniform
             >>> generator = Exponential.create_fixed_rate(rate=1.0)
-            >>> generator.generate(seq_len=6, batch_size=2)  # doctest:+ELLIPSIS
+            >>> generator.generate(seq_len=6, batch_size=2)
             tensor([[...]], batch_dim=0, seq_dim=1)
         """
         return cls(FullSequenceGenerator(value=rate, feature_size=feature_size))
@@ -130,7 +130,7 @@ class ExponentialSequenceGenerator(BaseSequenceGenerator):
 
             >>> from startorch.sequence import Exponential, RandUniform
             >>> generator = Exponential.create_uniform_rate(min_rate=0.1, max_rate=1.0)
-            >>> generator.generate(seq_len=6, batch_size=2)  # doctest:+ELLIPSIS
+            >>> generator.generate(seq_len=6, batch_size=2)
             tensor([[...]], batch_dim=0, seq_dim=1)
         """
         # The import is here to do not generate circular dependencies
@@ -168,7 +168,7 @@ class RandExponentialSequenceGenerator(BaseSequenceGenerator):
 
         >>> from startorch.sequence import RandExponential
         >>> generator = RandExponential(rate=1.0)
-        >>> generator.generate(seq_len=6, batch_size=2)  # doctest:+ELLIPSIS
+        >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
@@ -225,7 +225,7 @@ class RandTruncExponentialSequenceGenerator(BaseSequenceGenerator):
 
         >>> from startorch.sequence import RandTruncExponential
         >>> generator = RandTruncExponential(rate=1.0, max_value=3.0)
-        >>> generator.generate(seq_len=6, batch_size=2)  # doctest:+ELLIPSIS
+        >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
@@ -284,7 +284,7 @@ class TruncExponentialSequenceGenerator(BaseSequenceGenerator):
         ...     rate=RandUniform(low=1.0, high=10.0),
         ...     max_value=RandUniform(low=1.0, high=100.0),
         ... )
-        >>> generator.generate(seq_len=6, batch_size=2)  # doctest:+ELLIPSIS
+        >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 

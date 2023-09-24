@@ -48,7 +48,7 @@ class MultinomialChoiceTensorGenerator(BaseTensorGenerator):
         ...         {"weight": 1.0, "generator": RandNormal()},
         ...     )
         ... )
-        >>> generator.generate(size=(4, 12))  # doctest:+ELLIPSIS
+        >>> generator.generate(size=(4, 12))
         tensor([[...]])
     """
 

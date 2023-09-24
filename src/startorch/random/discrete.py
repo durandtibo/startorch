@@ -42,7 +42,7 @@ def rand_poisson(
 
         >>> import torch
         >>> from startorch.random import rand_poisson
-        >>> rand_poisson(size=(2, 3), rate=2.0)  # doctest:+ELLIPSIS
+        >>> rand_poisson(size=(2, 3), rate=2.0)
         tensor([...])
     """
     if rate <= 0:

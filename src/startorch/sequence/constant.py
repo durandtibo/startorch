@@ -23,7 +23,7 @@ class ConstantSequenceGenerator(BaseWrapperSequenceGenerator):
 
         >>> from startorch.sequence import Constant, RandUniform
         >>> generator = Constant(RandUniform())
-        >>> generator.generate(seq_len=6, batch_size=2)  # doctest:+ELLIPSIS
+        >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 

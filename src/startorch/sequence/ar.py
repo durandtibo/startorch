@@ -58,7 +58,16 @@ class AutoRegressiveSequenceGenerator(BaseSequenceGenerator):
         ...     order=RandInt(low=1, high=6),
         ...     max_abs_value=100.0,
         ... )
-        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        >>> generator
+        AutoRegressiveSequenceGenerator(
+          (value): RandNormalSequenceGenerator(mean=0.0, std=1.0, feature_size=(1,))
+          (coefficient): RandUniformSequenceGenerator(low=-1.0, high=1.0, feature_size=(1,))
+          (noise): FullSequenceGenerator(value=0.0, feature_size=(1,))
+          (order): RandIntTensorGenerator(low=1, high=6)
+          (max_abs_value): 100.0
+          (warmup): 10
+        )
+        >>> generator.generate(seq_len=12, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 

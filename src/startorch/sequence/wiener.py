@@ -32,7 +32,7 @@ class RandWienerProcessSequenceGenerator(BaseSequenceGenerator):
 
         >>> from startorch.sequence import RandWienerProcess
         >>> generator = RandWienerProcess()
-        >>> generator.generate(seq_len=6, batch_size=2)  # doctest:+ELLIPSIS
+        >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
@@ -92,7 +92,7 @@ def wiener_process(
     .. code-block:: pycon
 
         >>> from startorch.sequence.wiener import wiener_process
-        >>> wiener_process(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        >>> wiener_process(seq_len=12, batch_size=4)
         tensor([[...]])
     """
     if step_size < 0:

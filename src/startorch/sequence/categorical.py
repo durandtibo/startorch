@@ -34,7 +34,9 @@ class MultinomialSequenceGenerator(BaseSequenceGenerator):
         >>> import torch
         >>> from startorch.sequence import Multinomial
         >>> generator = Multinomial(weights=torch.ones(5))
-        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        >>> generator
+        MultinomialSequenceGenerator(num_categories=5, feature_size=(1,))
+        >>> generator.generate(seq_len=12, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
@@ -157,7 +159,9 @@ class UniformCategoricalSequenceGenerator(BaseSequenceGenerator):
         >>> import torch
         >>> from startorch.sequence import UniformCategorical
         >>> generator = UniformCategorical(10)
-        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        >>> generator
+        UniformCategoricalSequenceGenerator(num_categories=10, feature_size=())
+        >>> generator.generate(seq_len=12, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 

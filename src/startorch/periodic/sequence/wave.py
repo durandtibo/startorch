@@ -33,6 +33,33 @@ class SineWavePeriodicSequenceGenerator(BasePeriodicSequenceGenerator):
         amplitude (``BasePeriodicSequenceGenerator`` or dict): Specifies a
             sequence generator (or its configuration) to generate the
             amplitude values.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> import torch
+        >>> from startorch.periodic.sequence import Repeat, SineWave
+        >>> from startorch.sequence import RandUniform
+        >>> generator = SineWave(
+        ...     value=Repeat(RandUniform(low=-1.0, high=1.0)),
+        ...     phase=Repeat(RandUniform(low=-1.0, high=1.0)),
+        ...     amplitude=Repeat(RandUniform(low=-1.0, high=1.0)),
+        ... )
+        >>> generator
+        SineWavePeriodicSequenceGenerator(
+          (value): RepeatPeriodicSequenceGenerator(
+              (sequence): RandUniformSequenceGenerator(low=-1.0, high=1.0, feature_size=(1,))
+            )
+          (phase): RepeatPeriodicSequenceGenerator(
+              (sequence): RandUniformSequenceGenerator(low=-1.0, high=1.0, feature_size=(1,))
+            )
+          (amplitude): RepeatPeriodicSequenceGenerator(
+              (sequence): RandUniformSequenceGenerator(low=-1.0, high=1.0, feature_size=(1,))
+            )
+        )
+        >>> generator.generate(seq_len=12, period=4, batch_size=4)
+        tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
     def __init__(

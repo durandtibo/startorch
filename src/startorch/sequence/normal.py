@@ -37,7 +37,7 @@ class NormalSequenceGenerator(BaseSequenceGenerator):
         >>> generator = Normal(
         ...     mean=RandUniform(low=-1.0, high=1.0), std=RandUniform(low=1.0, high=2.0)
         ... )
-        >>> generator.generate(seq_len=6, batch_size=2)  # doctest:+ELLIPSIS
+        >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
@@ -87,7 +87,7 @@ class RandNormalSequenceGenerator(BaseSequenceGenerator):
 
         >>> from startorch.sequence import RandNormal
         >>> generator = RandNormal(mean=0.0, std=1.0)
-        >>> generator.generate(seq_len=6, batch_size=2)  # doctest:+ELLIPSIS
+        >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
@@ -151,7 +151,7 @@ class RandTruncNormalSequenceGenerator(BaseSequenceGenerator):
 
         >>> from startorch.sequence import RandTruncNormal
         >>> generator = RandTruncNormal(mean=0.0, std=1.0, min_value=-1.0, max_value=1.0)
-        >>> generator.generate(seq_len=6, batch_size=2)  # doctest:+ELLIPSIS
+        >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
@@ -227,7 +227,7 @@ class TruncNormalSequenceGenerator(BaseSequenceGenerator):
         ...     min_value=RandUniform(low=-10.0, high=-5.0),
         ...     max_value=RandUniform(low=5.0, high=10.0),
         ... )
-        >>> generator.generate(seq_len=6, batch_size=2)  # doctest:+ELLIPSIS
+        >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 

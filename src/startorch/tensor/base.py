@@ -41,7 +41,7 @@ class BaseTensorGenerator(ABC, metaclass=AbstractFactory):
             >>> import torch
             >>> from startorch.tensor import RandUniform
             >>> generator = RandUniform()
-            >>> generator.generate(size=(4, 12))  # doctest:+ELLIPSIS
+            >>> generator.generate(size=(4, 12))
             tensor([[...]])
         """
 

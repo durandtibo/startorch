@@ -49,7 +49,7 @@ def rand_exponential(
 
         >>> import torch
         >>> from startorch.random import rand_exponential
-        >>> rand_exponential((2, 3), rate=1.0)  # doctest:+ELLIPSIS
+        >>> rand_exponential((2, 3), rate=1.0)
         tensor([[...]])
     """
     if rate <= 0:
@@ -92,7 +92,7 @@ def exponential(rate: torch.Tensor, generator: torch.Generator | None = None) ->
 
         >>> import torch
         >>> from startorch.random import exponential
-        >>> exponential(torch.tensor([1.0, 3.0, 5.0]))  # doctest:+ELLIPSIS
+        >>> exponential(torch.tensor([1.0, 3.0, 5.0]))
         tensor([...])
     """
     rate = rate.float()
@@ -133,7 +133,7 @@ def rand_half_cauchy(
 
         >>> import torch
         >>> from startorch.random import rand_half_cauchy
-        >>> rand_half_cauchy((2, 3), scale=1.0)  # doctest:+ELLIPSIS
+        >>> rand_half_cauchy((2, 3), scale=1.0)
         tensor([[...]])
     """
     return rand_cauchy(size=size, loc=0.0, scale=scale, generator=generator).abs()
@@ -171,7 +171,7 @@ def half_cauchy(scale: Tensor, generator: Generator | None = None) -> Tensor:
 
         >>> import torch
         >>> from startorch.random import half_cauchy
-        >>> half_cauchy(torch.tensor([1.0, 3.0, 5.0]))  # doctest:+ELLIPSIS
+        >>> half_cauchy(torch.tensor([1.0, 3.0, 5.0]))
         tensor([...])
     """
     return cauchy(loc=torch.zeros_like(scale), scale=scale, generator=generator).abs()
@@ -208,7 +208,7 @@ def rand_half_normal(
 
         >>> import torch
         >>> from startorch.random import rand_half_normal
-        >>> rand_half_normal((2, 3), std=1.0)  # doctest:+ELLIPSIS
+        >>> rand_half_normal((2, 3), std=1.0)
         tensor([[...]])
     """
     if std <= 0:
@@ -248,7 +248,7 @@ def half_normal(std: Tensor, generator: Generator | None = None) -> Tensor:
 
         >>> import torch
         >>> from startorch.random import half_normal
-        >>> half_normal(torch.tensor([1.0, 3.0, 5.0]))  # doctest:+ELLIPSIS
+        >>> half_normal(torch.tensor([1.0, 3.0, 5.0]))
         tensor([...])
     """
     return normal(mean=torch.zeros_like(std), std=std, generator=generator).abs()
@@ -289,7 +289,7 @@ def rand_log_normal(
 
         >>> import torch
         >>> from startorch.random import rand_log_normal
-        >>> rand_log_normal((2, 3), mean=1.0, std=2.0)  # doctest:+ELLIPSIS
+        >>> rand_log_normal((2, 3), mean=1.0, std=2.0)
         tensor([[...]])
     """
     if std <= 0:
@@ -335,9 +335,7 @@ def log_normal(mean: Tensor, std: Tensor, generator: Generator | None = None) ->
 
         >>> import torch
         >>> from startorch.random import log_normal
-        >>> log_normal(
-        ...     torch.tensor([-1.0, 0.0, 1.0]), torch.tensor([1.0, 3.0, 5.0])
-        ... )  # doctest:+ELLIPSIS
+        >>> log_normal(torch.tensor([-1.0, 0.0, 1.0]), torch.tensor([1.0, 3.0, 5.0]))
         tensor([...])
     """
     return normal(mean=mean, std=std, generator=generator).exp()

@@ -42,7 +42,7 @@ def rand_cauchy(
 
         >>> import torch
         >>> from startorch.random import rand_cauchy
-        >>> rand_cauchy((2, 3), loc=1.0, scale=2.0)  # doctest:+ELLIPSIS
+        >>> rand_cauchy((2, 3), loc=1.0, scale=2.0)
         tensor([[...]])
     """
     if scale <= 0:
@@ -88,9 +88,7 @@ def cauchy(loc: Tensor, scale: Tensor, generator: torch.Generator | None = None)
 
         >>> import torch
         >>> from startorch.random import cauchy
-        >>> cauchy(
-        ...     loc=torch.tensor([-1.0, 0.0, 1.0]), scale=torch.tensor([1.0, 3.0, 5.0])
-        ... )  # doctest:+ELLIPSIS
+        >>> cauchy(loc=torch.tensor([-1.0, 0.0, 1.0]), scale=torch.tensor([1.0, 3.0, 5.0]))
         tensor([...])
     """
     if loc.shape != scale.shape:
@@ -134,7 +132,7 @@ def rand_normal(
 
         >>> import torch
         >>> from startorch.random import rand_normal
-        >>> rand_normal((2, 3), mean=1.0, std=2.0)  # doctest:+ELLIPSIS
+        >>> rand_normal((2, 3), mean=1.0, std=2.0)
         tensor([[...]])
     """
     if std <= 0.0:
@@ -172,9 +170,7 @@ def normal(mean: Tensor, std: Tensor, generator: torch.Generator | None = None) 
 
         >>> import torch
         >>> from startorch.random import normal
-        >>> normal(
-        ...     mean=torch.tensor([-1.0, 0.0, 1.0]), std=torch.tensor([1.0, 3.0, 5.0])
-        ... )  # doctest:+ELLIPSIS
+        >>> normal(mean=torch.tensor([-1.0, 0.0, 1.0]), std=torch.tensor([1.0, 3.0, 5.0]))
         tensor([...])
     """
     if mean.shape != std.shape:

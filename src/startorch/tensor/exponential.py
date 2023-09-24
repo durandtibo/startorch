@@ -40,7 +40,7 @@ class ExponentialTensorGenerator(BaseTensorGenerator):
 
         >>> from startorch.tensor import Exponential, RandUniform
         >>> generator = Exponential(rate=RandUniform(low=1.0, high=100.0))
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 
@@ -75,7 +75,7 @@ class RandExponentialTensorGenerator(BaseTensorGenerator):
 
         >>> from startorch.tensor import RandExponential
         >>> generator = RandExponential(rate=1.0)
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 
@@ -114,7 +114,7 @@ class RandTruncExponentialTensorGenerator(BaseTensorGenerator):
 
         >>> from startorch.tensor import RandTruncExponential
         >>> generator = RandTruncExponential(rate=1.0, max_value=3.0)
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 
@@ -160,7 +160,7 @@ class TruncExponentialTensorGenerator(BaseTensorGenerator):
         ...     rate=RandUniform(low=1.0, high=10.0),
         ...     max_value=RandUniform(low=1.0, high=100.0),
         ... )
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 
