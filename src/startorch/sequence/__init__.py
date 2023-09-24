@@ -73,11 +73,16 @@ __all__ = [
     "TruncNormal",
     "Uniform",
     "UniformCategorical",
+    "is_sequence_generator_config",
     "setup_sequence_generator",
 ]
 
 from startorch.sequence.ar import AutoRegressiveSequenceGenerator as AutoRegressive
-from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_generator
+from startorch.sequence.base import (
+    BaseSequenceGenerator,
+    is_sequence_generator_config,
+    setup_sequence_generator,
+)
 from startorch.sequence.categorical import MultinomialSequenceGenerator as Multinomial
 from startorch.sequence.categorical import (
     UniformCategoricalSequenceGenerator as UniformCategorical,

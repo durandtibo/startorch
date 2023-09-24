@@ -1,11 +1,12 @@
 from __future__ import annotations
 
-__all__ = ["BaseSequenceGenerator", "setup_sequence_generator"]
+__all__ = ["BaseSequenceGenerator", "is_sequence_generator_config", "setup_sequence_generator"]
 
 import logging
 from abc import ABC, abstractmethod
 
 from objectory import AbstractFactory
+from objectory.utils import is_object_config
 from redcat import BatchedTensorSeq
 from torch import Generator
 
@@ -65,6 +66,35 @@ class BaseSequenceGenerator(ABC, metaclass=AbstractFactory):
             >>> generator.generate(seq_len=12, batch_size=4)
             tensor([[...]], batch_dim=0, seq_dim=1)
         """
+
+
+def is_sequence_generator_config(config: dict) -> bool:
+    r"""Indicates if the input configuration is a configuration for a
+    ``BaseSequenceGenerator``.
+
+    This function only checks if the value of the key  ``_target_``
+    is valid. It does not check the other values. If ``_target_``
+    indicates a function, the returned type hint is used to check
+    the class.
+
+    Args:
+    ----
+        config (dict): Specifies the configuration to check.
+
+    Returns:
+    -------
+        bool: ``True`` if the input configuration is a configuration
+            for a ``BaseSequenceGenerator`` object.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> from startorch.sequence import is_sequence_generator_config
+        >>> is_sequence_generator_config({"_target_": "startorch.sequence.RandUniform"})
+        True
+    """
+    return is_object_config(config, BaseSequenceGenerator)
 
 
 def setup_sequence_generator(generator: BaseSequenceGenerator | dict) -> BaseSequenceGenerator:

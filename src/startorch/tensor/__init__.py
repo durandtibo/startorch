@@ -61,10 +61,15 @@ __all__ = [
     "TruncNormal",
     "Uniform",
     "UniformCategorical",
+    "is_tensor_generator_config",
     "setup_tensor_generator",
 ]
 
-from startorch.tensor.base import BaseTensorGenerator, setup_tensor_generator
+from startorch.tensor.base import (
+    BaseTensorGenerator,
+    is_tensor_generator_config,
+    setup_tensor_generator,
+)
 from startorch.tensor.categorical import MultinomialTensorGenerator as Multinomial
 from startorch.tensor.categorical import (
     UniformCategoricalTensorGenerator as UniformCategorical,

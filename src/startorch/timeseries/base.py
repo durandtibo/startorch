@@ -1,12 +1,17 @@
 from __future__ import annotations
 
-__all__ = ["BaseTimeSeriesGenerator", "setup_timeseries_generator"]
+__all__ = [
+    "BaseTimeSeriesGenerator",
+    "is_timeseries_generator_config",
+    "setup_timeseries_generator",
+]
 
 import logging
 from abc import ABC, abstractmethod
 from collections.abc import Generator
 
 from objectory import AbstractFactory
+from objectory.utils import is_object_config
 from redcat import BatchDict
 
 from startorch.utils.format import str_target_object
@@ -32,8 +37,8 @@ class BaseTimeSeriesGenerator(ABC, metaclass=AbstractFactory):
         )
         >>> generator.generate(seq_len=12, batch_size=4)
         BatchDict(
-          (value): tensor([[...]], batch_dim=0, seq_dim=1)
-          (time): tensor([[...]], batch_dim=0, seq_dim=1)
+          (value): timeseries([[...]], batch_dim=0, seq_dim=1)
+          (time): timeseries([[...]], batch_dim=0, seq_dim=1)
         )
     """
 
@@ -65,10 +70,39 @@ class BaseTimeSeriesGenerator(ABC, metaclass=AbstractFactory):
             >>> generator = TimeSeries({"value": RandUniform(), "time": RandUniform()})
             >>> generator.generate(seq_len=12, batch_size=4)
             BatchDict(
-              (value): tensor([[...]], batch_dim=0, seq_dim=1)
-              (time): tensor([[...]], batch_dim=0, seq_dim=1)
+              (value): timeseries([[...]], batch_dim=0, seq_dim=1)
+              (time): timeseries([[...]], batch_dim=0, seq_dim=1)
             )
         """
+
+
+def is_timeseries_generator_config(config: dict) -> bool:
+    r"""Indicates if the input configuration is a configuration for a
+    ``BaseTimeSeriesGenerator``.
+
+    This function only checks if the value of the key  ``_target_``
+    is valid. It does not check the other values. If ``_target_``
+    indicates a function, the returned type hint is used to check
+    the class.
+
+    Args:
+    ----
+        config (dict): Specifies the configuration to check.
+
+    Returns:
+    -------
+        bool: ``True`` if the input configuration is a configuration
+            for a ``BaseTimeSeriesGenerator`` object.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> from startorch.timeseries import is_timeseries_generator_config
+        >>> is_timeseries_generator_config({"_target_": "startorch.timeseries.RandUniform"})
+        True
+    """
+    return is_object_config(config, BaseTimeSeriesGenerator)
 
 
 def setup_timeseries_generator(

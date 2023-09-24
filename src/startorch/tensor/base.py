@@ -1,11 +1,12 @@
 from __future__ import annotations
 
-__all__ = ["BaseTensorGenerator", "setup_tensor_generator"]
+__all__ = ["BaseTensorGenerator", "is_tensor_generator_config", "setup_tensor_generator"]
 
 import logging
 from abc import ABC, abstractmethod
 
 from objectory import AbstractFactory
+from objectory.utils import is_object_config
 from torch import Generator, Tensor
 
 from startorch.utils.format import str_target_object
@@ -56,6 +57,35 @@ class BaseTensorGenerator(ABC, metaclass=AbstractFactory):
             >>> generator.generate(size=(4, 12))
             tensor([[...]])
         """
+
+
+def is_tensor_generator_config(config: dict) -> bool:
+    r"""Indicates if the input configuration is a configuration for a
+    ``BaseTensorGenerator``.
+
+    This function only checks if the value of the key  ``_target_``
+    is valid. It does not check the other values. If ``_target_``
+    indicates a function, the returned type hint is used to check
+    the class.
+
+    Args:
+    ----
+        config (dict): Specifies the configuration to check.
+
+    Returns:
+    -------
+        bool: ``True`` if the input configuration is a configuration
+            for a ``BaseTensorGenerator`` object.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> from startorch.tensor import is_tensor_generator_config
+        >>> is_tensor_generator_config({"_target_": "startorch.tensor.RandUniform"})
+        True
+    """
+    return is_object_config(config, BaseTensorGenerator)
 
 
 def setup_tensor_generator(generator: BaseTensorGenerator | dict) -> BaseTensorGenerator:

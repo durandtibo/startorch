@@ -6,7 +6,24 @@ from objectory import OBJECT_TARGET
 from pytest import LogCaptureFixture
 
 from startorch.sequence import RandInt
-from startorch.tensor import RandUniform, setup_tensor_generator
+from startorch.tensor import (
+    RandUniform,
+    is_tensor_generator_config,
+    setup_tensor_generator,
+)
+
+################################################
+#     Tests for is_tensor_generator_config     #
+################################################
+
+
+def test_is_tensor_generator_config_true() -> None:
+    assert is_tensor_generator_config({OBJECT_TARGET: "startorch.tensor.RandUniform"})
+
+
+def test_is_tensor_generator_config_false() -> None:
+    assert not is_tensor_generator_config({OBJECT_TARGET: "torch.nn.Identity"})
+
 
 ############################################
 #     Tests for setup_tensor_generator     #
