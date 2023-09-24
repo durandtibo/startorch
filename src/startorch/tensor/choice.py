@@ -48,6 +48,11 @@ class MultinomialChoiceTensorGenerator(BaseTensorGenerator):
         ...         {"weight": 1.0, "generator": RandNormal()},
         ...     )
         ... )
+        >>> generator
+        MultinomialChoiceTensorGenerator(
+          (0) [weight=2.0] RandUniformTensorGenerator(low=0.0, high=1.0)
+          (1) [weight=1.0] RandNormalTensorGenerator(mean=0.0, std=1.0)
+        )
         >>> generator.generate(size=(4, 12))
         tensor([[...]])
     """

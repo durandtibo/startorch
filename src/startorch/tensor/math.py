@@ -35,6 +35,10 @@ class AbsTensorGenerator(BaseWrapperTensorGenerator):
 
         >>> from startorch.tensor import Abs, RandNormal
         >>> generator = Abs(RandNormal())
+        >>> generator
+        AbsTensorGenerator(
+          (tensor): RandNormalTensorGenerator(mean=0.0, std=1.0)
+        )
         >>> generator.generate((2, 6))
         tensor([[...]])
     """
@@ -59,6 +63,11 @@ class AddScalarTensorGenerator(BaseWrapperTensorGenerator):
 
         >>> from startorch.tensor import AddScalar, RandUniform
         >>> generator = AddScalar(RandUniform(), 10.0)
+        >>> generator
+        AddScalarTensorGenerator(
+          (tensor): RandUniformTensorGenerator(low=0.0, high=1.0)
+          (value): 10.0
+        )
         >>> generator.generate((2, 6))
         tensor([[...]])
     """
@@ -100,6 +109,11 @@ class AddTensorGenerator(BaseTensorGenerator):
 
         >>> from startorch.tensor import Add, RandNormal, RandUniform
         >>> generator = Add([RandUniform(), RandNormal()])
+        >>> generator
+        AddTensorGenerator(
+          (0): RandUniformTensorGenerator(low=0.0, high=1.0)
+          (1): RandNormalTensorGenerator(mean=0.0, std=1.0)
+        )
         >>> generator.generate((2, 6))
         tensor([[...]])
     """
@@ -147,6 +161,12 @@ class ClampTensorGenerator(BaseWrapperTensorGenerator):
 
         >>> from startorch.tensor import Clamp, RandUniform
         >>> generator = Clamp(RandUniform(low=1.0, high=50.0), min_value=2.0, max_value=10.0)
+        >>> generator
+        ClampTensorGenerator(
+          (tensor): RandUniformTensorGenerator(low=1.0, high=50.0)
+          (min_value): 2.0
+          (max_value): 10.0
+        )
         >>> generator.generate((2, 6))
         tensor([[...]])
     """
@@ -203,6 +223,11 @@ class DivTensorGenerator(BaseTensorGenerator):
 
         >>> from startorch.tensor import Div, RandUniform
         >>> generator = Div(RandUniform(), RandUniform(low=1.0, high=10.0))
+        >>> generator
+        DivTensorGenerator(
+          (dividend): RandUniformTensorGenerator(low=0.0, high=1.0)
+          (divisor): RandUniformTensorGenerator(low=1.0, high=10.0)
+        )
         >>> generator.generate((2, 6))
         tensor([[...]])
     """
@@ -239,6 +264,10 @@ class ExpTensorGenerator(BaseWrapperTensorGenerator):
 
         >>> from startorch.tensor import Exp, RandUniform
         >>> generator = Exp(RandUniform(low=1.0, high=5.0))
+        >>> generator
+        ExpTensorGenerator(
+          (tensor): RandUniformTensorGenerator(low=1.0, high=5.0)
+        )
         >>> generator.generate((2, 6))
         tensor([[...]])
     """
@@ -264,11 +293,21 @@ class FmodTensorGenerator(BaseTensorGenerator):
 
         >>> from startorch.tensor import Fmod, RandUniform
         >>> generator = Fmod(dividend=RandUniform(low=-100, high=100), divisor=10.0)
+        >>> generator
+        FmodTensorGenerator(
+          (dividend): RandUniformTensorGenerator(low=-100.0, high=100.0)
+          (divisor): 10.0
+        )
         >>> generator.generate((2, 6))
         tensor([[...]])
         >>> generator = Fmod(
         ...     dividend=RandUniform(low=-100, high=100), divisor=RandUniform(low=1, high=10)
         ... )
+        >>> generator
+        FmodTensorGenerator(
+          (dividend): RandUniformTensorGenerator(low=-100.0, high=100.0)
+          (divisor): RandUniformTensorGenerator(low=1.0, high=10.0)
+        )
         >>> generator.generate((2, 6))
         tensor([[...]])
     """
@@ -305,6 +344,10 @@ class LogTensorGenerator(BaseWrapperTensorGenerator):
 
         >>> from startorch.tensor import Log, RandUniform
         >>> generator = Log(RandUniform(low=1.0, high=100.0))
+        >>> generator
+        LogTensorGenerator(
+          (tensor): RandUniformTensorGenerator(low=1.0, high=100.0)
+        )
         >>> generator.generate((2, 6))
         tensor([[...]])
     """
@@ -333,6 +376,11 @@ class MulTensorGenerator(BaseTensorGenerator):
         >>> import torch
         >>> from startorch.tensor import Mul, RandUniform, RandNormal
         >>> generator = Mul([RandUniform(), RandNormal()])
+        >>> generator
+        MulTensorGenerator(
+          (0): RandUniformTensorGenerator(low=0.0, high=1.0)
+          (1): RandNormalTensorGenerator(mean=0.0, std=1.0)
+        )
         >>> generator.generate((2, 6))
         tensor([[...]])
     """
@@ -372,6 +420,10 @@ class MulScalarTensorGenerator(BaseWrapperTensorGenerator):
         >>> import torch
         >>> from startorch.tensor import MulScalar, RandUniform, RandNormal
         >>> generator = MulScalar(RandUniform(), 42)
+        >>> generator
+        MulScalarTensorGenerator(
+          (tensor): RandUniformTensorGenerator(low=0.0, high=1.0)
+        )
         >>> generator.generate((2, 6))
         tensor([[...]])
     """
@@ -405,6 +457,10 @@ class NegTensorGenerator(BaseWrapperTensorGenerator):
         >>> import torch
         >>> from startorch.tensor import Neg, RandNormal
         >>> generator = Neg(RandNormal())
+        >>> generator
+        NegTensorGenerator(
+          (tensor): RandNormalTensorGenerator(mean=0.0, std=1.0)
+        )
         >>> generator.generate((2, 6))
         tensor([[...]])
     """
@@ -423,6 +479,10 @@ class SqrtTensorGenerator(BaseWrapperTensorGenerator):
 
         >>> from startorch.tensor import RandUniform, Sqrt
         >>> generator = Sqrt(RandUniform(low=1.0, high=100.0))
+        >>> generator
+        SqrtTensorGenerator(
+          (tensor): RandUniformTensorGenerator(low=1.0, high=100.0)
+        )
         >>> generator.generate((2, 6))
         tensor([[...]])
     """
@@ -451,6 +511,11 @@ class SubTensorGenerator(BaseTensorGenerator):
 
         >>> from startorch.tensor import RandNormal, RandUniform, Sub
         >>> generator = Sub(RandUniform(), RandNormal())
+        >>> generator
+        SubTensorGenerator(
+          (tensor1): RandUniformTensorGenerator(low=0.0, high=1.0)
+          (tensor2): RandNormalTensorGenerator(mean=0.0, std=1.0)
+        )
         >>> generator.generate((2, 6))
         tensor([[...]])
     """

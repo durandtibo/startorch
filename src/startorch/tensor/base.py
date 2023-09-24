@@ -17,6 +17,18 @@ class BaseTensorGenerator(ABC, metaclass=AbstractFactory):
     r"""Defines the base class to generate tensor.
 
     A child class has to implement the ``generate`` method.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> import torch
+        >>> from startorch.tensor import RandUniform
+        >>> generator = RandUniform()
+        >>> generator
+        RandUniformTensorGenerator(low=0.0, high=1.0)
+        >>> generator.generate(size=(4, 12))
+        tensor([[...]])
     """
 
     @abstractmethod

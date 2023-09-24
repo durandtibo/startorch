@@ -27,6 +27,11 @@ class TimeSeriesGenerator(BaseTimeSeriesGenerator):
         >>> from startorch.sequence import RandUniform
         >>> from startorch.timeseries import TimeSeries
         >>> generator = TimeSeries({"value": RandUniform(), "time": RandUniform()})
+        >>> generator
+        TimeSeriesGenerator(
+          (value): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+          (time): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+        )
         >>> generator.generate(seq_len=12, batch_size=4)
         BatchDict(
           (value): tensor([[...]], batch_dim=0, seq_dim=1)

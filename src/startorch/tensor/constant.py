@@ -25,7 +25,10 @@ class FullTensorGenerator(BaseTensorGenerator):
     .. code-block:: pycon
 
         >>> from startorch.tensor import Full
-        >>> Full(value=42).generate((2, 6))
+        >>> generator = Full(value=42)
+        >>> generator
+        FullTensorGenerator(value=42, dtype=None)
+        >>> generator.generate((2, 6))
         tensor([[42, 42, 42, 42, 42, 42],
                 [42, 42, 42, 42, 42, 42]])
     """

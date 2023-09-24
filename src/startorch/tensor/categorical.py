@@ -30,6 +30,8 @@ class MultinomialTensorGenerator(BaseTensorGenerator):
         >>> import torch
         >>> from startorch.tensor import Multinomial
         >>> generator = Multinomial(torch.ones(10))
+        >>> generator
+        MultinomialTensorGenerator(num_categories=10)
         >>> generator.generate(size=(4, 12))
         tensor([[...]])
     """
@@ -71,6 +73,8 @@ class MultinomialTensorGenerator(BaseTensorGenerator):
             >>> import torch
             >>> from startorch.tensor import Multinomial
             >>> generator = Multinomial.create_uniform_weights(10)
+            >>> generator
+            MultinomialTensorGenerator(num_categories=10)
             >>> generator.generate(size=(4, 12))
             tensor([[...]])
         """
@@ -103,6 +107,8 @@ class MultinomialTensorGenerator(BaseTensorGenerator):
             >>> import torch
             >>> from startorch.tensor import Multinomial
             >>> generator = Multinomial.create_linear_weights(10)
+            >>> generator
+            MultinomialTensorGenerator(num_categories=10)
             >>> generator.generate(size=(4, 12))
             tensor([[...]])
         """
@@ -139,6 +145,8 @@ class MultinomialTensorGenerator(BaseTensorGenerator):
             >>> import torch
             >>> from startorch.tensor import Multinomial
             >>> generator = Multinomial.create_exp_weights(10)
+            >>> generator
+            MultinomialTensorGenerator(num_categories=10)
             >>> generator.generate(size=(4, 12))
             tensor([[...]])
         """
@@ -169,6 +177,8 @@ class UniformCategoricalTensorGenerator(BaseTensorGenerator):
         >>> import torch
         >>> from startorch.tensor import UniformCategorical
         >>> generator = UniformCategorical(10)
+        >>> generator
+        UniformCategoricalTensorGenerator(num_categories=10)
         >>> generator.generate(size=(4, 12))
         tensor([[...]])
     """

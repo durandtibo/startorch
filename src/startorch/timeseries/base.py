@@ -15,7 +15,27 @@ logger = logging.getLogger(__name__)
 
 
 class BaseTimeSeriesGenerator(ABC, metaclass=AbstractFactory):
-    r"""Defines the base class to generate time series."""
+    r"""Defines the base class to generate time series.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> import torch
+        >>> from startorch.sequence import RandUniform
+        >>> from startorch.timeseries import TimeSeries
+        >>> generator = TimeSeries({"value": RandUniform(), "time": RandUniform()})
+        >>> generator
+        TimeSeriesGenerator(
+          (value): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+          (time): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+        )
+        >>> generator.generate(seq_len=12, batch_size=4)
+        BatchDict(
+          (value): tensor([[...]], batch_dim=0, seq_dim=1)
+          (time): tensor([[...]], batch_dim=0, seq_dim=1)
+        )
+    """
 
     @abstractmethod
     def generate(

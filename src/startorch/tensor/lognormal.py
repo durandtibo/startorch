@@ -41,6 +41,11 @@ class LogNormalTensorGenerator(BaseTensorGenerator):
         >>> generator = LogNormal(
         ...     mean=RandUniform(low=-1.0, high=1.0), std=RandUniform(low=1.0, high=2.0)
         ... )
+        >>> generator
+        LogNormalTensorGenerator(
+          (mean): RandUniformTensorGenerator(low=-1.0, high=1.0)
+          (std): RandUniformTensorGenerator(low=1.0, high=2.0)
+        )
         >>> generator.generate(size=(2, 6))
         tensor([[...]])
     """
@@ -83,6 +88,8 @@ class RandLogNormalTensorGenerator(BaseTensorGenerator):
 
         >>> from startorch.tensor import RandLogNormal
         >>> generator = RandLogNormal(mean=0.0, std=1.0)
+        >>> generator
+        RandLogNormalTensorGenerator(mean=0.0, std=1.0)
         >>> generator.generate(size=(2, 6))
         tensor([[...]])
     """
@@ -132,6 +139,8 @@ class RandTruncLogNormalTensorGenerator(BaseTensorGenerator):
 
         >>> from startorch.tensor import RandTruncLogNormal
         >>> generator = RandTruncLogNormal(mean=0.0, std=1.0, min_value=0.0, max_value=1.0)
+        >>> generator
+        RandTruncLogNormalTensorGenerator(mean=0.0, std=1.0, min_value=0.0, max_value=1.0)
         >>> generator.generate(size=(2, 6))
         tensor([[...]])
     """
@@ -191,13 +200,20 @@ class TruncLogNormalTensorGenerator(BaseTensorGenerator):
 
     .. code-block:: pycon
 
-        >>> from startorch.tensor import RandUniform, TruncNormal
-        >>> generator = TruncNormal(
+        >>> from startorch.tensor import RandUniform, TruncLogNormal
+        >>> generator = TruncLogNormal(
         ...     mean=RandUniform(low=-1.0, high=1.0),
         ...     std=RandUniform(low=1.0, high=2.0),
         ...     min_value=RandUniform(low=0.0, high=2.0),
         ...     max_value=RandUniform(low=5.0, high=10.0),
         ... )
+        >>> generator
+        TruncLogNormalTensorGenerator(
+          (mean): RandUniformTensorGenerator(low=-1.0, high=1.0)
+          (std): RandUniformTensorGenerator(low=1.0, high=2.0)
+          (min_value): RandUniformTensorGenerator(low=0.0, high=2.0)
+          (max_value): RandUniformTensorGenerator(low=5.0, high=10.0)
+        )
         >>> generator.generate(size=(2, 6))
         tensor([[...]])
     """

@@ -17,6 +17,10 @@ class FloatTensorGenerator(BaseWrapperTensorGenerator):
 
         >>> from startorch.tensor import Float, RandInt
         >>> generator = Float(RandInt(low=0, high=10))
+        >>> generator
+        FloatTensorGenerator(
+          (tensor): RandIntTensorGenerator(low=0, high=10)
+        )
         >>> generator.generate((2, 6))
         tensor([[...]])
     """
@@ -35,6 +39,10 @@ class LongTensorGenerator(BaseWrapperTensorGenerator):
 
         >>> from startorch.tensor import Long, RandUniform
         >>> generator = Long(RandUniform(low=0, high=10))
+        >>> generator
+        LongTensorGenerator(
+          (tensor): RandUniformTensorGenerator(low=0.0, high=10.0)
+        )
         >>> generator.generate((2, 6))
         tensor([[...]])
     """
