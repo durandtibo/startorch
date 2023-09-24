@@ -31,7 +31,7 @@ class PoissonTensorGenerator(BaseTensorGenerator):
 
         >>> from startorch.tensor import RandUniform, Poisson
         >>> generator = Poisson(rate=RandUniform(low=1.0, high=2.0))
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 
@@ -67,7 +67,7 @@ class RandPoissonTensorGenerator(BaseTensorGenerator):
 
         >>> from startorch.tensor import RandPoisson
         >>> generator = RandPoisson(rate=1.0)
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 

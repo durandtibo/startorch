@@ -34,7 +34,7 @@ class PoissonSequenceGenerator(BaseSequenceGenerator):
 
         >>> from startorch.sequence import RandUniform, Poisson
         >>> generator = Poisson(rate=RandUniform(low=1.0, high=2.0))
-        >>> generator.generate(seq_len=6, batch_size=2)  # doctest:+ELLIPSIS
+        >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
@@ -117,7 +117,7 @@ class RandPoissonSequenceGenerator(BaseSequenceGenerator):
 
         >>> from startorch.sequence import RandPoisson
         >>> generator = RandPoisson(rate=1.0)
-        >>> generator.generate(seq_len=6, batch_size=2)  # doctest:+ELLIPSIS
+        >>> generator.generate(seq_len=6, batch_size=2)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 

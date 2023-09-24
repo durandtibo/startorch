@@ -35,7 +35,7 @@ class Cat2SequenceGenerator(BaseSequenceGenerator):
         >>> generator = Cat2(
         ...     generator1=RandUniform(), generator2=RandNormal(), changepoint=RandInt(0, 12)
         ... )
-        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        >>> generator.generate(seq_len=12, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 

@@ -17,7 +17,7 @@ class FloatTensorGenerator(BaseWrapperTensorGenerator):
 
         >>> from startorch.tensor import Float, RandInt
         >>> generator = Float(RandInt(low=0, high=10))
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 
@@ -35,7 +35,7 @@ class LongTensorGenerator(BaseWrapperTensorGenerator):
 
         >>> from startorch.tensor import Long, RandUniform
         >>> generator = Long(RandUniform(low=0, high=10))
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 

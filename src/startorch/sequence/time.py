@@ -31,7 +31,7 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
         >>> import torch
         >>> from startorch.sequence import RandUniform, Time
         >>> generator = Time(RandUniform())
-        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        >>> generator.generate(seq_len=12, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 
@@ -65,7 +65,7 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
             >>> import torch
             >>> from startorch.sequence import RandUniform, Time
             >>> generator = Time.create_exponential_constant_time_diff()
-            >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+            >>> generator.generate(seq_len=12, batch_size=4)
             tensor([[...]], batch_dim=0, seq_dim=1)
         """
         return cls(
@@ -104,7 +104,7 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
             >>> import torch
             >>> from startorch.sequence import RandUniform, Time
             >>> generator = Time.create_exponential_time_diff()
-            >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+            >>> generator.generate(seq_len=12, batch_size=4)
             tensor([[...]], batch_dim=0, seq_dim=1)
         """
         return cls(
@@ -141,7 +141,7 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
             >>> import torch
             >>> from startorch.sequence import RandUniform, Time
             >>> generator = Time.create_poisson_constant_time_diff()
-            >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+            >>> generator.generate(seq_len=12, batch_size=4)
             tensor([[...]], batch_dim=0, seq_dim=1)
         """
         return cls(
@@ -173,7 +173,7 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
             >>> import torch
             >>> from startorch.sequence import RandUniform, Time
             >>> generator = Time.create_poisson_time_diff()
-            >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+            >>> generator.generate(seq_len=12, batch_size=4)
             tensor([[...]], batch_dim=0, seq_dim=1)
         """
         return cls(CumsumSequenceGenerator(RandPoissonSequenceGenerator(rate, feature_size=1)))
@@ -215,7 +215,7 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
             >>> import torch
             >>> from startorch.sequence import RandUniform, Time
             >>> generator = Time.create_uniform_constant_time_diff()
-            >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+            >>> generator.generate(seq_len=12, batch_size=4)
             tensor([[...]], batch_dim=0, seq_dim=1)
         """
         if min_time_diff < 0:
@@ -269,7 +269,7 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
             >>> import torch
             >>> from startorch.sequence import RandUniform, Time
             >>> generator = Time.create_uniform_time_diff()
-            >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+            >>> generator.generate(seq_len=12, batch_size=4)
             tensor([[...]], batch_dim=0, seq_dim=1)
         """
         if min_time_diff < 0:
@@ -318,7 +318,7 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
             >>> import torch
             >>> from startorch.sequence import RandUniform, Time
             >>> generator = Time.create_uniform_time()
-            >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+            >>> generator.generate(seq_len=12, batch_size=4)
             tensor([[...]], batch_dim=0, seq_dim=1)
         """
         if min_time < 0:

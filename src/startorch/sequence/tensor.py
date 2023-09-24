@@ -31,7 +31,7 @@ class TensorSequenceGenerator(BaseSequenceGenerator):
         >>> from startorch.sequence import TensorSequence
         >>> from startorch.tensor import RandUniform
         >>> generator = TensorSequence(RandUniform())
-        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        >>> generator.generate(seq_len=12, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 

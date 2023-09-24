@@ -81,9 +81,7 @@ def rand_trunc_cauchy(
 
         >>> import torch
         >>> from startorch.random import rand_trunc_cauchy
-        >>> rand_trunc_cauchy(
-        ...     (2, 3), loc=1.0, scale=2.0, min_value=-3.0, max_value=3.0
-        ... )  # doctest:+ELLIPSIS
+        >>> rand_trunc_cauchy((2, 3), loc=1.0, scale=2.0, min_value=-3.0, max_value=3.0)
         tensor([[...]])
     """
     if max_value < min_value:
@@ -146,7 +144,7 @@ def trunc_cauchy(
         ...     scale=torch.tensor([1.0, 3.0, 5.0]),
         ...     min_value=torch.tensor([-5.0, -10.0, -15.0]),
         ...     max_value=torch.tensor([5.0, 10.0, 15.0]),
-        ... )  # doctest:+ELLIPSIS
+        ... )
         tensor([...])
     """
     if not shapes_are_equal((loc, scale, min_value, max_value)):
@@ -205,7 +203,7 @@ def rand_trunc_exponential(
 
         >>> import torch
         >>> from startorch.random import rand_trunc_exponential
-        >>> rand_trunc_exponential((2, 3), rate=1.0, max_value=3.0)  # doctest:+ELLIPSIS
+        >>> rand_trunc_exponential((2, 3), rate=1.0, max_value=3.0)
         tensor([[...]])
     """
     if max_value <= 0:
@@ -257,7 +255,7 @@ def trunc_exponential(
         >>> trunc_exponential(
         ...     rate=torch.tensor([1.0, 3.0, 5.0]),
         ...     max_value=torch.tensor([5.0, 10.0, 15.0]),
-        ... )  # doctest:+ELLIPSIS
+        ... )
         tensor([...])
     """
     if rate.shape != max_value.shape:
@@ -313,7 +311,7 @@ def rand_trunc_half_cauchy(
 
         >>> import torch
         >>> from startorch.random import rand_trunc_half_cauchy
-        >>> rand_trunc_half_cauchy((2, 3), scale=1.0, max_value=3.0)  # doctest:+ELLIPSIS
+        >>> rand_trunc_half_cauchy((2, 3), scale=1.0, max_value=3.0)
         tensor([[...]])
     """
     if max_value <= 0:
@@ -365,7 +363,7 @@ def trunc_half_cauchy(
         >>> trunc_half_cauchy(
         ...     scale=torch.tensor([1.0, 3.0, 5.0]),
         ...     max_value=torch.tensor([5.0, 10.0, 15.0]),
-        ... )  # doctest:+ELLIPSIS
+        ... )
         tensor([...])
     """
     if scale.shape != max_value.shape:
@@ -421,7 +419,7 @@ def rand_trunc_half_normal(
 
         >>> import torch
         >>> from startorch.random import rand_trunc_half_normal
-        >>> rand_trunc_half_normal((2, 3), std=1.0, max_value=3.0)  # doctest:+ELLIPSIS
+        >>> rand_trunc_half_normal((2, 3), std=1.0, max_value=3.0)
         tensor([[...]])
     """
     if max_value <= 0:
@@ -472,7 +470,7 @@ def trunc_half_normal(
         >>> from startorch.random import trunc_half_normal
         >>> trunc_half_normal(
         ...     std=torch.tensor([1.0, 3.0, 5.0]), max_value=torch.tensor([5.0, 10.0, 15.0])
-        ... )  # doctest:+ELLIPSIS
+        ... )
         tensor([...])
     """
     if std.shape != max_value.shape:
@@ -533,9 +531,7 @@ def rand_trunc_log_normal(
 
         >>> import torch
         >>> from startorch.random import rand_trunc_log_normal
-        >>> rand_trunc_log_normal(
-        ...     (2, 3), mean=0.0, std=1.0, min_value=1.0, max_value=4.0
-        ... )  # doctest:+ELLIPSIS
+        >>> rand_trunc_log_normal((2, 3), mean=0.0, std=1.0, min_value=1.0, max_value=4.0)
         tensor([[...]])
     """
     if max_value < min_value:
@@ -598,7 +594,7 @@ def trunc_log_normal(
         ...     std=torch.tensor([1.0, 3.0, 5.0]),
         ...     min_value=torch.tensor([0.0, 1.0, 2.0]),
         ...     max_value=torch.tensor([5.0, 10.0, 15.0]),
-        ... )  # doctest:+ELLIPSIS
+        ... )
         tensor([...])
     """
     if not shapes_are_equal((mean, std, min_value, max_value)):
@@ -665,9 +661,7 @@ def rand_trunc_normal(
 
         >>> import torch
         >>> from startorch.random import rand_trunc_normal
-        >>> rand_trunc_normal(
-        ...     (2, 3), mean=1.0, std=2.0, min_value=-5.0, max_value=5.0
-        ... )  # doctest:+ELLIPSIS
+        >>> rand_trunc_normal((2, 3), mean=1.0, std=2.0, min_value=-5.0, max_value=5.0)
         tensor([[...]])
     """
     if max_value < min_value:
@@ -730,7 +724,7 @@ def trunc_normal(
         ...     std=torch.tensor([1.0, 3.0, 5.0]),
         ...     min_value=torch.tensor([-5.0, -10.0, -15.0]),
         ...     max_value=torch.tensor([5.0, 10.0, 15.0]),
-        ... )  # doctest:+ELLIPSIS
+        ... )
         tensor([...])
     """
     if not shapes_are_equal((mean, std, min_value, max_value)):
@@ -791,7 +785,7 @@ def rand_uniform(
 
         >>> import torch
         >>> from startorch.random import rand_uniform
-        >>> rand_uniform((2, 3), low=-1.0, high=2.0)  # doctest:+ELLIPSIS
+        >>> rand_uniform((2, 3), low=-1.0, high=2.0)
         tensor([[...]])
     """
     if high < low:
@@ -839,9 +833,7 @@ def uniform(low: Tensor, high: Tensor, generator: torch.Generator | None = None)
 
         >>> import torch
         >>> from startorch.random import uniform
-        >>> uniform(
-        ...     low=torch.tensor([-1.0, 0.0, 1.0]), high=torch.tensor([1.0, 3.0, 5.0])
-        ... )  # doctest:+ELLIPSIS
+        >>> uniform(low=torch.tensor([-1.0, 0.0, 1.0]), high=torch.tensor([1.0, 3.0, 5.0]))
         tensor([...])
     """
     if low.shape != high.shape:
@@ -895,7 +887,7 @@ def rand_log_uniform(
     .. code-block:: pycon
 
         >>> from startorch.random import rand_log_uniform
-        >>> rand_log_uniform((2, 3), low=0.1, high=1000.0)  # doctest:+ELLIPSIS
+        >>> rand_log_uniform((2, 3), low=0.1, high=1000.0)
         tensor([[...]])
     """
     if high < low:
@@ -942,9 +934,7 @@ def log_uniform(low: Tensor, high: Tensor, generator: torch.Generator | None = N
     .. code-block:: pycon
 
         >>> from startorch.random import log_uniform
-        >>> log_uniform(
-        ...     low=torch.tensor([0.01, 0.1, 1.0]), high=torch.tensor([1.0, 10.0, 100.0])
-        ... )  # doctest:+ELLIPSIS
+        >>> log_uniform(low=torch.tensor([0.01, 0.1, 1.0]), high=torch.tensor([1.0, 10.0, 100.0]))
         tensor([...])
     """
     if low.shape != high.shape:
@@ -998,7 +988,7 @@ def rand_asinh_uniform(
     .. code-block:: pycon
 
         >>> from startorch.random import rand_asinh_uniform
-        >>> rand_asinh_uniform((2, 3), low=-1000.0, high=1000.0)  # doctest:+ELLIPSIS
+        >>> rand_asinh_uniform((2, 3), low=-1000.0, high=1000.0)
         tensor([[...]])
     """
     if high < low:
@@ -1047,7 +1037,7 @@ def asinh_uniform(low: Tensor, high: Tensor, generator: torch.Generator | None =
         >>> asinh_uniform(
         ...     low=torch.tensor([-10.0, 0.0, 1.0]),
         ...     high=torch.tensor([1.0, 10.0, 100.0]),
-        ... )  # doctest:+ELLIPSIS
+        ... )
         tensor([...])
     """
     if low.shape != high.shape:

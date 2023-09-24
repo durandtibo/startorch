@@ -35,7 +35,7 @@ class HalfCauchyTensorGenerator(BaseTensorGenerator):
 
         >>> from startorch.tensor import HalfCauchy, RandUniform
         >>> generator = HalfCauchy(scale=RandUniform(low=1.0, high=2.0))
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 
@@ -73,7 +73,7 @@ class RandHalfCauchyTensorGenerator(BaseTensorGenerator):
 
         >>> from startorch.tensor import RandHalfCauchy
         >>> generator = RandHalfCauchy(scale=1.0)
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 
@@ -116,7 +116,7 @@ class RandTruncHalfCauchyTensorGenerator(BaseTensorGenerator):
 
         >>> from startorch.tensor import RandTruncHalfCauchy
         >>> generator = RandTruncHalfCauchy(scale=1.0, max_value=5.0)
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 
@@ -166,7 +166,7 @@ class TruncHalfCauchyTensorGenerator(BaseTensorGenerator):
         ...     scale=RandUniform(low=1.0, high=2.0),
         ...     max_value=RandUniform(low=5.0, high=10.0),
         ... )
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 

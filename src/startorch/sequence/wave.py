@@ -45,7 +45,7 @@ class SineWaveSequenceGenerator(BaseSequenceGenerator):
         ...     phase=Constant(RandUniform(low=-1.0, high=1.0)),
         ...     amplitude=Constant(RandLogUniform(low=0.1, high=1.0)),
         ... )
-        >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+        >>> generator.generate(seq_len=12, batch_size=4)
         tensor([[...]], batch_dim=0, seq_dim=1)
     """
 

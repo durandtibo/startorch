@@ -43,7 +43,7 @@ class BaseTimeSeriesGenerator(ABC, metaclass=AbstractFactory):
             >>> from startorch.sequence import RandUniform
             >>> from startorch.timeseries import TimeSeries
             >>> generator = TimeSeries({"value": RandUniform(), "time": RandUniform()})
-            >>> generator.generate(seq_len=12, batch_size=4)  # doctest:+ELLIPSIS
+            >>> generator.generate(seq_len=12, batch_size=4)
             BatchDict(
               (value): tensor([[...]], batch_dim=0, seq_dim=1)
               (time): tensor([[...]], batch_dim=0, seq_dim=1)

@@ -30,7 +30,7 @@ class MultinomialTensorGenerator(BaseTensorGenerator):
         >>> import torch
         >>> from startorch.tensor import Multinomial
         >>> generator = Multinomial(torch.ones(10))
-        >>> generator.generate(size=(4, 12))  # doctest:+ELLIPSIS
+        >>> generator.generate(size=(4, 12))
         tensor([[...]])
     """
 
@@ -71,7 +71,7 @@ class MultinomialTensorGenerator(BaseTensorGenerator):
             >>> import torch
             >>> from startorch.tensor import Multinomial
             >>> generator = Multinomial.create_uniform_weights(10)
-            >>> generator.generate(size=(4, 12))  # doctest:+ELLIPSIS
+            >>> generator.generate(size=(4, 12))
             tensor([[...]])
         """
         return cls(weights=torch.ones(num_categories))
@@ -103,7 +103,7 @@ class MultinomialTensorGenerator(BaseTensorGenerator):
             >>> import torch
             >>> from startorch.tensor import Multinomial
             >>> generator = Multinomial.create_linear_weights(10)
-            >>> generator.generate(size=(4, 12))  # doctest:+ELLIPSIS
+            >>> generator.generate(size=(4, 12))
             tensor([[...]])
         """
         return cls(
@@ -139,7 +139,7 @@ class MultinomialTensorGenerator(BaseTensorGenerator):
             >>> import torch
             >>> from startorch.tensor import Multinomial
             >>> generator = Multinomial.create_exp_weights(10)
-            >>> generator.generate(size=(4, 12))  # doctest:+ELLIPSIS
+            >>> generator.generate(size=(4, 12))
             tensor([[...]])
         """
         return cls(weights=torch.arange(num_categories).float().mul(-scale).exp())
@@ -169,7 +169,7 @@ class UniformCategoricalTensorGenerator(BaseTensorGenerator):
         >>> import torch
         >>> from startorch.tensor import UniformCategorical
         >>> generator = UniformCategorical(10)
-        >>> generator.generate(size=(4, 12))  # doctest:+ELLIPSIS
+        >>> generator.generate(size=(4, 12))
         tensor([[...]])
     """
 

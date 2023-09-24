@@ -35,7 +35,7 @@ class NormalTensorGenerator(BaseTensorGenerator):
         >>> generator = Normal(
         ...     mean=RandUniform(low=-1.0, high=1.0), std=RandUniform(low=1.0, high=2.0)
         ... )
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 
@@ -77,7 +77,7 @@ class RandNormalTensorGenerator(BaseTensorGenerator):
 
         >>> from startorch.tensor import RandNormal
         >>> generator = RandNormal(mean=0.0, std=1.0)
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 
@@ -126,7 +126,7 @@ class RandTruncNormalTensorGenerator(BaseTensorGenerator):
 
         >>> from startorch.tensor import RandTruncNormal
         >>> generator = RandTruncNormal(mean=0.0, std=1.0, min_value=-1.0, max_value=1.0)
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 
@@ -195,7 +195,7 @@ class TruncNormalTensorGenerator(BaseTensorGenerator):
         ...     min_value=RandUniform(low=-10.0, high=-5.0),
         ...     max_value=RandUniform(low=5.0, high=10.0),
         ... )
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 

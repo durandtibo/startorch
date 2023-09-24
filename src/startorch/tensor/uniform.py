@@ -46,7 +46,7 @@ class AsinhUniformTensorGenerator(BaseTensorGenerator):
         >>> generator = AsinhUniform(
         ...     low=RandUniform(low=-1000, high=-100), high=RandUniform(low=100, high=1000)
         ... )
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 
@@ -92,7 +92,7 @@ class LogUniformTensorGenerator(BaseTensorGenerator):
         >>> generator = LogUniform(
         ...     low=RandUniform(low=0.1, high=1.0), high=RandUniform(low=100, high=1000)
         ... )
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 
@@ -132,7 +132,7 @@ class RandAsinhUniformTensorGenerator(BaseTensorGenerator):
 
         >>> from startorch.tensor import RandAsinhUniform
         >>> generator = RandAsinhUniform(low=-1000, high=1000)
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 
@@ -172,7 +172,7 @@ class RandIntTensorGenerator(BaseTensorGenerator):
 
         >>> from startorch.tensor import RandInt
         >>> generator = RandInt(low=0, high=10)
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 
@@ -205,7 +205,7 @@ class RandLogUniformTensorGenerator(BaseTensorGenerator):
 
         >>> from startorch.tensor import RandLogUniform
         >>> generator = RandLogUniform(low=0.1, high=100.0)
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 
@@ -245,7 +245,7 @@ class RandUniformTensorGenerator(BaseTensorGenerator):
 
         >>> from startorch.tensor import RandUniform
         >>> generator = RandUniform(low=0, high=10)
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 
@@ -284,7 +284,7 @@ class UniformTensorGenerator(BaseTensorGenerator):
         >>> generator = UniformTensorGenerator(
         ...     low=RandUniform(low=0, high=2), high=RandUniform(low=8, high=10)
         ... )
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 

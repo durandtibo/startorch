@@ -35,7 +35,7 @@ class AbsTensorGenerator(BaseWrapperTensorGenerator):
 
         >>> from startorch.tensor import Abs, RandNormal
         >>> generator = Abs(RandNormal())
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 
@@ -59,7 +59,7 @@ class AddScalarTensorGenerator(BaseWrapperTensorGenerator):
 
         >>> from startorch.tensor import AddScalar, RandUniform
         >>> generator = AddScalar(RandUniform(), 10.0)
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 
@@ -100,7 +100,7 @@ class AddTensorGenerator(BaseTensorGenerator):
 
         >>> from startorch.tensor import Add, RandNormal, RandUniform
         >>> generator = Add([RandUniform(), RandNormal()])
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 
@@ -147,7 +147,7 @@ class ClampTensorGenerator(BaseWrapperTensorGenerator):
 
         >>> from startorch.tensor import Clamp, RandUniform
         >>> generator = Clamp(RandUniform(low=1.0, high=50.0), min_value=2.0, max_value=10.0)
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 
@@ -203,7 +203,7 @@ class DivTensorGenerator(BaseTensorGenerator):
 
         >>> from startorch.tensor import Div, RandUniform
         >>> generator = Div(RandUniform(), RandUniform(low=1.0, high=10.0))
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 
@@ -239,7 +239,7 @@ class ExpTensorGenerator(BaseWrapperTensorGenerator):
 
         >>> from startorch.tensor import Exp, RandUniform
         >>> generator = Exp(RandUniform(low=1.0, high=5.0))
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 
@@ -264,12 +264,12 @@ class FmodTensorGenerator(BaseTensorGenerator):
 
         >>> from startorch.tensor import Fmod, RandUniform
         >>> generator = Fmod(dividend=RandUniform(low=-100, high=100), divisor=10.0)
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
         >>> generator = Fmod(
         ...     dividend=RandUniform(low=-100, high=100), divisor=RandUniform(low=1, high=10)
         ... )
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 
@@ -305,7 +305,7 @@ class LogTensorGenerator(BaseWrapperTensorGenerator):
 
         >>> from startorch.tensor import Log, RandUniform
         >>> generator = Log(RandUniform(low=1.0, high=100.0))
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 
@@ -333,7 +333,7 @@ class MulTensorGenerator(BaseTensorGenerator):
         >>> import torch
         >>> from startorch.tensor import Mul, RandUniform, RandNormal
         >>> generator = Mul([RandUniform(), RandNormal()])
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 
@@ -372,7 +372,7 @@ class MulScalarTensorGenerator(BaseWrapperTensorGenerator):
         >>> import torch
         >>> from startorch.tensor import MulScalar, RandUniform, RandNormal
         >>> generator = MulScalar(RandUniform(), 42)
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 
@@ -405,7 +405,7 @@ class NegTensorGenerator(BaseWrapperTensorGenerator):
         >>> import torch
         >>> from startorch.tensor import Neg, RandNormal
         >>> generator = Neg(RandNormal())
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 
@@ -423,7 +423,7 @@ class SqrtTensorGenerator(BaseWrapperTensorGenerator):
 
         >>> from startorch.tensor import RandUniform, Sqrt
         >>> generator = Sqrt(RandUniform(low=1.0, high=100.0))
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 
@@ -451,7 +451,7 @@ class SubTensorGenerator(BaseTensorGenerator):
 
         >>> from startorch.tensor import RandNormal, RandUniform, Sub
         >>> generator = Sub(RandUniform(), RandNormal())
-        >>> generator.generate((2, 6))  # doctest:+ELLIPSIS
+        >>> generator.generate((2, 6))
         tensor([[...]])
     """
 
