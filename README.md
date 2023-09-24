@@ -110,5 +110,4 @@ that was using the old version of `startorch`.
 ## License
 
 `startorch` is licensed under BSD 3-Clause "New" or "Revised" license available
-in [LICENSE](LICENSE)
-file.
+in [LICENSE](LICENSE) file.
