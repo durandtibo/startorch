@@ -5,6 +5,8 @@ on:
   workflow_dispatch:  # to trigger manually
 
 jobs:
+  cyclic-imports:
+    uses: ./.github/workflows/cyclic-imports.yaml
   doctest:
     uses: ./.github/workflows/doctest.yaml
   format:
