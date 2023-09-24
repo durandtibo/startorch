@@ -105,13 +105,13 @@ python-dateutil = ">=2.7.0"
 
 [[package]]
 name = "astroid"
-version = "2.15.6"
+version = "2.15.7"
 description = "An abstract syntax tree for Python with inference support."
 optional = false
 python-versions = ">=3.7.2"
 files = [
-    {file = "astroid-2.15.6-py3-none-any.whl", hash = "sha256:389656ca57b6108f939cf5d2f9a2a825a3be50ba9d589670f393236e0a03b91c"},
-    {file = "astroid-2.15.6.tar.gz", hash = "sha256:903f024859b7c7687d7a7f3a3f73b17301f8e42dfd9cc9df9d4418172d3e2dbd"},
+    {file = "astroid-2.15.7-py3-none-any.whl", hash = "sha256:958f280532e36ca84a13023f15cb1556fb6792d193acb87e1f3ca536b6fa6bd2"},
+    {file = "astroid-2.15.7.tar.gz", hash = "sha256:c522f2832a900e27a7d284b9b6ef670d2495f760ede3c8c0b004a5641d3c5987"},
 ]
 
 [package.dependencies]
@@ -2793,13 +2793,13 @@ cffi = {version = "*", markers = "implementation_name == \"pypy\""}
 
 [[package]]
 name = "redcat"
-version = "0.0.9"
+version = "0.0.10"
 description = "A library to manipulate batches of examples"
 optional = false
 python-versions = ">=3.9,<3.12"
 files = [
-    {file = "redcat-0.0.9-py3-none-any.whl", hash = "sha256:5bae3470631148fb47d71ca833e02cdfbc9c95efbd253191a97df8bb3c7b4f31"},
-    {file = "redcat-0.0.9.tar.gz", hash = "sha256:3a70fabbecd20d8bbac6502b05a95389e33bd176cb3372c5e7734e3792900b6d"},
+    {file = "redcat-0.0.10-py3-none-any.whl", hash = "sha256:1814c7b77120592b756c06cee27e1d792463273c32f44eb7108b03f933aa3731"},
+    {file = "redcat-0.0.10.tar.gz", hash = "sha256:f311fa087eb4c1753408fd6698e08f84beb7c635f7c6a790b6a6d35bfe6774df"},
 ]
 
 [package.dependencies]
@@ -3679,4 +3679,4 @@ all = ["matplotlib"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.12"
-content-hash = "b8111a3fee3e66dda3d7fd35d37e121bdccf73566244803dc50cb9e48e2055d6"
+content-hash = "7054a5990c59db4cc97d9c093c5ab388f0c049dc75a8b2667a4cebdf5c49a47c"
