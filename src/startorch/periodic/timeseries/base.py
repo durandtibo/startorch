@@ -1,11 +1,16 @@
 from __future__ import annotations
 
-__all__ = ["BasePeriodicTimeSeriesGenerator", "setup_periodic_timeseries_generator"]
+__all__ = [
+    "BasePeriodicTimeSeriesGenerator",
+    "is_periodic_timeseries_generator_config",
+    "setup_periodic_timeseries_generator",
+]
 
 import logging
 from abc import ABC, abstractmethod
 
 from objectory import AbstractFactory
+from objectory.utils import is_object_config
 from redcat import BatchDict
 from torch import Generator
 
@@ -82,22 +87,62 @@ class BasePeriodicTimeSeriesGenerator(ABC, metaclass=AbstractFactory):
         """
 
 
+def is_periodic_timeseries_generator_config(config: dict) -> bool:
+    r"""Indicates if the input configuration is a configuration for a
+    ``BasePeriodicTimeSeriesGenerator``.
+
+    This function only checks if the value of the key  ``_target_``
+    is valid. It does not check the other values. If ``_target_``
+    indicates a function, the returned type hint is used to check
+    the class.
+
+    Args:
+    ----
+        config (dict): Specifies the configuration to check.
+
+    Returns:
+    -------
+        bool: ``True`` if the input configuration is a configuration
+            for a ``BasePeriodicTimeSeriesGenerator`` object.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> from startorch.periodic.timeseries import is_periodic_timeseries_generator_config
+        >>> is_periodic_timeseries_generator_config(
+        ...     {
+        ...         "_target_": "startorch.periodic.timeseries.Repeat",
+        ...         "generator": {
+        ...             "_target_": "startorch.timeseries.TimeSeries",
+        ...             "sequences": {
+        ...                 "value": {"_target_": "startorch.sequence.RandUniform"},
+        ...                 "time": {"_target_": "startorch.sequence.RandUniform"},
+        ...             },
+        ...         },
+        ...     }
+        ... )
+        True
+    """
+    return is_object_config(config, BasePeriodicTimeSeriesGenerator)
+
+
 def setup_periodic_timeseries_generator(
     generator: BasePeriodicTimeSeriesGenerator | dict,
 ) -> BasePeriodicTimeSeriesGenerator:
     r"""Sets up a periodic time series generator.
 
     The time series generator is instantiated from its configuration by
-    using the ``BasePeriodicSequenceGenerator`` factory function.
+    using the ``BasePeriodicTimeSeriesGenerator`` factory function.
 
     Args:
     ----
-        generator (``BasePeriodicSequenceGenerator`` or dict): Specifies a
+        generator (``BasePeriodicTimeSeriesGenerator`` or dict): Specifies a
             periodic time series generator or its configuration.
 
     Returns:
     -------
-        ``BasePeriodicSequenceGenerator``: A periodic time series generator.
+        ``BasePeriodicTimeSeriesGenerator``: A periodic time series generator.
 
     Example usage:
 

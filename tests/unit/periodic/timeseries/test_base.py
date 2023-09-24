@@ -5,9 +5,37 @@ import logging
 from objectory import OBJECT_TARGET
 from pytest import LogCaptureFixture
 
-from startorch.periodic.timeseries import Repeat, setup_periodic_timeseries_generator
+from startorch.periodic.timeseries import (
+    Repeat,
+    is_periodic_timeseries_generator_config,
+    setup_periodic_timeseries_generator,
+)
 from startorch.sequence import RandUniform
 from startorch.timeseries import TimeSeries
+
+#############################################################
+#     Tests for is_periodic_timeseries_generator_config     #
+#############################################################
+
+
+def test_is_periodic_timeseries_generator_config_true() -> None:
+    assert is_periodic_timeseries_generator_config(
+        {
+            OBJECT_TARGET: "startorch.periodic.timeseries.Repeat",
+            "generator": {
+                OBJECT_TARGET: "startorch.timeseries.TimeSeries",
+                "sequences": {
+                    "value": {OBJECT_TARGET: "startorch.sequence.RandUniform"},
+                    "time": {OBJECT_TARGET: "startorch.sequence.RandUniform"},
+                },
+            },
+        }
+    )
+
+
+def test_is_periodic_timeseries_generator_config_false() -> None:
+    assert not is_periodic_timeseries_generator_config({OBJECT_TARGET: "torch.nn.Identity"})
+
 
 #########################################################
 #     Tests for setup_periodic_timeseries_generator     #

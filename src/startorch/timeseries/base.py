@@ -37,8 +37,8 @@ class BaseTimeSeriesGenerator(ABC, metaclass=AbstractFactory):
         )
         >>> generator.generate(seq_len=12, batch_size=4)
         BatchDict(
-          (value): timeseries([[...]], batch_dim=0, seq_dim=1)
-          (time): timeseries([[...]], batch_dim=0, seq_dim=1)
+          (value): tensor([[...]], batch_dim=0, seq_dim=1)
+          (time): tensor([[...]], batch_dim=0, seq_dim=1)
         )
     """
 
@@ -70,8 +70,8 @@ class BaseTimeSeriesGenerator(ABC, metaclass=AbstractFactory):
             >>> generator = TimeSeries({"value": RandUniform(), "time": RandUniform()})
             >>> generator.generate(seq_len=12, batch_size=4)
             BatchDict(
-              (value): timeseries([[...]], batch_dim=0, seq_dim=1)
-              (time): timeseries([[...]], batch_dim=0, seq_dim=1)
+              (value): tensor([[...]], batch_dim=0, seq_dim=1)
+              (time): tensor([[...]], batch_dim=0, seq_dim=1)
             )
         """
 
@@ -99,7 +99,15 @@ def is_timeseries_generator_config(config: dict) -> bool:
     .. code-block:: pycon
 
         >>> from startorch.timeseries import is_timeseries_generator_config
-        >>> is_timeseries_generator_config({"_target_": "startorch.timeseries.RandUniform"})
+        >>> is_timeseries_generator_config(
+        ...     {
+        ...         "_target_": "startorch.timeseries.TimeSeries",
+        ...         "sequences": {
+        ...             "value": {"_target_": "startorch.sequence.RandUniform"},
+        ...             "time": {"_target_": "startorch.sequence.RandUniform"},
+        ...         },
+        ...     }
+        ... )
         True
     """
     return is_object_config(config, BaseTimeSeriesGenerator)
