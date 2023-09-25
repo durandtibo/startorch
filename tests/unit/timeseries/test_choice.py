@@ -81,17 +81,19 @@ def test_multinomial_choice_create(batch_size: int, seq_len: int) -> None:
     assert batch.batch_size == batch_size
     assert len(batch.data) == 2
 
-    assert isinstance(batch.data[ct.VALUE], BatchedTensorSeq)
-    assert batch.data[ct.VALUE].batch_size == batch_size
-    assert batch.data[ct.VALUE].seq_len == seq_len
-    assert batch.data[ct.VALUE].data.shape == (batch_size, seq_len, 1)
-    assert batch.data[ct.VALUE].data.dtype == torch.float
+    batch_value = batch.data[ct.VALUE]
+    assert isinstance(batch_value, BatchedTensorSeq)
+    assert batch_value.batch_size == batch_size
+    assert batch_value.seq_len == seq_len
+    assert batch_value.data.shape == (batch_size, seq_len, 1)
+    assert batch_value.data.dtype == torch.float
 
-    assert isinstance(batch.data[ct.TIME], BatchedTensorSeq)
-    assert batch.data[ct.TIME].batch_size == batch_size
-    assert batch.data[ct.TIME].seq_len == seq_len
-    assert batch.data[ct.TIME].data.shape == (batch_size, seq_len, 1)
-    assert batch.data[ct.TIME].data.dtype == torch.float
+    batch_time = batch.data[ct.TIME]
+    assert isinstance(batch_time, BatchedTensorSeq)
+    assert batch_time.batch_size == batch_size
+    assert batch_time.seq_len == seq_len
+    assert batch_time.data.shape == (batch_size, seq_len, 1)
+    assert batch_time.data.dtype == torch.float
 
 
 def test_multinomial_choice_generate_same_random_seed() -> None:
