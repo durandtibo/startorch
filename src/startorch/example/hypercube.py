@@ -27,6 +27,11 @@ class HypercubeExampleGenerator(BaseExampleGenerator[BatchedTensor]):
         noise_std (float, optional): Specifies the standard deviation
             of the Gaussian noise. Default: ``0.2``
 
+    Raises:
+    ------
+        ValueError if one of the parameters is not valid.
+
+
     Example usage:
 
     .. code-block:: pycon
@@ -140,6 +145,10 @@ def create_hypercube_examples(
             - ``'target'``: a ``torch.Tensor`` of type long and
                 shape ``(num_examples,)``. This tensor represents
                 the targets.
+
+    Raises:
+    ------
+        RuntimeError if one of the parameters is not valid.
 
     Example usage:
 

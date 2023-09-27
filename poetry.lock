@@ -3679,4 +3679,4 @@ all = ["matplotlib"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.12"
-content-hash = "ad19edadc5a6f7d4a7cd84172c7fdfbd6519df6d4473b5ad77e412ebc10f934d"
+content-hash = "d4efdc9fb16789f54a2c4e0e08c5fc378a928715d8887e490415d435e842122f"
