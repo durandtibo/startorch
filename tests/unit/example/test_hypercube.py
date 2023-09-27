@@ -1,7 +1,7 @@
 import torch
 from coola import objects_are_equal
 from pytest import mark, raises
-from redcat import BatchedTensor
+from redcat import BatchDict, BatchedTensor
 
 from startorch import constants as ct
 from startorch.example import Hypercube
@@ -60,6 +60,7 @@ def test_hypercube_incorrect_noise_std() -> None:
 @mark.parametrize("feature_size", (5, 8, 10))
 def test_hypercube_generate(batch_size: int, feature_size: int) -> None:
     data = Hypercube(num_classes=5, feature_size=feature_size).generate(batch_size)
+    assert isinstance(data, BatchDict)
     assert len(data) == 2
     assert isinstance(data[ct.TARGET], BatchedTensor)
     assert data[ct.TARGET].shape == (batch_size,)
@@ -118,6 +119,7 @@ def test_create_hypercube_examples_incorrect_noise_std() -> None:
 
 def test_create_hypercube_examples_create() -> None:
     data = create_hypercube_examples(num_examples=10, num_classes=5, feature_size=8)
+    assert isinstance(data, BatchDict)
     assert len(data) == 2
     assert isinstance(data[ct.TARGET], BatchedTensor)
     assert data[ct.TARGET].shape == (10,)
