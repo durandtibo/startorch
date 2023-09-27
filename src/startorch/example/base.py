@@ -9,6 +9,7 @@ __all__ = [
 import logging
 from abc import ABC, abstractmethod
 from collections.abc import Generator
+from typing import Generic, TypeVar
 
 from objectory import AbstractFactory
 from objectory.utils import is_object_config
@@ -19,18 +20,30 @@ from startorch.utils.format import str_target_object
 logger = logging.getLogger(__name__)
 
 
-class BaseExampleGenerator(ABC, metaclass=AbstractFactory):
+T = TypeVar("T")
+
+
+class BaseExampleGenerator(Generic[T], ABC, metaclass=AbstractFactory):
     r"""Defines the base class to generate time series.
 
     Example usage:
 
     .. code-block:: pycon
 
-        >>> import torch  # TODO
+        >>> from startorch.example import Hypercube
+        >>> generator = Hypercube(num_classes=5, feature_size=6)
+        >>> generator
+        HypercubeExampleGenerator(num_classes=5, feature_size=6, noise_std=0.2)
+        >>> batch = generator.generate(batch_size=10)
+        >>> batch
+        BatchDict(
+          (target): tensor([...], batch_dim=0)
+          (feature): tensor([[...]], batch_dim=0)
+        )
     """
 
     @abstractmethod
-    def generate(self, batch_size: int = 1, rng: Generator | None = None) -> BatchDict:
+    def generate(self, batch_size: int = 1, rng: Generator | None = None) -> BatchDict[T]:
         r"""Generates a time series.
 
         Args:
@@ -48,7 +61,14 @@ class BaseExampleGenerator(ABC, metaclass=AbstractFactory):
 
         .. code-block:: pycon
 
-            >>> import torch  # TODO
+            >>> from startorch.example import Hypercube
+            >>> generator = Hypercube(num_classes=5, feature_size=6)
+            >>> batch = generator.generate(batch_size=10)
+            >>> batch
+            BatchDict(
+              (target): tensor([...], batch_dim=0)
+              (feature): tensor([[...]], batch_dim=0)
+            )
         """
 
 
@@ -74,7 +94,9 @@ def is_example_generator_config(config: dict) -> bool:
 
     .. code-block:: pycon
 
-        >>> from startorch.example import is_example_generator_config  # TODO
+        >>> from startorch.example import is_example_generator_config
+        >>> is_example_generator_config({"_target_": "startorch.example.Hypercube"})
+        True
     """
     return is_object_config(config, BaseExampleGenerator)
 
@@ -100,7 +122,10 @@ def setup_example_generator(
 
     .. code-block:: pycon
 
-        >>> from startorch.example import setup_example_generator  # TODO
+        >>> from startorch.example import setup_example_generator
+        >>> generator = setup_example_generator({"_target_": "startorch.example.Hypercube"})
+        >>> generator
+        HypercubeExampleGenerator(num_classes=50, feature_size=64, noise_std=0.2)
     """
     if isinstance(generator, dict):
         logger.info(

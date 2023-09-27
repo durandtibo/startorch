@@ -1,12 +1,86 @@
 import torch
 from coola import objects_are_equal
 from pytest import mark, raises
+from redcat import BatchedTensor
 
 from startorch import constants as ct
+from startorch.example import Hypercube
 from startorch.example.hypercube import create_hypercube_examples
 from startorch.utils.seed import get_torch_generator
 
 SIZES = (1, 2, 4)
+
+###############################################
+#     Tests for HypercubeExampleGenerator     #
+###############################################
+
+
+def test_hypercube_str() -> None:
+    assert str(Hypercube()).startswith("HypercubeExampleGenerator(")
+
+
+@mark.parametrize("num_classes", SIZES)
+def test_hypercube_num_classes(num_classes: int) -> None:
+    assert Hypercube(num_classes=num_classes).num_classes == num_classes
+
+
+@mark.parametrize("num_classes", (0, -1))
+def test_hypercube_incorrect_num_classes(num_classes: int) -> None:
+    with raises(ValueError, match="he number of classes .* has to be greater than 0"):
+        Hypercube(num_classes=num_classes)
+
+
+@mark.parametrize("feature_size", SIZES)
+def test_hypercube_feature_size(feature_size: int) -> None:
+    assert Hypercube(num_classes=1, feature_size=feature_size).feature_size == feature_size
+
+
+def test_hypercube_incorrect_feature_size() -> None:
+    with raises(
+        ValueError,
+        match="The feature dimension .* has to be greater or equal to the number of classes .*",
+    ):
+        Hypercube(num_classes=50, feature_size=32)
+
+
+@mark.parametrize("noise_std", (0, 0.1, 1))
+def test_hypercube_noise_std(noise_std: float) -> None:
+    assert Hypercube(noise_std=noise_std).noise_std == noise_std
+
+
+def test_hypercube_incorrect_noise_std() -> None:
+    with raises(
+        ValueError,
+        match="The standard deviation of the Gaussian noise .* has to be greater or equal than 0",
+    ):
+        Hypercube(noise_std=-1)
+
+
+@mark.parametrize("batch_size", SIZES)
+@mark.parametrize("feature_size", (5, 8, 10))
+def test_hypercube_generate(batch_size: int, feature_size: int) -> None:
+    data = Hypercube(num_classes=5, feature_size=feature_size).generate(batch_size)
+    assert len(data) == 2
+    assert isinstance(data[ct.TARGET], BatchedTensor)
+    assert data[ct.TARGET].shape == (batch_size,)
+    assert data[ct.TARGET].dtype == torch.long
+    assert isinstance(data[ct.FEATURE], BatchedTensor)
+    assert data[ct.FEATURE].shape == (batch_size, feature_size)
+    assert data[ct.FEATURE].dtype == torch.float
+
+
+def test_hypercube_generate_same_random_seed() -> None:
+    generator = Hypercube(num_classes=5, feature_size=8)
+    assert generator.generate(batch_size=64, rng=get_torch_generator(1)).equal(
+        generator.generate(batch_size=64, rng=get_torch_generator(1))
+    )
+
+
+def test_hypercube_generate_different_random_seeds() -> None:
+    generator = Hypercube(num_classes=5, feature_size=8)
+    assert not generator.generate(batch_size=64, rng=get_torch_generator(1)).equal(
+        generator.generate(batch_size=64, rng=get_torch_generator(2))
+    )
 
 
 ###############################################
@@ -45,8 +119,10 @@ def test_create_hypercube_examples_incorrect_noise_std() -> None:
 def test_create_hypercube_examples_create() -> None:
     data = create_hypercube_examples(num_examples=10, num_classes=5, feature_size=8)
     assert len(data) == 2
+    assert isinstance(data[ct.TARGET], BatchedTensor)
     assert data[ct.TARGET].shape == (10,)
     assert data[ct.TARGET].dtype == torch.long
+    assert isinstance(data[ct.FEATURE], BatchedTensor)
     assert data[ct.FEATURE].shape == (10, 8)
     assert data[ct.FEATURE].dtype == torch.float
 
