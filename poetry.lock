@@ -2793,13 +2793,13 @@ cffi = {version = "*", markers = "implementation_name == \"pypy\""}
 
 [[package]]
 name = "redcat"
-version = "0.0.10"
+version = "0.0.11"
 description = "A library to manipulate batches of examples"
 optional = false
 python-versions = ">=3.9,<3.12"
 files = [
-    {file = "redcat-0.0.10-py3-none-any.whl", hash = "sha256:1814c7b77120592b756c06cee27e1d792463273c32f44eb7108b03f933aa3731"},
-    {file = "redcat-0.0.10.tar.gz", hash = "sha256:f311fa087eb4c1753408fd6698e08f84beb7c635f7c6a790b6a6d35bfe6774df"},
+    {file = "redcat-0.0.11-py3-none-any.whl", hash = "sha256:9ab2d294c47ca61dc20063ba2c91d51d12f2917dfe98f320617a9cd8989c156e"},
+    {file = "redcat-0.0.11.tar.gz", hash = "sha256:b8198a1c78820d81c337a3e2542d467ddc45e6add770b1a227e8ce97c60150d9"},
 ]
 
 [package.dependencies]
@@ -3679,4 +3679,4 @@ all = ["matplotlib"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.12"
-content-hash = "7054a5990c59db4cc97d9c093c5ab388f0c049dc75a8b2667a4cebdf5c49a47c"
+content-hash = "46a565895a8700b4e0dde2d6a7fbc607ae63c04f5a38588c9410e036c64c3f96"
