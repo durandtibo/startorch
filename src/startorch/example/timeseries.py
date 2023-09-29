@@ -31,12 +31,12 @@ class TimeSeriesExampleGenerator(BaseExampleGenerator):
 
     .. code-block:: pycon
 
-        >>> from startorch import example
-        >>> from startorch import timeseries
+        >>> from startorch.example import TimeSeriesExampleGenerator
+        >>> from startorch.timeseries import TimeSeriesGenerator
         >>> from startorch.sequence import Periodic, RandUniform
         >>> from startorch.tensor import RandInt
-        >>> generator = example.TimeSeries(
-        ...     timeseries=timeseries.TimeSeries({"value": RandUniform(), "time": RandUniform()}),
+        >>> generator = TimeSeriesExampleGenerator(
+        ...     timeseries=TimeSeriesGenerator({"value": RandUniform(), "time": RandUniform()}),
         ...     seq_len=RandInt(2, 5),
         ... )
         >>> generator
