@@ -9,7 +9,9 @@ from redcat import BatchDict, BatchedTensorSeq
 from startorch import constants as ct
 
 
-def merge_timeseries_by_time(timeseries: Sequence[BatchDict], time_key: str = ct.TIME) -> BatchDict:
+def merge_timeseries_by_time(
+    timeseries: Sequence[BatchDict[BatchedTensorSeq]], time_key: str = ct.TIME
+) -> BatchDict[BatchedTensorSeq]:
     if not timeseries:
         raise RuntimeError("No time series is provided so it is not possible to merge time series")
     ts = timeseries[0].cat_along_seq(timeseries[1:])

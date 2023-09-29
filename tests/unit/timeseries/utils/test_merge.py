@@ -49,7 +49,7 @@ def test_merge_timeseries_by_time_batch_size_1() -> None:
                 ),
             }
         ),
-        show_difference=True
+        show_difference=True,
     )
 
 
