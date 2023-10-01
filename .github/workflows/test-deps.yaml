@@ -97,7 +97,7 @@ jobs:
       matrix:
         os: [ ubuntu-latest ]
         python-version: [ '3.9', '3.10', '3.11' ]
-        redcat-version: [ 0.0.10 ]
+        redcat-version: [ 0.0.16 ]
 
     steps:
       - name: Checkout
