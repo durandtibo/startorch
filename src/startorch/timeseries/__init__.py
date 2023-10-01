@@ -2,6 +2,8 @@ from __future__ import annotations
 
 __all__ = [
     "BaseTimeSeriesGenerator",
+    "Merge",
+    "MergeTimeSeriesGenerator",
     "MultinomialChoice",
     "MultinomialChoiceTimeSeriesGenerator",
     "Periodic",
@@ -23,5 +25,7 @@ from startorch.timeseries.choice import (
 )
 from startorch.timeseries.generic import TimeSeriesGenerator
 from startorch.timeseries.generic import TimeSeriesGenerator as TimeSeries
+from startorch.timeseries.merge import MergeTimeSeriesGenerator
+from startorch.timeseries.merge import MergeTimeSeriesGenerator as Merge
 from startorch.timeseries.periodic import PeriodicTimeSeriesGenerator
 from startorch.timeseries.periodic import PeriodicTimeSeriesGenerator as Periodic

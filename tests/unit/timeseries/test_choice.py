@@ -64,7 +64,7 @@ def test_multinomial_choice_weights() -> None:
 
 @mark.parametrize("batch_size", SIZES)
 @mark.parametrize("seq_len", SIZES)
-def test_multinomial_choice_create(batch_size: int, seq_len: int) -> None:
+def test_multinomial_choice_generate(batch_size: int, seq_len: int) -> None:
     batch = MultinomialChoice(
         (
             {
