@@ -4,6 +4,8 @@ __all__ = [
     "BaseTimeSeriesGenerator",
     "Merge",
     "MergeTimeSeriesGenerator",
+    "MixedTimeSeries",
+    "MixedTimeSeriesGenerator",
     "MultinomialChoice",
     "MultinomialChoiceTimeSeriesGenerator",
     "Periodic",
@@ -27,5 +29,7 @@ from startorch.timeseries.generic import TimeSeriesGenerator
 from startorch.timeseries.generic import TimeSeriesGenerator as TimeSeries
 from startorch.timeseries.merge import MergeTimeSeriesGenerator
 from startorch.timeseries.merge import MergeTimeSeriesGenerator as Merge
+from startorch.timeseries.mixed import MixedTimeSeriesGenerator
+from startorch.timeseries.mixed import MixedTimeSeriesGenerator as MixedTimeSeries
 from startorch.timeseries.periodic import PeriodicTimeSeriesGenerator
 from startorch.timeseries.periodic import PeriodicTimeSeriesGenerator as Periodic
