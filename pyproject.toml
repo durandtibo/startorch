@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "startorch"
-version = "0.0.5"
+version = "0.0.6a0"
 description = "synthetic time-series generator in PyTorch"
 readme = "README.md"
 authors = ["Thibaut Durand <durand.tibo+gh@gmail.com>"]
@@ -10,7 +10,7 @@ keywords = ["synthetic", "time-series", "pytorch"]
 license = "BSD-3-Clause"
 
 classifiers = [
-    "Development Status :: 2 - Pre-Alpha",
+    "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
     "Intended Audience :: Information Technology",
     "Intended Audience :: Science/Research",
@@ -30,10 +30,10 @@ packages = [
 [tool.poetry.dependencies]
 # Core dependencies
 coola = ">=0.0.20,<0.0.24"
-objectory = ">=0.0.7,<0.0.8"
+objectory = ">=0.0.7,<0.0.9"
 python = ">=3.9,<3.12"
-redcat = ">=0.0.16,<0.0.17"
-torch = ">=2.0,<2.1"
+redcat = ">=0.0.16,<0.0.18"
+torch = ">=2.0,<2.2"
 
 # Optional dependencies
 matplotlib = { version = ">=3.6,<3.9", optional = true }
@@ -61,10 +61,9 @@ coverage = { extras = ["toml"], version = "^7.3" }
 docformatter = { extras = ["tomli"], version = "^1.7" }
 pre-commit = "^3.4"
 pygments = "^2.16"
-pylint = "^2.17"
 pytest = "^7.4"
 pytest-cov = "^4.1"
-pytest-timeout = "^2.1"
+pytest-timeout = "^2.2"
 ruff = ">=0.0.292,<1.0"
 xdoctest = "^1.1"
 
