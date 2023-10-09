@@ -30,7 +30,7 @@ packages = [
 [tool.poetry.dependencies]
 # Core dependencies
 coola = ">=0.0.20,<0.0.24"
-objectory = ">=0.0.7,<0.0.8"
+objectory = ">=0.0.7,<0.0.9"
 python = ">=3.9,<3.12"
 redcat = ">=0.0.16,<0.0.17"
 torch = ">=2.0,<2.1"
