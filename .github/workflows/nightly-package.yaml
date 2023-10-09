@@ -65,6 +65,64 @@ jobs:
         run: |
           python -c "import startorch; import torch;" \
             "assert isinstance(startorch.random.uniform(0.0, 10.0), torch.Tensor); "
+
+  coola:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      max-parallel: 8
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest ]
+        python-version: [ '3.9', '3.10', '3.11' ]
+        coola-version: [ 0.0.23, 0.0.22, 0.0.21, 0.0.20 ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install package
+        run: |
+          pip install startorch coola==${{ matrix.coola-version }}
+
+      - name: Run short experiment
+        run: |
+          python -c "import startorch; import torch;" \
+            "assert isinstance(startorch.random.uniform(0.0, 10.0), torch.Tensor); "
+
+  objectory:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      max-parallel: 8
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest ]
+        python-version: [ '3.9', '3.10', '3.11' ]
+        objectory-version: [ 0.0.8, 0.0.7 ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install package
+        run: |
+          pip install startorch objectory==${{ matrix.objectory-version }}
+
+      - name: Run short experiment
+        run: |
+          python -c "import startorch; import torch;" \
+            "assert isinstance(startorch.random.uniform(0.0, 10.0), torch.Tensor); "
           
   redcat:
     runs-on: ${{ matrix.os }}
