@@ -123,7 +123,7 @@ jobs:
         run: |
           python -c "import startorch; import torch;" \
             "assert isinstance(startorch.random.uniform(0.0, 10.0), torch.Tensor); "
-          
+
   redcat:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
