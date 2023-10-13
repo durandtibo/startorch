@@ -4,9 +4,12 @@ __all__ = [
     "BaseExampleGenerator",
     "Hypercube",
     "HypercubeExampleGenerator",
+    "SwissRoll",
+    "SwissRollExampleGenerator",
     "TimeSeries",
     "TimeSeriesExampleGenerator",
     "is_example_generator_config",
+    "make_swiss_roll",
     "setup_example_generator",
 ]
 
@@ -17,5 +20,8 @@ from startorch.example.base import (
 )
 from startorch.example.hypercube import HypercubeExampleGenerator
 from startorch.example.hypercube import HypercubeExampleGenerator as Hypercube
+from startorch.example.swissroll import SwissRollExampleGenerator
+from startorch.example.swissroll import SwissRollExampleGenerator as SwissRoll
+from startorch.example.swissroll import make_swiss_roll
 from startorch.example.timeseries import TimeSeriesExampleGenerator
 from startorch.example.timeseries import TimeSeriesExampleGenerator as TimeSeries
