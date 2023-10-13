@@ -63,17 +63,29 @@ def test_swiss_roll_generate(batch_size: int, feature_size: int) -> None:
     assert data[ct.FEATURE].dtype == torch.float
 
 
-def test_swiss_roll_generate_same_random_seed() -> None:
-    generator = SwissRoll()
+@mark.parametrize("noise_std", (0.0, 1.0))
+@mark.parametrize("hole", (True, False))
+def test_swiss_roll_generate_same_random_seed(noise_std: float, hole: bool) -> None:
+    generator = SwissRoll(noise_std=noise_std, hole=hole)
     assert generator.generate(batch_size=64, rng=get_torch_generator(1)).equal(
         generator.generate(batch_size=64, rng=get_torch_generator(1))
     )
 
 
-def test_swiss_roll_generate_different_random_seeds() -> None:
-    generator = SwissRoll()
+@mark.parametrize("noise_std", (0.0, 1.0))
+@mark.parametrize("hole", (True, False))
+def test_swiss_roll_generate_different_random_seeds(noise_std: float, hole: bool) -> None:
+    generator = SwissRoll(noise_std=noise_std, hole=hole)
     assert not generator.generate(batch_size=64, rng=get_torch_generator(1)).equal(
         generator.generate(batch_size=64, rng=get_torch_generator(2))
+    )
+
+
+def test_swiss_roll_generate_same_random_seed_hole() -> None:
+    generator1 = SwissRoll(hole=True)
+    generator2 = SwissRoll(hole=False)
+    assert not generator1.generate(batch_size=64, rng=get_torch_generator(1)).equal(
+        generator2.generate(batch_size=64, rng=get_torch_generator(1))
     )
 
 
@@ -120,8 +132,9 @@ def test_make_swiss_roll() -> None:
 
 @mark.parametrize("spin", (0.5, 1.0, 1.5, 2.0))
 @mark.parametrize("noise_std", (0.0, 0.5, 1.0))
-def test_make_swiss_roll_params(spin: float | int, noise_std: float | int) -> None:
-    data = make_swiss_roll(num_examples=64, spin=spin, noise_std=noise_std)
+@mark.parametrize("hole", (True, False))
+def test_make_swiss_roll_params(spin: float, noise_std: float, hole: bool) -> None:
+    data = make_swiss_roll(num_examples=64, spin=spin, noise_std=noise_std, hole=hole)
     assert isinstance(data, BatchDict)
     assert len(data) == 2
     assert isinstance(data[ct.TARGET], BatchedTensor)
@@ -142,15 +155,34 @@ def test_make_swiss_roll_num_examples(num_examples: int) -> None:
     assert data[ct.FEATURE].batch_size == num_examples
 
 
-def test_make_swiss_roll_create_same_random_seed() -> None:
+@mark.parametrize("noise_std", (0.0, 1.0))
+@mark.parametrize("hole", (True, False))
+def test_make_swiss_roll_create_same_random_seed(noise_std: float, hole: bool) -> None:
     assert objects_are_equal(
-        make_swiss_roll(num_examples=64, noise_std=1.0, generator=get_torch_generator(1)),
-        make_swiss_roll(num_examples=64, noise_std=1.0, generator=get_torch_generator(1)),
+        make_swiss_roll(
+            num_examples=64, noise_std=noise_std, hole=hole, generator=get_torch_generator(1)
+        ),
+        make_swiss_roll(
+            num_examples=64, noise_std=noise_std, hole=hole, generator=get_torch_generator(1)
+        ),
     )
 
 
-def test_make_swiss_roll_create_different_random_seeds() -> None:
+@mark.parametrize("noise_std", (0.0, 1.0))
+@mark.parametrize("hole", (True, False))
+def test_make_swiss_roll_create_different_random_seeds(noise_std: float, hole: bool) -> None:
     assert not objects_are_equal(
-        make_swiss_roll(num_examples=64, noise_std=1.0, generator=get_torch_generator(1)),
-        make_swiss_roll(num_examples=64, noise_std=1.0, generator=get_torch_generator(2)),
+        make_swiss_roll(
+            num_examples=64, noise_std=noise_std, hole=hole, generator=get_torch_generator(1)
+        ),
+        make_swiss_roll(
+            num_examples=64, noise_std=noise_std, hole=hole, generator=get_torch_generator(2)
+        ),
+    )
+
+
+def test_make_swiss_roll_create_same_random_seed_hole() -> None:
+    assert not objects_are_equal(
+        make_swiss_roll(num_examples=64, hole=True, generator=get_torch_generator(1)),
+        make_swiss_roll(num_examples=64, hole=False, generator=get_torch_generator(1)),
     )
