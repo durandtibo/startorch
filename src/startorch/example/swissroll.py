@@ -13,7 +13,7 @@ from startorch.random import rand_normal, rand_uniform
 
 
 class SwissRollExampleGenerator(BaseExampleGenerator[BatchedTensor]):
-    r"""Implements a regression example generator based on the Swiss roll
+    r"""Implements a manifold example generator based on the Swiss roll
     pattern.
 
     The implementation is based on
@@ -103,8 +103,7 @@ def make_swiss_roll(
     hole: bool = False,
     generator: torch.Generator | None = None,
 ) -> BatchDict[BatchedTensor]:
-    r"""Generates a toy classification dataset based on Swiss roll
-    pattern.
+    r"""Generates a toy manifold dataset based on Swiss roll pattern.
 
     The implementation is based on
     https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_swiss_roll.html
