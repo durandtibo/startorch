@@ -30,10 +30,10 @@ class BaseExampleGenerator(Generic[T], ABC, metaclass=AbstractFactory):
 
     .. code-block:: pycon
 
-        >>> from startorch.example import Hypercube
-        >>> generator = Hypercube(num_classes=5, feature_size=6)
+        >>> from startorch.example import HypercubeClassification
+        >>> generator = HypercubeClassification(num_classes=5, feature_size=6)
         >>> generator
-        HypercubeExampleGenerator(num_classes=5, feature_size=6, noise_std=0.2)
+        HypercubeClassificationExampleGenerator(num_classes=5, feature_size=6, noise_std=0.2)
         >>> batch = generator.generate(batch_size=10)
         >>> batch
         BatchDict(
@@ -61,8 +61,8 @@ class BaseExampleGenerator(Generic[T], ABC, metaclass=AbstractFactory):
 
         .. code-block:: pycon
 
-            >>> from startorch.example import Hypercube
-            >>> generator = Hypercube(num_classes=5, feature_size=6)
+            >>> from startorch.example import HypercubeClassification
+            >>> generator = HypercubeClassification(num_classes=5, feature_size=6)
             >>> batch = generator.generate(batch_size=10)
             >>> batch
             BatchDict(
@@ -95,7 +95,7 @@ def is_example_generator_config(config: dict) -> bool:
     .. code-block:: pycon
 
         >>> from startorch.example import is_example_generator_config
-        >>> is_example_generator_config({"_target_": "startorch.example.Hypercube"})
+        >>> is_example_generator_config({"_target_": "startorch.example.HypercubeClassification"})
         True
     """
     return is_object_config(config, BaseExampleGenerator)
@@ -123,9 +123,11 @@ def setup_example_generator(
     .. code-block:: pycon
 
         >>> from startorch.example import setup_example_generator
-        >>> generator = setup_example_generator({"_target_": "startorch.example.Hypercube"})
+        >>> generator = setup_example_generator(
+        ...     {"_target_": "startorch.example.HypercubeClassification"}
+        ... )
         >>> generator
-        HypercubeExampleGenerator(num_classes=50, feature_size=64, noise_std=0.2)
+        HypercubeClassificationExampleGenerator(num_classes=50, feature_size=64, noise_std=0.2)
     """
     if isinstance(generator, dict):
         logger.info(
