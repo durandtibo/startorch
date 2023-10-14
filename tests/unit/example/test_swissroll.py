@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from unittest.mock import patch
+
 import torch
 from coola import objects_are_equal
 from pytest import mark, raises
@@ -48,8 +50,7 @@ def test_swiss_roll_incorrect_spin(spin: float) -> None:
 
 
 @mark.parametrize("batch_size", SIZES)
-@mark.parametrize("feature_size", (5, 8, 10))
-def test_swiss_roll_generate(batch_size: int, feature_size: int) -> None:
+def test_swiss_roll_generate(batch_size: int) -> None:
     data = SwissRoll().generate(batch_size)
     assert isinstance(data, BatchDict)
     assert len(data) == 2
@@ -87,6 +88,26 @@ def test_swiss_roll_generate_same_random_seed_hole() -> None:
     assert not generator1.generate(batch_size=64, rng=get_torch_generator(1)).equal(
         generator2.generate(batch_size=64, rng=get_torch_generator(1))
     )
+
+
+@mark.parametrize("batch_size", SIZES)
+@mark.parametrize("noise_std", (0.0, 1.0))
+@mark.parametrize("spin", (1.5, 2.0))
+@mark.parametrize("hole", (True, False))
+@mark.parametrize("rng", (None, get_torch_generator(1)))
+def test_swiss_roll_generate_mock(
+    batch_size: int, noise_std: float, spin: float, hole: bool, rng: torch.Generator | None
+) -> None:
+    generator = SwissRoll(noise_std=noise_std, hole=hole, spin=spin)
+    with patch("startorch.example.swissroll.make_swiss_roll") as make_mock:
+        generator.generate(batch_size=batch_size, rng=rng)
+        make_mock.assert_called_once_with(
+            num_examples=batch_size,
+            noise_std=noise_std,
+            spin=spin,
+            hole=hole,
+            generator=rng,
+        )
 
 
 #####################################
