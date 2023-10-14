@@ -227,7 +227,8 @@ def get_uniform_weights(
 
     Returns:
     -------
-        ``torch.Tensor``: The generated weights.
+        ``torch.Tensor`` of shape ``(feature_size,)``: The generated
+            weights.
 
     Example usage:
 
@@ -239,9 +240,9 @@ def get_uniform_weights(
         tensor([...])
     """
     informative_feature_size = min(feature_size, informative_feature_size)
-    weights = torch.zeros(feature_size, 1)
-    weights[:informative_feature_size, :] = 100 * rand_uniform(
-        size=(informative_feature_size, 1), generator=generator
+    weights = torch.zeros(feature_size)
+    weights[:informative_feature_size] = 100 * rand_uniform(
+        size=(informative_feature_size,), generator=generator
     )
-    # TODO: add option to shuffle the weights
-    return weights
+    permutation = torch.randperm(feature_size, generator=generator)
+    return weights[permutation]
