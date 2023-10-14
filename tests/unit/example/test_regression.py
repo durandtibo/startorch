@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Sequence
+from unittest.mock import patch
 
 import torch
 from coola import objects_are_equal
@@ -77,6 +78,30 @@ def test_linear_regression_generate_different_random_seeds(noise_std: float, bia
     assert not generator.generate(batch_size=64, rng=get_torch_generator(1)).equal(
         generator.generate(batch_size=64, rng=get_torch_generator(2))
     )
+
+
+@mark.parametrize("batch_size", SIZES)
+@mark.parametrize("noise_std", (0.0, 1.0))
+@mark.parametrize("weights", (torch.ones(3), torch.ones(5)))
+@mark.parametrize("bias", (0.0, 1.0))
+@mark.parametrize("rng", (None, get_torch_generator(1)))
+def test_linear_regression_generate_mock(
+    batch_size: int,
+    noise_std: float,
+    weights: int,
+    bias: float,
+    rng: torch.Generator | None,
+) -> None:
+    generator = LinearRegression(noise_std=noise_std, weights=weights, bias=bias)
+    with patch("startorch.example.regression.make_linear_regression") as make_mock:
+        generator.generate(batch_size=batch_size, rng=rng)
+        make_mock.assert_called_once_with(
+            num_examples=batch_size,
+            noise_std=noise_std,
+            weights=weights,
+            bias=bias,
+            generator=rng,
+        )
 
 
 ############################################

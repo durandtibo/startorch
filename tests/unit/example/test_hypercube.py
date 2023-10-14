@@ -1,3 +1,7 @@
+from __future__ import annotations
+
+from unittest.mock import patch
+
 import torch
 from coola import objects_are_equal
 from pytest import mark, raises
@@ -84,6 +88,32 @@ def test_hypercube_classification_generate_different_random_seeds() -> None:
     assert not generator.generate(batch_size=64, rng=get_torch_generator(1)).equal(
         generator.generate(batch_size=64, rng=get_torch_generator(2))
     )
+
+
+@mark.parametrize("batch_size", SIZES)
+@mark.parametrize("noise_std", (0.0, 1.0))
+@mark.parametrize("num_classes", (2, 5))
+@mark.parametrize("feature_size", (5, 10))
+@mark.parametrize("rng", (None, get_torch_generator(1)))
+def test_hypercube_classification_generate_mock(
+    batch_size: int,
+    noise_std: float,
+    feature_size: int,
+    num_classes: int,
+    rng: torch.Generator | None,
+) -> None:
+    generator = HypercubeClassification(
+        noise_std=noise_std, feature_size=feature_size, num_classes=num_classes
+    )
+    with patch("startorch.example.hypercube.make_hypercube_classification") as make_mock:
+        generator.generate(batch_size=batch_size, rng=rng)
+        make_mock.assert_called_once_with(
+            num_examples=batch_size,
+            noise_std=noise_std,
+            feature_size=feature_size,
+            num_classes=num_classes,
+            generator=rng,
+        )
 
 
 ###################################################
