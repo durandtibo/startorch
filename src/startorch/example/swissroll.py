@@ -36,10 +36,10 @@ class SwissRollExampleGenerator(BaseExampleGenerator[BatchedTensor]):
 
     .. code-block:: pycon
 
-        >>> from startorch.example import Hypercube
-        >>> generator = Hypercube(num_classes=5, feature_size=6)
+        >>> from startorch.example import SwissRoll
+        >>> generator = SwissRoll()
         >>> generator
-        HypercubeExampleGenerator(num_classes=5, feature_size=6, noise_std=0.2)
+        SwissRollExampleGenerator(noise_std=0.0, spin=1.5, hole=False)
         >>> batch = generator.generate(batch_size=10)
         >>> batch
         BatchDict(
@@ -97,7 +97,7 @@ class SwissRollExampleGenerator(BaseExampleGenerator[BatchedTensor]):
 
 
 def make_swiss_roll(
-    num_examples: int = 1000,
+    num_examples: int = 100,
     noise_std: float = 0.0,
     spin: float | int = 1.5,
     hole: bool = False,
@@ -111,7 +111,7 @@ def make_swiss_roll(
     Args:
     ----
         num_examples (int, optional): Specifies the number of examples.
-            Default: ``1000``
+            Default: ``100``
         noise_std (float, optional): Specifies the standard deviation
             of the Gaussian noise. Default: ``0.0``
         spin (float or int, optional): Specifies the number of spins
@@ -123,11 +123,11 @@ def make_swiss_roll(
 
     Returns:
     -------
-        dict: A dictionary with two keys:
-            - ``'input'``: a ``torch.Tensor`` of type float and
+        ``BatchDict``: A batch with two items:
+            - ``'input'``: a ``BatchedTensor`` of type float and
                 shape ``(num_examples, 3)``. This
                 tensor represents the input features.
-            - ``'target'``: a ``torch.Tensor`` of type float and
+            - ``'target'``: a ``BatchedTensor`` of type float and
                 shape ``(num_examples,)``. This tensor represents
                 the targets.
 
@@ -139,7 +139,7 @@ def make_swiss_roll(
 
     .. code-block:: pycon
 
-        >>> from startorch.example.swissroll import make_swiss_roll
+        >>> from startorch.example import make_swiss_roll
         >>> batch = make_swiss_roll(num_examples=10)
         >>> batch
         BatchDict(
