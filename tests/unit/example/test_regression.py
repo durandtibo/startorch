@@ -163,14 +163,12 @@ def test_make_linear_regression_different_random_seeds(noise_std: float) -> None
 
 
 def test_get_uniform_weights_informative_feature_size_0() -> None:
-    assert get_uniform_weights(feature_size=10, informative_feature_size=0).equal(
-        torch.zeros(10, 1)
-    )
+    assert get_uniform_weights(feature_size=10, informative_feature_size=0).equal(torch.zeros(10))
 
 
 def test_get_uniform_weights_informative_feature_size_10() -> None:
     assert not get_uniform_weights(feature_size=10, informative_feature_size=10).equal(
-        torch.zeros(10, 1)
+        torch.zeros(10)
     )
 
 
