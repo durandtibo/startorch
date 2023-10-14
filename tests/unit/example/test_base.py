@@ -6,19 +6,19 @@ from objectory import OBJECT_TARGET
 from pytest import LogCaptureFixture
 
 from startorch.example import (
-    Hypercube,
+    HypercubeClassification,
     is_example_generator_config,
     setup_example_generator,
 )
 from startorch.tensor import RandInt
 
-##################################################
+#################################################
 #     Tests for is_example_generator_config     #
-##################################################
+#################################################
 
 
 def test_is_example_generator_config_true() -> None:
-    assert is_example_generator_config({OBJECT_TARGET: "startorch.example.Hypercube"})
+    assert is_example_generator_config({OBJECT_TARGET: "startorch.example.HypercubeClassification"})
 
 
 def test_is_example_generator_config_false() -> None:
@@ -31,14 +31,14 @@ def test_is_example_generator_config_false() -> None:
 
 
 def test_setup_example_generator_object() -> None:
-    generator = Hypercube()
+    generator = HypercubeClassification()
     assert setup_example_generator(generator) is generator
 
 
 def test_setup_example_generator_dict() -> None:
     assert isinstance(
-        setup_example_generator({OBJECT_TARGET: "startorch.example.Hypercube"}),
-        Hypercube,
+        setup_example_generator({OBJECT_TARGET: "startorch.example.HypercubeClassification"}),
+        HypercubeClassification,
     )
 
 

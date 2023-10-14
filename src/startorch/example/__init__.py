@@ -2,8 +2,8 @@ from __future__ import annotations
 
 __all__ = [
     "BaseExampleGenerator",
-    "Hypercube",
-    "HypercubeExampleGenerator",
+    "HypercubeClassification",
+    "HypercubeClassificationExampleGenerator",
     "LinearRegression",
     "LinearRegressionExampleGenerator",
     "SwissRoll",
@@ -11,6 +11,7 @@ __all__ = [
     "TimeSeries",
     "TimeSeriesExampleGenerator",
     "is_example_generator_config",
+    "make_hypercube_classification",
     "make_linear_regression",
     "make_swiss_roll",
     "setup_example_generator",
@@ -21,8 +22,11 @@ from startorch.example.base import (
     is_example_generator_config,
     setup_example_generator,
 )
-from startorch.example.hypercube import HypercubeExampleGenerator
-from startorch.example.hypercube import HypercubeExampleGenerator as Hypercube
+from startorch.example.hypercube import HypercubeClassificationExampleGenerator
+from startorch.example.hypercube import (
+    HypercubeClassificationExampleGenerator as HypercubeClassification,
+)
+from startorch.example.hypercube import make_hypercube_classification
 from startorch.example.regression import LinearRegressionExampleGenerator
 from startorch.example.regression import (
     LinearRegressionExampleGenerator as LinearRegression,
