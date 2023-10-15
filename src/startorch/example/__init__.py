@@ -18,12 +18,18 @@ __all__ = [
     "make_linear_regression",
     "make_swiss_roll",
     "setup_example_generator",
+    "Friedman1Regression",
+    "Friedman1RegressionExampleGenerator",
 ]
 
 from startorch.example.base import (
     BaseExampleGenerator,
     is_example_generator_config,
     setup_example_generator,
+)
+from startorch.example.friedman import Friedman1RegressionExampleGenerator
+from startorch.example.friedman import (
+    Friedman1RegressionExampleGenerator as Friedman1Regression,
 )
 from startorch.example.friedman import make_friedman1, make_friedman2, make_friedman3
 from startorch.example.hypercube import HypercubeClassificationExampleGenerator
