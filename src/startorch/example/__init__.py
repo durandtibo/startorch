@@ -13,6 +13,7 @@ __all__ = [
     "is_example_generator_config",
     "make_friedman1",
     "make_friedman2",
+    "make_friedman3",
     "make_hypercube_classification",
     "make_linear_regression",
     "make_swiss_roll",
@@ -24,7 +25,7 @@ from startorch.example.base import (
     is_example_generator_config,
     setup_example_generator,
 )
-from startorch.example.friedman import make_friedman1, make_friedman2
+from startorch.example.friedman import make_friedman1, make_friedman2, make_friedman3
 from startorch.example.hypercube import HypercubeClassificationExampleGenerator
 from startorch.example.hypercube import (
     HypercubeClassificationExampleGenerator as HypercubeClassification,
