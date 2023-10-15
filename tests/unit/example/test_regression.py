@@ -33,6 +33,11 @@ def test_linear_regression_weights(weights: Tensor | Sequence) -> None:
     assert LinearRegression(weights=weights).weights.equal(torch.tensor([2.0, 1.0, 3.0]))
 
 
+@mark.parametrize("bias", (0.0, 1.0, -1.0))
+def test_linear_regression_bias(bias: float) -> None:
+    assert LinearRegression(weights=torch.tensor([2.0, 1.0, 3.0]), bias=bias).bias == bias
+
+
 @mark.parametrize("noise_std", (0, 0.1, 1))
 def test_linear_regression_noise_std(noise_std: float) -> None:
     assert LinearRegression.create_uniform_weights(noise_std=noise_std).noise_std == noise_std

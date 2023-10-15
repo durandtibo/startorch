@@ -76,15 +76,17 @@ def test_hypercube_classification_generate(batch_size: int, feature_size: int) -
     assert data[ct.FEATURE].dtype == torch.float
 
 
-def test_hypercube_classification_generate_same_random_seed() -> None:
-    generator = HypercubeClassification(num_classes=5, feature_size=8)
+@mark.parametrize("noise_std", (0.0, 1.0))
+def test_hypercube_classification_generate_same_random_seed(noise_std: float) -> None:
+    generator = HypercubeClassification(num_classes=5, feature_size=8, noise_std=noise_std)
     assert generator.generate(batch_size=64, rng=get_torch_generator(1)).equal(
         generator.generate(batch_size=64, rng=get_torch_generator(1))
     )
 
 
-def test_hypercube_classification_generate_different_random_seeds() -> None:
-    generator = HypercubeClassification(num_classes=5, feature_size=8)
+@mark.parametrize("noise_std", (0.0, 1.0))
+def test_hypercube_classification_generate_different_random_seeds(noise_std: float) -> None:
+    generator = HypercubeClassification(num_classes=5, feature_size=8, noise_std=noise_std)
     assert not generator.generate(batch_size=64, rng=get_torch_generator(1)).equal(
         generator.generate(batch_size=64, rng=get_torch_generator(2))
     )
@@ -188,23 +190,41 @@ def test_make_hypercube_classification_noise_std_0() -> None:
     assert features.max() == 1
 
 
-def test_make_hypercube_classification_same_random_seed() -> None:
+@mark.parametrize("noise_std", (0.0, 1.0))
+def test_make_hypercube_classification_same_random_seed(noise_std: float) -> None:
     assert objects_are_equal(
         make_hypercube_classification(
-            num_examples=10, num_classes=5, feature_size=8, generator=get_torch_generator(1)
+            num_examples=10,
+            num_classes=5,
+            feature_size=8,
+            noise_std=noise_std,
+            generator=get_torch_generator(1),
         ),
         make_hypercube_classification(
-            num_examples=10, num_classes=5, feature_size=8, generator=get_torch_generator(1)
+            num_examples=10,
+            num_classes=5,
+            feature_size=8,
+            noise_std=noise_std,
+            generator=get_torch_generator(1),
         ),
     )
 
 
-def test_make_hypercube_classification_different_random_seeds() -> None:
+@mark.parametrize("noise_std", (0.0, 1.0))
+def test_make_hypercube_classification_different_random_seeds(noise_std: float) -> None:
     assert not objects_are_equal(
         make_hypercube_classification(
-            num_examples=10, num_classes=5, feature_size=8, generator=get_torch_generator(1)
+            num_examples=10,
+            num_classes=5,
+            feature_size=8,
+            noise_std=noise_std,
+            generator=get_torch_generator(1),
         ),
         make_hypercube_classification(
-            num_examples=10, num_classes=5, feature_size=8, generator=get_torch_generator(2)
+            num_examples=10,
+            num_classes=5,
+            feature_size=8,
+            noise_std=noise_std,
+            generator=get_torch_generator(2),
         ),
     )
