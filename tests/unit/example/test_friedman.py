@@ -11,9 +11,9 @@ from redcat import BatchDict, BatchedTensor
 from startorch import constants as ct
 from startorch.example import (
     Friedman1Regression,
-    make_friedman1,
-    make_friedman2,
-    make_friedman3,
+    make_friedman1_regression,
+    make_friedman2_regression,
+    make_friedman3_regression,
 )
 from startorch.utils.seed import get_torch_generator
 
@@ -94,7 +94,7 @@ def test_friedman1_regression_generate_mock(
     rng: torch.Generator | None,
 ) -> None:
     generator = Friedman1Regression(noise_std=noise_std, feature_size=feature_size)
-    with patch("startorch.example.friedman.make_friedman1") as make_mock:
+    with patch("startorch.example.friedman.make_friedman1_regression") as make_mock:
         generator.generate(batch_size=batch_size, rng=rng)
         make_mock.assert_called_once_with(
             num_examples=batch_size,
@@ -112,13 +112,13 @@ def test_friedman1_regression_generate_mock(
 @mark.parametrize("num_examples", (0, -1))
 def test_make_friedman1_incorrect_num_examples(num_examples: int) -> None:
     with raises(RuntimeError, match="The number of examples .* has to be greater than 0"):
-        make_friedman1(num_examples=num_examples)
+        make_friedman1_regression(num_examples=num_examples)
 
 
 @mark.parametrize("feature_size", (4, 1, 0, -1))
 def test_make_friedman1_incorrect_feature_size(feature_size: int) -> None:
     with raises(RuntimeError, match="feature_size (.*) has to be greater or equal to 5"):
-        make_friedman1(feature_size=feature_size)
+        make_friedman1_regression(feature_size=feature_size)
 
 
 def test_make_friedman1_incorrect_noise_std() -> None:
@@ -126,11 +126,11 @@ def test_make_friedman1_incorrect_noise_std() -> None:
         RuntimeError,
         match="The standard deviation of the Gaussian noise .* has to be greater or equal than 0",
     ):
-        make_friedman1(noise_std=-1)
+        make_friedman1_regression(noise_std=-1)
 
 
 def test_make_friedman1() -> None:
-    data = make_friedman1(num_examples=10, feature_size=8)
+    data = make_friedman1_regression(num_examples=10, feature_size=8)
     assert isinstance(data, BatchDict)
     assert len(data) == 2
     assert isinstance(data[ct.TARGET], BatchedTensor)
@@ -143,7 +143,7 @@ def test_make_friedman1() -> None:
 
 @mark.parametrize("num_examples", SIZES)
 def test_make_friedman1_num_examples(num_examples: int) -> None:
-    data = make_friedman1(num_examples)
+    data = make_friedman1_regression(num_examples)
     assert len(data) == 2
     assert data[ct.TARGET].batch_size == num_examples
     assert data[ct.FEATURE].batch_size == num_examples
@@ -151,20 +151,20 @@ def test_make_friedman1_num_examples(num_examples: int) -> None:
 
 @mark.parametrize("feature_size", (5, 8, 10))
 def test_make_friedman1_feature_size(feature_size: int) -> None:
-    data = make_friedman1(num_examples=10, feature_size=feature_size)
+    data = make_friedman1_regression(num_examples=10, feature_size=feature_size)
     assert data[ct.FEATURE].shape[1] == feature_size
 
 
 @mark.parametrize("noise_std", (0.0, 1.0))
 def test_make_friedman1_same_random_seed(noise_std: float) -> None:
     assert objects_are_equal(
-        make_friedman1(
+        make_friedman1_regression(
             num_examples=10,
             feature_size=8,
             noise_std=noise_std,
             generator=get_torch_generator(1),
         ),
-        make_friedman1(
+        make_friedman1_regression(
             num_examples=10,
             feature_size=8,
             noise_std=noise_std,
@@ -176,13 +176,13 @@ def test_make_friedman1_same_random_seed(noise_std: float) -> None:
 @mark.parametrize("noise_std", (0.0, 1.0))
 def test_make_friedman1_different_random_seeds(noise_std: float) -> None:
     assert not objects_are_equal(
-        make_friedman1(
+        make_friedman1_regression(
             num_examples=10,
             feature_size=8,
             noise_std=noise_std,
             generator=get_torch_generator(1),
         ),
-        make_friedman1(
+        make_friedman1_regression(
             num_examples=10,
             feature_size=8,
             noise_std=noise_std,
@@ -199,13 +199,13 @@ def test_make_friedman1_different_random_seeds(noise_std: float) -> None:
 @mark.parametrize("num_examples", (0, -1))
 def test_make_friedman2_incorrect_num_examples(num_examples: int) -> None:
     with raises(RuntimeError, match="The number of examples .* has to be greater than 0"):
-        make_friedman2(num_examples=num_examples)
+        make_friedman2_regression(num_examples=num_examples)
 
 
 @mark.parametrize("feature_size", (3, 1, 0, -1))
 def test_make_friedman2_incorrect_feature_size(feature_size: int) -> None:
     with raises(RuntimeError, match="feature_size (.*) has to be greater or equal to 4"):
-        make_friedman2(feature_size=feature_size)
+        make_friedman2_regression(feature_size=feature_size)
 
 
 def test_make_friedman2_incorrect_noise_std() -> None:
@@ -213,11 +213,11 @@ def test_make_friedman2_incorrect_noise_std() -> None:
         RuntimeError,
         match="The standard deviation of the Gaussian noise .* has to be greater or equal than 0",
     ):
-        make_friedman2(noise_std=-1)
+        make_friedman2_regression(noise_std=-1)
 
 
 def test_make_friedman2() -> None:
-    data = make_friedman2(num_examples=10)
+    data = make_friedman2_regression(num_examples=10)
     assert isinstance(data, BatchDict)
     assert len(data) == 2
     assert isinstance(data[ct.TARGET], BatchedTensor)
@@ -237,7 +237,7 @@ def test_make_friedman2() -> None:
 
 
 def test_make_friedman2_feature_size_8() -> None:
-    data = make_friedman2(num_examples=10, feature_size=8)
+    data = make_friedman2_regression(num_examples=10, feature_size=8)
     assert isinstance(data, BatchDict)
     assert len(data) == 2
     assert isinstance(data[ct.TARGET], BatchedTensor)
@@ -259,7 +259,7 @@ def test_make_friedman2_feature_size_8() -> None:
 
 @mark.parametrize("num_examples", SIZES)
 def test_make_friedman2_num_examples(num_examples: int) -> None:
-    data = make_friedman2(num_examples)
+    data = make_friedman2_regression(num_examples)
     assert len(data) == 2
     assert data[ct.TARGET].batch_size == num_examples
     assert data[ct.FEATURE].batch_size == num_examples
@@ -267,20 +267,20 @@ def test_make_friedman2_num_examples(num_examples: int) -> None:
 
 @mark.parametrize("feature_size", (5, 8, 10))
 def test_make_friedman2_feature_size(feature_size: int) -> None:
-    data = make_friedman2(num_examples=10, feature_size=feature_size)
+    data = make_friedman2_regression(num_examples=10, feature_size=feature_size)
     assert data[ct.FEATURE].shape[1] == feature_size
 
 
 @mark.parametrize("noise_std", (0.0, 1.0))
 def test_make_friedman2_same_random_seed(noise_std: float) -> None:
     assert objects_are_equal(
-        make_friedman2(
+        make_friedman2_regression(
             num_examples=10,
             feature_size=8,
             noise_std=noise_std,
             generator=get_torch_generator(1),
         ),
-        make_friedman2(
+        make_friedman2_regression(
             num_examples=10,
             feature_size=8,
             noise_std=noise_std,
@@ -292,13 +292,13 @@ def test_make_friedman2_same_random_seed(noise_std: float) -> None:
 @mark.parametrize("noise_std", (0.0, 1.0))
 def test_make_friedman2_different_random_seeds(noise_std: float) -> None:
     assert not objects_are_equal(
-        make_friedman2(
+        make_friedman2_regression(
             num_examples=10,
             feature_size=8,
             noise_std=noise_std,
             generator=get_torch_generator(1),
         ),
-        make_friedman2(
+        make_friedman2_regression(
             num_examples=10,
             feature_size=8,
             noise_std=noise_std,
@@ -315,13 +315,13 @@ def test_make_friedman2_different_random_seeds(noise_std: float) -> None:
 @mark.parametrize("num_examples", (0, -1))
 def test_make_friedman3_incorrect_num_examples(num_examples: int) -> None:
     with raises(RuntimeError, match="The number of examples .* has to be greater than 0"):
-        make_friedman3(num_examples=num_examples)
+        make_friedman3_regression(num_examples=num_examples)
 
 
 @mark.parametrize("feature_size", (3, 1, 0, -1))
 def test_make_friedman3_incorrect_feature_size(feature_size: int) -> None:
     with raises(RuntimeError, match="feature_size (.*) has to be greater or equal to 4"):
-        make_friedman3(feature_size=feature_size)
+        make_friedman3_regression(feature_size=feature_size)
 
 
 def test_make_friedman3_incorrect_noise_std() -> None:
@@ -329,11 +329,11 @@ def test_make_friedman3_incorrect_noise_std() -> None:
         RuntimeError,
         match="The standard deviation of the Gaussian noise .* has to be greater or equal than 0",
     ):
-        make_friedman3(noise_std=-1)
+        make_friedman3_regression(noise_std=-1)
 
 
 def test_make_friedman3() -> None:
-    data = make_friedman3(num_examples=10)
+    data = make_friedman3_regression(num_examples=10)
     assert isinstance(data, BatchDict)
     assert len(data) == 2
     assert isinstance(data[ct.TARGET], BatchedTensor)
@@ -353,7 +353,7 @@ def test_make_friedman3() -> None:
 
 
 def test_make_friedman3_feature_size_8() -> None:
-    data = make_friedman3(num_examples=10, feature_size=8)
+    data = make_friedman3_regression(num_examples=10, feature_size=8)
     assert isinstance(data, BatchDict)
     assert len(data) == 2
     assert isinstance(data[ct.TARGET], BatchedTensor)
@@ -375,7 +375,7 @@ def test_make_friedman3_feature_size_8() -> None:
 
 @mark.parametrize("num_examples", SIZES)
 def test_make_friedman3_num_examples(num_examples: int) -> None:
-    data = make_friedman3(num_examples)
+    data = make_friedman3_regression(num_examples)
     assert len(data) == 2
     assert data[ct.TARGET].batch_size == num_examples
     assert data[ct.FEATURE].batch_size == num_examples
@@ -383,20 +383,20 @@ def test_make_friedman3_num_examples(num_examples: int) -> None:
 
 @mark.parametrize("feature_size", (5, 8, 10))
 def test_make_friedman3_feature_size(feature_size: int) -> None:
-    data = make_friedman3(num_examples=10, feature_size=feature_size)
+    data = make_friedman3_regression(num_examples=10, feature_size=feature_size)
     assert data[ct.FEATURE].shape[1] == feature_size
 
 
 @mark.parametrize("noise_std", (0.0, 1.0))
 def test_make_friedman3_same_random_seed(noise_std: float) -> None:
     assert objects_are_equal(
-        make_friedman3(
+        make_friedman3_regression(
             num_examples=10,
             feature_size=8,
             noise_std=noise_std,
             generator=get_torch_generator(1),
         ),
-        make_friedman3(
+        make_friedman3_regression(
             num_examples=10,
             feature_size=8,
             noise_std=noise_std,
@@ -408,13 +408,13 @@ def test_make_friedman3_same_random_seed(noise_std: float) -> None:
 @mark.parametrize("noise_std", (0.0, 1.0))
 def test_make_friedman3_different_random_seeds(noise_std: float) -> None:
     assert not objects_are_equal(
-        make_friedman3(
+        make_friedman3_regression(
             num_examples=10,
             feature_size=8,
             noise_std=noise_std,
             generator=get_torch_generator(1),
         ),
-        make_friedman3(
+        make_friedman3_regression(
             num_examples=10,
             feature_size=8,
             noise_std=noise_std,
