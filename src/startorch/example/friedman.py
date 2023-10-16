@@ -2,9 +2,9 @@ from __future__ import annotations
 
 __all__ = [
     "Friedman1RegressionExampleGenerator",
-    "make_friedman1",
-    "make_friedman2",
-    "make_friedman3",
+    "make_friedman1_regression",
+    "make_friedman2_regression",
+    "make_friedman3_regression",
 ]
 
 import math
@@ -86,7 +86,7 @@ class Friedman1RegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
     def generate(
         self, batch_size: int = 1, rng: torch.Generator | None = None
     ) -> BatchDict[BatchedTensor]:
-        return make_friedman1(
+        return make_friedman1_regression(
             num_examples=batch_size,
             feature_size=self._feature_size,
             noise_std=self._noise_std,
@@ -94,7 +94,7 @@ class Friedman1RegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
         )
 
 
-def make_friedman1(
+def make_friedman1_regression(
     num_examples: int = 100,
     feature_size: int = 10,
     noise_std: float = 0.0,
@@ -137,8 +137,8 @@ def make_friedman1(
 
     .. code-block:: pycon
 
-        >>> from startorch.example import make_friedman1
-        >>> batch = make_friedman1(num_examples=10)
+        >>> from startorch.example import make_friedman1_regression
+        >>> batch = make_friedman1_regression(num_examples=10)
         >>> batch
         BatchDict(
           (target): tensor([...], batch_dim=0)
@@ -167,7 +167,7 @@ def make_friedman1(
     return BatchDict({ct.TARGET: BatchedTensor(targets), ct.FEATURE: BatchedTensor(features)})
 
 
-def make_friedman2(
+def make_friedman2_regression(
     num_examples: int = 100,
     feature_size: int = 4,
     noise_std: float = 0.0,
@@ -210,8 +210,8 @@ def make_friedman2(
 
     .. code-block:: pycon
 
-        >>> from startorch.example import make_friedman2
-        >>> batch = make_friedman2(num_examples=10)
+        >>> from startorch.example import make_friedman2_regression
+        >>> batch = make_friedman2_regression(num_examples=10)
         >>> batch
         BatchDict(
           (target): tensor([...], batch_dim=0)
@@ -244,7 +244,7 @@ def make_friedman2(
     return BatchDict({ct.TARGET: BatchedTensor(targets), ct.FEATURE: BatchedTensor(features)})
 
 
-def make_friedman3(
+def make_friedman3_regression(
     num_examples: int = 100,
     feature_size: int = 4,
     noise_std: float = 0.0,
@@ -287,8 +287,8 @@ def make_friedman3(
 
     .. code-block:: pycon
 
-        >>> from startorch.example import make_friedman3
-        >>> batch = make_friedman3(num_examples=10)
+        >>> from startorch.example import make_friedman3_regression
+        >>> batch = make_friedman3_regression(num_examples=10)
         >>> batch
         BatchDict(
           (target): tensor([...], batch_dim=0)

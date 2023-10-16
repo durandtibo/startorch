@@ -11,9 +11,9 @@ __all__ = [
     "TimeSeries",
     "TimeSeriesExampleGenerator",
     "is_example_generator_config",
-    "make_friedman1",
-    "make_friedman2",
-    "make_friedman3",
+    "make_friedman1_regression",
+    "make_friedman2_regression",
+    "make_friedman3_regression",
     "make_hypercube_classification",
     "make_linear_regression",
     "make_swiss_roll",
@@ -31,7 +31,11 @@ from startorch.example.friedman import Friedman1RegressionExampleGenerator
 from startorch.example.friedman import (
     Friedman1RegressionExampleGenerator as Friedman1Regression,
 )
-from startorch.example.friedman import make_friedman1, make_friedman2, make_friedman3
+from startorch.example.friedman import (
+    make_friedman1_regression,
+    make_friedman2_regression,
+    make_friedman3_regression,
+)
 from startorch.example.hypercube import HypercubeClassificationExampleGenerator
 from startorch.example.hypercube import (
     HypercubeClassificationExampleGenerator as HypercubeClassification,
