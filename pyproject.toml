@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "startorch"
-version = "0.0.7a13"
+version = "0.0.7a14"
 description = "synthetic time-series generator in PyTorch"
 readme = "README.md"
 authors = ["Thibaut Durand <durand.tibo+gh@gmail.com>"]
@@ -37,9 +37,10 @@ torch = ">=2.0,<2.2"
 
 # Optional dependencies
 matplotlib = { version = ">=3.6,<3.9", optional = true }
+plotly = { version = ">=5.10,<5.18", optional = true }
 
 [tool.poetry.extras]
-all = ["matplotlib"]
+all = ["matplotlib", "plotly"]
 
 [tool.poetry.group.exp]
 optional = true
