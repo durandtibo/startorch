@@ -55,10 +55,9 @@ def hist_sequence(
 
     .. code-block:: pycon
 
-        >>> from startorch.utils.plot import hist_sequence
+        >>> from startorch.plot.matplotlib import hist_sequence
         >>> from startorch.sequence import RandUniform
-        >>> generator = RandUniform(low=-5, high=5)
-        >>> fig = hist_sequence(generator)
+        >>> fig = hist_sequence(RandUniform(low=-5, high=5))
     """
     check_matplotlib()
     if not isinstance(rng, Generator):
@@ -118,10 +117,9 @@ def plot_sequence(
 
     .. code-block:: pycon
 
-        >>> from startorch.utils.plot import plot_sequence
+        >>> from startorch.plot.matplotlib import plot_sequence
         >>> from startorch.sequence import RandUniform
-        >>> generator = RandUniform(low=-5, high=5)
-        >>> fig = plot_sequence(generator, batch_size=4)
+        >>> fig = plot_sequence(RandUniform(low=-5, high=5), batch_size=4)
     """
     check_matplotlib()
     if not isinstance(rng, Generator):
