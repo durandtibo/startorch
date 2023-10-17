@@ -173,7 +173,6 @@ class Friedman2RegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
         )
 
 
-
 class Friedman3RegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
     r"""Implements the "Friedman #3" regression example generator.
 
