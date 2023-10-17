@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-__all__ = ["plot_features"]
+__all__ = ["hist_features"]
 
 import math
 from collections.abc import Sequence
@@ -17,14 +17,17 @@ else:
     plt = Mock()  # pragma: no cover
 
 
-def plot_features(
+def hist_features(
     features: torch.Tensor | np.ndarray,
     feature_names: Sequence[str] | None = None,
     ncols: int = 2,
     figsize: tuple[int, int] = (6, 4),
     **kwargs,
 ) -> plt.Figure:
-    r"""
+    r"""Plots the distribution of each feature.
+
+    If the input has ``n`` features, this function returns a figure
+    with ``n`` histograms: one for each features.
 
     Args:
     ----
@@ -53,9 +56,9 @@ def plot_features(
 
     .. code-block:: pycon
 
-        >>> from startorch.plot.matplotlib import plot_features
+        >>> from startorch.plot.matplotlib import hist_features
         >>> import numpy as np
-        >>> fig = plot_features(np.random.rand(10, 5))
+        >>> fig = hist_features(np.random.rand(10, 5))
     """
     check_matplotlib()
     if torch.is_tensor(features):
