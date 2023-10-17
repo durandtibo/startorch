@@ -2,6 +2,10 @@ from __future__ import annotations
 
 __all__ = [
     "BaseExampleGenerator",
+    "Friedman1Regression",
+    "Friedman1RegressionExampleGenerator",
+    "Friedman2Regression",
+    "Friedman2RegressionExampleGenerator",
     "HypercubeClassification",
     "HypercubeClassificationExampleGenerator",
     "LinearRegression",
@@ -18,8 +22,6 @@ __all__ = [
     "make_linear_regression",
     "make_swiss_roll",
     "setup_example_generator",
-    "Friedman1Regression",
-    "Friedman1RegressionExampleGenerator",
 ]
 
 from startorch.example.base import (
@@ -30,6 +32,10 @@ from startorch.example.base import (
 from startorch.example.friedman import Friedman1RegressionExampleGenerator
 from startorch.example.friedman import (
     Friedman1RegressionExampleGenerator as Friedman1Regression,
+)
+from startorch.example.friedman import Friedman2RegressionExampleGenerator
+from startorch.example.friedman import (
+    Friedman2RegressionExampleGenerator as Friedman2Regression,
 )
 from startorch.example.friedman import (
     make_friedman1_regression,
