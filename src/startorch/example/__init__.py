@@ -6,6 +6,8 @@ __all__ = [
     "Friedman1RegressionExampleGenerator",
     "Friedman2Regression",
     "Friedman2RegressionExampleGenerator",
+    "Friedman3Regression",
+    "Friedman3RegressionExampleGenerator",
     "HypercubeClassification",
     "HypercubeClassificationExampleGenerator",
     "LinearRegression",
@@ -36,6 +38,10 @@ from startorch.example.friedman import (
 from startorch.example.friedman import Friedman2RegressionExampleGenerator
 from startorch.example.friedman import (
     Friedman2RegressionExampleGenerator as Friedman2Regression,
+)
+from startorch.example.friedman import Friedman3RegressionExampleGenerator
+from startorch.example.friedman import (
+    Friedman3RegressionExampleGenerator as Friedman3Regression,
 )
 from startorch.example.friedman import (
     make_friedman1_regression,
