@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-__all__ = ["hist_features"]
+__all__ = ["hist_feature"]
 
 import math
 from collections.abc import Sequence
@@ -17,7 +17,7 @@ else:
     plt = Mock()  # pragma: no cover
 
 
-def hist_features(
+def hist_feature(
     features: torch.Tensor | np.ndarray,
     feature_names: Sequence[str] | None = None,
     ncols: int = 2,
@@ -56,9 +56,9 @@ def hist_features(
 
     .. code-block:: pycon
 
-        >>> from startorch.plot.matplotlib import hist_features
+        >>> from startorch.plot.matplotlib import hist_feature
         >>> import numpy as np
-        >>> fig = hist_features(np.random.rand(10, 5))
+        >>> fig = hist_feature(np.random.rand(10, 5))
     """
     check_matplotlib()
     if torch.is_tensor(features):
