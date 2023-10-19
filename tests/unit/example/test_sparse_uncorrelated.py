@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-
 import torch
 from coola import objects_are_equal
 from pytest import mark, raises
