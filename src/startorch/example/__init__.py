@@ -22,6 +22,7 @@ __all__ = [
     "make_friedman3_regression",
     "make_hypercube_classification",
     "make_linear_regression",
+    "make_sparse_uncorrelated_regression",
     "make_swiss_roll",
     "setup_example_generator",
 ]
@@ -58,6 +59,7 @@ from startorch.example.regression import (
     LinearRegressionExampleGenerator as LinearRegression,
 )
 from startorch.example.regression import make_linear_regression
+from startorch.example.sparse_uncorrelated import make_sparse_uncorrelated_regression
 from startorch.example.swissroll import SwissRollExampleGenerator
 from startorch.example.swissroll import SwissRollExampleGenerator as SwissRoll
 from startorch.example.swissroll import make_swiss_roll
