@@ -56,8 +56,8 @@ def test_hypercube_classification_noise_std(noise_std: float) -> None:
 
 def test_hypercube_classification_incorrect_noise_std() -> None:
     with raises(
-        ValueError,
-        match="The standard deviation of the Gaussian noise .* has to be greater or equal than 0",
+        RuntimeError,
+        match="Incorrect value for noise_std. Expected a value greater than 0",
     ):
         HypercubeClassification(noise_std=-1)
 
@@ -148,7 +148,7 @@ def test_make_hypercube_classification_incorrect_feature_size() -> None:
 def test_make_hypercube_classification_incorrect_noise_std() -> None:
     with raises(
         RuntimeError,
-        match="The standard deviation of the Gaussian noise .* has to be greater or equal than 0",
+        match="Incorrect value for noise_std. Expected a value greater than 0",
     ):
         make_hypercube_classification(noise_std=-1)
 

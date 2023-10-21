@@ -34,7 +34,7 @@ def test_make_sparse_uncorrelated_regression_incorrect_feature_size(feature_size
 def test_make_sparse_uncorrelated_regression_incorrect_noise_std() -> None:
     with raises(
         RuntimeError,
-        match="The standard deviation of the Gaussian noise .* has to be greater or equal than 0",
+        match="Incorrect value for noise_std. Expected a value greater than 0",
     ):
         make_sparse_uncorrelated_regression(noise_std=-1)
 

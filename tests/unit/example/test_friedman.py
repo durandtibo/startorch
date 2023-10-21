@@ -49,8 +49,8 @@ def test_friedman1_regression_noise_std(noise_std: float) -> None:
 
 def test_friedman1_regression_incorrect_noise_std() -> None:
     with raises(
-        ValueError,
-        match="The standard deviation of the Gaussian noise .* has to be greater or equal than 0",
+        RuntimeError,
+        match="Incorrect value for noise_std. Expected a value greater than 0",
     ):
         Friedman1Regression(noise_std=-1)
 
@@ -133,8 +133,8 @@ def test_friedman2_regression_noise_std(noise_std: float) -> None:
 
 def test_friedman2_regression_incorrect_noise_std() -> None:
     with raises(
-        ValueError,
-        match="The standard deviation of the Gaussian noise .* has to be greater or equal than 0",
+        RuntimeError,
+        match="Incorrect value for noise_std. Expected a value greater than 0",
     ):
         Friedman2Regression(noise_std=-1)
 
@@ -217,8 +217,8 @@ def test_friedman3_regression_noise_std(noise_std: float) -> None:
 
 def test_friedman3_regression_incorrect_noise_std() -> None:
     with raises(
-        ValueError,
-        match="The standard deviation of the Gaussian noise .* has to be greater or equal than 0",
+        RuntimeError,
+        match="Incorrect value for noise_std. Expected a value greater than 0",
     ):
         Friedman3Regression(noise_std=-1)
 
@@ -296,7 +296,7 @@ def test_make_friedman1_regression_incorrect_feature_size(feature_size: int) -> 
 def test_make_friedman1_regression_incorrect_noise_std() -> None:
     with raises(
         RuntimeError,
-        match="The standard deviation of the Gaussian noise .* has to be greater or equal than 0",
+        match="Incorrect value for noise_std. Expected a value greater than 0",
     ):
         make_friedman1_regression(noise_std=-1)
 
@@ -385,7 +385,7 @@ def test_make_friedman2_regression_incorrect_feature_size(feature_size: int) -> 
 def test_make_friedman2_regression_incorrect_noise_std() -> None:
     with raises(
         RuntimeError,
-        match="The standard deviation of the Gaussian noise .* has to be greater or equal than 0",
+        match="Incorrect value for noise_std. Expected a value greater than 0",
     ):
         make_friedman2_regression(noise_std=-1)
 
@@ -503,7 +503,7 @@ def test_make_friedman3_regression_incorrect_feature_size(feature_size: int) -> 
 def test_make_friedman3_regression_incorrect_noise_std() -> None:
     with raises(
         RuntimeError,
-        match="The standard deviation of the Gaussian noise .* has to be greater or equal than 0",
+        match="Incorrect value for noise_std. Expected a value greater than 0",
     ):
         make_friedman3_regression(noise_std=-1)
 

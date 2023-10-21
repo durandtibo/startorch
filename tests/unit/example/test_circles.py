@@ -28,7 +28,7 @@ def test_make_circles_classification_incorrect_num_examples(num_examples: int) -
 def test_make_circles_classification_incorrect_noise_std() -> None:
     with raises(
         RuntimeError,
-        match="The standard deviation of the Gaussian noise .* has to be greater or equal than 0",
+        match="Incorrect value for noise_std. Expected a value greater than 0",
     ):
         make_circles_classification(noise_std=-1)
 

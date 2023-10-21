@@ -6,7 +6,7 @@ import torch
 from redcat import BatchDict, BatchedTensor
 
 from startorch import constants as ct
-from startorch.example.utils import check_num_examples
+from startorch.example.utils import check_num_examples, check_std
 from startorch.random import normal, rand_normal
 
 
@@ -65,11 +65,7 @@ def make_sparse_uncorrelated_regression(
     check_num_examples(num_examples)
     if feature_size < 4:
         raise RuntimeError(f"feature_size ({feature_size}) has to be greater or equal to 4")
-    if noise_std < 0:
-        raise RuntimeError(
-            f"The standard deviation of the Gaussian noise ({noise_std}) has to be "
-            "greater or equal than 0"
-        )
+    check_std(noise_std, "noise_std")
 
     features = rand_normal(size=(num_examples, feature_size), generator=generator)
     targets = normal(

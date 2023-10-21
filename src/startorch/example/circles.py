@@ -8,7 +8,7 @@ import torch
 from redcat import BatchDict, BatchedTensor
 
 from startorch import constants as ct
-from startorch.example.utils import check_num_examples
+from startorch.example.utils import check_num_examples, check_std
 from startorch.random import rand_normal
 
 
@@ -70,11 +70,7 @@ def make_circles_classification(
         )
     """
     check_num_examples(num_examples)
-    if noise_std < 0:
-        raise RuntimeError(
-            f"The standard deviation of the Gaussian noise ({noise_std}) has to be "
-            "greater or equal than 0"
-        )
+    check_std(noise_std, "noise_std")
     if factor < 0.0 or factor >= 1.0:
         raise RuntimeError(f"Incorrect factor ({factor}). factor has to be in the range [0, 1)")
 

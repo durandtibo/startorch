@@ -7,7 +7,7 @@ from redcat import BatchDict, BatchedTensor
 
 from startorch import constants as ct
 from startorch.example.base import BaseExampleGenerator
-from startorch.example.utils import check_num_examples
+from startorch.example.utils import check_num_examples, check_std
 
 
 class HypercubeClassificationExampleGenerator(BaseExampleGenerator[BatchedTensor]):
@@ -66,11 +66,7 @@ class HypercubeClassificationExampleGenerator(BaseExampleGenerator[BatchedTensor
             )
         self._feature_size = int(feature_size)
 
-        if noise_std < 0:
-            raise ValueError(
-                f"The standard deviation of the Gaussian noise ({noise_std}) has to be "
-                "greater or equal than 0"
-            )
+        check_std(noise_std, "noise_std")
         self._noise_std = float(noise_std)
 
     def __repr__(self) -> str:
@@ -171,11 +167,7 @@ def make_hypercube_classification(
             f"The feature dimension ({feature_size:,}) has to be greater or equal to the "
             f"number of classes ({num_classes:,})"
         )
-    if noise_std < 0:
-        raise RuntimeError(
-            f"The standard deviation of the Gaussian noise ({noise_std}) has to be "
-            "greater or equal than 0"
-        )
+    check_std(noise_std, "noise_std")
     # Generate the target of each example.
     targets = torch.randint(0, num_classes, (num_examples,), generator=generator)
     # Generate the features. Each class should be a vertex of the hyper-cube
