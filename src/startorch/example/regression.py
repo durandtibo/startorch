@@ -15,7 +15,7 @@ from torch import Tensor
 
 from startorch import constants as ct
 from startorch.example.base import BaseExampleGenerator
-from startorch.example.utils import check_num_examples
+from startorch.example.utils import check_num_examples, check_std
 from startorch.random import rand_normal, rand_uniform
 from startorch.utils.seed import get_torch_generator
 
@@ -66,11 +66,7 @@ class LinearRegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
         self._weights = to_tensor(weights)
         self._bias = bias
 
-        if noise_std < 0.0:
-            raise ValueError(
-                f"The standard deviation of the Gaussian noise ({noise_std}) has to be "
-                "greater or equal than 0"
-            )
+        check_std(noise_std, "noise_std")
         self._noise_std = float(noise_std)
 
     def __repr__(self) -> str:
@@ -186,11 +182,7 @@ def make_linear_regression(
         )
     """
     check_num_examples(num_examples)
-    if noise_std < 0:
-        raise RuntimeError(
-            f"The standard deviation of the Gaussian noise ({noise_std}) has to be "
-            "greater or equal than 0"
-        )
+    check_std(noise_std, "noise_std")
     feature_size = weights.shape[0]
     features = rand_normal(size=(num_examples, feature_size), generator=generator)
     targets = torch.mm(features, weights.view(feature_size, 1)) + bias

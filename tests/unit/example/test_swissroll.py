@@ -30,8 +30,8 @@ def test_swiss_roll_noise_std(noise_std: float) -> None:
 
 def test_swiss_roll_incorrect_noise_std() -> None:
     with raises(
-        ValueError,
-        match="The standard deviation of the Gaussian noise .* has to be greater or equal than 0",
+        RuntimeError,
+        match="Incorrect value for noise_std. Expected a value greater than 0",
     ):
         SwissRoll(noise_std=-1)
 
@@ -126,7 +126,7 @@ def test_make_swiss_roll_incorrect_num_examples(num_examples: int) -> None:
 def test_make_swiss_roll_incorrect_noise_std() -> None:
     with raises(
         RuntimeError,
-        match="The standard deviation of the Gaussian noise .* has to be greater or equal than 0",
+        match="Incorrect value for noise_std. Expected a value greater than 0",
     ):
         make_swiss_roll(noise_std=-1)
 

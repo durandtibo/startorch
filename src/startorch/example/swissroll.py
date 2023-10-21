@@ -9,7 +9,7 @@ from redcat import BatchDict, BatchedTensor
 
 from startorch import constants as ct
 from startorch.example.base import BaseExampleGenerator
-from startorch.example.utils import check_num_examples
+from startorch.example.utils import check_num_examples, check_std
 from startorch.random import rand_normal, rand_uniform
 
 
@@ -55,11 +55,7 @@ class SwissRollExampleGenerator(BaseExampleGenerator[BatchedTensor]):
         spin: float | int = 1.5,
         hole: bool = False,
     ) -> None:
-        if noise_std < 0.0:
-            raise ValueError(
-                f"The standard deviation of the Gaussian noise ({noise_std}) has to be "
-                "greater or equal than 0"
-            )
+        check_std(noise_std, "noise_std")
         self._noise_std = float(noise_std)
 
         if spin <= 0.0:
@@ -149,11 +145,7 @@ def make_swiss_roll(
         )
     """
     check_num_examples(num_examples)
-    if noise_std < 0:
-        raise RuntimeError(
-            f"The standard deviation of the Gaussian noise ({noise_std}) has to be "
-            "greater or equal than 0"
-        )
+    check_std(noise_std, "noise_std")
     if spin <= 0.0:
         raise RuntimeError(f"The spin of the Swiss roll ({spin}) has to be greater or equal than 0")
     if hole:
