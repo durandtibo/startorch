@@ -9,6 +9,7 @@ from redcat import BatchDict, BatchedTensor
 
 from startorch import constants as ct
 from startorch.example.base import BaseExampleGenerator
+from startorch.example.utils import check_num_examples
 from startorch.random import rand_normal, rand_uniform
 
 
@@ -147,8 +148,7 @@ def make_swiss_roll(
           (feature): tensor([[...]], batch_dim=0)
         )
     """
-    if num_examples < 1:
-        raise RuntimeError(f"The number of examples ({num_examples}) has to be greater than 0")
+    check_num_examples(num_examples)
     if noise_std < 0:
         raise RuntimeError(
             f"The standard deviation of the Gaussian noise ({noise_std}) has to be "
