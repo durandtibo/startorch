@@ -16,6 +16,7 @@ from redcat import BatchDict, BatchedTensor
 
 from startorch import constants as ct
 from startorch.example.base import BaseExampleGenerator
+from startorch.example.utils import check_num_examples
 from startorch.random import rand_normal, rand_uniform
 
 
@@ -301,8 +302,7 @@ def make_friedman1_regression(
           (feature): tensor([[...]], batch_dim=0)
         )
     """
-    if num_examples < 1:
-        raise RuntimeError(f"The number of examples ({num_examples}) has to be greater than 0")
+    check_num_examples(num_examples)
     if feature_size < 5:
         raise RuntimeError(f"feature_size ({feature_size}) has to be greater or equal to 5")
     if noise_std < 0:
@@ -374,8 +374,7 @@ def make_friedman2_regression(
           (feature): tensor([[...]], batch_dim=0)
         )
     """
-    if num_examples < 1:
-        raise RuntimeError(f"The number of examples ({num_examples}) has to be greater than 0")
+    check_num_examples(num_examples)
     if feature_size < 4:
         raise RuntimeError(f"feature_size ({feature_size}) has to be greater or equal to 4")
     if noise_std < 0:
@@ -451,8 +450,7 @@ def make_friedman3_regression(
           (feature): tensor([[...]], batch_dim=0)
         )
     """
-    if num_examples < 1:
-        raise RuntimeError(f"The number of examples ({num_examples}) has to be greater than 0")
+    check_num_examples(num_examples)
     if feature_size < 4:
         raise RuntimeError(f"feature_size ({feature_size}) has to be greater or equal to 4")
     if noise_std < 0:

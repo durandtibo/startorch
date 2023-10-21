@@ -116,7 +116,9 @@ def test_linear_regression_generate_mock(
 
 @mark.parametrize("num_examples", (0, -1))
 def test_make_linear_regression_incorrect_num_examples(num_examples: int) -> None:
-    with raises(RuntimeError, match="The number of examples .* has to be greater than 0"):
+    with raises(
+        RuntimeError, match="Incorrect value for num_examples. Expected a value greater than 0"
+    ):
         make_linear_regression(weights=torch.ones(8), num_examples=num_examples)
 
 

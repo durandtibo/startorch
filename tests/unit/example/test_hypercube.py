@@ -125,7 +125,9 @@ def test_hypercube_classification_generate_mock(
 
 @mark.parametrize("num_examples", (0, -1))
 def test_make_hypercube_classification_incorrect_num_examples(num_examples: int) -> None:
-    with raises(RuntimeError, match="The number of examples .* has to be greater than 0"):
+    with raises(
+        RuntimeError, match="Incorrect value for num_examples. Expected a value greater than 0"
+    ):
         make_hypercube_classification(num_examples=num_examples)
 
 

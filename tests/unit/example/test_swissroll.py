@@ -117,7 +117,9 @@ def test_swiss_roll_generate_mock(
 
 @mark.parametrize("num_examples", (0, -1))
 def test_make_swiss_roll_incorrect_num_examples(num_examples: int) -> None:
-    with raises(RuntimeError, match="The number of examples .* has to be greater than 0"):
+    with raises(
+        RuntimeError, match="Incorrect value for num_examples. Expected a value greater than 0"
+    ):
         make_swiss_roll(num_examples=num_examples)
 
 

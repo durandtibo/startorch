@@ -7,6 +7,7 @@ from redcat import BatchDict, BatchedTensor
 
 from startorch import constants as ct
 from startorch.example.base import BaseExampleGenerator
+from startorch.example.utils import check_num_examples
 
 
 class HypercubeClassificationExampleGenerator(BaseExampleGenerator[BatchedTensor]):
@@ -162,8 +163,7 @@ def make_hypercube_classification(
           (feature): tensor([[...]], batch_dim=0)
         )
     """
-    if num_examples < 1:
-        raise RuntimeError(f"The number of examples ({num_examples}) has to be greater than 0")
+    check_num_examples(num_examples)
     if num_classes < 1:
         raise RuntimeError(f"The number of classes ({num_classes}) has to be greater than 0")
     if feature_size < num_classes:
