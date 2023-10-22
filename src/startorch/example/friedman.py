@@ -16,7 +16,7 @@ from redcat import BatchDict, BatchedTensor
 
 from startorch import constants as ct
 from startorch.example.base import BaseExampleGenerator
-from startorch.example.utils import check_num_examples, check_std
+from startorch.example.utils import check_feature_size, check_num_examples, check_std
 from startorch.random import rand_normal, rand_uniform
 
 
@@ -58,8 +58,7 @@ class Friedman1RegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
     """
 
     def __init__(self, feature_size: int = 10, noise_std: float = 0.0) -> None:
-        if feature_size < 5:
-            raise ValueError(f"feature_size ({feature_size:,}) has to be greater or equal to 5")
+        check_feature_size(feature_size, low=5)
         self._feature_size = int(feature_size)
 
         check_std(noise_std, "noise_std")
@@ -131,8 +130,7 @@ class Friedman2RegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
     """
 
     def __init__(self, feature_size: int = 4, noise_std: float = 0.0) -> None:
-        if feature_size < 4:
-            raise ValueError(f"feature_size ({feature_size:,}) has to be greater or equal to 4")
+        check_feature_size(feature_size, low=4)
         self._feature_size = int(feature_size)
 
         check_std(noise_std, "noise_std")
@@ -204,8 +202,7 @@ class Friedman3RegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
     """
 
     def __init__(self, feature_size: int = 4, noise_std: float = 0.0) -> None:
-        if feature_size < 4:
-            raise ValueError(f"feature_size ({feature_size:,}) has to be greater or equal to 4")
+        check_feature_size(feature_size, low=4)
         self._feature_size = int(feature_size)
 
         check_std(noise_std, "noise_std")
@@ -291,8 +288,7 @@ def make_friedman1_regression(
         )
     """
     check_num_examples(num_examples)
-    if feature_size < 5:
-        raise RuntimeError(f"feature_size ({feature_size}) has to be greater or equal to 5")
+    check_feature_size(feature_size, low=5)
     check_std(noise_std, "noise_std")
 
     features = rand_uniform(size=(num_examples, feature_size), generator=generator)
@@ -359,8 +355,7 @@ def make_friedman2_regression(
         )
     """
     check_num_examples(num_examples)
-    if feature_size < 4:
-        raise RuntimeError(f"feature_size ({feature_size}) has to be greater or equal to 4")
+    check_feature_size(feature_size, low=4)
     check_std(noise_std, "noise_std")
 
     features = rand_uniform(size=(num_examples, feature_size), generator=generator)
@@ -431,8 +426,7 @@ def make_friedman3_regression(
         )
     """
     check_num_examples(num_examples)
-    if feature_size < 4:
-        raise RuntimeError(f"feature_size ({feature_size}) has to be greater or equal to 4")
+    check_feature_size(feature_size, low=4)
     check_std(noise_std, "noise_std")
 
     features = rand_uniform(size=(num_examples, feature_size), generator=generator)

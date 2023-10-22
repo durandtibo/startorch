@@ -29,7 +29,10 @@ def test_hypercube_classification_num_classes(num_classes: int) -> None:
 
 @mark.parametrize("num_classes", (0, -1))
 def test_hypercube_classification_incorrect_num_classes(num_classes: int) -> None:
-    with raises(ValueError, match="he number of classes .* has to be greater than 0"):
+    with raises(
+        RuntimeError,
+        match="Incorrect value for num_classes. Expected a value greater or equal to 1",
+    ):
         HypercubeClassification(num_classes=num_classes)
 
 
@@ -43,8 +46,8 @@ def test_hypercube_classification_feature_size(feature_size: int) -> None:
 
 def test_hypercube_classification_incorrect_feature_size() -> None:
     with raises(
-        ValueError,
-        match="The feature dimension .* has to be greater or equal to the number of classes .*",
+        RuntimeError,
+        match="Incorrect value for feature_size. Expected a value greater or equal to 50",
     ):
         HypercubeClassification(num_classes=50, feature_size=32)
 
@@ -127,21 +130,25 @@ def test_hypercube_classification_generate_mock(
 @mark.parametrize("num_examples", (0, -1))
 def test_make_hypercube_classification_incorrect_num_examples(num_examples: int) -> None:
     with raises(
-        RuntimeError, match="Incorrect value for num_examples. Expected a value greater than 0"
+        RuntimeError,
+        match="Incorrect value for num_examples. Expected a value greater or equal to 1",
     ):
         make_hypercube_classification(num_examples=num_examples)
 
 
 @mark.parametrize("num_classes", (0, -1))
 def test_make_hypercube_classification_incorrect_num_classes(num_classes: int) -> None:
-    with raises(RuntimeError, match="he number of classes .* has to be greater than 0"):
+    with raises(
+        RuntimeError,
+        match="Incorrect value for num_classes. Expected a value greater or equal to 1",
+    ):
         make_hypercube_classification(num_classes=num_classes)
 
 
 def test_make_hypercube_classification_incorrect_feature_size() -> None:
     with raises(
         RuntimeError,
-        match="The feature dimension .* has to be greater or equal to the number of classes .*",
+        match="Incorrect value for feature_size. Expected a value greater or equal to 50",
     ):
         make_hypercube_classification(num_classes=50, feature_size=32)
 

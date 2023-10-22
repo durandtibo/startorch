@@ -20,14 +20,18 @@ SIZES = (1, 2, 4)
 @mark.parametrize("num_examples", (0, -1))
 def test_make_sparse_uncorrelated_regression_incorrect_num_examples(num_examples: int) -> None:
     with raises(
-        RuntimeError, match="Incorrect value for num_examples. Expected a value greater than 0"
+        RuntimeError,
+        match="Incorrect value for num_examples. Expected a value greater or equal to 1",
     ):
         make_sparse_uncorrelated_regression(num_examples=num_examples)
 
 
 @mark.parametrize("feature_size", (3, 1, 0, -1))
 def test_make_sparse_uncorrelated_regression_incorrect_feature_size(feature_size: int) -> None:
-    with raises(RuntimeError, match="feature_size (.*) has to be greater or equal to 4"):
+    with raises(
+        RuntimeError,
+        match="Incorrect value for feature_size. Expected a value greater or equal to 4",
+    ):
         make_sparse_uncorrelated_regression(feature_size=feature_size)
 
 

@@ -31,12 +31,12 @@ def test_check_feature_size_incorrect_type(value: Any) -> None:
         check_feature_size(value)
 
 
-@mark.parametrize("value", (-2, -1))
-@mark.parametrize("low", (0, 1))
+@mark.parametrize("value", (0, -1))
+@mark.parametrize("low", (1, 2))
 def test_check_feature_size_incorrect_value(value: int, low: int) -> None:
     with raises(
         RuntimeError,
-        match=f"Incorrect value for feature_size. Expected a value greater than {low-1}",
+        match=f"Incorrect value for feature_size. Expected a value greater or equal to {low}",
     ):
         check_feature_size(value, low)
 
@@ -98,7 +98,8 @@ def test_check_num_examples_incorrect_type(value: Any) -> None:
 @mark.parametrize("value", (0, -1))
 def test_check_num_examples_incorrect_value(value: int) -> None:
     with raises(
-        RuntimeError, match="Incorrect value for num_examples. Expected a value greater than 0"
+        RuntimeError,
+        match="Incorrect value for num_examples. Expected a value greater or equal to 1",
     ):
         check_num_examples(value)
 
@@ -126,7 +127,7 @@ def test_check_integer_ge_incorrect_type(value: Any) -> None:
 def test_check_integer_ge_incorrect_value(value: int, low: int) -> None:
     with raises(
         RuntimeError,
-        match=f"Incorrect value for feature_size. Expected a value greater than {low-1}",
+        match=f"Incorrect value for feature_size. Expected a value greater or equal to {low}",
     ):
         check_integer_ge(value, low=low, name="feature_size")
 

@@ -20,7 +20,8 @@ SIZES = (1, 2, 4)
 @mark.parametrize("num_examples", (0, -1))
 def test_make_circles_classification_incorrect_num_examples(num_examples: int) -> None:
     with raises(
-        RuntimeError, match="Incorrect value for num_examples. Expected a value greater than 0"
+        RuntimeError,
+        match="Incorrect value for num_examples. Expected a value greater or equal to 1",
     ):
         make_circles_classification(num_examples=num_examples)
 
