@@ -10,7 +10,7 @@ __all__ = [
 from typing import Any
 
 
-def check_interval(value: Any, low: float, high: float, name: str) -> None:
+def check_interval(value: float | int | Any, low: float, high: float, name: str) -> None:
     r"""Checks if the given value is an interval.
 
     Args:
@@ -44,7 +44,7 @@ def check_interval(value: Any, low: float, high: float, name: str) -> None:
         )
 
 
-def check_num_examples(value: Any) -> None:
+def check_num_examples(value: int | Any) -> None:
     r"""Checks if the given value is a valid number of examples.
 
     Args:
@@ -67,7 +67,7 @@ def check_num_examples(value: Any) -> None:
     check_positive_integer(value, name="num_examples")
 
 
-def check_positive_integer(value: Any, name: str) -> None:
+def check_positive_integer(value: int | Any, name: str) -> None:
     r"""Checks if the given value is a valid positive integer.
 
     Args:
@@ -98,7 +98,7 @@ def check_positive_integer(value: Any, name: str) -> None:
         )
 
 
-def check_std(value: Any, name: str = "std") -> None:
+def check_std(value: float | int | Any, name: str = "std") -> None:
     r"""Checks if the given value is a valid standard deviation.
 
     Args:
