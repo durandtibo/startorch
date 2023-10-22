@@ -2,6 +2,8 @@ from __future__ import annotations
 
 __all__ = [
     "BaseExampleGenerator",
+    "CirclesClassification",
+    "CirclesClassificationExampleGenerator",
     "Friedman1Regression",
     "Friedman1RegressionExampleGenerator",
     "Friedman2Regression",
@@ -32,6 +34,10 @@ from startorch.example.base import (
     BaseExampleGenerator,
     is_example_generator_config,
     setup_example_generator,
+)
+from startorch.example.circles import CirclesClassificationExampleGenerator
+from startorch.example.circles import (
+    CirclesClassificationExampleGenerator as CirclesClassification,
 )
 from startorch.example.circles import make_circles_classification
 from startorch.example.friedman import Friedman1RegressionExampleGenerator
