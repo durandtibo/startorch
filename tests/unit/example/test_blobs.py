@@ -118,6 +118,22 @@ def test_blobs_classification_generate_mock(
         )
 
 
+@mark.parametrize("num_clusters", SIZES)
+@mark.parametrize("feature_size", SIZES)
+def test_blobs_classification_create_uniform_weights(num_clusters: int, feature_size: int) -> None:
+    generator = BlobsClassification.create_uniform_centers(
+        num_clusters=num_clusters, feature_size=feature_size
+    )
+    assert generator.centers.shape == (num_clusters, feature_size)
+    assert generator.cluster_std.equal(torch.ones(num_clusters, feature_size))
+
+
+def test_blobs_classification_create_uniform_weights_default() -> None:
+    generator = BlobsClassification.create_uniform_centers()
+    assert generator.centers.shape == (3, 2)
+    assert generator.cluster_std.equal(torch.ones(3, 2))
+
+
 ###############################################
 #     Tests for make_blobs_classification     #
 ###############################################

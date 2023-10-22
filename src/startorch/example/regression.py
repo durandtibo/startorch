@@ -116,6 +116,7 @@ class LinearRegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
         noise_std: float = 0.0,
         random_seed: int = 17532042831661189422,
     ) -> LinearRegressionExampleGenerator:
+        # TODO: add documentation
         return cls(
             weights=get_uniform_weights(
                 feature_size=feature_size,

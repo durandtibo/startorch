@@ -11,6 +11,7 @@ from startorch import constants as ct
 from startorch.example.base import BaseExampleGenerator
 from startorch.example.utils import check_num_examples
 from startorch.random import normal
+from startorch.utils.seed import get_torch_generator
 
 
 class BlobsClassificationExampleGenerator(BaseExampleGenerator[BatchedTensor]):
@@ -103,6 +104,56 @@ class BlobsClassificationExampleGenerator(BaseExampleGenerator[BatchedTensor]):
             centers=self._centers,
             cluster_std=self._cluster_std,
             generator=rng,
+        )
+
+    @classmethod
+    def create_uniform_centers(
+        cls,
+        num_clusters: int = 3,
+        feature_size: int = 2,
+        random_seed: int = 17532042831661189422,
+    ) -> BlobsClassificationExampleGenerator:
+        r"""Instantiates a ``BlobsClassificationExampleGenerator`` where
+        the centers are sampled from a uniform distribution.
+
+        Args:
+        ----
+            num_clusters (int, optional): Specifies the number of
+                clusters. Default: ``3``
+            feature_size (int, optional): Specifies the feature size.
+                Default: ``2``
+            random_seed (int, optional): Specifies the random seed
+                used to generate the cluster centers.
+                Default: ``17532042831661189422``
+
+        Returns:
+        -------
+            ``BlobsClassificationExampleGenerator``: An instantiated
+                example generator.
+
+        Example usage:
+
+        .. code-block:: pycon
+
+            >>> from startorch.example import BlobsClassification
+            >>> generator = BlobsClassification.create_uniform_centers()
+            >>> generator
+            BlobsClassificationExampleGenerator(num_clusters=3, feature_size=2)
+            >>> batch = generator.generate(batch_size=10)
+            >>> batch
+            BatchDict(
+              (target): tensor([...], batch_dim=0)
+              (feature): tensor([[...]], batch_dim=0)
+            )
+        """
+        return cls(
+            centers=torch.rand(
+                num_clusters,
+                feature_size,
+                generator=get_torch_generator(random_seed),
+            )
+            .mul(20.0)
+            .sub(10.0)
         )
 
 
