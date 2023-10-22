@@ -7,7 +7,12 @@ from redcat import BatchDict, BatchedTensor
 
 from startorch import constants as ct
 from startorch.example.base import BaseExampleGenerator
-from startorch.example.utils import check_num_examples, check_std
+from startorch.example.utils import (
+    check_feature_size,
+    check_integer_ge,
+    check_num_examples,
+    check_std,
+)
 
 
 class HypercubeClassificationExampleGenerator(BaseExampleGenerator[BatchedTensor]):
@@ -55,15 +60,10 @@ class HypercubeClassificationExampleGenerator(BaseExampleGenerator[BatchedTensor
         feature_size: int = 64,
         noise_std: float = 0.2,
     ) -> None:
-        if num_classes < 1:
-            raise ValueError(f"The number of classes ({num_classes}) has to be greater than 0")
+        check_integer_ge(num_classes, low=1, name="num_classes")
         self._num_classes = int(num_classes)
 
-        if feature_size < num_classes:
-            raise ValueError(
-                f"The feature dimension ({feature_size:,}) has to be greater or equal to the "
-                f"number of classes ({num_classes:,})"
-            )
+        check_feature_size(feature_size, low=self._num_classes)
         self._feature_size = int(feature_size)
 
         check_std(noise_std, "noise_std")
@@ -160,13 +160,8 @@ def make_hypercube_classification(
         )
     """
     check_num_examples(num_examples)
-    if num_classes < 1:
-        raise RuntimeError(f"The number of classes ({num_classes}) has to be greater than 0")
-    if feature_size < num_classes:
-        raise RuntimeError(
-            f"The feature dimension ({feature_size:,}) has to be greater or equal to the "
-            f"number of classes ({num_classes:,})"
-        )
+    check_integer_ge(num_classes, low=1, name="num_classes")
+    check_feature_size(feature_size, low=num_classes)
     check_std(noise_std, "noise_std")
     # Generate the target of each example.
     targets = torch.randint(0, num_classes, (num_examples,), generator=generator)

@@ -122,7 +122,7 @@ def check_integer_ge(value: int | Any, low: int, name: str) -> None:
         )
     if value < low:
         raise RuntimeError(
-            f"Incorrect value for {name}. Expected a value greater than {low-1} but received {value}"
+            f"Incorrect value for {name}. Expected a value greater or equal to {low} but received {value}"
         )
 
 
