@@ -8,14 +8,15 @@ import torch
 from redcat import BatchDict, BatchedTensor
 
 from startorch import constants as ct
-from startorch.example import BaseExampleGenerator
+from startorch.example.base import BaseExampleGenerator
 from startorch.example.utils import check_interval, check_num_examples, check_std
 from startorch.random import rand_normal
 
 
 class CirclesClassificationExampleGenerator(BaseExampleGenerator[BatchedTensor]):
-    r"""Implements a manifold example generator based on the Swiss roll
-    pattern.
+    r"""Implements a binary classification example generator where the
+    data are generated with a large circle containing a smaller circle
+    in 2d.
 
     The implementation is based on
     https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_circles.html
@@ -167,6 +168,7 @@ def make_circles_classification(
     check_num_examples(num_examples)
     check_std(noise_std, "noise_std")
     check_interval(factor, low=0.0, high=1.0, name="factor")
+    check_interval(ratio, low=0.0, high=1.0, name="ratio")
 
     num_examples_out = math.ceil(num_examples * ratio)
     num_examples_in = num_examples - num_examples_out
@@ -186,9 +188,7 @@ def make_circles_classification(
     )
 
     if noise_std > 0.0:
-        features += rand_normal(
-            size=(num_examples_out + num_examples_in, 2), std=noise_std, generator=generator
-        )
+        features += rand_normal(size=(num_examples, 2), std=noise_std, generator=generator)
 
     batch = BatchDict({ct.TARGET: BatchedTensor(targets), ct.FEATURE: BatchedTensor(features)})
     if shuffle:

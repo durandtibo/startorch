@@ -47,6 +47,17 @@ def test_circles_classification_incorrect_factor(factor: float) -> None:
         CirclesClassification(factor=factor)
 
 
+@mark.parametrize("ratio", (0.5, 0.8))
+def test_circles_classification_ratio(ratio: float) -> None:
+    assert CirclesClassification(ratio=ratio).ratio == ratio
+
+
+@mark.parametrize("ratio", (-0.1, 1.0))
+def test_circles_classification_incorrect_ratio(ratio: float) -> None:
+    with raises(RuntimeError, match="Incorrect value for ratio. Expected a value in interval"):
+        CirclesClassification(ratio=ratio)
+
+
 @mark.parametrize("batch_size", SIZES)
 def test_circles_classification_generate(batch_size: int) -> None:
     data = CirclesClassification().generate(batch_size)
@@ -84,8 +95,8 @@ def test_circles_classification_generate_different_random_seeds(noise_std: float
 @mark.parametrize(
     "batch_size,noise_std,ratio,factor,shuffle,rng",
     (
-        (2, 0.0, 0.2, 0.5, True, None),
-        (4, 0.5, 0.8, 0.5, False, get_torch_generator(1)),
+        (2, 0.0, 0.5, 0.8, True, None),
+        (4, 0.5, 0.2, 0.5, False, get_torch_generator(1)),
     ),
 )
 def test_circles_classification_generate_mock(
@@ -132,6 +143,24 @@ def test_make_circles_classification_incorrect_noise_std(noise_std: float | int)
         match="Incorrect value for noise_std. Expected a value greater than 0",
     ):
         make_circles_classification(noise_std=noise_std)
+
+
+@mark.parametrize("factor", (-0.1, 1.0, 2.0))
+def test_make_circles_classification_incorrect_factor(factor: float | int) -> None:
+    with raises(
+        RuntimeError,
+        match=r"Incorrect value for factor. Expected a value in interval \[0.0, 1.0\)",
+    ):
+        make_circles_classification(factor=factor)
+
+
+@mark.parametrize("ratio", (-0.1, 1.0, 2.0))
+def test_make_circles_classification_incorrect_ratio(ratio: float | int) -> None:
+    with raises(
+        RuntimeError,
+        match=r"Incorrect value for ratio. Expected a value in interval \[0.0, 1.0\)",
+    ):
+        make_circles_classification(ratio=ratio)
 
 
 def test_make_circles_classification() -> None:
