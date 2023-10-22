@@ -86,7 +86,7 @@ def check_positive_integer(value: Any, name: str) -> None:
 
         >>> import torch
         >>> from startorch.example.utils import check_positive_integer
-        >>> check_positive_integer(5, name='feature_size')
+        >>> check_positive_integer(5, name="feature_size")
     """
     if not isinstance(value, int):
         raise TypeError(
