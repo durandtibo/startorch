@@ -152,7 +152,7 @@ def make_moons_classification(
     linspace_out = torch.linspace(0, math.pi, num_examples_out)
     linspace_in = torch.linspace(0, math.pi, num_examples_in)
     outer_circ = torch.stack([linspace_out.cos(), linspace_out.sin()], dim=1)
-    inner_circ = torch.stack([linspace_in.cos().sub(1.0), linspace_in.sin().add(0.5)], dim=1)
+    inner_circ = torch.stack([1.0 - linspace_in.cos(), 0.5 - linspace_in.sin()], dim=1)
 
     features = torch.cat([outer_circ, inner_circ], dim=0)
     targets = torch.cat(

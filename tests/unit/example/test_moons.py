@@ -52,14 +52,21 @@ def test_moons_classification_generate(batch_size: int) -> None:
     data = MoonsClassification().generate(batch_size)
     assert isinstance(data, BatchDict)
     assert len(data) == 2
-    assert isinstance(data[ct.TARGET], BatchedTensor)
-    assert data[ct.TARGET].batch_size == batch_size
-    assert data[ct.TARGET].shape == (batch_size,)
-    assert data[ct.TARGET].dtype == torch.long
+    targets = data[ct.TARGET]
+    assert isinstance(targets, BatchedTensor)
+    assert targets.batch_size == batch_size
+    assert targets.shape == (batch_size,)
+    assert targets.dtype == torch.long
+    assert targets.min() >= 0
+    assert targets.max() <= 1
+
+    features = data[ct.FEATURE]
     assert isinstance(data[ct.FEATURE], BatchedTensor)
-    assert data[ct.FEATURE].batch_size == batch_size
-    assert data[ct.FEATURE].shape == (batch_size, 2)
-    assert data[ct.FEATURE].dtype == torch.float
+    assert features.batch_size == batch_size
+    assert features.shape == (batch_size, 2)
+    assert features.dtype == torch.float
+    assert features.min() >= -1.0
+    assert features.max() <= 2.0
 
 
 @mark.parametrize("noise_std", (0.0, 1.0))
@@ -157,7 +164,7 @@ def test_make_moons_classification() -> None:
     assert features.batch_size == 100
     assert features.shape == (100, 2)
     assert features.dtype == torch.float
-    assert features.min() >= -2.0
+    assert features.min() >= -1.0
     assert features.max() <= 2.0
 
 
@@ -172,7 +179,7 @@ def test_make_moons_classification_shuffle_false() -> None:
     assert features.batch_size == 10
     assert features.shape == (10, 2)
     assert features.dtype == torch.float
-    assert features.min() >= -2.0
+    assert features.min() >= -1.0
     assert features.max() <= 2.0
 
 
@@ -187,7 +194,7 @@ def test_make_moons_classification_ratio_0_2() -> None:
     assert features.batch_size == 10
     assert features.shape == (10, 2)
     assert features.dtype == torch.float
-    assert features.min() >= -2.0
+    assert features.min() >= -1.0
     assert features.max() <= 2.0
 
 
