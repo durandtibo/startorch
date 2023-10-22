@@ -11,20 +11,17 @@ from startorch.example.base import BaseExampleGenerator, setup_example_generator
 
 
 class CacheExampleGenerator(BaseExampleGenerator):
-    r"""Implements.
+    r"""Implements an example generator that caches a batch and returns
+    the same batch.
+
+    A new batch is generated only if the batch size changes.
 
     Args:
     ----
-        noise_std (float, optional): Specifies the standard deviation
-            of the Gaussian noise. Default: ``0.0``
-        spin (float or int, optional): Specifies the number of spins
-            of the Swiss roll. Default: ``1.5``
-        hole (bool, optional): If ``True`` generates the Swiss roll
-            with hole dataset. Default: ``False``
-
-    Raises:
-    ------
-        ValueError if one of the parameters is not valid.
+        generator (``BaseExampleGenerator`` or dict): Specifies the
+            example generator or its configuration.
+        deepcopy (bool, optional): If ``True``, the cached batch is
+            deepcopied before to be return. Default: ``True``
 
     Example usage:
 
