@@ -39,7 +39,7 @@ def test_make_moons_classification_incorrect_noise_std(noise_std: float | int) -
 def test_make_moons_classification_incorrect_ratio(ratio: float | int) -> None:
     with raises(
         RuntimeError,
-        match="Incorrect value for ratio. Expected a value in interval \[0.0, 1.0\)",
+        match=r"Incorrect value for ratio. Expected a value in interval \[0.0, 1.0\)",
     ):
         make_moons_classification(ratio=ratio)
 
