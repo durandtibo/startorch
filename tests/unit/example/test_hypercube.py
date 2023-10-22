@@ -54,12 +54,13 @@ def test_hypercube_classification_noise_std(noise_std: float) -> None:
     assert HypercubeClassification(noise_std=noise_std).noise_std == noise_std
 
 
-def test_hypercube_classification_incorrect_noise_std() -> None:
+@mark.parametrize("noise_std", (-1, -4.2))
+def test_hypercube_classification_incorrect_noise_std(noise_std: float | int) -> None:
     with raises(
         RuntimeError,
         match="Incorrect value for noise_std. Expected a value greater than 0",
     ):
-        HypercubeClassification(noise_std=-1)
+        HypercubeClassification(noise_std=noise_std)
 
 
 @mark.parametrize("batch_size", SIZES)
@@ -99,7 +100,7 @@ def test_hypercube_classification_generate_different_random_seeds(noise_std: flo
 @mark.parametrize("rng", (None, get_torch_generator(1)))
 def test_hypercube_classification_generate_mock(
     batch_size: int,
-    noise_std: float,
+    noise_std: float | int,
     feature_size: int,
     num_classes: int,
     rng: torch.Generator | None,
@@ -145,7 +146,8 @@ def test_make_hypercube_classification_incorrect_feature_size() -> None:
         make_hypercube_classification(num_classes=50, feature_size=32)
 
 
-def test_make_hypercube_classification_incorrect_noise_std() -> None:
+@mark.parametrize("noise_std", (-1, -4.2))
+def test_make_hypercube_classification_incorrect_noise_std(noise_std: float | int) -> None:
     with raises(
         RuntimeError,
         match="Incorrect value for noise_std. Expected a value greater than 0",

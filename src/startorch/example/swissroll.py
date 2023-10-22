@@ -9,7 +9,7 @@ from redcat import BatchDict, BatchedTensor
 
 from startorch import constants as ct
 from startorch.example.base import BaseExampleGenerator
-from startorch.example.utils import check_num_examples, check_std
+from startorch.example.utils import check_interval, check_num_examples, check_std
 from startorch.random import rand_normal, rand_uniform
 
 
@@ -58,10 +58,7 @@ class SwissRollExampleGenerator(BaseExampleGenerator[BatchedTensor]):
         check_std(noise_std, "noise_std")
         self._noise_std = float(noise_std)
 
-        if spin <= 0.0:
-            raise ValueError(
-                f"The spin of the Swiss roll ({spin}) has to be greater or equal than 0"
-            )
+        check_interval(spin, low=1e-10, high=math.inf, name="spin")
         self._spin = float(spin)
         self._hole = bool(hole)
 
@@ -146,8 +143,7 @@ def make_swiss_roll(
     """
     check_num_examples(num_examples)
     check_std(noise_std, "noise_std")
-    if spin <= 0.0:
-        raise RuntimeError(f"The spin of the Swiss roll ({spin}) has to be greater or equal than 0")
+    check_interval(spin, low=1e-10, high=math.inf, name="spin")
     if hole:
         corners = torch.tensor(
             [[math.pi * (1.5 + i), j * 7] for i in range(3) for j in range(3) if (i != 1 or j != 1)]

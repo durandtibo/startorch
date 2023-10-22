@@ -31,12 +31,13 @@ def test_make_sparse_uncorrelated_regression_incorrect_feature_size(feature_size
         make_sparse_uncorrelated_regression(feature_size=feature_size)
 
 
-def test_make_sparse_uncorrelated_regression_incorrect_noise_std() -> None:
+@mark.parametrize("noise_std", (-1, -4.2))
+def test_make_sparse_uncorrelated_regression_incorrect_noise_std(noise_std: float) -> None:
     with raises(
         RuntimeError,
         match="Incorrect value for noise_std. Expected a value greater than 0",
     ):
-        make_sparse_uncorrelated_regression(noise_std=-1)
+        make_sparse_uncorrelated_regression(noise_std=noise_std)
 
 
 def test_make_sparse_uncorrelated_regression() -> None:

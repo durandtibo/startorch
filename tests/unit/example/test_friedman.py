@@ -43,16 +43,17 @@ def test_friedman1_regression_incorrect_feature_size(feature_size: int) -> None:
 
 
 @mark.parametrize("noise_std", (0, 0.1, 1))
-def test_friedman1_regression_noise_std(noise_std: float) -> None:
+def test_friedman1_regression_noise_std(noise_std: float | int) -> None:
     assert Friedman1Regression(noise_std=noise_std).noise_std == noise_std
 
 
-def test_friedman1_regression_incorrect_noise_std() -> None:
+@mark.parametrize("noise_std", (-1, -4.2))
+def test_friedman1_regression_incorrect_noise_std(noise_std: float | int) -> None:
     with raises(
         RuntimeError,
         match="Incorrect value for noise_std. Expected a value greater than 0",
     ):
-        Friedman1Regression(noise_std=-1)
+        Friedman1Regression(noise_std=noise_std)
 
 
 @mark.parametrize("batch_size", SIZES)
@@ -91,7 +92,7 @@ def test_friedman1_regression_generate_different_random_seeds(noise_std: float) 
 @mark.parametrize("rng", (None, get_torch_generator(1)))
 def test_friedman1_regression_generate_mock(
     batch_size: int,
-    noise_std: float,
+    noise_std: float | int,
     feature_size: int,
     rng: torch.Generator | None,
 ) -> None:
@@ -131,12 +132,13 @@ def test_friedman2_regression_noise_std(noise_std: float) -> None:
     assert Friedman2Regression(noise_std=noise_std).noise_std == noise_std
 
 
-def test_friedman2_regression_incorrect_noise_std() -> None:
+@mark.parametrize("noise_std", (-1, -4.2))
+def test_friedman2_regression_incorrect_noise_std(noise_std: float | int) -> None:
     with raises(
         RuntimeError,
         match="Incorrect value for noise_std. Expected a value greater than 0",
     ):
-        Friedman2Regression(noise_std=-1)
+        Friedman2Regression(noise_std=noise_std)
 
 
 @mark.parametrize("batch_size", SIZES)
@@ -175,7 +177,7 @@ def test_friedman2_regression_generate_different_random_seeds(noise_std: float) 
 @mark.parametrize("rng", (None, get_torch_generator(1)))
 def test_friedman2_regression_generate_mock(
     batch_size: int,
-    noise_std: float,
+    noise_std: float | int,
     feature_size: int,
     rng: torch.Generator | None,
 ) -> None:
@@ -215,12 +217,13 @@ def test_friedman3_regression_noise_std(noise_std: float) -> None:
     assert Friedman3Regression(noise_std=noise_std).noise_std == noise_std
 
 
-def test_friedman3_regression_incorrect_noise_std() -> None:
+@mark.parametrize("noise_std", (-1, -4.2))
+def test_friedman3_regression_incorrect_noise_std(noise_std: float | int) -> None:
     with raises(
         RuntimeError,
         match="Incorrect value for noise_std. Expected a value greater than 0",
     ):
-        Friedman3Regression(noise_std=-1)
+        Friedman3Regression(noise_std=noise_std)
 
 
 @mark.parametrize("batch_size", SIZES)
@@ -259,7 +262,7 @@ def test_friedman3_regression_generate_different_random_seeds(noise_std: float) 
 @mark.parametrize("rng", (None, get_torch_generator(1)))
 def test_friedman3_regression_generate_mock(
     batch_size: int,
-    noise_std: float,
+    noise_std: float | int,
     feature_size: int,
     rng: torch.Generator | None,
 ) -> None:
@@ -293,12 +296,13 @@ def test_make_friedman1_regression_incorrect_feature_size(feature_size: int) -> 
         make_friedman1_regression(feature_size=feature_size)
 
 
-def test_make_friedman1_regression_incorrect_noise_std() -> None:
+@mark.parametrize("noise_std", (-1, -4.2))
+def test_make_friedman1_regression_incorrect_noise_std(noise_std: float | int) -> None:
     with raises(
         RuntimeError,
         match="Incorrect value for noise_std. Expected a value greater than 0",
     ):
-        make_friedman1_regression(noise_std=-1)
+        make_friedman1_regression(noise_std=noise_std)
 
 
 def test_make_friedman1_regression() -> None:
@@ -382,12 +386,13 @@ def test_make_friedman2_regression_incorrect_feature_size(feature_size: int) -> 
         make_friedman2_regression(feature_size=feature_size)
 
 
-def test_make_friedman2_regression_incorrect_noise_std() -> None:
+@mark.parametrize("noise_std", (-1, -4.2))
+def test_make_friedman2_regression_incorrect_noise_std(noise_std: float | int) -> None:
     with raises(
         RuntimeError,
         match="Incorrect value for noise_std. Expected a value greater than 0",
     ):
-        make_friedman2_regression(noise_std=-1)
+        make_friedman2_regression(noise_std=noise_std)
 
 
 def test_make_friedman2_regression() -> None:
@@ -500,12 +505,13 @@ def test_make_friedman3_regression_incorrect_feature_size(feature_size: int) -> 
         make_friedman3_regression(feature_size=feature_size)
 
 
-def test_make_friedman3_regression_incorrect_noise_std() -> None:
+@mark.parametrize("noise_std", (-1, -4.2))
+def test_make_friedman3_regression_incorrect_noise_std(noise_std: float | int) -> None:
     with raises(
         RuntimeError,
         match="Incorrect value for noise_std. Expected a value greater than 0",
     ):
-        make_friedman3_regression(noise_std=-1)
+        make_friedman3_regression(noise_std=noise_std)
 
 
 def test_make_friedman3_regression() -> None:

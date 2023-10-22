@@ -8,7 +8,7 @@ import torch
 from redcat import BatchDict, BatchedTensor
 
 from startorch import constants as ct
-from startorch.example.utils import check_num_examples, check_std
+from startorch.example.utils import check_interval, check_num_examples, check_std
 from startorch.random import rand_normal
 
 
@@ -71,8 +71,7 @@ def make_circles_classification(
     """
     check_num_examples(num_examples)
     check_std(noise_std, "noise_std")
-    if factor < 0.0 or factor >= 1.0:
-        raise RuntimeError(f"Incorrect factor ({factor}). factor has to be in the range [0, 1)")
+    check_interval(factor, low=0.0, high=1.0, name="factor")
 
     num_examples_out = math.ceil(num_examples * ratio)
     num_examples_in = num_examples - num_examples_out

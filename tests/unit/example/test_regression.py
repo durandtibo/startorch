@@ -43,12 +43,13 @@ def test_linear_regression_noise_std(noise_std: float) -> None:
     assert LinearRegression.create_uniform_weights(noise_std=noise_std).noise_std == noise_std
 
 
-def test_linear_regression_incorrect_noise_std() -> None:
+@mark.parametrize("noise_std", (-1, -4.2))
+def test_linear_regression_incorrect_noise_std(noise_std: float | int) -> None:
     with raises(
         RuntimeError,
         match="Incorrect value for noise_std. Expected a value greater than 0",
     ):
-        LinearRegression.create_uniform_weights(noise_std=-1)
+        LinearRegression.create_uniform_weights(noise_std=noise_std)
 
 
 @mark.parametrize("batch_size", SIZES)
@@ -69,7 +70,7 @@ def test_linear_regression_generate(batch_size: int, feature_size: int) -> None:
 
 @mark.parametrize("noise_std", (0.0, 1.0))
 @mark.parametrize("bias", (0.0, 1.0))
-def test_linear_regression_generate_same_random_seed(noise_std: float, bias: float) -> None:
+def test_linear_regression_generate_same_random_seed(noise_std: float | int, bias: float) -> None:
     generator = LinearRegression.create_uniform_weights(noise_std=noise_std, bias=bias)
     assert generator.generate(batch_size=64, rng=get_torch_generator(1)).equal(
         generator.generate(batch_size=64, rng=get_torch_generator(1))
@@ -78,7 +79,9 @@ def test_linear_regression_generate_same_random_seed(noise_std: float, bias: flo
 
 @mark.parametrize("noise_std", (0.0, 1.0))
 @mark.parametrize("bias", (0.0, 1.0))
-def test_linear_regression_generate_different_random_seeds(noise_std: float, bias: float) -> None:
+def test_linear_regression_generate_different_random_seeds(
+    noise_std: float | int, bias: float
+) -> None:
     generator = LinearRegression.create_uniform_weights(noise_std=noise_std, bias=bias)
     assert not generator.generate(batch_size=64, rng=get_torch_generator(1)).equal(
         generator.generate(batch_size=64, rng=get_torch_generator(2))
@@ -92,7 +95,7 @@ def test_linear_regression_generate_different_random_seeds(noise_std: float, bia
 @mark.parametrize("rng", (None, get_torch_generator(1)))
 def test_linear_regression_generate_mock(
     batch_size: int,
-    noise_std: float,
+    noise_std: float | int,
     weights: int,
     bias: float,
     rng: torch.Generator | None,
@@ -122,12 +125,13 @@ def test_make_linear_regression_incorrect_num_examples(num_examples: int) -> Non
         make_linear_regression(weights=torch.ones(8), num_examples=num_examples)
 
 
-def test_make_linear_regression_incorrect_noise_std() -> None:
+@mark.parametrize("noise_std", (-1, -4.2))
+def test_make_linear_regression_incorrect_noise_std(noise_std: float | int) -> None:
     with raises(
         RuntimeError,
         match="Incorrect value for noise_std. Expected a value greater than 0",
     ):
-        make_linear_regression(weights=torch.ones(8), noise_std=-1)
+        make_linear_regression(weights=torch.ones(8), noise_std=noise_std)
 
 
 def test_make_linear_regression() -> None:

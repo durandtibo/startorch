@@ -25,12 +25,13 @@ def test_make_circles_classification_incorrect_num_examples(num_examples: int) -
         make_circles_classification(num_examples=num_examples)
 
 
-def test_make_circles_classification_incorrect_noise_std() -> None:
+@mark.parametrize("noise_std", (-1, -4.2))
+def test_make_circles_classification_incorrect_noise_std(noise_std: float | int) -> None:
     with raises(
         RuntimeError,
         match="Incorrect value for noise_std. Expected a value greater than 0",
     ):
-        make_circles_classification(noise_std=-1)
+        make_circles_classification(noise_std=noise_std)
 
 
 def test_make_circles_classification() -> None:

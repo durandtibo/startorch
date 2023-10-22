@@ -43,9 +43,7 @@ def test_swiss_roll_spin(spin: float) -> None:
 
 @mark.parametrize("spin", (0, -0.1, -1.0))
 def test_swiss_roll_incorrect_spin(spin: float) -> None:
-    with raises(
-        ValueError, match="The spin of the Swiss roll (.*) has to be greater or equal than 0"
-    ):
+    with raises(RuntimeError, match="Incorrect value for spin. Expected a value in interval"):
         SwissRoll(spin=spin)
 
 
@@ -66,7 +64,7 @@ def test_swiss_roll_generate(batch_size: int) -> None:
 
 @mark.parametrize("noise_std", (0.0, 1.0))
 @mark.parametrize("hole", (True, False))
-def test_swiss_roll_generate_same_random_seed(noise_std: float, hole: bool) -> None:
+def test_swiss_roll_generate_same_random_seed(noise_std: float | int, hole: bool) -> None:
     generator = SwissRoll(noise_std=noise_std, hole=hole)
     assert generator.generate(batch_size=64, rng=get_torch_generator(1)).equal(
         generator.generate(batch_size=64, rng=get_torch_generator(1))
@@ -75,7 +73,7 @@ def test_swiss_roll_generate_same_random_seed(noise_std: float, hole: bool) -> N
 
 @mark.parametrize("noise_std", (0.0, 1.0))
 @mark.parametrize("hole", (True, False))
-def test_swiss_roll_generate_different_random_seeds(noise_std: float, hole: bool) -> None:
+def test_swiss_roll_generate_different_random_seeds(noise_std: float | int, hole: bool) -> None:
     generator = SwissRoll(noise_std=noise_std, hole=hole)
     assert not generator.generate(batch_size=64, rng=get_torch_generator(1)).equal(
         generator.generate(batch_size=64, rng=get_torch_generator(2))
@@ -96,7 +94,7 @@ def test_swiss_roll_generate_same_random_seed_hole() -> None:
 @mark.parametrize("hole", (True, False))
 @mark.parametrize("rng", (None, get_torch_generator(1)))
 def test_swiss_roll_generate_mock(
-    batch_size: int, noise_std: float, spin: float, hole: bool, rng: torch.Generator | None
+    batch_size: int, noise_std: float | int, spin: float, hole: bool, rng: torch.Generator | None
 ) -> None:
     generator = SwissRoll(noise_std=noise_std, hole=hole, spin=spin)
     with patch("startorch.example.swissroll.make_swiss_roll") as make_mock:
@@ -133,9 +131,7 @@ def test_make_swiss_roll_incorrect_noise_std() -> None:
 
 @mark.parametrize("spin", (0, -1))
 def test_make_swiss_roll_incorrect_spin(spin: int) -> None:
-    with raises(
-        RuntimeError, match="The spin of the Swiss roll (.*) has to be greater or equal than 0"
-    ):
+    with raises(RuntimeError, match="Incorrect value for spin. Expected a value in interval"):
         make_swiss_roll(num_examples=10, spin=spin)
 
 
@@ -156,7 +152,7 @@ def test_make_swiss_roll() -> None:
 @mark.parametrize("spin", (0.5, 1.0, 1.5, 2.0))
 @mark.parametrize("noise_std", (0.0, 0.5, 1.0))
 @mark.parametrize("hole", (True, False))
-def test_make_swiss_roll_params(spin: float, noise_std: float, hole: bool) -> None:
+def test_make_swiss_roll_params(spin: float, noise_std: float | int, hole: bool) -> None:
     data = make_swiss_roll(num_examples=64, spin=spin, noise_std=noise_std, hole=hole)
     assert isinstance(data, BatchDict)
     assert len(data) == 2
@@ -180,7 +176,7 @@ def test_make_swiss_roll_num_examples(num_examples: int) -> None:
 
 @mark.parametrize("noise_std", (0.0, 1.0))
 @mark.parametrize("hole", (True, False))
-def test_make_swiss_roll_create_same_random_seed(noise_std: float, hole: bool) -> None:
+def test_make_swiss_roll_create_same_random_seed(noise_std: float | int, hole: bool) -> None:
     assert objects_are_equal(
         make_swiss_roll(
             num_examples=64, noise_std=noise_std, hole=hole, generator=get_torch_generator(1)
@@ -193,7 +189,7 @@ def test_make_swiss_roll_create_same_random_seed(noise_std: float, hole: bool) -
 
 @mark.parametrize("noise_std", (0.0, 1.0))
 @mark.parametrize("hole", (True, False))
-def test_make_swiss_roll_create_different_random_seeds(noise_std: float, hole: bool) -> None:
+def test_make_swiss_roll_create_different_random_seeds(noise_std: float | int, hole: bool) -> None:
     assert not objects_are_equal(
         make_swiss_roll(
             num_examples=64, noise_std=noise_std, hole=hole, generator=get_torch_generator(1)
