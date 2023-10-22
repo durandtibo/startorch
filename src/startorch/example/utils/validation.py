@@ -4,20 +4,22 @@ __all__ = [
     "check_feature_size",
     "check_interval",
     "check_num_examples",
-    "check_positive_integer",
+    "check_integer_ge",
     "check_std",
 ]
 
 from typing import Any
 
 
-def check_feature_size(value: int | Any) -> None:
+def check_feature_size(value: int | Any, low: int = 1) -> None:
     r"""Checks if the given value is a valid feature size i.e. number of
     features.
 
     Args:
     ----
         value: Specifies the value to check.
+        low (int, optional): Specifies the minimum value (inclusive).
+            Default: ``1``
 
     Raises:
     ------
@@ -32,7 +34,7 @@ def check_feature_size(value: int | Any) -> None:
         >>> from startorch.example.utils import check_feature_size
         >>> check_feature_size(5)
     """
-    check_positive_integer(value, name="feature_size")
+    check_integer_ge(value, name="feature_size", low=low)
 
 
 def check_interval(value: float | int | Any, low: float, high: float, name: str) -> None:
@@ -89,15 +91,16 @@ def check_num_examples(value: int | Any) -> None:
         >>> from startorch.example.utils import check_num_examples
         >>> check_num_examples(5)
     """
-    check_positive_integer(value, name="num_examples")
+    check_integer_ge(value, low=1, name="num_examples")
 
 
-def check_positive_integer(value: int | Any, name: str) -> None:
+def check_integer_ge(value: int | Any, low: int, name: str) -> None:
     r"""Checks if the given value is a valid positive integer.
 
     Args:
     ----
         value: Specifies the value to check.
+        low (int): Specifies the minimum value (inclusive).
         name (str): Specifies the variable name.
 
     Raises:
@@ -110,16 +113,16 @@ def check_positive_integer(value: int | Any, name: str) -> None:
     .. code-block:: pycon
 
         >>> import torch
-        >>> from startorch.example.utils import check_positive_integer
-        >>> check_positive_integer(5, name="feature_size")
+        >>> from startorch.example.utils import check_integer_ge
+        >>> check_integer_ge(5, low=0, name="feature_size")
     """
     if not isinstance(value, int):
         raise TypeError(
             f"Incorrect type for {name}. Expected an integer but received {type(value)}"
         )
-    if value < 1:
+    if value < low:
         raise RuntimeError(
-            f"Incorrect value for {name}. Expected a value greater than 0 but received {value}"
+            f"Incorrect value for {name}. Expected a value greater than {low-1} but received {value}"
         )
 
 

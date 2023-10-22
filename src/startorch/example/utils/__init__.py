@@ -4,14 +4,14 @@ __all__ = [
     "check_feature_size",
     "check_interval",
     "check_num_examples",
-    "check_positive_integer",
+    "check_integer_ge",
     "check_std",
 ]
 
 from startorch.example.utils.validation import (
     check_feature_size,
+    check_integer_ge,
     check_interval,
     check_num_examples,
-    check_positive_integer,
     check_std,
 )
