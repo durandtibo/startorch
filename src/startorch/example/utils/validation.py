@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 __all__ = [
+    "check_feature_size",
     "check_interval",
     "check_num_examples",
     "check_positive_integer",
@@ -8,6 +9,30 @@ __all__ = [
 ]
 
 from typing import Any
+
+
+def check_feature_size(value: int | Any) -> None:
+    r"""Checks if the given value is a valid feature size i.e. number of
+    features.
+
+    Args:
+    ----
+        value: Specifies the value to check.
+
+    Raises:
+    ------
+        TypeError if the input is not an integer.
+        RuntimeError if the value is not greater than 0
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> import torch
+        >>> from startorch.example.utils import check_feature_size
+        >>> check_feature_size(5)
+    """
+    check_positive_integer(value, name="feature_size")
 
 
 def check_interval(value: float | int | Any, low: float, high: float, name: str) -> None:
