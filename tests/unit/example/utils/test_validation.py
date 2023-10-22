@@ -1,14 +1,45 @@
+from __future__ import annotations
+
 import math
 from typing import Any
 
 from pytest import mark, raises
 
 from startorch.example.utils import (
+    check_feature_size,
+    check_integer_ge,
     check_interval,
     check_num_examples,
-    check_positive_integer,
     check_std,
 )
+
+########################################
+#     Tests for check_feature_size     #
+########################################
+
+
+@mark.parametrize("value", (1, 2, 100))
+def test_check_feature_size_valid(value: int) -> None:
+    check_feature_size(value)
+
+
+@mark.parametrize("value", (1.2, "abc", None))
+def test_check_feature_size_incorrect_type(value: Any) -> None:
+    with raises(
+        TypeError, match="Incorrect type for feature_size. Expected an integer but received"
+    ):
+        check_feature_size(value)
+
+
+@mark.parametrize("value", (-2, -1))
+@mark.parametrize("low", (0, 1))
+def test_check_feature_size_incorrect_value(value: int, low: int) -> None:
+    with raises(
+        RuntimeError,
+        match=f"Incorrect value for feature_size. Expected a value greater than {low-1}",
+    ):
+        check_feature_size(value, low)
+
 
 ####################################
 #     Tests for check_interval     #
@@ -72,30 +103,32 @@ def test_check_num_examples_incorrect_value(value: int) -> None:
         check_num_examples(value)
 
 
-############################################
-#     Tests for check_positive_integer     #
-############################################
+######################################
+#     Tests for check_integer_ge     #
+######################################
 
 
 @mark.parametrize("value", (1, 2, 100))
-def test_check_positive_integer_valid(value: int) -> None:
-    check_positive_integer(value, name="feature_size")
+def test_check_integer_ge_valid(value: int) -> None:
+    check_integer_ge(value, low=0, name="feature_size")
 
 
 @mark.parametrize("value", (1.2, "abc", None))
-def test_check_positive_integer_incorrect_type(value: Any) -> None:
+def test_check_integer_ge_incorrect_type(value: Any) -> None:
     with raises(
         TypeError, match="Incorrect type for feature_size. Expected an integer but received"
     ):
-        check_positive_integer(value, name="feature_size")
+        check_integer_ge(value, low=0, name="feature_size")
 
 
-@mark.parametrize("value", (0, -1))
-def test_check_positive_integer_incorrect_value(value: int) -> None:
+@mark.parametrize("value", (-2, -1))
+@mark.parametrize("low", (0, 1))
+def test_check_integer_ge_incorrect_value(value: int, low: int) -> None:
     with raises(
-        RuntimeError, match="Incorrect value for feature_size. Expected a value greater than 0"
+        RuntimeError,
+        match=f"Incorrect value for feature_size. Expected a value greater than {low-1}",
     ):
-        check_positive_integer(value, name="feature_size")
+        check_integer_ge(value, low=low, name="feature_size")
 
 
 ###############################
