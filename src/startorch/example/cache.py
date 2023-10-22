@@ -11,8 +11,8 @@ from startorch.example.base import BaseExampleGenerator, setup_example_generator
 
 
 class CacheExampleGenerator(BaseExampleGenerator):
-    r"""Implements an example generator that caches a batch and returns
-    the same batch.
+    r"""Implements an example generator that caches the last batch and
+    returns it everytime a batch is generated.
 
     A new batch is generated only if the batch size changes.
 
