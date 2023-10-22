@@ -21,6 +21,7 @@ __all__ = [
     "TimeSeries",
     "TimeSeriesExampleGenerator",
     "is_example_generator_config",
+    "make_blobs_classification",
     "make_circles_classification",
     "make_friedman1_regression",
     "make_friedman2_regression",
@@ -38,6 +39,7 @@ from startorch.example.base import (
     is_example_generator_config,
     setup_example_generator,
 )
+from startorch.example.blobs import make_blobs_classification
 from startorch.example.circles import CirclesClassificationExampleGenerator
 from startorch.example.circles import (
     CirclesClassificationExampleGenerator as CirclesClassification,
