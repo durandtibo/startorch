@@ -3,13 +3,14 @@ from __future__ import annotations
 __all__ = [
     "check_interval",
     "check_num_examples",
+    "check_positive_integer",
     "check_std",
 ]
 
 from typing import Any
 
 
-def check_interval(value: Any, low: float, high: float, name: str) -> None:
+def check_interval(value: float | int | Any, low: float, high: float, name: str) -> None:
     r"""Checks if the given value is an interval.
 
     Args:
@@ -43,14 +44,12 @@ def check_interval(value: Any, low: float, high: float, name: str) -> None:
         )
 
 
-def check_num_examples(value: Any, name: str = "num_examples") -> None:
+def check_num_examples(value: int | Any) -> None:
     r"""Checks if the given value is a valid number of examples.
 
     Args:
     ----
         value: Specifies the value to check.
-        name (str, optional): Specifies the variable name.
-            Default: ``'num_examples'``
 
     Raises:
     ------
@@ -65,6 +64,30 @@ def check_num_examples(value: Any, name: str = "num_examples") -> None:
         >>> from startorch.example.utils import check_num_examples
         >>> check_num_examples(5)
     """
+    check_positive_integer(value, name="num_examples")
+
+
+def check_positive_integer(value: int | Any, name: str) -> None:
+    r"""Checks if the given value is a valid positive integer.
+
+    Args:
+    ----
+        value: Specifies the value to check.
+        name (str): Specifies the variable name.
+
+    Raises:
+    ------
+        TypeError if the input is not an integer.
+        RuntimeError if the value is not greater than 0
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> import torch
+        >>> from startorch.example.utils import check_positive_integer
+        >>> check_positive_integer(5, name="feature_size")
+    """
     if not isinstance(value, int):
         raise TypeError(
             f"Incorrect type for {name}. Expected an integer but received {type(value)}"
@@ -75,7 +98,7 @@ def check_num_examples(value: Any, name: str = "num_examples") -> None:
         )
 
 
-def check_std(value: Any, name: str = "std") -> None:
+def check_std(value: float | int | Any, name: str = "std") -> None:
     r"""Checks if the given value is a valid standard deviation.
 
     Args:

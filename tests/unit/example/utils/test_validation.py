@@ -3,7 +3,12 @@ from typing import Any
 
 from pytest import mark, raises
 
-from startorch.example.utils import check_interval, check_num_examples, check_std
+from startorch.example.utils import (
+    check_interval,
+    check_num_examples,
+    check_positive_integer,
+    check_std,
+)
 
 ####################################
 #     Tests for check_interval     #
@@ -59,11 +64,6 @@ def test_check_num_examples_incorrect_type(value: Any) -> None:
         check_num_examples(value)
 
 
-def test_check_num_examples_incorrect_type_custom_name() -> None:
-    with raises(TypeError, match="Incorrect type for n_samples. Expected an integer but received"):
-        check_num_examples(1.2, name="n_samples")
-
-
 @mark.parametrize("value", (0, -1))
 def test_check_num_examples_incorrect_value(value: int) -> None:
     with raises(
@@ -72,11 +72,30 @@ def test_check_num_examples_incorrect_value(value: int) -> None:
         check_num_examples(value)
 
 
-def test_check_num_examples_incorrect_value_custom_name() -> None:
+############################################
+#     Tests for check_positive_integer     #
+############################################
+
+
+@mark.parametrize("value", (1, 2, 100))
+def test_check_positive_integer_valid(value: int) -> None:
+    check_positive_integer(value, name="feature_size")
+
+
+@mark.parametrize("value", (1.2, "abc", None))
+def test_check_positive_integer_incorrect_type(value: Any) -> None:
     with raises(
-        RuntimeError, match="Incorrect value for n_samples. Expected a value greater than 0"
+        TypeError, match="Incorrect type for feature_size. Expected an integer but received"
     ):
-        check_num_examples(0, "n_samples")
+        check_positive_integer(value, name="feature_size")
+
+
+@mark.parametrize("value", (0, -1))
+def test_check_positive_integer_incorrect_value(value: int) -> None:
+    with raises(
+        RuntimeError, match="Incorrect value for feature_size. Expected a value greater than 0"
+    ):
+        check_positive_integer(value, name="feature_size")
 
 
 ###############################
