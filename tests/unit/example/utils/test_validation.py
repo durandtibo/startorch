@@ -1,3 +1,4 @@
+import math
 from typing import Any
 
 from pytest import mark, raises
@@ -12,6 +13,16 @@ from startorch.example.utils import check_interval, check_num_examples, check_st
 @mark.parametrize("value", (0, 1, 1.2, 2, 2.9))
 def test_check_interval_valid(value: int) -> None:
     check_interval(value, low=0.0, high=3.0, name="my_variable")
+
+
+@mark.parametrize("value", (0, 1, 1e2, 1e10))
+def test_check_interval_valid_positive(value: int) -> None:
+    check_interval(value, low=0.0, high=math.inf, name="my_variable")
+
+
+@mark.parametrize("value", (-1e-10, -1, -1e2, -1e10))
+def test_check_interval_valid_negative(value: int) -> None:
+    check_interval(value, low=-math.inf, high=0.0, name="my_variable")
 
 
 @mark.parametrize("value", ("abc", None))
