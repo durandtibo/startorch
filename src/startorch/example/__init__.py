@@ -25,6 +25,7 @@ __all__ = [
     "make_friedman3_regression",
     "make_hypercube_classification",
     "make_linear_regression",
+    "make_moons_classification",
     "make_sparse_uncorrelated_regression",
     "make_swiss_roll",
     "setup_example_generator",
@@ -62,6 +63,7 @@ from startorch.example.hypercube import (
     HypercubeClassificationExampleGenerator as HypercubeClassification,
 )
 from startorch.example.hypercube import make_hypercube_classification
+from startorch.example.moons import make_moons_classification
 from startorch.example.regression import LinearRegressionExampleGenerator
 from startorch.example.regression import (
     LinearRegressionExampleGenerator as LinearRegression,
