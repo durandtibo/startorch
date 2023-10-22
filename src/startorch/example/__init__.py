@@ -14,6 +14,8 @@ __all__ = [
     "HypercubeClassificationExampleGenerator",
     "LinearRegression",
     "LinearRegressionExampleGenerator",
+    "MoonsClassification",
+    "MoonsClassificationExampleGenerator",
     "SwissRoll",
     "SwissRollExampleGenerator",
     "TimeSeries",
@@ -63,6 +65,10 @@ from startorch.example.hypercube import (
     HypercubeClassificationExampleGenerator as HypercubeClassification,
 )
 from startorch.example.hypercube import make_hypercube_classification
+from startorch.example.moons import MoonsClassificationExampleGenerator
+from startorch.example.moons import (
+    MoonsClassificationExampleGenerator as MoonsClassification,
+)
 from startorch.example.moons import make_moons_classification
 from startorch.example.regression import LinearRegressionExampleGenerator
 from startorch.example.regression import (

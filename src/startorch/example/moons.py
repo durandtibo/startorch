@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-__all__ = ["make_moons_classification"]
+__all__ = ["MoonsClassificationExampleGenerator", "make_moons_classification"]
 
 import math
 
@@ -8,8 +8,85 @@ import torch
 from redcat import BatchDict, BatchedTensor
 
 from startorch import constants as ct
+from startorch.example.base import BaseExampleGenerator
 from startorch.example.utils import check_interval, check_num_examples, check_std
 from startorch.random import rand_normal
+
+
+class MoonsClassificationExampleGenerator(BaseExampleGenerator[BatchedTensor]):
+    r"""Implements a binary classification example generator where the
+    data are generated with a large circle containing a smaller circle
+    in 2d.
+
+    The implementation is based on
+    https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_circles.html
+
+    Args:
+    ----
+        shuffle (bool, optional): If ``True``, the examples are
+            shuffled. Default: ``True``
+        noise_std (float, optional): Specifies the standard deviation
+            of the Gaussian noise. Default: ``0.0``
+        ratio (float, optional): Specifies the ratio between the
+            number of examples in outer circle and inner circle.
+            Default: ``0.5``
+
+    Raises:
+    ------
+        TypeError or RuntimeError if one of the parameters is not
+            valid.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> from startorch.example import MoonsClassification
+        >>> generator = MoonsClassification()
+        >>> generator
+        MoonsClassificationExampleGenerator(shuffle=True, noise_std=0.0, ratio=0.5)
+        >>> batch = generator.generate(batch_size=10)
+        >>> batch
+        BatchDict(
+          (target): tensor([...], batch_dim=0)
+          (feature): tensor([[...]], batch_dim=0)
+        )
+    """
+
+    def __init__(self, shuffle: bool = True, noise_std: float = 0.0, ratio: float = 0.5) -> None:
+        self._shuffle = bool(shuffle)
+        check_std(noise_std, "noise_std")
+        self._noise_std = float(noise_std)
+
+        check_interval(ratio, low=0.0, high=1.0, name="ratio")
+        self._ratio = float(ratio)
+
+    def __repr__(self) -> str:
+        return (
+            f"{self.__class__.__qualname__}(shuffle={self._shuffle}, "
+            f"noise_std={self._noise_std}, ratio={self._ratio})"
+        )
+
+    @property
+    def noise_std(self) -> float:
+        r"""``float``: The standard deviation of the Gaussian noise."""
+        return self._noise_std
+
+    @property
+    def ratio(self) -> float:
+        r"""``float``: the ratio between the number of examples in outer
+        circle and inner circle."""
+        return self._ratio
+
+    def generate(
+        self, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> BatchDict[BatchedTensor]:
+        return make_moons_classification(
+            num_examples=batch_size,
+            shuffle=self._shuffle,
+            noise_std=self._noise_std,
+            ratio=self._ratio,
+            generator=rng,
+        )
 
 
 def make_moons_classification(
