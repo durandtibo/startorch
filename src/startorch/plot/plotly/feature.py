@@ -85,5 +85,5 @@ def hist_feature(
             go.Histogram(x=features[:, i], **kwargs, name=feature_names[i]), row=x + 1, col=y + 1
         )
 
-    fig.update_layout(height=figsize[1] * nrows, width=figsize[0] * ncols, showlegend=False)
+    fig.update_layout(height=figsize[1] * nrows + 120, width=figsize[0] * ncols, showlegend=False)
     return fig
