@@ -2,6 +2,8 @@ from __future__ import annotations
 
 __all__ = [
     "BaseExampleGenerator",
+    "BlobsClassification",
+    "BlobsClassificationExampleGenerator",
     "Cache",
     "CacheExampleGenerator",
     "CirclesClassification",
@@ -40,6 +42,10 @@ from startorch.example.base import (
     BaseExampleGenerator,
     is_example_generator_config,
     setup_example_generator,
+)
+from startorch.example.blobs import BlobsClassificationExampleGenerator
+from startorch.example.blobs import (
+    BlobsClassificationExampleGenerator as BlobsClassification,
 )
 from startorch.example.blobs import make_blobs_classification
 from startorch.example.cache import CacheExampleGenerator
