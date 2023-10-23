@@ -4,6 +4,8 @@ __all__ = [
     "BaseExampleGenerator",
     "BlobsClassification",
     "BlobsClassificationExampleGenerator",
+    "Cache",
+    "CacheExampleGenerator",
     "CirclesClassification",
     "CirclesClassificationExampleGenerator",
     "Friedman1Regression",
@@ -46,6 +48,8 @@ from startorch.example.blobs import (
     BlobsClassificationExampleGenerator as BlobsClassification,
 )
 from startorch.example.blobs import make_blobs_classification
+from startorch.example.cache import CacheExampleGenerator
+from startorch.example.cache import CacheExampleGenerator as Cache
 from startorch.example.circles import CirclesClassificationExampleGenerator
 from startorch.example.circles import (
     CirclesClassificationExampleGenerator as CirclesClassification,
