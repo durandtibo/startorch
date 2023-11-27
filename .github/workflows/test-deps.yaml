@@ -139,7 +139,7 @@ jobs:
       matrix:
         os: [ ubuntu-latest ]
         python-version: [ '3.9', '3.10', '3.11' ]
-        torch-version: [ 2.1.0, 2.0.1 ]
+        torch-version: [ 2.1.1, 2.0.1 ]
 
     steps:
       - name: Checkout
