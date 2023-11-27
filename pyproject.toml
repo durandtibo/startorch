@@ -37,7 +37,7 @@ torch = ">=2.0,<2.2"
 
 # Optional dependencies
 matplotlib = { version = ">=3.6,<3.9", optional = true }
-plotly = { version = ">=5.12,<5.18", optional = true }
+plotly = { version = ">=5.12,<5.19", optional = true }
 
 [tool.poetry.extras]
 all = ["matplotlib", "plotly"]
