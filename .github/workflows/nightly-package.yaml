@@ -220,7 +220,7 @@ jobs:
 
       - name: Install package
         run: |
-          pip install startorch torch==${{ matrix.pytorch-version }}
+          pip install startorch torch==${{ matrix.torch-version }}
 
       - name: Run some checks
         run: |
