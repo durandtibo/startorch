@@ -5,7 +5,7 @@ on:
   workflow_dispatch:  # to trigger manually
 
 jobs:
-  all:
+  stable-all:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
     strategy:
@@ -28,17 +28,11 @@ jobs:
         run: |
           pip install "startorch[all]"
 
-      - name: Run short experiment
+      - name: Run some checks
         run: |
-          python -c "import startorch; import torch;" \
-            "assert isinstance(startorch.random.uniform(0.0, 10.0), torch.Tensor); "
+          python tests/package_checks.py
 
-      - name: Check imports
-        run: |
-          python -c "from startorch.sequence import BaseSequenceGenerator"
-          python -c "from startorch.tensor import BaseTensorGenerator"
-
-  min:
+  stable-min:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
     strategy:
@@ -61,10 +55,64 @@ jobs:
         run: |
           pip install startorch
 
-      - name: Run short experiment
+      - name: Run some checks
         run: |
-          python -c "import startorch; import torch;" \
-            "assert isinstance(startorch.random.uniform(0.0, 10.0), torch.Tensor); "
+          python tests/package_checks.py
+
+  latest-all:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      max-parallel: 8
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, macos-latest ]
+        python-version: [ '3.11', '3.10', '3.9' ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install package
+        run: |
+          pip install --pre "startorch[all]"
+
+      - name: Run some checks
+        run: |
+          python tests/package_checks.py
+
+  latest-min:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      max-parallel: 8
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, macos-latest ]
+        python-version: [ '3.11', '3.10', '3.9' ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install package
+        run: |
+          pip install --pre startorch
+
+      - name: Run some checks
+        run: |
+          python tests/package_checks.py
+
 
   coola:
     runs-on: ${{ matrix.os }}
@@ -90,10 +138,9 @@ jobs:
         run: |
           pip install startorch coola==${{ matrix.coola-version }}
 
-      - name: Run short experiment
+      - name: Run some checks
         run: |
-          python -c "import startorch; import torch;" \
-            "assert isinstance(startorch.random.uniform(0.0, 10.0), torch.Tensor); "
+          python tests/package_checks.py
 
   objectory:
     runs-on: ${{ matrix.os }}
@@ -119,10 +166,9 @@ jobs:
         run: |
           pip install startorch objectory==${{ matrix.objectory-version }}
 
-      - name: Run short experiment
+      - name: Run some checks
         run: |
-          python -c "import startorch; import torch;" \
-            "assert isinstance(startorch.random.uniform(0.0, 10.0), torch.Tensor); "
+          python tests/package_checks.py
 
   redcat:
     runs-on: ${{ matrix.os }}
@@ -148,10 +194,9 @@ jobs:
         run: |
           pip install startorch redcat==${{ matrix.redcat-version }}
 
-      - name: Run short experiment
+      - name: Run some checks
         run: |
-          python -c "import startorch; import torch;" \
-            "assert isinstance(startorch.random.uniform(0.0, 10.0), torch.Tensor); "
+          python tests/package_checks.py
 
   torch:
     runs-on: ${{ matrix.os }}
@@ -175,9 +220,8 @@ jobs:
 
       - name: Install package
         run: |
-          pip install startorch torch==${{ matrix.pytorch-version }}
+          pip install startorch torch==${{ matrix.torch-version }}
 
-      - name: Run short experiment
+      - name: Run some checks
         run: |
-          python -c "import startorch; import torch;" \
-            "assert isinstance(startorch.random.uniform(0.0, 10.0), torch.Tensor); "
+          python tests/package_checks.py
