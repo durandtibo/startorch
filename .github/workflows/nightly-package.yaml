@@ -28,15 +28,9 @@ jobs:
         run: |
           pip install "startorch[all]"
 
-      - name: Run short experiment
+      - name: Run some checks
         run: |
-          python -c "import startorch; import torch;" \
-            "assert isinstance(startorch.random.uniform(0.0, 10.0), torch.Tensor); "
-
-      - name: Check imports
-        run: |
-          python -c "from startorch.sequence import BaseSequenceGenerator"
-          python -c "from startorch.tensor import BaseTensorGenerator"
+          python tests/package_checks.py
 
   min:
     runs-on: ${{ matrix.os }}
@@ -61,10 +55,9 @@ jobs:
         run: |
           pip install startorch
 
-      - name: Run short experiment
+      - name: Run some checks
         run: |
-          python -c "import startorch; import torch;" \
-            "assert isinstance(startorch.random.uniform(0.0, 10.0), torch.Tensor); "
+          python tests/package_checks.py
 
   coola:
     runs-on: ${{ matrix.os }}
@@ -90,10 +83,9 @@ jobs:
         run: |
           pip install startorch coola==${{ matrix.coola-version }}
 
-      - name: Run short experiment
+      - name: Run some checks
         run: |
-          python -c "import startorch; import torch;" \
-            "assert isinstance(startorch.random.uniform(0.0, 10.0), torch.Tensor); "
+          python tests/package_checks.py
 
   objectory:
     runs-on: ${{ matrix.os }}
@@ -119,10 +111,9 @@ jobs:
         run: |
           pip install startorch objectory==${{ matrix.objectory-version }}
 
-      - name: Run short experiment
+      - name: Run some checks
         run: |
-          python -c "import startorch; import torch;" \
-            "assert isinstance(startorch.random.uniform(0.0, 10.0), torch.Tensor); "
+          python tests/package_checks.py
 
   redcat:
     runs-on: ${{ matrix.os }}
@@ -148,10 +139,9 @@ jobs:
         run: |
           pip install startorch redcat==${{ matrix.redcat-version }}
 
-      - name: Run short experiment
+      - name: Run some checks
         run: |
-          python -c "import startorch; import torch;" \
-            "assert isinstance(startorch.random.uniform(0.0, 10.0), torch.Tensor); "
+          python tests/package_checks.py
 
   torch:
     runs-on: ${{ matrix.os }}
@@ -177,7 +167,6 @@ jobs:
         run: |
           pip install startorch torch==${{ matrix.pytorch-version }}
 
-      - name: Run short experiment
+      - name: Run some checks
         run: |
-          python -c "import startorch; import torch;" \
-            "assert isinstance(startorch.random.uniform(0.0, 10.0), torch.Tensor); "
+          python tests/package_checks.py
