@@ -12,8 +12,8 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest ]
-        python-version: [ '3.9', '3.10', '3.11' ]
-        coola-version: [ 0.0.24, 0.0.23, 0.0.22, 0.0.21, 0.0.20 ]
+        python-version: [ '3.11', '3.10', '3.9' ]
+        coola-version: [ 0.1.2, 0.1.1, 0.1.0, 0.0.26, 0.0.25, 0.0.24, 0.0.23, 0.0.22, 0.0.21, 0.0.20 ]
 
     steps:
       - name: Checkout
@@ -54,8 +54,8 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest ]
-        python-version: [ '3.9', '3.10', '3.11' ]
-        objectory-version: [ 0.0.8, 0.0.7 ]
+        python-version: [ '3.11', '3.10', '3.9' ]
+        objectory-version: [ 0.1.0, 0.0.9, 0.0.8, 0.0.7 ]
 
     steps:
       - name: Checkout
@@ -96,8 +96,8 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest ]
-        python-version: [ '3.9', '3.10', '3.11' ]
-        redcat-version: [ 0.0.17, 0.0.16 ]
+        python-version: [ '3.11', '3.10', '3.9' ]
+        redcat-version: [ 0.0.18, 0.0.17, 0.0.16 ]
 
     steps:
       - name: Checkout
@@ -138,8 +138,8 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest ]
-        python-version: [ '3.9', '3.10', '3.11' ]
-        torch-version: [ 2.1.1, 2.0.1 ]
+        python-version: [ '3.11', '3.10', '3.9' ]
+        torch-version: [ 2.1.2, 2.0.1 ]
 
     steps:
       - name: Checkout
@@ -180,8 +180,8 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest ]
-        python-version: [ '3.9', '3.10', '3.11' ]
-        matplotlib-version: [ 3.8.0, 3.7.3, 3.6.3 ]
+        python-version: [ '3.11', '3.10', '3.9' ]
+        matplotlib-version: [ 3.8.2, 3.7.3, 3.6.3 ]
 
     steps:
       - name: Checkout
@@ -223,8 +223,8 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest ]
-        python-version: [ '3.9', '3.10', '3.11' ]
-        plotly-version: [ 5.17.0, 5.16.1, 5.15.0, 5.14.1, 5.13.1, 5.12.0 ]
+        python-version: [ '3.11', '3.10', '3.9' ]
+        plotly-version: [ 5.18.0, 5.17.0, 5.16.1, 5.15.0, 5.14.1, 5.13.1, 5.12.0 ]
 
     steps:
       - name: Checkout
