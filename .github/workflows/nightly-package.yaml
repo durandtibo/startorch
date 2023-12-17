@@ -5,7 +5,7 @@ on:
   workflow_dispatch:  # to trigger manually
 
 jobs:
-  all:
+  stable-all:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
     strategy:
@@ -32,7 +32,7 @@ jobs:
         run: |
           python tests/package_checks.py
 
-  min:
+  stable-min:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
     strategy:
@@ -58,6 +58,61 @@ jobs:
       - name: Run some checks
         run: |
           python tests/package_checks.py
+
+  latest-all:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      max-parallel: 8
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, macos-latest ]
+        python-version: [ '3.11', '3.10', '3.9' ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install package
+        run: |
+          pip install --pre "startorch[all]"
+
+      - name: Run some checks
+        run: |
+          python tests/package_checks.py
+
+  latest-min:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      max-parallel: 8
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, macos-latest ]
+        python-version: [ '3.11', '3.10', '3.9' ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install package
+        run: |
+          pip install --pre startorch
+
+      - name: Run some checks
+        run: |
+          python tests/package_checks.py
+
 
   coola:
     runs-on: ${{ matrix.os }}
