@@ -31,7 +31,7 @@ def rand_exponential(
         rate: Specifies the rate of the Exponential
             distribution. Default: ``1.0``
         generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator. Default: ``None``
+            an optional random generator.
 
     Returns:
         ``torch.Tensor``: A tensor filled with values sampled from an
@@ -71,7 +71,7 @@ def exponential(rate: torch.Tensor, generator: torch.Generator | None = None) ->
             of the Exponential distribution. The output has the
             same shape that this input.
         generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator. Default: ``None``
+            an optional random generator.
 
     Returns:
         ``torch.Tensor`` of type float and shape
@@ -111,7 +111,7 @@ def rand_half_cauchy(
             half-Cauchy distribution. This value has to be greater
             than 0. Default: ``1.0``
         generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator. Default: ``None``
+            an optional random generator.
 
     Returns:
         ``torch.Tensor``: A tensor filled with values sampled from a
@@ -146,7 +146,7 @@ def half_cauchy(scale: Tensor, generator: Generator | None = None) -> Tensor:
             ``(d0, d1, ..., dn)``): Specifies the scale
             of the half-Cauchy distribution.
         generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator. Default: ``None``
+            an optional random generator.
 
     Returns:
         ``torch.Tensor``: A tensor filled with values sampled from a
@@ -180,7 +180,7 @@ def rand_half_normal(
         std: Specifies the standard deviation of
             the half-Normal distribution. Default: ``1.0``
         generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator. Default: ``None``
+            an optional random generator.
 
     Returns:
         ``torch.Tensor``: A tensor filled with values sampled from a
@@ -218,7 +218,7 @@ def half_normal(std: Tensor, generator: Generator | None = None) -> Tensor:
             ``(d0, d1, ..., dn)``): Specifies the standard
             deviation of the half-Normal distribution.
         generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator. Default: ``None``
+            an optional random generator.
 
     Returns:
         ``torch.Tensor``: A tensor filled with values sampled from a
@@ -255,7 +255,7 @@ def rand_log_normal(
         std: Specifies the standard deviation of
             the underlying Normal distribution. Default: ``1.0``
         generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator. Default: ``None``
+            an optional random generator.
 
     Returns:
         ``torch.Tensor``: A tensor filled with values sampled from a
@@ -299,7 +299,7 @@ def log_normal(mean: Tensor, std: Tensor, generator: Generator | None = None) ->
             ``(d0, d1, ..., dn)``): Specifies the standard
             deviation of the log-Normal distribution.
         generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator. Default: ``None``
+            an optional random generator.
 
     Returns:
         ``torch.Tensor``: A tensor filled with values sampled from a

@@ -1,11 +1,17 @@
+r"""Contain the implementation of sequence generators to change the data
+type of sequences/tensors."""
+
 from __future__ import annotations
 
 __all__ = ["FloatSequenceGenerator", "LongSequenceGenerator"]
 
-from redcat import BatchedTensorSeq
-from torch import Generator
+from typing import TYPE_CHECKING
 
 from startorch.sequence.wrapper import BaseWrapperSequenceGenerator
+
+if TYPE_CHECKING:
+    from redcat import BatchedTensorSeq
+    from torch import Generator
 
 
 class FloatSequenceGenerator(BaseWrapperSequenceGenerator):
@@ -14,16 +20,17 @@ class FloatSequenceGenerator(BaseWrapperSequenceGenerator):
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.sequence import Float, RandInt
+    >>> generator = Float(RandInt(low=0, high=10))
+    >>> generator
+    FloatSequenceGenerator(
+      (sequence): RandIntSequenceGenerator(low=0, high=10, feature_size=())
+    )
+    >>> generator.generate(seq_len=6, batch_size=2)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> from startorch.sequence import Float, RandInt
-        >>> generator = Float(RandInt(low=0, high=10))
-        >>> generator
-        FloatSequenceGenerator(
-          (sequence): RandIntSequenceGenerator(low=0, high=10, feature_size=())
-        )
-        >>> generator.generate(seq_len=6, batch_size=2)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def generate(
@@ -38,16 +45,17 @@ class LongSequenceGenerator(BaseWrapperSequenceGenerator):
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.sequence import Long, RandUniform
+    >>> generator = Long(RandUniform(low=0, high=10))
+    >>> generator
+    LongSequenceGenerator(
+      (sequence): RandUniformSequenceGenerator(low=0.0, high=10.0, feature_size=(1,))
+    )
+    >>> generator.generate(seq_len=6, batch_size=2)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> from startorch.sequence import Long, RandUniform
-        >>> generator = Long(RandUniform(low=0, high=10))
-        >>> generator
-        LongSequenceGenerator(
-          (sequence): RandUniformSequenceGenerator(low=0.0, high=10.0, feature_size=(1,))
-        )
-        >>> generator.generate(seq_len=6, batch_size=2)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def generate(

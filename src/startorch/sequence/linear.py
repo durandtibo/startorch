@@ -1,13 +1,19 @@
+r"""Contain the implementations of sequence generators that generate
+sequences by sampling values with a linear pattern."""
+
 from __future__ import annotations
 
 __all__ = ["LinearSequenceGenerator"]
 
+from typing import TYPE_CHECKING
 
 from coola.utils import str_indent, str_mapping
-from redcat import BatchedTensorSeq
-from torch import Generator
 
 from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_generator
+
+if TYPE_CHECKING:
+    from redcat import BatchedTensorSeq
+    from torch import Generator
 
 
 class LinearSequenceGenerator(BaseSequenceGenerator):
@@ -19,35 +25,33 @@ class LinearSequenceGenerator(BaseSequenceGenerator):
     ``output = slope * value + intercept``
 
     Args:
-        value (``BaseSequenceGenerator`` or dict): Specifies a
-            sequence generator (or its configuration) to generate the
-            sequence values. The linear transformation is applied
-            on these values.
-        slope (``BaseSequenceGenerator`` or dict): Specifies a sequence
-            generator (or its configuration) to generate the slope
-            values.
-        intercept (``BaseSequenceGenerator`` or dict): Specifies a
-            sequence generator (or its configuration) to generate the
-            intercept values.
+        value: Specifies a sequence generator (or its configuration)
+            to generate the sequence values. The linear transformation
+            is applied on these values.
+        slope: Specifies a sequence generator (or its configuration)
+            to generate the slope values.
+        intercept: Specifies a sequence generator (or its
+            configuration) to generate the intercept values.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.sequence import Linear, RandUniform
+    >>> generator = Linear(
+    ...     value=RandUniform(low=-1.0, high=1.0),
+    ...     slope=RandUniform(low=1.0, high=2.0),
+    ...     intercept=RandUniform(low=-10.0, high=-5.0),
+    ... )
+    >>> generator
+    LinearSequenceGenerator(
+      (value): RandUniformSequenceGenerator(low=-1.0, high=1.0, feature_size=(1,))
+      (slope): RandUniformSequenceGenerator(low=1.0, high=2.0, feature_size=(1,))
+      (intercept): RandUniformSequenceGenerator(low=-10.0, high=-5.0, feature_size=(1,))
+    )
+    >>> generator.generate(seq_len=6, batch_size=2)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> from startorch.sequence import Linear, RandUniform
-        >>> generator = Linear(
-        ...     value=RandUniform(low=-1.0, high=1.0),
-        ...     slope=RandUniform(low=1.0, high=2.0),
-        ...     intercept=RandUniform(low=-10.0, high=-5.0),
-        ... )
-        >>> generator
-        LinearSequenceGenerator(
-          (value): RandUniformSequenceGenerator(low=-1.0, high=1.0, feature_size=(1,))
-          (slope): RandUniformSequenceGenerator(low=1.0, high=2.0, feature_size=(1,))
-          (intercept): RandUniformSequenceGenerator(low=-10.0, high=-5.0, feature_size=(1,))
-        )
-        >>> generator.generate(seq_len=6, batch_size=2)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(

@@ -1,17 +1,25 @@
+r"""Contain the implementation of a sequence generator that select a
+sequence generator at each batch."""
+
 from __future__ import annotations
 
 __all__ = ["MultinomialChoiceSequenceGenerator"]
 
-from collections.abc import Sequence
+
+from typing import TYPE_CHECKING
 
 import torch
 from coola.utils.format import str_indent
-from redcat import BatchedTensorSeq
-from torch import Generator
 
 from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_generator
 from startorch.utils.format import str_weighted_modules
 from startorch.utils.weight import prepare_weighted_generators
+
+if TYPE_CHECKING:
+    from collections.abc import Sequence
+
+    from redcat import BatchedTensorSeq
+    from torch import Generator
 
 
 class MultinomialChoiceSequenceGenerator(BaseSequenceGenerator):
@@ -33,23 +41,23 @@ class MultinomialChoiceSequenceGenerator(BaseSequenceGenerator):
             If this key is absent, the weight is set to ``1.0``.
 
     Args:
-        sequences (sequence): Specifies the sequence
-            generators and their weights. See above to learn
-            about the expected format.
+        sequences: Specifies the sequence generators and their weights.
+            See above to learn about the expected format.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.sequence import MultinomialChoice, RandUniform, RandNormal
+    >>> generator = MultinomialChoice(
+    ...     (
+    ...         {"weight": 2.0, "generator": RandUniform()},
+    ...         {"weight": 1.0, "generator": RandNormal()},
+    ...     )
+    ... )
+    >>> generator.generate(seq_len=10, batch_size=2)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> from startorch.sequence import MultinomialChoice, RandUniform, RandNormal
-        >>> generator = MultinomialChoice(
-        ...     (
-        ...         {"weight": 2.0, "generator": RandUniform()},
-        ...         {"weight": 1.0, "generator": RandNormal()},
-        ...     )
-        ... )
-        >>> generator.generate(seq_len=10, batch_size=2)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(self, sequences: Sequence[dict[str, BaseSequenceGenerator | dict]]) -> None:

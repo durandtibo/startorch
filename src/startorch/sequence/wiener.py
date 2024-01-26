@@ -1,14 +1,20 @@
+r"""Contain the implementation of sequence generators where the values
+are sampled from a Wiener process."""
+
 from __future__ import annotations
 
 __all__ = ["RandWienerProcessSequenceGenerator", "wiener_process"]
 
 import math
+from typing import TYPE_CHECKING
 
 import torch
 from redcat import BatchedTensorSeq
-from torch import Generator, Tensor
 
 from startorch.sequence.base import BaseSequenceGenerator
+
+if TYPE_CHECKING:
+    from torch import Generator, Tensor
 
 
 class RandWienerProcessSequenceGenerator(BaseSequenceGenerator):
@@ -18,32 +24,33 @@ class RandWienerProcessSequenceGenerator(BaseSequenceGenerator):
     Useful link: https://en.wikipedia.org/wiki/Wiener_process
 
     Args:
-        step_size: Specifies the time
-            step size. Default: ``1.0``
+        step_size: Specifies the time step size.
 
     Raises:
-        ValueError if ``step_size`` is not a positive number.
+        ValueError: if ``step_size`` is not a positive number.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.sequence import RandWienerProcess
+    >>> generator = RandWienerProcess()
+    >>> generator
+    RandWienerProcessSequenceGenerator(step_size=1.0)
+    >>> generator.generate(seq_len=6, batch_size=2)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> from startorch.sequence import RandWienerProcess
-        >>> generator = RandWienerProcess()
-        >>> generator
-        RandWienerProcessSequenceGenerator(time_step_size=1.0)
-        >>> generator.generate(seq_len=6, batch_size=2)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(self, step_size: float = 1.0) -> None:
         super().__init__()
         if step_size < 0:
-            raise ValueError(f"step_size has to be greater than 0 (received: {step_size})")
+            msg = f"step_size has to be greater than 0 (received: {step_size})"
+            raise ValueError(msg)
         self._step_size = float(step_size)
 
     def __repr__(self) -> str:
-        return f"{self.__class__.__qualname__}(time_step_size={self._step_size})"
+        return f"{self.__class__.__qualname__}(step_size={self._step_size})"
 
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
@@ -70,30 +77,30 @@ def wiener_process(
 
     Args:
         seq_len: Specifies the sequence length.
-        step_size: Specifies the time
-            step size. Default: ``1.0``
+        step_size: Specifies the time step size.
         batch_size: Specifies the batch size.
-            Default: ``1``
-        generator (``torch.Generator`` or None): Specifies an optional
-            random generator. Default: ``None``
+        generator: Specifies an optional random generator.
 
     Returns:
-        ``torch.Tensor`` of shape ``(batch size, sequence length)``
-            and type float: A batch of Wiener processes.
+        A batch of sequences generated with a Wiener process.
+            It is a tensor of type float and shape
+            ``(batch size, sequence length)``.
 
     Raises:
-        ValueError if ``step_size`` is not a positive number.
+        ValueError: if ``step_size`` is not a positive number.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.sequence.wiener import wiener_process
+    >>> wiener_process(seq_len=12, batch_size=4)
+    tensor([[...]])
 
-        >>> from startorch.sequence.wiener import wiener_process
-        >>> wiener_process(seq_len=12, batch_size=4)
-        tensor([[...]])
+    ```
     """
     if step_size < 0:
-        raise ValueError(f"step_size has to be greater than 0 (received: {step_size})")
+        msg = f"step_size has to be greater than 0 (received: {step_size})"
+        raise ValueError(msg)
     increments = torch.randn((batch_size, seq_len), generator=generator).mul(math.sqrt(step_size))
     increments[:, 0] = 0
     return torch.cumsum(increments, dim=1)

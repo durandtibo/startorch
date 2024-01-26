@@ -1,3 +1,6 @@
+r"""Contain the implementation of sequence generators where the values
+are sampled from a uniform distribution."""
+
 from __future__ import annotations
 
 __all__ = [
@@ -10,7 +13,8 @@ __all__ = [
     "UniformSequenceGenerator",
 ]
 
-from collections.abc import Generator
+
+from typing import TYPE_CHECKING
 
 import torch
 from coola.utils import str_indent, str_mapping
@@ -27,39 +31,39 @@ from startorch.random import (
 from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_generator
 from startorch.utils.conversion import to_tuple
 
+if TYPE_CHECKING:
+    from torch import Generator
+
 
 class AsinhUniformSequenceGenerator(BaseSequenceGenerator):
     r"""Implement a sequence generator to generate sequences by sampling
     values from an asinh-uniform distribution.
 
     Args:
-        low (``BaseSequenceGenerator`` or dict): Specifies a sequence
-            generator (or its configuration) to generate the minimum
-            value (inclusive).
-        high (``BaseSequenceGenerator`` or dict): Specifies a sequence
-            generator (or its configuration) to generate the maximum
-            value (exclusive).
+        low: Specifies a sequence generator (or its configuration) to
+            generate the minimum value (inclusive).
+        high: Specifies a sequence generator (or its configuration) to
+            generate the maximum value (exclusive).
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.sequence import AsinhUniform, RandUniform
+    >>> generator = AsinhUniform(low=RandUniform(-1.0, 0.0), high=RandUniform(0.0, 1.0))
+    >>> generator
+    AsinhUniformSequenceGenerator(
+      (low): RandUniformSequenceGenerator(low=-1.0, high=0.0, feature_size=(1,))
+      (high): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+    )
+    >>> generator.generate(seq_len=12, batch_size=4)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> import torch
-        >>> from startorch.sequence import AsinhUniform, RandUniform
-        >>> generator = AsinhUniform(low=RandUniform(-1.0, 0.0), high=RandUniform(0.0, 1.0))
-        >>> generator
-        AsinhUniformSequenceGenerator(
-          (low): RandUniformSequenceGenerator(low=-1.0, high=0.0, feature_size=(1,))
-          (high): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
-        )
-        >>> generator.generate(seq_len=12, batch_size=4)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(
-        self,
-        low: BaseSequenceGenerator | dict,
-        high: BaseSequenceGenerator | dict,
+        self, low: BaseSequenceGenerator | dict, high: BaseSequenceGenerator | dict
     ) -> None:
         super().__init__()
         self._low = setup_sequence_generator(low)
@@ -86,33 +90,30 @@ class LogUniformSequenceGenerator(BaseSequenceGenerator):
     values from a log-uniform distribution.
 
     Args:
-        low (``BaseSequenceGenerator`` or dict): Specifies a sequence
-            generator (or its configuration) to generate the minimum
-            value (inclusive).
-        high (``BaseSequenceGenerator`` or dict): Specifies a sequence
-            generator (or its configuration) to generate the maximum
-            value (exclusive).
+        low: Specifies a sequence generator (or its configuration) to
+            generate the minimum value (inclusive).
+        high: Specifies a sequence generator (or its configuration) to
+            generate the maximum value (exclusive).
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.sequence import LogUniform, RandUniform
+    >>> generator = LogUniform(low=RandUniform(0.0, 1.0), high=RandUniform(5.0, 10.0))
+    >>> generator
+    LogUniformSequenceGenerator(
+      (low): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+      (high): RandUniformSequenceGenerator(low=5.0, high=10.0, feature_size=(1,))
+    )
+    >>> generator.generate(seq_len=12, batch_size=4)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> import torch
-        >>> from startorch.sequence import LogUniform, RandUniform
-        >>> generator = LogUniform(low=RandUniform(0.0, 1.0), high=RandUniform(5.0, 10.0))
-        >>> generator
-        LogUniformSequenceGenerator(
-          (low): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
-          (high): RandUniformSequenceGenerator(low=5.0, high=10.0, feature_size=(1,))
-        )
-        >>> generator.generate(seq_len=12, batch_size=4)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(
-        self,
-        low: BaseSequenceGenerator | dict,
-        high: BaseSequenceGenerator | dict,
+        self, low: BaseSequenceGenerator | dict, high: BaseSequenceGenerator | dict
     ) -> None:
         super().__init__()
         self._low = setup_sequence_generator(low)
@@ -141,23 +142,23 @@ class RandAsinhUniformSequenceGenerator(BaseSequenceGenerator):
     Args:
         low: Specifies the minimum value (inclusive).
         high: Specifies the maximum value (exclusive).
-        feature_size (tuple or list or int, optional): Specifies the
-            feature size. Default: ``1``
+        feature_size: Specifies the feature size.
 
     Raises:
-        ValueError if ``high`` is lower than ``low``.
+        ValueError: if ``high`` is lower than ``low``.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.sequence import RandAsinhUniform
+    >>> generator = RandAsinhUniform(low=1.0, high=10.0)
+    >>> generator
+    RandAsinhUniformSequenceGenerator(low=1.0, high=10.0, feature_size=(1,))
+    >>> generator.generate(seq_len=12, batch_size=4)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> import torch
-        >>> from startorch.sequence import RandAsinhUniform
-        >>> generator = RandAsinhUniform(low=1.0, high=10.0)
-        >>> generator
-        RandAsinhUniformSequenceGenerator(low=1.0, high=10.0, feature_size=(1,))
-        >>> generator.generate(seq_len=12, batch_size=4)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(
@@ -169,7 +170,8 @@ class RandAsinhUniformSequenceGenerator(BaseSequenceGenerator):
         super().__init__()
         self._low = float(low)
         if high < low:
-            raise ValueError(f"high ({high}) has to be greater or equal to low ({low})")
+            msg = f"high ({high}) has to be greater or equal to low ({low})"
+            raise ValueError(msg)
         self._high = float(high)
         self._feature_size = to_tuple(feature_size)
 
@@ -199,34 +201,35 @@ class RandIntSequenceGenerator(BaseSequenceGenerator):
     Args:
         low: Specifies the minimum value (included).
         high: Specifies the maximum value (excluded).
-        feature_size (tuple or list or int, optional): Specifies the
-            feature size. Default: ``tuple()``
+        feature_size: Specifies the feature size.
 
     Raises:
         ValueError if ``high`` is lower than ``low``.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.sequence import RandInt
+    >>> generator = RandInt(0, 100)
+    >>> generator
+    RandIntSequenceGenerator(low=0, high=100, feature_size=())
+    >>> generator.generate(seq_len=12, batch_size=4)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> import torch
-        >>> from startorch.sequence import RandInt
-        >>> generator = RandInt(0, 100)
-        >>> generator
-        RandIntSequenceGenerator(low=0, high=100, feature_size=())
-        >>> generator.generate(seq_len=12, batch_size=4)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(
         self,
         low: int,
         high: int,
-        feature_size: tuple[int, ...] | list[int] | int = tuple(),
+        feature_size: tuple[int, ...] | list[int] | int = (),
     ) -> None:
         super().__init__()
         if high < low:
-            raise ValueError(f"high ({high}) has to be greater or equal to low ({low})")
+            msg = f"high ({high}) has to be greater or equal to low ({low})"
+            raise ValueError(msg)
         self._low = int(low)
         self._high = int(high)
         self._feature_size = to_tuple(feature_size)
@@ -257,23 +260,23 @@ class RandLogUniformSequenceGenerator(BaseSequenceGenerator):
     Args:
         low: Specifies the minimum value (inclusive).
         high: Specifies the maximum value (exclusive).
-        feature_size (tuple or list or int, optional): Specifies the
-            feature size. Default: ``1``
+        feature_size: Specifies the feature size.
 
     Raises:
-        ValueError if ``high`` is lower than ``low``.
+        ValueError: if ``high`` is lower than ``low``.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.sequence import RandLogUniform
+    >>> generator = RandLogUniform(low=1.0, high=10.0)
+    >>> generator
+    RandLogUniformSequenceGenerator(low=1.0, high=10.0, feature_size=(1,))
+    >>> generator.generate(seq_len=12, batch_size=4)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> import torch
-        >>> from startorch.sequence import RandLogUniform
-        >>> generator = RandLogUniform(low=1.0, high=10.0)
-        >>> generator
-        RandLogUniformSequenceGenerator(low=1.0, high=10.0, feature_size=(1,))
-        >>> generator.generate(seq_len=12, batch_size=4)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(
@@ -285,7 +288,8 @@ class RandLogUniformSequenceGenerator(BaseSequenceGenerator):
         super().__init__()
         self._low = float(low)
         if high < low:
-            raise ValueError(f"high ({high}) has to be greater or equal to low ({low})")
+            msg = f"high ({high}) has to be greater or equal to low ({low})"
+            raise ValueError(msg)
         self._high = float(high)
         self._feature_size = to_tuple(feature_size)
 
@@ -313,27 +317,25 @@ class RandUniformSequenceGenerator(BaseSequenceGenerator):
     values from a uniform distribution.
 
     Args:
-        low: Specifies the minimum value
-            (inclusive). Default: ``0.0``
-        high: Specifies the maximum value
-            (exclusive). Default: ``1.0``
-        feature_size (tuple or list or int, optional): Specifies the
-            feature size. Default: ``1``
+        low: Specifies the minimum value (inclusive).
+        high: Specifies the maximum value (exclusive).
+        feature_size: Specifies the feature size.
 
     Raises:
-        ValueError if ``high`` is lower than ``low``.
+        ValueError: if ``high`` is lower than ``low``.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.sequence import RandUniform
+    >>> generator = RandUniform()
+    >>> generator
+    RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+    >>> generator.generate(seq_len=12, batch_size=4)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> import torch
-        >>> from startorch.sequence import RandUniform
-        >>> generator = RandUniform()
-        >>> generator
-        RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
-        >>> generator.generate(seq_len=12, batch_size=4)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(
@@ -345,7 +347,8 @@ class RandUniformSequenceGenerator(BaseSequenceGenerator):
         super().__init__()
         self._low = float(low)
         if high < low:
-            raise ValueError(f"high ({high}) has to be greater or equal to low ({low})")
+            msg = f"high ({high}) has to be greater or equal to low ({low})"
+            raise ValueError(msg)
         self._high = float(high)
         self._feature_size = to_tuple(feature_size)
 
@@ -373,27 +376,26 @@ class UniformSequenceGenerator(BaseSequenceGenerator):
     values from a uniform distribution.
 
     Args:
-        low (``BaseSequenceGenerator`` or dict): Specifies a sequence
-            generator (or its configuration) to generate the minimum
-            value (inclusive).
-        high (``BaseSequenceGenerator`` or dict): Specifies a sequence
-            generator (or its configuration) to generate the maximum
-            value (exclusive).
+        low: Specifies a sequence generator (or its configuration) to
+            generate the minimum value (inclusive).
+        high: Specifies a sequence generator (or its configuration) to
+            generate the maximum value (exclusive).
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.sequence import Uniform, RandUniform
+    >>> generator = Uniform(low=RandUniform(-1.0, 0.0), high=RandUniform(0.0, 1.0))
+    >>> generator
+    UniformSequenceGenerator(
+      (low): RandUniformSequenceGenerator(low=-1.0, high=0.0, feature_size=(1,))
+      (high): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+    )
+    >>> generator.generate(seq_len=12, batch_size=4)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> import torch
-        >>> from startorch.sequence import Uniform, RandUniform
-        >>> generator = Uniform(low=RandUniform(-1.0, 0.0), high=RandUniform(0.0, 1.0))
-        >>> generator
-        UniformSequenceGenerator(
-          (low): RandUniformSequenceGenerator(low=-1.0, high=0.0, feature_size=(1,))
-          (high): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
-        )
-        >>> generator.generate(seq_len=12, batch_size=4)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(

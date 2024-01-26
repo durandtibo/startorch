@@ -33,7 +33,7 @@ def make_sparse_uncorrelated_regression(
         noise_std: Specifies the standard deviation
             of the Gaussian noise. Default: ``0.0``
         generator (``torch.Generator`` or ``None``, optional):
-            Specifies an optional random generator. Default: ``None``
+            Specifies an optional random generator.
 
     Returns:
         ``BatchDict``: A batch with two items:

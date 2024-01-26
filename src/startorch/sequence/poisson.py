@@ -1,17 +1,23 @@
+r"""Contain the implementation of sequence generators where the values
+are sampled from a Poisson distribution."""
+
 from __future__ import annotations
 
 __all__ = ["PoissonSequenceGenerator", "RandPoissonSequenceGenerator"]
 
+from typing import TYPE_CHECKING
 
 import torch
 from coola.utils import str_indent, str_mapping
 from redcat import BatchedTensorSeq
-from torch import Generator
 
 from startorch.random import rand_poisson
 from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_generator
 from startorch.sequence.constant import ConstantSequenceGenerator
 from startorch.utils.conversion import to_tuple
+
+if TYPE_CHECKING:
+    from torch import Generator
 
 
 class PoissonSequenceGenerator(BaseSequenceGenerator):
@@ -23,22 +29,22 @@ class PoissonSequenceGenerator(BaseSequenceGenerator):
     in the sequence. The rate values should be greater than 0.
 
     Args:
-        rate (``BaseSequenceGenerator`` or dict): Specifies the
-            rate generator or its configuration. The rate generator
-            should return valid rate values.
+        rate: Specifies the rate generator or its configuration.
+            The rate generator should return valid rate values.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.sequence import RandUniform, Poisson
+    >>> generator = Poisson(rate=RandUniform(low=1.0, high=2.0))
+    >>> generator
+    PoissonSequenceGenerator(
+      (rate): RandUniformSequenceGenerator(low=1.0, high=2.0, feature_size=(1,))
+    )
+    >>> generator.generate(seq_len=6, batch_size=2)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> from startorch.sequence import RandUniform, Poisson
-        >>> generator = Poisson(rate=RandUniform(low=1.0, high=2.0))
-        >>> generator
-        PoissonSequenceGenerator(
-          (rate): RandUniformSequenceGenerator(low=1.0, high=2.0, feature_size=(1,))
-        )
-        >>> generator.generate(seq_len=6, batch_size=2)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(self, rate: BaseSequenceGenerator | dict) -> None:
@@ -70,17 +76,13 @@ class PoissonSequenceGenerator(BaseSequenceGenerator):
         distribution are sampled from a uniform distribution.
 
         Args:
-            min_rate: Specifies the minimum rate
-                value. Default: ``0.01``
-            max_rate: Specifies the maximum rate
-                value. Default: ``1.0``
-            feature_size (tuple or list or int, optional): Specifies the
-                feature size. Default: ``1``
+            min_rate: Specifies the minimum rate value.
+            max_rate: Specifies the maximum rate value.
+            feature_size: Specifies the feature size.
 
         Returns:
-            ``Poisson``: A sequence generator
-                where the rates of the Poisson distribution are
-                sampled from a uniform distribution
+            A sequence generator where the rates of the Poisson
+                distribution are sampled from a uniform distribution
                 (``UniformConstantSequenceGenerator``).
         """
         # The import is here to do not generate circular dependencies
@@ -102,25 +104,24 @@ class RandPoissonSequenceGenerator(BaseSequenceGenerator):
     Poisson distribution.
 
     Args:
-        rate: Specifies the rate of the Poisson
-            distribution. This value has to be greater than 0.
-            Default: ``1.0``
-        feature_size (tuple or list or int, optional): Specifies the
-            feature size. Default: ``1``
+        rate: Specifies the rate of the Poisson distribution.
+            This value has to be greater than 0.
+        feature_size: Specifies the feature size.
 
     Raises:
-        ValueError if ``rate`` is not a positive number.
+        ValueError: if ``rate`` is not a positive number.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.sequence import RandPoisson
+    >>> generator = RandPoisson(rate=1.0)
+    >>> generator
+    RandPoissonSequenceGenerator(rate=1.0, feature_size=(1,))
+    >>> generator.generate(seq_len=6, batch_size=2)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> from startorch.sequence import RandPoisson
-        >>> generator = RandPoisson(rate=1.0)
-        >>> generator
-        RandPoissonSequenceGenerator(rate=1.0, feature_size=(1,))
-        >>> generator.generate(seq_len=6, batch_size=2)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(
@@ -130,7 +131,8 @@ class RandPoissonSequenceGenerator(BaseSequenceGenerator):
     ) -> None:
         super().__init__()
         if rate <= 0:
-            raise ValueError(f"rate has to be greater than 0 (received: {rate})")
+            msg = f"rate has to be greater than 0 (received: {rate})"
+            raise ValueError(msg)
         self._rate = float(rate)
         self._feature_size = to_tuple(feature_size)
 

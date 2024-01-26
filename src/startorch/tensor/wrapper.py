@@ -17,8 +17,8 @@ class BaseWrapperTensorGenerator(BaseTensorGenerator):
 
     Note:
         It is possible to wrap a tensor generator into another tensor
-        generator without using this base class. This class just makes
-        it more convenient and reduce duplicate code.
+        generator without using this base class. This class makes it
+        more convenient and reduce duplicate code.
 
     Args:
         generator: Specifies the tensor generator or its configuration.

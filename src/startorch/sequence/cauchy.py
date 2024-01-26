@@ -1,3 +1,6 @@
+r"""Contain the implementation of sequence generators where the values
+are sampled from a Cauchy distribution."""
+
 from __future__ import annotations
 
 __all__ = [
@@ -7,14 +10,17 @@ __all__ = [
     "TruncCauchySequenceGenerator",
 ]
 
+from typing import TYPE_CHECKING
 
 from coola.utils.format import str_indent, str_mapping
 from redcat import BatchedTensorSeq
-from torch import Generator
 
 from startorch.random import cauchy, rand_cauchy, rand_trunc_cauchy, trunc_cauchy
 from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_generator
 from startorch.utils.conversion import to_tuple
+
+if TYPE_CHECKING:
+    from torch import Generator
 
 
 class CauchySequenceGenerator(BaseSequenceGenerator):
@@ -22,27 +28,28 @@ class CauchySequenceGenerator(BaseSequenceGenerator):
     Cauchy distribution.
 
     Args:
-        loc (``BaseSequenceGenerator`` or dict): Specifies a sequence
-            generator (or its configuration) to generate the location.
-        scale (``BaseSequenceGenerator`` or dict): Specifies a sequence
-            generator (or its configuration) to generate the scale.
+        loc: Specifies a sequence generator (or its configuration) to
+            generate the location.
+        scale: Specifies a sequence generator (or its configuration)
+            to generate the scale.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.sequence import Cauchy, RandUniform
+    >>> generator = Cauchy(
+    ...     loc=RandUniform(low=-1.0, high=1.0),
+    ...     scale=RandUniform(low=1.0, high=2.0),
+    ... )
+    >>> generator
+    CauchySequenceGenerator(
+      (loc): RandUniformSequenceGenerator(low=-1.0, high=1.0, feature_size=(1,))
+      (scale): RandUniformSequenceGenerator(low=1.0, high=2.0, feature_size=(1,))
+    )
+    >>> generator.generate(seq_len=6, batch_size=2)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> from startorch.sequence import Cauchy, RandUniform
-        >>> generator = Cauchy(
-        ...     loc=RandUniform(low=-1.0, high=1.0),
-        ...     scale=RandUniform(low=1.0, high=2.0),
-        ... )
-        >>> generator
-        CauchySequenceGenerator(
-          (loc): RandUniformSequenceGenerator(low=-1.0, high=1.0, feature_size=(1,))
-          (scale): RandUniformSequenceGenerator(low=1.0, high=2.0, feature_size=(1,))
-        )
-        >>> generator.generate(seq_len=6, batch_size=2)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(
@@ -75,26 +82,24 @@ class RandCauchySequenceGenerator(BaseSequenceGenerator):
     Cauchy distribution.
 
     Args:
-        loc: Specifies the location/median of the
-            Cauchy distribution. Default: ``0.0``
-        scale: Specifies the scale of the
-            distribution. Default: ``1.0``
-        feature_size (tuple or list or int, optional): Specifies the
-            feature size. Default: ``1``
+        loc: Specifies the location/median of the Cauchy distribution.
+        scale: Specifies the scale of the distribution.
+        feature_size: Specifies the feature size.
 
     Raises:
-        ValueError if ``scale`` is not a positive number.
+        ValueError: if ``scale`` is not a positive number.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.sequence import RandCauchy
+    >>> generator = RandCauchy(loc=0.0, scale=1.0)
+    >>> generator
+    RandCauchySequenceGenerator(loc=0.0, scale=1.0, feature_size=(1,))
+    >>> generator.generate(seq_len=6, batch_size=2)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> from startorch.sequence import RandCauchy
-        >>> generator = RandCauchy(loc=0.0, scale=1.0)
-        >>> generator
-        RandCauchySequenceGenerator(loc=0.0, scale=1.0, feature_size=(1,))
-        >>> generator.generate(seq_len=6, batch_size=2)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(
@@ -106,7 +111,8 @@ class RandCauchySequenceGenerator(BaseSequenceGenerator):
         super().__init__()
         self._loc = float(loc)
         if scale <= 0:
-            raise ValueError(f"scale has to be greater than 0 (received: {scale})")
+            msg = f"scale has to be greater than 0 (received: {scale})"
+            raise ValueError(msg)
         self._scale = float(scale)
         self._feature_size = to_tuple(feature_size)
 
@@ -134,31 +140,27 @@ class RandTruncCauchySequenceGenerator(BaseSequenceGenerator):
     truncated Cauchy distribution.
 
     Args:
-        loc: Specifies the location/median of the
-            Cauchy distribution. Default: ``0.0``
-        scale: Specifies the scale of the
-            distribution. Default: ``1.0``
-        min_value: Specifies the minimum value.
-            (included). Default: ``-2.0``
-        max_value: Specifies the maximum value
-            (excluded). Default: ``2.0``
-        feature_size (tuple or list or int, optional): Specifies the
-            feature size. Default: ``1``
+        loc: Specifies the location/median of the Cauchy distribution.
+        scale: Specifies the scale of the distribution.
+        min_value: Specifies the minimum value (included).
+        max_value: Specifies the maximum value (excluded).
+        feature_size: Specifies the feature size.
 
     Raises:
-        ValueError if ``std`` is not a positive number.
-        ValueError if ``max_value`` is lower than ``min_value``.
+        ValueError: if ``std`` is not a positive number.
+        ValueError: if ``max_value`` is lower than ``min_value``.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.sequence import RandTruncCauchy
+    >>> generator = RandTruncCauchy(loc=0.0, scale=1.0, min_value=-5.0, max_value=5.0)
+    >>> generator
+    RandTruncCauchySequenceGenerator(loc=0.0, scale=1.0, min_value=-5.0, max_value=5.0, feature_size=(1,))
+    >>> generator.generate(seq_len=6, batch_size=2)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> from startorch.sequence import RandTruncCauchy
-        >>> generator = RandTruncCauchy(loc=0.0, scale=1.0, min_value=-5.0, max_value=5.0)
-        >>> generator
-        RandTruncCauchySequenceGenerator(loc=0.0, scale=1.0, min_value=-5.0, max_value=5.0, feature_size=(1,))
-        >>> generator.generate(seq_len=6, batch_size=2)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(
@@ -172,12 +174,12 @@ class RandTruncCauchySequenceGenerator(BaseSequenceGenerator):
         super().__init__()
         self._loc = float(loc)
         if scale <= 0:
-            raise ValueError(f"scale has to be greater than 0 (received: {scale})")
+            msg = f"scale has to be greater than 0 (received: {scale})"
+            raise ValueError(msg)
         self._scale = float(scale)
         if max_value < min_value:
-            raise ValueError(
-                f"max_value ({max_value}) has to be greater or equal to min_value ({min_value})"
-            )
+            msg = f"max_value ({max_value}) has to be greater or equal to min_value ({min_value})"
+            raise ValueError(msg)
         self._min_value = float(min_value)
         self._max_value = float(max_value)
 
@@ -210,37 +212,36 @@ class TruncCauchySequenceGenerator(BaseSequenceGenerator):
     Cauchy distribution.
 
     Args:
-        loc (``BaseSequenceGenerator`` or dict): Specifies a sequence
-            generator (or its configuration) to generate the location.
-        scale (``BaseSequenceGenerator`` or dict): Specifies a sequence
-            generator (or its configuration) to generate the scale.
-        min_value (``BaseSequenceGenerator`` or dict): Specifies a
-            sequence generator (or its configuration) to generate the
-            minimum value (included).
-        max_value (``BaseSequenceGenerator`` or dict): Specifies a
-            sequence generator (or its configuration) to generate the
-            maximum value (excluded).
+        loc: Specifies a sequence generator (or its configuration) to
+            generate the location.
+        scale: Specifies a sequence generator (or its configuration)
+            to generate the scale.
+        min_value: Specifies a sequence generator (or its
+            configuration) to generate the minimum value (included).
+        max_value: Specifies a sequence generator (or its
+            configuration) to generate the  maximum value (excluded).
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.sequence import RandUniform, TruncCauchy
+    >>> generator = TruncCauchy(
+    ...     loc=RandUniform(low=-1.0, high=1.0),
+    ...     scale=RandUniform(low=1.0, high=2.0),
+    ...     min_value=RandUniform(low=-10.0, high=-5.0),
+    ...     max_value=RandUniform(low=5.0, high=10.0),
+    ... )
+    >>> generator
+    TruncCauchySequenceGenerator(
+      (loc): RandUniformSequenceGenerator(low=-1.0, high=1.0, feature_size=(1,))
+      (scale): RandUniformSequenceGenerator(low=1.0, high=2.0, feature_size=(1,))
+      (min_value): RandUniformSequenceGenerator(low=-10.0, high=-5.0, feature_size=(1,))
+      (max_value): RandUniformSequenceGenerator(low=5.0, high=10.0, feature_size=(1,))
+    )
+    >>> generator.generate(seq_len=6, batch_size=2)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> from startorch.sequence import RandUniform, TruncCauchy
-        >>> generator = TruncCauchy(
-        ...     loc=RandUniform(low=-1.0, high=1.0),
-        ...     scale=RandUniform(low=1.0, high=2.0),
-        ...     min_value=RandUniform(low=-10.0, high=-5.0),
-        ...     max_value=RandUniform(low=5.0, high=10.0),
-        ... )
-        >>> generator
-        TruncCauchySequenceGenerator(
-          (loc): RandUniformSequenceGenerator(low=-1.0, high=1.0, feature_size=(1,))
-          (scale): RandUniformSequenceGenerator(low=1.0, high=2.0, feature_size=(1,))
-          (min_value): RandUniformSequenceGenerator(low=-10.0, high=-5.0, feature_size=(1,))
-          (max_value): RandUniformSequenceGenerator(low=5.0, high=10.0, feature_size=(1,))
-        )
-        >>> generator.generate(seq_len=6, batch_size=2)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(

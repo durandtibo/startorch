@@ -1,3 +1,6 @@
+r"""Contain the implementation of sequence generators where the values
+are sampled from a Log-Normal distribution."""
+
 from __future__ import annotations
 
 __all__ = [
@@ -7,10 +10,10 @@ __all__ = [
     "TruncLogNormalSequenceGenerator",
 ]
 
+from typing import TYPE_CHECKING
 
 from coola.utils.format import str_indent, str_mapping
 from redcat import BatchedTensorSeq
-from torch import Generator
 
 from startorch.random import (
     log_normal,
@@ -21,34 +24,37 @@ from startorch.random import (
 from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_generator
 from startorch.utils.conversion import to_tuple
 
+if TYPE_CHECKING:
+    from torch import Generator
+
 
 class LogNormalSequenceGenerator(BaseSequenceGenerator):
     r"""Implement a class to generate sequence by sampling values from a
     log-Normal distribution.
 
     Args:
-        mean (``BaseSequenceGenerator`` or dict): Specifies a sequence
-            generator (or its configuration) to generate the mean
-            of the underlying Normal distribution.
-        std (``BaseSequenceGenerator`` or dict): Specifies a sequence
-            generator (or its configuration) to generate the standard
-            deviation of the underlying Normal distribution.
+        mean: Specifies a sequence generator (or its configuration) to
+            generate the mean of the underlying Normal distribution.
+        std: Specifies a sequence generator (or its configuration) to
+            generate the standard deviation of the underlying Normal
+            distribution.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.sequence import LogNormal, RandUniform
+    >>> generator = LogNormal(
+    ...     mean=RandUniform(low=-1.0, high=1.0), std=RandUniform(low=1.0, high=2.0)
+    ... )
+    >>> generator
+    LogNormalSequenceGenerator(
+      (mean): RandUniformSequenceGenerator(low=-1.0, high=1.0, feature_size=(1,))
+      (std): RandUniformSequenceGenerator(low=1.0, high=2.0, feature_size=(1,))
+    )
+    >>> generator.generate(seq_len=6, batch_size=2)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> from startorch.sequence import LogNormal, RandUniform
-        >>> generator = LogNormal(
-        ...     mean=RandUniform(low=-1.0, high=1.0), std=RandUniform(low=1.0, high=2.0)
-        ... )
-        >>> generator
-        LogNormalSequenceGenerator(
-          (mean): RandUniformSequenceGenerator(low=-1.0, high=1.0, feature_size=(1,))
-          (std): RandUniformSequenceGenerator(low=1.0, high=2.0, feature_size=(1,))
-        )
-        >>> generator.generate(seq_len=6, batch_size=2)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(
@@ -79,26 +85,25 @@ class RandLogNormalSequenceGenerator(BaseSequenceGenerator):
     log-Normal distribution.
 
     Args:
-        mean: Specifies the mean of the underlying
-            Normal distribution. Default: ``0.0``
-        std: Specifies the standard deviation of the
-            underlying Normal distribution. Default: ``1.0``
-        feature_size (tuple or list or int, optional): Specifies the
-            feature size. Default: ``1``
+        mean: Specifies the mean of the underlying Normal distribution.
+        std: Specifies the standard deviation of the underlying Normal
+            distribution.
+        feature_size: Specifies the feature size.
 
     Raises:
-        ValueError if ``std`` is not a positive number.
+        ValueError: if ``std`` is not a positive number.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.sequence import RandLogNormal
+    >>> generator = RandLogNormal(mean=0.0, std=1.0)
+    >>> generator
+    RandLogNormalSequenceGenerator(mean=0.0, std=1.0, feature_size=(1,))
+    >>> generator.generate(seq_len=6, batch_size=2)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> from startorch.sequence import RandLogNormal
-        >>> generator = RandLogNormal(mean=0.0, std=1.0)
-        >>> generator
-        RandLogNormalSequenceGenerator(mean=0.0, std=1.0, feature_size=(1,))
-        >>> generator.generate(seq_len=6, batch_size=2)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(
@@ -110,7 +115,8 @@ class RandLogNormalSequenceGenerator(BaseSequenceGenerator):
         super().__init__()
         self._mean = float(mean)
         if std <= 0:
-            raise ValueError(f"std has to be greater than 0 (received: {std})")
+            msg = f"std has to be greater than 0 (received: {std})"
+            raise ValueError(msg)
         self._std = float(std)
         self._feature_size = to_tuple(feature_size)
 
@@ -138,31 +144,28 @@ class RandTruncLogNormalSequenceGenerator(BaseSequenceGenerator):
     sampling values from a truncated log-Normal distribution.
 
     Args:
-        mean: Specifies the mean of the
-            log-Normal distribution. Default: ``0.0``
-        std: Specifies the standard deviation of
-            the log-Normal distribution. Default: ``1.0``
+        mean: Specifies the mean of the log-Normal distribution.
+        std: Specifies the standard deviation of the log-Normal
+            distribution.
         min_value: Specifies the minimum value.
-            Default: ``0.0``
         max_value: Specifies the maximum value.
-            Default: ``5.0``
-        feature_size (tuple or list or int, optional): Specifies the
-            feature size. Default: ``1``
+        feature_size: Specifies the feature size.
 
     Raises:
-        ValueError if ``std`` is not a positive number.
-        ValueError if ``max_value`` is lower than ``min_value``.
+        ValueError: if ``std`` is not a positive number.
+        ValueError: if ``max_value`` is lower than ``min_value``.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.sequence import RandTruncLogNormal
+    >>> generator = RandTruncLogNormal(mean=0.0, std=1.0, min_value=0.0, max_value=1.0)
+    >>> generator
+    RandTruncLogNormalSequenceGenerator(mean=0.0, std=1.0, min_value=0.0, max_value=1.0, feature_size=(1,))
+    >>> generator.generate(seq_len=6, batch_size=2)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> from startorch.sequence import RandTruncLogNormal
-        >>> generator = RandTruncLogNormal(mean=0.0, std=1.0, min_value=0.0, max_value=1.0)
-        >>> generator
-        RandTruncLogNormalSequenceGenerator(mean=0.0, std=1.0, min_value=0.0, max_value=1.0, feature_size=(1,))
-        >>> generator.generate(seq_len=6, batch_size=2)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(
@@ -176,12 +179,12 @@ class RandTruncLogNormalSequenceGenerator(BaseSequenceGenerator):
         super().__init__()
         self._mean = float(mean)
         if std <= 0:
-            raise ValueError(f"std has to be greater than 0 (received: {std})")
+            msg = f"std has to be greater than 0 (received: {std})"
+            raise ValueError(msg)
         self._std = float(std)
         if max_value < min_value:
-            raise ValueError(
-                f"max_value ({max_value}) has to be greater or equal to min_value ({min_value})"
-            )
+            msg = f"max_value ({max_value}) has to be greater or equal to min_value ({min_value})"
+            raise ValueError(msg)
         self._min_value = float(min_value)
         self._max_value = float(max_value)
         self._feature_size = to_tuple(feature_size)
@@ -213,16 +216,16 @@ class TruncLogNormalSequenceGenerator(BaseSequenceGenerator):
     truncated log-Normal distribution.
 
     Args:
-        mean (``BaseSequenceGenerator`` or dict): Specifies a sequence
+        mean: Specifies a sequence
             generator (or its configuration) to generate the mean of
             the underlying Normal distribution.
-        std (``BaseSequenceGenerator`` or dict): Specifies a sequence
+        std: Specifies a sequence
             generator (or its configuration) to generate the standard
             deviation of the underlying Normal distribution.
-        min_value (``BaseSequenceGenerator`` or dict): Specifies a
+        min_value: Specifies a
             sequence generator (or its configuration) to generate the
             minimum value (included).
-        max_value (``BaseSequenceGenerator`` or dict): Specifies a
+        max_value: Specifies a
             sequence generator (or its configuration) to generate the
             maximum value (excluded).
 

@@ -35,7 +35,7 @@ def hist_feature(
             ``(batch_size, feature_size)``): Specifies the features.
         feature_names (``Sequence`` or ``None``, optional): Specifies
             the feature names. If ``None``, the feature names are
-            generated automatically. Default: ``None``
+            generated automatically.
         ncols: Specifies the number of columns.
             Default: ``2``
         figsize (``tuple``, optional): Specifies the individual figure

@@ -1,3 +1,6 @@
+r"""Contain the implementation of sequence generators that generates
+sequences from a range of values."""
+
 from __future__ import annotations
 
 __all__ = ["ArangeSequenceGenerator"]
@@ -16,20 +19,20 @@ class ArangeSequenceGenerator(BaseSequenceGenerator):
     values between ``0`` and ``seq_len-1``.
 
     Args:
-        feature_size (tuple or list or int, optional): Specifies the
-            feature size. Default: ``1``
+        feature_size: Specifies the feature size.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.sequence import Arange
+    >>> generator = Arange(feature_size=())
+    >>> generator
+    ArangeSequenceGenerator(feature_size=())
+    >>> generator.generate(seq_len=6, batch_size=2)
+    tensor([[0, 1, 2, 3, 4, 5],
+            [0, 1, 2, 3, 4, 5]], batch_dim=0, seq_dim=1)
 
-        >>> from startorch.sequence import Arange
-        >>> generator = Arange(feature_size=())
-        >>> generator
-        ArangeSequenceGenerator(feature_size=())
-        >>> generator.generate(seq_len=6, batch_size=2)
-        tensor([[0, 1, 2, 3, 4, 5],
-                [0, 1, 2, 3, 4, 5]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(self, feature_size: tuple[int, ...] | list[int] | int = 1) -> None:

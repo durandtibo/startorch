@@ -1,3 +1,6 @@
+r"""Contain the implementation of sequence generators where the values
+are sampled from a half-Normal distribution."""
+
 from __future__ import annotations
 
 __all__ = [
@@ -7,10 +10,10 @@ __all__ = [
     "TruncHalfNormalSequenceGenerator",
 ]
 
+from typing import TYPE_CHECKING
 
 from coola.utils.format import str_indent, str_mapping
 from redcat import BatchedTensorSeq
-from torch import Generator
 
 from startorch.random import (
     half_normal,
@@ -21,28 +24,31 @@ from startorch.random import (
 from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_generator
 from startorch.utils.conversion import to_tuple
 
+if TYPE_CHECKING:
+    from torch import Generator
+
 
 class HalfNormalSequenceGenerator(BaseSequenceGenerator):
     r"""Implement a class to generate sequence by sampling values from a
     half-Normal distribution.
 
     Args:
-        std (``BaseSequenceGenerator`` or dict): Specifies a sequence
-            generator (or its configuration) to generate the standard
-            deviation.
+        std: Specifies a sequence generator (or its configuration)
+            to generate the standard deviation.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.sequence import HalfNormal, RandUniform
+    >>> generator = HalfNormal(std=RandUniform(low=1.0, high=2.0))
+    >>> generator
+    HalfNormalSequenceGenerator(
+      (std): RandUniformSequenceGenerator(low=1.0, high=2.0, feature_size=(1,))
+    )
+    >>> generator.generate(seq_len=6, batch_size=2)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> from startorch.sequence import HalfNormal, RandUniform
-        >>> generator = HalfNormal(std=RandUniform(low=1.0, high=2.0))
-        >>> generator
-        HalfNormalSequenceGenerator(
-          (std): RandUniformSequenceGenerator(low=1.0, high=2.0, feature_size=(1,))
-        )
-        >>> generator.generate(seq_len=6, batch_size=2)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(self, std: BaseSequenceGenerator | dict) -> None:
@@ -70,23 +76,22 @@ class RandHalfNormalSequenceGenerator(BaseSequenceGenerator):
 
     Args:
         std: Specifies the std of the distribution.
-            Default: ``1.0``
-        feature_size (tuple or list or int, optional): Specifies the
-            feature size. Default: ``1``
+        feature_size: Specifies the feature size.
 
     Raises:
-        ValueError if ``std`` is not a positive number.
+        ValueError: if ``std`` is not a positive number.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.sequence import RandHalfNormal
+    >>> generator = RandHalfNormal(std=1.0)
+    >>> generator
+    RandHalfNormalSequenceGenerator(std=1.0, feature_size=(1,))
+    >>> generator.generate(seq_len=6, batch_size=2)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> from startorch.sequence import RandHalfNormal
-        >>> generator = RandHalfNormal(std=1.0)
-        >>> generator
-        RandHalfNormalSequenceGenerator(std=1.0, feature_size=(1,))
-        >>> generator.generate(seq_len=6, batch_size=2)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(
@@ -94,7 +99,8 @@ class RandHalfNormalSequenceGenerator(BaseSequenceGenerator):
     ) -> None:
         super().__init__()
         if std <= 0:
-            raise ValueError(f"std has to be greater than 0 (received: {std})")
+            msg = f"std has to be greater than 0 (received: {std})"
+            raise ValueError(msg)
         self._std = float(std)
         self._feature_size = to_tuple(feature_size)
 
@@ -119,26 +125,24 @@ class RandTruncHalfNormalSequenceGenerator(BaseSequenceGenerator):
 
     Args:
         std: Specifies the std of the distribution.
-            Default: ``1.0``
         max_value: Specifies the maximum value.
-            Default: ``3.0``
-        feature_size (tuple or list or int, optional): Specifies the
-            feature size. Default: ``1``
+        feature_size: Specifies the feature size.
 
     Raises:
-        ValueError if ``std`` is not a positive number.
-        ValueError if ``max_value`` is not a positive number.
+        ValueError: if ``std`` is not a positive number.
+        ValueError: if ``max_value`` is not a positive number.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.sequence import RandTruncHalfNormal
+    >>> generator = RandTruncHalfNormal(std=1.0, max_value=1.0)
+    >>> generator
+    RandTruncHalfNormalSequenceGenerator(std=1.0, max_value=1.0, feature_size=(1,))
+    >>> generator.generate(seq_len=6, batch_size=2)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> from startorch.sequence import RandTruncHalfNormal
-        >>> generator = RandTruncHalfNormal(std=1.0, max_value=1.0)
-        >>> generator
-        RandTruncHalfNormalSequenceGenerator(std=1.0, max_value=1.0, feature_size=(1,))
-        >>> generator.generate(seq_len=6, batch_size=2)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(
@@ -149,10 +153,12 @@ class RandTruncHalfNormalSequenceGenerator(BaseSequenceGenerator):
     ) -> None:
         super().__init__()
         if std <= 0:
-            raise ValueError(f"std has to be greater than 0 (received: {std})")
+            msg = f"std has to be greater than 0 (received: {std})"
+            raise ValueError(msg)
         self._std = float(std)
         if max_value <= 0:
-            raise ValueError(f"max_value has to be greater than 0 (received: {max_value})")
+            msg = f"max_value has to be greater than 0 (received: {max_value})"
+            raise ValueError(msg)
         self._max_value = float(max_value)
         self._feature_size = to_tuple(feature_size)
 
@@ -180,28 +186,28 @@ class TruncHalfNormalSequenceGenerator(BaseSequenceGenerator):
     half-Normal distribution.
 
     Args:
-        std (``BaseSequenceGenerator`` or dict): Specifies a sequence
-            generator (or its configuration) to generate the std.
-        max_value (``BaseSequenceGenerator`` or dict): Specifies a
-            sequence generator (or its configuration) to generate the
-            maximum value (excluded).
+        std: Specifies a sequence generator (or its configuration) to
+            generate the std.
+        max_value: Specifies a sequence generator (or its
+            configuration) to generate the maximum value (excluded).
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.sequence import RandUniform, TruncHalfNormal
+    >>> generator = TruncHalfNormal(
+    ...     std=RandUniform(low=1.0, high=2.0),
+    ...     max_value=RandUniform(low=5.0, high=10.0),
+    ... )
+    >>> generator
+    TruncHalfNormalSequenceGenerator(
+      (std): RandUniformSequenceGenerator(low=1.0, high=2.0, feature_size=(1,))
+      (max_value): RandUniformSequenceGenerator(low=5.0, high=10.0, feature_size=(1,))
+    )
+    >>> generator.generate(seq_len=6, batch_size=2)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> from startorch.sequence import RandUniform, TruncHalfNormal
-        >>> generator = TruncHalfNormal(
-        ...     std=RandUniform(low=1.0, high=2.0),
-        ...     max_value=RandUniform(low=5.0, high=10.0),
-        ... )
-        >>> generator
-        TruncHalfNormalSequenceGenerator(
-          (std): RandUniformSequenceGenerator(low=1.0, high=2.0, feature_size=(1,))
-          (max_value): RandUniformSequenceGenerator(low=5.0, high=10.0, feature_size=(1,))
-        )
-        >>> generator.generate(seq_len=6, batch_size=2)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(

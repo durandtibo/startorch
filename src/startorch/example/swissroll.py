@@ -113,7 +113,7 @@ def make_swiss_roll(
         hole (bool, optional): If ``True`` generates the Swiss roll
             with hole dataset. Default: ``False``
         generator (``torch.Generator`` or ``None``, optional):
-            Specifies an optional random generator. Default: ``None``
+            Specifies an optional random generator.
 
     Returns:
     -------

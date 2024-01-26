@@ -154,7 +154,7 @@ def make_linear_regression(
         noise_std (float, optional): Specifies the standard deviation
             of the Gaussian noise. Default: ``0.0``
         generator (``torch.Generator`` or ``None``, optional):
-            Specifies an optional random generator. Default: ``None``
+            Specifies an optional random generator.
 
     Returns:
     -------
@@ -216,7 +216,7 @@ def get_uniform_weights(
         informative_feature_size: Specifies the number of
             informative features.
         generator (``torch.Generator`` or ``None``, optional):
-            Specifies an optional random generator. Default: ``None``
+            Specifies an optional random generator.
 
     Returns:
     -------

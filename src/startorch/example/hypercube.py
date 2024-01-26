@@ -131,7 +131,7 @@ def make_hypercube_classification(
         noise_std (float, optional): Specifies the standard deviation
             of the Gaussian noise. Default: ``0.2``
         generator (``torch.Generator`` or ``None``, optional):
-            Specifies an optional random generator. Default: ``None``
+            Specifies an optional random generator.
 
     Returns:
     -------

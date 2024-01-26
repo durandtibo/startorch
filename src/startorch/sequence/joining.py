@@ -1,47 +1,55 @@
+r"""Contain the implementations of sequence generators that generate
+sequences by joining generated sequences."""
+
 from __future__ import annotations
 
 __all__ = ["Cat2SequenceGenerator"]
 
+from typing import TYPE_CHECKING
 
 from coola.utils.format import str_indent, str_mapping
-from redcat import BatchedTensorSeq
-from torch import Generator
 
 from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_generator
 from startorch.tensor.base import BaseTensorGenerator, setup_tensor_generator
 
+if TYPE_CHECKING:
+    from redcat import BatchedTensorSeq
+    from torch import Generator
+
 
 class Cat2SequenceGenerator(BaseSequenceGenerator):
-    r"""Implement a sequence generator that concatenate two sequences.
+    r"""Implement a sequence generator that concatenate two sequences
+    along the sequence dimension.
 
-    ``sequence = [sequence_1, sequence_2]``
+    ``ouput = [sequence1, sequence2]``
 
     Args:
-        generator1 (``BaseSequenceGenerator`` or dict): Specifies the
-            first sequence generator or its configuration.
-        generator2 (``BaseSequenceGenerator`` or dict): Specifies the
-            second sequence generator or its configuration.
-        changepoint (``BaseTensorGenerator`` or dict): Specifies the
-            change point generator or its configuration.
+        generator1: Specifies the first sequence generator or its
+            configuration.
+        generator2: Specifies the second sequence generator or its
+            configuration.
+        changepoint: Specifies the change point generator or its
+            configuration.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.sequence import Cat2, RandUniform, RandNormal
+    >>> from startorch.tensor import RandInt
+    >>> generator = Cat2(
+    ...     generator1=RandUniform(), generator2=RandNormal(), changepoint=RandInt(0, 12)
+    ... )
+    >>> generator
+    Cat2SequenceGenerator(
+      (generator1): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+      (generator2): RandNormalSequenceGenerator(mean=0.0, std=1.0, feature_size=(1,))
+      (changepoint): RandIntTensorGenerator(low=0, high=12)
+    )
+    >>> generator.generate(seq_len=12, batch_size=4)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> import torch
-        >>> from startorch.sequence import Cat2, RandUniform, RandNormal
-        >>> from startorch.tensor import RandInt
-        >>> generator = Cat2(
-        ...     generator1=RandUniform(), generator2=RandNormal(), changepoint=RandInt(0, 12)
-        ... )
-        >>> generator
-        Cat2SequenceGenerator(
-          (generator1): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
-          (generator2): RandNormalSequenceGenerator(mean=0.0, std=1.0, feature_size=(1,))
-          (changepoint): RandIntTensorGenerator(low=0, high=12)
-        )
-        >>> generator.generate(seq_len=12, batch_size=4)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(

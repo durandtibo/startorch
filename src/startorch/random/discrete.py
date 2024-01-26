@@ -24,7 +24,7 @@ def rand_poisson(
             distribution. This value has to be greater than 0.
             Default: ``1.0``
         generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator. Default: ``None``
+            an optional random generator.
 
     Returns:
         ``torch.Tensor`` of type float: A tensor filled with values

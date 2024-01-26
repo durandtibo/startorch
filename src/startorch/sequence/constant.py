@@ -1,3 +1,6 @@
+r"""Contain the implementations of sequences generators where the values
+are constant."""
+
 from __future__ import annotations
 
 __all__ = ["ConstantSequenceGenerator", "FullSequenceGenerator"]
@@ -19,16 +22,17 @@ class ConstantSequenceGenerator(BaseWrapperSequenceGenerator):
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.sequence import Constant, RandUniform
+    >>> generator = Constant(RandUniform())
+    >>> generator
+    ConstantSequenceGenerator(
+      (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+    )
+    >>> generator.generate(seq_len=6, batch_size=2)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> from startorch.sequence import Constant, RandUniform
-        >>> generator = Constant(RandUniform())
-        >>> generator
-        ConstantSequenceGenerator(
-          (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
-        )
-        >>> generator.generate(seq_len=6, batch_size=2)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def generate(
@@ -48,30 +52,30 @@ class FullSequenceGenerator(BaseSequenceGenerator):
 
     Args:
         value: Specifies the value.
-        feature_size (tuple or list or int, optional): Specifies the
-            feature size. Default: ``1``
+        feature_size: Specifies the feature size.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.sequence import Full
+    >>> generator = Full(42.0)
+    >>> generator
+    FullSequenceGenerator(value=42.0, feature_size=(1,))
+    >>> generator.generate(seq_len=6, batch_size=2)
+    tensor([[[42.],
+             [42.],
+             [42.],
+             [42.],
+             [42.],
+             [42.]],
+            [[42.],
+             [42.],
+             [42.],
+             [42.],
+             [42.],
+             [42.]]], batch_dim=0, seq_dim=1)
 
-        >>> from startorch.sequence import Full
-        >>> generator = Full(42.0)
-        >>> generator
-        FullSequenceGenerator(value=42.0, feature_size=(1,))
-        >>> generator.generate(seq_len=6, batch_size=2)
-        tensor([[[42.],
-                 [42.],
-                 [42.],
-                 [42.],
-                 [42.],
-                 [42.]],
-                [[42.],
-                 [42.],
-                 [42.],
-                 [42.],
-                 [42.],
-                 [42.]]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(

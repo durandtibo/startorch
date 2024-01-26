@@ -1,9 +1,11 @@
+r"""Contain the implementations of sequence generators to generate time
+sequences."""
+
 from __future__ import annotations
 
 __all__ = ["TimeSequenceGenerator"]
 
-from redcat import BatchedTensorSeq
-from torch import Generator
+from typing import TYPE_CHECKING
 
 from startorch.sequence.constant import ConstantSequenceGenerator
 from startorch.sequence.exponential import ExponentialSequenceGenerator
@@ -13,12 +15,16 @@ from startorch.sequence.sort import SortSequenceGenerator
 from startorch.sequence.uniform import RandUniformSequenceGenerator
 from startorch.sequence.wrapper import BaseWrapperSequenceGenerator
 
+if TYPE_CHECKING:
+    from redcat import BatchedTensorSeq
+    from torch import Generator
+
 
 class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
     r"""Implement a sequence generator to generate time sequences.
 
-    The time is represented as a float value where the unit in the
-    second:
+    The time is represented as a float value. The unit depends on the
+    context. If the unit is the second:
 
        - ``1.2`` -> ``00:00:01.200``
        - ``61.2`` -> ``00:01:01.200``
@@ -26,17 +32,18 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.sequence import RandUniform, Time
+    >>> generator = Time(RandUniform())
+    >>> generator
+    TimeSequenceGenerator(
+      (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+    )
+    >>> generator.generate(seq_len=12, batch_size=4)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> import torch
-        >>> from startorch.sequence import RandUniform, Time
-        >>> generator = Time(RandUniform())
-        >>> generator
-        TimeSequenceGenerator(
-          (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
-        )
-        >>> generator.generate(seq_len=12, batch_size=4)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def generate(
@@ -51,36 +58,35 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
         exponential distribution.
 
         Args:
-            rate: Specifies the rate of the
-                exponential distribution. Default: ``1.0``
+            rate: Specifies the rate of the exponential distribution.
 
         Returns:
-            ``TimeSequenceGenerator``: A time sequence generator where
-                the time difference between two consecutive steps is
-                constant and is sampled from an exponential
-                distribution.
+            A time sequence generator where the time difference
+                between two consecutive steps is constant and is
+                sampled from an exponential distribution.
 
         Example usage:
 
-        .. code-block:: pycon
-
-            >>> import torch
-            >>> from startorch.sequence import RandUniform, Time
-            >>> generator = Time.create_exponential_constant_time_diff()
-            >>> generator
-            TimeSequenceGenerator(
-              (sequence): CumsumSequenceGenerator(
-                  (sequence): ConstantSequenceGenerator(
-                      (sequence): ExponentialSequenceGenerator(
-                          (rate): ConstantSequenceGenerator(
-                              (sequence): RandUniformSequenceGenerator(low=1.0, high=1.0, feature_size=(1,))
-                            )
+        ```pycon
+        >>> import torch
+        >>> from startorch.sequence import RandUniform, Time
+        >>> generator = Time.create_exponential_constant_time_diff()
+        >>> generator
+        TimeSequenceGenerator(
+          (sequence): CumsumSequenceGenerator(
+              (sequence): ConstantSequenceGenerator(
+                  (sequence): ExponentialSequenceGenerator(
+                      (rate): ConstantSequenceGenerator(
+                          (sequence): RandUniformSequenceGenerator(low=1.0, high=1.0, feature_size=(1,))
                         )
                     )
                 )
             )
-            >>> generator.generate(seq_len=12, batch_size=4)
-            tensor([[...]], batch_dim=0, seq_dim=1)
+        )
+        >>> generator.generate(seq_len=12, batch_size=4)
+        tensor([[...]], batch_dim=0, seq_dim=1)
+
+        ```
         """
         return cls(
             CumsumSequenceGenerator(
@@ -101,33 +107,33 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
         distribution.
 
         Args:
-            rate: Specifies the rate of the
-                exponential distribution. Default: ``1.0``
+            rate: Specifies the rate of the exponential distribution.
 
         Returns:
-            ``TimeSequenceGenerator``: A time sequence generator where the
-                time difference between two consecutive steps follows
-                an exponential distribution.
+            A time sequence generator where the time difference between
+                two consecutive steps follows an exponential
+                distribution.
 
         Example usage:
 
-        .. code-block:: pycon
-
-            >>> import torch
-            >>> from startorch.sequence import RandUniform, Time
-            >>> generator = Time.create_exponential_time_diff()
-            >>> generator
-            TimeSequenceGenerator(
-              (sequence): CumsumSequenceGenerator(
-                  (sequence): ExponentialSequenceGenerator(
-                      (rate): ConstantSequenceGenerator(
-                          (sequence): RandUniformSequenceGenerator(low=1.0, high=1.0, feature_size=(1,))
-                        )
+        ```pycon
+        >>> import torch
+        >>> from startorch.sequence import RandUniform, Time
+        >>> generator = Time.create_exponential_time_diff()
+        >>> generator
+        TimeSequenceGenerator(
+          (sequence): CumsumSequenceGenerator(
+              (sequence): ExponentialSequenceGenerator(
+                  (rate): ConstantSequenceGenerator(
+                      (sequence): RandUniformSequenceGenerator(low=1.0, high=1.0, feature_size=(1,))
                     )
                 )
             )
-            >>> generator.generate(seq_len=12, batch_size=4)
-            tensor([[...]], batch_dim=0, seq_dim=1)
+        )
+        >>> generator.generate(seq_len=12, batch_size=4)
+        tensor([[...]], batch_dim=0, seq_dim=1)
+
+        ```
         """
         return cls(
             CumsumSequenceGenerator(
@@ -146,31 +152,31 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
         Poisson distribution.
 
         Args:
-            rate: Specifies the rate of the Poisson
-                distribution. Default: ``1.0``
+            rate: Specifies the rate of the Poisson distribution.
 
         Returns:
-            ``TimeSequenceGenerator``: A time sequence generator where the
-                time difference between two consecutive steps is
-                constant and is sampled from a Poisson distribution.
+            A time sequence generator where the time difference
+                between two consecutive steps is constant and is
+                sampled from a Poisson distribution.
 
         Example usage:
 
-        .. code-block:: pycon
-
-            >>> import torch
-            >>> from startorch.sequence import RandUniform, Time
-            >>> generator = Time.create_poisson_constant_time_diff()
-            >>> generator
-            TimeSequenceGenerator(
-              (sequence): CumsumSequenceGenerator(
-                  (sequence): ConstantSequenceGenerator(
-                      (sequence): RandPoissonSequenceGenerator(rate=1.0, feature_size=(1,))
-                    )
+        ```pycon
+        >>> import torch
+        >>> from startorch.sequence import RandUniform, Time
+        >>> generator = Time.create_poisson_constant_time_diff()
+        >>> generator
+        TimeSequenceGenerator(
+          (sequence): CumsumSequenceGenerator(
+              (sequence): ConstantSequenceGenerator(
+                  (sequence): RandPoissonSequenceGenerator(rate=1.0, feature_size=(1,))
                 )
             )
-            >>> generator.generate(seq_len=12, batch_size=4)
-            tensor([[...]], batch_dim=0, seq_dim=1)
+        )
+        >>> generator.generate(seq_len=12, batch_size=4)
+        tensor([[...]], batch_dim=0, seq_dim=1)
+
+        ```
         """
         return cls(
             CumsumSequenceGenerator(
@@ -184,29 +190,29 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
         between two consecutive steps follows a Poisson distribution.
 
         Args:
-            rate: Specifies the rate of the
-                Poisson distribution. Default: ``1.0``
+            rate: Specifies the rate of the Poisson distribution.
 
         Returns:
-            ``TimeSequenceGenerator``: A time sequence generator where
-                the time difference between two consecutive steps
-                follows a Poisson distribution.
+            A time sequence generator where the time difference
+                between two consecutive steps follows a Poisson
+                distribution.
 
         Example usage:
 
-        .. code-block:: pycon
-
-            >>> import torch
-            >>> from startorch.sequence import RandUniform, Time
-            >>> generator = Time.create_poisson_time_diff()
-            >>> generator
-            TimeSequenceGenerator(
-              (sequence): CumsumSequenceGenerator(
-                  (sequence): RandPoissonSequenceGenerator(rate=1.0, feature_size=(1,))
-                )
+        ```pycon
+        >>> import torch
+        >>> from startorch.sequence import RandUniform, Time
+        >>> generator = Time.create_poisson_time_diff()
+        >>> generator
+        TimeSequenceGenerator(
+          (sequence): CumsumSequenceGenerator(
+              (sequence): RandPoissonSequenceGenerator(rate=1.0, feature_size=(1,))
             )
-            >>> generator.generate(seq_len=12, batch_size=4)
-            tensor([[...]], batch_dim=0, seq_dim=1)
+        )
+        >>> generator.generate(seq_len=12, batch_size=4)
+        tensor([[...]], batch_dim=0, seq_dim=1)
+
+        ```
         """
         return cls(CumsumSequenceGenerator(RandPoissonSequenceGenerator(rate, feature_size=1)))
 
@@ -221,45 +227,41 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
         uniform distribution.
 
         Args:
-            min_time_diff: Specifies the minimum
-                time difference between two consecutive steps.
-                Default: ``0.0``
-            max_time_diff: Specifies the maximum
-                time difference between two consecutive steps.
-                Default: ``1.0``
+            min_time_diff: Specifies the minimum time difference
+                between two consecutive steps.
+            max_time_diff: Specifies the maximum time difference
+                between two consecutive steps.
 
         Returns:
-            ``TimeSequenceGenerator``: A time sequence generator where
-                the time difference between two consecutive steps
-                is constant and is sampled from a uniform
-                distribution.
+            A time sequence generator where the time difference
+                between two consecutive steps is constant and is
+                sampled from a uniform distribution.
 
         Raises:
-        ------
-            ValueError if ``min_time_diff`` is lower than 0.
+            ValueError: if ``min_time_diff`` is lower than 0.
 
         Example usage:
 
-        .. code-block:: pycon
-
-            >>> import torch
-            >>> from startorch.sequence import RandUniform, Time
-            >>> generator = Time.create_uniform_constant_time_diff()
-            >>> generator
-            TimeSequenceGenerator(
-              (sequence): CumsumSequenceGenerator(
-                  (sequence): ConstantSequenceGenerator(
-                      (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
-                    )
+        ```pycon
+        >>> import torch
+        >>> from startorch.sequence import RandUniform, Time
+        >>> generator = Time.create_uniform_constant_time_diff()
+        >>> generator
+        TimeSequenceGenerator(
+          (sequence): CumsumSequenceGenerator(
+              (sequence): ConstantSequenceGenerator(
+                  (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
                 )
             )
-            >>> generator.generate(seq_len=12, batch_size=4)
-            tensor([[...]], batch_dim=0, seq_dim=1)
+        )
+        >>> generator.generate(seq_len=12, batch_size=4)
+        tensor([[...]], batch_dim=0, seq_dim=1)
+
+        ```
         """
         if min_time_diff < 0:
-            raise ValueError(
-                f"min_time_diff has to be greater or equal to 0 (received: {min_time_diff})"
-            )
+            msg = f"min_time_diff has to be greater or equal to 0 (received: {min_time_diff})"
+            raise ValueError(msg)
         return cls(
             CumsumSequenceGenerator(
                 ConstantSequenceGenerator(
@@ -282,42 +284,39 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
         between two consecutive steps follows a uniform distribution.
 
         Args:
-            min_time_diff: Specifies the minimum
-                time difference between two consecutive steps.
-                Default: ``0.0``
-            max_time_diff: Specifies the maximum
-                time difference between two consecutive steps.
-                Default: ``1.0``
+            min_time_diff: Specifies the minimum time difference
+                between two consecutive steps.
+            max_time_diff: Specifies the maximum time difference
+                between two consecutive steps.
 
         Returns:
-            ``TimeSequenceGenerator``: A time sequence generator where
-                the time difference between two consecutive steps
-                follows a uniform distribution.
+            A time sequence generator where the time difference
+                between two consecutive steps follows a uniform
+                distribution.
 
         Raises:
-        ------
-            ValueError if ``min_time_diff`` is lower than 0.
+            ValueError: if ``min_time_diff`` is lower than 0.
 
         Example usage:
 
-        .. code-block:: pycon
-
-            >>> import torch
-            >>> from startorch.sequence import RandUniform, Time
-            >>> generator = Time.create_uniform_time_diff()
-            >>> generator
-            TimeSequenceGenerator(
-              (sequence): CumsumSequenceGenerator(
-                  (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
-                )
+        ```pycon
+        >>> import torch
+        >>> from startorch.sequence import RandUniform, Time
+        >>> generator = Time.create_uniform_time_diff()
+        >>> generator
+        TimeSequenceGenerator(
+          (sequence): CumsumSequenceGenerator(
+              (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
             )
-            >>> generator.generate(seq_len=12, batch_size=4)
-            tensor([[...]], batch_dim=0, seq_dim=1)
+        )
+        >>> generator.generate(seq_len=12, batch_size=4)
+        tensor([[...]], batch_dim=0, seq_dim=1)
+
+        ```
         """
         if min_time_diff < 0:
-            raise ValueError(
-                f"min_time_diff has to be greater or equal to 0 (received: {min_time_diff})"
-            )
+            msg = f"min_time_diff has to be greater or equal to 0 (received: {min_time_diff})"
+            raise ValueError(msg)
         return cls(
             CumsumSequenceGenerator(
                 RandUniformSequenceGenerator(
@@ -339,21 +338,18 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
 
         Args:
             min_time: Specifies the minimum time.
-                Default: ``0.0``
             max_time: Specifies the maximum time.
-                Default: ``1.0``
-
-        Raises:
-        ------
-            ValueError if ``min_time`` is lower than 0.
 
         Returns:
-            ``TimeSequenceGenerator``: A time sequence generator where
-                the time is sampled from a uniform distribution.
+            A time sequence generator where the time is sampled from a
+                uniform distribution.
+
+        Raises:
+            ValueError: if ``min_time`` is lower than 0.
 
         Example usage:
 
-        .. code-block:: pycon
+        ```pycon
 
             >>> import torch
             >>> from startorch.sequence import RandUniform, Time
@@ -368,7 +364,8 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
             tensor([[...]], batch_dim=0, seq_dim=1)
         """
         if min_time < 0:
-            raise ValueError(f"min_time has to be greater or equal to 0 (received: {min_time})")
+            msg = f"min_time has to be greater or equal to 0 (received: {min_time})"
+            raise ValueError(msg)
         return cls(
             SortSequenceGenerator(
                 RandUniformSequenceGenerator(

@@ -64,7 +64,7 @@ class BasePeriodicTimeSeriesGenerator(ABC, metaclass=AbstractFactory):
             batch_size: Specifies the batch size.
                 Default: ``1``
             rng (``torch.Generator`` or None, optional): Specifies
-                an optional random number generator. Default: ``None``
+                an optional random number generator.
 
         Returns:
             ``BatchDict``: A batch of periodic time series.
