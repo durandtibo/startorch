@@ -1,14 +1,14 @@
 from __future__ import annotations
 
+import pytest
 import torch
-from pytest import mark
 from redcat import BatchedTensorSeq
 
 from startorch.periodic.sequence import Repeat, SineWave
 from startorch.sequence import Arange, Full, RandUniform
 from startorch.utils.seed import get_torch_generator
 
-SIZES = (1, 2, 4)
+SIZES = [1, 2, 4]
 
 
 ##############################
@@ -26,10 +26,10 @@ def test_sine_wave_str() -> None:
     ).startswith("SineWavePeriodicSequenceGenerator(")
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("period", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("period", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_sine_wave_generate(batch_size: int, seq_len: int, period: int, feature_size: int) -> None:
     batch = SineWave(
         value=Repeat(RandUniform(low=-1.0, high=1.0, feature_size=feature_size)),

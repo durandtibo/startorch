@@ -46,7 +46,7 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
 
     @classmethod
     def create_exponential_constant_time_diff(cls, rate: float = 1.0) -> TimeSequenceGenerator:
-        r"""Creates a time sequence generator where the time difference
+        r"""Create a time sequence generator where the time difference
         between two consecutive steps is constant and is sampled from an
         exponential distribution.
 
@@ -96,7 +96,7 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
 
     @classmethod
     def create_exponential_time_diff(cls, rate: float = 1.0) -> TimeSequenceGenerator:
-        r"""Creates a time sequence generator where the time difference
+        r"""Create a time sequence generator where the time difference
         between two consecutive steps follows an exponential
         distribution.
 
@@ -141,7 +141,7 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
 
     @classmethod
     def create_poisson_constant_time_diff(cls, rate: float = 1.0) -> TimeSequenceGenerator:
-        r"""Creates a time sequence generator where the time difference
+        r"""Create a time sequence generator where the time difference
         between two consecutive steps is constant and is sampled from a
         Poisson distribution.
 
@@ -180,7 +180,7 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
 
     @classmethod
     def create_poisson_time_diff(cls, rate: float = 1.0) -> TimeSequenceGenerator:
-        r"""Creates a time sequence generator where the time difference
+        r"""Create a time sequence generator where the time difference
         between two consecutive steps follows a Poisson distribution.
 
         Args:
@@ -216,7 +216,7 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
         min_time_diff: float = 0.0,
         max_time_diff: float = 1.0,
     ) -> TimeSequenceGenerator:
-        r"""Creates a time sequence generator where the time difference
+        r"""Create a time sequence generator where the time difference
         between two consecutive steps is constant and is sampled from a
         uniform distribution.
 
@@ -278,7 +278,7 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
         min_time_diff: float = 0.0,
         max_time_diff: float = 1.0,
     ) -> TimeSequenceGenerator:
-        r"""Creates a time sequence generator where the time difference
+        r"""Create a time sequence generator where the time difference
         between two consecutive steps follows a uniform distribution.
 
         Args:
@@ -334,7 +334,7 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
         min_time: float = 0.0,
         max_time: float = 1.0,
     ) -> TimeSequenceGenerator:
-        r"""Creates a time sequence generator where the time is sampled
+        r"""Create a time sequence generator where the time is sampled
         from a uniform distribution.
 
         Args:

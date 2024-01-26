@@ -15,7 +15,7 @@ def rand_poisson(
     rate: float = 1.0,
     generator: torch.Generator | None = None,
 ) -> Tensor:
-    r"""Creates a tensor filled with values sampled from a Poisson
+    r"""Create a tensor filled with values sampled from a Poisson
     distribution.
 
     Args:

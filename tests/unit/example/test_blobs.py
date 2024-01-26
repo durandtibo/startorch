@@ -11,7 +11,7 @@ from startorch import constants as ct
 from startorch.example import BlobsClassification, make_blobs_classification
 from startorch.utils.seed import get_torch_generator
 
-SIZES = (1, 2, 4)
+SIZES = [1, 2, 4]
 
 
 @fixture()

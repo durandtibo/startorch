@@ -1,8 +1,8 @@
 import math
 from unittest.mock import Mock, patch
 
+import pytest
 import torch
-from pytest import mark, raises
 
 from startorch.random import (
     asinh_uniform,
@@ -52,7 +52,7 @@ def test_rand_rand_trunc_cauchy_2d() -> None:
     assert values.max() <= 2.0
 
 
-@mark.parametrize("loc", [-1.0, 0.0, 1.0])
+@pytest.mark.parametrize("loc", [-1.0, 0.0, 1.0])
 def test_rand_trunc_cauchy_loc(loc: float) -> None:
     values = rand_trunc_cauchy(
         (100000,),
@@ -68,7 +68,7 @@ def test_rand_trunc_cauchy_loc(loc: float) -> None:
     assert values.max() <= loc + 2.0
 
 
-@mark.parametrize("scale", (0.1, 0.5, 1.0))
+@pytest.mark.parametrize("scale", [0.1, 0.5, 1.0])
 def test_rand_trunc_cauchy_scale(scale: float) -> None:
     values = rand_trunc_cauchy((100000,), scale=scale, generator=get_torch_generator(1))
     assert values.shape == (100000,)
@@ -77,14 +77,14 @@ def test_rand_trunc_cauchy_scale(scale: float) -> None:
     assert values.max() <= 2.0
 
 
-@mark.parametrize("scale", (0.0, -1.0))
+@pytest.mark.parametrize("scale", [0.0, -1.0])
 def test_rand_trunc_cauchy_scale_incorrect(scale: float) -> None:
-    with raises(ValueError):
+    with pytest.raises(ValueError, match="Expected parameter scale"):
         rand_trunc_cauchy((1000,), scale=scale, generator=get_torch_generator(1))
 
 
-@mark.parametrize("min_value", (-2.0, -1.0))
-@mark.parametrize("max_value", (2.0, 1.0))
+@pytest.mark.parametrize("min_value", [-2.0, -1.0])
+@pytest.mark.parametrize("max_value", [2.0, 1.0])
 def test_rand_trunc_cauchy_min_max(min_value: float, max_value: float) -> None:
     values = rand_trunc_cauchy(
         (100000,), min_value=min_value, max_value=max_value, generator=get_torch_generator(1)
@@ -96,7 +96,7 @@ def test_rand_trunc_cauchy_min_max(min_value: float, max_value: float) -> None:
 
 
 def test_rand_trunc_cauchy_incorrect_min_max() -> None:
-    with raises(
+    with pytest.raises(
         ValueError, match="`max_value` (.*) has to be greater or equal to `min_value` (.*)"
     ):
         rand_trunc_cauchy((1000,), min_value=1, max_value=-1, generator=get_torch_generator(1))
@@ -149,7 +149,7 @@ def test_rand_trunc_cauchy_2d() -> None:
     assert values.max() <= 2.0
 
 
-@mark.parametrize("loc", [-1.0, 0.0, 1.0])
+@pytest.mark.parametrize("loc", [-1.0, 0.0, 1.0])
 def test_trunc_cauchy_loc(loc: float) -> None:
     values = trunc_cauchy(
         loc=torch.full((100000,), loc),
@@ -165,7 +165,7 @@ def test_trunc_cauchy_loc(loc: float) -> None:
     assert values.max() <= loc + 2.0
 
 
-@mark.parametrize("scale", (0.1, 0.5, 1.0))
+@pytest.mark.parametrize("scale", [0.1, 0.5, 1.0])
 def test_trunc_cauchy_scale(scale: float) -> None:
     values = trunc_cauchy(
         loc=torch.zeros(100000),
@@ -180,9 +180,9 @@ def test_trunc_cauchy_scale(scale: float) -> None:
     assert values.max() <= 2.0
 
 
-@mark.parametrize("scale", (0.0, -1.0))
+@pytest.mark.parametrize("scale", [0.0, -1.0])
 def test_trunc_cauchy_scale_incorrect(scale: float) -> None:
-    with raises(ValueError):
+    with pytest.raises(ValueError, match="All the `scale` values have to be greater than 0"):
         trunc_cauchy(
             loc=torch.zeros(100000),
             scale=torch.full((100000,), scale),
@@ -192,8 +192,8 @@ def test_trunc_cauchy_scale_incorrect(scale: float) -> None:
         )
 
 
-@mark.parametrize("min_value", (-2.0, -1.0))
-@mark.parametrize("max_value", (2.0, 1.0))
+@pytest.mark.parametrize("min_value", [-2.0, -1.0])
+@pytest.mark.parametrize("max_value", [2.0, 1.0])
 def test_trunc_cauchy_min_max(min_value: float, max_value: float) -> None:
     values = trunc_cauchy(
         loc=torch.zeros(100000),
@@ -209,7 +209,7 @@ def test_trunc_cauchy_min_max(min_value: float, max_value: float) -> None:
 
 
 def test_trunc_cauchy_incorrect_min_max() -> None:
-    with raises(
+    with pytest.raises(
         ValueError,
         match=(
             "Found at least one value in `min_value` that is higher than "
@@ -226,7 +226,7 @@ def test_trunc_cauchy_incorrect_min_max() -> None:
 
 
 def test_trunc_cauchy_shape_mismatch_loc() -> None:
-    with raises(
+    with pytest.raises(
         ValueError, match="Incorrect shapes. The shapes of all the input tensors must be equal:"
     ):
         trunc_cauchy(
@@ -239,7 +239,7 @@ def test_trunc_cauchy_shape_mismatch_loc() -> None:
 
 
 def test_trunc_cauchy_shape_mismatch_scale() -> None:
-    with raises(
+    with pytest.raises(
         ValueError, match="Incorrect shapes. The shapes of all the input tensors must be equal:"
     ):
         trunc_cauchy(
@@ -252,7 +252,7 @@ def test_trunc_cauchy_shape_mismatch_scale() -> None:
 
 
 def test_trunc_cauchy_shape_mismatch_min_value() -> None:
-    with raises(
+    with pytest.raises(
         ValueError, match="Incorrect shapes. The shapes of all the input tensors must be equal:"
     ):
         trunc_cauchy(
@@ -265,7 +265,7 @@ def test_trunc_cauchy_shape_mismatch_min_value() -> None:
 
 
 def test_trunc_cauchy_shape_mismatch_max_value() -> None:
-    with raises(
+    with pytest.raises(
         ValueError, match="Incorrect shapes. The shapes of all the input tensors must be equal:"
     ):
         trunc_cauchy(
@@ -336,7 +336,7 @@ def test_rand_trunc_exponential_2d() -> None:
     assert values.max() <= 5.0
 
 
-@mark.parametrize("rate", (0.5, 2.0))
+@pytest.mark.parametrize("rate", [0.5, 2.0])
 def test_rand_trunc_exponential_rate(rate: float) -> None:
     values = rand_trunc_exponential(
         (100000,), rate=rate, max_value=10, generator=get_torch_generator(1)
@@ -348,13 +348,13 @@ def test_rand_trunc_exponential_rate(rate: float) -> None:
     assert values.max() <= 10.0
 
 
-@mark.parametrize("rate", (0.0, -1.0))
+@pytest.mark.parametrize("rate", [0.0, -1.0])
 def test_rand_trunc_exponential_incorrect_rate(rate: float) -> None:
-    with raises(ValueError):
+    with pytest.raises(ValueError, match="Expected parameter rate"):
         rand_trunc_exponential((1000,), rate=rate, generator=get_torch_generator(1))
 
 
-@mark.parametrize("max_value", (2.0, 1.0))
+@pytest.mark.parametrize("max_value", [2.0, 1.0])
 def test_rand_trunc_exponential_max_value(max_value: float) -> None:
     values = rand_trunc_exponential(
         (100000,), max_value=max_value, generator=get_torch_generator(1)
@@ -365,9 +365,9 @@ def test_rand_trunc_exponential_max_value(max_value: float) -> None:
     assert values.max() <= max_value
 
 
-@mark.parametrize("max_value", (0.0, -1.0))
+@pytest.mark.parametrize("max_value", [0.0, -1.0])
 def test_rand_trunc_exponential_incorrect_max_value(max_value: float) -> None:
-    with raises(ValueError, match="`max_value` has to be greater than 0"):
+    with pytest.raises(ValueError, match="`max_value` has to be greater than 0"):
         rand_trunc_exponential((1000,), max_value=max_value, generator=get_torch_generator(1))
 
 
@@ -417,7 +417,7 @@ def test_trunc_exponential_2d() -> None:
     assert values.max() <= 5.0
 
 
-@mark.parametrize("rate", (0.5, 2.0))
+@pytest.mark.parametrize("rate", [0.5, 2.0])
 def test_trunc_exponential_rate(rate: float) -> None:
     values = trunc_exponential(
         rate=torch.full((100000,), rate),
@@ -431,9 +431,9 @@ def test_trunc_exponential_rate(rate: float) -> None:
     assert values.max() <= 10.0
 
 
-@mark.parametrize("rate", (0.0, -1.0))
+@pytest.mark.parametrize("rate", [0.0, -1.0])
 def test_trunc_exponential_incorrect_rate(rate: float) -> None:
-    with raises(ValueError, match="All the `rate` values have to be greater than 0"):
+    with pytest.raises(ValueError, match="All the `rate` values have to be greater than 0"):
         trunc_exponential(
             rate=torch.full((100000,), rate),
             max_value=torch.full((100000,), 3.0),
@@ -441,7 +441,7 @@ def test_trunc_exponential_incorrect_rate(rate: float) -> None:
         )
 
 
-@mark.parametrize("max_value", (2.0, 1.0))
+@pytest.mark.parametrize("max_value", [2.0, 1.0])
 def test_trunc_exponential_max_value(max_value: float) -> None:
     values = trunc_exponential(
         rate=torch.ones(100000),
@@ -454,9 +454,9 @@ def test_trunc_exponential_max_value(max_value: float) -> None:
     assert values.max() <= max_value
 
 
-@mark.parametrize("max_value", (0.0, -1.0))
+@pytest.mark.parametrize("max_value", [0.0, -1.0])
 def test_trunc_exponential_incorrect_max_value(max_value: float) -> None:
-    with raises(
+    with pytest.raises(
         ValueError, match="Found at least one value in `max_value` that is lower or equal to 0"
     ):
         trunc_exponential(
@@ -467,7 +467,7 @@ def test_trunc_exponential_incorrect_max_value(max_value: float) -> None:
 
 
 def test_trunc_exponential_shape_mismatch() -> None:
-    with raises(
+    with pytest.raises(
         ValueError, match="Incorrect shapes. The shapes of all the input tensors must be equal:"
     ):
         trunc_exponential(
@@ -528,13 +528,13 @@ def test_rand_trunc_half_cauchy_different_scale() -> None:
     )
 
 
-@mark.parametrize("scale", (0.0, -1.0))
+@pytest.mark.parametrize("scale", [0.0, -1.0])
 def test_rand_trunc_half_cauchy_incorrect_scale(scale: float) -> None:
-    with raises(ValueError):
+    with pytest.raises(ValueError, match="Expected parameter scale"):
         rand_trunc_half_cauchy((1000,), scale=scale, generator=get_torch_generator(1))
 
 
-@mark.parametrize("max_value", (2.0, 1.0))
+@pytest.mark.parametrize("max_value", [2.0, 1.0])
 def test_rand_trunc_half_cauchy_max_value(max_value: float) -> None:
     values = rand_trunc_half_cauchy(
         (100000,), max_value=max_value, generator=get_torch_generator(1)
@@ -545,9 +545,9 @@ def test_rand_trunc_half_cauchy_max_value(max_value: float) -> None:
     assert values.max() <= max_value
 
 
-@mark.parametrize("max_value", (0.0, -1.0))
+@pytest.mark.parametrize("max_value", [0.0, -1.0])
 def test_rand_trunc_half_cauchy_incorrect_max_value(max_value: float) -> None:
-    with raises(ValueError, match="`max_value` has to be greater than 0"):
+    with pytest.raises(ValueError, match="`max_value` has to be greater than 0"):
         rand_trunc_half_cauchy((1000,), max_value=max_value, generator=get_torch_generator(1))
 
 
@@ -603,15 +603,15 @@ def test_trunc_half_cauchy_different_scale() -> None:
     )
 
 
-@mark.parametrize("scale", (0.0, -1.0))
+@pytest.mark.parametrize("scale", [0.0, -1.0])
 def test_trunc_half_cauchy_incorrect_scale(scale: float) -> None:
-    with raises(ValueError, match="All the `scale` values have to be greater than 0"):
+    with pytest.raises(ValueError, match="All the `scale` values have to be greater than 0"):
         trunc_half_cauchy(
             torch.full((1000,), scale), torch.full((1000,), 4.0), generator=get_torch_generator(1)
         )
 
 
-@mark.parametrize("max_value", (2.0, 1.0))
+@pytest.mark.parametrize("max_value", [2.0, 1.0])
 def test_trunc_half_cauchy_max_value(max_value: float) -> None:
     values = trunc_half_cauchy(
         torch.ones(100000), torch.full((100000,), max_value), generator=get_torch_generator(1)
@@ -622,9 +622,9 @@ def test_trunc_half_cauchy_max_value(max_value: float) -> None:
     assert values.max() <= max_value
 
 
-@mark.parametrize("max_value", (0.0, -1.0))
+@pytest.mark.parametrize("max_value", [0.0, -1.0])
 def test_trunc_half_cauchy_max_value_incorrect(max_value: float) -> None:
-    with raises(
+    with pytest.raises(
         ValueError, match="Found at least one value in `max_value` that is lower or equal to 0"
     ):
         trunc_half_cauchy(
@@ -633,7 +633,7 @@ def test_trunc_half_cauchy_max_value_incorrect(max_value: float) -> None:
 
 
 def test_trunc_half_cauchy_shape_mismatch() -> None:
-    with raises(
+    with pytest.raises(
         ValueError, match="Incorrect shapes. The shapes of all the input tensors must be equal:"
     ):
         trunc_half_cauchy(
@@ -688,7 +688,7 @@ def test_rand_trunc_half_normal_2d() -> None:
     assert values.max() <= 5.0
 
 
-@mark.parametrize("std", (0.1, 0.5, 1.0))
+@pytest.mark.parametrize("std", [0.1, 0.5, 1.0])
 def test_rand_trunc_half_normal_std(std: float) -> None:
     values = rand_trunc_half_normal((100000,), std=std, generator=get_torch_generator(1))
     assert values.shape == (100000,)
@@ -699,12 +699,13 @@ def test_rand_trunc_half_normal_std(std: float) -> None:
     assert values.max() <= 5.0
 
 
-def test_rand_trunc_half_normal_incorrect_std() -> None:
-    with raises(ValueError):
-        rand_trunc_half_normal((1000,), std=-1, generator=get_torch_generator(1))
+@pytest.mark.parametrize("std", [0.0, -1.0])
+def test_rand_trunc_half_normal_incorrect_std(std: float) -> None:
+    with pytest.raises(ValueError, match="Expected parameter scale"):
+        rand_trunc_half_normal((1000,), std=std, generator=get_torch_generator(1))
 
 
-@mark.parametrize("max_value", (2.0, 1.0))
+@pytest.mark.parametrize("max_value", [2.0, 1.0])
 def test_rand_trunc_half_normal_max_value(max_value: float) -> None:
     values = rand_trunc_half_normal(
         (100000,), max_value=max_value, generator=get_torch_generator(1)
@@ -716,7 +717,7 @@ def test_rand_trunc_half_normal_max_value(max_value: float) -> None:
 
 
 def test_rand_trunc_half_normal_incorrect_max_value() -> None:
-    with raises(ValueError, match="`max_value` has to be greater than 0"):
+    with pytest.raises(ValueError, match="`max_value` has to be greater than 0"):
         rand_trunc_half_normal((1000,), max_value=0, generator=get_torch_generator(1))
 
 
@@ -765,7 +766,7 @@ def test_trunc_half_normal_2d() -> None:
     assert values.max() <= 100.0
 
 
-@mark.parametrize("std", (0.1, 0.5, 1.0))
+@pytest.mark.parametrize("std", [0.1, 0.5, 1.0])
 def test_trunc_half_normal_std(std: float) -> None:
     values = trunc_half_normal(
         std=torch.full((1000000,), std),
@@ -780,9 +781,9 @@ def test_trunc_half_normal_std(std: float) -> None:
     assert values.max() <= 100.0
 
 
-@mark.parametrize("std", (0.0, -1.0))
+@pytest.mark.parametrize("std", [0.0, -1.0])
 def test_trunc_half_normal_incorrect_std(std: float) -> None:
-    with raises(ValueError, match="All the `std` values have to be greater than 0"):
+    with pytest.raises(ValueError, match="All the `std` values have to be greater than 0"):
         trunc_half_normal(
             std=torch.full((1000,), std),
             max_value=torch.full((1000,), 100.0),
@@ -790,7 +791,7 @@ def test_trunc_half_normal_incorrect_std(std: float) -> None:
         )
 
 
-@mark.parametrize("max_value", (2.0, 1.0))
+@pytest.mark.parametrize("max_value", [2.0, 1.0])
 def test_trunc_half_normal_max_value(max_value: float) -> None:
     values = trunc_half_normal(
         torch.ones(100000),
@@ -803,9 +804,9 @@ def test_trunc_half_normal_max_value(max_value: float) -> None:
     assert values.max() <= max_value
 
 
-@mark.parametrize("max_value", (0.0, -1.0))
+@pytest.mark.parametrize("max_value", [0.0, -1.0])
 def test_trunc_half_normal_incorrect_max_value(max_value: float) -> None:
-    with raises(ValueError, match="All the `max_value` values must be greater than 0"):
+    with pytest.raises(ValueError, match="All the `max_value` values must be greater than 0"):
         trunc_half_normal(
             std=torch.ones(1000),
             max_value=torch.full((1000,), max_value),
@@ -814,7 +815,7 @@ def test_trunc_half_normal_incorrect_max_value(max_value: float) -> None:
 
 
 def test_trunc_half_normal_shape_mismatch() -> None:
-    with raises(
+    with pytest.raises(
         ValueError, match="Incorrect shapes. The shapes of all the input tensors must be equal:"
     ):
         trunc_half_normal(
@@ -883,7 +884,7 @@ def test_rand_trunc_log_normal_2d() -> None:
     assert values.max() <= 100.0
 
 
-@mark.parametrize("mean", [-1.0, 0.0, 1.0])
+@pytest.mark.parametrize("mean", [-1.0, 0.0, 1.0])
 def test_rand_trunc_log_normal_mean(mean: float) -> None:
     values = rand_trunc_log_normal(
         (100000,),
@@ -904,7 +905,7 @@ def test_rand_trunc_log_normal_mean(mean: float) -> None:
     assert values.max() <= 1000.0
 
 
-@mark.parametrize("std", (0.25, 0.5, 1.0))
+@pytest.mark.parametrize("std", [0.25, 0.5, 1.0])
 def test_rand_trunc_log_normal_std(std: float) -> None:
     values = rand_trunc_log_normal(
         (100000,), std=std, min_value=0.0, max_value=10000.0, generator=get_torch_generator(1)
@@ -921,14 +922,14 @@ def test_rand_trunc_log_normal_std(std: float) -> None:
     assert values.max() <= 10000.0
 
 
-@mark.parametrize("std", (0.0, -1.0))
+@pytest.mark.parametrize("std", [0.0, -1.0])
 def test_rand_trunc_log_normal_incorrect_std(std: float) -> None:
-    with raises(ValueError):
+    with pytest.raises(ValueError, match="Expected parameter scale"):
         rand_trunc_log_normal((1000,), std=std, generator=get_torch_generator(1))
 
 
-@mark.parametrize("min_value", (0.0, 1.0))
-@mark.parametrize("max_value", (2.0, 3.0))
+@pytest.mark.parametrize("min_value", [0.0, 1.0])
+@pytest.mark.parametrize("max_value", [2.0, 3.0])
 def test_rand_trunc_log_normal_min_max(min_value: float, max_value: float) -> None:
     values = rand_trunc_log_normal(
         (1000,), min_value=min_value, max_value=max_value, generator=get_torch_generator(1)
@@ -948,7 +949,7 @@ def test_rand_trunc_log_normal_min_max_default() -> None:
 
 
 def test_rand_trunc_log_normal_incorrect_min_max() -> None:
-    with raises(
+    with pytest.raises(
         ValueError, match="`max_value` (.*) has to be greater or equal to `min_value` (.*)"
     ):
         rand_trunc_log_normal((1000,), min_value=1, max_value=-1, generator=get_torch_generator(1))
@@ -1009,7 +1010,7 @@ def test_trunc_log_normal_2d() -> None:
     assert values.max() <= 100.0
 
 
-@mark.parametrize("mean", [-1.0, 0.0, 1.0])
+@pytest.mark.parametrize("mean", [-1.0, 0.0, 1.0])
 def test_trunc_log_normal_mean(mean: float) -> None:
     values = trunc_log_normal(
         mean=torch.full((100000,), mean),
@@ -1030,7 +1031,7 @@ def test_trunc_log_normal_mean(mean: float) -> None:
     assert values.max() <= 1000.0
 
 
-@mark.parametrize("std", (0.25, 0.5, 1.0))
+@pytest.mark.parametrize("std", [0.25, 0.5, 1.0])
 def test_trunc_log_normal_std(std: float) -> None:
     values = trunc_log_normal(
         mean=torch.zeros(100000),
@@ -1051,9 +1052,9 @@ def test_trunc_log_normal_std(std: float) -> None:
     assert values.max() <= 10000.0
 
 
-@mark.parametrize("std", (0.0, -1.0))
+@pytest.mark.parametrize("std", [0.0, -1.0])
 def test_trunc_log_normal_std_incorrect(std: float) -> None:
-    with raises(ValueError):
+    with pytest.raises(ValueError, match="All the `std` values have to be greater than 0"):
         trunc_log_normal(
             mean=torch.zeros(1000),
             std=torch.full((1000,), std),
@@ -1063,8 +1064,8 @@ def test_trunc_log_normal_std_incorrect(std: float) -> None:
         )
 
 
-@mark.parametrize("min_value", (0.0, 1.0))
-@mark.parametrize("max_value", (2.0, 3.0))
+@pytest.mark.parametrize("min_value", [0.0, 1.0])
+@pytest.mark.parametrize("max_value", [2.0, 3.0])
 def test_trunc_log_normal_min_max(min_value: float, max_value: float) -> None:
     values = trunc_log_normal(
         mean=torch.zeros(100000),
@@ -1080,7 +1081,7 @@ def test_trunc_log_normal_min_max(min_value: float, max_value: float) -> None:
 
 
 def test_trunc_log_normal_incorrect_min_max() -> None:
-    with raises(
+    with pytest.raises(
         ValueError,
         match=(
             "Found at least one value in `min_value` that is higher than its associated "
@@ -1097,7 +1098,7 @@ def test_trunc_log_normal_incorrect_min_max() -> None:
 
 
 def test_trunc_log_normal_shape_mismatch_mean() -> None:
-    with raises(
+    with pytest.raises(
         ValueError, match="Incorrect shapes. The shapes of all the input tensors must be equal:"
     ):
         trunc_log_normal(
@@ -1110,7 +1111,7 @@ def test_trunc_log_normal_shape_mismatch_mean() -> None:
 
 
 def test_trunc_log_normal_shape_mismatch_std() -> None:
-    with raises(
+    with pytest.raises(
         ValueError, match="Incorrect shapes. The shapes of all the input tensors must be equal:"
     ):
         trunc_log_normal(
@@ -1123,7 +1124,7 @@ def test_trunc_log_normal_shape_mismatch_std() -> None:
 
 
 def test_trunc_log_normal_shape_mismatch_min_value() -> None:
-    with raises(
+    with pytest.raises(
         ValueError, match="Incorrect shapes. The shapes of all the input tensors must be equal:"
     ):
         trunc_log_normal(
@@ -1136,7 +1137,7 @@ def test_trunc_log_normal_shape_mismatch_min_value() -> None:
 
 
 def test_trunc_log_normal_shape_mismatch_max_value() -> None:
-    with raises(
+    with pytest.raises(
         ValueError, match="Incorrect shapes. The shapes of all the input tensors must be equal:"
     ):
         trunc_log_normal(
@@ -1213,7 +1214,7 @@ def test_rand_trunc_normal_2d() -> None:
     assert values.max() <= 100.0
 
 
-@mark.parametrize("mean", [-1.0, 0.0, 1.0])
+@pytest.mark.parametrize("mean", [-1.0, 0.0, 1.0])
 def test_rand_trunc_normal_mean(mean: float) -> None:
     values = rand_trunc_normal(
         (100000,),
@@ -1230,7 +1231,7 @@ def test_rand_trunc_normal_mean(mean: float) -> None:
     assert values.max() <= mean + 100.0
 
 
-@mark.parametrize("std", (1.0, 2.0, 5.0))
+@pytest.mark.parametrize("std", [1.0, 2.0, 5.0])
 def test_rand_trunc_normal_std(std: float) -> None:
     values = rand_trunc_normal(
         (100000,), std=std, min_value=-100, max_value=100, generator=get_torch_generator(1)
@@ -1244,12 +1245,12 @@ def test_rand_trunc_normal_std(std: float) -> None:
 
 
 def test_rand_trunc_normal_incorrect_std() -> None:
-    with raises(ValueError):
+    with pytest.raises(ValueError, match="Expected parameter scale"):
         rand_trunc_normal((1000,), std=-1, generator=get_torch_generator(1))
 
 
-@mark.parametrize("min_value", (-2.0, -1.0))
-@mark.parametrize("max_value", (2.0, 1.0))
+@pytest.mark.parametrize("min_value", [-2.0, -1.0])
+@pytest.mark.parametrize("max_value", [2.0, 1.0])
 def test_rand_trunc_normal_min_max(min_value: float, max_value: float) -> None:
     values = rand_trunc_normal(
         (1000,), min_value=min_value, max_value=max_value, generator=get_torch_generator(1)
@@ -1269,7 +1270,7 @@ def test_rand_trunc_normal_min_max_default() -> None:
 
 
 def test_rand_trunc_normal_incorrect_min_max() -> None:
-    with raises(
+    with pytest.raises(
         ValueError, match="`max_value` (.*) has to be greater or equal to `min_value` (.*)"
     ):
         rand_trunc_normal((1000,), min_value=1, max_value=-1, generator=get_torch_generator(1))
@@ -1324,7 +1325,7 @@ def test_trunc_normal_2d() -> None:
     assert values.max() <= 100.0
 
 
-@mark.parametrize("mean", [-1.0, 0.0, 1.0])
+@pytest.mark.parametrize("mean", [-1.0, 0.0, 1.0])
 def test_trunc_normal_mean(mean: float) -> None:
     values = trunc_normal(
         mean=torch.full((100000,), mean),
@@ -1341,7 +1342,7 @@ def test_trunc_normal_mean(mean: float) -> None:
     assert values.max() <= mean + 100.0
 
 
-@mark.parametrize("std", (1.0, 2.0, 5.0))
+@pytest.mark.parametrize("std", [1.0, 2.0, 5.0])
 def test_trunc_normal_std(std: float) -> None:
     values = trunc_normal(
         mean=torch.zeros(100000),
@@ -1358,9 +1359,9 @@ def test_trunc_normal_std(std: float) -> None:
     assert values.max() <= 100.0
 
 
-@mark.parametrize("std", (0.0, -1.0))
+@pytest.mark.parametrize("std", [0.0, -1.0])
 def test_trunc_normal_std_incorrect(std: float) -> None:
-    with raises(ValueError):
+    with pytest.raises(ValueError, match="All the `std` values have to be greater than 0"):
         trunc_normal(
             mean=torch.zeros(1000),
             std=torch.full((1000,), std),
@@ -1370,8 +1371,8 @@ def test_trunc_normal_std_incorrect(std: float) -> None:
         )
 
 
-@mark.parametrize("min_value", (-2.0, -1.0))
-@mark.parametrize("max_value", (2.0, 1.0))
+@pytest.mark.parametrize("min_value", [-2.0, -1.0])
+@pytest.mark.parametrize("max_value", [2.0, 1.0])
 def test_trunc_normal_min_max(min_value: float, max_value: float) -> None:
     values = trunc_normal(
         mean=torch.zeros(100000),
@@ -1387,7 +1388,13 @@ def test_trunc_normal_min_max(min_value: float, max_value: float) -> None:
 
 
 def test_trunc_normal_incorrect_min_max() -> None:
-    with raises(ValueError):
+    with pytest.raises(
+        ValueError,
+        match=(
+            "Found at least one value in `min_value` that is higher than its associated "
+            "`max_value`"
+        ),
+    ):
         trunc_normal(
             mean=torch.zeros(1000),
             std=torch.ones(1000),
@@ -1398,7 +1405,7 @@ def test_trunc_normal_incorrect_min_max() -> None:
 
 
 def test_trunc_normal_shape_mismatch_mean() -> None:
-    with raises(
+    with pytest.raises(
         ValueError, match="Incorrect shapes. The shapes of all the input tensors must be equal:"
     ):
         trunc_normal(
@@ -1411,7 +1418,7 @@ def test_trunc_normal_shape_mismatch_mean() -> None:
 
 
 def test_trunc_normal_shape_mismatch_std() -> None:
-    with raises(
+    with pytest.raises(
         ValueError, match="Incorrect shapes. The shapes of all the input tensors must be equal:"
     ):
         trunc_normal(
@@ -1424,7 +1431,7 @@ def test_trunc_normal_shape_mismatch_std() -> None:
 
 
 def test_trunc_normal_shape_mismatch_min_value() -> None:
-    with raises(
+    with pytest.raises(
         ValueError, match="Incorrect shapes. The shapes of all the input tensors must be equal:"
     ):
         trunc_normal(
@@ -1437,7 +1444,7 @@ def test_trunc_normal_shape_mismatch_min_value() -> None:
 
 
 def test_trunc_normal_shape_mismatch_max_value() -> None:
-    with raises(
+    with pytest.raises(
         ValueError, match="Incorrect shapes. The shapes of all the input tensors must be equal:"
     ):
         trunc_normal(
@@ -1513,7 +1520,7 @@ def test_rand_uniform_2d() -> None:
     assert values.max() < 1.0
 
 
-@mark.parametrize("low", [-1.0, 0.0, 1.0])
+@pytest.mark.parametrize("low", [-1.0, 0.0, 1.0])
 def test_rand_uniform_low(low: float) -> None:
     values = rand_uniform((100000,), low=low, high=2.0, generator=get_torch_generator(1))
     assert values.shape == (100000,)
@@ -1522,7 +1529,7 @@ def test_rand_uniform_low(low: float) -> None:
     assert values.max() < 2.0
 
 
-@mark.parametrize("high", (0.1, 0.5, 1.0))
+@pytest.mark.parametrize("high", [0.1, 0.5, 1.0])
 def test_rand_uniform_high(high: float) -> None:
     values = rand_uniform((100000,), high=high, generator=get_torch_generator(1))
     assert values.shape == (100000,)
@@ -1542,7 +1549,9 @@ def test_rand_uniform_mock() -> None:
 
 
 def test_rand_uniform_incorrect_low_high() -> None:
-    with raises(ValueError):
+    with pytest.raises(
+        ValueError, match=r"`high` \(.*\) has to be greater or equal to `low` \(.*\)"
+    ):
         rand_uniform((1000,), low=1, high=0.5)
 
 
@@ -1581,7 +1590,7 @@ def test_uniform_2d() -> None:
     assert values.max() < 1.0
 
 
-@mark.parametrize("low", [-1.0, 0.0, 1.0])
+@pytest.mark.parametrize("low", [-1.0, 0.0, 1.0])
 def test_uniform_low(low: float) -> None:
     values = uniform(
         torch.full((100000,), low), torch.full((100000,), 2.0), generator=get_torch_generator(1)
@@ -1592,7 +1601,7 @@ def test_uniform_low(low: float) -> None:
     assert values.max() < 2.0
 
 
-@mark.parametrize("high", (0.1, 0.5, 1.0))
+@pytest.mark.parametrize("high", [0.1, 0.5, 1.0])
 def test_uniform_high(high: float) -> None:
     values = uniform(
         torch.zeros(100000), torch.full((100000,), high), generator=get_torch_generator(1)
@@ -1614,12 +1623,18 @@ def test_uniform_mock() -> None:
 
 
 def test_uniform_incorrect_low_high() -> None:
-    with raises(ValueError):
+    with pytest.raises(
+        ValueError,
+        match=(
+            "Found at least one value in `low` that is higher than its associated "
+            "value in `high`"
+        ),
+    ):
         uniform(torch.full((1000,), 1.0), torch.full((1000,), 0.5))
 
 
 def test_uniform_shape_mismatch() -> None:
-    with raises(
+    with pytest.raises(
         ValueError, match="Incorrect shapes. The shapes of all the input tensors must be equal:"
     ):
         uniform(torch.zeros(5), torch.ones(6), generator=get_torch_generator(1))
@@ -1660,7 +1675,7 @@ def test_rand_log_uniform_2d() -> None:
     assert values.max() < 1000.0
 
 
-@mark.parametrize("low", (0.01, 0.1, 1.0))
+@pytest.mark.parametrize("low", [0.01, 0.1, 1.0])
 def test_rand_log_uniform_low(low: float) -> None:
     values = rand_log_uniform((100000,), low=low, high=10.0, generator=get_torch_generator(1))
     assert values.shape == (100000,)
@@ -1672,7 +1687,7 @@ def test_rand_log_uniform_low(low: float) -> None:
     assert values.max() < 10.0
 
 
-@mark.parametrize("high", (1.0, 10.0, 100.0))
+@pytest.mark.parametrize("high", [1.0, 10.0, 100.0])
 def test_rand_log_uniform_high(high: float) -> None:
     values = rand_log_uniform((100000,), low=0.1, high=high, generator=get_torch_generator(1))
     assert values.shape == (100000,)
@@ -1695,7 +1710,7 @@ def test_rand_log_uniform_mock() -> None:
 
 
 def test_rand_log_uniform_incorrect_low_high() -> None:
-    with raises(ValueError, match="`high` (.*) has to be greater or equal to `low` (.*)"):
+    with pytest.raises(ValueError, match="`high` (.*) has to be greater or equal to `low` (.*)"):
         rand_log_uniform((1000,), low=1, high=0.5)
 
 
@@ -1742,7 +1757,7 @@ def test_log_uniform_2d() -> None:
     assert values.max() < 1000.0
 
 
-@mark.parametrize("low", (0.01, 0.1, 1.0))
+@pytest.mark.parametrize("low", [0.01, 0.1, 1.0])
 def test_log_uniform_low(low: float) -> None:
     values = log_uniform(
         torch.full((100000,), low),
@@ -1758,7 +1773,7 @@ def test_log_uniform_low(low: float) -> None:
     assert values.max() < 10.0
 
 
-@mark.parametrize("high", (1.0, 10.0, 100.0))
+@pytest.mark.parametrize("high", [1.0, 10.0, 100.0])
 def test_log_uniform_high(high: float) -> None:
     values = log_uniform(
         torch.full((100000,), 0.1),
@@ -1785,7 +1800,7 @@ def test_log_uniform_mock() -> None:
 
 
 def test_log_uniform_incorrect_low_high() -> None:
-    with raises(
+    with pytest.raises(
         ValueError,
         match=(
             "Found at least one value in `low` that is higher than its associated "
@@ -1796,7 +1811,7 @@ def test_log_uniform_incorrect_low_high() -> None:
 
 
 def test_log_uniform_shape_mismatch() -> None:
-    with raises(
+    with pytest.raises(
         ValueError, match="Incorrect shapes. The shapes of all the input tensors must be equal:"
     ):
         log_uniform(torch.full((5,), 0.01), torch.ones(6), generator=get_torch_generator(1))
@@ -1855,7 +1870,7 @@ def test_rand_asinh_uniform_2d() -> None:
     assert values.max() < 10.0
 
 
-@mark.parametrize("low", [-1.0, 0.0, 1.0])
+@pytest.mark.parametrize("low", [-1.0, 0.0, 1.0])
 def test_rand_asinh_uniform_low(low: float) -> None:
     values = rand_asinh_uniform((100000,), low=low, high=10.0, generator=get_torch_generator(1))
     assert values.shape == (100000,)
@@ -1864,7 +1879,7 @@ def test_rand_asinh_uniform_low(low: float) -> None:
     assert values.max() < 10.0
 
 
-@mark.parametrize("high", (1.0, 10.0, 100.0))
+@pytest.mark.parametrize("high", [1.0, 10.0, 100.0])
 def test_rand_asinh_uniform_high(high: float) -> None:
     values = rand_asinh_uniform((100000,), low=0.1, high=high, generator=get_torch_generator(1))
     assert values.shape == (100000,)
@@ -1884,7 +1899,7 @@ def test_rand_asinh_uniform_mock() -> None:
 
 
 def test_rand_asinh_uniform_incorrect_low_high() -> None:
-    with raises(ValueError, match="`high` (.*) has to be greater or equal to `low` (.*)"):
+    with pytest.raises(ValueError, match="`high` (.*) has to be greater or equal to `low` (.*)"):
         rand_asinh_uniform((1000,), low=1.0, high=0.5)
 
 
@@ -1933,7 +1948,7 @@ def test_asinh_uniform_2d() -> None:
     assert values.max() < 10.0
 
 
-@mark.parametrize("low", [-1.0, 0.0, 1.0])
+@pytest.mark.parametrize("low", [-1.0, 0.0, 1.0])
 def test_asinh_uniform_low(low: float) -> None:
     values = asinh_uniform(
         torch.full((100000,), low),
@@ -1946,7 +1961,7 @@ def test_asinh_uniform_low(low: float) -> None:
     assert values.max() < 10.0
 
 
-@mark.parametrize("high", (1.0, 10.0, 100.0))
+@pytest.mark.parametrize("high", [1.0, 10.0, 100.0])
 def test_asinh_uniform_high(high: float) -> None:
     values = asinh_uniform(
         torch.full((100000,), 0.1),
@@ -1970,7 +1985,7 @@ def test_asinh_uniform_mock() -> None:
 
 
 def test_asinh_uniform_incorrect_low_high() -> None:
-    with raises(
+    with pytest.raises(
         ValueError,
         match=(
             "Found at least one value in `low` that is higher than its associated "
@@ -1981,7 +1996,7 @@ def test_asinh_uniform_incorrect_low_high() -> None:
 
 
 def test_asinh_uniform_shape_mismatch() -> None:
-    with raises(
+    with pytest.raises(
         ValueError, match="Incorrect shapes. The shapes of all the input tensors must be equal:"
     ):
         asinh_uniform(torch.zeros(5), torch.ones(6), generator=get_torch_generator(1))

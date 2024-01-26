@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 import logging
+from typing import TYPE_CHECKING
 
 from objectory import OBJECT_TARGET
-from pytest import LogCaptureFixture
 
 from startorch.periodic.timeseries import (
     Repeat,
@@ -12,6 +12,9 @@ from startorch.periodic.timeseries import (
 )
 from startorch.sequence import RandUniform
 from startorch.timeseries import TimeSeries
+
+if TYPE_CHECKING:
+    import pytest
 
 #############################################################
 #     Tests for is_periodic_timeseries_generator_config     #
@@ -65,7 +68,9 @@ def test_setup_periodic_timeseries_generator_dict() -> None:
     )
 
 
-def test_setup_periodic_timeseries_generator_incorrect_type(caplog: LogCaptureFixture) -> None:
+def test_setup_periodic_timeseries_generator_incorrect_type(
+    caplog: pytest.LogCaptureFixture,
+) -> None:
     with caplog.at_level(level=logging.WARNING):
         assert isinstance(
             setup_periodic_timeseries_generator(
