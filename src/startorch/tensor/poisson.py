@@ -1,3 +1,6 @@
+r"""Contain the implementation of tensor generators where the values are
+sampled from a Poisson distribution."""
+
 from __future__ import annotations
 
 __all__ = ["PoissonTensorGenerator", "RandPoissonTensorGenerator"]
@@ -20,22 +23,22 @@ class PoissonTensorGenerator(BaseTensorGenerator):
     in the tensor. The rate values should be greater than 0.
 
     Args:
-        rate (``BaseTensorGenerator`` or dict): Specifies the
-            rate generator or its configuration. The rate generator
-            should return valid rate values.
+        rate: Specifies the rate generator or its configuration.
+            The rate generator should return valid rate values.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.tensor import RandUniform, Poisson
+    >>> generator = Poisson(rate=RandUniform(low=1.0, high=2.0))
+    >>> generator
+    PoissonTensorGenerator(
+      (rate): RandUniformTensorGenerator(low=1.0, high=2.0)
+    )
+    >>> generator.generate((2, 6))
+    tensor([[...]])
 
-        >>> from startorch.tensor import RandUniform, Poisson
-        >>> generator = Poisson(rate=RandUniform(low=1.0, high=2.0))
-        >>> generator
-        PoissonTensorGenerator(
-          (rate): RandUniformTensorGenerator(low=1.0, high=2.0)
-        )
-        >>> generator.generate((2, 6))
-        tensor([[...]])
+    ```
     """
 
     def __init__(self, rate: BaseTensorGenerator | dict) -> None:
@@ -55,12 +58,11 @@ class RandPoissonTensorGenerator(BaseTensorGenerator):
     Poisson distribution.
 
     Args:
-        rate: Specifies the rate of the Poisson
-            distribution. This value has to be greater than 0.
-            Default: ``1.0``
+        rate: Specifies the rate of the Poisson distribution.
+            This value has to be greater than 0.
 
     Raises:
-        ValueError if ``rate`` is not a positive number.
+        ValueError: if ``rate`` is not a positive number.
 
     Example usage:
 
@@ -77,7 +79,8 @@ class RandPoissonTensorGenerator(BaseTensorGenerator):
     def __init__(self, rate: float = 1.0) -> None:
         super().__init__()
         if rate <= 0:
-            raise ValueError(f"rate has to be greater than 0 (received: {rate})")
+            msg = f"rate has to be greater than 0 (received: {rate})"
+            raise ValueError(msg)
         self._rate = float(rate)
 
     def __repr__(self) -> str:

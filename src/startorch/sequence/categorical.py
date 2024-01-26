@@ -68,7 +68,7 @@ class MultinomialSequenceGenerator(BaseSequenceGenerator):
 
     @classmethod
     def create_uniform_weights(cls, num_categories: int) -> MultinomialSequenceGenerator:
-        r"""Initializes the weights with a uniform pattern.
+        r"""Instantiate the weights with a uniform pattern.
 
         All the categories have the same probability.
         The weight of the ``i``-th category (``w_i``) is generated
@@ -86,7 +86,7 @@ class MultinomialSequenceGenerator(BaseSequenceGenerator):
 
     @classmethod
     def create_linear_weights(cls, num_categories: int) -> MultinomialSequenceGenerator:
-        r"""Initializes the weights with a linear pattern.
+        r"""Instantiate the weights with a linear pattern.
 
         The weight of the ``i``-th category (``w_i``) is generated
         with the rule: ``w_i = num_categories - i``
@@ -107,7 +107,7 @@ class MultinomialSequenceGenerator(BaseSequenceGenerator):
     def create_exp_weights(
         cls, num_categories: int, scale: float = 0.1
     ) -> MultinomialSequenceGenerator:
-        r"""Initializes the weights with an exponential pattern.
+        r"""Instantiate the weights with an exponential pattern.
 
         The weight of the ``i``-th category (``w_i``) is generated with
         the rule: ``w_i = exp(-scale * i)``

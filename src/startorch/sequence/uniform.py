@@ -139,8 +139,8 @@ class RandAsinhUniformSequenceGenerator(BaseSequenceGenerator):
     values from an asinh-uniform distribution.
 
     Args:
-        low (float): Specifies the minimum value (inclusive).
-        high (float): Specifies the maximum value (exclusive).
+        low: Specifies the minimum value (inclusive).
+        high: Specifies the maximum value (exclusive).
         feature_size (tuple or list or int, optional): Specifies the
             feature size. Default: ``1``
 
@@ -255,8 +255,8 @@ class RandLogUniformSequenceGenerator(BaseSequenceGenerator):
     values from a log-uniform distribution.
 
     Args:
-        low (float): Specifies the minimum value (inclusive).
-        high (float): Specifies the maximum value (exclusive).
+        low: Specifies the minimum value (inclusive).
+        high: Specifies the maximum value (exclusive).
         feature_size (tuple or list or int, optional): Specifies the
             feature size. Default: ``1``
 

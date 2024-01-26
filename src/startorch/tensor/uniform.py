@@ -1,3 +1,6 @@
+r"""Contain the implementation of tensor generators where the values are
+sampled from a uniform distribution."""
+
 from __future__ import annotations
 
 __all__ = [
@@ -9,7 +12,6 @@ __all__ = [
     "RandUniformTensorGenerator",
     "UniformTensorGenerator",
 ]
-
 
 from coola.utils.format import str_indent, str_mapping
 from torch import Generator, Tensor, randint
@@ -30,35 +32,30 @@ class AsinhUniformTensorGenerator(BaseTensorGenerator):
     values from an asinh-uniform distribution.
 
     Args:
-        low (``BaseTensorGenerator`` or dict): Specifies a tensor
-            generator (or its configuration) to generate the minimum
-            value (inclusive).
-        high (``BaseTensorGenerator`` or dict): Specifies a tensor
-            generator (or its configuration) to generate the maximum
-            value (exclusive).
+        low : Specifies a tensor generator (or its configuration) to
+            generate the minimum value (inclusive).
+        high: Specifies a tensor generator (or its configuration) to
+            generate the maximum value (exclusive).
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.tensor import RandUniform, AsinhUniform
+    >>> generator = AsinhUniform(
+    ...     low=RandUniform(low=-1000, high=-100), high=RandUniform(low=100, high=1000)
+    ... )
+    >>> generator
+    AsinhUniformTensorGenerator(
+      (low): RandUniformTensorGenerator(low=-1000.0, high=-100.0)
+      (high): RandUniformTensorGenerator(low=100.0, high=1000.0)
+    )
+    >>> generator.generate((2, 6))
+    tensor([[...]])
 
-        >>> from startorch.tensor import RandUniform, AsinhUniform
-        >>> generator = AsinhUniform(
-        ...     low=RandUniform(low=-1000, high=-100), high=RandUniform(low=100, high=1000)
-        ... )
-        >>> generator
-        AsinhUniformTensorGenerator(
-          (low): RandUniformTensorGenerator(low=-1000.0, high=-100.0)
-          (high): RandUniformTensorGenerator(low=100.0, high=1000.0)
-        )
-        >>> generator.generate((2, 6))
-        tensor([[...]])
+    ```
     """
 
-    def __init__(
-        self,
-        low: BaseTensorGenerator | dict,
-        high: BaseTensorGenerator | dict,
-    ) -> None:
+    def __init__(self, low: BaseTensorGenerator | dict, high: BaseTensorGenerator | dict) -> None:
         super().__init__()
         self._low = setup_tensor_generator(low)
         self._high = setup_tensor_generator(high)
@@ -80,35 +77,30 @@ class LogUniformTensorGenerator(BaseTensorGenerator):
     values from a log-uniform distribution.
 
     Args:
-        low (``BaseSequenceGenerator`` or dict): Specifies a tensor
-            generator (or its configuration) to generate the minimum
-            value (inclusive).
-        high (``BaseSequenceGenerator`` or dict): Specifies a tensor
-            generator (or its configuration) to generate the maximum
-            value (exclusive).
+        low: Specifies a tensor generator (or its configuration) to
+            generate the minimum value (inclusive).
+        high: Specifies a tensor generator (or its configuration) to
+            generate the maximum value (exclusive).
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.tensor import RandUniform, LogUniform
+    >>> generator = LogUniform(
+    ...     low=RandUniform(low=0.1, high=1.0), high=RandUniform(low=100, high=1000)
+    ... )
+    >>> generator
+    LogUniformTensorGenerator(
+      (low): RandUniformTensorGenerator(low=0.1, high=1.0)
+      (high): RandUniformTensorGenerator(low=100.0, high=1000.0)
+    )
+    >>> generator.generate((2, 6))
+    tensor([[...]])
 
-        >>> from startorch.tensor import RandUniform, LogUniform
-        >>> generator = LogUniform(
-        ...     low=RandUniform(low=0.1, high=1.0), high=RandUniform(low=100, high=1000)
-        ... )
-        >>> generator
-        LogUniformTensorGenerator(
-          (low): RandUniformTensorGenerator(low=0.1, high=1.0)
-          (high): RandUniformTensorGenerator(low=100.0, high=1000.0)
-        )
-        >>> generator.generate((2, 6))
-        tensor([[...]])
+    ```
     """
 
-    def __init__(
-        self,
-        low: BaseTensorGenerator | dict,
-        high: BaseTensorGenerator | dict,
-    ) -> None:
+    def __init__(self, low: BaseTensorGenerator | dict, high: BaseTensorGenerator | dict) -> None:
         super().__init__()
         self._low = setup_tensor_generator(low)
         self._high = setup_tensor_generator(high)
@@ -130,26 +122,28 @@ class RandAsinhUniformTensorGenerator(BaseTensorGenerator):
     uniform distribution.
 
     Args:
-        low (float): Specifies the minimum value (inclusive).
-        high (float): Specifies the maximum value (exclusive).
+        low: Specifies the minimum value (inclusive).
+        high: Specifies the maximum value (exclusive).
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.tensor import RandAsinhUniform
+    >>> generator = RandAsinhUniform(low=-1000, high=1000)
+    >>> generator
+    RandAsinhUniformTensorGenerator(low=-1000.0, high=1000.0)
+    >>> generator.generate((2, 6))
+    tensor([[...]])
 
-        >>> from startorch.tensor import RandAsinhUniform
-        >>> generator = RandAsinhUniform(low=-1000, high=1000)
-        >>> generator
-        RandAsinhUniformTensorGenerator(low=-1000.0, high=1000.0)
-        >>> generator.generate((2, 6))
-        tensor([[...]])
+    ```
     """
 
     def __init__(self, low: float, high: float) -> None:
         super().__init__()
         self._low = float(low)
         if high < low:
-            raise ValueError(f"high ({high}) has to be greater or equal to low ({low})")
+            msg = f"high ({high}) has to be greater or equal to low ({low})"
+            raise ValueError(msg)
         self._high = float(high)
 
     def __repr__(self) -> str:
@@ -169,28 +163,28 @@ class RandIntTensorGenerator(BaseTensorGenerator):
     uniform distribution.
 
     Args:
-        low: Specifies the minimum value
-            (inclusive).
-        high: Specifies the maximum value
-            (exclusive).
+        low: Specifies the minimum value (inclusive).
+        high: Specifies the maximum value (exclusive).
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.tensor import RandInt
+    >>> generator = RandInt(low=0, high=10)
+    >>> generator
+    RandIntTensorGenerator(low=0, high=10)
+    >>> generator.generate((2, 6))
+    tensor([[...]])
 
-        >>> from startorch.tensor import RandInt
-        >>> generator = RandInt(low=0, high=10)
-        >>> generator
-        RandIntTensorGenerator(low=0, high=10)
-        >>> generator.generate((2, 6))
-        tensor([[...]])
+    ```
     """
 
     def __init__(self, low: int, high: int) -> None:
         super().__init__()
         self._low = int(low)
         if high <= low:
-            raise ValueError(f"high ({high}) has to be greater than low ({low})")
+            msg = f"high ({high}) has to be greater than low ({low})"
+            raise ValueError(msg)
         self._high = int(high)
 
     def __repr__(self) -> str:
@@ -205,8 +199,8 @@ class RandLogUniformTensorGenerator(BaseTensorGenerator):
     values from a log-uniform distribution.
 
     Args:
-        low (float): Specifies the minimum value (inclusive).
-        high (float): Specifies the maximum value (exclusive).
+        low: Specifies the minimum value (inclusive).
+        high: Specifies the maximum value (exclusive).
 
     Example usage:
 
@@ -224,7 +218,8 @@ class RandLogUniformTensorGenerator(BaseTensorGenerator):
         super().__init__()
         self._low = float(low)
         if high < low:
-            raise ValueError(f"high ({high}) has to be greater or equal to low ({low})")
+            msg = f"high ({high}) has to be greater or equal to low ({low})"
+            raise ValueError(msg)
         self._high = float(high)
 
     def __repr__(self) -> str:
@@ -244,10 +239,8 @@ class RandUniformTensorGenerator(BaseTensorGenerator):
     distribution.
 
     Args:
-        low: Specifies the minimum value
-            (inclusive). Default: ``0.0``
-        high: Specifies the maximum value
-            (exclusive). Default: ``1.0``
+        low: Specifies the minimum value (inclusive).
+        high: Specifies the maximum value (exclusive).
 
     Example usage:
 
@@ -265,7 +258,8 @@ class RandUniformTensorGenerator(BaseTensorGenerator):
         super().__init__()
         self._low = float(low)
         if high < low:
-            raise ValueError(f"high ({high}) has to be greater or equal to low ({low})")
+            msg = f"high ({high}) has to be greater or equal to low ({low})"
+            raise ValueError(msg)
         self._high = float(high)
 
     def __repr__(self) -> str:
@@ -280,28 +274,27 @@ class UniformTensorGenerator(BaseTensorGenerator):
     distribution.
 
     Args:
-        low (``BaseTensorGenerator`` or dict): Specifies a tensor
-            generator (or its configuration) to generate the minimum
-            value (inclusive).
-        high (``BaseTensorGenerator`` or dict): Specifies a tensor
-            generator (or its configuration) to generate the maximum
-            value (exclusive).
+        low: Specifies a tensor generator (or its configuration) to
+            generate the minimum value (inclusive).
+        high: Specifies a tensor generator (or its configuration) to
+            generate the maximum value (exclusive).
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.tensor import RandUniform, Uniform
+    >>> generator = UniformTensorGenerator(
+    ...     low=RandUniform(low=0, high=2), high=RandUniform(low=8, high=10)
+    ... )
+    >>> generator
+    UniformTensorGenerator(
+      (low): RandUniformTensorGenerator(low=0.0, high=2.0)
+      (high): RandUniformTensorGenerator(low=8.0, high=10.0)
+    )
+    >>> generator.generate((2, 6))
+    tensor([[...]])
 
-        >>> from startorch.tensor import RandUniform, Uniform
-        >>> generator = UniformTensorGenerator(
-        ...     low=RandUniform(low=0, high=2), high=RandUniform(low=8, high=10)
-        ... )
-        >>> generator
-        UniformTensorGenerator(
-          (low): RandUniformTensorGenerator(low=0.0, high=2.0)
-          (high): RandUniformTensorGenerator(low=8.0, high=10.0)
-        )
-        >>> generator.generate((2, 6))
-        tensor([[...]])
+    ```
     """
 
     def __init__(self, low: BaseTensorGenerator | dict, high: BaseTensorGenerator | dict) -> None:

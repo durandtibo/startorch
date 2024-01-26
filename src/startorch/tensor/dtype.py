@@ -1,10 +1,19 @@
+r"""Contain the implementation of tensor generators to change the data
+type of tensors.
+
+constant.
+"""
+
 from __future__ import annotations
 
 __all__ = ["FloatTensorGenerator", "LongTensorGenerator"]
 
-from torch import Generator, Tensor
+from typing import TYPE_CHECKING
 
 from startorch.tensor.wrapper import BaseWrapperTensorGenerator
+
+if TYPE_CHECKING:
+    from torch import Generator, Tensor
 
 
 class FloatTensorGenerator(BaseWrapperTensorGenerator):
@@ -13,16 +22,17 @@ class FloatTensorGenerator(BaseWrapperTensorGenerator):
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.tensor import Float, RandInt
+    >>> generator = Float(RandInt(low=0, high=10))
+    >>> generator
+    FloatTensorGenerator(
+      (tensor): RandIntTensorGenerator(low=0, high=10)
+    )
+    >>> generator.generate((2, 6))
+    tensor([[...]])
 
-        >>> from startorch.tensor import Float, RandInt
-        >>> generator = Float(RandInt(low=0, high=10))
-        >>> generator
-        FloatTensorGenerator(
-          (tensor): RandIntTensorGenerator(low=0, high=10)
-        )
-        >>> generator.generate((2, 6))
-        tensor([[...]])
+    ```
     """
 
     def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
@@ -35,16 +45,17 @@ class LongTensorGenerator(BaseWrapperTensorGenerator):
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.tensor import Long, RandUniform
+    >>> generator = Long(RandUniform(low=0, high=10))
+    >>> generator
+    LongTensorGenerator(
+      (tensor): RandUniformTensorGenerator(low=0.0, high=10.0)
+    )
+    >>> generator.generate((2, 6))
+    tensor([[...]])
 
-        >>> from startorch.tensor import Long, RandUniform
-        >>> generator = Long(RandUniform(low=0, high=10))
-        >>> generator
-        LongTensorGenerator(
-          (tensor): RandUniformTensorGenerator(low=0.0, high=10.0)
-        )
-        >>> generator.generate((2, 6))
-        tensor([[...]])
+    ```
     """
 
     def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
