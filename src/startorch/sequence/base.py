@@ -1,16 +1,21 @@
+r"""Contain the base class to implement a sequence generator."""
+
 from __future__ import annotations
 
 __all__ = ["BaseSequenceGenerator", "is_sequence_generator_config", "setup_sequence_generator"]
 
 import logging
 from abc import ABC, abstractmethod
+from typing import TYPE_CHECKING
 
 from objectory import AbstractFactory
 from objectory.utils import is_object_config
-from redcat import BatchedTensorSeq
-from torch import Generator
 
 from startorch.utils.format import str_target_object
+
+if TYPE_CHECKING:
+    from redcat import BatchedTensorSeq
+    from torch import Generator
 
 logger = logging.getLogger(__name__)
 
@@ -22,15 +27,16 @@ class BaseSequenceGenerator(ABC, metaclass=AbstractFactory):
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.sequence import RandUniform
+    >>> generator = RandUniform()
+    >>> generator
+    RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+    >>> generator.generate(seq_len=12, batch_size=4)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> import torch
-        >>> from startorch.sequence import RandUniform
-        >>> generator = RandUniform()
-        >>> generator
-        RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
-        >>> generator.generate(seq_len=12, batch_size=4)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     @abstractmethod
@@ -44,25 +50,24 @@ class BaseSequenceGenerator(ABC, metaclass=AbstractFactory):
         Args:
             seq_len: Specifies the sequence length.
             batch_size: Specifies the batch size.
-                Default: ``1``
-            rng (``torch.Generator`` or None, optional): Specifies
-                an optional random number generator. Default: ``None``
+            rng: Specifies an optional random number generator.
 
         Returns:
-            ``BatchedTensorSeq``: A batch of sequences. The data in the
-                batch are represented by a ``torch.Tensor`` of shape
+            A batch of sequences. The data in the batch are
+                represented as a ``torch.Tensor`` of shape
                 ``(batch_size, sequence_length, *)`` where `*` means
                 any number of dimensions.
 
         Example usage:
 
-        .. code-block:: pycon
+        ```pycon
+        >>> import torch
+        >>> from startorch.sequence import RandUniform
+        >>> generator = RandUniform()
+        >>> generator.generate(seq_len=12, batch_size=4)
+        tensor([[...]], batch_dim=0, seq_dim=1)
 
-            >>> import torch
-            >>> from startorch.sequence import RandUniform
-            >>> generator = RandUniform()
-            >>> generator.generate(seq_len=12, batch_size=4)
-            tensor([[...]], batch_dim=0, seq_dim=1)
+        ```
         """
 
 
@@ -76,43 +81,44 @@ def is_sequence_generator_config(config: dict) -> bool:
     the class.
 
     Args:
-        config (dict): Specifies the configuration to check.
+        config: Specifies the configuration to check.
 
     Returns:
-        bool: ``True`` if the input configuration is a configuration
+        ``True`` if the input configuration is a configuration
             for a ``BaseSequenceGenerator`` object.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.sequence import is_sequence_generator_config
+    >>> is_sequence_generator_config({"_target_": "startorch.sequence.RandUniform"})
+    True
 
-        >>> from startorch.sequence import is_sequence_generator_config
-        >>> is_sequence_generator_config({"_target_": "startorch.sequence.RandUniform"})
-        True
+    ```
     """
     return is_object_config(config, BaseSequenceGenerator)
 
 
 def setup_sequence_generator(generator: BaseSequenceGenerator | dict) -> BaseSequenceGenerator:
-    r"""Sets up a sequence generator.
+    r"""Set up a sequence generator.
 
     The sequence generator is instantiated from its configuration by
     using the ``BaseSequenceGenerator`` factory function.
 
     Args:
-        generator (``BaseSequenceGenerator`` or dict): Specifies a
-            sequence generator or its configuration.
+        generator: Specifies a sequence generator or its configuration.
 
     Returns:
-        ``BaseSequenceGenerator``: A sequence generator.
+        A sequence generator.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.sequence import setup_sequence_generator
+    >>> setup_sequence_generator({"_target_": "startorch.sequence.RandUniform"})
+    RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
 
-        >>> from startorch.sequence import setup_sequence_generator
-        >>> setup_sequence_generator({"_target_": "startorch.sequence.RandUniform"})
-        RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+    ```
     """
     if isinstance(generator, dict):
         logger.info(

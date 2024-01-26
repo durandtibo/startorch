@@ -1,3 +1,6 @@
+r"""Contain the implementation of sequence generators where the values
+are sampled from an autoregressive process."""
+
 from __future__ import annotations
 
 __all__ = ["AutoRegressiveSequenceGenerator"]
@@ -13,23 +16,19 @@ from startorch.tensor.base import BaseTensorGenerator, setup_tensor_generator
 
 
 class AutoRegressiveSequenceGenerator(BaseSequenceGenerator):
-    r"""Implement a class to generate sequence by sampling values with a
-    linear pattern.
+    r"""Implement a class to generate sequence by sampling values from an
+    autoregressive process.
 
     Args:
-        value (``BaseSequenceGenerator`` or dict): Specifies a
-            sequence generator (or its configuration) used to generate
-            the initial sequence values. These values are used to
-            start the AR.
-        coefficient (``BaseSequenceGenerator`` or dict): Specifies a
-            sequence generator (or its configuration) used to generate
-            the coefficients.
-        noise (``BaseSequenceGenerator`` or dict): Specifies a sequence
-            generator (or its configuration) used to generate the
-            noise values.
-        order (``BaseTensorGenerator`` or dict): Specifies a tensor
-            generator (or its configuration) used to generate the order
-            of the AR.
+        value: Specifies a sequence generator (or its configuration)
+            used to generate the initial sequence values. These values
+            are used to start the AR.
+        coefficient: Specifies a sequence generator (or its
+            configuration) used to generate the coefficients.
+        noise: Specifies a sequence generator (or its configuration)
+            used to generate the noise values.
+        order: Specifies a tensor generator (or its configuration)
+            used to generate the order of the AR.
         max_abs_value: Specifies the maximum absolute value.
             This argument ensures the values stay in the range
             ``[-max_abs_value, max_abs_value]``.
@@ -39,34 +38,35 @@ class AutoRegressiveSequenceGenerator(BaseSequenceGenerator):
             value follows an AR. Default: ``10``
 
     Raises:
-        ValueError if ``max_abs_value`` is not a positive number.
-        ValueError if ``warmup`` is not a positive number.
+        ValueError: if ``max_abs_value`` is not a positive number.
+        ValueError: if ``warmup`` is not a positive number.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.sequence import AutoRegressive, RandUniform, RandNormal, Full
+    >>> from startorch.tensor import RandInt
+    >>> generator = AutoRegressive(
+    ...     value=RandNormal(),
+    ...     coefficient=RandUniform(low=-1.0, high=1.0),
+    ...     noise=Full(0.0),
+    ...     order=RandInt(low=1, high=6),
+    ...     max_abs_value=100.0,
+    ... )
+    >>> generator
+    AutoRegressiveSequenceGenerator(
+      (value): RandNormalSequenceGenerator(mean=0.0, std=1.0, feature_size=(1,))
+      (coefficient): RandUniformSequenceGenerator(low=-1.0, high=1.0, feature_size=(1,))
+      (noise): FullSequenceGenerator(value=0.0, feature_size=(1,))
+      (order): RandIntTensorGenerator(low=1, high=6)
+      (max_abs_value): 100.0
+      (warmup): 10
+    )
+    >>> generator.generate(seq_len=12, batch_size=4)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> import torch
-        >>> from startorch.sequence import AutoRegressive, RandUniform, RandNormal, Full
-        >>> from startorch.tensor import RandInt
-        >>> generator = AutoRegressive(
-        ...     value=RandNormal(),
-        ...     coefficient=RandUniform(low=-1.0, high=1.0),
-        ...     noise=Full(0.0),
-        ...     order=RandInt(low=1, high=6),
-        ...     max_abs_value=100.0,
-        ... )
-        >>> generator
-        AutoRegressiveSequenceGenerator(
-          (value): RandNormalSequenceGenerator(mean=0.0, std=1.0, feature_size=(1,))
-          (coefficient): RandUniformSequenceGenerator(low=-1.0, high=1.0, feature_size=(1,))
-          (noise): FullSequenceGenerator(value=0.0, feature_size=(1,))
-          (order): RandIntTensorGenerator(low=1, high=6)
-          (max_abs_value): 100.0
-          (warmup): 10
-        )
-        >>> generator.generate(seq_len=12, batch_size=4)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(
@@ -85,10 +85,12 @@ class AutoRegressiveSequenceGenerator(BaseSequenceGenerator):
         self._order = setup_tensor_generator(order)
 
         if max_abs_value <= 0.0:
-            raise ValueError(f"`max_abs_value` has to be positive but received {max_abs_value}")
+            msg = f"`max_abs_value` has to be positive but received {max_abs_value}"
+            raise ValueError(msg)
         self._max_abs_value = float(max_abs_value)
         if warmup < 0:
-            raise ValueError(f"warmup has to be positive or zero but received {warmup}")
+            msg = f"warmup has to be positive or zero but received {warmup}"
+            raise ValueError(msg)
         self._warmup = int(warmup)
 
     def __repr__(self) -> str:
@@ -111,7 +113,8 @@ class AutoRegressiveSequenceGenerator(BaseSequenceGenerator):
     ) -> BatchedTensorSeq:
         order = int(self._order.generate((1,), rng=rng).item())
         if order < 1:
-            raise RuntimeError(f"Order must be a positive integer but received {order}")
+            msg = f"Order must be a positive integer but received {order}"
+            raise RuntimeError(msg)
         x = self._value.generate(
             seq_len=seq_len + order * self._warmup, batch_size=batch_size, rng=rng
         ).data

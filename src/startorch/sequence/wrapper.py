@@ -1,3 +1,6 @@
+r"""Contain the implementation of a base class to easily wrap a sequence
+generator into another sequence generator."""
+
 from __future__ import annotations
 
 __all__ = ["BaseWrapperSequenceGenerator"]
@@ -11,9 +14,14 @@ from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_genera
 class BaseWrapperSequenceGenerator(BaseSequenceGenerator):
     r"""Define a base class to easily wrap a sequence generator.
 
+    Note:
+        It is possible to wrap a sequence generator into another
+        sequence generator without using this base class. This class
+        makes it more convenient and reduce duplicate code.
+
     Args:
-        generator (``BaseSequenceGenerator`` or dict):
-            Specifies the sequence generator or its configuration.
+        generator: Specifies the sequence generator or its
+            configuration.
     """
 
     def __init__(self, generator: BaseSequenceGenerator | dict) -> None:

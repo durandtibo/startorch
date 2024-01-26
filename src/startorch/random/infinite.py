@@ -24,7 +24,7 @@ def rand_cauchy(
             distribution. This value has to be greater than 0.
             Default: ``1.0``
         generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator. Default: ``None``
+            an optional random generator.
 
     Returns:
         ``torch.Tensor``: A tensor filled with values sampled from a
@@ -67,7 +67,7 @@ def cauchy(loc: Tensor, scale: Tensor, generator: torch.Generator | None = None)
             ``(d0, d1, ..., dn)``): Specifies the standard
             deviation of the Cauchy distribution.
         generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator. Default: ``None``
+            an optional random generator.
 
     Returns:
         ``torch.Tensor``: A tensor filled with values sampled from a
@@ -111,7 +111,7 @@ def rand_normal(
         std: Specifies the standard deviation of
             the Normal distribution. Default: ``1.0``
         generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator. Default: ``None``
+            an optional random generator.
 
     Returns:
         ``torch.Tensor``: A tensor filled with values sampled from a
@@ -146,7 +146,7 @@ def normal(mean: Tensor, std: Tensor, generator: torch.Generator | None = None) 
             ``(d0, d1, ..., dn)``): Specifies the standard
             deviation.
         generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator. Default: ``None``
+            an optional random generator.
 
     Returns:
         ``torch.Tensor``: A tensor filled with values sampled from a

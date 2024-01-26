@@ -1,17 +1,24 @@
+r"""Contain the implementation of sequence generators where the values
+are sampled from a categorical distribution."""
+
 from __future__ import annotations
 
 __all__ = ["MultinomialSequenceGenerator", "UniformCategoricalSequenceGenerator"]
 
 import math
-from collections.abc import Sequence
+from typing import TYPE_CHECKING
 
 import torch
 from redcat import BatchedTensorSeq
-from torch import Generator
 
 from startorch.sequence.base import BaseSequenceGenerator
 from startorch.utils.conversion import to_tuple
 from startorch.utils.weight import prepare_probabilities
+
+if TYPE_CHECKING:
+    from collections.abc import Sequence
+
+    from torch import Generator
 
 
 class MultinomialSequenceGenerator(BaseSequenceGenerator):
@@ -23,20 +30,20 @@ class MultinomialSequenceGenerator(BaseSequenceGenerator):
             type float): Specifies the vector of weights associated
             at each category. The weights have to be positive but do
             not need to sum to 1.
-        feature_size (tuple or list or int, optional): Specifies the
-            feature size. Default: ``1``
+        feature_size: Specifies the feature size.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.sequence import Multinomial
+    >>> generator = Multinomial(weights=torch.ones(5))
+    >>> generator
+    MultinomialSequenceGenerator(num_categories=5, feature_size=(1,))
+    >>> generator.generate(seq_len=12, batch_size=4)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> import torch
-        >>> from startorch.sequence import Multinomial
-        >>> generator = Multinomial(weights=torch.ones(5))
-        >>> generator
-        MultinomialSequenceGenerator(num_categories=5, feature_size=(1,))
-        >>> generator.generate(seq_len=12, batch_size=4)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(
@@ -78,9 +85,8 @@ class MultinomialSequenceGenerator(BaseSequenceGenerator):
             num_categories: Specifies the number of categories.
 
         Returns:
-            ``MultinomialSequenceGenerator``: A sequence generator where
-                the weights of the multinomial distribution follow
-                a uniform pattern.
+            A sequence generator where the weights of the multinomial
+                distribution follow a uniform pattern.
         """
         return cls(weights=torch.ones(num_categories))
 
@@ -95,9 +101,8 @@ class MultinomialSequenceGenerator(BaseSequenceGenerator):
             num_categories: Specifies the number of categories.
 
         Returns:
-            ``MultinomialSequenceGenerator``: A sequence generator where
-                the weights of the multinomial distribution follow a
-                linear pattern.
+            A sequence generator where the weights of the multinomial
+                distribution follow a linear pattern.
         """
         return cls(
             weights=num_categories * torch.ones(num_categories) - torch.arange(num_categories)
@@ -114,14 +119,12 @@ class MultinomialSequenceGenerator(BaseSequenceGenerator):
 
         Args:
             num_categories: Specifies the number of categories.
-            scale: Specifies the scale parameter
-                that controls the exponential function.
-                Default: ``0.1``
+            scale: Specifies the scale parameter that controls the
+                exponential function.
 
         Returns:
-            ``MultinomialSequenceGenerator``: A sequence generator where
-                the weights of the multinomial distribution follow
-                an exponential pattern.
+            A sequence generator where the weights of the multinomial
+                distribution follow an exponential pattern.
         """
         return cls(weights=torch.arange(num_categories).float().mul(-scale).exp())
 
@@ -132,40 +135,40 @@ class UniformCategoricalSequenceGenerator(BaseSequenceGenerator):
 
     All the categories have the same probability.
 
-    Note: it is a more efficient implementation of
-    ``Multinomial.generate_uniform_weights``.
+    Note:
+        It is a more efficient implementation of
+        ``Multinomial.generate_uniform_weights``.
 
     Args:
         num_categories: Specifies the number of categories.
-        feature_size (tuple or list or int, optional): Specifies the
-            feature size. Default: ``tuple()``
+        feature_size: Specifies the feature size.
 
     Raises:
-        ValueError if ``num_categories`` is negative.
+        ValueError: if ``num_categories`` is negative.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.sequence import UniformCategorical
+    >>> generator = UniformCategorical(10)
+    >>> generator
+    UniformCategoricalSequenceGenerator(num_categories=10, feature_size=())
+    >>> generator.generate(seq_len=12, batch_size=4)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> import torch
-        >>> from startorch.sequence import UniformCategorical
-        >>> generator = UniformCategorical(10)
-        >>> generator
-        UniformCategoricalSequenceGenerator(num_categories=10, feature_size=())
-        >>> generator.generate(seq_len=12, batch_size=4)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(
         self,
         num_categories: int,
-        feature_size: tuple[int, ...] | list[int] | int = tuple(),
+        feature_size: tuple[int, ...] | list[int] | int = (),
     ) -> None:
         super().__init__()
         if num_categories <= 0:
-            raise ValueError(
-                f"num_categories has to be greater than 0 (received: {num_categories})"
-            )
+            msg = f"num_categories has to be greater than 0 (received: {num_categories})"
+            raise ValueError(msg)
         self._num_categories = int(num_categories)
         self._feature_size = to_tuple(feature_size)
 

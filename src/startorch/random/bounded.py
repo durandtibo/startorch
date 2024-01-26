@@ -62,7 +62,7 @@ def rand_trunc_cauchy(
         max_value: Specifies the maximum value.
             Default: ``2.0``
         generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator. Default: ``None``
+            an optional random generator.
 
     Returns:
         ``torch.Tensor``: A tensor filled with values sampled from
@@ -116,7 +116,7 @@ def trunc_cauchy(
         max_value (``torch.Tensor`` of type float and shape
             ``(d0, d1, ..., dn)``): Specifies the maximum value.
         generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator. Default: ``None``
+            an optional random generator.
 
     Returns:
         ``torch.Tensor``: A tensor filled with values sampled from
@@ -181,7 +181,7 @@ def rand_trunc_exponential(
         max_value: Specifies the maximum value.
             Default: ``5.0``
         generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator. Default: ``None``
+            an optional random generator.
 
     Returns:
         ``torch.Tensor``: A tensor filled with values sampled from a
@@ -227,7 +227,7 @@ def trunc_exponential(
         max_value (``torch.Tensor`` of type float and shape
             ``(d0, d1, ..., dn)``): Specifies the maximum value.
         generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator. Default: ``None``
+            an optional random generator.
 
     Returns:
         ``torch.Tensor``: A tensor filled with values sampled from
@@ -287,7 +287,7 @@ def rand_trunc_half_cauchy(
         max_value: Specifies the maximum value.
             Default: ``4.0``
         generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator. Default: ``None``
+            an optional random generator.
 
     Returns:
         ``torch.Tensor``: A tensor filled with values sampled from a
@@ -333,7 +333,7 @@ def trunc_half_cauchy(
         max_value (``torch.Tensor`` of type float and shape
             ``(d0, d1, ..., dn)``): Specifies the maximum value.
         generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator. Default: ``None``
+            an optional random generator.
 
     Returns:
         ``torch.Tensor``: A tensor filled with values sampled from
@@ -393,7 +393,7 @@ def rand_trunc_half_normal(
         max_value: Specifies the maximum value.
             Default: ``5.0``
         generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator. Default: ``None``
+            an optional random generator.
 
     Returns:
         ``torch.Tensor``: A tensor filled with values sampled from a
@@ -439,7 +439,7 @@ def trunc_half_normal(
         max_value (``torch.Tensor`` of type float and shape
             ``(d0, d1, ..., dn)``): Specifies the maximum value.
         generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator. Default: ``None``
+            an optional random generator.
 
     Returns:
         ``torch.Tensor``: A tensor filled with values sampled from a
@@ -502,7 +502,7 @@ def rand_trunc_log_normal(
         max_value: Specifies the maximum value.
             Default: ``5.0``
         generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator. Default: ``None``
+            an optional random generator.
 
     Returns:
         ``torch.Tensor``: A tensor filled with values sampled from a
@@ -556,7 +556,7 @@ def trunc_log_normal(
         max_value (``torch.Tensor`` of type float and shape
             ``(d0, d1, ..., dn)``): Specifies the maximum value.
         generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator. Default: ``None``
+            an optional random generator.
 
     Returns:
         ``torch.Tensor``: A tensor filled with values sampled from a
@@ -628,7 +628,7 @@ def rand_trunc_normal(
         max_value: Specifies the maximum value.
             Default: ``3.0``
         generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator. Default: ``None``
+            an optional random generator.
 
     Returns:
         ``torch.Tensor``: A tensor filled with values sampled from a
@@ -682,7 +682,7 @@ def trunc_normal(
         max_value (``torch.Tensor`` of type float and shape
             ``(d0, d1, ..., dn)``): Specifies the maximum value.
         generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator. Default: ``None``
+            an optional random generator.
 
     Returns:
         ``torch.Tensor``: A tensor filled with values sampled from a
@@ -748,7 +748,7 @@ def rand_uniform(
         high: Specifies the maximum value
             (exclusive). Default: ``1.0``
         generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator. Default: ``None``
+            an optional random generator.
 
     Returns:
         ``torch.Tensor``: A tensor filled with values sampled from a
@@ -792,7 +792,7 @@ def uniform(low: Tensor, high: Tensor, generator: torch.Generator | None = None)
             ``(d0, d1, ..., dn)``): Specifies the maximum values
             (exclusive).
         generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator. Default: ``None``
+            an optional random generator.
 
     Returns:
         ``torch.Tensor`` of type float and shape
@@ -849,7 +849,7 @@ def rand_log_uniform(
             This value needs to be positive.
         high: Specifies the maximum value (exclusive).
         generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator. Default: ``None``
+            an optional random generator.
 
     Returns:
         ``torch.Tensor``: A tensor filled with values sampled from a
@@ -892,7 +892,7 @@ def log_uniform(low: Tensor, high: Tensor, generator: torch.Generator | None = N
             ``(d0, d1, ..., dn)``): Specifies the maximum values
             (exclusive).
         generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator. Default: ``None``
+            an optional random generator.
 
     Returns:
         ``torch.Tensor`` of type float and shape
@@ -949,7 +949,7 @@ def rand_asinh_uniform(
             This value needs to be positive.
         high: Specifies the maximum value (exclusive).
         generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator. Default: ``None``
+            an optional random generator.
 
     Returns:
         ``torch.Tensor``: A tensor filled with values sampled from a
@@ -992,7 +992,7 @@ def asinh_uniform(low: Tensor, high: Tensor, generator: torch.Generator | None =
             ``(d0, d1, ..., dn)``): Specifies the maximum values
             (exclusive).
         generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator. Default: ``None``
+            an optional random generator.
 
     Returns:
         ``torch.Tensor`` of type float and shape

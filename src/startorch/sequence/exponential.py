@@ -1,3 +1,6 @@
+r"""Contain the implementation of sequence generators where the values
+are sampled from an Exponential distribution."""
+
 from __future__ import annotations
 
 __all__ = [
@@ -7,10 +10,10 @@ __all__ = [
     "TruncExponentialSequenceGenerator",
 ]
 
+from typing import TYPE_CHECKING
 
 from coola.utils.format import str_indent, str_mapping
 from redcat import BatchedTensorSeq
-from torch import Generator
 
 from startorch.random import (
     exponential,
@@ -22,6 +25,9 @@ from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_genera
 from startorch.sequence.constant import ConstantSequenceGenerator, FullSequenceGenerator
 from startorch.utils.conversion import to_tuple
 
+if TYPE_CHECKING:
+    from torch import Generator
+
 
 class ExponentialSequenceGenerator(BaseSequenceGenerator):
     r"""Implement a class to generate sequence by sampling values from an
@@ -32,22 +38,22 @@ class ExponentialSequenceGenerator(BaseSequenceGenerator):
     value in the sequence.
 
     Args:
-        rate (``BaseSequenceGenerator`` or dict):
-            Specifies the rate generator or its configuration.
+        rate: Specifies the rate generator or its configuration.
             The rate generator should return valid rate values.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.sequence import Exponential, RandUniform
+    >>> generator = Exponential(rate=RandUniform(low=1.0, high=10.0))
+    >>> generator
+    ExponentialSequenceGenerator(
+      (rate): RandUniformSequenceGenerator(low=1.0, high=10.0, feature_size=(1,))
+    )
+    >>> generator.generate(seq_len=6, batch_size=2)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> from startorch.sequence import Exponential, RandUniform
-        >>> generator = Exponential(rate=RandUniform(low=1.0, high=10.0))
-        >>> generator
-        ExponentialSequenceGenerator(
-          (rate): RandUniformSequenceGenerator(low=1.0, high=10.0, feature_size=(1,))
-        )
-        >>> generator.generate(seq_len=6, batch_size=2)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(self, rate: BaseSequenceGenerator | dict) -> None:
@@ -76,28 +82,26 @@ class ExponentialSequenceGenerator(BaseSequenceGenerator):
         from an Exponential distribution with a fixed rate.
 
         Args:
-            rate: Specifies the rate of the
-                Exponential distribution. Default: ``1.0``
-            feature_size (tuple or list or int, optional): Specifies the
-                feature size. Default: ``1``
+            rate: Specifies the rate of the Exponential distribution.
+            feature_size: Specifies the feature size.
 
         Returns:
-            ``ExponentialSequenceGenerator``: A sequence generator where
-                the rates of the Exponential distribution are a fixed
-                given value.
+            A sequence generator where the rates of the Exponential
+                distribution are a fixed given value.
 
         Example usage:
 
-        .. code-block:: pycon
+        ```pycon
+        >>> from startorch.sequence import Exponential, RandUniform
+        >>> generator = Exponential.create_fixed_rate(rate=1.0)
+        >>> generator
+        ExponentialSequenceGenerator(
+          (rate): FullSequenceGenerator(value=1.0, feature_size=(1,))
+        )
+        >>> generator.generate(seq_len=6, batch_size=2)
+        tensor([[...]], batch_dim=0, seq_dim=1)
 
-            >>> from startorch.sequence import Exponential, RandUniform
-            >>> generator = Exponential.create_fixed_rate(rate=1.0)
-            >>> generator
-            ExponentialSequenceGenerator(
-              (rate): FullSequenceGenerator(value=1.0, feature_size=(1,))
-            )
-            >>> generator.generate(seq_len=6, batch_size=2)
-            tensor([[...]], batch_dim=0, seq_dim=1)
+        ```
         """
         return cls(FullSequenceGenerator(value=rate, feature_size=feature_size))
 
@@ -115,32 +119,29 @@ class ExponentialSequenceGenerator(BaseSequenceGenerator):
         One rate is sampled per sequence.
 
         Args:
-            min_rate: Specifies the minimum rate
-                value. Default: ``0.01``
-            max_rate: Specifies the maximum rate
-                value. Default: ``1.0``
-            feature_size (tuple or list or int, optional): Specifies the
-                feature size. Default: ``1``
+            min_rate: Specifies the minimum rate value.
+            max_rate: Specifies the maximum rate value.
+            feature_size: Specifies the feature size.
 
         Returns:
-            ``ExponentialSequenceGenerator``: A sequence generator where
-                the rates for each sequence are sampled from a
-                uniform distribution.
+            A sequence generator where the rates for each sequence are
+                sampled from a uniform distribution.
 
         Example usage:
 
-        .. code-block:: pycon
-
-            >>> from startorch.sequence import Exponential, RandUniform
-            >>> generator = Exponential.create_uniform_rate(min_rate=0.1, max_rate=1.0)
-            >>> generator
-            ExponentialSequenceGenerator(
-              (rate): ConstantSequenceGenerator(
-                  (sequence): RandUniformSequenceGenerator(low=0.1, high=1.0, feature_size=(1,))
-                )
+        ```pycon
+        >>> from startorch.sequence import Exponential, RandUniform
+        >>> generator = Exponential.create_uniform_rate(min_rate=0.1, max_rate=1.0)
+        >>> generator
+        ExponentialSequenceGenerator(
+          (rate): ConstantSequenceGenerator(
+              (sequence): RandUniformSequenceGenerator(low=0.1, high=1.0, feature_size=(1,))
             )
-            >>> generator.generate(seq_len=6, batch_size=2)
-            tensor([[...]], batch_dim=0, seq_dim=1)
+        )
+        >>> generator.generate(seq_len=6, batch_size=2)
+        tensor([[...]], batch_dim=0, seq_dim=1)
+
+        ```
         """
         # The import is here to do not generate circular dependencies
         from startorch.sequence.uniform import RandUniformSequenceGenerator
@@ -161,24 +162,23 @@ class RandExponentialSequenceGenerator(BaseSequenceGenerator):
     an Exponential distribution.
 
     Args:
-        rate: Specifies the rate of the Exponential
-            distribution. Default: ``1.0``
-        feature_size (tuple or list or int, optional): Specifies the
-            feature size. Default: ``1``
+        rate: Specifies the rate of the Exponential distribution.
+        feature_size: Specifies the feature size.
 
     Raises:
-        ValueError if ``rate`` is not a positive number.
+        ValueError: if ``rate`` is not a positive number.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.sequence import RandExponential
+    >>> generator = RandExponential(rate=1.0)
+    >>> generator
+    RandExponentialSequenceGenerator(rate=1.0, feature_size=(1,))
+    >>> generator.generate(seq_len=6, batch_size=2)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> from startorch.sequence import RandExponential
-        >>> generator = RandExponential(rate=1.0)
-        >>> generator
-        RandExponentialSequenceGenerator(rate=1.0, feature_size=(1,))
-        >>> generator.generate(seq_len=6, batch_size=2)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(
@@ -188,7 +188,8 @@ class RandExponentialSequenceGenerator(BaseSequenceGenerator):
     ) -> None:
         super().__init__()
         if rate <= 0:
-            raise ValueError(f"rate has to be greater than 0 (received: {rate})")
+            msg = f"rate has to be greater than 0 (received: {rate})"
+            raise ValueError(msg)
         self._rate = float(rate)
         self._feature_size = to_tuple(feature_size)
 
@@ -215,27 +216,25 @@ class RandTruncExponentialSequenceGenerator(BaseSequenceGenerator):
     truncated Exponential distribution.
 
     Args:
-        rate: Specifies the rate of the Exponential
-            distribution. Default: ``1.0``
+        rate: Specifies the rate of the Exponential distribution.
         max_value: Specifies the maximum value.
-            Default: ``5.0``
-        feature_size (tuple or list or int, optional): Specifies the
-            feature size. Default: ``1``
+        feature_size: Specifies the feature size.
 
     Raises:
-        ValueError if ``rate`` is not a positive number.
-        ValueError if ``max_value`` is not a positive number.
+        ValueError: if ``rate`` is not a positive number.
+        ValueError: if ``max_value`` is not a positive number.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.sequence import RandTruncExponential
+    >>> generator = RandTruncExponential(rate=1.0, max_value=3.0)
+    >>> generator
+    RandTruncExponentialSequenceGenerator(rate=1.0, max_value=3.0, feature_size=(1,))
+    >>> generator.generate(seq_len=6, batch_size=2)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> from startorch.sequence import RandTruncExponential
-        >>> generator = RandTruncExponential(rate=1.0, max_value=3.0)
-        >>> generator
-        RandTruncExponentialSequenceGenerator(rate=1.0, max_value=3.0, feature_size=(1,))
-        >>> generator.generate(seq_len=6, batch_size=2)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(
@@ -246,10 +245,12 @@ class RandTruncExponentialSequenceGenerator(BaseSequenceGenerator):
     ) -> None:
         super().__init__()
         if rate <= 0:
-            raise ValueError(f"rate has to be greater than 0 (received: {rate})")
+            msg = f"rate has to be greater than 0 (received: {rate})"
+            raise ValueError(msg)
         self._rate = float(rate)
         if max_value <= 0:
-            raise ValueError(f"max_value has to be greater than 0 (received: {max_value})")
+            msg = f"max_value has to be greater than 0 (received: {max_value})"
+            raise ValueError(msg)
         self._max_value = float(max_value)
         self._feature_size = to_tuple(feature_size)
 
@@ -277,28 +278,28 @@ class TruncExponentialSequenceGenerator(BaseSequenceGenerator):
     Exponential distribution.
 
     Args:
-        rate (``BaseSequenceGenerator`` or dict): Specifies a sequence
-            generator (or its configuration) to generate the rate.
-        max_value (``BaseSequenceGenerator`` or dict): Specifies a
-            sequence generator (or its configuration) to generate the
-            maximum value (excluded).
+        rate: Specifies a sequence generator (or its configuration)
+            to generate the rate.
+        max_value: Specifies a sequence generator (or its
+            configuration) to generate the maximum value (excluded).
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.sequence import RandUniform, TruncExponential
+    >>> generator = TruncExponential(
+    ...     rate=RandUniform(low=1.0, high=10.0),
+    ...     max_value=RandUniform(low=1.0, high=100.0),
+    ... )
+    >>> generator
+    TruncExponentialSequenceGenerator(
+      (rate): RandUniformSequenceGenerator(low=1.0, high=10.0, feature_size=(1,))
+      (max_value): RandUniformSequenceGenerator(low=1.0, high=100.0, feature_size=(1,))
+    )
+    >>> generator.generate(seq_len=6, batch_size=2)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> from startorch.sequence import RandUniform, TruncExponential
-        >>> generator = TruncExponential(
-        ...     rate=RandUniform(low=1.0, high=10.0),
-        ...     max_value=RandUniform(low=1.0, high=100.0),
-        ... )
-        >>> generator
-        TruncExponentialSequenceGenerator(
-          (rate): RandUniformSequenceGenerator(low=1.0, high=10.0, feature_size=(1,))
-          (max_value): RandUniformSequenceGenerator(low=1.0, high=100.0, feature_size=(1,))
-        )
-        >>> generator.generate(seq_len=6, batch_size=2)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(

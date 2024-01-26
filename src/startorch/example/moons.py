@@ -114,7 +114,7 @@ def make_moons_classification(
             number of examples in outer circle and inner circle.
             Default: ``0.5``
         generator (``torch.Generator`` or ``None``, optional):
-            Specifies an optional random generator. Default: ``None``
+            Specifies an optional random generator.
 
     Returns:
     -------

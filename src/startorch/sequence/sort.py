@@ -1,38 +1,44 @@
+r"""Contain the implementation of sequence generator that generates a
+sequence by sorting a generated sequence."""
+
 from __future__ import annotations
 
 __all__ = ["SortSequenceGenerator"]
 
+from typing import TYPE_CHECKING
 
-from redcat import BatchedTensorSeq
-from torch import Generator
-
-from startorch.sequence.base import BaseSequenceGenerator
 from startorch.sequence.wrapper import BaseWrapperSequenceGenerator
+
+if TYPE_CHECKING:
+    from redcat import BatchedTensorSeq
+    from torch import Generator
+
+    from startorch.sequence.base import BaseSequenceGenerator
 
 
 class SortSequenceGenerator(BaseWrapperSequenceGenerator):
     r"""Implement a sequence generator that sorts a generated sequence.
 
     Args:
-        sequence (``BaseSequenceGenerator`` or dict):
-            Specifies the sequence generator or its configuration.
-        descending (bool, optional): Controls the sorting order.
-            If ``True``, the elements are sorted in
-            descending order by value. Default: ``False``
+        sequence: Specifies the sequence generator or its
+            configuration.
+        descending: Controls the sorting order. If ``True``,
+            the elements are sorted in descending order by value.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.sequence import RandUniform, Sort
+    >>> generator = Sort(RandUniform())
+    >>> generator
+    SortSequenceGenerator(
+      (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+    )
+    >>> generator.generate(seq_len=12, batch_size=4)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> import torch
-        >>> from startorch.sequence import RandUniform, Sort
-        >>> generator = Sort(RandUniform())
-        >>> generator
-        SortSequenceGenerator(
-          (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
-        )
-        >>> generator.generate(seq_len=12, batch_size=4)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(

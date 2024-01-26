@@ -1,8 +1,5 @@
 r"""Contain the implementation of tensor generators to change the data
-type of tensors.
-
-constant.
-"""
+type of tensors."""
 
 from __future__ import annotations
 

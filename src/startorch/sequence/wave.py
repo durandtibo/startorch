@@ -1,14 +1,20 @@
+r"""Contain the implementation of sequence generators where the values
+are sampled with a sine-wave pattern."""
+
 from __future__ import annotations
 
 __all__ = ["SineWaveSequenceGenerator"]
 
 import math
+from typing import TYPE_CHECKING
 
 from coola.utils.format import str_indent, str_mapping
-from redcat import BatchedTensorSeq
-from torch import Generator
 
 from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_generator
+
+if TYPE_CHECKING:
+    from redcat import BatchedTensorSeq
+    from torch import Generator
 
 
 class SineWaveSequenceGenerator(BaseSequenceGenerator):
@@ -20,46 +26,43 @@ class SineWaveSequenceGenerator(BaseSequenceGenerator):
     ``output = amplitude * sin(2 * pi * frequency * value + phase)``
 
     Args:
-        value (``BaseSequenceGenerator`` or dict): Specifies a
-            sequence generator (or its configuration) to generate the
-            sequence values.
-        frequency (``BaseSequenceGenerator`` or dict): Specifies a
-            sequence generator (or its configuration) to generate the
-            frequency values.
-        phase (``BaseSequenceGenerator`` or dict): Specifies a
-            sequence generator (or its configuration) to generate the
-            phase values.
-        amplitude (``BaseSequenceGenerator`` or dict): Specifies a
-            sequence generator (or its configuration) to generate the
-            amplitude values.
+        value: Specifies a sequence generator (or its configuration) to
+            generate the sequence values.
+        frequency: Specifies a sequence generator (or its
+            configuration) to generate the frequency values.
+        phase: Specifies a sequence generator (or its configuration)
+            to generate the phase values.
+        amplitude: Specifies a sequence generator (or its
+            configuration) to generate the amplitude values.
 
     Example usage:
 
-    .. code-block:: pycon
-
-        >>> import torch
-        >>> from startorch.sequence import Arange, SineWave, RandUniform, Constant, RandLogUniform
-        >>> generator = SineWave(
-        ...     value=Arange(),
-        ...     frequency=Constant(RandLogUniform(low=0.01, high=0.1)),
-        ...     phase=Constant(RandUniform(low=-1.0, high=1.0)),
-        ...     amplitude=Constant(RandLogUniform(low=0.1, high=1.0)),
-        ... )
-        >>> generator
-        SineWaveSequenceGenerator(
-          (value): ArangeSequenceGenerator(feature_size=(1,))
-          (frequency): ConstantSequenceGenerator(
-              (sequence): RandLogUniformSequenceGenerator(low=0.01, high=0.1, feature_size=(1,))
-            )
-          (phase): ConstantSequenceGenerator(
-              (sequence): RandUniformSequenceGenerator(low=-1.0, high=1.0, feature_size=(1,))
-            )
-          (amplitude): ConstantSequenceGenerator(
-              (sequence): RandLogUniformSequenceGenerator(low=0.1, high=1.0, feature_size=(1,))
-            )
+    ```pycon
+    >>> import torch
+    >>> from startorch.sequence import Arange, SineWave, RandUniform, Constant, RandLogUniform
+    >>> generator = SineWave(
+    ...     value=Arange(),
+    ...     frequency=Constant(RandLogUniform(low=0.01, high=0.1)),
+    ...     phase=Constant(RandUniform(low=-1.0, high=1.0)),
+    ...     amplitude=Constant(RandLogUniform(low=0.1, high=1.0)),
+    ... )
+    >>> generator
+    SineWaveSequenceGenerator(
+      (value): ArangeSequenceGenerator(feature_size=(1,))
+      (frequency): ConstantSequenceGenerator(
+          (sequence): RandLogUniformSequenceGenerator(low=0.01, high=0.1, feature_size=(1,))
         )
-        >>> generator.generate(seq_len=12, batch_size=4)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+      (phase): ConstantSequenceGenerator(
+          (sequence): RandUniformSequenceGenerator(low=-1.0, high=1.0, feature_size=(1,))
+        )
+      (amplitude): ConstantSequenceGenerator(
+          (sequence): RandLogUniformSequenceGenerator(low=0.1, high=1.0, feature_size=(1,))
+        )
+    )
+    >>> generator.generate(seq_len=12, batch_size=4)
+    tensor([[...]], batch_dim=0, seq_dim=1)
+
+    ```
     """
 
     def __init__(

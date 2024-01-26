@@ -1,3 +1,6 @@
+r"""Contain the implementation of sequence generators that computes
+trigonometric functions on sequences/tensors."""
+
 from __future__ import annotations
 
 __all__ = [
@@ -9,10 +12,13 @@ __all__ = [
     "TanhSequenceGenerator",
 ]
 
-from redcat import BatchedTensorSeq
-from torch import Generator
+from typing import TYPE_CHECKING
 
 from startorch.sequence.wrapper import BaseWrapperSequenceGenerator
+
+if TYPE_CHECKING:
+    from redcat import BatchedTensorSeq
+    from torch import Generator
 
 
 class AcoshSequenceGenerator(BaseWrapperSequenceGenerator):
@@ -21,17 +27,18 @@ class AcoshSequenceGenerator(BaseWrapperSequenceGenerator):
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.sequence import Acosh, RandUniform
+    >>> generator = Acosh(RandUniform())
+    >>> generator
+    AcoshSequenceGenerator(
+      (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+    )
+    >>> generator.generate(seq_len=12, batch_size=4)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> import torch
-        >>> from startorch.sequence import Acosh, RandUniform
-        >>> generator = Acosh(RandUniform())
-        >>> generator
-        AcoshSequenceGenerator(
-          (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
-        )
-        >>> generator.generate(seq_len=12, batch_size=4)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def generate(
@@ -46,17 +53,18 @@ class AsinhSequenceGenerator(BaseWrapperSequenceGenerator):
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.sequence import Asinh, RandUniform
+    >>> generator = Asinh(RandUniform())
+    >>> generator
+    AsinhSequenceGenerator(
+      (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+    )
+    >>> generator.generate(seq_len=12, batch_size=4)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> import torch
-        >>> from startorch.sequence import Asinh, RandUniform
-        >>> generator = Asinh(RandUniform())
-        >>> generator
-        AsinhSequenceGenerator(
-          (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
-        )
-        >>> generator.generate(seq_len=12, batch_size=4)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def generate(
@@ -71,17 +79,18 @@ class AtanhSequenceGenerator(BaseWrapperSequenceGenerator):
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.sequence import Atanh, RandUniform
+    >>> generator = Atanh(RandUniform())
+    >>> generator
+    AtanhSequenceGenerator(
+      (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+    )
+    >>> generator.generate(seq_len=12, batch_size=4)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> import torch
-        >>> from startorch.sequence import Atanh, RandUniform
-        >>> generator = Atanh(RandUniform())
-        >>> generator
-        AtanhSequenceGenerator(
-          (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
-        )
-        >>> generator.generate(seq_len=12, batch_size=4)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def generate(
@@ -96,17 +105,18 @@ class CoshSequenceGenerator(BaseWrapperSequenceGenerator):
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.sequence import Cosh, RandUniform
+    >>> generator = Cosh(RandUniform())
+    >>> generator
+    CoshSequenceGenerator(
+      (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+    )
+    >>> generator.generate(seq_len=12, batch_size=4)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> import torch
-        >>> from startorch.sequence import Cosh, RandUniform
-        >>> generator = Cosh(RandUniform())
-        >>> generator
-        CoshSequenceGenerator(
-          (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
-        )
-        >>> generator.generate(seq_len=12, batch_size=4)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def generate(
@@ -121,17 +131,18 @@ class SinhSequenceGenerator(BaseWrapperSequenceGenerator):
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.sequence import Sinh, RandUniform
+    >>> generator = Sinh(RandUniform())
+    >>> generator
+    SinhSequenceGenerator(
+      (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+    )
+    >>> generator.generate(seq_len=12, batch_size=4)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> import torch
-        >>> from startorch.sequence import Sinh, RandUniform
-        >>> generator = Sinh(RandUniform())
-        >>> generator
-        SinhSequenceGenerator(
-          (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
-        )
-        >>> generator.generate(seq_len=12, batch_size=4)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def generate(
@@ -146,17 +157,18 @@ class TanhSequenceGenerator(BaseWrapperSequenceGenerator):
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.sequence import Tanh, RandUniform
+    >>> generator = Tanh(RandUniform())
+    >>> generator
+    TanhSequenceGenerator(
+      (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+    )
+    >>> generator.generate(seq_len=12, batch_size=4)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> import torch
-        >>> from startorch.sequence import Tanh, RandUniform
-        >>> generator = Tanh(RandUniform())
-        >>> generator
-        TanhSequenceGenerator(
-          (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
-        )
-        >>> generator.generate(seq_len=12, batch_size=4)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def generate(
