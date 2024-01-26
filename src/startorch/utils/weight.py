@@ -12,7 +12,7 @@ GENERATOR = "generator"
 WEIGHT = "weight"
 
 
-def prepare_probabilities(weights: Tensor | Sequence[int | float]) -> torch.Tensor:
+def prepare_probabilities(weights: Tensor | Sequence[float]) -> torch.Tensor:
     r"""Converts un-normalized positive weights to probabilities.
 
     Args:

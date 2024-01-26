@@ -52,7 +52,7 @@ class SwissRollExampleGenerator(BaseExampleGenerator[BatchedTensor]):
     def __init__(
         self,
         noise_std: float = 0.0,
-        spin: float | int = 1.5,
+        spin: float = 1.5,
         hole: bool = False,
     ) -> None:
         check_std(noise_std, "noise_std")
@@ -93,7 +93,7 @@ class SwissRollExampleGenerator(BaseExampleGenerator[BatchedTensor]):
 def make_swiss_roll(
     num_examples: int = 100,
     noise_std: float = 0.0,
-    spin: float | int = 1.5,
+    spin: float = 1.5,
     hole: bool = False,
     generator: torch.Generator | None = None,
 ) -> BatchDict[BatchedTensor]:

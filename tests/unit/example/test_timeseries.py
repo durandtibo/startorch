@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+import pytest
 import torch
-from pytest import mark
 from redcat import BatchDict, BatchedTensorSeq
 
 from startorch import constants as ct
@@ -11,7 +11,7 @@ from startorch.sequence import RandUniform
 from startorch.tensor import Full, RandInt
 from startorch.utils.seed import get_torch_generator
 
-SIZES = (1, 2)
+SIZES = (1, 2, 4)
 
 
 ################################################
@@ -28,8 +28,8 @@ def test_timeseries_str() -> None:
     ).startswith("TimeSeriesExampleGenerator(")
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_timeseries_generate(batch_size: int, seq_len: int) -> None:
     batch = TimeSeries(
         timeseries=timeseries.TimeSeries({"value": RandUniform(), "time": RandUniform()}),

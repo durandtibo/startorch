@@ -74,7 +74,7 @@ class AddScalarTensorGenerator(BaseWrapperTensorGenerator):
     def __init__(
         self,
         generator: BaseTensorGenerator | dict,
-        value: int | float,
+        value: float,
     ) -> None:
         super().__init__(generator=generator)
         self._value = value
@@ -169,8 +169,8 @@ class ClampTensorGenerator(BaseWrapperTensorGenerator):
     def __init__(
         self,
         generator: BaseTensorGenerator | dict,
-        min_value: int | float | None,
-        max_value: int | float | None,
+        min_value: float | None,
+        max_value: float | None,
     ) -> None:
         super().__init__(generator=generator)
         if min_value is None and max_value is None:
@@ -312,7 +312,7 @@ class FmodTensorGenerator(BaseTensorGenerator):
     def __init__(
         self,
         dividend: BaseTensorGenerator | dict,
-        divisor: BaseTensorGenerator | dict | int | float,
+        divisor: BaseTensorGenerator | dict | float,
     ) -> None:
         super().__init__()
         self._dividend = setup_tensor_generator(dividend)
@@ -425,7 +425,7 @@ class MulScalarTensorGenerator(BaseWrapperTensorGenerator):
     def __init__(
         self,
         generator: BaseTensorGenerator | dict,
-        value: int | float,
+        value: float,
     ) -> None:
         super().__init__(generator=generator)
         self._value = value

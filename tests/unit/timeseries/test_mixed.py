@@ -9,7 +9,7 @@ from startorch.sequence import BaseSequenceGenerator, RandUniform
 from startorch.timeseries import MixedTimeSeries, TimeSeries
 from startorch.utils.seed import get_torch_generator
 
-SIZES = (1, 2)
+SIZES = (1, 2, 4)
 
 
 #####################################

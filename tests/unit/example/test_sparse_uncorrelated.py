@@ -1,8 +1,8 @@
 from __future__ import annotations
 
+import pytest
 import torch
 from coola import objects_are_equal
-from pytest import mark, raises
 from redcat import BatchDict, BatchedTensor
 
 from startorch import constants as ct
@@ -17,27 +17,27 @@ SIZES = [1, 2, 4]
 #########################################################
 
 
-@mark.parametrize("num_examples", [0, -1])
+@pytest.mark.parametrize("num_examples", [0, -1])
 def test_make_sparse_uncorrelated_regression_incorrect_num_examples(num_examples: int) -> None:
-    with raises(
+    with pytest.raises(
         RuntimeError,
         match="Incorrect value for num_examples. Expected a value greater or equal to 1",
     ):
         make_sparse_uncorrelated_regression(num_examples=num_examples)
 
 
-@mark.parametrize("feature_size", (3, 1, 0, -1))
+@pytest.mark.parametrize("feature_size", [3, 1, 0, -1])
 def test_make_sparse_uncorrelated_regression_incorrect_feature_size(feature_size: int) -> None:
-    with raises(
+    with pytest.raises(
         RuntimeError,
         match="Incorrect value for feature_size. Expected a value greater or equal to 4",
     ):
         make_sparse_uncorrelated_regression(feature_size=feature_size)
 
 
-@mark.parametrize("noise_std", (-1, -4.2))
+@pytest.mark.parametrize("noise_std", [-1, -4.2])
 def test_make_sparse_uncorrelated_regression_incorrect_noise_std(noise_std: float) -> None:
-    with raises(
+    with pytest.raises(
         RuntimeError,
         match="Incorrect value for noise_std. Expected a value greater than 0",
     ):
@@ -70,7 +70,7 @@ def test_make_sparse_uncorrelated_regression_feature_size_8() -> None:
     assert features.dtype == torch.float
 
 
-@mark.parametrize("num_examples", SIZES)
+@pytest.mark.parametrize("num_examples", SIZES)
 def test_make_sparse_uncorrelated_regression_num_examples(num_examples: int) -> None:
     data = make_sparse_uncorrelated_regression(num_examples)
     assert len(data) == 2
@@ -78,13 +78,13 @@ def test_make_sparse_uncorrelated_regression_num_examples(num_examples: int) -> 
     assert data[ct.FEATURE].batch_size == num_examples
 
 
-@mark.parametrize("feature_size", (5, 8, 10))
+@pytest.mark.parametrize("feature_size", [5, 8, 10])
 def test_make_sparse_uncorrelated_regression_feature_size(feature_size: int) -> None:
     data = make_sparse_uncorrelated_regression(num_examples=10, feature_size=feature_size)
     assert data[ct.FEATURE].shape[1] == feature_size
 
 
-@mark.parametrize("noise_std", (0.0, 1.0))
+@pytest.mark.parametrize("noise_std", [0.0, 1.0])
 def test_make_sparse_uncorrelated_regression_same_random_seed(noise_std: float) -> None:
     assert objects_are_equal(
         make_sparse_uncorrelated_regression(
@@ -102,7 +102,7 @@ def test_make_sparse_uncorrelated_regression_same_random_seed(noise_std: float) 
     )
 
 
-@mark.parametrize("noise_std", (0.0, 1.0))
+@pytest.mark.parametrize("noise_std", [0.0, 1.0])
 def test_make_sparse_uncorrelated_regression_different_random_seeds(noise_std: float) -> None:
     assert not objects_are_equal(
         make_sparse_uncorrelated_regression(

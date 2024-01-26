@@ -35,7 +35,7 @@ class MultinomialTensorGenerator(BaseTensorGenerator):
         tensor([[...]])
     """
 
-    def __init__(self, weights: torch.Tensor | Sequence[int | float]) -> None:
+    def __init__(self, weights: torch.Tensor | Sequence[float]) -> None:
         super().__init__()
         self._probabilities = prepare_probabilities(weights)
 
