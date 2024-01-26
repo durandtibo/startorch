@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+import pytest
 import torch
-from pytest import mark
 from redcat import BatchedTensorSeq
 
 from startorch.sequence import Arange
@@ -31,8 +31,8 @@ def test_arange_generate() -> None:
     )
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_arange_generate_feature_size_default(batch_size: int, seq_len: int) -> None:
     batch = Arange().generate(batch_size=batch_size, seq_len=seq_len)
     assert isinstance(batch, BatchedTensorSeq)
@@ -42,9 +42,9 @@ def test_arange_generate_feature_size_default(batch_size: int, seq_len: int) -> 
     assert batch.data.dtype == torch.long
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_arange_generate_feature_size_int(batch_size: int, seq_len: int, feature_size: int) -> None:
     batch = Arange(feature_size=feature_size).generate(batch_size=batch_size, seq_len=seq_len)
     assert isinstance(batch, BatchedTensorSeq)
@@ -54,8 +54,8 @@ def test_arange_generate_feature_size_int(batch_size: int, seq_len: int, feature
     assert batch.data.dtype == torch.long
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_arange_generate_feature_size_tuple(batch_size: int, seq_len: int) -> None:
     batch = Arange(feature_size=(3, 4)).generate(batch_size=batch_size, seq_len=seq_len)
     assert isinstance(batch, BatchedTensorSeq)

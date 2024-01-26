@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 import logging
+from typing import TYPE_CHECKING
 
 from objectory import OBJECT_TARGET
-from pytest import LogCaptureFixture
 
 from startorch.sequence import (
     RandUniform,
@@ -11,6 +11,9 @@ from startorch.sequence import (
     setup_sequence_generator,
 )
 from startorch.tensor import RandInt
+
+if TYPE_CHECKING:
+    import pytest
 
 ##################################################
 #     Tests for is_sequence_generator_config     #
@@ -42,7 +45,7 @@ def test_setup_sequence_generator_dict() -> None:
     )
 
 
-def test_setup_sequence_generator_incorrect_type(caplog: LogCaptureFixture) -> None:
+def test_setup_sequence_generator_incorrect_type(caplog: pytest.LogCaptureFixture) -> None:
     with caplog.at_level(level=logging.WARNING):
         assert isinstance(
             setup_sequence_generator(

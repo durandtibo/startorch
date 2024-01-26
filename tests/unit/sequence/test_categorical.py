@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from collections.abc import Sequence
+from typing import TYPE_CHECKING
 
+import pytest
 import torch
-from pytest import mark, raises
 from redcat import BatchedTensorSeq
 from torch import Tensor
 
@@ -11,6 +11,9 @@ from startorch.sequence import Multinomial, UniformCategorical
 from startorch.utils.seed import get_torch_generator
 
 SIZES = (1, 2, 4)
+
+if TYPE_CHECKING:
+    from collections.abc import Sequence
 
 
 #################################
@@ -22,11 +25,11 @@ def test_multinomial_str() -> None:
     assert str(Multinomial(torch.ones(10))).startswith("MultinomialSequenceGenerator(")
 
 
-@mark.parametrize(
+@pytest.mark.parametrize(
     "weights", [torch.ones(10), [1, 1, 1, 1, 1, 1, 1, 1, 1, 1], (1, 1, 1, 1, 1, 1, 1, 1, 1, 1)]
 )
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_multinomial_generate_feature_size_default(
     weights: Tensor | Sequence, batch_size: int, seq_len: int
 ) -> None:
@@ -40,9 +43,9 @@ def test_multinomial_generate_feature_size_default(
     assert batch.max() < 10
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_multinomial_generate_feature_size_int(
     batch_size: int, seq_len: int, feature_size: int
 ) -> None:
@@ -58,8 +61,8 @@ def test_multinomial_generate_feature_size_int(
     assert batch.max() < 10
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_multinomial_generate_feature_size_tuple(batch_size: int, seq_len: int) -> None:
     batch = Multinomial(torch.ones(10), feature_size=(3, 4)).generate(
         batch_size=batch_size, seq_len=seq_len
@@ -73,7 +76,7 @@ def test_multinomial_generate_feature_size_tuple(batch_size: int, seq_len: int) 
     assert batch.max() < 10
 
 
-@mark.parametrize("num_categories", SIZES)
+@pytest.mark.parametrize("num_categories", SIZES)
 def test_multinomial_generate_num_categories(num_categories: int) -> None:
     batch = Multinomial(torch.ones(num_categories)).generate(batch_size=4, seq_len=10)
     assert isinstance(batch, BatchedTensorSeq)
@@ -99,16 +102,16 @@ def test_multinomial_generate_different_random_seeds() -> None:
     )
 
 
-@mark.parametrize(
+@pytest.mark.parametrize(
     "generator",
-    (
+    [
         Multinomial.create_uniform_weights(num_categories=10),
         Multinomial.create_exp_weights(num_categories=10),
         Multinomial.create_linear_weights(num_categories=10),
-    ),
+    ],
 )
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_multinomial_generate_predefined_settings(
     generator: Multinomial, batch_size: int, seq_len: int
 ) -> None:
@@ -133,23 +136,23 @@ def test_uniform_categorical_str() -> None:
     )
 
 
-@mark.parametrize("num_categories", (1, 2))
+@pytest.mark.parametrize("num_categories", [1, 2])
 def test_uniform_categorical_num_categories(num_categories: int) -> None:
     assert UniformCategorical(num_categories)._num_categories == num_categories
 
 
-@mark.parametrize("num_categories", (0, -1))
+@pytest.mark.parametrize("num_categories", [0, -1])
 def test_uniform_categorical_incorrect_num_categories(num_categories: int) -> None:
-    with raises(ValueError, match="num_categories has to be greater than 0"):
+    with pytest.raises(ValueError, match="num_categories has to be greater than 0"):
         UniformCategorical(num_categories)
 
 
 def test_uniform_categorical_feature_size_default() -> None:
-    assert UniformCategorical(num_categories=50)._feature_size == tuple()
+    assert UniformCategorical(num_categories=50)._feature_size == ()
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_uniform_categorical_generate_feature_size_default(batch_size: int, seq_len: int) -> None:
     batch = UniformCategorical(num_categories=50).generate(batch_size=batch_size, seq_len=seq_len)
     assert isinstance(batch, BatchedTensorSeq)
@@ -161,9 +164,9 @@ def test_uniform_categorical_generate_feature_size_default(batch_size: int, seq_
     assert batch.max() < 50
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_uniform_categorical_generate_feature_size_int(
     batch_size: int, seq_len: int, feature_size: int
 ) -> None:
@@ -179,8 +182,8 @@ def test_uniform_categorical_generate_feature_size_int(
     assert batch.max() < 50
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_uniform_categorical_generate_feature_size_tuple(batch_size: int, seq_len: int) -> None:
     batch = UniformCategorical(num_categories=50, feature_size=(3, 4)).generate(
         batch_size=batch_size, seq_len=seq_len

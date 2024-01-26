@@ -139,7 +139,7 @@ def test_blobs_classification_create_uniform_weights_default() -> None:
 ###############################################
 
 
-@mark.parametrize("num_examples", (0, -1))
+@mark.parametrize("num_examples", [0, -1])
 def test_make_blobs_classification_incorrect_num_examples(
     num_examples: int, centers: torch.Tensor
 ) -> None:

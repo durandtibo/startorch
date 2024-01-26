@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from unittest.mock import patch
 
+import pytest
 import torch
-from pytest import mark
 from redcat import BatchedTensorSeq
 
 from startorch.sequence import RandUniform, Sort
@@ -21,9 +21,9 @@ def test_sort_str() -> None:
     assert str(Sort(RandUniform())).startswith("SortSequenceGenerator(")
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_sort_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     batch = Sort(RandUniform(feature_size=feature_size)).generate(
         batch_size=batch_size, seq_len=seq_len

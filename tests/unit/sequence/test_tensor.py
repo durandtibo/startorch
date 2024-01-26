@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+import pytest
 import torch
-from pytest import mark
 from redcat import BatchedTensorSeq
 
 from startorch.sequence import TensorSequence
@@ -20,8 +20,8 @@ def test_tensor_sequence_str() -> None:
     assert str(TensorSequence(RandUniform())).startswith("TensorSequenceGenerator(")
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_tensor_sequence_generate_feature_size_default(batch_size: int, seq_len: int) -> None:
     assert (
         TensorSequence(Full(1.0))
@@ -30,8 +30,8 @@ def test_tensor_sequence_generate_feature_size_default(batch_size: int, seq_len:
     )
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_tensor_sequence_generate_int(batch_size: int, seq_len: int) -> None:
     assert (
         TensorSequence(Full(1.0), feature_size=4)
@@ -40,8 +40,8 @@ def test_tensor_sequence_generate_int(batch_size: int, seq_len: int) -> None:
     )
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_tensor_sequence_generate_tuple(batch_size: int, seq_len: int) -> None:
     assert (
         TensorSequence(Full(1.0), feature_size=(3, 4))

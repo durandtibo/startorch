@@ -1,8 +1,8 @@
 from __future__ import annotations
 
+import pytest
 import torch
 from objectory import OBJECT_TARGET
-from pytest import mark, raises
 from redcat import BatchedTensorSeq
 
 from startorch.sequence import (
@@ -39,9 +39,9 @@ def test_abs_str() -> None:
     assert str(Abs(RandNormal())).startswith("AbsSequenceGenerator(")
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_abs_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     generator = Abs(RandNormal(feature_size=feature_size))
     batch = generator.generate(batch_size=batch_size, seq_len=seq_len)
@@ -110,12 +110,12 @@ def test_add_3_sequences() -> None:
 
 
 def test_add_sequences_empty() -> None:
-    with raises(ValueError, match="No sequence generator."):
+    with pytest.raises(ValueError, match="No sequence generator."):
         Add(sequences=[])
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_add_generate(batch_size: int, seq_len: int) -> None:
     batch = Add((RandUniform(), RandUniform())).generate(seq_len=seq_len, batch_size=batch_size)
     assert isinstance(batch, BatchedTensorSeq)
@@ -156,9 +156,9 @@ def test_add_scalar_str() -> None:
     assert str(AddScalar(RandUniform(), value=1.0)).startswith("AddScalarSequenceGenerator(")
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_add_scalar_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     batch = AddScalar(RandUniform(feature_size=feature_size), value=1.0).generate(
         batch_size=batch_size, seq_len=seq_len
@@ -219,24 +219,24 @@ def test_clamp_str() -> None:
     assert str(Clamp(RandNormal(), min=-2, max=2)).startswith("ClampSequenceGenerator(")
 
 
-@mark.parametrize("min_value", (-1.0, -2.0))
+@pytest.mark.parametrize("min_value", [-1.0, -2.0])
 def test_clamp_min(min_value: float) -> None:
     assert Clamp(RandNormal(), min=min_value, max=None)._min == min_value
 
 
-@mark.parametrize("max_value", (1.0, 2.0))
+@pytest.mark.parametrize("max_value", [1.0, 2.0])
 def test_clamp_max(max_value: float) -> None:
     assert Clamp(RandNormal(), min=None, max=max_value)._max == max_value
 
 
 def test_clamp_incorrect_min_max() -> None:
-    with raises(ValueError, match="`min` and `max` cannot be both None"):
+    with pytest.raises(ValueError, match="`min` and `max` cannot be both None"):
         Clamp(RandNormal(), min=None, max=None)
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_clamp_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     batch = Clamp(RandNormal(feature_size=feature_size), min=-2, max=2).generate(
         batch_size=batch_size, seq_len=seq_len
@@ -248,16 +248,16 @@ def test_clamp_generate(batch_size: int, seq_len: int, feature_size: int) -> Non
     assert batch.data.dtype == torch.float
 
 
-@mark.parametrize("min_value", (-1.0, -2.0))
-@mark.parametrize("max_value", (1.0, 2.0))
+@pytest.mark.parametrize("min_value", [-1.0, -2.0])
+@pytest.mark.parametrize("max_value", [1.0, 2.0])
 def test_clamp_generate_min_max_float(min_value: float, max_value: float) -> None:
     batch = Clamp(RandNormal(), min=min_value, max=max_value).generate(batch_size=10, seq_len=10)
     assert batch.min() >= min_value
     assert batch.max() <= max_value
 
 
-@mark.parametrize("min_value", (-1.0, -2.0))
-@mark.parametrize("max_value", (1.0, 2.0))
+@pytest.mark.parametrize("min_value", [-1.0, -2.0])
+@pytest.mark.parametrize("max_value", [1.0, 2.0])
 def test_clamp_generate_min_max_long(min_value: int, max_value: int) -> None:
     batch = Clamp(RandInt(low=-5, high=20), min=min_value, max=max_value).generate(
         batch_size=10, seq_len=10
@@ -266,7 +266,7 @@ def test_clamp_generate_min_max_long(min_value: int, max_value: int) -> None:
     assert batch.max() <= max_value
 
 
-@mark.parametrize("min_value", (-1.0, -2.0))
+@pytest.mark.parametrize("min_value", [-1.0, -2.0])
 def test_clamp_generate_only_min_value(min_value: float) -> None:
     assert (
         Clamp(RandNormal(), min=min_value, max=None).generate(batch_size=10, seq_len=10).min()
@@ -274,7 +274,7 @@ def test_clamp_generate_only_min_value(min_value: float) -> None:
     )
 
 
-@mark.parametrize("max_value", (-1.0, -2.0))
+@pytest.mark.parametrize("max_value", [-1.0, -2.0])
 def test_clamp_generate_only_max_value(max_value: float) -> None:
     assert (
         Clamp(RandNormal(), min=None, max=max_value).generate(batch_size=10, seq_len=10).max()
@@ -305,9 +305,9 @@ def test_cumsum_str() -> None:
     assert str(Cumsum(RandNormal())).startswith("CumsumSequenceGenerator(")
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_cumsum_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     batch = Cumsum(RandUniform(feature_size=feature_size)).generate(
         batch_size=batch_size, seq_len=seq_len
@@ -356,8 +356,8 @@ def test_div_str() -> None:
     )
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_div_generate(batch_size: int, seq_len: int) -> None:
     batch = Div(
         dividend=RandUniform(low=0.1, high=2.0),
@@ -370,8 +370,8 @@ def test_div_generate(batch_size: int, seq_len: int) -> None:
     assert batch.data.dtype == torch.float
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_div_generate_rounding_mode_default(batch_size: int, seq_len: int) -> None:
     assert (
         Div(dividend=Full(3.0), divisor=Full(2.0))
@@ -380,8 +380,8 @@ def test_div_generate_rounding_mode_default(batch_size: int, seq_len: int) -> No
     )
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_div_generate_rounding_mode_floor(batch_size: int, seq_len: int) -> None:
     assert (
         Div(dividend=Full(3.0), divisor=Full(2.0), rounding_mode="floor")
@@ -419,9 +419,9 @@ def test_exp_str() -> None:
     assert str(Exp(RandUniform())).startswith("ExpSequenceGenerator(")
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_exp_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     assert (
         Exp(Full(value=0.0, feature_size=feature_size))
@@ -458,9 +458,9 @@ def test_fmod_str() -> None:
     ).startswith("FmodSequenceGenerator(")
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_fmod_generate_divisor_generator(batch_size: int, seq_len: int, feature_size: int) -> None:
     assert (
         Fmod(
@@ -476,9 +476,9 @@ def test_fmod_generate_divisor_generator(batch_size: int, seq_len: int, feature_
     )
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_fmod_generate_divisor_number(batch_size: int, seq_len: int, feature_size: int) -> None:
     assert (
         Fmod(dividend=Full(5.0, feature_size=feature_size), divisor=10.0)
@@ -518,9 +518,9 @@ def test_log_str() -> None:
     assert str(Log(RandUniform(low=0.1, high=2.0))).startswith("LogSequenceGenerator(")
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_log_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     assert (
         Log(Full(value=1.0, feature_size=feature_size))
@@ -574,12 +574,12 @@ def test_mul_3_sequences() -> None:
 
 
 def test_mul_sequences_empty() -> None:
-    with raises(ValueError, match="No sequence generator."):
+    with pytest.raises(ValueError, match="No sequence generator."):
         Mul(sequences=[])
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_mul_generate(batch_size: int, seq_len: int) -> None:
     batch = Mul((RandUniform(), RandUniform())).generate(seq_len=seq_len, batch_size=batch_size)
     assert isinstance(batch, BatchedTensorSeq)
@@ -620,9 +620,9 @@ def test_mul_scalar_str() -> None:
     assert str(MulScalar(RandUniform(), value=1.0)).startswith("MulScalarSequenceGenerator(")
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_mul_scalar_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     batch = MulScalar(RandUniform(feature_size=feature_size), value=2.0).generate(
         batch_size=batch_size, seq_len=seq_len
@@ -683,9 +683,9 @@ def test_neg_str() -> None:
     assert str(Neg(RandUniform())).startswith("NegSequenceGenerator(")
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_neg_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     generator = Neg(RandUniform(feature_size=feature_size))
     batch = generator.generate(batch_size=batch_size, seq_len=seq_len)
@@ -731,9 +731,9 @@ def test_sqrt_str() -> None:
     assert str(Sqrt(RandUniform(low=0.1, high=2.0))).startswith("SqrtSequenceGenerator(")
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_sqrt_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     assert (
         Sqrt(Full(value=4.0, feature_size=feature_size))
@@ -771,8 +771,8 @@ def test_sub_str() -> None:
     )
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_sub_generate(batch_size: int, seq_len: int) -> None:
     batch = Sub(sequence1=RandUniform(), sequence2=RandUniform()).generate(
         seq_len=seq_len, batch_size=batch_size

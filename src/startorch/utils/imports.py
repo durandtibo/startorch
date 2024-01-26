@@ -15,7 +15,7 @@ from importlib.util import find_spec
 
 
 def check_matplotlib() -> None:
-    r"""Checks if the ``matplotlib`` package is installed.
+    r"""Check if the ``matplotlib`` package is installed.
 
     Raises:
         RuntimeError if the ``matplotlib`` package is not installed.
@@ -54,7 +54,7 @@ def is_matplotlib_available() -> bool:
 
 
 def check_plotly() -> None:
-    r"""Checks if the ``plotly`` package is installed.
+    r"""Check if the ``plotly`` package is installed.
 
     Raises:
         RuntimeError if the ``plotly`` package is not installed.

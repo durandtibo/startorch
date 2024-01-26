@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from unittest.mock import Mock, patch
 
+import pytest
 import torch
-from pytest import mark, raises
 from redcat import BatchedTensorSeq
 
 from startorch.sequence import (
@@ -29,9 +29,9 @@ def test_half_cauchy_str() -> None:
     )
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_half_cauchy_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     batch = HalfCauchy(scale=RandUniform(low=1.0, high=2.0, feature_size=feature_size)).generate(
         batch_size=batch_size, seq_len=seq_len
@@ -74,14 +74,14 @@ def test_rand_half_cauchy_str() -> None:
     assert str(RandHalfCauchy()).startswith("RandHalfCauchySequenceGenerator(")
 
 
-@mark.parametrize("scale", (1.0, 2.0))
+@pytest.mark.parametrize("scale", [1.0, 2.0])
 def test_rand_half_cauchy_scale(scale: float) -> None:
     assert RandHalfCauchy(scale=scale)._scale == scale
 
 
-@mark.parametrize("scale", (0.0, -1.0))
+@pytest.mark.parametrize("scale", [0.0, -1.0])
 def test_rand_half_cauchy_incorrect_scale(scale: float) -> None:
-    with raises(ValueError, match="scale has to be greater than 0"):
+    with pytest.raises(ValueError, match="scale has to be greater than 0"):
         RandHalfCauchy(scale=scale)
 
 
@@ -89,8 +89,8 @@ def test_rand_half_cauchy_feature_size_default() -> None:
     assert RandHalfCauchy()._feature_size == (1,)
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_rand_half_cauchy_generate_feature_size_default(batch_size: int, seq_len: int) -> None:
     batch = RandHalfCauchy().generate(batch_size=batch_size, seq_len=seq_len)
     assert isinstance(batch, BatchedTensorSeq)
@@ -101,9 +101,9 @@ def test_rand_half_cauchy_generate_feature_size_default(batch_size: int, seq_len
     assert batch.min() >= 0.0
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_rand_half_cauchy_generate_feature_size_int(
     batch_size: int, seq_len: int, feature_size: int
 ) -> None:
@@ -118,8 +118,8 @@ def test_rand_half_cauchy_generate_feature_size_int(
     assert batch.min() >= 0.0
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_rand_half_cauchy_generate_feature_size_tuple(batch_size: int, seq_len: int) -> None:
     batch = RandHalfCauchy(feature_size=(3, 4)).generate(batch_size=batch_size, seq_len=seq_len)
     assert isinstance(batch, BatchedTensorSeq)
@@ -130,7 +130,7 @@ def test_rand_half_cauchy_generate_feature_size_tuple(batch_size: int, seq_len: 
     assert batch.min() >= 0.0
 
 
-@mark.parametrize("scale", (1.0, 2.0))
+@pytest.mark.parametrize("scale", [1.0, 2.0])
 def test_rand_half_cauchy_generate_scale(scale: float) -> None:
     generator = RandHalfCauchy(scale=scale)
     mock = Mock(return_value=torch.ones(2, 3))
@@ -162,7 +162,7 @@ def test_rand_trunc_half_cauchy_str() -> None:
     assert str(RandTruncHalfCauchy()).startswith("RandTruncHalfCauchySequenceGenerator(")
 
 
-@mark.parametrize("scale", (1.0, 2.0))
+@pytest.mark.parametrize("scale", [1.0, 2.0])
 def test_rand_trunc_half_cauchy_scale(scale: float) -> None:
     assert RandTruncHalfCauchy(scale=scale)._scale == scale
 
@@ -171,13 +171,13 @@ def test_rand_trunc_half_cauchy_scale_default() -> None:
     assert RandTruncHalfCauchy()._scale == 1.0
 
 
-@mark.parametrize("scale", (0.0, -1.0))
+@pytest.mark.parametrize("scale", [0.0, -1.0])
 def test_rand_trunc_half_cauchy_incorrect_scale(scale: float) -> None:
-    with raises(ValueError, match="scale has to be greater than 0"):
+    with pytest.raises(ValueError, match="scale has to be greater than 0"):
         RandTruncHalfCauchy(scale=scale)
 
 
-@mark.parametrize("max_value", (1, 2))
+@pytest.mark.parametrize("max_value", [1, 2])
 def test_rand_trunc_half_cauchy_max_value(max_value: float) -> None:
     assert RandTruncHalfCauchy(max_value=max_value)._max_value == max_value
 
@@ -187,7 +187,7 @@ def test_rand_trunc_half_cauchy_max_value_default() -> None:
 
 
 def test_rand_trunc_half_cauchy_incorrect_max_value() -> None:
-    with raises(ValueError, match="max_value has to be greater than 0"):
+    with pytest.raises(ValueError, match="max_value has to be greater than 0"):
         RandTruncHalfCauchy(max_value=0.0)
 
 
@@ -195,8 +195,8 @@ def test_rand_trunc_half_cauchy_feature_size_default() -> None:
     assert RandTruncHalfCauchy()._feature_size == (1,)
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_rand_trunc_half_cauchy_generate_feature_size_default(
     batch_size: int, seq_len: int
 ) -> None:
@@ -210,9 +210,9 @@ def test_rand_trunc_half_cauchy_generate_feature_size_default(
     assert batch.max() <= 4
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_rand_trunc_half_cauchy_generate_feature_size_int(
     batch_size: int, seq_len: int, feature_size: int
 ) -> None:
@@ -228,8 +228,8 @@ def test_rand_trunc_half_cauchy_generate_feature_size_int(
     assert batch.max() <= 4
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_rand_trunc_half_cauchy_generate_feature_size_tuple(batch_size: int, seq_len: int) -> None:
     batch = RandTruncHalfCauchy(feature_size=(3, 4)).generate(
         batch_size=batch_size, seq_len=seq_len
@@ -243,7 +243,7 @@ def test_rand_trunc_half_cauchy_generate_feature_size_tuple(batch_size: int, seq
     assert batch.max() <= 4
 
 
-@mark.parametrize("scale", (1.0, 2.0))
+@pytest.mark.parametrize("scale", [1.0, 2.0])
 def test_rand_trunc_half_cauchy_generate_scale(scale: float) -> None:
     generator = RandTruncHalfCauchy(scale=scale)
     mock = Mock(return_value=torch.ones(2, 3))
@@ -252,7 +252,7 @@ def test_rand_trunc_half_cauchy_generate_scale(scale: float) -> None:
         assert mock.call_args.kwargs["scale"] == scale
 
 
-@mark.parametrize("max_value", (1.0, 2.0))
+@pytest.mark.parametrize("max_value", [1.0, 2.0])
 def test_rand_trunc_half_cauchy_generate_max_value(max_value: float) -> None:
     generator = RandTruncHalfCauchy(max_value=max_value)
     mock = Mock(return_value=torch.ones(2, 3))
@@ -289,9 +289,9 @@ def test_trunc_half_cauchy_str() -> None:
     ).startswith("TruncHalfCauchySequenceGenerator(")
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_trunc_half_cauchy_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     batch = TruncHalfCauchy(
         scale=RandUniform(low=1.0, high=2.0, feature_size=feature_size),

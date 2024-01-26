@@ -291,7 +291,7 @@ def test_friedman3_regression_generate_mock(
 ###############################################
 
 
-@mark.parametrize("num_examples", (0, -1))
+@mark.parametrize("num_examples", [0, -1])
 def test_make_friedman1_regression_incorrect_num_examples(num_examples: int) -> None:
     with raises(
         RuntimeError,
@@ -385,7 +385,7 @@ def test_make_friedman1_regression_different_random_seeds(noise_std: float) -> N
 ###############################################
 
 
-@mark.parametrize("num_examples", (0, -1))
+@mark.parametrize("num_examples", [0, -1])
 def test_make_friedman2_regression_incorrect_num_examples(num_examples: int) -> None:
     with raises(
         RuntimeError,
@@ -508,7 +508,7 @@ def test_make_friedman2_regression_different_random_seeds(noise_std: float) -> N
 ###############################################
 
 
-@mark.parametrize("num_examples", (0, -1))
+@mark.parametrize("num_examples", [0, -1])
 def test_make_friedman3_regression_incorrect_num_examples(num_examples: int) -> None:
     with raises(
         RuntimeError,

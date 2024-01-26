@@ -27,7 +27,7 @@ def test_hypercube_classification_num_classes(num_classes: int) -> None:
     assert HypercubeClassification(num_classes=num_classes).num_classes == num_classes
 
 
-@mark.parametrize("num_classes", (0, -1))
+@mark.parametrize("num_classes", [0, -1])
 def test_hypercube_classification_incorrect_num_classes(num_classes: int) -> None:
     with raises(
         RuntimeError,
@@ -127,7 +127,7 @@ def test_hypercube_classification_generate_mock(
 ###################################################
 
 
-@mark.parametrize("num_examples", (0, -1))
+@mark.parametrize("num_examples", [0, -1])
 def test_make_hypercube_classification_incorrect_num_examples(num_examples: int) -> None:
     with raises(
         RuntimeError,
@@ -136,7 +136,7 @@ def test_make_hypercube_classification_incorrect_num_examples(num_examples: int)
         make_hypercube_classification(num_examples=num_examples)
 
 
-@mark.parametrize("num_classes", (0, -1))
+@mark.parametrize("num_classes", [0, -1])
 def test_make_hypercube_classification_incorrect_num_classes(num_classes: int) -> None:
     with raises(
         RuntimeError,

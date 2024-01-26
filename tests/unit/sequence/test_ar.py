@@ -1,5 +1,5 @@
+import pytest
 import torch
-from pytest import mark, raises
 from redcat import BatchedTensorSeq
 
 from startorch.sequence import AutoRegressive, Full, RandNormal, RandUniform
@@ -26,7 +26,7 @@ def test_auto_regressive_str() -> None:
     ).startswith("AutoRegressiveSequenceGenerator(")
 
 
-@mark.parametrize("max_abs_value", (1, 10))
+@pytest.mark.parametrize("max_abs_value", [1, 10])
 def test_auto_regressive_max_abs_value(max_abs_value: float) -> None:
     assert (
         AutoRegressive(
@@ -43,9 +43,9 @@ def test_auto_regressive_max_abs_value(max_abs_value: float) -> None:
     )
 
 
-@mark.parametrize("max_abs_value", (-1, 0))
+@pytest.mark.parametrize("max_abs_value", [-1, 0])
 def test_auto_regressive_max_abs_value_incorrect(max_abs_value: float) -> None:
-    with raises(ValueError, match="`max_abs_value` has to be positive"):
+    with pytest.raises(ValueError, match="`max_abs_value` has to be positive"):
         AutoRegressive(
             value=RandNormal(),
             coefficient=RandUniform(
@@ -58,7 +58,7 @@ def test_auto_regressive_max_abs_value_incorrect(max_abs_value: float) -> None:
         )
 
 
-@mark.parametrize("warmup", (0, 1))
+@pytest.mark.parametrize("warmup", [0, 1])
 def test_auto_regressive_warmup(warmup: int) -> None:
     assert (
         AutoRegressive(
@@ -92,9 +92,9 @@ def test_auto_regressive_warmup_default() -> None:
     )
 
 
-@mark.parametrize("warmup", (-10, -1))
+@pytest.mark.parametrize("warmup", [-10, -1])
 def test_auto_regressive_warmup_incorrect(warmup: int) -> None:
-    with raises(ValueError, match="warmup has to be positive or zero"):
+    with pytest.raises(ValueError, match="warmup has to be positive or zero"):
         AutoRegressive(
             value=RandNormal(),
             coefficient=RandUniform(
@@ -108,9 +108,9 @@ def test_auto_regressive_warmup_incorrect(warmup: int) -> None:
         )
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_auto_regressive_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     batch = AutoRegressive(
         value=RandNormal(feature_size=feature_size),
@@ -136,7 +136,7 @@ def test_auto_regressive_generate_incorrect_order() -> None:
         order=RandInt(low=-6, high=1),
         max_abs_value=100.0,
     )
-    with raises(RuntimeError, match="Order must be a positive integer"):
+    with pytest.raises(RuntimeError, match="Order must be a positive integer"):
         generator.generate(batch_size=4, seq_len=12)
 
 

@@ -350,7 +350,7 @@ def test_rand_log_normal_2d() -> None:
     assert values.min() >= 0.0
 
 
-@mark.parametrize("mean", (-1.0, 0.0, 1.0))
+@mark.parametrize("mean", [-1.0, 0.0, 1.0])
 def test_rand_log_normal_mean(mean: float) -> None:
     values = rand_log_normal((100000,), mean=mean, generator=get_torch_generator(1))
     assert values.shape == (100000,)
