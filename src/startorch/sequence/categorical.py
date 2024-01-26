@@ -41,7 +41,7 @@ class MultinomialSequenceGenerator(BaseSequenceGenerator):
 
     def __init__(
         self,
-        weights: torch.Tensor | Sequence[int | float],
+        weights: torch.Tensor | Sequence[float],
         feature_size: tuple[int, ...] | list[int] | int = 1,
     ) -> None:
         super().__init__()

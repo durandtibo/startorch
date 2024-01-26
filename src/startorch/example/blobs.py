@@ -52,9 +52,7 @@ class BlobsClassificationExampleGenerator(BaseExampleGenerator[BatchedTensor]):
     ```
     """
 
-    def __init__(
-        self, centers: torch.Tensor, cluster_std: torch.Tensor | int | float = 1.0
-    ) -> None:
+    def __init__(self, centers: torch.Tensor, cluster_std: torch.Tensor | float = 1.0) -> None:
         self._centers = centers
         if not torch.is_tensor(cluster_std):
             cluster_std = torch.full_like(centers, cluster_std)
@@ -153,7 +151,7 @@ class BlobsClassificationExampleGenerator(BaseExampleGenerator[BatchedTensor]):
 def make_blobs_classification(
     num_examples: int,
     centers: torch.Tensor,
-    cluster_std: torch.Tensor | int | float = 1.0,
+    cluster_std: torch.Tensor | float = 1.0,
     generator: torch.Generator | None = None,
 ) -> BatchDict[BatchedTensor]:
     r"""Generate a classification dataset where the data are gnerated

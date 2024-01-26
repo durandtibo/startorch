@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+import pytest
 import torch
-from pytest import mark
 from redcat import BatchDict, BatchedTensor
 
 from startorch import constants as ct
@@ -20,7 +20,7 @@ def test_cache_str() -> None:
     assert str(Cache(SwissRoll())).startswith("CacheExampleGenerator(")
 
 
-@mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
 def test_cache_generate(batch_size: int) -> None:
     data = Cache(SwissRoll()).generate(batch_size)
     assert isinstance(data, BatchDict)

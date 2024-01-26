@@ -8,7 +8,7 @@ from startorch.sequence import RandNormal, RandUniform
 from startorch.timeseries import Merge, TimeSeries
 from startorch.utils.seed import get_torch_generator
 
-SIZES = (1, 2)
+SIZES = (1, 2, 4)
 
 
 ###########################

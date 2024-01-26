@@ -131,7 +131,7 @@ class AddScalarSequenceGenerator(BaseWrapperSequenceGenerator):
     def __init__(
         self,
         generator: BaseSequenceGenerator | dict,
-        value: int | float,
+        value: float,
     ) -> None:
         super().__init__(generator=generator)
         self._value = value
@@ -185,8 +185,8 @@ class ClampSequenceGenerator(BaseWrapperSequenceGenerator):
     def __init__(
         self,
         generator: BaseSequenceGenerator | dict,
-        min: int | float | None,  # noqa: A002
-        max: int | float | None,  # noqa: A002
+        min: float | None,  # noqa: A002
+        max: float | None,  # noqa: A002
     ) -> None:
         super().__init__(generator=generator)
         if min is None and max is None:
@@ -368,7 +368,7 @@ class FmodSequenceGenerator(BaseSequenceGenerator):
     def __init__(
         self,
         dividend: BaseSequenceGenerator | dict,
-        divisor: BaseSequenceGenerator | dict | int | float,
+        divisor: BaseSequenceGenerator | dict | float,
     ) -> None:
         super().__init__()
         self._dividend = setup_sequence_generator(dividend)
@@ -493,7 +493,7 @@ class MulScalarSequenceGenerator(BaseWrapperSequenceGenerator):
     def __init__(
         self,
         generator: BaseSequenceGenerator | dict,
-        value: int | float,
+        value: float,
     ) -> None:
         super().__init__(generator=generator)
         self._value = value

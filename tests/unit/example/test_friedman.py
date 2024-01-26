@@ -3,9 +3,9 @@ from __future__ import annotations
 import math
 from unittest.mock import patch
 
+import pytest
 import torch
 from coola import objects_are_equal
-from pytest import mark, raises
 from redcat import BatchDict, BatchedTensor
 
 from startorch import constants as ct
@@ -31,36 +31,36 @@ def test_friedman1_regression_str() -> None:
     assert str(Friedman1Regression()).startswith("Friedman1RegressionExampleGenerator(")
 
 
-@mark.parametrize("feature_size", (5, 8, 10))
+@pytest.mark.parametrize("feature_size", [5, 8, 10])
 def test_friedman1_regression_feature_size(feature_size: int) -> None:
     assert Friedman1Regression(feature_size=feature_size).feature_size == feature_size
 
 
-@mark.parametrize("feature_size", (4, 1, 0, -1))
+@pytest.mark.parametrize("feature_size", [4, 1, 0, -1])
 def test_friedman1_regression_incorrect_feature_size(feature_size: int) -> None:
-    with raises(
+    with pytest.raises(
         RuntimeError,
         match="Incorrect value for feature_size. Expected a value greater or equal to 5",
     ):
         Friedman1Regression(feature_size=feature_size)
 
 
-@mark.parametrize("noise_std", (0, 0.1, 1))
-def test_friedman1_regression_noise_std(noise_std: float | int) -> None:
+@pytest.mark.parametrize("noise_std", [0, 0.1, 1])
+def test_friedman1_regression_noise_std(noise_std: float) -> None:
     assert Friedman1Regression(noise_std=noise_std).noise_std == noise_std
 
 
-@mark.parametrize("noise_std", (-1, -4.2))
-def test_friedman1_regression_incorrect_noise_std(noise_std: float | int) -> None:
-    with raises(
+@pytest.mark.parametrize("noise_std", [-1, -4.2])
+def test_friedman1_regression_incorrect_noise_std(noise_std: float) -> None:
+    with pytest.raises(
         RuntimeError,
         match="Incorrect value for noise_std. Expected a value greater than 0",
     ):
         Friedman1Regression(noise_std=noise_std)
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("feature_size", (5, 8, 10))
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("feature_size", [5, 8, 10])
 def test_friedman1_regression_generate(batch_size: int, feature_size: int) -> None:
     data = Friedman1Regression(feature_size=feature_size).generate(batch_size)
     assert isinstance(data, BatchDict)
@@ -73,7 +73,7 @@ def test_friedman1_regression_generate(batch_size: int, feature_size: int) -> No
     assert data[ct.FEATURE].dtype == torch.float
 
 
-@mark.parametrize("noise_std", (0.0, 1.0))
+@pytest.mark.parametrize("noise_std", [0.0, 1.0])
 def test_friedman1_regression_generate_same_random_seed(noise_std: float) -> None:
     generator = Friedman1Regression(feature_size=8, noise_std=noise_std)
     assert generator.generate(batch_size=64, rng=get_torch_generator(1)).equal(
@@ -81,7 +81,7 @@ def test_friedman1_regression_generate_same_random_seed(noise_std: float) -> Non
     )
 
 
-@mark.parametrize("noise_std", (0.0, 1.0))
+@pytest.mark.parametrize("noise_std", [0.0, 1.0])
 def test_friedman1_regression_generate_different_random_seeds(noise_std: float) -> None:
     generator = Friedman1Regression(feature_size=8, noise_std=noise_std)
     assert not generator.generate(batch_size=64, rng=get_torch_generator(1)).equal(
@@ -89,13 +89,13 @@ def test_friedman1_regression_generate_different_random_seeds(noise_std: float) 
     )
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("noise_std", (0.0, 1.0))
-@mark.parametrize("feature_size", (5, 10))
-@mark.parametrize("rng", (None, get_torch_generator(1)))
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("noise_std", [0.0, 1.0])
+@pytest.mark.parametrize("feature_size", [5, 10])
+@pytest.mark.parametrize("rng", [None, get_torch_generator(1)])
 def test_friedman1_regression_generate_mock(
     batch_size: int,
-    noise_std: float | int,
+    noise_std: float,
     feature_size: int,
     rng: torch.Generator | None,
 ) -> None:
@@ -119,36 +119,36 @@ def test_friedman2_regression_str() -> None:
     assert str(Friedman2Regression()).startswith("Friedman2RegressionExampleGenerator(")
 
 
-@mark.parametrize("feature_size", (4, 8, 10))
+@pytest.mark.parametrize("feature_size", [4, 8, 10])
 def test_friedman2_regression_feature_size(feature_size: int) -> None:
     assert Friedman2Regression(feature_size=feature_size).feature_size == feature_size
 
 
-@mark.parametrize("feature_size", (3, 1, 0, -1))
+@pytest.mark.parametrize("feature_size", [3, 1, 0, -1])
 def test_friedman2_regression_incorrect_feature_size(feature_size: int) -> None:
-    with raises(
+    with pytest.raises(
         RuntimeError,
         match="Incorrect value for feature_size. Expected a value greater or equal to 4",
     ):
         Friedman2Regression(feature_size=feature_size)
 
 
-@mark.parametrize("noise_std", (0, 0.1, 1))
+@pytest.mark.parametrize("noise_std", [0, 0.1, 1])
 def test_friedman2_regression_noise_std(noise_std: float) -> None:
     assert Friedman2Regression(noise_std=noise_std).noise_std == noise_std
 
 
-@mark.parametrize("noise_std", (-1, -4.2))
-def test_friedman2_regression_incorrect_noise_std(noise_std: float | int) -> None:
-    with raises(
+@pytest.mark.parametrize("noise_std", [-1, -4.2])
+def test_friedman2_regression_incorrect_noise_std(noise_std: float) -> None:
+    with pytest.raises(
         RuntimeError,
         match="Incorrect value for noise_std. Expected a value greater than 0",
     ):
         Friedman2Regression(noise_std=noise_std)
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("feature_size", (5, 8, 10))
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("feature_size", [5, 8, 10])
 def test_friedman2_regression_generate(batch_size: int, feature_size: int) -> None:
     data = Friedman2Regression(feature_size=feature_size).generate(batch_size)
     assert isinstance(data, BatchDict)
@@ -161,7 +161,7 @@ def test_friedman2_regression_generate(batch_size: int, feature_size: int) -> No
     assert data[ct.FEATURE].dtype == torch.float
 
 
-@mark.parametrize("noise_std", (0.0, 1.0))
+@pytest.mark.parametrize("noise_std", [0.0, 1.0])
 def test_friedman2_regression_generate_same_random_seed(noise_std: float) -> None:
     generator = Friedman2Regression(feature_size=8, noise_std=noise_std)
     assert generator.generate(batch_size=64, rng=get_torch_generator(1)).equal(
@@ -169,7 +169,7 @@ def test_friedman2_regression_generate_same_random_seed(noise_std: float) -> Non
     )
 
 
-@mark.parametrize("noise_std", (0.0, 1.0))
+@pytest.mark.parametrize("noise_std", [0.0, 1.0])
 def test_friedman2_regression_generate_different_random_seeds(noise_std: float) -> None:
     generator = Friedman2Regression(feature_size=8, noise_std=noise_std)
     assert not generator.generate(batch_size=64, rng=get_torch_generator(1)).equal(
@@ -177,13 +177,13 @@ def test_friedman2_regression_generate_different_random_seeds(noise_std: float) 
     )
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("noise_std", (0.0, 1.0))
-@mark.parametrize("feature_size", (4, 8))
-@mark.parametrize("rng", (None, get_torch_generator(1)))
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("noise_std", [0.0, 1.0])
+@pytest.mark.parametrize("feature_size", [4, 8])
+@pytest.mark.parametrize("rng", [None, get_torch_generator(1)])
 def test_friedman2_regression_generate_mock(
     batch_size: int,
-    noise_std: float | int,
+    noise_std: float,
     feature_size: int,
     rng: torch.Generator | None,
 ) -> None:
@@ -207,36 +207,36 @@ def test_friedman3_regression_str() -> None:
     assert str(Friedman3Regression()).startswith("Friedman3RegressionExampleGenerator(")
 
 
-@mark.parametrize("feature_size", (4, 8, 10))
+@pytest.mark.parametrize("feature_size", [4, 8, 10])
 def test_friedman3_regression_feature_size(feature_size: int) -> None:
     assert Friedman3Regression(feature_size=feature_size).feature_size == feature_size
 
 
-@mark.parametrize("feature_size", (3, 1, 0, -1))
+@pytest.mark.parametrize("feature_size", [3, 1, 0, -1])
 def test_friedman3_regression_incorrect_feature_size(feature_size: int) -> None:
-    with raises(
+    with pytest.raises(
         RuntimeError,
         match="Incorrect value for feature_size. Expected a value greater or equal to 4",
     ):
         Friedman3Regression(feature_size=feature_size)
 
 
-@mark.parametrize("noise_std", (0, 0.1, 1))
+@pytest.mark.parametrize("noise_std", [0, 0.1, 1])
 def test_friedman3_regression_noise_std(noise_std: float) -> None:
     assert Friedman3Regression(noise_std=noise_std).noise_std == noise_std
 
 
-@mark.parametrize("noise_std", (-1, -4.2))
-def test_friedman3_regression_incorrect_noise_std(noise_std: float | int) -> None:
-    with raises(
+@pytest.mark.parametrize("noise_std", [-1, -4.2])
+def test_friedman3_regression_incorrect_noise_std(noise_std: float) -> None:
+    with pytest.raises(
         RuntimeError,
         match="Incorrect value for noise_std. Expected a value greater than 0",
     ):
         Friedman3Regression(noise_std=noise_std)
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("feature_size", (5, 8, 10))
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("feature_size", [5, 8, 10])
 def test_friedman3_regression_generate(batch_size: int, feature_size: int) -> None:
     data = Friedman3Regression(feature_size=feature_size).generate(batch_size)
     assert isinstance(data, BatchDict)
@@ -249,7 +249,7 @@ def test_friedman3_regression_generate(batch_size: int, feature_size: int) -> No
     assert data[ct.FEATURE].dtype == torch.float
 
 
-@mark.parametrize("noise_std", (0.0, 1.0))
+@pytest.mark.parametrize("noise_std", [0.0, 1.0])
 def test_friedman3_regression_generate_same_random_seed(noise_std: float) -> None:
     generator = Friedman3Regression(feature_size=8, noise_std=noise_std)
     assert generator.generate(batch_size=64, rng=get_torch_generator(1)).equal(
@@ -257,7 +257,7 @@ def test_friedman3_regression_generate_same_random_seed(noise_std: float) -> Non
     )
 
 
-@mark.parametrize("noise_std", (0.0, 1.0))
+@pytest.mark.parametrize("noise_std", [0.0, 1.0])
 def test_friedman3_regression_generate_different_random_seeds(noise_std: float) -> None:
     generator = Friedman3Regression(feature_size=8, noise_std=noise_std)
     assert not generator.generate(batch_size=64, rng=get_torch_generator(1)).equal(
@@ -265,13 +265,13 @@ def test_friedman3_regression_generate_different_random_seeds(noise_std: float) 
     )
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("noise_std", (0.0, 1.0))
-@mark.parametrize("feature_size", (4, 8))
-@mark.parametrize("rng", (None, get_torch_generator(1)))
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("noise_std", [0.0, 1.0])
+@pytest.mark.parametrize("feature_size", [4, 8])
+@pytest.mark.parametrize("rng", [None, get_torch_generator(1)])
 def test_friedman3_regression_generate_mock(
     batch_size: int,
-    noise_std: float | int,
+    noise_std: float,
     feature_size: int,
     rng: torch.Generator | None,
 ) -> None:
@@ -291,27 +291,27 @@ def test_friedman3_regression_generate_mock(
 ###############################################
 
 
-@mark.parametrize("num_examples", [0, -1])
+@pytest.mark.parametrize("num_examples", [0, -1])
 def test_make_friedman1_regression_incorrect_num_examples(num_examples: int) -> None:
-    with raises(
+    with pytest.raises(
         RuntimeError,
         match="Incorrect value for num_examples. Expected a value greater or equal to 1",
     ):
         make_friedman1_regression(num_examples=num_examples)
 
 
-@mark.parametrize("feature_size", (4, 1, 0, -1))
+@pytest.mark.parametrize("feature_size", [4, 1, 0, -1])
 def test_make_friedman1_regression_incorrect_feature_size(feature_size: int) -> None:
-    with raises(
+    with pytest.raises(
         RuntimeError,
         match="Incorrect value for feature_size. Expected a value greater or equal to 5",
     ):
         make_friedman1_regression(feature_size=feature_size)
 
 
-@mark.parametrize("noise_std", (-1, -4.2))
-def test_make_friedman1_regression_incorrect_noise_std(noise_std: float | int) -> None:
-    with raises(
+@pytest.mark.parametrize("noise_std", [-1, -4.2])
+def test_make_friedman1_regression_incorrect_noise_std(noise_std: float) -> None:
+    with pytest.raises(
         RuntimeError,
         match="Incorrect value for noise_std. Expected a value greater than 0",
     ):
@@ -330,7 +330,7 @@ def test_make_friedman1_regression() -> None:
     assert data[ct.FEATURE].dtype == torch.float
 
 
-@mark.parametrize("num_examples", SIZES)
+@pytest.mark.parametrize("num_examples", SIZES)
 def test_make_friedman1_regression_num_examples(num_examples: int) -> None:
     data = make_friedman1_regression(num_examples)
     assert len(data) == 2
@@ -338,13 +338,13 @@ def test_make_friedman1_regression_num_examples(num_examples: int) -> None:
     assert data[ct.FEATURE].batch_size == num_examples
 
 
-@mark.parametrize("feature_size", (5, 8, 10))
+@pytest.mark.parametrize("feature_size", [5, 8, 10])
 def test_make_friedman1_regression_feature_size(feature_size: int) -> None:
     data = make_friedman1_regression(num_examples=10, feature_size=feature_size)
     assert data[ct.FEATURE].shape[1] == feature_size
 
 
-@mark.parametrize("noise_std", (0.0, 1.0))
+@pytest.mark.parametrize("noise_std", [0.0, 1.0])
 def test_make_friedman1_regression_same_random_seed(noise_std: float) -> None:
     assert objects_are_equal(
         make_friedman1_regression(
@@ -362,7 +362,7 @@ def test_make_friedman1_regression_same_random_seed(noise_std: float) -> None:
     )
 
 
-@mark.parametrize("noise_std", (0.0, 1.0))
+@pytest.mark.parametrize("noise_std", [0.0, 1.0])
 def test_make_friedman1_regression_different_random_seeds(noise_std: float) -> None:
     assert not objects_are_equal(
         make_friedman1_regression(
@@ -385,27 +385,27 @@ def test_make_friedman1_regression_different_random_seeds(noise_std: float) -> N
 ###############################################
 
 
-@mark.parametrize("num_examples", [0, -1])
+@pytest.mark.parametrize("num_examples", [0, -1])
 def test_make_friedman2_regression_incorrect_num_examples(num_examples: int) -> None:
-    with raises(
+    with pytest.raises(
         RuntimeError,
         match="Incorrect value for num_examples. Expected a value greater or equal to 1",
     ):
         make_friedman2_regression(num_examples=num_examples)
 
 
-@mark.parametrize("feature_size", (3, 1, 0, -1))
+@pytest.mark.parametrize("feature_size", [3, 1, 0, -1])
 def test_make_friedman2_regression_incorrect_feature_size(feature_size: int) -> None:
-    with raises(
+    with pytest.raises(
         RuntimeError,
         match="Incorrect value for feature_size. Expected a value greater or equal to 4",
     ):
         make_friedman2_regression(feature_size=feature_size)
 
 
-@mark.parametrize("noise_std", (-1, -4.2))
-def test_make_friedman2_regression_incorrect_noise_std(noise_std: float | int) -> None:
-    with raises(
+@pytest.mark.parametrize("noise_std", [-1, -4.2])
+def test_make_friedman2_regression_incorrect_noise_std(noise_std: float) -> None:
+    with pytest.raises(
         RuntimeError,
         match="Incorrect value for noise_std. Expected a value greater than 0",
     ):
@@ -424,12 +424,14 @@ def test_make_friedman2_regression() -> None:
     assert features.shape == (10, 4)
     assert features.dtype == torch.float
 
-    assert torch.all(features[:, 0] >= 0.0) and torch.all(features[:, 0] <= 100.0)
-    assert torch.all(40.0 * math.pi <= features[:, 1]) and torch.all(
-        features[:, 1] <= 560.0 * math.pi
-    )
-    assert torch.all(features[:, 2] >= 0.0) and torch.all(features[:, 2] <= 1.0)
-    assert torch.all(features[:, 3] >= 1.0) and torch.all(features[:, 3] <= 11.0)
+    assert torch.all(features[:, 0] >= 0.0)
+    assert torch.all(features[:, 0] <= 100.0)
+    assert torch.all(40.0 * math.pi <= features[:, 1])
+    assert torch.all(features[:, 1] <= 560.0 * math.pi)
+    assert torch.all(features[:, 2] >= 0.0)
+    assert torch.all(features[:, 2] <= 1.0)
+    assert torch.all(features[:, 3] >= 1.0)
+    assert torch.all(features[:, 3] <= 11.0)
 
 
 def test_make_friedman2_regression_feature_size_8() -> None:
@@ -444,16 +446,19 @@ def test_make_friedman2_regression_feature_size_8() -> None:
     assert features.shape == (10, 8)
     assert features.dtype == torch.float
 
-    assert torch.all(features[:, 0] >= 0.0) and torch.all(features[:, 0] <= 100.0)
-    assert torch.all(40.0 * math.pi <= features[:, 1]) and torch.all(
-        features[:, 1] <= 560.0 * math.pi
-    )
-    assert torch.all(features[:, 2] >= 0.0) and torch.all(features[:, 2] <= 1.0)
-    assert torch.all(features[:, 3] >= 1.0) and torch.all(features[:, 3] <= 11.0)
-    assert torch.all(features[:, 4:] >= 0.0) and torch.all(features[:, 4:] <= 1)
+    assert torch.all(features[:, 0] >= 0.0)
+    assert torch.all(features[:, 0] <= 100.0)
+    assert torch.all(40.0 * math.pi <= features[:, 1])
+    assert torch.all(features[:, 1] <= 560.0 * math.pi)
+    assert torch.all(features[:, 2] >= 0.0)
+    assert torch.all(features[:, 2] <= 1.0)
+    assert torch.all(features[:, 3] >= 1.0)
+    assert torch.all(features[:, 3] <= 11.0)
+    assert torch.all(features[:, 4:] >= 0.0)
+    assert torch.all(features[:, 4:] <= 1)
 
 
-@mark.parametrize("num_examples", SIZES)
+@pytest.mark.parametrize("num_examples", SIZES)
 def test_make_friedman2_regression_num_examples(num_examples: int) -> None:
     data = make_friedman2_regression(num_examples)
     assert len(data) == 2
@@ -461,13 +466,13 @@ def test_make_friedman2_regression_num_examples(num_examples: int) -> None:
     assert data[ct.FEATURE].batch_size == num_examples
 
 
-@mark.parametrize("feature_size", (5, 8, 10))
+@pytest.mark.parametrize("feature_size", [5, 8, 10])
 def test_make_friedman2_regression_feature_size(feature_size: int) -> None:
     data = make_friedman2_regression(num_examples=10, feature_size=feature_size)
     assert data[ct.FEATURE].shape[1] == feature_size
 
 
-@mark.parametrize("noise_std", (0.0, 1.0))
+@pytest.mark.parametrize("noise_std", [0.0, 1.0])
 def test_make_friedman2_regression_same_random_seed(noise_std: float) -> None:
     assert objects_are_equal(
         make_friedman2_regression(
@@ -485,7 +490,7 @@ def test_make_friedman2_regression_same_random_seed(noise_std: float) -> None:
     )
 
 
-@mark.parametrize("noise_std", (0.0, 1.0))
+@pytest.mark.parametrize("noise_std", [0.0, 1.0])
 def test_make_friedman2_regression_different_random_seeds(noise_std: float) -> None:
     assert not objects_are_equal(
         make_friedman2_regression(
@@ -508,27 +513,27 @@ def test_make_friedman2_regression_different_random_seeds(noise_std: float) -> N
 ###############################################
 
 
-@mark.parametrize("num_examples", [0, -1])
+@pytest.mark.parametrize("num_examples", [0, -1])
 def test_make_friedman3_regression_incorrect_num_examples(num_examples: int) -> None:
-    with raises(
+    with pytest.raises(
         RuntimeError,
         match="Incorrect value for num_examples. Expected a value greater or equal to 1",
     ):
         make_friedman3_regression(num_examples=num_examples)
 
 
-@mark.parametrize("feature_size", (3, 1, 0, -1))
+@pytest.mark.parametrize("feature_size", [3, 1, 0, -1])
 def test_make_friedman3_regression_incorrect_feature_size(feature_size: int) -> None:
-    with raises(
+    with pytest.raises(
         RuntimeError,
         match="Incorrect value for feature_size. Expected a value greater or equal to 4",
     ):
         make_friedman3_regression(feature_size=feature_size)
 
 
-@mark.parametrize("noise_std", (-1, -4.2))
-def test_make_friedman3_regression_incorrect_noise_std(noise_std: float | int) -> None:
-    with raises(
+@pytest.mark.parametrize("noise_std", [-1, -4.2])
+def test_make_friedman3_regression_incorrect_noise_std(noise_std: float) -> None:
+    with pytest.raises(
         RuntimeError,
         match="Incorrect value for noise_std. Expected a value greater than 0",
     ):
@@ -547,12 +552,14 @@ def test_make_friedman3_regression() -> None:
     assert features.shape == (10, 4)
     assert features.dtype == torch.float
 
-    assert torch.all(features[:, 0] >= 0.0) and torch.all(features[:, 0] <= 100.0)
-    assert torch.all(40.0 * math.pi <= features[:, 1]) and torch.all(
-        features[:, 1] <= 560.0 * math.pi
-    )
-    assert torch.all(features[:, 2] >= 0.0) and torch.all(features[:, 2] <= 1.0)
-    assert torch.all(features[:, 3] >= 1.0) and torch.all(features[:, 3] <= 11.0)
+    assert torch.all(features[:, 0] >= 0.0)
+    assert torch.all(features[:, 0] <= 100.0)
+    assert torch.all(40.0 * math.pi <= features[:, 1])
+    assert torch.all(features[:, 1] <= 560.0 * math.pi)
+    assert torch.all(features[:, 2] >= 0.0)
+    assert torch.all(features[:, 2] <= 1.0)
+    assert torch.all(features[:, 3] >= 1.0)
+    assert torch.all(features[:, 3] <= 11.0)
 
 
 def test_make_friedman3_regression_feature_size_8() -> None:
@@ -567,16 +574,19 @@ def test_make_friedman3_regression_feature_size_8() -> None:
     assert features.shape == (10, 8)
     assert features.dtype == torch.float
 
-    assert torch.all(features[:, 0] >= 0.0) and torch.all(features[:, 0] <= 100.0)
-    assert torch.all(40.0 * math.pi <= features[:, 1]) and torch.all(
-        features[:, 1] <= 560.0 * math.pi
-    )
-    assert torch.all(features[:, 2] >= 0.0) and torch.all(features[:, 2] <= 1.0)
-    assert torch.all(features[:, 3] >= 1.0) and torch.all(features[:, 3] <= 11.0)
-    assert torch.all(features[:, 4:] >= 0.0) and torch.all(features[:, 4:] <= 1)
+    assert torch.all(features[:, 0] >= 0.0)
+    assert torch.all(features[:, 0] <= 100.0)
+    assert torch.all(40.0 * math.pi <= features[:, 1])
+    assert torch.all(features[:, 1] <= 560.0 * math.pi)
+    assert torch.all(features[:, 2] >= 0.0)
+    assert torch.all(features[:, 2] <= 1.0)
+    assert torch.all(features[:, 3] >= 1.0)
+    assert torch.all(features[:, 3] <= 11.0)
+    assert torch.all(features[:, 4:] >= 0.0)
+    assert torch.all(features[:, 4:] <= 1)
 
 
-@mark.parametrize("num_examples", SIZES)
+@pytest.mark.parametrize("num_examples", SIZES)
 def test_make_friedman3_regression_num_examples(num_examples: int) -> None:
     data = make_friedman3_regression(num_examples)
     assert len(data) == 2
@@ -584,13 +594,13 @@ def test_make_friedman3_regression_num_examples(num_examples: int) -> None:
     assert data[ct.FEATURE].batch_size == num_examples
 
 
-@mark.parametrize("feature_size", (5, 8, 10))
+@pytest.mark.parametrize("feature_size", [5, 8, 10])
 def test_make_friedman3_regression_feature_size(feature_size: int) -> None:
     data = make_friedman3_regression(num_examples=10, feature_size=feature_size)
     assert data[ct.FEATURE].shape[1] == feature_size
 
 
-@mark.parametrize("noise_std", (0.0, 1.0))
+@pytest.mark.parametrize("noise_std", [0.0, 1.0])
 def test_make_friedman3_regression_same_random_seed(noise_std: float) -> None:
     assert objects_are_equal(
         make_friedman3_regression(
@@ -608,7 +618,7 @@ def test_make_friedman3_regression_same_random_seed(noise_std: float) -> None:
     )
 
 
-@mark.parametrize("noise_std", (0.0, 1.0))
+@pytest.mark.parametrize("noise_std", [0.0, 1.0])
 def test_make_friedman3_regression_different_random_seeds(noise_std: float) -> None:
     assert not objects_are_equal(
         make_friedman3_regression(

@@ -9,7 +9,7 @@ from startorch.timeseries import MultinomialChoice, TimeSeries
 from startorch.utils.seed import get_torch_generator
 from startorch.utils.weight import GENERATOR, WEIGHT
 
-SIZES = (1, 2)
+SIZES = (1, 2, 4)
 
 
 #######################################

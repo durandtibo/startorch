@@ -35,7 +35,7 @@ def check_feature_size(value: int | Any, low: int = 1) -> None:
     check_integer_ge(value, name="feature_size", low=low)
 
 
-def check_interval(value: float | int | Any, low: float, high: float, name: str) -> None:
+def check_interval(value: float | Any, low: float, high: float, name: str) -> None:
     r"""Check if the given value is an interval.
 
     Args:
@@ -121,7 +121,7 @@ def check_integer_ge(value: int | Any, low: int, name: str) -> None:
         )
 
 
-def check_std(value: float | int | Any, name: str = "std") -> None:
+def check_std(value: float | Any, name: str = "std") -> None:
     r"""Check if the given value is a valid standard deviation.
 
     Args:

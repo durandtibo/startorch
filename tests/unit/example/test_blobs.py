@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from unittest.mock import patch
 
+import pytest
 import torch
 from coola import objects_are_equal
-from pytest import fixture, mark, raises
 from redcat import BatchDict, BatchedTensor
 
 from startorch import constants as ct
@@ -14,7 +14,7 @@ from startorch.utils.seed import get_torch_generator
 SIZES = [1, 2, 4]
 
 
-@fixture()
+@pytest.fixture()
 def centers() -> torch.Tensor:
     return torch.rand(5, 2) * 20.0 - 10.0
 
@@ -34,7 +34,7 @@ def test_blobs_classification_centers(centers: torch.Tensor) -> None:
     assert BlobsClassification(centers=centers).centers.equal(centers)
 
 
-@mark.parametrize("cluster_std", (0.1, 1, 4.2))
+@pytest.mark.parametrize("cluster_std", [0.1, 1, 4.2])
 def test_blobs_classification_cluster_std_scalar(centers: torch.Tensor, cluster_std: float) -> None:
     assert BlobsClassification(centers=centers, cluster_std=cluster_std).cluster_std.equal(
         torch.full((5, 2), cluster_std)
@@ -49,21 +49,21 @@ def test_blobs_classification_cluster_std_tensor(centers: torch.Tensor) -> None:
 
 
 def test_blobs_classification_cluster_std_incorrect_shape(centers: torch.Tensor) -> None:
-    with raises(RuntimeError, match="centers and cluster_std do not match:"):
+    with pytest.raises(RuntimeError, match="centers and cluster_std do not match:"):
         BlobsClassification(centers=centers, cluster_std=torch.ones(5, 4))
 
 
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_blobs_classification_feature_size(feature_size: int) -> None:
     assert BlobsClassification(centers=torch.ones(5, feature_size)).feature_size == feature_size
 
 
-@mark.parametrize("num_clusters", SIZES)
+@pytest.mark.parametrize("num_clusters", SIZES)
 def test_blobs_classification_num_clusters(num_clusters: int) -> None:
     assert BlobsClassification(centers=torch.ones(num_clusters, 4)).num_clusters == num_clusters
 
 
-@mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
 def test_blobs_classification_generate(centers: torch.Tensor, batch_size: int) -> None:
     data = BlobsClassification(centers=centers).generate(batch_size)
     assert isinstance(data, BatchDict)
@@ -97,10 +97,10 @@ def test_blobs_classification_generate_different_random_seeds(centers: torch.Ten
     )
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("centers", (torch.tensor([[1.0]]), torch.tensor([[2.0]])))
-@mark.parametrize("cluster_std", (torch.tensor([[1.0]]), torch.tensor([[2.0]])))
-@mark.parametrize("rng", (None, get_torch_generator(1)))
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("centers", [torch.tensor([[1.0]]), torch.tensor([[2.0]])])
+@pytest.mark.parametrize("cluster_std", [torch.tensor([[1.0]]), torch.tensor([[2.0]])])
+@pytest.mark.parametrize("rng", [None, get_torch_generator(1)])
 def test_blobs_classification_generate_mock(
     batch_size: int,
     rng: torch.Generator | None,
@@ -118,8 +118,8 @@ def test_blobs_classification_generate_mock(
         )
 
 
-@mark.parametrize("num_clusters", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("num_clusters", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_blobs_classification_create_uniform_weights(num_clusters: int, feature_size: int) -> None:
     generator = BlobsClassification.create_uniform_centers(
         num_clusters=num_clusters, feature_size=feature_size
@@ -139,11 +139,11 @@ def test_blobs_classification_create_uniform_weights_default() -> None:
 ###############################################
 
 
-@mark.parametrize("num_examples", [0, -1])
+@pytest.mark.parametrize("num_examples", [0, -1])
 def test_make_blobs_classification_incorrect_num_examples(
     num_examples: int, centers: torch.Tensor
 ) -> None:
-    with raises(
+    with pytest.raises(
         RuntimeError,
         match="Incorrect value for num_examples. Expected a value greater or equal to 1",
     ):
@@ -151,7 +151,7 @@ def test_make_blobs_classification_incorrect_num_examples(
 
 
 def test_make_blobs_classification_incorrect_centers_cluster_std(centers: torch.Tensor) -> None:
-    with raises(RuntimeError, match="centers and cluster_std do not match:"):
+    with pytest.raises(RuntimeError, match="centers and cluster_std do not match:"):
         make_blobs_classification(num_examples=4, centers=centers, cluster_std=torch.ones(2, 2))
 
 
@@ -195,7 +195,7 @@ def test_make_blobs_classification_cluster_std_tensor(centers: torch.Tensor) -> 
     assert features.dtype == torch.float
 
 
-@mark.parametrize("num_examples", SIZES)
+@pytest.mark.parametrize("num_examples", SIZES)
 def test_make_blobs_classification_num_examples(num_examples: int, centers: torch.Tensor) -> None:
     data = make_blobs_classification(
         num_examples,
@@ -206,8 +206,8 @@ def test_make_blobs_classification_num_examples(num_examples: int, centers: torc
     assert data[ct.FEATURE].batch_size == num_examples
 
 
-@mark.parametrize("num_centers", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("num_centers", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_make_blobs_classification_num_centers(num_centers: int, feature_size: int) -> None:
     data = make_blobs_classification(
         num_examples=64,

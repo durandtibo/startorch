@@ -32,7 +32,7 @@ class FullTensorGenerator(BaseTensorGenerator):
                 [42, 42, 42, 42, 42, 42]])
     """
 
-    def __init__(self, value: bool | int | float, dtype: torch.dtype | None = None) -> None:
+    def __init__(self, value: bool | float, dtype: torch.dtype | None = None) -> None:
         super().__init__()
         self._value = value
         self._dtype = dtype
