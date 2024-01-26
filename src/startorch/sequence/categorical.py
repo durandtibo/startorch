@@ -75,7 +75,7 @@ class MultinomialSequenceGenerator(BaseSequenceGenerator):
         with the rule: ``w_i = 1``
 
         Args:
-            num_categories (int): Specifies the number of categories.
+            num_categories: Specifies the number of categories.
 
         Returns:
             ``MultinomialSequenceGenerator``: A sequence generator where
@@ -92,7 +92,7 @@ class MultinomialSequenceGenerator(BaseSequenceGenerator):
         with the rule: ``w_i = num_categories - i``
 
         Args:
-            num_categories (int): Specifies the number of categories.
+            num_categories: Specifies the number of categories.
 
         Returns:
             ``MultinomialSequenceGenerator``: A sequence generator where
@@ -113,7 +113,7 @@ class MultinomialSequenceGenerator(BaseSequenceGenerator):
         the rule: ``w_i = exp(-scale * i)``
 
         Args:
-            num_categories (int): Specifies the number of categories.
+            num_categories: Specifies the number of categories.
             scale: Specifies the scale parameter
                 that controls the exponential function.
                 Default: ``0.1``
@@ -136,7 +136,7 @@ class UniformCategoricalSequenceGenerator(BaseSequenceGenerator):
     ``Multinomial.generate_uniform_weights``.
 
     Args:
-        num_categories (int): Specifies the number of categories.
+        num_categories: Specifies the number of categories.
         feature_size (tuple or list or int, optional): Specifies the
             feature size. Default: ``tuple()``
 

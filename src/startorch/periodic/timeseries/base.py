@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 
 
 class BasePeriodicTimeSeriesGenerator(ABC, metaclass=AbstractFactory):
-    r"""Defines the base class to generate periodic time series.
+    r"""Define the base class to generate periodic time series.
 
     A child class has to implement the ``generate`` method.
 
@@ -59,8 +59,8 @@ class BasePeriodicTimeSeriesGenerator(ABC, metaclass=AbstractFactory):
         All the time series in the batch have the same length.
 
         Args:
-            seq_len (int): Specifies the sequence length.
-            period (int): Specifies the period.
+            seq_len: Specifies the sequence length.
+            period: Specifies the period.
             batch_size: Specifies the batch size.
                 Default: ``1``
             rng (``torch.Generator`` or None, optional): Specifies
@@ -86,7 +86,7 @@ class BasePeriodicTimeSeriesGenerator(ABC, metaclass=AbstractFactory):
 
 
 def is_periodic_timeseries_generator_config(config: dict) -> bool:
-    r"""Indicates if the input configuration is a configuration for a
+    r"""Indicate if the input configuration is a configuration for a
     ``BasePeriodicTimeSeriesGenerator``.
 
     This function only checks if the value of the key  ``_target_``

@@ -58,7 +58,7 @@ class AddSequenceGenerator(BaseSequenceGenerator):
     ``sequence = sequence_1 + sequence_2 + ... + sequence_n``
 
     Args:
-        sequences (``Sequence``): Specifies the sequence generators or
+        sequences: Specifies the sequence generators or
             their configuration.
 
     Raises:
@@ -242,10 +242,10 @@ class DivSequenceGenerator(BaseSequenceGenerator):
     ``sequence = dividend / divisor`` (a.k.a. true division)
 
     Args:
-        dividend (``Sequence``): (``BaseSequenceGenerator`` or dict):
+        dividend: (``BaseSequenceGenerator`` or dict):
             Specifies the dividend sequence generator or its
             configuration.
-        divisor (``Sequence``): (``BaseSequenceGenerator`` or dict):
+        divisor: (``BaseSequenceGenerator`` or dict):
             Specifies the divisor sequence generator or its
             configuration.
         rounding_mode (str or ``None``, optional): Specifies the
@@ -421,7 +421,7 @@ class MulSequenceGenerator(BaseSequenceGenerator):
     ``sequence = sequence_1 * sequence_2 * ... * sequence_n``
 
     Args:
-        sequences (``Sequence``): Specifies the sequence generators.
+        sequences: Specifies the sequence generators.
 
     Raises:
         ValueError if no sequence generator is provided.

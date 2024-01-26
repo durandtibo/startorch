@@ -197,8 +197,8 @@ class RandIntSequenceGenerator(BaseSequenceGenerator):
     integers.
 
     Args:
-        low (int): Specifies the minimum value (included).
-        high (int): Specifies the maximum value (excluded).
+        low: Specifies the minimum value (included).
+        high: Specifies the maximum value (excluded).
         feature_size (tuple or list or int, optional): Specifies the
             feature size. Default: ``tuple()``
 

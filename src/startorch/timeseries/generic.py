@@ -1,14 +1,19 @@
+r"""Contain the implementation of a generic time series generator."""
+
 from __future__ import annotations
 
 __all__ = ["TimeSeriesGenerator"]
 
+from typing import TYPE_CHECKING
 
 from coola.utils import str_indent, str_mapping
 from redcat import BatchDict
-from torch import Generator
 
 from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_generator
 from startorch.timeseries.base import BaseTimeSeriesGenerator
+
+if TYPE_CHECKING:
+    from torch import Generator
 
 
 class TimeSeriesGenerator(BaseTimeSeriesGenerator):
@@ -20,22 +25,23 @@ class TimeSeriesGenerator(BaseTimeSeriesGenerator):
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.sequence import RandUniform
+    >>> from startorch.timeseries import TimeSeries
+    >>> generator = TimeSeries({"value": RandUniform(), "time": RandUniform()})
+    >>> generator
+    TimeSeriesGenerator(
+      (value): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+      (time): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+    )
+    >>> generator.generate(seq_len=12, batch_size=4)
+    BatchDict(
+      (value): tensor([[...]], batch_dim=0, seq_dim=1)
+      (time): tensor([[...]], batch_dim=0, seq_dim=1)
+    )
 
-        >>> import torch
-        >>> from startorch.sequence import RandUniform
-        >>> from startorch.timeseries import TimeSeries
-        >>> generator = TimeSeries({"value": RandUniform(), "time": RandUniform()})
-        >>> generator
-        TimeSeriesGenerator(
-          (value): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
-          (time): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
-        )
-        >>> generator.generate(seq_len=12, batch_size=4)
-        BatchDict(
-          (value): tensor([[...]], batch_dim=0, seq_dim=1)
-          (time): tensor([[...]], batch_dim=0, seq_dim=1)
-        )
+    ```
     """
 
     def __init__(self, sequences: dict[str, BaseSequenceGenerator | dict]) -> None:

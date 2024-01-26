@@ -50,7 +50,8 @@ def rand_exponential(
         tensor([[...]])
     """
     if rate <= 0:
-        raise ValueError(f"rate has to be greater than 0 (received: {rate})")
+        msg = f"rate has to be greater than 0 (received: {rate})"
+        raise ValueError(msg)
     tensor = torch.zeros(*size, dtype=torch.float)
     tensor.exponential_(rate, generator=generator)
     return tensor
@@ -91,7 +92,8 @@ def exponential(rate: torch.Tensor, generator: torch.Generator | None = None) ->
     """
     rate = rate.float()
     if torch.any(rate <= 0.0):
-        raise ValueError("rate values have to be greater than 0 (>0)")
+        msg = "rate values have to be greater than 0 (>0)"
+        raise ValueError(msg)
     return torch.zeros_like(rate).exponential_(generator=generator) / rate
 
 
@@ -197,7 +199,8 @@ def rand_half_normal(
         tensor([[...]])
     """
     if std <= 0:
-        raise ValueError(f"std has to be greater than 0 (received: {std})")
+        msg = f"std has to be greater than 0 (received: {std})"
+        raise ValueError(msg)
     return rand_normal(size=size, mean=0.0, std=std, generator=generator).abs()
 
 
@@ -272,7 +275,8 @@ def rand_log_normal(
         tensor([[...]])
     """
     if std <= 0:
-        raise ValueError(f"std has to be greater than 0 (received: {std})")
+        msg = f"std has to be greater than 0 (received: {std})"
+        raise ValueError(msg)
     tensor = torch.zeros(*size, dtype=torch.float)
     tensor.log_normal_(mean=mean, std=std, generator=generator)
     return tensor

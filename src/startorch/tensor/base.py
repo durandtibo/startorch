@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 
 class BaseTensorGenerator(ABC, metaclass=AbstractFactory):
-    r"""Defines the base class to generate tensor.
+    r"""Define the base class to generate tensor.
 
     A child class has to implement the ``generate`` method.
 
@@ -58,7 +58,7 @@ class BaseTensorGenerator(ABC, metaclass=AbstractFactory):
 
 
 def is_tensor_generator_config(config: dict) -> bool:
-    r"""Indicates if the input configuration is a configuration for a
+    r"""Indicate if the input configuration is a configuration for a
     ``BaseTensorGenerator``.
 
     This function only checks if the value of the key  ``_target_``

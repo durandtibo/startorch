@@ -1,3 +1,5 @@
+r"""Contain the important constant values used in the library."""
+
 __all__ = [
     "BATCH_SIZE",
     "FEATURE",

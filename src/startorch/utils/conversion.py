@@ -1,3 +1,5 @@
+r"""Contain utility functions to convert objects."""
+
 from __future__ import annotations
 
 __all__ = ["to_tuple"]
@@ -6,7 +8,7 @@ from typing import Any
 
 
 def to_tuple(value: Any) -> tuple:
-    r"""Converts a value to a tuple.
+    r"""Convert a value to a tuple.
 
     This function is a no-op if the input is a tuple.
 
@@ -14,17 +16,18 @@ def to_tuple(value: Any) -> tuple:
         value: Specifies the value to convert.
 
     Returns:
-        tuple: The input value in a tuple.
+        The input value in a tuple.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.utils.conversion import to_tuple
+    >>> to_tuple(1)
+    (1,)
+    >>> to_tuple("abc")
+    ('abc',)
 
-        >>> from startorch.utils.conversion import to_tuple
-        >>> to_tuple(1)
-        (1,)
-        >>> to_tuple("abc")
-        ('abc',)
+    ```
     """
     if isinstance(value, tuple):
         return value

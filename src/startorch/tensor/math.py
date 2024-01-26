@@ -359,7 +359,7 @@ class MulTensorGenerator(BaseTensorGenerator):
     ``tensor = tensor_1 * tensor_2 * ... * tensor_n``
 
     Args:
-        generators (``Sequence``): Specifies the tensor generators.
+        generators: Specifies the tensor generators.
 
     Raises:
         ValueError if no sequence generator is provided.
