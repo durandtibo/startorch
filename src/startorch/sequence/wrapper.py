@@ -9,7 +9,7 @@ from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_genera
 
 
 class BaseWrapperSequenceGenerator(BaseSequenceGenerator):
-    r"""Defines a base class to easily wrap a sequence generator.
+    r"""Define a base class to easily wrap a sequence generator.
 
     Args:
         generator (``BaseSequenceGenerator`` or dict):

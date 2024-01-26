@@ -1,3 +1,6 @@
+r"""Contain the implementation of a base class to easily wrap a tensor
+generator into another tensor generator."""
+
 from __future__ import annotations
 
 __all__ = ["BaseWrapperTensorGenerator"]
@@ -9,11 +12,16 @@ from startorch.tensor.base import BaseTensorGenerator, setup_tensor_generator
 
 
 class BaseWrapperTensorGenerator(BaseTensorGenerator):
-    r"""Defines a base class to easily wrap a tensor generator.
+    r"""Define a base class to easily wrap a tensor generator into
+    another tensor generator.
+
+    Note:
+        It is possible to wrap a tensor generator into another tensor
+        generator without using this base class. This class just makes
+        it more convenient and reduce duplicate code.
 
     Args:
-        tensor (``BaseTensorGenerator`` or dict):
-            Specifies the tensor generator or its configuration.
+        generator: Specifies the tensor generator or its configuration.
     """
 
     def __init__(self, generator: BaseTensorGenerator | dict) -> None:

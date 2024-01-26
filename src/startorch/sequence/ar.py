@@ -30,7 +30,7 @@ class AutoRegressiveSequenceGenerator(BaseSequenceGenerator):
         order (``BaseTensorGenerator`` or dict): Specifies a tensor
             generator (or its configuration) used to generate the order
             of the AR.
-        max_abs_value (float): Specifies the maximum absolute value.
+        max_abs_value: Specifies the maximum absolute value.
             This argument ensures the values stay in the range
             ``[-max_abs_value, max_abs_value]``.
         warmup: Specifies the number of cycles used to

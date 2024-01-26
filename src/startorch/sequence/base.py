@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 
 class BaseSequenceGenerator(ABC, metaclass=AbstractFactory):
-    r"""Defines the base class to generate sequences.
+    r"""Define the base class to generate sequences.
 
     A child class has to implement the ``generate`` method.
 
@@ -42,7 +42,7 @@ class BaseSequenceGenerator(ABC, metaclass=AbstractFactory):
         All the sequences in the batch must have the same length.
 
         Args:
-            seq_len (int): Specifies the sequence length.
+            seq_len: Specifies the sequence length.
             batch_size: Specifies the batch size.
                 Default: ``1``
             rng (``torch.Generator`` or None, optional): Specifies
@@ -67,7 +67,7 @@ class BaseSequenceGenerator(ABC, metaclass=AbstractFactory):
 
 
 def is_sequence_generator_config(config: dict) -> bool:
-    r"""Indicates if the input configuration is a configuration for a
+    r"""Indicate if the input configuration is a configuration for a
     ``BaseSequenceGenerator``.
 
     This function only checks if the value of the key  ``_target_``

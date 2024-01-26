@@ -124,9 +124,9 @@ def test_add_str() -> None:
 
 def test_add_2_tensors() -> None:
     generator = Add((RandUniform(), {OBJECT_TARGET: "startorch.tensor.RandUniform"}))
-    assert len(generator._tensors) == 2
-    assert isinstance(generator._tensors[0], RandUniform)
-    assert isinstance(generator._tensors[1], RandUniform)
+    assert len(generator._generators) == 2
+    assert isinstance(generator._generators[0], RandUniform)
+    assert isinstance(generator._generators[1], RandUniform)
 
 
 def test_add_3_tensors() -> None:
@@ -137,15 +137,15 @@ def test_add_3_tensors() -> None:
             {OBJECT_TARGET: "startorch.tensor.RandUniform"},
         )
     )
-    assert len(generator._tensors) == 3
-    assert isinstance(generator._tensors[0], RandUniform)
-    assert isinstance(generator._tensors[1], RandNormal)
-    assert isinstance(generator._tensors[2], RandUniform)
+    assert len(generator._generators) == 3
+    assert isinstance(generator._generators[0], RandUniform)
+    assert isinstance(generator._generators[1], RandNormal)
+    assert isinstance(generator._generators[2], RandUniform)
 
 
 def test_add_tensors_empty() -> None:
     with pytest.raises(ValueError, match="No tensor generator."):
-        Add(tensors=[])
+        Add(generators=[])
 
 
 @pytest.mark.parametrize("size", SIZES)
@@ -436,9 +436,9 @@ def test_mul_str() -> None:
 
 def test_mul_2_tensors() -> None:
     generator = Mul((RandUniform(), {OBJECT_TARGET: "startorch.tensor.RandUniform"}))
-    assert len(generator._tensors) == 2
-    assert isinstance(generator._tensors[0], RandUniform)
-    assert isinstance(generator._tensors[1], RandUniform)
+    assert len(generator._generators) == 2
+    assert isinstance(generator._generators[0], RandUniform)
+    assert isinstance(generator._generators[1], RandUniform)
 
 
 def test_mul_3_tensors() -> None:
@@ -449,10 +449,10 @@ def test_mul_3_tensors() -> None:
             {OBJECT_TARGET: "startorch.tensor.RandUniform"},
         )
     )
-    assert len(generator._tensors) == 3
-    assert isinstance(generator._tensors[0], RandUniform)
-    assert isinstance(generator._tensors[1], RandNormal)
-    assert isinstance(generator._tensors[2], RandUniform)
+    assert len(generator._generators) == 3
+    assert isinstance(generator._generators[0], RandUniform)
+    assert isinstance(generator._generators[1], RandNormal)
+    assert isinstance(generator._generators[2], RandUniform)
 
 
 def test_mul_tensors_empty() -> None:

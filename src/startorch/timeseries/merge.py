@@ -1,11 +1,12 @@
+r"""Contain the base class to implement a time series generator."""
+
 from __future__ import annotations
 
 __all__ = ["MergeTimeSeriesGenerator"]
 
-from collections.abc import Generator, Sequence
+from typing import TYPE_CHECKING
 
 from coola.utils import str_indent, str_sequence
-from redcat import BatchDict
 
 from startorch import constants as ct
 from startorch.timeseries.base import (
@@ -13,6 +14,12 @@ from startorch.timeseries.base import (
     setup_timeseries_generator,
 )
 from startorch.timeseries.utils import merge_timeseries_by_time
+
+if TYPE_CHECKING:
+    from collections.abc import Sequence
+
+    from redcat import BatchDict
+    from torch import Generator
 
 
 class MergeTimeSeriesGenerator(BaseTimeSeriesGenerator):
@@ -22,41 +29,42 @@ class MergeTimeSeriesGenerator(BaseTimeSeriesGenerator):
     The time series are combined by using the time information.
 
     Args:
-        generators (``Sequence``): Specifies the time series
-            generators or their configuration.
-        time_key (str, optional): Specifies the key used to merge the
-            time series by time. Default: ``'time'``
+        generators: Specifies the time series generators or their
+            configuration.
+        time_key: Specifies the key used to merge the time series by
+            time.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.timeseries import Merge, TimeSeries
+    >>> from startorch.sequence import RandUniform, RandNormal
+    >>> generator = Merge(
+    ...     (
+    ...         TimeSeries({"value": RandUniform(), "time": RandUniform()}),
+    ...         TimeSeries({"value": RandNormal(), "time": RandNormal()}),
+    ...     )
+    ... )
+    >>> generator
+    MergeTimeSeriesGenerator(
+      (time_key): time
+      (0): TimeSeriesGenerator(
+          (value): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+          (time): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+        )
+      (1): TimeSeriesGenerator(
+          (value): RandNormalSequenceGenerator(mean=0.0, std=1.0, feature_size=(1,))
+          (time): RandNormalSequenceGenerator(mean=0.0, std=1.0, feature_size=(1,))
+        )
+    )
+    >>> batch = generator.generate(seq_len=12, batch_size=10)
+    >>> batch
+    BatchDict(
+      (value): tensor([[...]], batch_dim=0, seq_dim=1)
+      (time): tensor([[...]], batch_dim=0, seq_dim=1)
+    )
 
-        >>> from startorch.timeseries import Merge, TimeSeries
-        >>> from startorch.sequence import RandUniform, RandNormal
-        >>> generator = Merge(
-        ...     (
-        ...         TimeSeries({"value": RandUniform(), "time": RandUniform()}),
-        ...         TimeSeries({"value": RandNormal(), "time": RandNormal()}),
-        ...     )
-        ... )
-        >>> generator
-        MergeTimeSeriesGenerator(
-          (time_key): time
-          (0): TimeSeriesGenerator(
-              (value): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
-              (time): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
-            )
-          (1): TimeSeriesGenerator(
-              (value): RandNormalSequenceGenerator(mean=0.0, std=1.0, feature_size=(1,))
-              (time): RandNormalSequenceGenerator(mean=0.0, std=1.0, feature_size=(1,))
-            )
-        )
-        >>> batch = generator.generate(seq_len=12, batch_size=10)
-        >>> batch
-        BatchDict(
-          (value): tensor([[...]], batch_dim=0, seq_dim=1)
-          (time): tensor([[...]], batch_dim=0, seq_dim=1)
-        )
+    ```
     """
 
     def __init__(

@@ -1,3 +1,5 @@
+r"""Contain time series generators."""
+
 from __future__ import annotations
 
 __all__ = [

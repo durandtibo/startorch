@@ -211,9 +211,9 @@ def get_uniform_weights(
 
     Args:
     ----
-        feature_size (int): Specifies the feature size i.e. the
+        feature_size: Specifies the feature size i.e. the
             number of features.
-        informative_feature_size (int): Specifies the number of
+        informative_feature_size: Specifies the number of
             informative features.
         generator (``torch.Generator`` or ``None``, optional):
             Specifies an optional random generator. Default: ``None``

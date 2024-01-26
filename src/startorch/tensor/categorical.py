@@ -1,9 +1,12 @@
+r"""Contain the implementation of tensor generators where the values are
+sampled from a categorical distribution."""
+
 from __future__ import annotations
 
 __all__ = ["MultinomialTensorGenerator", "UniformCategoricalTensorGenerator"]
 
 import math
-from collections.abc import Sequence
+from typing import TYPE_CHECKING
 
 import torch
 from torch import Generator, Tensor
@@ -11,28 +14,32 @@ from torch import Generator, Tensor
 from startorch.tensor.base import BaseTensorGenerator
 from startorch.utils.weight import prepare_probabilities
 
+if TYPE_CHECKING:
+    from collections.abc import Sequence
+
 
 class MultinomialTensorGenerator(BaseTensorGenerator):
     r"""Implement a class to generate tensors of categorical variables
     where each value is sampled from a multinomial distribution.
 
     Args:
-        weights (``torch.Tensor`` of shape ``(num_categories,)`` and
-            type float): Specifies the vector of weights associated
-            at each category. The weights have to be positive but do
-            not need to sum to 1.
+        weights: Specifies the vector of weights associated at each
+            category. It must be a float tensor of shape
+            ``(num_categories,)``. The weights have to be positive but
+            do not need to sum to 1.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.tensor import Multinomial
+    >>> generator = Multinomial(torch.ones(10))
+    >>> generator
+    MultinomialTensorGenerator(num_categories=10)
+    >>> generator.generate(size=(4, 12))
+    tensor([[...]])
 
-        >>> import torch
-        >>> from startorch.tensor import Multinomial
-        >>> generator = Multinomial(torch.ones(10))
-        >>> generator
-        MultinomialTensorGenerator(num_categories=10)
-        >>> generator.generate(size=(4, 12))
-        tensor([[...]])
+    ```
     """
 
     def __init__(self, weights: torch.Tensor | Sequence[float]) -> None:
@@ -49,31 +56,31 @@ class MultinomialTensorGenerator(BaseTensorGenerator):
 
     @classmethod
     def create_uniform_weights(cls, num_categories: int) -> MultinomialTensorGenerator:
-        r"""Initializes the weights with a uniform pattern.
+        r"""Instantiate the weights with a uniform pattern.
 
         All the categories have the same probability.
         The weight of the ``i``-th category (``w_i``) is generated
         with the rule: ``w_i = 1``
 
         Args:
-            num_categories (int): Specifies the number of categories.
+            num_categories: Specifies the number of categories.
 
         Returns:
-            ``MultinomialTensorGenerator``: A tensor generator where
-                the weights of the multinomial distribution follow
-                a uniform pattern.
+            A tensor generator where the weights of the multinomial
+                distribution follow a uniform pattern.
 
         Example usage:
 
-        .. code-block:: pycon
+        ```pycon
+        >>> import torch
+        >>> from startorch.tensor import Multinomial
+        >>> generator = Multinomial.create_uniform_weights(10)
+        >>> generator
+        MultinomialTensorGenerator(num_categories=10)
+        >>> generator.generate(size=(4, 12))
+        tensor([[...]])
 
-            >>> import torch
-            >>> from startorch.tensor import Multinomial
-            >>> generator = Multinomial.create_uniform_weights(10)
-            >>> generator
-            MultinomialTensorGenerator(num_categories=10)
-            >>> generator.generate(size=(4, 12))
-            tensor([[...]])
+        ```
         """
         return cls(weights=torch.ones(num_categories))
 
@@ -82,30 +89,30 @@ class MultinomialTensorGenerator(BaseTensorGenerator):
         cls,
         num_categories: int,
     ) -> MultinomialTensorGenerator:
-        r"""Initializes the weights with a linear pattern.
+        r"""Instantiate the weights with a linear pattern.
 
         The weight of the ``i``-th category (``w_i``) is generated
         with the rule: ``w_i = num_categories - i``
 
         Args:
-            num_categories (int): Specifies the number of categories.
+            num_categories: Specifies the number of categories.
 
         Returns:
-            ``MultinomialTensorGenerator``: A tensor generator where
-                the weights of the multinomial distribution follow a
-                linear pattern.
+            A tensor generator where the weights of the multinomial
+                distribution follow a linear pattern.
 
         Example usage:
 
-        .. code-block:: pycon
+        ```pycon
+        >>> import torch
+        >>> from startorch.tensor import Multinomial
+        >>> generator = Multinomial.create_linear_weights(10)
+        >>> generator
+        MultinomialTensorGenerator(num_categories=10)
+        >>> generator.generate(size=(4, 12))
+        tensor([[...]])
 
-            >>> import torch
-            >>> from startorch.tensor import Multinomial
-            >>> generator = Multinomial.create_linear_weights(10)
-            >>> generator
-            MultinomialTensorGenerator(num_categories=10)
-            >>> generator.generate(size=(4, 12))
-            tensor([[...]])
+        ```
         """
         return cls(
             weights=num_categories * torch.ones(num_categories) - torch.arange(num_categories)
@@ -115,33 +122,32 @@ class MultinomialTensorGenerator(BaseTensorGenerator):
     def create_exp_weights(
         cls, num_categories: int, scale: float = 0.1
     ) -> MultinomialTensorGenerator:
-        r"""Initializes the weights with an exponential pattern.
+        r"""Instantiate the weights with an exponential pattern.
 
         The weight of the ``i``-th category (``w_i``) is generated with
         the rule: ``w_i = exp(-scale * i)``
 
         Args:
-            num_categories (int): Specifies the number of categories.
-            scale: Specifies the scale parameter
-                that controls the exponential function.
-                Default: ``0.1``
+            num_categories: Specifies the number of categories.
+            scale: Specifies the scale parameter that controls the
+                exponential function.
 
         Returns:
-            ``MultinomialTensorGenerator``: A tensor generator where
-                the weights of the multinomial distribution follow
-                an exponential pattern.
+            A tensor generator where the weights of the multinomial
+                distribution follow an exponential pattern.
 
         Example usage:
 
-        .. code-block:: pycon
+        ```pycon
+        >>> import torch
+        >>> from startorch.tensor import Multinomial
+        >>> generator = Multinomial.create_exp_weights(10)
+        >>> generator
+        MultinomialTensorGenerator(num_categories=10)
+        >>> generator.generate(size=(4, 12))
+        tensor([[...]])
 
-            >>> import torch
-            >>> from startorch.tensor import Multinomial
-            >>> generator = Multinomial.create_exp_weights(10)
-            >>> generator
-            MultinomialTensorGenerator(num_categories=10)
-            >>> generator.generate(size=(4, 12))
-            tensor([[...]])
+        ```
         """
         return cls(weights=torch.arange(num_categories).float().mul(-scale).exp())
 
@@ -156,30 +162,30 @@ class UniformCategoricalTensorGenerator(BaseTensorGenerator):
     ``Multinomial.generate_uniform_weights``.
 
     Args:
-        num_categories (int): Specifies the number of categories.
+        num_categories: Specifies the number of categories.
 
     Raises:
-        ValueError if ``num_categories`` is negative.
+        ValueError: if ``num_categories`` is negative.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.tensor import UniformCategorical
+    >>> generator = UniformCategorical(10)
+    >>> generator
+    UniformCategoricalTensorGenerator(num_categories=10)
+    >>> generator.generate(size=(4, 12))
+    tensor([[...]])
 
-        >>> import torch
-        >>> from startorch.tensor import UniformCategorical
-        >>> generator = UniformCategorical(10)
-        >>> generator
-        UniformCategoricalTensorGenerator(num_categories=10)
-        >>> generator.generate(size=(4, 12))
-        tensor([[...]])
+    ```
     """
 
     def __init__(self, num_categories: int) -> None:
         super().__init__()
         if num_categories <= 0:
-            raise ValueError(
-                f"num_categories has to be greater than 0 (received: {num_categories})"
-            )
+            msg = f"num_categories has to be greater than 0 (received: {num_categories})"
+            raise ValueError(msg)
         self._num_categories = int(num_categories)
 
     def __repr__(self) -> str:

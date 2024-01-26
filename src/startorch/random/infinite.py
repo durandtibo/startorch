@@ -43,7 +43,8 @@ def rand_cauchy(
         tensor([[...]])
     """
     if scale <= 0:
-        raise ValueError(f"scale has to be greater than 0 (received: {scale})")
+        msg = f"scale has to be greater than 0 (received: {scale})"
+        raise ValueError(msg)
     sequence = torch.zeros(*size, dtype=torch.float)
     sequence.cauchy_(median=loc, sigma=scale, generator=generator)
     return sequence
@@ -86,9 +87,11 @@ def cauchy(loc: Tensor, scale: Tensor, generator: torch.Generator | None = None)
         tensor([...])
     """
     if loc.shape != scale.shape:
-        raise ValueError(f"The shapes of loc and scale do not match ({loc.shape} vs {scale.shape})")
-    if torch.any(scale <= 0.0):
-        raise ValueError(f"scale has to be greater than 0 (received: {scale})")
+        msg = f"The shapes of loc and scale do not match ({loc.shape} vs {scale.shape})"
+        raise ValueError(msg)
+    if torch.any(scale.le(0.0)):
+        msg = f"scale has to be greater than 0 (received: {scale})"
+        raise ValueError(msg)
     return rand_cauchy(loc.shape, generator=generator).mul(scale).add(loc)
 
 
@@ -127,7 +130,8 @@ def rand_normal(
         tensor([[...]])
     """
     if std <= 0.0:
-        raise ValueError(f"std has to be greater than 0 (received: {std})")
+        msg = f"std has to be greater than 0 (received: {std})"
+        raise ValueError(msg)
     return torch.randn(size, generator=generator).mul(std).add(mean)
 
 
@@ -162,7 +166,9 @@ def normal(mean: Tensor, std: Tensor, generator: torch.Generator | None = None) 
         tensor([...])
     """
     if mean.shape != std.shape:
-        raise ValueError(f"The shapes of mean and std do not match ({mean.shape} vs {std.shape})")
-    if torch.any(std <= 0.0):
-        raise ValueError(f"std has to be greater than 0 (received: {std})")
+        msg = f"The shapes of mean and std do not match ({mean.shape} vs {std.shape})"
+        raise ValueError(msg)
+    if torch.any(std.le(0.0)):
+        msg = f"std has to be greater than 0 (received: {std})"
+        raise ValueError(msg)
     return torch.randn(mean.shape, generator=generator).mul(std).add(mean)

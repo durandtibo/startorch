@@ -69,7 +69,7 @@ def wiener_process(
     Useful link: https://en.wikipedia.org/wiki/Wiener_process
 
     Args:
-        seq_len (int): Specifies the sequence length.
+        seq_len: Specifies the sequence length.
         step_size: Specifies the time
             step size. Default: ``1.0``
         batch_size: Specifies the batch size.

@@ -1,8 +1,11 @@
+r"""Contain utility functions to mix batches."""
+
 from __future__ import annotations
 
 __all__ = ["mix2sequences"]
 
-from redcat import BatchedTensorSeq
+from typing import TYPE_CHECKING
+
 from redcat.utils.common import (
     check_batch_dims,
     check_seq_dims,
@@ -10,11 +13,14 @@ from redcat.utils.common import (
     get_seq_dims,
 )
 
+if TYPE_CHECKING:
+    from redcat import BatchedTensorSeq
+
 
 def mix2sequences(
     x: BatchedTensorSeq, y: BatchedTensorSeq
 ) -> tuple[BatchedTensorSeq, BatchedTensorSeq]:
-    r"""Mixes the values of two batches along the sequence dimension.
+    r"""Mix the values of two batches along the sequence dimension.
 
     If the input batches are
     ``x = [x[0], x[1], x[2], x[3], x[4], ...]`` and
@@ -23,34 +29,33 @@ def mix2sequences(
     ``y = [y[0], x[1], y[2], x[3], y[4], ...]``
 
     Args:
-        x (``BatchedTensorSeq``): Specifies the first batch.
-        y (``BatchedTensorSeq`` with the same shape as ``x``):
-            Specifies the second batch.
-        dim: Specifies the dimension used to mix
-            the values. Default: ``0``
+        x: Specifies the first batch.
+        y: Specifies the second batch. It must have the same shape
+            as ``x``.
 
     Returns:
-        tuple: The batches with mixed values along the sequence
-            dimension.
+        The batches with mixed values along the sequence dimension.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from redcat import BatchedTensorSeq
+    >>> from startorch.timeseries.utils import mix2sequences
+    >>> mix2sequences(
+    ...     BatchedTensorSeq(torch.arange(10).view(2, 5)),
+    ...     BatchedTensorSeq(torch.arange(10, 20).view(2, 5)),
+    ... )
+    (tensor([[ 0, 11,  2, 13,  4], [ 5, 16,  7, 18,  9]], batch_dim=0, seq_dim=1),
+     tensor([[10,  1, 12,  3, 14], [15,  6, 17,  8, 19]], batch_dim=0, seq_dim=1))
 
-        >>> import torch
-        >>> from redcat import BatchedTensorSeq
-        >>> from startorch.timeseries.utils import mix2sequences
-        >>> mix2sequences(
-        ...     BatchedTensorSeq(torch.arange(10).view(2, 5)),
-        ...     BatchedTensorSeq(torch.arange(10, 20).view(2, 5)),
-        ... )
-        (tensor([[ 0, 11,  2, 13,  4], [ 5, 16,  7, 18,  9]], batch_dim=0, seq_dim=1),
-         tensor([[10,  1, 12,  3, 14], [15,  6, 17,  8, 19]], batch_dim=0, seq_dim=1))
+    ```
     """
     check_batch_dims(get_batch_dims([x, y]))
     check_seq_dims(get_seq_dims([x, y]))
     if x.shape != y.shape:
-        raise RuntimeError(f"x and y shapes do not match: {x.shape} vs {y.shape}")
+        msg = f"x and y shapes do not match: {x.shape} vs {y.shape}"
+        raise RuntimeError(msg)
     t = x
     seq_dim = x.seq_dim
     if seq_dim >= 2:

@@ -1,3 +1,6 @@
+r"""Contain the implementation of tensor generators where the values are
+sampled from a Log-Normal distribution."""
+
 from __future__ import annotations
 
 __all__ = [
@@ -7,6 +10,7 @@ __all__ = [
     "TruncLogNormalTensorGenerator",
 ]
 
+from typing import TYPE_CHECKING
 
 from coola.utils.format import str_indent, str_mapping
 from torch import Generator, Tensor
@@ -19,34 +23,37 @@ from startorch.random import (
 )
 from startorch.tensor.base import BaseTensorGenerator, setup_tensor_generator
 
+if TYPE_CHECKING:
+    from torch import Generator, Tensor
+
 
 class LogNormalTensorGenerator(BaseTensorGenerator):
     r"""Implement a class to generate tensor by sampling values from a
     log-Normal distribution.
 
     Args:
-        mean (``BaseTensorGenerator`` or dict): Specifies a tensor
-            generator (or its configuration) to generate the mean
-            of the underlying Normal distribution.
-        std (``BaseTensorGenerator`` or dict): Specifies a tensor
-            generator (or its configuration) to generate the standard
-            deviation of the underlying Normal distribution.
+        mean: Specifies a tensor generator (or its configuration) to
+            generate the mean of the underlying Normal distribution.
+        std: Specifies a tensor generator (or its configuration) to
+            generate the standard deviation of the underlying Normal
+            distribution.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.tensor import LogNormal, RandUniform
+    >>> generator = LogNormal(
+    ...     mean=RandUniform(low=-1.0, high=1.0), std=RandUniform(low=1.0, high=2.0)
+    ... )
+    >>> generator
+    LogNormalTensorGenerator(
+      (mean): RandUniformTensorGenerator(low=-1.0, high=1.0)
+      (std): RandUniformTensorGenerator(low=1.0, high=2.0)
+    )
+    >>> generator.generate(size=(2, 6))
+    tensor([[...]])
 
-        >>> from startorch.tensor import LogNormal, RandUniform
-        >>> generator = LogNormal(
-        ...     mean=RandUniform(low=-1.0, high=1.0), std=RandUniform(low=1.0, high=2.0)
-        ... )
-        >>> generator
-        LogNormalTensorGenerator(
-          (mean): RandUniformTensorGenerator(low=-1.0, high=1.0)
-          (std): RandUniformTensorGenerator(low=1.0, high=2.0)
-        )
-        >>> generator.generate(size=(2, 6))
-        tensor([[...]])
+    ```
     """
 
     def __init__(self, mean: BaseTensorGenerator | dict, std: BaseTensorGenerator | dict) -> None:
@@ -71,31 +78,32 @@ class RandLogNormalTensorGenerator(BaseTensorGenerator):
     log-Normal distribution.
 
     Args:
-        mean: Specifies the mean of the underlying
-            Normal distribution. Default: ``0.0``
-        std: Specifies the standard deviation of the
-            underlying Normal distribution. Default: ``1.0``
+        mean: Specifies the mean of the underlying Normal distribution.
+        std: Specifies the standard deviation of the underlying Normal
+            distribution.
 
     Raises:
-        ValueError if ``std`` is not a positive number.
+        ValueError: if ``std`` is not a positive number.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.tensor import RandLogNormal
+    >>> generator = RandLogNormal(mean=0.0, std=1.0)
+    >>> generator
+    RandLogNormalTensorGenerator(mean=0.0, std=1.0)
+    >>> generator.generate(size=(2, 6))
+    tensor([[...]])
 
-        >>> from startorch.tensor import RandLogNormal
-        >>> generator = RandLogNormal(mean=0.0, std=1.0)
-        >>> generator
-        RandLogNormalTensorGenerator(mean=0.0, std=1.0)
-        >>> generator.generate(size=(2, 6))
-        tensor([[...]])
+    ```
     """
 
     def __init__(self, mean: float = 0.0, std: float = 1.0) -> None:
         super().__init__()
         self._mean = float(mean)
         if std <= 0:
-            raise ValueError(f"std has to be greater than 0 (received: {std})")
+            msg = f"std has to be greater than 0 (received: {std})"
+            raise ValueError(msg)
         self._std = float(std)
 
     def __repr__(self) -> str:
@@ -115,18 +123,15 @@ class RandTruncLogNormalTensorGenerator(BaseTensorGenerator):
     sampling values from a truncated log-Normal distribution.
 
     Args:
-        mean: Specifies the mean of the
-            log-Normal distribution. Default: ``0.0``
-        std: Specifies the standard deviation of
-            the log-Normal distribution. Default: ``1.0``
+        mean: Specifies the mean of the log-Normal distribution.
+        std: Specifies the standard deviation of the log-Normal
+            distribution.
         min_value: Specifies the minimum value.
-            Default: ``0.0``
         max_value: Specifies the maximum value.
-            Default: ``5.0``
 
     Raises:
-        ValueError if ``std`` is not a positive number.
-        ValueError if ``max_value`` is lower than ``min_value``.
+        ValueError: if ``std`` is not a positive number.
+        ValueError: if ``max_value`` is lower than ``min_value``.
 
     Example usage:
 
@@ -146,12 +151,12 @@ class RandTruncLogNormalTensorGenerator(BaseTensorGenerator):
         super().__init__()
         self._mean = float(mean)
         if std <= 0:
-            raise ValueError(f"std has to be greater than 0 (received: {std})")
+            msg = f"std has to be greater than 0 (received: {std})"
+            raise ValueError(msg)
         self._std = float(std)
         if max_value < min_value:
-            raise ValueError(
-                f"max_value ({max_value}) has to be greater or equal to min_value ({min_value})"
-            )
+            msg = f"max_value ({max_value}) has to be greater or equal to min_value ({min_value})"
+            raise ValueError(msg)
         self._min_value = float(min_value)
         self._max_value = float(max_value)
 
@@ -177,39 +182,37 @@ class TruncLogNormalTensorGenerator(BaseTensorGenerator):
     truncated log-Normal distribution.
 
     Args:
-        mean (``BaseTensorGenerator`` or dict): Specifies a tensor
-            generator (or its configuration) to generate the mean of
-            the underlying Normal distribution.
-        std (``BaseTensorGenerator`` or dict): Specifies a tensor
-            generator (or its configuration) to generate the standard
-            deviation of the underlying Normal distribution.
-        min_value (``BaseTensorGenerator`` or dict): Specifies a
-            tensor generator (or its configuration) to generate the
-            minimum value (included).
-        max_value (``BaseTensorGenerator`` or dict): Specifies a
-            tensor generator (or its configuration) to generate the
-            maximum value (excluded).
+        mean: Specifies a tensor generator (or its configuration) to
+            generate the mean of the underlying Normal distribution.
+        std: Specifies a tensor generator (or its configuration) to
+            generate the standard deviation of the underlying Normal
+            distribution.
+        min_value: Specifies a tensor generator (or its configuration)
+            to generate the minimum value (included).
+        max_value: Specifies a tensor generator (or its configuration)
+            to generate the maximum value (excluded).
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.tensor import RandUniform, TruncLogNormal
+    >>> generator = TruncLogNormal(
+    ...     mean=RandUniform(low=-1.0, high=1.0),
+    ...     std=RandUniform(low=1.0, high=2.0),
+    ...     min_value=RandUniform(low=0.0, high=2.0),
+    ...     max_value=RandUniform(low=5.0, high=10.0),
+    ... )
+    >>> generator
+    TruncLogNormalTensorGenerator(
+      (mean): RandUniformTensorGenerator(low=-1.0, high=1.0)
+      (std): RandUniformTensorGenerator(low=1.0, high=2.0)
+      (min_value): RandUniformTensorGenerator(low=0.0, high=2.0)
+      (max_value): RandUniformTensorGenerator(low=5.0, high=10.0)
+    )
+    >>> generator.generate(size=(2, 6))
+    tensor([[...]])
 
-        >>> from startorch.tensor import RandUniform, TruncLogNormal
-        >>> generator = TruncLogNormal(
-        ...     mean=RandUniform(low=-1.0, high=1.0),
-        ...     std=RandUniform(low=1.0, high=2.0),
-        ...     min_value=RandUniform(low=0.0, high=2.0),
-        ...     max_value=RandUniform(low=5.0, high=10.0),
-        ... )
-        >>> generator
-        TruncLogNormalTensorGenerator(
-          (mean): RandUniformTensorGenerator(low=-1.0, high=1.0)
-          (std): RandUniformTensorGenerator(low=1.0, high=2.0)
-          (min_value): RandUniformTensorGenerator(low=0.0, high=2.0)
-          (max_value): RandUniformTensorGenerator(low=5.0, high=10.0)
-        )
-        >>> generator.generate(size=(2, 6))
-        tensor([[...]])
+    ```
     """
 
     def __init__(

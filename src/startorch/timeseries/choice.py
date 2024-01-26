@@ -1,12 +1,14 @@
+r"""Contain the implementation of a time series generator that selecta a
+different time series generator at each batch."""
+
 from __future__ import annotations
 
 __all__ = ["MultinomialChoiceTimeSeriesGenerator"]
 
-from collections.abc import Generator, Sequence
+from typing import TYPE_CHECKING
 
 import torch
 from coola.utils import str_indent
-from redcat import BatchDict
 
 from startorch.timeseries.base import (
     BaseTimeSeriesGenerator,
@@ -15,10 +17,15 @@ from startorch.timeseries.base import (
 from startorch.utils.format import str_weighted_modules
 from startorch.utils.weight import prepare_weighted_generators
 
+if TYPE_CHECKING:
+    from collections.abc import Sequence
+
+    from redcat import BatchDict
+
 
 class MultinomialChoiceTimeSeriesGenerator(BaseTimeSeriesGenerator):
-    r"""Implement a time series generator that select a time series
-    generator at each batch.
+    r"""Implement a time series generator that selecta a different time
+    series generator at each batch.
 
     This time series generator is used to generate time series with
     different generation processes. The user can specify a list of
@@ -36,44 +43,44 @@ class MultinomialChoiceTimeSeriesGenerator(BaseTimeSeriesGenerator):
             If this key is absent, the weight is set to ``1.0``.
 
     Args:
-        generators (tuple or list): Specifies the time series
-            generators and their weights. See above to learn
-            about the expected format.
+        generators: Specifies the time series generators and their
+            weights. See above to learn about the expected format.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.timeseries import MultinomialChoice, TimeSeries
+    >>> from startorch.sequence import RandUniform, RandNormal
+    >>> generator = MultinomialChoice(
+    ...     (
+    ...         {
+    ...             "weight": 2.0,
+    ...             "generator": TimeSeries({"value": RandUniform(), "time": RandUniform()}),
+    ...         },
+    ...         {
+    ...             "weight": 1.0,
+    ...             "generator": TimeSeries({"value": RandNormal(), "time": RandNormal()}),
+    ...         },
+    ...     )
+    ... )
+    >>> generator
+    MultinomialChoiceTimeSeriesGenerator(
+      (0) [weight=2.0] TimeSeriesGenerator(
+          (value): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+          (time): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+        )
+      (1) [weight=1.0] TimeSeriesGenerator(
+          (value): RandNormalSequenceGenerator(mean=0.0, std=1.0, feature_size=(1,))
+          (time): RandNormalSequenceGenerator(mean=0.0, std=1.0, feature_size=(1,))
+        )
+    )
+    >>> generator.generate(seq_len=12, batch_size=4)
+    BatchDict(
+      (value): tensor([[...]], batch_dim=0, seq_dim=1)
+      (time): tensor([[...]], batch_dim=0, seq_dim=1)
+    )
 
-        >>> from startorch.timeseries import MultinomialChoice, TimeSeries
-        >>> from startorch.sequence import RandUniform, RandNormal
-        >>> generator = MultinomialChoice(
-        ...     (
-        ...         {
-        ...             "weight": 2.0,
-        ...             "generator": TimeSeries({"value": RandUniform(), "time": RandUniform()}),
-        ...         },
-        ...         {
-        ...             "weight": 1.0,
-        ...             "generator": TimeSeries({"value": RandNormal(), "time": RandNormal()}),
-        ...         },
-        ...     )
-        ... )
-        >>> generator
-        MultinomialChoiceTimeSeriesGenerator(
-          (0) [weight=2.0] TimeSeriesGenerator(
-              (value): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
-              (time): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
-            )
-          (1) [weight=1.0] TimeSeriesGenerator(
-              (value): RandNormalSequenceGenerator(mean=0.0, std=1.0, feature_size=(1,))
-              (time): RandNormalSequenceGenerator(mean=0.0, std=1.0, feature_size=(1,))
-            )
-        )
-        >>> generator.generate(seq_len=12, batch_size=4)
-        BatchDict(
-          (value): tensor([[...]], batch_dim=0, seq_dim=1)
-          (time): tensor([[...]], batch_dim=0, seq_dim=1)
-        )
+    ```
     """
 
     def __init__(self, generators: Sequence[dict[str, BaseTimeSeriesGenerator | dict]]) -> None:
@@ -87,7 +94,7 @@ class MultinomialChoiceTimeSeriesGenerator(BaseTimeSeriesGenerator):
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
     ) -> BatchDict:
         index = torch.multinomial(self._weights, num_samples=1, generator=rng).item()
         return self._generators[index].generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
