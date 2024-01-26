@@ -13,7 +13,7 @@ def rand_cauchy(
     scale: float = 1.0,
     generator: torch.Generator | None = None,
 ) -> torch.Tensor:
-    r"""Creates a sequence of continuous variables sampled from a Cauchy
+    r"""Create a sequence of continuous variables sampled from a Cauchy
     distribution.
 
     Args:
@@ -50,7 +50,7 @@ def rand_cauchy(
 
 
 def cauchy(loc: Tensor, scale: Tensor, generator: torch.Generator | None = None) -> Tensor:
-    r"""Creates a tensor filled with values sampled from a Cauchy
+    r"""Create a tensor filled with values sampled from a Cauchy
     distribution.
 
     Unlike ``rand_cauchy``, this function allows to sample values
@@ -98,7 +98,7 @@ def rand_normal(
     std: float = 1.0,
     generator: torch.Generator | None = None,
 ) -> Tensor:
-    r"""Creates a tensor filled with values sampled from a Normal
+    r"""Create a tensor filled with values sampled from a Normal
     distribution.
 
     Args:
@@ -132,7 +132,7 @@ def rand_normal(
 
 
 def normal(mean: Tensor, std: Tensor, generator: torch.Generator | None = None) -> Tensor:
-    r"""Creates a tensor filled with values sampled from a Normal
+    r"""Create a tensor filled with values sampled from a Normal
     distribution.
 
     Args:

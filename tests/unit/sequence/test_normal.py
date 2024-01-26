@@ -15,7 +15,7 @@ from startorch.sequence import (
 )
 from startorch.utils.seed import get_torch_generator
 
-SIZES = (1, 2, 4)
+SIZES = [1, 2, 4]
 
 
 ############################

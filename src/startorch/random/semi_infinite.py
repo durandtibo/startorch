@@ -23,7 +23,7 @@ def rand_exponential(
     rate: float = 1.0,
     generator: Generator | None = None,
 ) -> Tensor:
-    r"""Creates a tensor filled with values sampled from an Exponential
+    r"""Create a tensor filled with values sampled from an Exponential
     distribution.
 
     Args:
@@ -57,7 +57,7 @@ def rand_exponential(
 
 
 def exponential(rate: torch.Tensor, generator: torch.Generator | None = None) -> torch.Tensor:
-    r"""Creates a tensor filled with values sampled from an Exponential
+    r"""Create a tensor filled with values sampled from an Exponential
     distribution.
 
     Unlike ``rand_exponential``, this function allows to sample values
@@ -100,7 +100,7 @@ def rand_half_cauchy(
     scale: float = 1.0,
     generator: Generator | None = None,
 ) -> Tensor:
-    r"""Creates a tensor filled with values sampled from a half-Cauchy
+    r"""Create a tensor filled with values sampled from a half-Cauchy
     distribution.
 
     Args:
@@ -131,7 +131,7 @@ def rand_half_cauchy(
 
 
 def half_cauchy(scale: Tensor, generator: Generator | None = None) -> Tensor:
-    r"""Creates a tensor filled with values sampled from a half-Cauchy
+    r"""Create a tensor filled with values sampled from a half-Cauchy
     distribution.
 
     Unlike ``rand_half_cauchy``, this function allows to sample values
@@ -170,7 +170,7 @@ def rand_half_normal(
     std: float = 1.0,
     generator: Generator | None = None,
 ) -> Tensor:
-    r"""Creates a tensor filled with values sampled from a half-Normal
+    r"""Create a tensor filled with values sampled from a half-Normal
     distribution.
 
     Args:
@@ -202,7 +202,7 @@ def rand_half_normal(
 
 
 def half_normal(std: Tensor, generator: Generator | None = None) -> Tensor:
-    r"""Creates a tensor filled with values sampled from a half-Normal
+    r"""Create a tensor filled with values sampled from a half-Normal
     distribution.
 
     Unlike ``rand_half_normal``, this function allows to sample values
@@ -242,7 +242,7 @@ def rand_log_normal(
     std: float = 1.0,
     generator: Generator | None = None,
 ) -> Tensor:
-    r"""Creates a tensor filled with values sampled from a log-Normal
+    r"""Create a tensor filled with values sampled from a log-Normal
     distribution.
 
     Args:
@@ -279,7 +279,7 @@ def rand_log_normal(
 
 
 def log_normal(mean: Tensor, std: Tensor, generator: Generator | None = None) -> Tensor:
-    r"""Creates a tensor filled with values sampled from a log-Normal
+    r"""Create a tensor filled with values sampled from a log-Normal
     distribution.
 
     Unlike ``rand_log_normal``, this function allows to sample values

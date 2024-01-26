@@ -2,15 +2,15 @@ from __future__ import annotations
 
 from unittest.mock import Mock
 
+import pytest
 import torch
-from pytest import mark
 from redcat import BatchedTensorSeq
 
 from startorch.periodic.sequence import Repeat
 from startorch.sequence import BaseSequenceGenerator, RandUniform
 from startorch.utils.seed import get_torch_generator
 
-SIZES = (1, 2, 4)
+SIZES = [1, 2, 4]
 DTYPES = (torch.float, torch.long)
 
 
@@ -23,10 +23,10 @@ def test_repeat_str() -> None:
     assert str(Repeat(RandUniform())).startswith("RepeatPeriodicSequenceGenerator(")
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("period", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("period", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_repeat_generate(batch_size: int, seq_len: int, period: int, feature_size: int) -> None:
     batch = Repeat(RandUniform(feature_size=feature_size)).generate(
         batch_size=batch_size, seq_len=seq_len, period=period
@@ -56,7 +56,7 @@ def test_repeat_period_4() -> None:
     assert batch.data[:, :2].equal(batch.data[:, 8:])
 
 
-@mark.parametrize("dtype", DTYPES)
+@pytest.mark.parametrize("dtype", DTYPES)
 def test_repeat_dtype_dim_2(dtype: torch.dtype) -> None:
     assert (
         Repeat(
@@ -70,7 +70,7 @@ def test_repeat_dtype_dim_2(dtype: torch.dtype) -> None:
     )
 
 
-@mark.parametrize("dtype", DTYPES)
+@pytest.mark.parametrize("dtype", DTYPES)
 def test_repeat_dtype_dim_3(dtype: torch.dtype) -> None:
     assert (
         Repeat(
@@ -84,7 +84,7 @@ def test_repeat_dtype_dim_3(dtype: torch.dtype) -> None:
     )
 
 
-@mark.parametrize("dtype", DTYPES)
+@pytest.mark.parametrize("dtype", DTYPES)
 def test_repeat_dtype_dim_4(dtype: torch.dtype) -> None:
     assert (
         Repeat(

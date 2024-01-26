@@ -5,7 +5,7 @@ from redcat import BatchedTensorSeq
 
 from startorch.sequence import Time
 
-SIZES = (1, 2, 4)
+SIZES = [1, 2, 4]
 
 
 ##########################

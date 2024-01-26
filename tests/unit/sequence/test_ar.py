@@ -6,7 +6,7 @@ from startorch.sequence import AutoRegressive, Full, RandNormal, RandUniform
 from startorch.tensor import RandInt
 from startorch.utils.seed import get_torch_generator
 
-SIZES = (1, 2, 4)
+SIZES = [1, 2, 4]
 
 
 ####################################

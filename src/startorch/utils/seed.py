@@ -33,7 +33,7 @@ def get_random_seed(seed: int) -> int:
 def get_torch_generator(
     random_seed: int = 1, device: torch.device | str | None = "cpu"
 ) -> torch.Generator:
-    r"""Creates a ``torch.Generator`` initialized with a given seed.
+    r"""Create a ``torch.Generator`` initialized with a given seed.
 
     Args:
         random_seed: Specifies a random seed.

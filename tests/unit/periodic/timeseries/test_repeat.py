@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+import pytest
 import torch
-from pytest import mark
 from redcat import BatchDict, BatchedTensorSeq
 
 from startorch import constants as ct
@@ -10,7 +10,7 @@ from startorch.sequence import RandUniform
 from startorch.timeseries import TimeSeries
 from startorch.utils.seed import get_torch_generator
 
-SIZES = (1, 2, 4)
+SIZES = [1, 2, 4]
 DTYPES = (torch.float, torch.long)
 
 
@@ -25,10 +25,10 @@ def test_repeat_str() -> None:
     )
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("period", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("period", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_repeat_generate(batch_size: int, seq_len: int, period: int, feature_size: int) -> None:
     batch = Repeat(
         TimeSeries({ct.VALUE: RandUniform(feature_size=feature_size), ct.TIME: RandUniform()})

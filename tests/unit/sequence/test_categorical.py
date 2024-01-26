@@ -10,7 +10,7 @@ from torch import Tensor
 from startorch.sequence import Multinomial, UniformCategorical
 from startorch.utils.seed import get_torch_generator
 
-SIZES = (1, 2, 4)
+SIZES = [1, 2, 4]
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
