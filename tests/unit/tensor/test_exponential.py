@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from unittest.mock import Mock, patch
 
+import pytest
 import torch
-from pytest import mark, raises
 
 from startorch.tensor import (
     Exponential,
@@ -28,7 +28,7 @@ def test_exponential_str() -> None:
     )
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_exponential_generate(size: tuple[int, ...]) -> None:
     tensor = Exponential(rate=RandUniform(low=1.0, high=5.0)).generate(size)
     assert tensor.shape == size
@@ -67,7 +67,7 @@ def test_rand_exponential_str() -> None:
     assert str(RandExponential()).startswith("RandExponentialTensorGenerator(")
 
 
-@mark.parametrize("rate", (1.0, 2.0))
+@pytest.mark.parametrize("rate", [1.0, 2.0])
 def test_rand_exponential_rate(rate: float) -> None:
     assert RandExponential(rate=rate)._rate == rate
 
@@ -76,13 +76,13 @@ def test_rand_exponential_rate_default() -> None:
     assert RandExponential()._rate == 1.0
 
 
-@mark.parametrize("rate", (0.0, -1.0))
+@pytest.mark.parametrize("rate", [0.0, -1.0])
 def test_rand_exponential_incorrect_rate(rate: float) -> None:
-    with raises(ValueError, match="rate has to be greater than 0"):
+    with pytest.raises(ValueError, match="rate has to be greater than 0"):
         RandExponential(rate=rate)
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_rand_exponential_generate(size: tuple[int, ...]) -> None:
     tensor = RandExponential().generate(size)
     assert tensor.shape == size
@@ -90,7 +90,7 @@ def test_rand_exponential_generate(size: tuple[int, ...]) -> None:
     assert tensor.min() >= 0.0
 
 
-@mark.parametrize("rate", (1, 2))
+@pytest.mark.parametrize("rate", [1, 2])
 def test_rand_exponential_generate_rate(rate: float) -> None:
     generator = RandExponential(rate=rate)
     mock = Mock(return_value=torch.ones(2, 4))
@@ -122,7 +122,7 @@ def test_rand_trunc_exponential_str() -> None:
     assert str(RandTruncExponential()).startswith("RandTruncExponentialTensorGenerator(")
 
 
-@mark.parametrize("rate", (1.0, 2.0))
+@pytest.mark.parametrize("rate", [1.0, 2.0])
 def test_rand_trunc_exponential_rate(rate: float) -> None:
     assert RandTruncExponential(rate=rate)._rate == rate
 
@@ -131,13 +131,13 @@ def test_rand_trunc_exponential_rate_default() -> None:
     assert RandTruncExponential()._rate == 1.0
 
 
-@mark.parametrize("rate", (0.0, -1.0))
+@pytest.mark.parametrize("rate", [0.0, -1.0])
 def test_rand_trunc_exponential_incorrect_rate(rate: float) -> None:
-    with raises(ValueError, match="rate has to be greater than 0"):
+    with pytest.raises(ValueError, match="rate has to be greater than 0"):
         RandTruncExponential(rate=rate)
 
 
-@mark.parametrize("max_value", (1.0, 2.0))
+@pytest.mark.parametrize("max_value", [1.0, 2.0])
 def test_rand_trunc_exponential_max_value(max_value: float) -> None:
     assert RandTruncExponential(max_value=max_value)._max_value == max_value
 
@@ -146,13 +146,13 @@ def test_rand_trunc_exponential_max_value_default() -> None:
     assert RandTruncExponential()._max_value == 5.0
 
 
-@mark.parametrize("max_value", (0.0, -1.0))
+@pytest.mark.parametrize("max_value", [0.0, -1.0])
 def test_rand_trunc_exponential_incorrect_max_value(max_value: float) -> None:
-    with raises(ValueError, match="max_value has to be greater than 0"):
+    with pytest.raises(ValueError, match="max_value has to be greater than 0"):
         RandTruncExponential(max_value=max_value)
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_rand_trunc_exponential_generate(size: tuple[int, ...]) -> None:
     tensor = RandTruncExponential().generate(size)
     assert tensor.shape == size
@@ -161,7 +161,7 @@ def test_rand_trunc_exponential_generate(size: tuple[int, ...]) -> None:
     assert tensor.max() <= 5.0
 
 
-@mark.parametrize("rate", (1, 2))
+@pytest.mark.parametrize("rate", [1, 2])
 def test_rand_trunc_exponential_generate_rate(rate: float) -> None:
     generator = RandTruncExponential(rate=rate)
     mock = Mock(return_value=torch.ones(2, 4))
@@ -170,7 +170,7 @@ def test_rand_trunc_exponential_generate_rate(rate: float) -> None:
         assert mock.call_args.kwargs["rate"] == rate
 
 
-@mark.parametrize("max_value", (1, 2))
+@pytest.mark.parametrize("max_value", [1, 2])
 def test_rand_trunc_exponential_generate_max_value(max_value: float) -> None:
     generator = RandTruncExponential(max_value=max_value)
     mock = Mock(return_value=torch.ones(2, 4))
@@ -207,7 +207,7 @@ def test_trunc_exponential_str() -> None:
     ).startswith("TruncExponentialTensorGenerator(")
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_trunc_exponential_generate(size: tuple[int, ...]) -> None:
     tensor = TruncExponential(
         rate=RandUniform(low=1.0, high=2.0),

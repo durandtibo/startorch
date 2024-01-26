@@ -28,7 +28,7 @@ from startorch.sequence.wrapper import BaseWrapperSequenceGenerator
 
 
 class AbsSequenceGenerator(BaseWrapperSequenceGenerator):
-    r"""Implements a sequence generator that computes the absolute value
+    r"""Implement a sequence generator that computes the absolute value
     of a generated sequence.
 
     Example usage:
@@ -53,17 +53,15 @@ class AbsSequenceGenerator(BaseWrapperSequenceGenerator):
 
 
 class AddSequenceGenerator(BaseSequenceGenerator):
-    r"""Implements a sequence generator that adds multiple sequences.
+    r"""Implement a sequence generator that adds multiple sequences.
 
     ``sequence = sequence_1 + sequence_2 + ... + sequence_n``
 
     Args:
-    ----
         sequences (``Sequence``): Specifies the sequence generators or
             their configuration.
 
     Raises:
-    ------
         ValueError if no sequence generator is provided.
 
     Example usage:
@@ -106,11 +104,10 @@ class AddSequenceGenerator(BaseSequenceGenerator):
 
 
 class AddScalarSequenceGenerator(BaseWrapperSequenceGenerator):
-    r"""Implements a sequence generator that adds a scalar value to a
+    r"""Implement a sequence generator that adds a scalar value to a
     generated batch of sequences.
 
     Args:
-    ----
         sequence (``BaseSequenceGenerator`` or dict):
             Specifies the sequence generator or its configuration.
         value (int or float): Specifies the scalar value to add.
@@ -152,13 +149,12 @@ class AddScalarSequenceGenerator(BaseWrapperSequenceGenerator):
 
 
 class ClampSequenceGenerator(BaseWrapperSequenceGenerator):
-    r"""Implements a sequence generator to generate a batch of sequences
+    r"""Implement a sequence generator to generate a batch of sequences
     where the values are clamped.
 
     Note: ``min_value`` and ``max_value`` cannot be both ``None``.
 
     Args:
-    ----
         sequence (``BaseSequenceGenerator`` or dict):
             Specifies the sequence generator or its configuration.
         min (int, float or ``None``): Specifies the lower bound.
@@ -167,7 +163,6 @@ class ClampSequenceGenerator(BaseWrapperSequenceGenerator):
             If ``max_value`` is ``None``, there is no upper bound.
 
     Raises:
-    ------
         ValueError if both ``min`` and ``max`` are ``None``
 
     Example usage:
@@ -214,7 +209,7 @@ class ClampSequenceGenerator(BaseWrapperSequenceGenerator):
 
 
 class CumsumSequenceGenerator(BaseWrapperSequenceGenerator):
-    r"""Implements a sequence generator that computes the cumulative sum
+    r"""Implement a sequence generator that computes the cumulative sum
     of a generated sequence.
 
     Example usage:
@@ -241,13 +236,12 @@ class CumsumSequenceGenerator(BaseWrapperSequenceGenerator):
 
 
 class DivSequenceGenerator(BaseSequenceGenerator):
-    r"""Implements a sequence generator that divides one sequence by
+    r"""Implement a sequence generator that divides one sequence by
     another one.
 
     ``sequence = dividend / divisor`` (a.k.a. true division)
 
     Args:
-    ----
         dividend (``Sequence``): (``BaseSequenceGenerator`` or dict):
             Specifies the dividend sequence generator or its
             configuration.
@@ -312,8 +306,8 @@ class DivSequenceGenerator(BaseSequenceGenerator):
 
 
 class ExpSequenceGenerator(BaseWrapperSequenceGenerator):
-    r"""Implements a sequence generator that computes the exponential of
-    a batch of sequences.
+    r"""Implement a sequence generator that computes the exponential of a
+    batch of sequences.
 
     Example usage:
 
@@ -337,11 +331,10 @@ class ExpSequenceGenerator(BaseWrapperSequenceGenerator):
 
 
 class FmodSequenceGenerator(BaseSequenceGenerator):
-    r"""Implements a tensor generator that computes the element-wise
+    r"""Implement a tensor generator that computes the element-wise
     remainder of division.
 
     Args:
-    ----
         dividend (``BaseSequenceGenerator`` or dict):
             Specifies the sequence generator (or its configuration) that
             generates the dividend values.
@@ -397,7 +390,7 @@ class FmodSequenceGenerator(BaseSequenceGenerator):
 
 
 class LogSequenceGenerator(BaseWrapperSequenceGenerator):
-    r"""Implements a sequence generator that computes the logarithm of a
+    r"""Implement a sequence generator that computes the logarithm of a
     batch of sequences.
 
     Example usage:
@@ -422,17 +415,15 @@ class LogSequenceGenerator(BaseWrapperSequenceGenerator):
 
 
 class MulSequenceGenerator(BaseSequenceGenerator):
-    r"""Implements a sequence generator that multiplies multiple
+    r"""Implement a sequence generator that multiplies multiple
     sequences.
 
     ``sequence = sequence_1 * sequence_2 * ... * sequence_n``
 
     Args:
-    ----
         sequences (``Sequence``): Specifies the sequence generators.
 
     Raises:
-    ------
         ValueError if no sequence generator is provided.
 
     Example usage:
@@ -475,11 +466,10 @@ class MulSequenceGenerator(BaseSequenceGenerator):
 
 
 class MulScalarSequenceGenerator(BaseWrapperSequenceGenerator):
-    r"""Implements a sequence generator that multiplies a scalar value to
+    r"""Implement a sequence generator that multiplies a scalar value to
     a generated batch of sequences.
 
     Args:
-    ----
         sequence (``BaseSequenceGenerator`` or dict):
             Specifies the sequence generator or its configuration.
         value (int or float): Specifies the scalar value to multiply.
@@ -521,7 +511,7 @@ class MulScalarSequenceGenerator(BaseWrapperSequenceGenerator):
 
 
 class NegSequenceGenerator(BaseWrapperSequenceGenerator):
-    r"""Implements a sequence generator that computes the negation of a
+    r"""Implement a sequence generator that computes the negation of a
     generated sequence.
 
     Example usage:
@@ -546,7 +536,7 @@ class NegSequenceGenerator(BaseWrapperSequenceGenerator):
 
 
 class SqrtSequenceGenerator(BaseWrapperSequenceGenerator):
-    r"""Implements a sequence generator that computes the squared root of
+    r"""Implement a sequence generator that computes the squared root of
     a batch of sequences.
 
     Example usage:
@@ -571,12 +561,11 @@ class SqrtSequenceGenerator(BaseWrapperSequenceGenerator):
 
 
 class SubSequenceGenerator(BaseSequenceGenerator):
-    r"""Implements a sequence generator that subtracts sequences.
+    r"""Implement a sequence generator that subtracts sequences.
 
     ``sequence = sequence_1 - sequence_2``
 
     Args:
-    ----
         sequence1 (``BaseSequenceGenerator`` or dict):
             Specifies the first sequence generator or its
             configuration.

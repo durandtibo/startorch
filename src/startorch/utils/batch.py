@@ -11,11 +11,9 @@ def merge_batches(batches: Sequence[BatchedTensor]) -> BatchedTensor:
     r"""Merges batches into a single batch.
 
     Args:
-    ----
         batches (``Sequence``): Specifies the batches to merge.
 
     Returns:
-    -------
         ``BatchedTensor``: The "merged" batch.
 
     Example usage:
@@ -50,13 +48,11 @@ def scale_batch(batch: BatchedTensor, scale: str = "identity") -> BatchedTensor:
     r"""Scales a batch.
 
     Args:
-    ----
         batch (``BatchedTensor``): Specifies the batch to scale.
         scale (str, optional): Specifies the scaling transformation.
             Default: ``'identity'``
 
     Returns:
-    -------
         ``BatchedTensor``: The scaled batch.
 
     Example usage:

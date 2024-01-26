@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+import pytest
 import torch
-from pytest import mark
 
 from startorch.tensor import Full
 from startorch.utils.seed import get_torch_generator
@@ -18,12 +18,12 @@ def test_full_str() -> None:
     assert str(Full(value=42)).startswith("FullTensorGenerator(")
 
 
-@mark.parametrize("value", (1.2, 42))
+@pytest.mark.parametrize("value", [1.2, 42])
 def test_full_value(value: int) -> None:
     assert Full(value=value)._value == value
 
 
-@mark.parametrize("dtype", (torch.float, torch.long))
+@pytest.mark.parametrize("dtype", [torch.float, torch.long])
 def test_full_dtype(dtype: torch.dtype) -> None:
     assert Full(value=42, dtype=dtype)._dtype == dtype
 
@@ -32,17 +32,17 @@ def test_full_dtype_default() -> None:
     assert Full(value=42)._dtype is None
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_full_generate_dtype_default(size: tuple[int, ...]) -> None:
     assert Full(1).generate(size).equal(torch.full(size, 1, dtype=torch.float))
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_full_generate_dtype_float(size: tuple[int, ...]) -> None:
     assert Full(1, dtype=torch.float).generate(size).equal(torch.full(size, 1, dtype=torch.float))
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_full_generate_dtype_long(size: tuple[int, ...]) -> None:
     assert Full(1, dtype=torch.long).generate(size).equal(torch.ones(size, dtype=torch.long))
 

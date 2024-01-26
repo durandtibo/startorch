@@ -44,21 +44,19 @@ class BasePeriodicSequenceGenerator(ABC, metaclass=AbstractFactory):
     def generate(
         self, seq_len: int, period: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchedTensorSeq:
-        r"""Generates a batch of periodic sequences.
+        r"""Generate a batch of periodic sequences.
 
         All the sequences in the batch have the same length.
 
         Args:
-        ----
             seq_len (int): Specifies the sequence length.
             period (int): Specifies the period.
-            batch_size (int, optional): Specifies the batch size.
+            batch_size: Specifies the batch size.
                 Default: ``1``
             rng (``torch.Generator`` or None, optional): Specifies
                 an optional random number generator. Default: ``None``
 
         Returns:
-        -------
             ``BatchedTensorSeq``: A batch of sequences. The data in the
                 batch are represented by a ``torch.Tensor`` of shape
                 ``(batch_size, sequence_length, *)`` where `*` means
@@ -87,11 +85,9 @@ def is_periodic_sequence_generator_config(config: dict) -> bool:
     the class.
 
     Args:
-    ----
         config (dict): Specifies the configuration to check.
 
     Returns:
-    -------
         bool: ``True`` if the input configuration is a configuration
             for a ``BasePeriodicSequenceGenerator`` object.
 
@@ -120,12 +116,10 @@ def setup_periodic_sequence_generator(
     using the ``BasePeriodicSequenceGenerator`` factory function.
 
     Args:
-    ----
         generator (``BasePeriodicSequenceGenerator`` or dict): Specifies a
             periodic sequence generator or its configuration.
 
     Returns:
-    -------
         ``BasePeriodicSequenceGenerator``: A periodic sequence generator.
 
     Example usage:

@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from unittest.mock import Mock
 
+import pytest
 import torch
-from pytest import mark
 from redcat import BatchDict, BatchedTensorSeq
 
 from startorch import constants as ct
@@ -30,14 +30,14 @@ def test_periodic_str() -> None:
     ).startswith("PeriodicTimeSeriesGenerator(")
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize(
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize(
     "timeseries",
-    (
+    [
         TimeSeries({ct.VALUE: RandUniform(), ct.TIME: RandUniform()}),
         Repeat(TimeSeries({ct.VALUE: RandUniform(), ct.TIME: RandUniform()})),
-    ),
+    ],
 )
 def test_periodic_generate(
     batch_size: int,
@@ -67,12 +67,12 @@ def test_periodic_generate(
     assert batch_time.data.dtype == torch.float
 
 
-@mark.parametrize(
+@pytest.mark.parametrize(
     "timeseries",
-    (
+    [
         TimeSeries({ct.VALUE: RandUniform(), ct.TIME: RandUniform()}),
         Repeat(TimeSeries({ct.VALUE: RandUniform(), ct.TIME: RandUniform()})),
-    ),
+    ],
 )
 def test_periodic_generate_period_4(
     timeseries: BaseTimeSeriesGenerator | BasePeriodicTimeSeriesGenerator,

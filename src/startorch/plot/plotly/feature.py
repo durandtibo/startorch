@@ -31,13 +31,12 @@ def hist_feature(
     with ``n`` histograms: one for each features.
 
     Args:
-    ----
         features (``torch.Tensor`` or ``numpy.ndarray`` of shape
             ``(batch_size, feature_size)``): Specifies the features.
         feature_names (``Sequence`` or ``None``, optional): Specifies
             the feature names. If ``None``, the feature names are
             generated automatically. Default: ``None``
-        ncols (int, optional): Specifies the number of columns.
+        ncols: Specifies the number of columns.
             Default: ``2``
         figsize (``tuple``, optional): Specifies the individual figure
             size in pixels. The first dimension is the width and the
@@ -46,11 +45,9 @@ def hist_feature(
             ``plotly.graph_objects.Histogram``.
 
     Returns:
-    -------
         ``plotly.graph_objects.Figure``: The generated figure.
 
     Raises:
-    ------
         RuntimeError if the ``features`` shape is invalid
         RuntimeError if ``features`` and ``feature_names`` are not
             consistent

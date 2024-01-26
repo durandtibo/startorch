@@ -15,11 +15,10 @@ from startorch.utils.weight import prepare_probabilities
 
 
 class MultinomialSequenceGenerator(BaseSequenceGenerator):
-    r"""Implements a class to generate sequences of categorical variables
+    r"""Implement a class to generate sequences of categorical variables
     where each value is sampled from a multinomial distribution.
 
     Args:
-    ----
         weights (``torch.Tensor`` of shape ``(num_categories,)`` and
             type float): Specifies the vector of weights associated
             at each category. The weights have to be positive but do
@@ -76,11 +75,9 @@ class MultinomialSequenceGenerator(BaseSequenceGenerator):
         with the rule: ``w_i = 1``
 
         Args:
-        ----
             num_categories (int): Specifies the number of categories.
 
         Returns:
-        -------
             ``MultinomialSequenceGenerator``: A sequence generator where
                 the weights of the multinomial distribution follow
                 a uniform pattern.
@@ -95,11 +92,9 @@ class MultinomialSequenceGenerator(BaseSequenceGenerator):
         with the rule: ``w_i = num_categories - i``
 
         Args:
-        ----
             num_categories (int): Specifies the number of categories.
 
         Returns:
-        -------
             ``MultinomialSequenceGenerator``: A sequence generator where
                 the weights of the multinomial distribution follow a
                 linear pattern.
@@ -118,14 +113,12 @@ class MultinomialSequenceGenerator(BaseSequenceGenerator):
         the rule: ``w_i = exp(-scale * i)``
 
         Args:
-        ----
             num_categories (int): Specifies the number of categories.
-            scale (float, optional): Specifies the scale parameter
+            scale: Specifies the scale parameter
                 that controls the exponential function.
                 Default: ``0.1``
 
         Returns:
-        -------
             ``MultinomialSequenceGenerator``: A sequence generator where
                 the weights of the multinomial distribution follow
                 an exponential pattern.
@@ -134,7 +127,7 @@ class MultinomialSequenceGenerator(BaseSequenceGenerator):
 
 
 class UniformCategoricalSequenceGenerator(BaseSequenceGenerator):
-    r"""Implements a class to generate sequences of uniformly distributed
+    r"""Implement a class to generate sequences of uniformly distributed
     categorical variables.
 
     All the categories have the same probability.
@@ -143,13 +136,11 @@ class UniformCategoricalSequenceGenerator(BaseSequenceGenerator):
     ``Multinomial.generate_uniform_weights``.
 
     Args:
-    ----
         num_categories (int): Specifies the number of categories.
         feature_size (tuple or list or int, optional): Specifies the
             feature size. Default: ``tuple()``
 
     Raises:
-    ------
         ValueError if ``num_categories`` is negative.
 
     Example usage:

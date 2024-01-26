@@ -113,7 +113,7 @@ def test_swiss_roll_generate_mock(
 #####################################
 
 
-@mark.parametrize("num_examples", (0, -1))
+@mark.parametrize("num_examples", [0, -1])
 def test_make_swiss_roll_incorrect_num_examples(num_examples: int) -> None:
     with raises(
         RuntimeError,
@@ -130,7 +130,7 @@ def test_make_swiss_roll_incorrect_noise_std() -> None:
         make_swiss_roll(noise_std=-1)
 
 
-@mark.parametrize("spin", (0, -1))
+@mark.parametrize("spin", [0, -1])
 def test_make_swiss_roll_incorrect_spin(spin: int) -> None:
     with raises(RuntimeError, match="Incorrect value for spin. Expected a value in interval"):
         make_swiss_roll(num_examples=10, spin=spin)

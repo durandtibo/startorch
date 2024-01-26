@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+import pytest
 import torch
-from pytest import mark
 from redcat import BatchedTensorSeq
 
 from startorch.sequence import Constant, Full, RandUniform
@@ -19,9 +19,9 @@ def test_constant_str() -> None:
     assert str(Constant(RandUniform())).startswith("ConstantSequenceGenerator(")
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_constant_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     batch = Constant(RandUniform(feature_size=feature_size)).generate(
         batch_size=batch_size, seq_len=seq_len
@@ -65,7 +65,7 @@ def test_full_str() -> None:
     assert str(Full(value=42.0)).startswith("FullSequenceGenerator(")
 
 
-@mark.parametrize("value", (-1.0, 0.0, 1.0))
+@pytest.mark.parametrize("value", [-1.0, 0.0, 1.0])
 def test_full_value(value: float) -> None:
     assert Full(value=value)._value == value
 
@@ -74,8 +74,8 @@ def test_full_feature_size_default() -> None:
     assert Full(value=42.0)._feature_size == (1,)
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_full_generate_feature_size_default(batch_size: int, seq_len: int) -> None:
     assert (
         Full(value=42.0)
@@ -84,9 +84,9 @@ def test_full_generate_feature_size_default(batch_size: int, seq_len: int) -> No
     )
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_full_generate_feature_size_int(batch_size: int, seq_len: int, feature_size: int) -> None:
     assert (
         Full(value=42.0, feature_size=feature_size)
@@ -95,8 +95,8 @@ def test_full_generate_feature_size_int(batch_size: int, seq_len: int, feature_s
     )
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_full_generate_feature_size_tuple(batch_size: int, seq_len: int) -> None:
     assert (
         Full(value=42.0, feature_size=(3, 4))
@@ -105,7 +105,7 @@ def test_full_generate_feature_size_tuple(batch_size: int, seq_len: int) -> None
     )
 
 
-@mark.parametrize("value", (-1.0, 0.0, 1.0))
+@pytest.mark.parametrize("value", [-1.0, 0.0, 1.0])
 def test_full_generate_value(value: float) -> None:
     assert (
         Full(value=value, feature_size=1)

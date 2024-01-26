@@ -1,8 +1,8 @@
 from __future__ import annotations
 
+import pytest
 import torch
 from objectory import OBJECT_TARGET
-from pytest import mark, raises
 
 from startorch.tensor import (
     Abs,
@@ -37,7 +37,7 @@ def test_abs_str() -> None:
     assert str(Abs(RandNormal())).startswith("AbsTensorGenerator(")
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_abs_generate(size: tuple[int, ...]) -> None:
     generator = Abs(RandNormal())
     tensor = generator.generate(size)
@@ -73,7 +73,7 @@ def test_add_scalar_str() -> None:
     assert str(AddScalar(RandUniform(), value=1.0)).startswith("AddScalarTensorGenerator(")
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_add_scalar_generate(size: tuple[int, ...]) -> None:
     generator = AddScalar(RandUniform(), value=1.0)
     tensor = generator.generate(size)
@@ -144,11 +144,11 @@ def test_add_3_tensors() -> None:
 
 
 def test_add_tensors_empty() -> None:
-    with raises(ValueError, match="No tensor generator."):
+    with pytest.raises(ValueError, match="No tensor generator."):
         Add(tensors=[])
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_add_generate(size: tuple[int, ...]) -> None:
     tensor = Add((RandUniform(), RandUniform())).generate(size)
     assert tensor.shape == size
@@ -190,22 +190,22 @@ def test_clamp_str() -> None:
     assert str(Clamp(RandNormal(), min_value=-2, max_value=2)).startswith("ClampTensorGenerator(")
 
 
-@mark.parametrize("min_value", (-1.0, -2.0))
+@pytest.mark.parametrize("min_value", [-1.0, -2.0])
 def test_clamp_min_value(min_value: float) -> None:
     assert Clamp(RandNormal(), min_value=min_value, max_value=None)._min_value == min_value
 
 
-@mark.parametrize("max_value", (1.0, 2.0))
+@pytest.mark.parametrize("max_value", [1.0, 2.0])
 def test_clamp_max_value(max_value: float) -> None:
     assert Clamp(RandNormal(), min_value=None, max_value=max_value)._max_value == max_value
 
 
 def test_clamp_incorrect_min_max() -> None:
-    with raises(ValueError, match="`min_value` and `max_value` cannot be both None"):
+    with pytest.raises(ValueError, match="`min_value` and `max_value` cannot be both None"):
         Clamp(RandNormal(), min_value=None, max_value=None)
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_clamp_generate(size: tuple[int, ...]) -> None:
     tensor = Clamp(
         RandNormal(),
@@ -218,8 +218,8 @@ def test_clamp_generate(size: tuple[int, ...]) -> None:
     assert tensor.max() <= 2.0
 
 
-@mark.parametrize("min_value", (-1.0, -2.0))
-@mark.parametrize("max_value", (1.0, 2.0))
+@pytest.mark.parametrize("min_value", [-1.0, -2.0])
+@pytest.mark.parametrize("max_value", [1.0, 2.0])
 def test_clamp_generate_min_max_float(min_value: float, max_value: float) -> None:
     tensor = Clamp(
         RandNormal(),
@@ -230,8 +230,8 @@ def test_clamp_generate_min_max_float(min_value: float, max_value: float) -> Non
     assert tensor.max() <= max_value
 
 
-@mark.parametrize("min_value", (-1.0, -2.0))
-@mark.parametrize("max_value", (1.0, 2.0))
+@pytest.mark.parametrize("min_value", [-1.0, -2.0])
+@pytest.mark.parametrize("max_value", [1.0, 2.0])
 def test_clamp_generate_min_max_long(min_value: int, max_value: int) -> None:
     tensor = Clamp(RandInt(low=-5, high=20), min_value=min_value, max_value=max_value).generate(
         size=(4, 12)
@@ -240,7 +240,7 @@ def test_clamp_generate_min_max_long(min_value: int, max_value: int) -> None:
     assert tensor.max() <= max_value
 
 
-@mark.parametrize("min_value", (-1.0, -2.0))
+@pytest.mark.parametrize("min_value", [-1.0, -2.0])
 def test_clamp_generate_only_min_value(min_value: float) -> None:
     assert (
         Clamp(RandNormal(), min_value=min_value, max_value=None).generate(size=(4, 12)).min()
@@ -248,7 +248,7 @@ def test_clamp_generate_only_min_value(min_value: float) -> None:
     )
 
 
-@mark.parametrize("max_value", (-1.0, -2.0))
+@pytest.mark.parametrize("max_value", [-1.0, -2.0])
 def test_clamp_generate_only_max_value(max_value: float) -> None:
     assert (
         Clamp(RandNormal(), min_value=None, max_value=max_value).generate(size=(4, 12)).max()
@@ -281,7 +281,7 @@ def test_div_str() -> None:
     )
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_div_generate(size: tuple[int, ...]) -> None:
     tensor = Div(
         dividend=RandUniform(low=0.1, high=2.0),
@@ -291,12 +291,12 @@ def test_div_generate(size: tuple[int, ...]) -> None:
     assert tensor.dtype == torch.float
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_div_generate_rounding_mode_default(size: tuple[int, ...]) -> None:
     assert Div(dividend=Full(3.0), divisor=Full(2.0)).generate(size).equal(torch.full(size, 1.5))
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_div_generate_rounding_mode_floor(size: tuple[int, ...]) -> None:
     assert (
         Div(dividend=Full(3.0), divisor=Full(2.0), rounding_mode="floor")
@@ -328,7 +328,7 @@ def test_exp_str() -> None:
     assert str(Exp(RandUniform())).startswith("ExpTensorGenerator(")
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_exp_generate(size: tuple[int, ...]) -> None:
     assert Exp(Full(value=0.0)).generate(size).equal(torch.ones(size, dtype=torch.float))
 
@@ -361,7 +361,7 @@ def test_fmod_str() -> None:
     ).startswith("FmodTensorGenerator(")
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_fmod_generate_divisor_generator(size: tuple[int, ...]) -> None:
     assert (
         Fmod(dividend=Full(5.0), divisor=Full(10.0))
@@ -370,7 +370,7 @@ def test_fmod_generate_divisor_generator(size: tuple[int, ...]) -> None:
     )
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_fmod_generate_divisor_number(size: tuple[int, ...]) -> None:
     assert (
         Fmod(dividend=Full(5.0), divisor=10.0)
@@ -406,7 +406,7 @@ def test_log_str() -> None:
     assert str(Log(RandUniform(low=0.1, high=2.0))).startswith("LogTensorGenerator(")
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_log_generate(size: tuple[int, ...]) -> None:
     assert Log(Full(value=1.0)).generate(size).equal(torch.zeros(size, dtype=torch.float))
 
@@ -456,11 +456,11 @@ def test_mul_3_tensors() -> None:
 
 
 def test_mul_tensors_empty() -> None:
-    with raises(ValueError, match="No tensor generator."):
+    with pytest.raises(ValueError, match="No tensor generator."):
         Mul(generators=[])
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_mul_generate(size: tuple[int, ...]) -> None:
     tensor = Mul((RandUniform(), RandUniform())).generate(size)
     assert tensor.shape == size
@@ -498,7 +498,7 @@ def test_mul_scalar_str() -> None:
     assert str(MulScalar(RandUniform(), value=1.0)).startswith("MulScalarTensorGenerator(")
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_mul_scalar_generate(size: tuple[int, ...]) -> None:
     generator = MulScalar(RandUniform(), value=2.0)
     tensor = generator.generate(size)
@@ -547,7 +547,7 @@ def test_neg_str() -> None:
     assert str(Neg(RandUniform())).startswith("NegTensorGenerator(")
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_neg_generate(size: tuple[int, ...]) -> None:
     generator = Neg(RandUniform())
     tensor = generator.generate(size)
@@ -586,7 +586,7 @@ def test_sqrt_str() -> None:
     assert str(Sqrt(RandUniform(low=0.1, high=2.0))).startswith("SqrtTensorGenerator(")
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_sqrt_generate(size: tuple[int, ...]) -> None:
     assert Sqrt(Full(value=4.0)).generate(size).equal(torch.full(size, 2.0, dtype=torch.float))
 
@@ -614,7 +614,7 @@ def test_sub_str() -> None:
     assert str(Sub(tensor1=RandUniform(), tensor2=RandUniform())).startswith("SubTensorGenerator(")
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_sub_generate(size: tuple[int, ...]) -> None:
     tensor = Sub(tensor1=RandUniform(), tensor2=RandUniform()).generate(size)
     assert tensor.shape == size

@@ -12,10 +12,9 @@ from startorch.timeseries.base import BaseTimeSeriesGenerator
 
 
 class TimeSeriesGenerator(BaseTimeSeriesGenerator):
-    r"""Implements a generic time series generator.
+    r"""Implement a generic time series generator.
 
     Args:
-    ----
         sequences (dict): Specifies the sequence generators or their
             configurations.
 

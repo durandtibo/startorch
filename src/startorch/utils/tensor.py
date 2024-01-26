@@ -14,11 +14,9 @@ def shapes_are_equal(tensors: Sequence[Tensor]) -> bool:
     tensors.
 
     Args:
-    ----
         tensors (sequence): Specifies the tensors to check.
 
     Returns:
-    -------
         bool: ``True`` if all the tensors have the same shape,
             otherwise ``False``. By design, this function returns
             ``False`` if no tensor is provided.

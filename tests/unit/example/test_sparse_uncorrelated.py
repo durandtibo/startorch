@@ -17,7 +17,7 @@ SIZES = (1, 2, 4)
 #########################################################
 
 
-@mark.parametrize("num_examples", (0, -1))
+@mark.parametrize("num_examples", [0, -1])
 def test_make_sparse_uncorrelated_regression_incorrect_num_examples(num_examples: int) -> None:
     with raises(
         RuntimeError,

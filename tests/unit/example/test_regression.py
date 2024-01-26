@@ -117,7 +117,7 @@ def test_linear_regression_generate_mock(
 ############################################
 
 
-@mark.parametrize("num_examples", (0, -1))
+@mark.parametrize("num_examples", [0, -1])
 def test_make_linear_regression_incorrect_num_examples(num_examples: int) -> None:
     with raises(
         RuntimeError,

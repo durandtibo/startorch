@@ -1,9 +1,12 @@
 from __future__ import annotations
 
-from torch import Generator, Tensor
+from typing import TYPE_CHECKING
 
 from startorch.tensor import BaseWrapperTensorGenerator, RandUniform
 from startorch.utils.seed import get_torch_generator
+
+if TYPE_CHECKING:
+    from torch import Generator, Tensor
 
 ################################################
 #     Tests for BaseWrapperTensorGenerator     #

@@ -14,7 +14,7 @@ from startorch.utils.seed import get_torch_generator
 SIZES = (1, 2, 4)
 
 
-@fixture
+@fixture()
 def centers() -> torch.Tensor:
     return torch.rand(5, 2) * 20.0 - 10.0
 
@@ -139,7 +139,7 @@ def test_blobs_classification_create_uniform_weights_default() -> None:
 ###############################################
 
 
-@mark.parametrize("num_examples", (0, -1))
+@mark.parametrize("num_examples", [0, -1])
 def test_make_blobs_classification_incorrect_num_examples(
     num_examples: int, centers: torch.Tensor
 ) -> None:

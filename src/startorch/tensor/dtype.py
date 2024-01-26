@@ -8,7 +8,7 @@ from startorch.tensor.wrapper import BaseWrapperTensorGenerator
 
 
 class FloatTensorGenerator(BaseWrapperTensorGenerator):
-    r"""Implements a sequence generator that converts tensor values to
+    r"""Implement a sequence generator that converts tensor values to
     float.
 
     Example usage:
@@ -30,7 +30,7 @@ class FloatTensorGenerator(BaseWrapperTensorGenerator):
 
 
 class LongTensorGenerator(BaseWrapperTensorGenerator):
-    r"""Implements a sequence generator that converts a tensor values to
+    r"""Implement a sequence generator that converts a tensor values to
     long.
 
     Example usage:

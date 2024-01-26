@@ -23,11 +23,10 @@ from startorch.utils.conversion import to_tuple
 
 
 class HalfCauchySequenceGenerator(BaseSequenceGenerator):
-    r"""Implements a class to generate sequence by sampling values from a
+    r"""Implement a class to generate sequence by sampling values from a
     half-Cauchy distribution.
 
     Args:
-    ----
         scale (``BaseSequenceGenerator`` or dict): Specifies a sequence
             generator (or its configuration) to generate the scale.
 
@@ -65,18 +64,16 @@ class HalfCauchySequenceGenerator(BaseSequenceGenerator):
 
 
 class RandHalfCauchySequenceGenerator(BaseSequenceGenerator):
-    r"""Implements a class to generate sequence by sampling values from a
+    r"""Implement a class to generate sequence by sampling values from a
     half-Cauchy distribution.
 
     Args:
-    ----
-        scale (float, optional): Specifies the scale of the
+        scale: Specifies the scale of the
             distribution. Default: ``1.0``
         feature_size (tuple or list or int, optional): Specifies the
             feature size. Default: ``1``
 
     Raises:
-    ------
         ValueError if ``scale`` is not a positive number.
 
     Example usage:
@@ -121,20 +118,18 @@ class RandHalfCauchySequenceGenerator(BaseSequenceGenerator):
 
 
 class RandTruncHalfCauchySequenceGenerator(BaseSequenceGenerator):
-    r"""Implements a class to generate sequence by sampling values from a
+    r"""Implement a class to generate sequence by sampling values from a
     truncated half-Cauchy distribution.
 
     Args:
-    ----
-        scale (float, optional): Specifies the scale of the
+        scale: Specifies the scale of the
             distribution. Default: ``1.0``
-        max_value (float, optional): Specifies the maximum value.
+        max_value: Specifies the maximum value.
             Default: ``4.0``
         feature_size (tuple or list or int, optional): Specifies the
             feature size. Default: ``1``
 
     Raises:
-    ------
         ValueError if ``scale`` is not a positive number.
         ValueError if ``max_value`` is not a positive number.
 
@@ -185,11 +180,10 @@ class RandTruncHalfCauchySequenceGenerator(BaseSequenceGenerator):
 
 
 class TruncHalfCauchySequenceGenerator(BaseSequenceGenerator):
-    r"""Implements a class to generate sequence by sampling values from a
+    r"""Implement a class to generate sequence by sampling values from a
     half-Cauchy distribution.
 
     Args:
-    ----
         scale (``BaseSequenceGenerator`` or dict): Specifies a sequence
             generator (or its configuration) to generate the scale.
         max_value (``BaseSequenceGenerator`` or dict): Specifies a

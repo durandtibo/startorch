@@ -11,11 +11,9 @@ def to_tuple(value: Any) -> tuple:
     This function is a no-op if the input is a tuple.
 
     Args:
-    ----
         value: Specifies the value to convert.
 
     Returns:
-    -------
         tuple: The input value in a tuple.
 
     Example usage:

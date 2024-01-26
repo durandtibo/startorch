@@ -16,7 +16,7 @@ from startorch.sequence.wrapper import BaseWrapperSequenceGenerator
 
 
 class AcoshSequenceGenerator(BaseWrapperSequenceGenerator):
-    r"""Implements a sequence generator that computes the inverse
+    r"""Implement a sequence generator that computes the inverse
     hyperbolic cosine (arccosh) of each value.
 
     Example usage:
@@ -41,7 +41,7 @@ class AcoshSequenceGenerator(BaseWrapperSequenceGenerator):
 
 
 class AsinhSequenceGenerator(BaseWrapperSequenceGenerator):
-    r"""Implements a sequence generator that computes the inverse
+    r"""Implement a sequence generator that computes the inverse
     hyperbolic sine (arcsinh) of each value.
 
     Example usage:
@@ -66,7 +66,7 @@ class AsinhSequenceGenerator(BaseWrapperSequenceGenerator):
 
 
 class AtanhSequenceGenerator(BaseWrapperSequenceGenerator):
-    r"""Implements a sequence generator that computes the inverse
+    r"""Implement a sequence generator that computes the inverse
     hyperbolic tangent (arctanh) of each value.
 
     Example usage:
@@ -91,7 +91,7 @@ class AtanhSequenceGenerator(BaseWrapperSequenceGenerator):
 
 
 class CoshSequenceGenerator(BaseWrapperSequenceGenerator):
-    r"""Implements a sequence generator that computes the hyperbolic
+    r"""Implement a sequence generator that computes the hyperbolic
     cosine (cosh) of each value.
 
     Example usage:
@@ -116,7 +116,7 @@ class CoshSequenceGenerator(BaseWrapperSequenceGenerator):
 
 
 class SinhSequenceGenerator(BaseWrapperSequenceGenerator):
-    r"""Implements a sequence generator that computes the hyperbolic sine
+    r"""Implement a sequence generator that computes the hyperbolic sine
     (sinh) of each value.
 
     Example usage:
@@ -141,7 +141,7 @@ class SinhSequenceGenerator(BaseWrapperSequenceGenerator):
 
 
 class TanhSequenceGenerator(BaseWrapperSequenceGenerator):
-    r"""Implements a sequence generator that computes the hyperbolic
+    r"""Implement a sequence generator that computes the hyperbolic
     tangent (tanh) of each value.
 
     Example usage:

@@ -30,7 +30,7 @@ def test_rand_cauchy_2d() -> None:
     assert values.median().allclose(torch.tensor(0.0), atol=TOLERANCE)
 
 
-@mark.parametrize("loc", (-1.0, 0.0, 1.0))
+@mark.parametrize("loc", [-1.0, 0.0, 1.0])
 def test_rand_cauchy_loc(loc: float) -> None:
     values = rand_cauchy((100000,), loc=loc, generator=get_torch_generator(1))
     assert values.shape == (100000,)
@@ -83,7 +83,7 @@ def test_cauchy_2d() -> None:
     assert values.median().allclose(torch.tensor(0.0), atol=TOLERANCE)
 
 
-@mark.parametrize("loc", (-1.0, 0.0, 1.0))
+@mark.parametrize("loc", [-1.0, 0.0, 1.0])
 def test_cauchy_loc(loc: float) -> None:
     values = cauchy(
         torch.full((100000,), loc), torch.ones(100000), generator=get_torch_generator(1)
@@ -149,7 +149,7 @@ def test_rand_normal_2d() -> None:
     assert values.std().allclose(torch.tensor(1.0), atol=TOLERANCE)
 
 
-@mark.parametrize("mean", (-1.0, 0.0, 1.0))
+@mark.parametrize("mean", [-1.0, 0.0, 1.0])
 def test_rand_normal_mean(mean: float) -> None:
     values = rand_normal((100000,), mean=mean, generator=get_torch_generator(1))
     assert values.shape == (100000,)
@@ -216,7 +216,7 @@ def test_normal_2d() -> None:
     assert values.std().allclose(torch.tensor(1.0), atol=TOLERANCE)
 
 
-@mark.parametrize("mean", (-1.0, 0.0, 1.0))
+@mark.parametrize("mean", [-1.0, 0.0, 1.0])
 def test_normal_mean(mean: float) -> None:
     values = normal(
         torch.full((100000,), mean), torch.ones(100000), generator=get_torch_generator(1)

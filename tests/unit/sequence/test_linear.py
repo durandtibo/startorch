@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+import pytest
 import torch
-from pytest import mark
 from redcat import BatchedTensorSeq
 
 from startorch.sequence import Full, Linear, RandUniform
@@ -25,9 +25,9 @@ def test_linear_str() -> None:
     ).startswith("LinearSequenceGenerator(")
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_linear_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     batch = Linear(
         value=RandUniform(low=-1.0, high=1.0, feature_size=feature_size),

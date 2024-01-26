@@ -10,11 +10,10 @@ from startorch.tensor.base import BaseTensorGenerator
 
 
 class FullTensorGenerator(BaseTensorGenerator):
-    r"""Implements a tensor generator that fills the tensor with a given
+    r"""Implement a tensor generator that fills the tensor with a given
     value.
 
     Args:
-    ----
         value (bool or int or float): Specifies the fill value.
         dtype (``torch.dtype`` or ``None``): Specifies the target
             dtype. ``None`` means the data type is infered from the

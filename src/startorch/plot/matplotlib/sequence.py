@@ -31,14 +31,13 @@ def hist_sequence(
     r"""Plots the distribution from a sequence generator.
 
     Args:
-    ----
         sequence (``BaseSequenceGenerator``): Specifies the sequence
             generator.
-        bins (int, optional): Specifies the number of histogram bins.
+        bins: Specifies the number of histogram bins.
             Default: ``500``
-        seq_len (int, optional): Specifies the sequence length.
+        seq_len: Specifies the sequence length.
             Default: ``128``
-        batch_size (int, optional): Specifies the batch size.
+        batch_size: Specifies the batch size.
             Default: ``1``
         rng (``torch.Generator`` or int): Specifies a random number
             generator or a random seed.
@@ -48,7 +47,6 @@ def hist_sequence(
         **kwargs: Additional keyword arguments for ``plt.hist``.
 
     Returns:
-    -------
         ``matplotlib.pyplot.Figure``: The generated figure.
 
     Example usage:
@@ -89,14 +87,13 @@ def plot_sequence(
     r"""Plots some sequences generated from a sequence generator.
 
     Args:
-    ----
         sequence (``BaseSequenceGenerator``): Specifies the sequence
             generator.
-        seq_len (int, optional): Specifies the sequence length.
+        seq_len: Specifies the sequence length.
             Default: ``128``
-        batch_size (int, optional): Specifies the batch size.
+        batch_size: Specifies the batch size.
             Default: ``1``
-        num_batches (int, optional): Specifies the number of batches.
+        num_batches: Specifies the number of batches.
             Default: ``1``
         rng (``torch.Generator`` or int): Specifies a random number
             generator or a random seed.
@@ -110,7 +107,6 @@ def plot_sequence(
         **kwargs: Additional keyword arguments for ``plt.plot``.
 
     Returns:
-    -------
         ``matplotlib.pyplot.Figure``: The generated figure.
 
     Example usage:

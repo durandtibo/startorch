@@ -15,7 +15,7 @@ from startorch.utils.weight import prepare_weighted_generators
 
 
 class MultinomialChoiceSequenceGenerator(BaseSequenceGenerator):
-    r"""Implements a sequence generator that select a sequence generator
+    r"""Implement a sequence generator that select a sequence generator
     at each batch.
 
     This sequence generator is used to generate sequences with different
@@ -33,7 +33,6 @@ class MultinomialChoiceSequenceGenerator(BaseSequenceGenerator):
             If this key is absent, the weight is set to ``1.0``.
 
     Args:
-    ----
         sequences (sequence): Specifies the sequence
             generators and their weights. See above to learn
             about the expected format.

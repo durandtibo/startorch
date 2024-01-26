@@ -17,23 +17,20 @@ def rand_cauchy(
     distribution.
 
     Args:
-    ----
         size (list or tuple): Specifies the tensor shape.
-        loc (float, optional): Specifies the location/median of the
+        loc: Specifies the location/median of the
             Cauchy distribution. Default: ``0.0``
-        scale (float, optional): Specifies the scale of the Cauchy
+        scale: Specifies the scale of the Cauchy
             distribution. This value has to be greater than 0.
             Default: ``1.0``
         generator (``torch.Generator`` or None, optional): Specifies
             an optional random generator. Default: ``None``
 
     Returns:
-    -------
         ``torch.Tensor``: A tensor filled with values sampled from a
             Cauchy distribution.
 
     Raises:
-    ------
         ValueError if the ``scale`` parameter is not valid.
 
     Example usage:
@@ -62,7 +59,6 @@ def cauchy(loc: Tensor, scale: Tensor, generator: torch.Generator | None = None)
     the output size.
 
     Args:
-    ----
         loc (``torch.Tensor`` of type float and shape
             ``(d0, d1, ..., dn)``): Specifies the location/median
             of the Cauchy distribution.
@@ -73,12 +69,10 @@ def cauchy(loc: Tensor, scale: Tensor, generator: torch.Generator | None = None)
             an optional random generator. Default: ``None``
 
     Returns:
-    -------
         ``torch.Tensor``: A tensor filled with values sampled from a
             Cauchy distribution.
 
     Raises:
-    ------
         ValueError if the ``loc`` and ``scale`` parameters are not
             valid.
 
@@ -108,22 +102,19 @@ def rand_normal(
     distribution.
 
     Args:
-    ----
         size (list or tuple): Specifies the tensor shape.
-        mean (float, optional): Specifies the mean of the Normal
+        mean: Specifies the mean of the Normal
             distribution. Default: ``0.0``
-        std (float, optional): Specifies the standard deviation of
+        std: Specifies the standard deviation of
             the Normal distribution. Default: ``1.0``
         generator (``torch.Generator`` or None, optional): Specifies
             an optional random generator. Default: ``None``
 
     Returns:
-    -------
         ``torch.Tensor``: A tensor filled with values sampled from a
             Normal distribution.
 
     Raises:
-    ------
         ValueError if the ``std`` parameter is not valid.
 
     Example usage:
@@ -145,7 +136,6 @@ def normal(mean: Tensor, std: Tensor, generator: torch.Generator | None = None) 
     distribution.
 
     Args:
-    ----
         mean (``torch.Tensor`` of type float and shape
             ``(d0, d1, ..., dn)``): Specifies the mean.
         std (``torch.Tensor`` of type float and shape
@@ -155,12 +145,10 @@ def normal(mean: Tensor, std: Tensor, generator: torch.Generator | None = None) 
             an optional random generator. Default: ``None``
 
     Returns:
-    -------
         ``torch.Tensor``: A tensor filled with values sampled from a
             Normal distribution.
 
     Raises:
-    ------
         ValueError if the ``mean`` and ``std`` parameters are not
             valid.
 

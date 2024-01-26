@@ -1,5 +1,7 @@
+from __future__ import annotations
+
+import pytest
 import torch
-from pytest import mark
 from redcat import BatchedTensorSeq
 
 from startorch.sequence import Float, Full, Long, RandInt, RandUniform
@@ -17,9 +19,9 @@ def test_float_str() -> None:
     assert str(Float(RandInt(low=0, high=10))).startswith("FloatSequenceGenerator(")
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_float_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     assert (
         Float(Full(value=4, feature_size=feature_size))
@@ -55,8 +57,8 @@ def test_long_str() -> None:
     assert str(Long(RandUniform(low=0.0, high=50.0))).startswith("LongSequenceGenerator(")
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_long_generate(batch_size: int, seq_len: int) -> None:
     batch = Long(RandUniform(low=0.0, high=50.0)).generate(batch_size=batch_size, seq_len=seq_len)
     assert isinstance(batch, BatchedTensorSeq)

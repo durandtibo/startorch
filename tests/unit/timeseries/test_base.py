@@ -1,7 +1,7 @@
 import logging
 
+import pytest
 from objectory import OBJECT_TARGET
-from pytest import LogCaptureFixture
 
 from startorch.sequence import RandInt, RandUniform, UniformCategorical
 from startorch.timeseries import (
@@ -62,7 +62,7 @@ def test_setup_timeseries_generator_dict() -> None:
     )
 
 
-def test_setup_timeseries_generator_incorrect_type(caplog: LogCaptureFixture) -> None:
+def test_setup_timeseries_generator_incorrect_type(caplog: pytest.LogCaptureFixture) -> None:
     with caplog.at_level(level=logging.WARNING):
         assert isinstance(
             setup_timeseries_generator(

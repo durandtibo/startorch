@@ -1,5 +1,5 @@
+import pytest
 import torch
-from pytest import mark, raises
 from redcat import BatchedTensorSeq
 
 from startorch.sequence import (
@@ -31,9 +31,9 @@ def test_asinh_uniform_str() -> None:
     ).startswith("AsinhUniformSequenceGenerator(")
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_asinh_uniform_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     batch = AsinhUniform(
         low=RandUniform(low=-1000.0, high=-1.0, feature_size=feature_size),
@@ -96,9 +96,9 @@ def test_log_uniform_str() -> None:
     ).startswith("LogUniformSequenceGenerator(")
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_log_uniform_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     batch = LogUniform(
         low=RandUniform(low=0.001, high=1.0, feature_size=feature_size),
@@ -158,18 +158,18 @@ def test_rand_asinh_uniform_str() -> None:
     )
 
 
-@mark.parametrize("low", (-10.0, -0.1))
+@pytest.mark.parametrize("low", [-10.0, -0.1])
 def test_rand_asinh_uniform_low(low: float) -> None:
     assert RandAsinhUniform(low=low, high=10.0)._low == low
 
 
-@mark.parametrize("high", (1.0, 10.0))
+@pytest.mark.parametrize("high", [1.0, 10.0])
 def test_rand_asinh_uniform_high(high: float) -> None:
     assert RandAsinhUniform(low=-10.0, high=high)._high == high
 
 
 def test_rand_asinh_uniform_incorrect_min_high() -> None:
-    with raises(ValueError, match="high (.*) has to be greater or equal to low"):
+    with pytest.raises(ValueError, match="high (.*) has to be greater or equal to low"):
         RandAsinhUniform(low=2.0, high=1.0)
 
 
@@ -177,8 +177,8 @@ def test_rand_asinh_uniform_feature_size_default() -> None:
     assert RandAsinhUniform(low=-1000.0, high=1000.0)._feature_size == (1,)
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_rand_asinh_uniform_generate_feature_size_default(batch_size: int, seq_len: int) -> None:
     batch = RandAsinhUniform(low=-1000.0, high=1000.0).generate(
         batch_size=batch_size, seq_len=seq_len
@@ -190,9 +190,9 @@ def test_rand_asinh_uniform_generate_feature_size_default(batch_size: int, seq_l
     assert batch.data.dtype == torch.float
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_rand_asinh_uniform_generate_feature_size_int(
     batch_size: int, seq_len: int, feature_size: int
 ) -> None:
@@ -206,8 +206,8 @@ def test_rand_asinh_uniform_generate_feature_size_int(
     assert batch.data.dtype == torch.float
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_rand_asinh_uniform_generate_feature_size_tuple(batch_size: int, seq_len: int) -> None:
     batch = RandAsinhUniform(low=-1000.0, high=1000.0, feature_size=(3, 4)).generate(
         batch_size=batch_size, seq_len=seq_len
@@ -256,23 +256,23 @@ def test_rand_int_str() -> None:
     assert str(RandInt(low=5, high=20)).startswith("RandIntSequenceGenerator(")
 
 
-@mark.parametrize("low", (1, 2))
+@pytest.mark.parametrize("low", [1, 2])
 def test_rand_int_low(low: int) -> None:
     assert RandInt(low=low, high=20)._low == low
 
 
-@mark.parametrize("high", (10, 20))
+@pytest.mark.parametrize("high", [10, 20])
 def test_rand_int_high(high: int) -> None:
     assert RandInt(low=0, high=high)._high == high
 
 
 def test_rand_int_incorrect_min_max() -> None:
-    with raises(ValueError, match="high (.*) has to be greater or equal to low"):
+    with pytest.raises(ValueError, match="high (.*) has to be greater or equal to low"):
         RandInt(low=5, high=4)
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_rand_int_generate_feature_size_default(batch_size: int, seq_len: int) -> None:
     batch = RandInt(low=5, high=20).generate(batch_size=batch_size, seq_len=seq_len)
     assert isinstance(batch, BatchedTensorSeq)
@@ -282,9 +282,9 @@ def test_rand_int_generate_feature_size_default(batch_size: int, seq_len: int) -
     assert batch.data.dtype == torch.long
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_rand_int_generate_feature_size_int(
     batch_size: int, seq_len: int, feature_size: int
 ) -> None:
@@ -298,8 +298,8 @@ def test_rand_int_generate_feature_size_int(
     assert batch.data.dtype == torch.long
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_rand_int_generate_feature_size_tuple(batch_size: int, seq_len: int) -> None:
     batch = RandInt(low=5, high=20, feature_size=(3, 4)).generate(
         batch_size=batch_size, seq_len=seq_len
@@ -311,8 +311,8 @@ def test_rand_int_generate_feature_size_tuple(batch_size: int, seq_len: int) -> 
     assert batch.data.dtype == torch.long
 
 
-@mark.parametrize("low", (1, 5))
-@mark.parametrize("high", (10, 20))
+@pytest.mark.parametrize("low", [1, 5])
+@pytest.mark.parametrize("high", [10, 20])
 def test_rand_int_generate_high(low: int, high: int) -> None:
     batch = RandInt(low=low, high=high).generate(batch_size=10, seq_len=10)
     assert batch.min() >= low
@@ -352,18 +352,18 @@ def test_rand_log_uniform_str() -> None:
     )
 
 
-@mark.parametrize("low", (1.0, 2.0))
+@pytest.mark.parametrize("low", [1.0, 2.0])
 def test_rand_log_uniform_low(low: float) -> None:
     assert RandLogUniform(low=low, high=10.0)._low == low
 
 
-@mark.parametrize("high", (1.0, 10.0))
+@pytest.mark.parametrize("high", [1.0, 10.0])
 def test_rand_log_uniform_high(high: float) -> None:
     assert RandLogUniform(low=0.1, high=high)._high == high
 
 
 def test_rand_log_uniform_incorrect_min_high() -> None:
-    with raises(ValueError, match="high (.*) has to be greater or equal to low"):
+    with pytest.raises(ValueError, match="high (.*) has to be greater or equal to low"):
         RandLogUniform(low=2.0, high=1.0)
 
 
@@ -371,8 +371,8 @@ def test_rand_log_uniform_feature_size_default() -> None:
     assert RandLogUniform(low=0.001, high=1000.0)._feature_size == (1,)
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_rand_log_uniform_generate_feature_size_default(batch_size: int, seq_len: int) -> None:
     batch = RandLogUniform(low=0.001, high=1000.0).generate(batch_size=batch_size, seq_len=seq_len)
     assert isinstance(batch, BatchedTensorSeq)
@@ -382,9 +382,9 @@ def test_rand_log_uniform_generate_feature_size_default(batch_size: int, seq_len
     assert batch.data.dtype == torch.float
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_rand_log_uniform_generate_feature_size_int(
     batch_size: int, seq_len: int, feature_size: int
 ) -> None:
@@ -398,8 +398,8 @@ def test_rand_log_uniform_generate_feature_size_int(
     assert batch.data.dtype == torch.float
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_rand_log_uniform_generate_feature_size_tuple(batch_size: int, seq_len: int) -> None:
     batch = RandLogUniform(low=0.001, high=1000.0, feature_size=(3, 4)).generate(
         batch_size=batch_size, seq_len=seq_len
@@ -448,18 +448,18 @@ def test_rand_uniform_str() -> None:
     assert str(RandUniform()).startswith("RandUniformSequenceGenerator(")
 
 
-@mark.parametrize("low", (1.0, 2.0))
+@pytest.mark.parametrize("low", [1.0, 2.0])
 def test_rand_uniform_low(low: float) -> None:
     assert RandUniform(low=low, high=10)._low == low
 
 
-@mark.parametrize("high", (1.0, 10.0))
+@pytest.mark.parametrize("high", [1.0, 10.0])
 def test_rand_uniform_high(high: float) -> None:
     assert RandUniform(low=1, high=high)._high == high
 
 
 def test_rand_uniform_incorrect_min_high() -> None:
-    with raises(ValueError, match="high (.*) has to be greater or equal to low (.*)"):
+    with pytest.raises(ValueError, match="high (.*) has to be greater or equal to low (.*)"):
         RandUniform(low=2, high=1)
 
 
@@ -467,8 +467,8 @@ def test_rand_uniform_feature_size_default() -> None:
     assert RandUniform()._feature_size == (1,)
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_rand_uniform_generate_feature_size_default(batch_size: int, seq_len: int) -> None:
     batch = RandUniform().generate(batch_size=batch_size, seq_len=seq_len)
     assert isinstance(batch, BatchedTensorSeq)
@@ -478,9 +478,9 @@ def test_rand_uniform_generate_feature_size_default(batch_size: int, seq_len: in
     assert batch.data.dtype == torch.float
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_rand_uniform_generate_feature_size_int(
     batch_size: int, seq_len: int, feature_size: int
 ) -> None:
@@ -492,8 +492,8 @@ def test_rand_uniform_generate_feature_size_int(
     assert batch.data.dtype == torch.float
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_rand_uniform_generate_feature_size_tuple(batch_size: int, seq_len: int) -> None:
     batch = RandUniform(feature_size=(3, 4)).generate(batch_size=batch_size, seq_len=seq_len)
     assert isinstance(batch, BatchedTensorSeq)
@@ -545,9 +545,9 @@ def test_uniform_str() -> None:
     ).startswith("UniformSequenceGenerator(")
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_uniform_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     batch = Uniform(
         low=RandUniform(low=-2.0, high=-1.0, feature_size=feature_size),

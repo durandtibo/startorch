@@ -13,11 +13,10 @@ from startorch.utils.weight import prepare_probabilities
 
 
 class MultinomialTensorGenerator(BaseTensorGenerator):
-    r"""Implements a class to generate tensors of categorical variables
+    r"""Implement a class to generate tensors of categorical variables
     where each value is sampled from a multinomial distribution.
 
     Args:
-    ----
         weights (``torch.Tensor`` of shape ``(num_categories,)`` and
             type float): Specifies the vector of weights associated
             at each category. The weights have to be positive but do
@@ -57,11 +56,9 @@ class MultinomialTensorGenerator(BaseTensorGenerator):
         with the rule: ``w_i = 1``
 
         Args:
-        ----
             num_categories (int): Specifies the number of categories.
 
         Returns:
-        -------
             ``MultinomialTensorGenerator``: A tensor generator where
                 the weights of the multinomial distribution follow
                 a uniform pattern.
@@ -91,11 +88,9 @@ class MultinomialTensorGenerator(BaseTensorGenerator):
         with the rule: ``w_i = num_categories - i``
 
         Args:
-        ----
             num_categories (int): Specifies the number of categories.
 
         Returns:
-        -------
             ``MultinomialTensorGenerator``: A tensor generator where
                 the weights of the multinomial distribution follow a
                 linear pattern.
@@ -126,14 +121,12 @@ class MultinomialTensorGenerator(BaseTensorGenerator):
         the rule: ``w_i = exp(-scale * i)``
 
         Args:
-        ----
             num_categories (int): Specifies the number of categories.
-            scale (float, optional): Specifies the scale parameter
+            scale: Specifies the scale parameter
                 that controls the exponential function.
                 Default: ``0.1``
 
         Returns:
-        -------
             ``MultinomialTensorGenerator``: A tensor generator where
                 the weights of the multinomial distribution follow
                 an exponential pattern.
@@ -154,7 +147,7 @@ class MultinomialTensorGenerator(BaseTensorGenerator):
 
 
 class UniformCategoricalTensorGenerator(BaseTensorGenerator):
-    r"""Implements a class to generate tensors of uniformly distributed
+    r"""Implement a class to generate tensors of uniformly distributed
     categorical variables.
 
     All the categories have the same probability.
@@ -163,11 +156,9 @@ class UniformCategoricalTensorGenerator(BaseTensorGenerator):
     ``Multinomial.generate_uniform_weights``.
 
     Args:
-    ----
         num_categories (int): Specifies the number of categories.
 
     Raises:
-    ------
         ValueError if ``num_categories`` is negative.
 
     Example usage:

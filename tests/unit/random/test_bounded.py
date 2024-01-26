@@ -52,7 +52,7 @@ def test_rand_rand_trunc_cauchy_2d() -> None:
     assert values.max() <= 2.0
 
 
-@mark.parametrize("loc", (-1.0, 0.0, 1.0))
+@mark.parametrize("loc", [-1.0, 0.0, 1.0])
 def test_rand_trunc_cauchy_loc(loc: float) -> None:
     values = rand_trunc_cauchy(
         (100000,),
@@ -149,7 +149,7 @@ def test_rand_trunc_cauchy_2d() -> None:
     assert values.max() <= 2.0
 
 
-@mark.parametrize("loc", (-1.0, 0.0, 1.0))
+@mark.parametrize("loc", [-1.0, 0.0, 1.0])
 def test_trunc_cauchy_loc(loc: float) -> None:
     values = trunc_cauchy(
         loc=torch.full((100000,), loc),
@@ -883,7 +883,7 @@ def test_rand_trunc_log_normal_2d() -> None:
     assert values.max() <= 100.0
 
 
-@mark.parametrize("mean", (-1.0, 0.0, 1.0))
+@mark.parametrize("mean", [-1.0, 0.0, 1.0])
 def test_rand_trunc_log_normal_mean(mean: float) -> None:
     values = rand_trunc_log_normal(
         (100000,),
@@ -1009,7 +1009,7 @@ def test_trunc_log_normal_2d() -> None:
     assert values.max() <= 100.0
 
 
-@mark.parametrize("mean", (-1.0, 0.0, 1.0))
+@mark.parametrize("mean", [-1.0, 0.0, 1.0])
 def test_trunc_log_normal_mean(mean: float) -> None:
     values = trunc_log_normal(
         mean=torch.full((100000,), mean),
@@ -1213,7 +1213,7 @@ def test_rand_trunc_normal_2d() -> None:
     assert values.max() <= 100.0
 
 
-@mark.parametrize("mean", (-1.0, 0.0, 1.0))
+@mark.parametrize("mean", [-1.0, 0.0, 1.0])
 def test_rand_trunc_normal_mean(mean: float) -> None:
     values = rand_trunc_normal(
         (100000,),
@@ -1324,7 +1324,7 @@ def test_trunc_normal_2d() -> None:
     assert values.max() <= 100.0
 
 
-@mark.parametrize("mean", (-1.0, 0.0, 1.0))
+@mark.parametrize("mean", [-1.0, 0.0, 1.0])
 def test_trunc_normal_mean(mean: float) -> None:
     values = trunc_normal(
         mean=torch.full((100000,), mean),
@@ -1513,7 +1513,7 @@ def test_rand_uniform_2d() -> None:
     assert values.max() < 1.0
 
 
-@mark.parametrize("low", (-1.0, 0.0, 1.0))
+@mark.parametrize("low", [-1.0, 0.0, 1.0])
 def test_rand_uniform_low(low: float) -> None:
     values = rand_uniform((100000,), low=low, high=2.0, generator=get_torch_generator(1))
     assert values.shape == (100000,)
@@ -1581,7 +1581,7 @@ def test_uniform_2d() -> None:
     assert values.max() < 1.0
 
 
-@mark.parametrize("low", (-1.0, 0.0, 1.0))
+@mark.parametrize("low", [-1.0, 0.0, 1.0])
 def test_uniform_low(low: float) -> None:
     values = uniform(
         torch.full((100000,), low), torch.full((100000,), 2.0), generator=get_torch_generator(1)
@@ -1855,7 +1855,7 @@ def test_rand_asinh_uniform_2d() -> None:
     assert values.max() < 10.0
 
 
-@mark.parametrize("low", (-1.0, 0.0, 1.0))
+@mark.parametrize("low", [-1.0, 0.0, 1.0])
 def test_rand_asinh_uniform_low(low: float) -> None:
     values = rand_asinh_uniform((100000,), low=low, high=10.0, generator=get_torch_generator(1))
     assert values.shape == (100000,)
@@ -1933,7 +1933,7 @@ def test_asinh_uniform_2d() -> None:
     assert values.max() < 10.0
 
 
-@mark.parametrize("low", (-1.0, 0.0, 1.0))
+@mark.parametrize("low", [-1.0, 0.0, 1.0])
 def test_asinh_uniform_low(low: float) -> None:
     values = asinh_uniform(
         torch.full((100000,), low),

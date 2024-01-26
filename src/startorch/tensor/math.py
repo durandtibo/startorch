@@ -26,7 +26,7 @@ from startorch.tensor.wrapper import BaseWrapperTensorGenerator
 
 
 class AbsTensorGenerator(BaseWrapperTensorGenerator):
-    r"""Implements a tensor generator that computes the absolute value of
+    r"""Implement a tensor generator that computes the absolute value of
     a tensor.
 
     Example usage:
@@ -48,11 +48,10 @@ class AbsTensorGenerator(BaseWrapperTensorGenerator):
 
 
 class AddScalarTensorGenerator(BaseWrapperTensorGenerator):
-    r"""Implements a tensor generator that adds a scalar value to a
+    r"""Implement a tensor generator that adds a scalar value to a
     generated batch of tensors.
 
     Args:
-    ----
         tensor (``BaseTensorGenerator`` or dict):
             Specifies the tensor generator or its configuration.
         value (int or float): Specifies the scalar value to add.
@@ -91,16 +90,14 @@ class AddScalarTensorGenerator(BaseWrapperTensorGenerator):
 
 
 class AddTensorGenerator(BaseTensorGenerator):
-    r"""Implements a tensor generator that adds several tensor.
+    r"""Implement a tensor generator that adds several tensor.
 
     ``tensor = tensor_1 + tensor_2 + ... + tensor_n``
 
     Args:
-    ----
         tensors (``Tensor``): Specifies the tensor generators.
 
     Raises:
-    ------
         ValueError if no sequence generator is provided.
 
     Example usage:
@@ -137,13 +134,12 @@ class AddTensorGenerator(BaseTensorGenerator):
 
 
 class ClampTensorGenerator(BaseWrapperTensorGenerator):
-    r"""Implements a tensor generator to generate tensors where the
-    values are clamped.
+    r"""Implement a tensor generator to generate tensors where the values
+    are clamped.
 
     Note: ``min_value`` and ``max_value`` cannot be both ``None``.
 
     Args:
-    ----
         tensor (``BaseTensorGenerator`` or dict):
             Specifies the tensor generator or its configuration.
         min_value (int, float or ``None``): Specifies the lower bound.
@@ -152,7 +148,6 @@ class ClampTensorGenerator(BaseWrapperTensorGenerator):
             If ``max_value`` is ``None``, there is no upper bound.
 
     Raises:
-    ------
         ValueError if both ``min`` and ``max`` are ``None``
 
     Example usage:
@@ -200,13 +195,12 @@ class ClampTensorGenerator(BaseWrapperTensorGenerator):
 
 
 class DivTensorGenerator(BaseTensorGenerator):
-    r"""Implements a tensor generator that divides one tensor by another
+    r"""Implement a tensor generator that divides one tensor by another
     one.
 
     ``tensor = dividend / divisor`` (a.k.a. true division)
 
     Args:
-    ----
         dividend (``Tensor``): (``BaseTensorGenerator`` or dict):
             Specifies the dividend tensor generator or its
             configuration.
@@ -259,7 +253,7 @@ class DivTensorGenerator(BaseTensorGenerator):
 
 
 class ExpTensorGenerator(BaseWrapperTensorGenerator):
-    r"""Implements a tensor generator that computes the exponential of a
+    r"""Implement a tensor generator that computes the exponential of a
     tensor.
 
     Example usage:
@@ -281,11 +275,10 @@ class ExpTensorGenerator(BaseWrapperTensorGenerator):
 
 
 class FmodTensorGenerator(BaseTensorGenerator):
-    r"""Implements a tensor generator that computes the element-wise
+    r"""Implement a tensor generator that computes the element-wise
     remainder of division.
 
     Args:
-    ----
         dividend (``BaseTensorGenerator`` or dict):
             Specifies the tensor generator (or its configuration) that
             generates the dividend values.
@@ -339,7 +332,7 @@ class FmodTensorGenerator(BaseTensorGenerator):
 
 
 class LogTensorGenerator(BaseWrapperTensorGenerator):
-    r"""Implements a tensor generator that computes the logarithm of a
+    r"""Implement a tensor generator that computes the logarithm of a
     tensor.
 
     Example usage:
@@ -361,16 +354,14 @@ class LogTensorGenerator(BaseWrapperTensorGenerator):
 
 
 class MulTensorGenerator(BaseTensorGenerator):
-    r"""Implements a tensor generator that multiplies multiple tensors.
+    r"""Implement a tensor generator that multiplies multiple tensors.
 
     ``tensor = tensor_1 * tensor_2 * ... * tensor_n``
 
     Args:
-    ----
         generators (``Sequence``): Specifies the tensor generators.
 
     Raises:
-    ------
         ValueError if no sequence generator is provided.
 
     Example usage:
@@ -408,11 +399,10 @@ class MulTensorGenerator(BaseTensorGenerator):
 
 
 class MulScalarTensorGenerator(BaseWrapperTensorGenerator):
-    r"""Implements a tensor generator that multiplies a scalar value to a
+    r"""Implement a tensor generator that multiplies a scalar value to a
     generated batch of tensors.
 
     Args:
-    ----
         tensor (``BaseTensorGenerator`` or dict):
             Specifies the tensor generator or its configuration.
         value (int or float): Specifies the scalar value to multiply.
@@ -451,7 +441,7 @@ class MulScalarTensorGenerator(BaseWrapperTensorGenerator):
 
 
 class NegTensorGenerator(BaseWrapperTensorGenerator):
-    r"""Implements a tensor generator that computes the negation of a
+    r"""Implement a tensor generator that computes the negation of a
     generated tensor.
 
     Example usage:
@@ -474,7 +464,7 @@ class NegTensorGenerator(BaseWrapperTensorGenerator):
 
 
 class SqrtTensorGenerator(BaseWrapperTensorGenerator):
-    r"""Implements a tensor generator that computes the squared root of a
+    r"""Implement a tensor generator that computes the squared root of a
     tensor.
 
     Example usage:
@@ -496,12 +486,11 @@ class SqrtTensorGenerator(BaseWrapperTensorGenerator):
 
 
 class SubTensorGenerator(BaseTensorGenerator):
-    r"""Implements a tensor generator that subtracts two tensors.
+    r"""Implement a tensor generator that subtracts two tensors.
 
     ``tensor = tensor_1 - tensor_2``
 
     Args:
-    ----
         tensor1 (``BaseTensorGenerator`` or dict):
             Specifies the first tensor generator or its
             configuration.

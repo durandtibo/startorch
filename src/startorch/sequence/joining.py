@@ -12,12 +12,11 @@ from startorch.tensor.base import BaseTensorGenerator, setup_tensor_generator
 
 
 class Cat2SequenceGenerator(BaseSequenceGenerator):
-    r"""Implements a sequence generator that concatenate two sequences.
+    r"""Implement a sequence generator that concatenate two sequences.
 
     ``sequence = [sequence_1, sequence_2]``
 
     Args:
-    ----
         generator1 (``BaseSequenceGenerator`` or dict): Specifies the
             first sequence generator or its configuration.
         generator2 (``BaseSequenceGenerator`` or dict): Specifies the

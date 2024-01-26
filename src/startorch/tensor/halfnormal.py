@@ -21,11 +21,10 @@ from startorch.tensor.base import BaseTensorGenerator, setup_tensor_generator
 
 
 class HalfNormalTensorGenerator(BaseTensorGenerator):
-    r"""Implements a class to generate tensor by sampling values from a
+    r"""Implement a class to generate tensor by sampling values from a
     half-Normal distribution.
 
     Args:
-    ----
         std (``BaseTensorGenerator`` or dict): Specifies a tensor
             generator (or its configuration) to generate the standard
             deviation.
@@ -60,16 +59,14 @@ class HalfNormalTensorGenerator(BaseTensorGenerator):
 
 
 class RandHalfNormalTensorGenerator(BaseTensorGenerator):
-    r"""Implements a class to generate tensor by sampling values from a
+    r"""Implement a class to generate tensor by sampling values from a
     half-Normal distribution.
 
     Args:
-    ----
-        std (float, optional): Specifies the std of the distribution.
+        std: Specifies the std of the distribution.
             Default: ``1.0``
 
     Raises:
-    ------
         ValueError if ``std`` is not a positive number.
 
     Example usage:
@@ -102,18 +99,16 @@ class RandHalfNormalTensorGenerator(BaseTensorGenerator):
 
 
 class RandTruncHalfNormalTensorGenerator(BaseTensorGenerator):
-    r"""Implements a class to generate tensor by sampling values from a
+    r"""Implement a class to generate tensor by sampling values from a
     truncated half-Normal distribution.
 
     Args:
-    ----
-        std (float, optional): Specifies the std of the distribution.
+        std: Specifies the std of the distribution.
             Default: ``1.0``
-        max_value (float, optional): Specifies the maximum value.
+        max_value: Specifies the maximum value.
             Default: ``3.0``
 
     Raises:
-    ------
         ValueError if ``std`` is not a positive number.
         ValueError if ``max_value`` is not a positive number.
 
@@ -151,11 +146,10 @@ class RandTruncHalfNormalTensorGenerator(BaseTensorGenerator):
 
 
 class TruncHalfNormalTensorGenerator(BaseTensorGenerator):
-    r"""Implements a class to generate tensor by sampling values from a
+    r"""Implement a class to generate tensor by sampling values from a
     half-Normal distribution.
 
     Args:
-    ----
         std (``BaseTensorGenerator`` or dict): Specifies a tensor
             generator (or its configuration) to generate the std.
         max_value (``BaseTensorGenerator`` or dict): Specifies a

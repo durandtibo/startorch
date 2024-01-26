@@ -31,7 +31,7 @@ def test_check_feature_size_incorrect_type(value: Any) -> None:
         check_feature_size(value)
 
 
-@mark.parametrize("value", (0, -1))
+@mark.parametrize("value", [0, -1])
 @mark.parametrize("low", (1, 2))
 def test_check_feature_size_incorrect_value(value: int, low: int) -> None:
     with raises(
@@ -95,7 +95,7 @@ def test_check_num_examples_incorrect_type(value: Any) -> None:
         check_num_examples(value)
 
 
-@mark.parametrize("value", (0, -1))
+@mark.parametrize("value", [0, -1])
 def test_check_num_examples_incorrect_value(value: int) -> None:
     with raises(
         RuntimeError,
@@ -123,7 +123,7 @@ def test_check_integer_ge_incorrect_type(value: Any) -> None:
 
 
 @mark.parametrize("value", (-2, -1))
-@mark.parametrize("low", (0, 1))
+@mark.parametrize("low", [0, 1])
 def test_check_integer_ge_incorrect_value(value: int, low: int) -> None:
     with raises(
         RuntimeError,

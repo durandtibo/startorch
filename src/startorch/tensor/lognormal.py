@@ -21,11 +21,10 @@ from startorch.tensor.base import BaseTensorGenerator, setup_tensor_generator
 
 
 class LogNormalTensorGenerator(BaseTensorGenerator):
-    r"""Implements a class to generate tensor by sampling values from a
+    r"""Implement a class to generate tensor by sampling values from a
     log-Normal distribution.
 
     Args:
-    ----
         mean (``BaseTensorGenerator`` or dict): Specifies a tensor
             generator (or its configuration) to generate the mean
             of the underlying Normal distribution.
@@ -68,18 +67,16 @@ class LogNormalTensorGenerator(BaseTensorGenerator):
 
 
 class RandLogNormalTensorGenerator(BaseTensorGenerator):
-    r"""Implements a class to generate tensor by sampling values from a
+    r"""Implement a class to generate tensor by sampling values from a
     log-Normal distribution.
 
     Args:
-    ----
-        mean (float, optional): Specifies the mean of the underlying
+        mean: Specifies the mean of the underlying
             Normal distribution. Default: ``0.0``
-        std (float, optional): Specifies the standard deviation of the
+        std: Specifies the standard deviation of the
             underlying Normal distribution. Default: ``1.0``
 
     Raises:
-    ------
         ValueError if ``std`` is not a positive number.
 
     Example usage:
@@ -114,22 +111,20 @@ class RandLogNormalTensorGenerator(BaseTensorGenerator):
 
 
 class RandTruncLogNormalTensorGenerator(BaseTensorGenerator):
-    r"""Implements a tensor generator to generate cyclic tensors by
+    r"""Implement a tensor generator to generate cyclic tensors by
     sampling values from a truncated log-Normal distribution.
 
     Args:
-    ----
-        mean (float, optional): Specifies the mean of the
+        mean: Specifies the mean of the
             log-Normal distribution. Default: ``0.0``
-        std (float, optional): Specifies the standard deviation of
+        std: Specifies the standard deviation of
             the log-Normal distribution. Default: ``1.0``
-        min_value (float, optional): Specifies the minimum value.
+        min_value: Specifies the minimum value.
             Default: ``0.0``
-        max_value (float, optional): Specifies the maximum value.
+        max_value: Specifies the maximum value.
             Default: ``5.0``
 
     Raises:
-    ------
         ValueError if ``std`` is not a positive number.
         ValueError if ``max_value`` is lower than ``min_value``.
 
@@ -178,11 +173,10 @@ class RandTruncLogNormalTensorGenerator(BaseTensorGenerator):
 
 
 class TruncLogNormalTensorGenerator(BaseTensorGenerator):
-    r"""Implements a class to generate tensor by sampling values from a
+    r"""Implement a class to generate tensor by sampling values from a
     truncated log-Normal distribution.
 
     Args:
-    ----
         mean (``BaseTensorGenerator`` or dict): Specifies a tensor
             generator (or its configuration) to generate the mean of
             the underlying Normal distribution.

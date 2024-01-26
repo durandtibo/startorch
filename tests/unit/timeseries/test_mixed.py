@@ -1,8 +1,8 @@
 from unittest.mock import Mock
 
+import pytest
 import torch
 from coola import objects_are_equal
-from pytest import mark
 from redcat import BatchDict, BatchedTensorSeq
 
 from startorch.sequence import BaseSequenceGenerator, RandUniform
@@ -27,9 +27,9 @@ def test_mixed_timeseries_generator_str() -> None:
     ).startswith("MixedTimeSeriesGenerator(")
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_mixed_timeseries_generator_generate(
     batch_size: int, seq_len: int, feature_size: int
 ) -> None:

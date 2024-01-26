@@ -15,7 +15,7 @@ from startorch.sequence.wrapper import BaseWrapperSequenceGenerator
 
 
 class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
-    r"""Implements a sequence generator to generate time sequences.
+    r"""Implement a sequence generator to generate time sequences.
 
     The time is represented as a float value where the unit in the
     second:
@@ -51,12 +51,10 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
         exponential distribution.
 
         Args:
-        ----
-            rate (float, optional): Specifies the rate of the
+            rate: Specifies the rate of the
                 exponential distribution. Default: ``1.0``
 
         Returns:
-        -------
             ``TimeSequenceGenerator``: A time sequence generator where
                 the time difference between two consecutive steps is
                 constant and is sampled from an exponential
@@ -103,12 +101,10 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
         distribution.
 
         Args:
-        ----
-            rate (float, optional): Specifies the rate of the
+            rate: Specifies the rate of the
                 exponential distribution. Default: ``1.0``
 
         Returns:
-        -------
             ``TimeSequenceGenerator``: A time sequence generator where the
                 time difference between two consecutive steps follows
                 an exponential distribution.
@@ -150,12 +146,10 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
         Poisson distribution.
 
         Args:
-        ----
-            rate (float, optional): Specifies the rate of the Poisson
+            rate: Specifies the rate of the Poisson
                 distribution. Default: ``1.0``
 
         Returns:
-        -------
             ``TimeSequenceGenerator``: A time sequence generator where the
                 time difference between two consecutive steps is
                 constant and is sampled from a Poisson distribution.
@@ -190,12 +184,10 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
         between two consecutive steps follows a Poisson distribution.
 
         Args:
-        ----
-            rate (float, optional): Specifies the rate of the
+            rate: Specifies the rate of the
                 Poisson distribution. Default: ``1.0``
 
         Returns:
-        -------
             ``TimeSequenceGenerator``: A time sequence generator where
                 the time difference between two consecutive steps
                 follows a Poisson distribution.
@@ -229,16 +221,14 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
         uniform distribution.
 
         Args:
-        ----
-            min_time_diff (float, optional): Specifies the minimum
+            min_time_diff: Specifies the minimum
                 time difference between two consecutive steps.
                 Default: ``0.0``
-            max_time_diff (float, optional): Specifies the maximum
+            max_time_diff: Specifies the maximum
                 time difference between two consecutive steps.
                 Default: ``1.0``
 
         Returns:
-        -------
             ``TimeSequenceGenerator``: A time sequence generator where
                 the time difference between two consecutive steps
                 is constant and is sampled from a uniform
@@ -292,16 +282,14 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
         between two consecutive steps follows a uniform distribution.
 
         Args:
-        ----
-            min_time_diff (float, optional): Specifies the minimum
+            min_time_diff: Specifies the minimum
                 time difference between two consecutive steps.
                 Default: ``0.0``
-            max_time_diff (float, optional): Specifies the maximum
+            max_time_diff: Specifies the maximum
                 time difference between two consecutive steps.
                 Default: ``1.0``
 
         Returns:
-        -------
             ``TimeSequenceGenerator``: A time sequence generator where
                 the time difference between two consecutive steps
                 follows a uniform distribution.
@@ -350,10 +338,9 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
         from a uniform distribution.
 
         Args:
-        ----
-            min_time (float, optional): Specifies the minimum time.
+            min_time: Specifies the minimum time.
                 Default: ``0.0``
-            max_time (float, optional): Specifies the maximum time.
+            max_time: Specifies the maximum time.
                 Default: ``1.0``
 
         Raises:
@@ -361,7 +348,6 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
             ValueError if ``min_time`` is lower than 0.
 
         Returns:
-        -------
             ``TimeSequenceGenerator``: A time sequence generator where
                 the time is sampled from a uniform distribution.
 

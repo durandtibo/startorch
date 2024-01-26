@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+import pytest
 import torch
-from pytest import mark
 from redcat import BatchedTensorSeq
 
 from startorch.sequence import Cat2, RandUniform
@@ -26,9 +26,9 @@ def test_cat2_str() -> None:
     ).startswith("Cat2SequenceGenerator(")
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_cat2_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     batch = Cat2(
         generator1=RandUniform(low=-1.0, high=0.0, feature_size=feature_size),

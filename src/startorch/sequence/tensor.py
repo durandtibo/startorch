@@ -13,11 +13,10 @@ from startorch.utils.conversion import to_tuple
 
 
 class TensorSequenceGenerator(BaseSequenceGenerator):
-    r"""Implements a sequence generator to generate sequences from a
+    r"""Implement a sequence generator to generate sequences from a
     tensor generator.
 
     Args:
-    ----
         tensor (``BaseTensorGenerator`` or dict): Specifies a tensor
             generator (or its configuration).
         feature_size (tuple or list or int, optional): Specifies the

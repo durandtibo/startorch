@@ -11,35 +11,35 @@ from startorch.example.base import BaseExampleGenerator, setup_example_generator
 
 
 class CacheExampleGenerator(BaseExampleGenerator):
-    r"""Implements an example generator that caches the last batch and
+    r"""Implement an example generator that caches the last batch and
     returns it everytime a batch is generated.
 
     A new batch is generated only if the batch size changes.
 
     Args:
-    ----
-        generator (``BaseExampleGenerator`` or dict): Specifies the
-            example generator or its configuration.
-        deepcopy (bool, optional): If ``True``, the cached batch is
-            deepcopied before to be return. Default: ``True``
+        generator: Specifies the example generator or its
+            configuration.
+        deepcopy: If ``True``, the cached batch is deepcopied before to
+            be return.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.example import Cache, SwissRoll
+    >>> generator = Cache(SwissRoll())
+    >>> generator
+    CacheExampleGenerator(
+      (generator): SwissRollExampleGenerator(noise_std=0.0, spin=1.5, hole=False)
+      (deepcopy): False
+    )
+    >>> batch = generator.generate(batch_size=10)
+    >>> batch
+    BatchDict(
+      (target): tensor([...], batch_dim=0)
+      (feature): tensor([[...]], batch_dim=0)
+    )
 
-        >>> from startorch.example import Cache, SwissRoll
-        >>> generator = Cache(SwissRoll())
-        >>> generator
-        CacheExampleGenerator(
-          (generator): SwissRollExampleGenerator(noise_std=0.0, spin=1.5, hole=False)
-          (deepcopy): False
-        )
-        >>> batch = generator.generate(batch_size=10)
-        >>> batch
-        BatchDict(
-          (target): tensor([...], batch_dim=0)
-          (feature): tensor([[...]], batch_dim=0)
-        )
+    ```
     """
 
     def __init__(self, generator: BaseExampleGenerator | dict, deepcopy: bool = False) -> None:

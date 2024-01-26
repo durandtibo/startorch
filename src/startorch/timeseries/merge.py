@@ -16,13 +16,12 @@ from startorch.timeseries.utils import merge_timeseries_by_time
 
 
 class MergeTimeSeriesGenerator(BaseTimeSeriesGenerator):
-    r"""Implements a time series creator that creates time series by
+    r"""Implement a time series creator that creates time series by
     combining several time series.
 
     The time series are combined by using the time information.
 
     Args:
-    ----
         generators (``Sequence``): Specifies the time series
             generators or their configuration.
         time_key (str, optional): Specifies the key used to merge the

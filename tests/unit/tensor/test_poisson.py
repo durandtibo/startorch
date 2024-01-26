@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+import pytest
 import torch
-from pytest import mark, raises
 
 from startorch.tensor import Poisson, RandPoisson, RandUniform
 from startorch.utils.seed import get_torch_generator
@@ -18,7 +18,7 @@ def test_poisson_str() -> None:
     assert str(Poisson(RandUniform())).startswith("PoissonTensorGenerator(")
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_poisson_generate(size: tuple[int, ...]) -> None:
     tensor = Poisson(RandUniform(low=1.0, high=2.0)).generate(size)
     assert tensor.shape == size
@@ -48,7 +48,7 @@ def test_rand_poisson_str() -> None:
     assert str(RandPoisson()).startswith("RandPoissonTensorGenerator(")
 
 
-@mark.parametrize("rate", (1.0, 2.0))
+@pytest.mark.parametrize("rate", [1.0, 2.0])
 def test_rand_poisson_rate(rate: float) -> None:
     assert RandPoisson(rate=rate)._rate == rate
 
@@ -57,13 +57,13 @@ def test_rand_poisson_rate_default() -> None:
     assert RandPoisson()._rate == 1.0
 
 
-@mark.parametrize("rate", (0.0, -1.0))
+@pytest.mark.parametrize("rate", [0.0, -1.0])
 def test_rand_poisson_rate_incorrect(rate: float) -> None:
-    with raises(ValueError, match="rate has to be greater than 0"):
+    with pytest.raises(ValueError, match="rate has to be greater than 0"):
         RandPoisson(rate=rate)
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_rand_poisson_generate(size: tuple[int, ...]) -> None:
     tensor = RandPoisson().generate(size)
     assert tensor.shape == size

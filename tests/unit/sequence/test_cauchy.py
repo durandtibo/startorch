@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from unittest.mock import Mock, patch
 
+import pytest
 import torch
-from pytest import mark, raises
 from redcat import BatchedTensorSeq
 
 from startorch.sequence import (
@@ -29,9 +29,9 @@ def test_cauchy_str() -> None:
     ).startswith("CauchySequenceGenerator(")
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_cauchy_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     batch = Cauchy(
         loc=RandUniform(low=-1.0, high=1.0, feature_size=feature_size),
@@ -75,7 +75,7 @@ def test_rand_cauchy_str() -> None:
     assert str(RandCauchy()).startswith("RandCauchySequenceGenerator(")
 
 
-@mark.parametrize("loc", (-1.0, 0.0, 1.0))
+@pytest.mark.parametrize("loc", [-1.0, 0.0, 1.0])
 def test_rand_cauchy_loc(loc: float) -> None:
     assert RandCauchy(loc=loc)._loc == loc
 
@@ -84,7 +84,7 @@ def test_rand_cauchy_loc_default() -> None:
     assert RandCauchy()._loc == 0.0
 
 
-@mark.parametrize("scale", (1.0, 2.0))
+@pytest.mark.parametrize("scale", [1.0, 2.0])
 def test_rand_cauchy_scale(scale: float) -> None:
     assert RandCauchy(scale=scale)._scale == scale
 
@@ -93,9 +93,9 @@ def test_rand_cauchy_scale_default() -> None:
     assert RandCauchy()._scale == 1.0
 
 
-@mark.parametrize("scale", (0.0, -1.0))
+@pytest.mark.parametrize("scale", [0.0, -1.0])
 def test_rand_cauchy_incorrect_scale(scale: float) -> None:
-    with raises(ValueError, match="scale has to be greater than 0"):
+    with pytest.raises(ValueError, match="scale has to be greater than 0"):
         RandCauchy(scale=scale)
 
 
@@ -103,8 +103,8 @@ def test_rand_cauchy_feature_size_default() -> None:
     assert RandCauchy()._feature_size == (1,)
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_rand_cauchy_generate_feature_size_default(batch_size: int, seq_len: int) -> None:
     batch = RandCauchy().generate(batch_size=batch_size, seq_len=seq_len)
     assert isinstance(batch, BatchedTensorSeq)
@@ -114,9 +114,9 @@ def test_rand_cauchy_generate_feature_size_default(batch_size: int, seq_len: int
     assert batch.data.dtype == torch.float
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_rand_cauchy_generate_feature_size_int(
     batch_size: int, seq_len: int, feature_size: int
 ) -> None:
@@ -128,8 +128,8 @@ def test_rand_cauchy_generate_feature_size_int(
     assert batch.data.dtype == torch.float
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_rand_cauchy_generate_feature_size_tuple(batch_size: int, seq_len: int) -> None:
     batch = RandCauchy(feature_size=(3, 4)).generate(batch_size=batch_size, seq_len=seq_len)
     assert isinstance(batch, BatchedTensorSeq)
@@ -139,8 +139,8 @@ def test_rand_cauchy_generate_feature_size_tuple(batch_size: int, seq_len: int) 
     assert batch.data.dtype == torch.float
 
 
-@mark.parametrize("loc", (0, 1))
-@mark.parametrize("scale", (1, 2))
+@pytest.mark.parametrize("loc", [0, 1])
+@pytest.mark.parametrize("scale", [1, 2])
 def test_rand_cauchy_generate_loc_scale(loc: float, scale: float) -> None:
     generator = RandCauchy(loc=loc, scale=scale)
     mock = Mock(return_value=torch.ones(2, 3))
@@ -173,7 +173,7 @@ def test_rand_trunc_cauchy_str() -> None:
     assert str(RandTruncCauchy()).startswith("RandTruncCauchySequenceGenerator(")
 
 
-@mark.parametrize("loc", (-1.0, 0.0, 1.0))
+@pytest.mark.parametrize("loc", [-1.0, 0.0, 1.0])
 def test_rand_trunc_cauchy_loc(loc: float) -> None:
     assert RandTruncCauchy(loc=loc)._loc == loc
 
@@ -182,7 +182,7 @@ def test_rand_trunc_cauchy_loc_default() -> None:
     assert RandTruncCauchy()._loc == 0.0
 
 
-@mark.parametrize("scale", (1.0, 2.0))
+@pytest.mark.parametrize("scale", [1.0, 2.0])
 def test_rand_trunc_cauchy_scale(scale: float) -> None:
     assert RandTruncCauchy(scale=scale)._scale == scale
 
@@ -191,13 +191,13 @@ def test_rand_trunc_cauchy_scale_default() -> None:
     assert RandTruncCauchy()._scale == 1.0
 
 
-@mark.parametrize("scale", (0.0, -1.0))
+@pytest.mark.parametrize("scale", [0.0, -1.0])
 def test_rand_trunc_cauchy_incorrect_scale(scale: float) -> None:
-    with raises(ValueError, match="scale has to be greater than 0"):
+    with pytest.raises(ValueError, match="scale has to be greater than 0"):
         RandTruncCauchy(scale=scale)
 
 
-@mark.parametrize("min_value", (-1.0, -2.0))
+@pytest.mark.parametrize("min_value", [-1.0, -2.0])
 def test_rand_trunc_cauchy_min_value(min_value: float) -> None:
     assert RandTruncCauchy(min_value=min_value)._min_value == min_value
 
@@ -206,7 +206,7 @@ def test_rand_trunc_cauchy_min_value_default() -> None:
     assert RandTruncCauchy()._min_value == -2.0
 
 
-@mark.parametrize("max_value", (1.0, 2.0))
+@pytest.mark.parametrize("max_value", [1.0, 2.0])
 def test_rand_trunc_cauchy_max_value(max_value: float) -> None:
     assert RandTruncCauchy(max_value=max_value)._max_value == max_value
 
@@ -216,7 +216,7 @@ def test_rand_trunc_cauchy_max_value_default() -> None:
 
 
 def test_rand_trunc_cauchy_incorrect_min_max() -> None:
-    with raises(ValueError, match="max_value (.*) has to be greater or equal to min_value"):
+    with pytest.raises(ValueError, match="max_value (.*) has to be greater or equal to min_value"):
         RandTruncCauchy(min_value=1.0, max_value=-1.0)
 
 
@@ -224,8 +224,8 @@ def test_rand_trunc_cauchy_feature_size_default() -> None:
     assert RandTruncCauchy()._feature_size == (1,)
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_rand_trunc_cauchy_generate_feature_size_default(batch_size: int, seq_len: int) -> None:
     batch = RandTruncCauchy().generate(batch_size=batch_size, seq_len=seq_len)
     assert isinstance(batch, BatchedTensorSeq)
@@ -235,9 +235,9 @@ def test_rand_trunc_cauchy_generate_feature_size_default(batch_size: int, seq_le
     assert batch.data.dtype == torch.float
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_rand_trunc_cauchy_generate_feature_size_int(
     batch_size: int, seq_len: int, feature_size: int
 ) -> None:
@@ -251,8 +251,8 @@ def test_rand_trunc_cauchy_generate_feature_size_int(
     assert batch.data.dtype == torch.float
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_rand_trunc_cauchy_generate_feature_size_tuple(batch_size: int, seq_len: int) -> None:
     batch = RandTruncCauchy(feature_size=(3, 4)).generate(batch_size=batch_size, seq_len=seq_len)
     assert isinstance(batch, BatchedTensorSeq)
@@ -262,8 +262,8 @@ def test_rand_trunc_cauchy_generate_feature_size_tuple(batch_size: int, seq_len:
     assert batch.data.dtype == torch.float
 
 
-@mark.parametrize("loc", (0, 1))
-@mark.parametrize("scale", (1, 2))
+@pytest.mark.parametrize("loc", [0, 1])
+@pytest.mark.parametrize("scale", [1, 2])
 def test_rand_trunc_cauchy_generate_loc_scale(loc: float, scale: float) -> None:
     generator = RandTruncCauchy(loc=loc, scale=scale)
     mock = Mock(return_value=torch.ones(2, 3))
@@ -273,8 +273,8 @@ def test_rand_trunc_cauchy_generate_loc_scale(loc: float, scale: float) -> None:
         assert mock.call_args.kwargs["scale"] == scale
 
 
-@mark.parametrize("max_value", (1.0, 2.0))
-@mark.parametrize("min_value", (-1.0, -2.0))
+@pytest.mark.parametrize("max_value", [1.0, 2.0])
+@pytest.mark.parametrize("min_value", [-1.0, -2.0])
 def test_rand_trunc_cauchy_generate_max_min(max_value: float, min_value: float) -> None:
     generator = RandTruncCauchy(min_value=min_value, max_value=max_value)
     mock = Mock(return_value=torch.ones(2, 3))
@@ -314,9 +314,9 @@ def test_trunc_cauchy_str() -> None:
     ).startswith("TruncCauchySequenceGenerator(")
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_trunc_cauchy_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     batch = TruncCauchy(
         loc=RandUniform(low=-1.0, high=1.0, feature_size=feature_size),
