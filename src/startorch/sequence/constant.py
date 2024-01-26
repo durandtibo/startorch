@@ -47,7 +47,7 @@ class FullSequenceGenerator(BaseSequenceGenerator):
     seed has no effect.
 
     Args:
-        value (float): Specifies the value.
+        value: Specifies the value.
         feature_size (tuple or list or int, optional): Specifies the
             feature size. Default: ``1``
 

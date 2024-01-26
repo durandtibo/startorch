@@ -1,12 +1,18 @@
+r"""Contain the implementation of tensor generators where the values are
+constant."""
+
 from __future__ import annotations
 
 __all__ = ["FullTensorGenerator"]
 
+from typing import TYPE_CHECKING
 
 import torch
-from torch import Generator, Tensor
 
 from startorch.tensor.base import BaseTensorGenerator
+
+if TYPE_CHECKING:
+    from torch import Generator, Tensor
 
 
 class FullTensorGenerator(BaseTensorGenerator):
@@ -14,22 +20,22 @@ class FullTensorGenerator(BaseTensorGenerator):
     value.
 
     Args:
-        value (bool or int or float): Specifies the fill value.
-        dtype (``torch.dtype`` or ``None``): Specifies the target
-            dtype. ``None`` means the data type is infered from the
-            value type. Default: ``None``
+        value: Specifies the fill value.
+        dtype: Specifies the target dtype. ``None`` means the data type
+            is infered from the value type.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.tensor import Full
+    >>> generator = Full(value=42)
+    >>> generator
+    FullTensorGenerator(value=42, dtype=None)
+    >>> generator.generate((2, 6))
+    tensor([[42, 42, 42, 42, 42, 42],
+            [42, 42, 42, 42, 42, 42]])
 
-        >>> from startorch.tensor import Full
-        >>> generator = Full(value=42)
-        >>> generator
-        FullTensorGenerator(value=42, dtype=None)
-        >>> generator.generate((2, 6))
-        tensor([[42, 42, 42, 42, 42, 42],
-                [42, 42, 42, 42, 42, 42]])
+    ```
     """
 
     def __init__(self, value: bool | float, dtype: torch.dtype | None = None) -> None:

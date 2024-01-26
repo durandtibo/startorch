@@ -1,3 +1,6 @@
+r"""Contain the implementation of tensor generators where the values are
+sampled from an Exponential distribution."""
+
 from __future__ import annotations
 
 __all__ = [
@@ -7,9 +10,9 @@ __all__ = [
     "TruncExponentialTensorGenerator",
 ]
 
+from typing import TYPE_CHECKING
 
 from coola.utils.format import str_indent, str_mapping
-from torch import Generator, Tensor
 
 from startorch.random import (
     exponential,
@@ -18,6 +21,9 @@ from startorch.random import (
     trunc_exponential,
 )
 from startorch.tensor.base import BaseTensorGenerator, setup_tensor_generator
+
+if TYPE_CHECKING:
+    from torch import Generator, Tensor
 
 
 class ExponentialTensorGenerator(BaseTensorGenerator):
@@ -29,22 +35,22 @@ class ExponentialTensorGenerator(BaseTensorGenerator):
     value in the sequence.
 
     Args:
-        rate (``BaseTensorGenerator`` or dict):
-            Specifies the rate generator or its configuration.
+        rate: Specifies the rate generator or its configuration.
             The rate generator should return valid rate values.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.tensor import Exponential, RandUniform
+    >>> generator = Exponential(rate=RandUniform(low=1.0, high=100.0))
+    >>> generator
+    ExponentialTensorGenerator(
+      (rate): RandUniformTensorGenerator(low=1.0, high=100.0)
+    )
+    >>> generator.generate((2, 6))
+    tensor([[...]])
 
-        >>> from startorch.tensor import Exponential, RandUniform
-        >>> generator = Exponential(rate=RandUniform(low=1.0, high=100.0))
-        >>> generator
-        ExponentialTensorGenerator(
-          (rate): RandUniformTensorGenerator(low=1.0, high=100.0)
-        )
-        >>> generator.generate((2, 6))
-        tensor([[...]])
+    ```
     """
 
     def __init__(self, rate: BaseTensorGenerator | dict) -> None:
@@ -64,28 +70,29 @@ class RandExponentialTensorGenerator(BaseTensorGenerator):
     an Exponential distribution.
 
     Args:
-        rate: Specifies the rate of the Exponential
-            distribution. Default: ``1.0``
+        rate: Specifies the rate of the Exponential distribution.
 
     Raises:
-        ValueError if ``rate`` is not a positive number.
+        ValueError: if ``rate`` is not a positive number.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.tensor import RandExponential
+    >>> generator = RandExponential(rate=1.0)
+    >>> generator
+    RandExponentialTensorGenerator(rate=1.0)
+    >>> generator.generate((2, 6))
+    tensor([[...]])
 
-        >>> from startorch.tensor import RandExponential
-        >>> generator = RandExponential(rate=1.0)
-        >>> generator
-        RandExponentialTensorGenerator(rate=1.0)
-        >>> generator.generate((2, 6))
-        tensor([[...]])
+    ```
     """
 
     def __init__(self, rate: float = 1.0) -> None:
         super().__init__()
         if rate <= 0:
-            raise ValueError(f"rate has to be greater than 0 (received: {rate})")
+            msg = f"rate has to be greater than 0 (received: {rate})"
+            raise ValueError(msg)
         self._rate = float(rate)
 
     def __repr__(self) -> str:
@@ -100,34 +107,35 @@ class RandTruncExponentialTensorGenerator(BaseTensorGenerator):
     truncated Exponential distribution.
 
     Args:
-        rate: Specifies the rate of the Exponential
-            distribution. Default: ``1.0``
+        rate: Specifies the rate of the Exponential distribution.
         max_value: Specifies the maximum value.
-            Default: ``5.0``
 
     Raises:
-        ValueError if ``rate`` is not a positive number.
-        ValueError if ``max_value`` is not a positive number.
+        ValueError: if ``rate`` is not a positive number.
+        ValueError: if ``max_value`` is not a positive number.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.tensor import RandTruncExponential
+    >>> generator = RandTruncExponential(rate=1.0, max_value=3.0)
+    >>> generator
+    RandTruncExponentialTensorGenerator(rate=1.0, max_value=3.0)
+    >>> generator.generate((2, 6))
+    tensor([[...]])
 
-        >>> from startorch.tensor import RandTruncExponential
-        >>> generator = RandTruncExponential(rate=1.0, max_value=3.0)
-        >>> generator
-        RandTruncExponentialTensorGenerator(rate=1.0, max_value=3.0)
-        >>> generator.generate((2, 6))
-        tensor([[...]])
+    ```
     """
 
     def __init__(self, rate: float = 1.0, max_value: float = 5.0) -> None:
         super().__init__()
         if rate <= 0:
-            raise ValueError(f"rate has to be greater than 0 (received: {rate})")
+            msg = f"rate has to be greater than 0 (received: {rate})"
+            raise ValueError(msg)
         self._rate = float(rate)
         if max_value <= 0:
-            raise ValueError(f"max_value has to be greater than 0 (received: {max_value})")
+            msg = f"max_value has to be greater than 0 (received: {max_value})"
+            raise ValueError(msg)
         self._max_value = float(max_value)
 
     def __repr__(self) -> str:
@@ -147,28 +155,28 @@ class TruncExponentialTensorGenerator(BaseTensorGenerator):
     Exponential distribution.
 
     Args:
-        rate (``BaseTensorGenerator`` or dict): Specifies a sequence
-            generator (or its configuration) to generate the rate.
-        max_value (``BaseTensorGenerator`` or dict): Specifies a
-            sequence generator (or its configuration) to generate the
-            maximum value (excluded).
+        rate: Specifies a sequence generator (or its configuration) to
+            generate the rate.
+        max_value: Specifies a sequence generator (or its
+            configuration) to generate the maximum value (excluded).
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.tensor import RandUniform, TruncExponential
+    >>> generator = TruncExponential(
+    ...     rate=RandUniform(low=1.0, high=10.0),
+    ...     max_value=RandUniform(low=1.0, high=100.0),
+    ... )
+    >>> generator
+    TruncExponentialTensorGenerator(
+      (rate): RandUniformTensorGenerator(low=1.0, high=10.0)
+      (max_value): RandUniformTensorGenerator(low=1.0, high=100.0)
+    )
+    >>> generator.generate((2, 6))
+    tensor([[...]])
 
-        >>> from startorch.tensor import RandUniform, TruncExponential
-        >>> generator = TruncExponential(
-        ...     rate=RandUniform(low=1.0, high=10.0),
-        ...     max_value=RandUniform(low=1.0, high=100.0),
-        ... )
-        >>> generator
-        TruncExponentialTensorGenerator(
-          (rate): RandUniformTensorGenerator(low=1.0, high=10.0)
-          (max_value): RandUniformTensorGenerator(low=1.0, high=100.0)
-        )
-        >>> generator.generate((2, 6))
-        tensor([[...]])
+    ```
     """
 
     def __init__(

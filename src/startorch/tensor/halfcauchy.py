@@ -1,3 +1,6 @@
+r"""Contain the implementation of tensor generators where the values are
+sampled from a Half-Cauchy distribution."""
+
 from __future__ import annotations
 
 __all__ = [
@@ -7,9 +10,9 @@ __all__ = [
     "TruncHalfCauchyTensorGenerator",
 ]
 
+from typing import TYPE_CHECKING
 
 from coola.utils.format import str_indent, str_mapping
-from torch import Generator, Tensor
 
 from startorch.random import (
     half_cauchy,
@@ -19,27 +22,31 @@ from startorch.random import (
 )
 from startorch.tensor.base import BaseTensorGenerator, setup_tensor_generator
 
+if TYPE_CHECKING:
+    from torch import Generator, Tensor
+
 
 class HalfCauchyTensorGenerator(BaseTensorGenerator):
     r"""Implement a class to generate tensor by sampling values from a
     half-Cauchy distribution.
 
     Args:
-        scale (``BaseTensorGenerator`` or dict): Specifies a tensor
-            generator (or its configuration) to generate the scale.
+        scale: Specifies a tensor generator (or its configuration) to
+            generate the scale.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.tensor import HalfCauchy, RandUniform
+    >>> generator = HalfCauchy(scale=RandUniform(low=1.0, high=2.0))
+    >>> generator
+    HalfCauchyTensorGenerator(
+      (scale): RandUniformTensorGenerator(low=1.0, high=2.0)
+    )
+    >>> generator.generate((2, 6))
+    tensor([[...]])
 
-        >>> from startorch.tensor import HalfCauchy, RandUniform
-        >>> generator = HalfCauchy(scale=RandUniform(low=1.0, high=2.0))
-        >>> generator
-        HalfCauchyTensorGenerator(
-          (scale): RandUniformTensorGenerator(low=1.0, high=2.0)
-        )
-        >>> generator.generate((2, 6))
-        tensor([[...]])
+    ```
     """
 
     def __init__(self, scale: BaseTensorGenerator | dict) -> None:
@@ -62,28 +69,29 @@ class RandHalfCauchyTensorGenerator(BaseTensorGenerator):
     half-Cauchy distribution.
 
     Args:
-        scale: Specifies the scale of the
-            distribution. Default: ``1.0``
+        scale: Specifies the scale of the distribution.
 
     Raises:
-        ValueError if ``scale`` is not a positive number.
+        ValueError: if ``scale`` is not a positive number.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.tensor import RandHalfCauchy
+    >>> generator = RandHalfCauchy(scale=1.0)
+    >>> generator
+    RandHalfCauchyTensorGenerator(scale=1.0)
+    >>> generator.generate((2, 6))
+    tensor([[...]])
 
-        >>> from startorch.tensor import RandHalfCauchy
-        >>> generator = RandHalfCauchy(scale=1.0)
-        >>> generator
-        RandHalfCauchyTensorGenerator(scale=1.0)
-        >>> generator.generate((2, 6))
-        tensor([[...]])
+    ```
     """
 
     def __init__(self, scale: float = 1.0) -> None:
         super().__init__()
         if scale <= 0:
-            raise ValueError(f"scale has to be greater than 0 (received: {scale})")
+            msg = f"scale has to be greater than 0 (received: {scale})"
+            raise ValueError(msg)
         self._scale = float(scale)
 
     def __repr__(self) -> str:
@@ -102,25 +110,24 @@ class RandTruncHalfCauchyTensorGenerator(BaseTensorGenerator):
     truncated half-Cauchy distribution.
 
     Args:
-        scale: Specifies the scale of the
-            distribution. Default: ``1.0``
+        scale: Specifies the scale of the distribution.
         max_value: Specifies the maximum value.
-            Default: ``4.0``
 
     Raises:
-        ValueError if ``scale`` is not a positive number.
-        ValueError if ``max_value`` is not a positive number.
+        ValueError: if ``scale`` is not a positive number.
+        ValueError: if ``max_value`` is not a positive number.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.tensor import RandTruncHalfCauchy
+    >>> generator = RandTruncHalfCauchy(scale=1.0, max_value=5.0)
+    >>> generator
+    RandTruncHalfCauchyTensorGenerator(scale=1.0, max_value=5.0)
+    >>> generator.generate((2, 6))
+    tensor([[...]])
 
-        >>> from startorch.tensor import RandTruncHalfCauchy
-        >>> generator = RandTruncHalfCauchy(scale=1.0, max_value=5.0)
-        >>> generator
-        RandTruncHalfCauchyTensorGenerator(scale=1.0, max_value=5.0)
-        >>> generator.generate((2, 6))
-        tensor([[...]])
+    ```
     """
 
     def __init__(
@@ -130,10 +137,12 @@ class RandTruncHalfCauchyTensorGenerator(BaseTensorGenerator):
     ) -> None:
         super().__init__()
         if scale <= 0:
-            raise ValueError(f"scale has to be greater than 0 (received: {scale})")
+            msg = f"scale has to be greater than 0 (received: {scale})"
+            raise ValueError(msg)
         self._scale = float(scale)
         if max_value <= 0:
-            raise ValueError(f"max_value has to be greater than 0 (received: {max_value})")
+            msg = f"max_value has to be greater than 0 (received: {max_value})"
+            raise ValueError(msg)
         self._max_value = float(max_value)
 
     def __repr__(self) -> str:
@@ -153,28 +162,28 @@ class TruncHalfCauchyTensorGenerator(BaseTensorGenerator):
     half-Cauchy distribution.
 
     Args:
-        scale (``BaseTensorGenerator`` or dict): Specifies a tensor
-            generator (or its configuration) to generate the scale.
-        max_value (``BaseTensorGenerator`` or dict): Specifies a
-            tensor generator (or its configuration) to generate the
-            maximum value (excluded).
+        scale: Specifies a tensor generator (or its configuration) to
+            generate the scale.
+        max_value: Specifies a tensor generator (or its configuration)
+            to generate the maximum value (excluded).
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.tensor import RandUniform, TruncHalfCauchy
+    >>> generator = TruncHalfCauchy(
+    ...     scale=RandUniform(low=1.0, high=2.0),
+    ...     max_value=RandUniform(low=5.0, high=10.0),
+    ... )
+    >>> generator
+    TruncHalfCauchyTensorGenerator(
+      (scale): RandUniformTensorGenerator(low=1.0, high=2.0)
+      (max_value): RandUniformTensorGenerator(low=5.0, high=10.0)
+    )
+    >>> generator.generate((2, 6))
+    tensor([[...]])
 
-        >>> from startorch.tensor import RandUniform, TruncHalfCauchy
-        >>> generator = TruncHalfCauchy(
-        ...     scale=RandUniform(low=1.0, high=2.0),
-        ...     max_value=RandUniform(low=5.0, high=10.0),
-        ... )
-        >>> generator
-        TruncHalfCauchyTensorGenerator(
-          (scale): RandUniformTensorGenerator(low=1.0, high=2.0)
-          (max_value): RandUniformTensorGenerator(low=5.0, high=10.0)
-        )
-        >>> generator.generate((2, 6))
-        tensor([[...]])
+    ```
     """
 
     def __init__(

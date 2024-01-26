@@ -1,3 +1,6 @@
+r"""Contain the implementation of tensor generators that computes
+arithmetic functions on tensors."""
+
 from __future__ import annotations
 
 __all__ = [
@@ -16,31 +19,38 @@ __all__ = [
     "SubTensorGenerator",
 ]
 
-from collections.abc import Sequence
+from typing import TYPE_CHECKING
 
 from coola.utils.format import str_indent, str_mapping, str_sequence
-from torch import Generator, Tensor
 
 from startorch.tensor.base import BaseTensorGenerator, setup_tensor_generator
 from startorch.tensor.wrapper import BaseWrapperTensorGenerator
+
+if TYPE_CHECKING:
+    from collections.abc import Sequence
+
+    from torch import Generator, Tensor
 
 
 class AbsTensorGenerator(BaseWrapperTensorGenerator):
     r"""Implement a tensor generator that computes the absolute value of
     a tensor.
 
+    This tensor generator is equivalent to: ``output = abs(tensor)``
+
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.tensor import Abs, RandNormal
+    >>> generator = Abs(RandNormal())
+    >>> generator
+    AbsTensorGenerator(
+      (tensor): RandNormalTensorGenerator(mean=0.0, std=1.0)
+    )
+    >>> generator.generate((2, 6))
+    tensor([[...]])
 
-        >>> from startorch.tensor import Abs, RandNormal
-        >>> generator = Abs(RandNormal())
-        >>> generator
-        AbsTensorGenerator(
-          (tensor): RandNormalTensorGenerator(mean=0.0, std=1.0)
-        )
-        >>> generator.generate((2, 6))
-        tensor([[...]])
+    ```
     """
 
     def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
@@ -51,24 +61,27 @@ class AddScalarTensorGenerator(BaseWrapperTensorGenerator):
     r"""Implement a tensor generator that adds a scalar value to a
     generated batch of tensors.
 
+    This tensor generator is equivalent to:
+    ``output = tensor + scalar``
+
     Args:
-        tensor (``BaseTensorGenerator`` or dict):
-            Specifies the tensor generator or its configuration.
-        value (int or float): Specifies the scalar value to add.
+        generator: Specifies the tensor generator or its configuration.
+        value: Specifies the scalar value to add.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.tensor import AddScalar, RandUniform
+    >>> generator = AddScalar(RandUniform(), 10.0)
+    >>> generator
+    AddScalarTensorGenerator(
+      (tensor): RandUniformTensorGenerator(low=0.0, high=1.0)
+      (value): 10.0
+    )
+    >>> generator.generate((2, 6))
+    tensor([[...]])
 
-        >>> from startorch.tensor import AddScalar, RandUniform
-        >>> generator = AddScalar(RandUniform(), 10.0)
-        >>> generator
-        AddScalarTensorGenerator(
-          (tensor): RandUniformTensorGenerator(low=0.0, high=1.0)
-          (value): 10.0
-        )
-        >>> generator.generate((2, 6))
-        tensor([[...]])
+    ```
     """
 
     def __init__(
@@ -92,43 +105,44 @@ class AddScalarTensorGenerator(BaseWrapperTensorGenerator):
 class AddTensorGenerator(BaseTensorGenerator):
     r"""Implement a tensor generator that adds several tensor.
 
-    ``tensor = tensor_1 + tensor_2 + ... + tensor_n``
+    This tensor generator is equivalent to:
+    ``output = tensor_1 + tensor_2 + ... + tensor_n``
 
     Args:
-        tensors (``Tensor``): Specifies the tensor generators.
+        generators: Specifies the tensor generators.
 
     Raises:
-        ValueError if no sequence generator is provided.
+        ValueError: if no sequence generator is provided.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.tensor import Add, RandNormal, RandUniform
+    >>> generator = Add([RandUniform(), RandNormal()])
+    >>> generator
+    AddTensorGenerator(
+      (0): RandUniformTensorGenerator(low=0.0, high=1.0)
+      (1): RandNormalTensorGenerator(mean=0.0, std=1.0)
+    )
+    >>> generator.generate((2, 6))
+    tensor([[...]])
 
-        >>> from startorch.tensor import Add, RandNormal, RandUniform
-        >>> generator = Add([RandUniform(), RandNormal()])
-        >>> generator
-        AddTensorGenerator(
-          (0): RandUniformTensorGenerator(low=0.0, high=1.0)
-          (1): RandNormalTensorGenerator(mean=0.0, std=1.0)
-        )
-        >>> generator.generate((2, 6))
-        tensor([[...]])
+    ```
     """
 
-    def __init__(self, tensors: Sequence[BaseTensorGenerator | dict]) -> None:
+    def __init__(self, generators: Sequence[BaseTensorGenerator | dict]) -> None:
         super().__init__()
-        if not tensors:
-            raise ValueError(
-                "No tensor generator. You need to specify at least one tensor generator"
-            )
-        self._tensors = tuple(setup_tensor_generator(tensor) for tensor in tensors)
+        if not generators:
+            msg = "No tensor generator. You need to specify at least one tensor generator"
+            raise ValueError(msg)
+        self._generators = tuple(setup_tensor_generator(tensor) for tensor in generators)
 
     def __repr__(self) -> str:
-        return f"{self.__class__.__qualname__}(\n  {str_indent(str_sequence(self._tensors))}\n)"
+        return f"{self.__class__.__qualname__}(\n  {str_indent(str_sequence(self._generators))}\n)"
 
     def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
-        output = self._tensors[0].generate(size=size, rng=rng)
-        for generator in self._tensors[1:]:
+        output = self._generators[0].generate(size=size, rng=rng)
+        for generator in self._generators[1:]:
             output.add_(generator.generate(size=size, rng=rng))
         return output
 
@@ -140,30 +154,30 @@ class ClampTensorGenerator(BaseWrapperTensorGenerator):
     Note: ``min_value`` and ``max_value`` cannot be both ``None``.
 
     Args:
-        tensor (``BaseTensorGenerator`` or dict):
-            Specifies the tensor generator or its configuration.
-        min_value (int, float or ``None``): Specifies the lower bound.
-            If ``min_value`` is ``None``, there is no lower bound.
-        max_value (int, float or ``None``): Specifies the upper bound.
-            If ``max_value`` is ``None``, there is no upper bound.
+        generator: Specifies the tensor generator or its configuration.
+        min_value: Specifies the lower bound. If ``min_value`` is
+            ``None``, there is no lower bound.
+        max_value: Specifies the upper bound. If ``max_value`` is
+            ``None``, there is no upper bound.
 
     Raises:
-        ValueError if both ``min`` and ``max`` are ``None``
+        ValueError: if both ``min`` and ``max`` are ``None``
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.tensor import Clamp, RandUniform
+    >>> generator = Clamp(RandUniform(low=1.0, high=50.0), min_value=2.0, max_value=10.0)
+    >>> generator
+    ClampTensorGenerator(
+      (tensor): RandUniformTensorGenerator(low=1.0, high=50.0)
+      (min_value): 2.0
+      (max_value): 10.0
+    )
+    >>> generator.generate((2, 6))
+    tensor([[...]])
 
-        >>> from startorch.tensor import Clamp, RandUniform
-        >>> generator = Clamp(RandUniform(low=1.0, high=50.0), min_value=2.0, max_value=10.0)
-        >>> generator
-        ClampTensorGenerator(
-          (tensor): RandUniformTensorGenerator(low=1.0, high=50.0)
-          (min_value): 2.0
-          (max_value): 10.0
-        )
-        >>> generator.generate((2, 6))
-        tensor([[...]])
+    ```
     """
 
     def __init__(
@@ -174,7 +188,8 @@ class ClampTensorGenerator(BaseWrapperTensorGenerator):
     ) -> None:
         super().__init__(generator=generator)
         if min_value is None and max_value is None:
-            raise ValueError("`min_value` and `max_value` cannot be both None")
+            msg = "`min_value` and `max_value` cannot be both None"
+            raise ValueError(msg)
         self._min_value = min_value
         self._max_value = max_value
 
@@ -198,36 +213,36 @@ class DivTensorGenerator(BaseTensorGenerator):
     r"""Implement a tensor generator that divides one tensor by another
     one.
 
-    ``tensor = dividend / divisor`` (a.k.a. true division)
+    This tensor generator is equivalent to:
+        - ``output = dividend / divisor`` (a.k.a. true division)
+        - ``output = dividend // divisor`` (a.k.a. floor division)
 
     Args:
-        dividend (``Tensor``): (``BaseTensorGenerator`` or dict):
-            Specifies the dividend tensor generator or its
+        dividend: Specifies the dividend tensor generator or its
             configuration.
-        divisor (``Tensor``): (``BaseTensorGenerator`` or dict):
-            Specifies the divisor tensor generator or its
+        divisor: Specifies the divisor tensor generator or its
             configuration.
-        rounding_mode (str or ``None``, optional): Specifies the
+        rounding_mode: Specifies the
             type of rounding applied to the result.
             - ``None``: true division.
             - ``"trunc"``: rounds the results of the division
                 towards zero.
             - ``"floor"``: floor division.
-            Default: ``None``
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.tensor import Div, RandUniform
+    >>> generator = Div(RandUniform(), RandUniform(low=1.0, high=10.0))
+    >>> generator
+    DivTensorGenerator(
+      (dividend): RandUniformTensorGenerator(low=0.0, high=1.0)
+      (divisor): RandUniformTensorGenerator(low=1.0, high=10.0)
+    )
+    >>> generator.generate((2, 6))
+    tensor([[...]])
 
-        >>> from startorch.tensor import Div, RandUniform
-        >>> generator = Div(RandUniform(), RandUniform(low=1.0, high=10.0))
-        >>> generator
-        DivTensorGenerator(
-          (dividend): RandUniformTensorGenerator(low=0.0, high=1.0)
-          (divisor): RandUniformTensorGenerator(low=1.0, high=10.0)
-        )
-        >>> generator.generate((2, 6))
-        tensor([[...]])
+    ```
     """
 
     def __init__(
@@ -256,18 +271,21 @@ class ExpTensorGenerator(BaseWrapperTensorGenerator):
     r"""Implement a tensor generator that computes the exponential of a
     tensor.
 
+    This tensor generator is equivalent to: ``output = exp(tensor)``
+
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.tensor import Exp, RandUniform
+    >>> generator = Exp(RandUniform(low=1.0, high=5.0))
+    >>> generator
+    ExpTensorGenerator(
+      (tensor): RandUniformTensorGenerator(low=1.0, high=5.0)
+    )
+    >>> generator.generate((2, 6))
+    tensor([[...]])
 
-        >>> from startorch.tensor import Exp, RandUniform
-        >>> generator = Exp(RandUniform(low=1.0, high=5.0))
-        >>> generator
-        ExpTensorGenerator(
-          (tensor): RandUniformTensorGenerator(low=1.0, high=5.0)
-        )
-        >>> generator.generate((2, 6))
-        tensor([[...]])
+    ```
     """
 
     def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
@@ -278,35 +296,38 @@ class FmodTensorGenerator(BaseTensorGenerator):
     r"""Implement a tensor generator that computes the element-wise
     remainder of division.
 
+    This tensor generator is equivalent to:
+    ``output = dividend % divisor``
+
     Args:
-        dividend (``BaseTensorGenerator`` or dict):
-            Specifies the tensor generator (or its configuration) that
-            generates the dividend values.
-        divisor (int or float): Specifies the divisor.
+        dividend: Specifies the tensor generator (or its configuration)
+            that generates the dividend values.
+        divisor: Specifies the divisor.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.tensor import Fmod, RandUniform
+    >>> generator = Fmod(dividend=RandUniform(low=-100, high=100), divisor=10.0)
+    >>> generator
+    FmodTensorGenerator(
+      (dividend): RandUniformTensorGenerator(low=-100.0, high=100.0)
+      (divisor): 10.0
+    )
+    >>> generator.generate((2, 6))
+    tensor([[...]])
+    >>> generator = Fmod(
+    ...     dividend=RandUniform(low=-100, high=100), divisor=RandUniform(low=1, high=10)
+    ... )
+    >>> generator
+    FmodTensorGenerator(
+      (dividend): RandUniformTensorGenerator(low=-100.0, high=100.0)
+      (divisor): RandUniformTensorGenerator(low=1.0, high=10.0)
+    )
+    >>> generator.generate((2, 6))
+    tensor([[...]])
 
-        >>> from startorch.tensor import Fmod, RandUniform
-        >>> generator = Fmod(dividend=RandUniform(low=-100, high=100), divisor=10.0)
-        >>> generator
-        FmodTensorGenerator(
-          (dividend): RandUniformTensorGenerator(low=-100.0, high=100.0)
-          (divisor): 10.0
-        )
-        >>> generator.generate((2, 6))
-        tensor([[...]])
-        >>> generator = Fmod(
-        ...     dividend=RandUniform(low=-100, high=100), divisor=RandUniform(low=1, high=10)
-        ... )
-        >>> generator
-        FmodTensorGenerator(
-          (dividend): RandUniformTensorGenerator(low=-100.0, high=100.0)
-          (divisor): RandUniformTensorGenerator(low=1.0, high=10.0)
-        )
-        >>> generator.generate((2, 6))
-        tensor([[...]])
+    ```
     """
 
     def __init__(
@@ -335,18 +356,21 @@ class LogTensorGenerator(BaseWrapperTensorGenerator):
     r"""Implement a tensor generator that computes the logarithm of a
     tensor.
 
+    This tensor generator is equivalent to: ``output = log(tensor)``
+
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.tensor import Log, RandUniform
+    >>> generator = Log(RandUniform(low=1.0, high=100.0))
+    >>> generator
+    LogTensorGenerator(
+      (tensor): RandUniformTensorGenerator(low=1.0, high=100.0)
+    )
+    >>> generator.generate((2, 6))
+    tensor([[...]])
 
-        >>> from startorch.tensor import Log, RandUniform
-        >>> generator = Log(RandUniform(low=1.0, high=100.0))
-        >>> generator
-        LogTensorGenerator(
-          (tensor): RandUniformTensorGenerator(low=1.0, high=100.0)
-        )
-        >>> generator.generate((2, 6))
-        tensor([[...]])
+    ```
     """
 
     def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
@@ -356,44 +380,45 @@ class LogTensorGenerator(BaseWrapperTensorGenerator):
 class MulTensorGenerator(BaseTensorGenerator):
     r"""Implement a tensor generator that multiplies multiple tensors.
 
-    ``tensor = tensor_1 * tensor_2 * ... * tensor_n``
+    This tensor generator is equivalent to:
+    ``output = tensor_1 * tensor_2 * ... * tensor_n``
 
     Args:
         generators: Specifies the tensor generators.
 
     Raises:
-        ValueError if no sequence generator is provided.
+        ValueError: if no sequence generator is provided.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.tensor import Mul, RandUniform, RandNormal
+    >>> generator = Mul([RandUniform(), RandNormal()])
+    >>> generator
+    MulTensorGenerator(
+      (0): RandUniformTensorGenerator(low=0.0, high=1.0)
+      (1): RandNormalTensorGenerator(mean=0.0, std=1.0)
+    )
+    >>> generator.generate((2, 6))
+    tensor([[...]])
 
-        >>> import torch
-        >>> from startorch.tensor import Mul, RandUniform, RandNormal
-        >>> generator = Mul([RandUniform(), RandNormal()])
-        >>> generator
-        MulTensorGenerator(
-          (0): RandUniformTensorGenerator(low=0.0, high=1.0)
-          (1): RandNormalTensorGenerator(mean=0.0, std=1.0)
-        )
-        >>> generator.generate((2, 6))
-        tensor([[...]])
+    ```
     """
 
     def __init__(self, generators: Sequence[BaseTensorGenerator | dict]) -> None:
         super().__init__()
         if not generators:
-            raise ValueError(
-                "No tensor generator. You need to specify at least one tensor generator"
-            )
-        self._tensors = tuple(setup_tensor_generator(generator) for generator in generators)
+            msg = "No tensor generator. You need to specify at least one tensor generator"
+            raise ValueError(msg)
+        self._generators = tuple(setup_tensor_generator(generator) for generator in generators)
 
     def __repr__(self) -> str:
-        return f"{self.__class__.__qualname__}(\n  {str_indent(str_sequence(self._tensors))}\n)"
+        return f"{self.__class__.__qualname__}(\n  {str_indent(str_sequence(self._generators))}\n)"
 
     def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
-        output = self._tensors[0].generate(size=size, rng=rng)
-        for generator in self._tensors[1:]:
+        output = self._generators[0].generate(size=size, rng=rng)
+        for generator in self._generators[1:]:
             output.mul_(generator.generate(size=size, rng=rng))
         return output
 
@@ -402,24 +427,27 @@ class MulScalarTensorGenerator(BaseWrapperTensorGenerator):
     r"""Implement a tensor generator that multiplies a scalar value to a
     generated batch of tensors.
 
+    This tensor generator is equivalent to:
+    ``output = tensor * scalar``
+
     Args:
-        tensor (``BaseTensorGenerator`` or dict):
-            Specifies the tensor generator or its configuration.
-        value (int or float): Specifies the scalar value to multiply.
+        generator: Specifies the tensor generator or its configuration.
+        value: Specifies the scalar value to multiply.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.tensor import MulScalar, RandUniform, RandNormal
+    >>> generator = MulScalar(RandUniform(), 42)
+    >>> generator
+    MulScalarTensorGenerator(
+      (tensor): RandUniformTensorGenerator(low=0.0, high=1.0)
+    )
+    >>> generator.generate((2, 6))
+    tensor([[...]])
 
-        >>> import torch
-        >>> from startorch.tensor import MulScalar, RandUniform, RandNormal
-        >>> generator = MulScalar(RandUniform(), 42)
-        >>> generator
-        MulScalarTensorGenerator(
-          (tensor): RandUniformTensorGenerator(low=0.0, high=1.0)
-        )
-        >>> generator.generate((2, 6))
-        tensor([[...]])
+    ```
     """
 
     def __init__(
@@ -444,19 +472,22 @@ class NegTensorGenerator(BaseWrapperTensorGenerator):
     r"""Implement a tensor generator that computes the negation of a
     generated tensor.
 
+    This tensor generator is equivalent to: ``output = -tensor``
+
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.tensor import Neg, RandNormal
+    >>> generator = Neg(RandNormal())
+    >>> generator
+    NegTensorGenerator(
+      (tensor): RandNormalTensorGenerator(mean=0.0, std=1.0)
+    )
+    >>> generator.generate((2, 6))
+    tensor([[...]])
 
-        >>> import torch
-        >>> from startorch.tensor import Neg, RandNormal
-        >>> generator = Neg(RandNormal())
-        >>> generator
-        NegTensorGenerator(
-          (tensor): RandNormalTensorGenerator(mean=0.0, std=1.0)
-        )
-        >>> generator.generate((2, 6))
-        tensor([[...]])
+    ```
     """
 
     def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
@@ -467,18 +498,21 @@ class SqrtTensorGenerator(BaseWrapperTensorGenerator):
     r"""Implement a tensor generator that computes the squared root of a
     tensor.
 
+    This tensor generator is equivalent to: ``output = sqrt(tensor)``
+
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.tensor import RandUniform, Sqrt
+    >>> generator = Sqrt(RandUniform(low=1.0, high=100.0))
+    >>> generator
+    SqrtTensorGenerator(
+      (tensor): RandUniformTensorGenerator(low=1.0, high=100.0)
+    )
+    >>> generator.generate((2, 6))
+    tensor([[...]])
 
-        >>> from startorch.tensor import RandUniform, Sqrt
-        >>> generator = Sqrt(RandUniform(low=1.0, high=100.0))
-        >>> generator
-        SqrtTensorGenerator(
-          (tensor): RandUniformTensorGenerator(low=1.0, high=100.0)
-        )
-        >>> generator.generate((2, 6))
-        tensor([[...]])
+    ```
     """
 
     def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
@@ -488,29 +522,29 @@ class SqrtTensorGenerator(BaseWrapperTensorGenerator):
 class SubTensorGenerator(BaseTensorGenerator):
     r"""Implement a tensor generator that subtracts two tensors.
 
-    ``tensor = tensor_1 - tensor_2``
+    This tensor generator is equivalent to:
+    ``output = tensor_1 - tensor_2``
 
     Args:
-        tensor1 (``BaseTensorGenerator`` or dict):
-            Specifies the first tensor generator or its
+        tensor1: Specifies the first tensor generator or its
             configuration.
-        tensor2 (``BaseTensorGenerator`` or dict):
-            Specifies the second tensor generator or its
+        tensor2: Specifies the second tensor generator or its
             configuration.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.tensor import RandNormal, RandUniform, Sub
+    >>> generator = Sub(RandUniform(), RandNormal())
+    >>> generator
+    SubTensorGenerator(
+      (tensor1): RandUniformTensorGenerator(low=0.0, high=1.0)
+      (tensor2): RandNormalTensorGenerator(mean=0.0, std=1.0)
+    )
+    >>> generator.generate((2, 6))
+    tensor([[...]])
 
-        >>> from startorch.tensor import RandNormal, RandUniform, Sub
-        >>> generator = Sub(RandUniform(), RandNormal())
-        >>> generator
-        SubTensorGenerator(
-          (tensor1): RandUniformTensorGenerator(low=0.0, high=1.0)
-          (tensor2): RandNormalTensorGenerator(mean=0.0, std=1.0)
-        )
-        >>> generator.generate((2, 6))
-        tensor([[...]])
+    ```
     """
 
     def __init__(

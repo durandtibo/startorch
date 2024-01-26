@@ -1,16 +1,23 @@
+r"""Contain the implementation of a tensor generator that select a
+tensor generator at each batch."""
+
 from __future__ import annotations
 
 __all__ = ["MultinomialChoiceTensorGenerator"]
 
-from collections.abc import Sequence
+from typing import TYPE_CHECKING
 
 import torch
 from coola.utils.format import str_indent
-from torch import Generator, Tensor
 
 from startorch.tensor.base import BaseTensorGenerator, setup_tensor_generator
 from startorch.utils.format import str_weighted_modules
 from startorch.utils.weight import prepare_weighted_generators
+
+if TYPE_CHECKING:
+    from collections.abc import Sequence
+
+    from torch import Generator, Tensor
 
 
 class MultinomialChoiceTensorGenerator(BaseTensorGenerator):
@@ -32,28 +39,28 @@ class MultinomialChoiceTensorGenerator(BaseTensorGenerator):
             If this key is absent, the weight is set to ``1.0``.
 
     Args:
-        generators (tuple or list): Specifies the tensor
-            generators and their weights. See above to learn
-            about the expected format.
+        generators: Specifies the tensor generators and their weights.
+            See above to learn about the expected format.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.tensor import MultinomialChoice, RandUniform, RandNormal
+    >>> generator = MultinomialChoice(
+    ...     (
+    ...         {"weight": 2.0, "generator": RandUniform()},
+    ...         {"weight": 1.0, "generator": RandNormal()},
+    ...     )
+    ... )
+    >>> generator
+    MultinomialChoiceTensorGenerator(
+      (0) [weight=2.0] RandUniformTensorGenerator(low=0.0, high=1.0)
+      (1) [weight=1.0] RandNormalTensorGenerator(mean=0.0, std=1.0)
+    )
+    >>> generator.generate(size=(4, 12))
+    tensor([[...]])
 
-        >>> from startorch.tensor import MultinomialChoice, RandUniform, RandNormal
-        >>> generator = MultinomialChoice(
-        ...     (
-        ...         {"weight": 2.0, "generator": RandUniform()},
-        ...         {"weight": 1.0, "generator": RandNormal()},
-        ...     )
-        ... )
-        >>> generator
-        MultinomialChoiceTensorGenerator(
-          (0) [weight=2.0] RandUniformTensorGenerator(low=0.0, high=1.0)
-          (1) [weight=1.0] RandNormalTensorGenerator(mean=0.0, std=1.0)
-        )
-        >>> generator.generate(size=(4, 12))
-        tensor([[...]])
+    ```
     """
 
     def __init__(self, generators: Sequence[dict[str, BaseTensorGenerator | dict]]) -> None:

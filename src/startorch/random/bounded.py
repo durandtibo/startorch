@@ -845,9 +845,9 @@ def rand_log_uniform(
 
     Args:
         size (list or tuple): Specifies the tensor shape.
-        low (float): Specifies the minimum value (inclusive).
+        low: Specifies the minimum value (inclusive).
             This value needs to be positive.
-        high (float): Specifies the maximum value (exclusive).
+        high: Specifies the maximum value (exclusive).
         generator (``torch.Generator`` or None, optional): Specifies
             an optional random generator. Default: ``None``
 
@@ -945,9 +945,9 @@ def rand_asinh_uniform(
 
     Args:
         size (list or tuple): Specifies the tensor shape.
-        low (float): Specifies the minimum value (inclusive).
+        low: Specifies the minimum value (inclusive).
             This value needs to be positive.
-        high (float): Specifies the maximum value (exclusive).
+        high: Specifies the maximum value (exclusive).
         generator (``torch.Generator`` or None, optional): Specifies
             an optional random generator. Default: ``None``
 
