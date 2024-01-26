@@ -11,10 +11,9 @@ from startorch.sequence.wrapper import BaseWrapperSequenceGenerator
 
 
 class SortSequenceGenerator(BaseWrapperSequenceGenerator):
-    r"""Implements a sequence generator that sorts a generated sequence.
+    r"""Implement a sequence generator that sorts a generated sequence.
 
     Args:
-    ----
         sequence (``BaseSequenceGenerator`` or dict):
             Specifies the sequence generator or its configuration.
         descending (bool, optional): Controls the sorting order.

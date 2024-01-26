@@ -18,11 +18,10 @@ from startorch.utils.conversion import to_tuple
 
 
 class CauchySequenceGenerator(BaseSequenceGenerator):
-    r"""Implements a class to generate sequence by sampling values from a
+    r"""Implement a class to generate sequence by sampling values from a
     Cauchy distribution.
 
     Args:
-    ----
         loc (``BaseSequenceGenerator`` or dict): Specifies a sequence
             generator (or its configuration) to generate the location.
         scale (``BaseSequenceGenerator`` or dict): Specifies a sequence
@@ -72,20 +71,18 @@ class CauchySequenceGenerator(BaseSequenceGenerator):
 
 
 class RandCauchySequenceGenerator(BaseSequenceGenerator):
-    r"""Implements a class to generate sequence by sampling values from a
+    r"""Implement a class to generate sequence by sampling values from a
     Cauchy distribution.
 
     Args:
-    ----
-        loc (float, optional): Specifies the location/median of the
+        loc: Specifies the location/median of the
             Cauchy distribution. Default: ``0.0``
-        scale (float, optional): Specifies the scale of the
+        scale: Specifies the scale of the
             distribution. Default: ``1.0``
         feature_size (tuple or list or int, optional): Specifies the
             feature size. Default: ``1``
 
     Raises:
-    ------
         ValueError if ``scale`` is not a positive number.
 
     Example usage:
@@ -133,24 +130,22 @@ class RandCauchySequenceGenerator(BaseSequenceGenerator):
 
 
 class RandTruncCauchySequenceGenerator(BaseSequenceGenerator):
-    r"""Implements a class to generate sequence by sampling values from a
+    r"""Implement a class to generate sequence by sampling values from a
     truncated Cauchy distribution.
 
     Args:
-    ----
-        loc (float, optional): Specifies the location/median of the
+        loc: Specifies the location/median of the
             Cauchy distribution. Default: ``0.0``
-        scale (float, optional): Specifies the scale of the
+        scale: Specifies the scale of the
             distribution. Default: ``1.0``
-        min_value (float, optional): Specifies the minimum value.
+        min_value: Specifies the minimum value.
             (included). Default: ``-2.0``
-        max_value (float, optional): Specifies the maximum value
+        max_value: Specifies the maximum value
             (excluded). Default: ``2.0``
         feature_size (tuple or list or int, optional): Specifies the
             feature size. Default: ``1``
 
     Raises:
-    ------
         ValueError if ``std`` is not a positive number.
         ValueError if ``max_value`` is lower than ``min_value``.
 
@@ -211,11 +206,10 @@ class RandTruncCauchySequenceGenerator(BaseSequenceGenerator):
 
 
 class TruncCauchySequenceGenerator(BaseSequenceGenerator):
-    r"""Implements a class to generate sequence by sampling values from a
+    r"""Implement a class to generate sequence by sampling values from a
     Cauchy distribution.
 
     Args:
-    ----
         loc (``BaseSequenceGenerator`` or dict): Specifies a sequence
             generator (or its configuration) to generate the location.
         scale (``BaseSequenceGenerator`` or dict): Specifies a sequence

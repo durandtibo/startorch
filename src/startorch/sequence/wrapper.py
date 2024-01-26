@@ -12,7 +12,6 @@ class BaseWrapperSequenceGenerator(BaseSequenceGenerator):
     r"""Defines a base class to easily wrap a sequence generator.
 
     Args:
-    ----
         generator (``BaseSequenceGenerator`` or dict):
             Specifies the sequence generator or its configuration.
     """

@@ -1,8 +1,8 @@
 from __future__ import annotations
 
+import pytest
 import torch
 from coola import objects_are_equal
-from pytest import raises
 from redcat import BatchedTensorSeq
 
 from startorch.timeseries.utils import mix2sequences
@@ -58,5 +58,5 @@ def test_mix2sequences_seq_dim_2() -> None:
 
 
 def test_mix2sequences_incorrect_shape() -> None:
-    with raises(RuntimeError, match="x and y shapes do not match:"):
+    with pytest.raises(RuntimeError, match="x and y shapes do not match:"):
         mix2sequences(BatchedTensorSeq(torch.ones(1, 5)), BatchedTensorSeq(torch.ones(1, 5, 1)))

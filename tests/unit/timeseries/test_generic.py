@@ -1,6 +1,6 @@
+import pytest
 import torch
 from coola import objects_are_equal
-from pytest import mark
 from redcat import BatchDict, BatchedTensorSeq
 
 from startorch import constants as ct
@@ -22,9 +22,9 @@ def test_timeseries_generator_str() -> None:
     )
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_timeseries_generator_generate_float(
     batch_size: int, seq_len: int, feature_size: int
 ) -> None:
@@ -51,8 +51,8 @@ def test_timeseries_generator_generate_float(
     assert batch_time.data.dtype == torch.float
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_timeseries_generator_generate_long(batch_size: int, seq_len: int) -> None:
     batch = TimeSeries(
         {ct.VALUE: UniformCategorical(num_categories=10), ct.TIME: RandUniform()}
@@ -77,8 +77,8 @@ def test_timeseries_generator_generate_long(batch_size: int, seq_len: int) -> No
     assert batch_time.data.dtype == torch.float
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_timeseries_generator_generate_1(batch_size: int, seq_len: int) -> None:
     batch = TimeSeries(
         {ct.VALUE: RandUniform()},
@@ -96,8 +96,8 @@ def test_timeseries_generator_generate_1(batch_size: int, seq_len: int) -> None:
     assert batch_value.data.dtype == torch.float
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_timeseries_generator_generate_3(batch_size: int, seq_len: int) -> None:
     batch = TimeSeries(
         {

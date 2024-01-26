@@ -19,21 +19,18 @@ def rand_poisson(
     distribution.
 
     Args:
-    ----
         size (list or tuple): Specifies the tensor shape.
-        rate (float, optional): Specifies the rate of the Poisson
+        rate: Specifies the rate of the Poisson
             distribution. This value has to be greater than 0.
             Default: ``1.0``
         generator (``torch.Generator`` or None, optional): Specifies
             an optional random generator. Default: ``None``
 
     Returns:
-    -------
         ``torch.Tensor`` of type float: A tensor filled with values
             sampled from a Poisson distribution.
 
     Raises:
-    ------
         ValueError if the ``rate`` parameter is not valid.
 
     Example usage:

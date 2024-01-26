@@ -23,15 +23,13 @@ def mix2sequences(
     ``y = [y[0], x[1], y[2], x[3], y[4], ...]``
 
     Args:
-    ----
         x (``BatchedTensorSeq``): Specifies the first batch.
         y (``BatchedTensorSeq`` with the same shape as ``x``):
             Specifies the second batch.
-        dim (int, optional): Specifies the dimension used to mix
+        dim: Specifies the dimension used to mix
             the values. Default: ``0``
 
     Returns:
-    -------
         tuple: The batches with mixed values along the sequence
             dimension.
 

@@ -15,7 +15,7 @@ from startorch.tensor.wrapper import BaseWrapperTensorGenerator
 
 
 class AcoshTensorGenerator(BaseWrapperTensorGenerator):
-    r"""Implements a sequence generator that computes the inverse
+    r"""Implement a sequence generator that computes the inverse
     hyperbolic cosine (arccosh) of each value.
 
     Example usage:
@@ -37,7 +37,7 @@ class AcoshTensorGenerator(BaseWrapperTensorGenerator):
 
 
 class AsinhTensorGenerator(BaseWrapperTensorGenerator):
-    r"""Implements a sequence generator that computes the inverse
+    r"""Implement a sequence generator that computes the inverse
     hyperbolic sine (arcsinh) of each value.
 
     Example usage:
@@ -59,7 +59,7 @@ class AsinhTensorGenerator(BaseWrapperTensorGenerator):
 
 
 class AtanhTensorGenerator(BaseWrapperTensorGenerator):
-    r"""Implements a sequence generator that computes the inverse
+    r"""Implement a sequence generator that computes the inverse
     hyperbolic tangent (arctanh) of each value.
 
     Example usage:
@@ -81,7 +81,7 @@ class AtanhTensorGenerator(BaseWrapperTensorGenerator):
 
 
 class CoshTensorGenerator(BaseWrapperTensorGenerator):
-    r"""Implements a sequence generator that computes the hyperbolic
+    r"""Implement a sequence generator that computes the hyperbolic
     cosine (cosh) of each value.
 
     Example usage:
@@ -103,7 +103,7 @@ class CoshTensorGenerator(BaseWrapperTensorGenerator):
 
 
 class SinhTensorGenerator(BaseWrapperTensorGenerator):
-    r"""Implements a sequence generator that computes the hyperbolic sine
+    r"""Implement a sequence generator that computes the hyperbolic sine
     (sinh) of each value.
 
     Example usage:
@@ -125,7 +125,7 @@ class SinhTensorGenerator(BaseWrapperTensorGenerator):
 
 
 class TanhTensorGenerator(BaseWrapperTensorGenerator):
-    r"""Implements a sequence generator that computes the hyperbolic
+    r"""Implement a sequence generator that computes the hyperbolic
     tangent (tanh) of each value.
 
     Example usage:

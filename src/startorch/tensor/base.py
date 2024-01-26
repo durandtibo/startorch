@@ -34,16 +34,14 @@ class BaseTensorGenerator(ABC, metaclass=AbstractFactory):
 
     @abstractmethod
     def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
-        r"""Generates a tensor.
+        r"""Generate a tensor.
 
         Args:
-        ----
             size (tuple): Specifies the size of the tensor to generate.
             rng (``torch.Generator`` or None, optional): Specifies
                 an optional random number generator. Default: ``None``
 
         Returns:
-        -------
             ``torch.Tensor``: The generated tensor with the specified
                 size.
 
@@ -69,11 +67,9 @@ def is_tensor_generator_config(config: dict) -> bool:
     the class.
 
     Args:
-    ----
         config (dict): Specifies the configuration to check.
 
     Returns:
-    -------
         bool: ``True`` if the input configuration is a configuration
             for a ``BaseTensorGenerator`` object.
 
@@ -95,12 +91,10 @@ def setup_tensor_generator(generator: BaseTensorGenerator | dict) -> BaseTensorG
     using the ``BaseTensorGenerator`` factory function.
 
     Args:
-    ----
         generator (``BaseTensorGenerator`` or dict): Specifies a
             tensor generator or its configuration.
 
     Returns:
-    -------
         ``BaseTensorGenerator``: A tensor generator.
 
     Example usage:

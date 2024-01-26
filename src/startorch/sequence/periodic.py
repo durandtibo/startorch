@@ -14,11 +14,10 @@ from startorch.tensor.base import BaseTensorGenerator, setup_tensor_generator
 
 
 class PeriodicSequenceGenerator(BaseSequenceGenerator):
-    r"""Implements a sequence generator to generate periodic sequence
-    from a regular sequence generator.
+    r"""Implement a sequence generator to generate periodic sequence from
+    a regular sequence generator.
 
     Args:
-    ----
         sequence (``BaseSequenceGenerator`` or
             ``BasePeriodicSequenceGenerator`` or dict): Specifies a
             sequence generator or its configuration that is used to

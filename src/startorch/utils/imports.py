@@ -18,7 +18,6 @@ def check_matplotlib() -> None:
     r"""Checks if the ``matplotlib`` package is installed.
 
     Raises:
-    ------
         RuntimeError if the ``matplotlib`` package is not installed.
 
     Example usage:
@@ -58,7 +57,6 @@ def check_plotly() -> None:
     r"""Checks if the ``plotly`` package is installed.
 
     Raises:
-    ------
         RuntimeError if the ``plotly`` package is not installed.
 
     Example usage:

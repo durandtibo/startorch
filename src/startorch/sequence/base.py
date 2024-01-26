@@ -37,20 +37,18 @@ class BaseSequenceGenerator(ABC, metaclass=AbstractFactory):
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchedTensorSeq:
-        r"""Generates a batch of sequences.
+        r"""Generate a batch of sequences.
 
         All the sequences in the batch must have the same length.
 
         Args:
-        ----
             seq_len (int): Specifies the sequence length.
-            batch_size (int, optional): Specifies the batch size.
+            batch_size: Specifies the batch size.
                 Default: ``1``
             rng (``torch.Generator`` or None, optional): Specifies
                 an optional random number generator. Default: ``None``
 
         Returns:
-        -------
             ``BatchedTensorSeq``: A batch of sequences. The data in the
                 batch are represented by a ``torch.Tensor`` of shape
                 ``(batch_size, sequence_length, *)`` where `*` means
@@ -78,11 +76,9 @@ def is_sequence_generator_config(config: dict) -> bool:
     the class.
 
     Args:
-    ----
         config (dict): Specifies the configuration to check.
 
     Returns:
-    -------
         bool: ``True`` if the input configuration is a configuration
             for a ``BaseSequenceGenerator`` object.
 
@@ -104,12 +100,10 @@ def setup_sequence_generator(generator: BaseSequenceGenerator | dict) -> BaseSeq
     using the ``BaseSequenceGenerator`` factory function.
 
     Args:
-    ----
         generator (``BaseSequenceGenerator`` or dict): Specifies a
             sequence generator or its configuration.
 
     Returns:
-    -------
         ``BaseSequenceGenerator``: A sequence generator.
 
     Example usage:

@@ -1,6 +1,6 @@
+import pytest
 import torch
 from coola import objects_are_equal
-from pytest import mark
 from redcat import BatchDict, BatchedTensorSeq
 
 from startorch import constants as ct
@@ -39,8 +39,8 @@ def test_merge_generators() -> None:
     assert isinstance(generator._generators[1], TimeSeries)
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_merge_generate(batch_size: int, seq_len: int) -> None:
     batch = Merge(
         [
@@ -67,8 +67,8 @@ def test_merge_generate(batch_size: int, seq_len: int) -> None:
     assert batch_time.data.dtype == torch.float
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_merge_generate_time_0d(batch_size: int, seq_len: int) -> None:
     batch = Merge(
         [
@@ -95,8 +95,8 @@ def test_merge_generate_time_0d(batch_size: int, seq_len: int) -> None:
     assert batch_time.data.dtype == torch.float
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_merge_generate_value_0d(batch_size: int, seq_len: int) -> None:
     batch = Merge(
         [

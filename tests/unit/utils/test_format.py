@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+import pytest
 from objectory import OBJECT_TARGET
-from pytest import raises
 
 from startorch.utils.format import str_target_object, str_weighted_modules
 
@@ -41,5 +41,5 @@ def test_str_weighted_modules_2() -> None:
 
 
 def test_str_weighted_modules_different_lengths() -> None:
-    with raises(RuntimeError, match="`modules` and `weights` must have the same length"):
+    with pytest.raises(RuntimeError, match="`modules` and `weights` must have the same length"):
         str_weighted_modules(["abc"], [2, 3])

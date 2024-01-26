@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+import pytest
 import torch
-from pytest import mark, raises
 from redcat import BatchedTensor, BatchedTensorSeq
 
 from startorch.utils.batch import merge_batches, scale_batch
@@ -14,11 +14,11 @@ BATCH_CLASSES = (BatchedTensor, BatchedTensorSeq)
 
 
 def test_merge_batches_empty() -> None:
-    with raises(RuntimeError, match="No batch is provided"):
+    with pytest.raises(RuntimeError, match="No batch is provided"):
         merge_batches([])
 
 
-@mark.parametrize("cls", BATCH_CLASSES)
+@pytest.mark.parametrize("cls", BATCH_CLASSES)
 def test_merge_batches(cls: type[BatchedTensor]) -> None:
     assert merge_batches(
         [
@@ -46,14 +46,14 @@ def test_merge_batches(cls: type[BatchedTensor]) -> None:
 #################################
 
 
-@mark.parametrize("cls", BATCH_CLASSES)
+@pytest.mark.parametrize("cls", BATCH_CLASSES)
 def test_scale_batch_identity(cls: type[BatchedTensor]) -> None:
     assert scale_batch(cls(torch.arange(10).view(2, 5))).allclose(
         cls(torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]))
     )
 
 
-@mark.parametrize("cls", BATCH_CLASSES)
+@pytest.mark.parametrize("cls", BATCH_CLASSES)
 def test_scale_batch_log(cls: type[BatchedTensor]) -> None:
     assert scale_batch(cls(torch.arange(10).add(1).view(2, 5)), scale="log").allclose(
         cls(
@@ -79,7 +79,7 @@ def test_scale_batch_log(cls: type[BatchedTensor]) -> None:
     )
 
 
-@mark.parametrize("cls", BATCH_CLASSES)
+@pytest.mark.parametrize("cls", BATCH_CLASSES)
 def test_scale_batch_log10(cls: type[BatchedTensor]) -> None:
     assert scale_batch(cls(torch.arange(10).add(1).view(2, 5)), scale="log10").allclose(
         cls(
@@ -105,7 +105,7 @@ def test_scale_batch_log10(cls: type[BatchedTensor]) -> None:
     )
 
 
-@mark.parametrize("cls", BATCH_CLASSES)
+@pytest.mark.parametrize("cls", BATCH_CLASSES)
 def test_scale_batch_log1p(cls: type[BatchedTensor]) -> None:
     assert scale_batch(cls(torch.arange(10).view(2, 5)), scale="log1p").allclose(
         cls(
@@ -131,7 +131,7 @@ def test_scale_batch_log1p(cls: type[BatchedTensor]) -> None:
     )
 
 
-@mark.parametrize("cls", BATCH_CLASSES)
+@pytest.mark.parametrize("cls", BATCH_CLASSES)
 def test_scale_batch_log2(cls: type[BatchedTensor]) -> None:
     assert scale_batch(cls(torch.arange(10).add(1).view(2, 5)), scale="log2").allclose(
         cls(
@@ -151,7 +151,7 @@ def test_scale_batch_log2(cls: type[BatchedTensor]) -> None:
     )
 
 
-@mark.parametrize("cls", BATCH_CLASSES)
+@pytest.mark.parametrize("cls", BATCH_CLASSES)
 def test_scale_batch_asinh(cls: type[BatchedTensor]) -> None:
     assert scale_batch(cls(torch.arange(10).view(2, 5)), scale="asinh").allclose(
         cls(
@@ -177,7 +177,7 @@ def test_scale_batch_asinh(cls: type[BatchedTensor]) -> None:
     )
 
 
-@mark.parametrize("cls", BATCH_CLASSES)
+@pytest.mark.parametrize("cls", BATCH_CLASSES)
 def test_scale_batch_incorrect_scale(cls: type[BatchedTensor]) -> None:
-    with raises(RuntimeError, match="Incorrect scale: "):
+    with pytest.raises(RuntimeError, match="Incorrect scale: "):
         scale_batch(cls(torch.arange(10).view(2, 5)), scale="incorrect")

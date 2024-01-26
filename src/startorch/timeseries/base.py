@@ -46,18 +46,16 @@ class BaseTimeSeriesGenerator(ABC, metaclass=AbstractFactory):
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchDict:
-        r"""Generates a time series.
+        r"""Generate a time series.
 
         Args:
-        ----
             seq_len (int): Specifies the sequence length.
-            batch_size (int, optional): Specifies the batch size.
+            batch_size: Specifies the batch size.
                 Default: ``1``
             rng (``torch.Generator`` or None, optional): Specifies
                 an optional random number generator. Default: ``None``
 
         Returns:
-        -------
             ``BatchDict``: A batch of time series.
 
         Example usage:
@@ -86,11 +84,9 @@ def is_timeseries_generator_config(config: dict) -> bool:
     the class.
 
     Args:
-    ----
         config (dict): Specifies the configuration to check.
 
     Returns:
-    -------
         bool: ``True`` if the input configuration is a configuration
             for a ``BaseTimeSeriesGenerator`` object.
 
@@ -122,12 +118,10 @@ def setup_timeseries_generator(
     by using the ``BaseTimeSeriesGenerator`` factory function.
 
     Args:
-    ----
         generator (``BaseTimeSeriesGenerator`` or dict): Specifies a time
             series generator or its configuration.
 
     Returns:
-    -------
         ``BaseTimeSeriesGenerator``: A time series generator.
 
     Example usage:

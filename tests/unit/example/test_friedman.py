@@ -424,12 +424,12 @@ def test_make_friedman2_regression() -> None:
     assert features.shape == (10, 4)
     assert features.dtype == torch.float
 
-    assert torch.all(0.0 <= features[:, 0]) and torch.all(features[:, 0] <= 100.0)
+    assert torch.all(features[:, 0] >= 0.0) and torch.all(features[:, 0] <= 100.0)
     assert torch.all(40.0 * math.pi <= features[:, 1]) and torch.all(
         features[:, 1] <= 560.0 * math.pi
     )
-    assert torch.all(0.0 <= features[:, 2]) and torch.all(features[:, 2] <= 1.0)
-    assert torch.all(1.0 <= features[:, 3]) and torch.all(features[:, 3] <= 11.0)
+    assert torch.all(features[:, 2] >= 0.0) and torch.all(features[:, 2] <= 1.0)
+    assert torch.all(features[:, 3] >= 1.0) and torch.all(features[:, 3] <= 11.0)
 
 
 def test_make_friedman2_regression_feature_size_8() -> None:
@@ -444,13 +444,13 @@ def test_make_friedman2_regression_feature_size_8() -> None:
     assert features.shape == (10, 8)
     assert features.dtype == torch.float
 
-    assert torch.all(0.0 <= features[:, 0]) and torch.all(features[:, 0] <= 100.0)
+    assert torch.all(features[:, 0] >= 0.0) and torch.all(features[:, 0] <= 100.0)
     assert torch.all(40.0 * math.pi <= features[:, 1]) and torch.all(
         features[:, 1] <= 560.0 * math.pi
     )
-    assert torch.all(0.0 <= features[:, 2]) and torch.all(features[:, 2] <= 1.0)
-    assert torch.all(1.0 <= features[:, 3]) and torch.all(features[:, 3] <= 11.0)
-    assert torch.all(0.0 <= features[:, 4:]) and torch.all(features[:, 4:] <= 1)
+    assert torch.all(features[:, 2] >= 0.0) and torch.all(features[:, 2] <= 1.0)
+    assert torch.all(features[:, 3] >= 1.0) and torch.all(features[:, 3] <= 11.0)
+    assert torch.all(features[:, 4:] >= 0.0) and torch.all(features[:, 4:] <= 1)
 
 
 @mark.parametrize("num_examples", SIZES)
@@ -547,12 +547,12 @@ def test_make_friedman3_regression() -> None:
     assert features.shape == (10, 4)
     assert features.dtype == torch.float
 
-    assert torch.all(0.0 <= features[:, 0]) and torch.all(features[:, 0] <= 100.0)
+    assert torch.all(features[:, 0] >= 0.0) and torch.all(features[:, 0] <= 100.0)
     assert torch.all(40.0 * math.pi <= features[:, 1]) and torch.all(
         features[:, 1] <= 560.0 * math.pi
     )
-    assert torch.all(0.0 <= features[:, 2]) and torch.all(features[:, 2] <= 1.0)
-    assert torch.all(1.0 <= features[:, 3]) and torch.all(features[:, 3] <= 11.0)
+    assert torch.all(features[:, 2] >= 0.0) and torch.all(features[:, 2] <= 1.0)
+    assert torch.all(features[:, 3] >= 1.0) and torch.all(features[:, 3] <= 11.0)
 
 
 def test_make_friedman3_regression_feature_size_8() -> None:
@@ -567,13 +567,13 @@ def test_make_friedman3_regression_feature_size_8() -> None:
     assert features.shape == (10, 8)
     assert features.dtype == torch.float
 
-    assert torch.all(0.0 <= features[:, 0]) and torch.all(features[:, 0] <= 100.0)
+    assert torch.all(features[:, 0] >= 0.0) and torch.all(features[:, 0] <= 100.0)
     assert torch.all(40.0 * math.pi <= features[:, 1]) and torch.all(
         features[:, 1] <= 560.0 * math.pi
     )
-    assert torch.all(0.0 <= features[:, 2]) and torch.all(features[:, 2] <= 1.0)
-    assert torch.all(1.0 <= features[:, 3]) and torch.all(features[:, 3] <= 11.0)
-    assert torch.all(0.0 <= features[:, 4:]) and torch.all(features[:, 4:] <= 1)
+    assert torch.all(features[:, 2] >= 0.0) and torch.all(features[:, 2] <= 1.0)
+    assert torch.all(features[:, 3] >= 1.0) and torch.all(features[:, 3] <= 11.0)
+    assert torch.all(features[:, 4:] >= 0.0) and torch.all(features[:, 4:] <= 1)
 
 
 @mark.parametrize("num_examples", SIZES)

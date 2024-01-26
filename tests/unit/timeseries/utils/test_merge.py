@@ -1,6 +1,6 @@
+import pytest
 import torch
 from coola import objects_are_equal
-from pytest import raises
 from redcat import BatchDict, BatchedTensorSeq, BatchList
 
 from startorch import constants as ct
@@ -200,12 +200,12 @@ def test_merge_timeseries_by_time_only_time_feature() -> None:
 
 
 def test_merge_timeseries_by_time_empty() -> None:
-    with raises(RuntimeError, match="No time series is provided so it is not possible"):
+    with pytest.raises(RuntimeError, match="No time series is provided so it is not possible"):
         merge_timeseries_by_time([])
 
 
 def test_merge_timeseries_by_time_missing_time_key() -> None:
-    with raises(KeyError, match="The key time is not in batch. Available keys are:"):
+    with pytest.raises(KeyError, match="The key time is not in batch. Available keys are:"):
         merge_timeseries_by_time(
             [
                 BatchDict(
@@ -227,5 +227,5 @@ def test_merge_timeseries_by_time_missing_time_key() -> None:
 
 
 def test_merge_timeseries_by_time_invalid_time() -> None:
-    with raises(TypeError, match="Invalid time batch type. Expected BatchedTensorSeq"):
+    with pytest.raises(TypeError, match="Invalid time batch type. Expected BatchedTensorSeq"):
         merge_timeseries_by_time([BatchDict({ct.TIME: BatchList(["a", "b"])})])

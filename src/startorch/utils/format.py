@@ -12,13 +12,11 @@ def str_target_object(config: dict) -> str:
     r"""Gets a string that indicates the target object in the config.
 
     Args:
-    ----
         config (dict): Specifies a config using the ``object_factory``
             library. This dict is expected to have a key
             ``'_target_'`` to indicate the target object.
 
     Returns:
-    -------
         str: A string with the target object.
 
     Example usage:
@@ -42,7 +40,7 @@ def str_weighted_modules(modules: Sequence, weights: Sequence, num_spaces: int =
         modules (``Sequence``): Specifies the modules.
         weights (``Sequence``): Specifies the weights. The ``weights``
             should have the same length that ``modules``.
-        num_spaces (int, optional): Specifies the number of spaces
+        num_spaces: Specifies the number of spaces
             used for the indentation. Default: ``2``.
 
     Returns:

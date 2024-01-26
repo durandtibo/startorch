@@ -9,8 +9,8 @@ from startorch.sequence.wrapper import BaseWrapperSequenceGenerator
 
 
 class FloatSequenceGenerator(BaseWrapperSequenceGenerator):
-    r"""Implements a sequence generator that converts a batch of
-    sequences to float type.
+    r"""Implement a sequence generator that converts a batch of sequences
+    to float type.
 
     Example usage:
 
@@ -33,8 +33,8 @@ class FloatSequenceGenerator(BaseWrapperSequenceGenerator):
 
 
 class LongSequenceGenerator(BaseWrapperSequenceGenerator):
-    r"""Implements a sequence generator that converts a batch of
-    sequences to long type.
+    r"""Implement a sequence generator that converts a batch of sequences
+    to long type.
 
     Example usage:
 

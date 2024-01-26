@@ -17,11 +17,10 @@ from startorch.timeseries.base import (
 
 
 class PeriodicTimeSeriesGenerator(BaseTimeSeriesGenerator):
-    r"""Implements a time series generator to generate periodic time
+    r"""Implement a time series generator to generate periodic time
     series from a regular time series generator.
 
     Args:
-    ----
         timeseries (``BaseTimeSeriesGenerator`` or
             ``BasePeriodicTimeSeriesGenerator`` or dict): Specifies a
             time series generator or its configuration that is used to

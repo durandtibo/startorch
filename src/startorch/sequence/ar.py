@@ -13,11 +13,10 @@ from startorch.tensor.base import BaseTensorGenerator, setup_tensor_generator
 
 
 class AutoRegressiveSequenceGenerator(BaseSequenceGenerator):
-    r"""Implements a class to generate sequence by sampling values with a
+    r"""Implement a class to generate sequence by sampling values with a
     linear pattern.
 
     Args:
-    ----
         value (``BaseSequenceGenerator`` or dict): Specifies a
             sequence generator (or its configuration) used to generate
             the initial sequence values. These values are used to
@@ -34,13 +33,12 @@ class AutoRegressiveSequenceGenerator(BaseSequenceGenerator):
         max_abs_value (float): Specifies the maximum absolute value.
             This argument ensures the values stay in the range
             ``[-max_abs_value, max_abs_value]``.
-        warmup (int, optional): Specifies the number of cycles used to
+        warmup: Specifies the number of cycles used to
             initiate the AR. The initial value sampled do not follow
             an AR, so using warmup allows to initialize the AR so each
             value follows an AR. Default: ``10``
 
     Raises:
-    ------
         ValueError if ``max_abs_value`` is not a positive number.
         ValueError if ``warmup`` is not a positive number.
 

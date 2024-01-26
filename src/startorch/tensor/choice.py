@@ -14,7 +14,7 @@ from startorch.utils.weight import prepare_weighted_generators
 
 
 class MultinomialChoiceTensorGenerator(BaseTensorGenerator):
-    r"""Implements a tensor generator that select a tensor generator at
+    r"""Implement a tensor generator that select a tensor generator at
     each batch.
 
     This tensor generator is used to generate tensors with different
@@ -32,7 +32,6 @@ class MultinomialChoiceTensorGenerator(BaseTensorGenerator):
             If this key is absent, the weight is set to ``1.0``.
 
     Args:
-    ----
         generators (tuple or list): Specifies the tensor
             generators and their weights. See above to learn
             about the expected format.

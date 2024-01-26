@@ -13,12 +13,11 @@ from startorch.timeseries import BaseTimeSeriesGenerator, setup_timeseries_gener
 
 
 class RepeatPeriodicTimeSeriesGenerator(BasePeriodicTimeSeriesGenerator):
-    r"""Implements a class to generate periodic sequences by using a
+    r"""Implement a class to generate periodic sequences by using a
     ``BaseTimeSeriesGenerator`` object and repeating the generated
     sequence.
 
     Args:
-    ----
         sequence (``BaseTimeSeriesGenerator`` or dict): Specifies
             a sequence generator or its configuration.
 

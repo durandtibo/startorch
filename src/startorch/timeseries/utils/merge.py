@@ -33,7 +33,6 @@ def merge_timeseries_by_time(
     number of features.
 
     Args:
-    ----
         timeseries (``Sequence``): Specifies the list of time series
             to merge. See the description above to know the format of
             the time series.
@@ -42,7 +41,6 @@ def merge_timeseries_by_time(
             Default: ``'time'``
 
     Returns:
-    -------
         ``BatchDict``: The merged time series. The dictionary has the
             same structure that the input time series.
 

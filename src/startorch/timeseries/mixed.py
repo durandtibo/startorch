@@ -15,10 +15,9 @@ from startorch.timeseries.utils import mix2sequences
 
 
 class MixedTimeSeriesGenerator(BaseTimeSeriesGenerator):
-    r"""Implements a generic time series generator.
+    r"""Implement a generic time series generator.
 
     Args:
-    ----
         generator (``BaseTimeSeriesGenerator`` or dict): Specifies
             the time series generator or its configuration.
 

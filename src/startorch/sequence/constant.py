@@ -13,7 +13,7 @@ from startorch.utils.conversion import to_tuple
 
 
 class ConstantSequenceGenerator(BaseWrapperSequenceGenerator):
-    r"""Implements a sequence generator to generate a batch of sequences
+    r"""Implement a sequence generator to generate a batch of sequences
     with constant values where the values for each sequence are sampled
     from another sequence generator.
 
@@ -40,14 +40,13 @@ class ConstantSequenceGenerator(BaseWrapperSequenceGenerator):
 
 
 class FullSequenceGenerator(BaseSequenceGenerator):
-    r"""Implements a sequence generator to generate sequences filled with
+    r"""Implement a sequence generator to generate sequences filled with
     a given value.
 
     This sequence generator is fully deterministic and the random
     seed has no effect.
 
     Args:
-    ----
         value (float): Specifies the value.
         feature_size (tuple or list or int, optional): Specifies the
             feature size. Default: ``1``

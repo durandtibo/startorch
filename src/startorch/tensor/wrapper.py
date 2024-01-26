@@ -12,7 +12,6 @@ class BaseWrapperTensorGenerator(BaseTensorGenerator):
     r"""Defines a base class to easily wrap a tensor generator.
 
     Args:
-    ----
         tensor (``BaseTensorGenerator`` or dict):
             Specifies the tensor generator or its configuration.
     """

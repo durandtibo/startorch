@@ -1,13 +1,16 @@
 from __future__ import annotations
 
-from collections.abc import Sequence
+from typing import TYPE_CHECKING
 
+import pytest
 import torch
-from pytest import mark, raises
 from torch import Tensor
 
 from startorch.tensor import Multinomial, UniformCategorical
 from startorch.utils.seed import get_torch_generator
+
+if TYPE_CHECKING:
+    from collections.abc import Sequence
 
 SIZES = ((1,), (2, 3), (2, 3, 4))
 
@@ -21,10 +24,10 @@ def test_multinomial_str() -> None:
     assert str(Multinomial(torch.ones(10))).startswith("MultinomialTensorGenerator(")
 
 
-@mark.parametrize(
+@pytest.mark.parametrize(
     "weights", [torch.ones(10), [1, 1, 1, 1, 1, 1, 1, 1, 1, 1], (1, 1, 1, 1, 1, 1, 1, 1, 1, 1)]
 )
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_multinomial_generate(weights: Tensor | Sequence, size: tuple[int, ...]) -> None:
     tensor = Multinomial(weights).generate(size)
     assert tensor.shape == size
@@ -33,7 +36,7 @@ def test_multinomial_generate(weights: Tensor | Sequence, size: tuple[int, ...])
     assert tensor.max() < 10
 
 
-@mark.parametrize("num_categories", (1, 2, 4))
+@pytest.mark.parametrize("num_categories", [1, 2, 4])
 def test_multinomial_generate_num_categories(num_categories: int) -> None:
     tensor = Multinomial(torch.ones(num_categories)).generate(size=(4, 10))
     assert tensor.shape == (4, 10)
@@ -56,15 +59,15 @@ def test_multinomial_generate_different_random_seeds() -> None:
     )
 
 
-@mark.parametrize(
+@pytest.mark.parametrize(
     "generator",
-    (
+    [
         Multinomial.create_uniform_weights(num_categories=10),
         Multinomial.create_exp_weights(num_categories=10),
         Multinomial.create_linear_weights(num_categories=10),
-    ),
+    ],
 )
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_multinomial_generate_predefined_settings(
     generator: Multinomial, size: tuple[int, ...]
 ) -> None:
@@ -86,18 +89,18 @@ def test_uniform_categorical_str() -> None:
     )
 
 
-@mark.parametrize("num_categories", (1, 2))
+@pytest.mark.parametrize("num_categories", [1, 2])
 def test_uniform_categorical_num_categories(num_categories: int) -> None:
     assert UniformCategorical(num_categories)._num_categories == num_categories
 
 
-@mark.parametrize("num_categories", (0, -1))
+@pytest.mark.parametrize("num_categories", [0, -1])
 def test_uniform_categorical_incorrect_num_categories(num_categories: int) -> None:
-    with raises(ValueError, match="num_categories has to be greater than 0"):
+    with pytest.raises(ValueError, match="num_categories has to be greater than 0"):
         UniformCategorical(num_categories)
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_uniform_categorical_generate(size: tuple[int, ...]) -> None:
     tensor = UniformCategorical(num_categories=50).generate(size)
     assert tensor.shape == size

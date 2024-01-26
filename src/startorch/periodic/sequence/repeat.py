@@ -13,12 +13,11 @@ from startorch.sequence import BaseSequenceGenerator, setup_sequence_generator
 
 
 class RepeatPeriodicSequenceGenerator(BasePeriodicSequenceGenerator):
-    r"""Implements a class to generate periodic sequences by using a
+    r"""Implement a class to generate periodic sequences by using a
     ``BaseSequenceGenerator`` object and repeating the generated
     sequence.
 
     Args:
-    ----
         sequence (``BaseSequenceGenerator`` or dict): Specifies
             a sequence generator or its configuration.
 

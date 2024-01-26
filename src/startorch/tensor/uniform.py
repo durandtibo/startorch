@@ -26,11 +26,10 @@ from startorch.tensor.base import BaseTensorGenerator, setup_tensor_generator
 
 
 class AsinhUniformTensorGenerator(BaseTensorGenerator):
-    r"""Implements a tensor generator to generate tensors by sampling
+    r"""Implement a tensor generator to generate tensors by sampling
     values from an asinh-uniform distribution.
 
     Args:
-    ----
         low (``BaseTensorGenerator`` or dict): Specifies a tensor
             generator (or its configuration) to generate the minimum
             value (inclusive).
@@ -77,11 +76,10 @@ class AsinhUniformTensorGenerator(BaseTensorGenerator):
 
 
 class LogUniformTensorGenerator(BaseTensorGenerator):
-    r"""Implements a tensor generator to generate tensors by sampling
+    r"""Implement a tensor generator to generate tensors by sampling
     values from a log-uniform distribution.
 
     Args:
-    ----
         low (``BaseSequenceGenerator`` or dict): Specifies a tensor
             generator (or its configuration) to generate the minimum
             value (inclusive).
@@ -128,11 +126,10 @@ class LogUniformTensorGenerator(BaseTensorGenerator):
 
 
 class RandAsinhUniformTensorGenerator(BaseTensorGenerator):
-    r"""Implements a tensor generator by sampling values from an asinh-
+    r"""Implement a tensor generator by sampling values from an asinh-
     uniform distribution.
 
     Args:
-    ----
         low (float): Specifies the minimum value (inclusive).
         high (float): Specifies the maximum value (exclusive).
 
@@ -156,7 +153,7 @@ class RandAsinhUniformTensorGenerator(BaseTensorGenerator):
         self._high = float(high)
 
     def __repr__(self) -> str:
-        return f"{self.__class__.__qualname__}(low={self._low}, " f"high={self._high})"
+        return f"{self.__class__.__qualname__}(low={self._low}, high={self._high})"
 
     def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
         return rand_asinh_uniform(
@@ -168,14 +165,13 @@ class RandAsinhUniformTensorGenerator(BaseTensorGenerator):
 
 
 class RandIntTensorGenerator(BaseTensorGenerator):
-    r"""Implements a tensor generator by sampling integer values from a
+    r"""Implement a tensor generator by sampling integer values from a
     uniform distribution.
 
     Args:
-    ----
-        low (int, optional): Specifies the minimum value
+        low: Specifies the minimum value
             (inclusive).
-        high (int, optional): Specifies the maximum value
+        high: Specifies the maximum value
             (exclusive).
 
     Example usage:
@@ -205,11 +201,10 @@ class RandIntTensorGenerator(BaseTensorGenerator):
 
 
 class RandLogUniformTensorGenerator(BaseTensorGenerator):
-    r"""Implements a tensor generator to generate tensors by sampling
+    r"""Implement a tensor generator to generate tensors by sampling
     values from a log-uniform distribution.
 
     Args:
-    ----
         low (float): Specifies the minimum value (inclusive).
         high (float): Specifies the maximum value (exclusive).
 
@@ -245,14 +240,13 @@ class RandLogUniformTensorGenerator(BaseTensorGenerator):
 
 
 class RandUniformTensorGenerator(BaseTensorGenerator):
-    r"""Implements a tensor generator by sampling values from a uniform
+    r"""Implement a tensor generator by sampling values from a uniform
     distribution.
 
     Args:
-    ----
-        low (float, optional): Specifies the minimum value
+        low: Specifies the minimum value
             (inclusive). Default: ``0.0``
-        high (float, optional): Specifies the maximum value
+        high: Specifies the maximum value
             (exclusive). Default: ``1.0``
 
     Example usage:
@@ -282,11 +276,10 @@ class RandUniformTensorGenerator(BaseTensorGenerator):
 
 
 class UniformTensorGenerator(BaseTensorGenerator):
-    r"""Implements a tensor generator by sampling values from a uniform
+    r"""Implement a tensor generator by sampling values from a uniform
     distribution.
 
     Args:
-    ----
         low (``BaseTensorGenerator`` or dict): Specifies a tensor
             generator (or its configuration) to generate the minimum
             value (inclusive).

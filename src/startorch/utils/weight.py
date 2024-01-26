@@ -16,19 +16,16 @@ def prepare_probabilities(weights: Tensor | Sequence[int | float]) -> torch.Tens
     r"""Converts un-normalized positive weights to probabilities.
 
     Args:
-    ----
         weights (``torch.Tensor`` of shape ``(num_categories,)`` and
             type float or ``Sequence``): Specifies the vector of
             weights associated to each category. The weights have
             to be positive.
 
     Returns:
-    -------
         ``torch.Tensor`` of type float and shape ``(num_categories,)``:
             The vector of probability associated at each category.
 
     Raises:
-    ------
         ValueError if the weights are not valid.
 
     Example usage:
@@ -70,13 +67,11 @@ def prepare_weighted_generators(
             If this key is absent, the weight is set to ``1.0``.
 
     Args:
-    ----
         generators (tuple or list): Specifies the tensor generators
             and their weights. See above to learn about the
             expected format.
 
     Returns:
-    -------
         tuple with two values:
             - a tuple of generators or their configurations
             - a tuple of floats

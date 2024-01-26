@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from unittest.mock import Mock, patch
 
+import pytest
 import torch
-from pytest import mark, raises
 
 from startorch.tensor import (
     HalfNormal,
@@ -28,7 +28,7 @@ def test_half_normal_str() -> None:
     )
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_half_normal_generate(size: tuple[int, ...]) -> None:
     tensor = HalfNormal(std=RandUniform(low=1.0, high=2.0)).generate(size)
     assert tensor.shape == size
@@ -66,7 +66,7 @@ def test_rand_half_normal_str() -> None:
     assert str(RandHalfNormal()).startswith("RandHalfNormalTensorGenerator(")
 
 
-@mark.parametrize("std", (1, 2))
+@pytest.mark.parametrize("std", [1, 2])
 def test_rand_half_normal_std(std: float) -> None:
     assert RandHalfNormal(std=std)._std == std
 
@@ -75,13 +75,13 @@ def test_rand_half_normal_std_default() -> None:
     assert RandHalfNormal()._std == 1.0
 
 
-@mark.parametrize("std", (0, -1))
+@pytest.mark.parametrize("std", [0, -1])
 def test_rand_half_normal_incorrect_std(std: float) -> None:
-    with raises(ValueError, match="std has to be greater than 0"):
+    with pytest.raises(ValueError, match="std has to be greater than 0"):
         RandHalfNormal(std=std)
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_rand_half_normal_generate(size: tuple[int, ...]) -> None:
     tensor = RandHalfNormal().generate(size)
     assert tensor.shape == size
@@ -89,7 +89,7 @@ def test_rand_half_normal_generate(size: tuple[int, ...]) -> None:
     assert tensor.min() >= 0.0
 
 
-@mark.parametrize("std", (0.1, 1.0))
+@pytest.mark.parametrize("std", [0.1, 1.0])
 def test_rand_half_normal_generate_mean_std(std: float) -> None:
     generator = RandHalfNormal(std=std)
     mock = Mock(return_value=torch.ones(2, 4))
@@ -121,7 +121,7 @@ def test_rand_trunc_normal_str() -> None:
     assert str(RandTruncHalfNormal()).startswith("RandTruncHalfNormalTensorGenerator(")
 
 
-@mark.parametrize("std", (1.0, 2.0))
+@pytest.mark.parametrize("std", [1.0, 2.0])
 def test_rand_trunc_normal_std(std: float) -> None:
     assert RandTruncHalfNormal(std=std)._std == std
 
@@ -130,13 +130,13 @@ def test_rand_trunc_normal_std_default() -> None:
     assert RandTruncHalfNormal()._std == 1.0
 
 
-@mark.parametrize("std", (0.0, -1.0))
+@pytest.mark.parametrize("std", [0.0, -1.0])
 def test_rand_trunc_normal_incorrect_std(std: float) -> None:
-    with raises(ValueError, match="std has to be greater than 0"):
+    with pytest.raises(ValueError, match="std has to be greater than 0"):
         RandTruncHalfNormal(std=std)
 
 
-@mark.parametrize("max_value", (1.0, 2.0))
+@pytest.mark.parametrize("max_value", [1.0, 2.0])
 def test_rand_trunc_normal_max_value(max_value: float) -> None:
     assert RandTruncHalfNormal(max_value=max_value)._max_value == max_value
 
@@ -145,13 +145,13 @@ def test_rand_trunc_normal_max_value_default() -> None:
     assert RandTruncHalfNormal()._max_value == 3.0
 
 
-@mark.parametrize("max_value", (0.0, -1.0))
+@pytest.mark.parametrize("max_value", [0.0, -1.0])
 def test_rand_trunc_normal_incorrect_max_value(max_value: float) -> None:
-    with raises(ValueError, match="max_value has to be greater than 0"):
+    with pytest.raises(ValueError, match="max_value has to be greater than 0"):
         RandTruncHalfNormal(max_value=max_value)
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_rand_trunc_normal_generate(size: tuple[int, ...]) -> None:
     tensor = RandTruncHalfNormal().generate(size)
     assert tensor.shape == size
@@ -160,7 +160,7 @@ def test_rand_trunc_normal_generate(size: tuple[int, ...]) -> None:
     assert tensor.max() < 3.0
 
 
-@mark.parametrize("std", (0.1, 1.0))
+@pytest.mark.parametrize("std", [0.1, 1.0])
 def test_rand_trunc_normal_generate_std(std: float) -> None:
     generator = RandTruncHalfNormal(std=std)
     mock = Mock(return_value=torch.ones(2, 4))
@@ -169,7 +169,7 @@ def test_rand_trunc_normal_generate_std(std: float) -> None:
         assert mock.call_args.kwargs["std"] == std
 
 
-@mark.parametrize("max_value", (2.0, 1.0))
+@pytest.mark.parametrize("max_value", [2.0, 1.0])
 def test_rand_trunc_normal_generate_min_max(max_value: float) -> None:
     generator = RandTruncHalfNormal(max_value=max_value)
     mock = Mock(return_value=torch.ones(2, 4))
@@ -206,7 +206,7 @@ def test_trunc_half_normal_str() -> None:
     ).startswith("TruncHalfNormalTensorGenerator(")
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_trunc_half_normal_generate(size: tuple[int, ...]) -> None:
     tensor = TruncHalfNormal(
         std=RandUniform(low=1.0, high=2.0),

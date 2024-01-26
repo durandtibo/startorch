@@ -14,7 +14,7 @@ from startorch.utils.seed import get_torch_generator
 SIZES = (1, 2, 4)
 
 
-@fixture
+@fixture()
 def centers() -> torch.Tensor:
     return torch.rand(5, 2) * 20.0 - 10.0
 

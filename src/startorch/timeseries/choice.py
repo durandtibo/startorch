@@ -17,7 +17,7 @@ from startorch.utils.weight import prepare_weighted_generators
 
 
 class MultinomialChoiceTimeSeriesGenerator(BaseTimeSeriesGenerator):
-    r"""Implements a time series generator that select a time series
+    r"""Implement a time series generator that select a time series
     generator at each batch.
 
     This time series generator is used to generate time series with
@@ -36,7 +36,6 @@ class MultinomialChoiceTimeSeriesGenerator(BaseTimeSeriesGenerator):
             If this key is absent, the weight is set to ``1.0``.
 
     Args:
-    ----
         generators (tuple or list): Specifies the time series
             generators and their weights. See above to learn
             about the expected format.

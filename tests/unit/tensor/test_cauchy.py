@@ -1,7 +1,7 @@
 from unittest.mock import Mock, patch
 
+import pytest
 import torch
-from pytest import mark, raises
 
 from startorch.tensor import (
     Cauchy,
@@ -26,7 +26,7 @@ def test_cauchy_str() -> None:
     ).startswith("CauchyTensorGenerator(")
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_cauchy_generate(size: tuple[int, ...]) -> None:
     tensor = Cauchy(
         loc=RandUniform(low=-1.0, high=1.0),
@@ -70,7 +70,7 @@ def test_rand_cauchy_str() -> None:
     assert str(RandCauchy()).startswith("RandCauchyTensorGenerator(")
 
 
-@mark.parametrize("loc", (-1.0, 0.0, 1.0))
+@pytest.mark.parametrize("loc", [-1.0, 0.0, 1.0])
 def test_rand_cauchy_loc(loc: float) -> None:
     assert RandCauchy(loc=loc)._loc == loc
 
@@ -79,7 +79,7 @@ def test_rand_cauchy_loc_default() -> None:
     assert RandCauchy()._loc == 0.0
 
 
-@mark.parametrize("scale", (1.0, 2.0))
+@pytest.mark.parametrize("scale", [1.0, 2.0])
 def test_rand_cauchy_scale(scale: float) -> None:
     assert RandCauchy(scale=scale)._scale == scale
 
@@ -88,21 +88,21 @@ def test_rand_cauchy_scale_default() -> None:
     assert RandCauchy()._scale == 1.0
 
 
-@mark.parametrize("scale", (0.0, -1.0))
+@pytest.mark.parametrize("scale", [0.0, -1.0])
 def test_rand_cauchy_incorrect_scale(scale: float) -> None:
-    with raises(ValueError, match="scale has to be greater than 0"):
+    with pytest.raises(ValueError, match="scale has to be greater than 0"):
         RandCauchy(scale=scale)
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_rand_cauchy_generate(size: tuple[int, ...]) -> None:
     tensor = RandCauchy().generate(size)
     assert tensor.data.shape == size
     assert tensor.data.dtype == torch.float
 
 
-@mark.parametrize("loc", (0, 1))
-@mark.parametrize("scale", (1, 2))
+@pytest.mark.parametrize("loc", [0, 1])
+@pytest.mark.parametrize("scale", [1, 2])
 def test_rand_cauchy_generate_loc_scale(loc: float, scale: float) -> None:
     generator = RandCauchy(loc=loc, scale=scale)
     mock = Mock(return_value=torch.ones(2, 4))
@@ -135,7 +135,7 @@ def test_rand_trunc_cauchy_str() -> None:
     assert str(RandTruncCauchy()).startswith("RandTruncCauchyTensorGenerator(")
 
 
-@mark.parametrize("loc", (-1.0, 0.0, 1.0))
+@pytest.mark.parametrize("loc", [-1.0, 0.0, 1.0])
 def test_rand_trunc_cauchy_loc(loc: float) -> None:
     assert RandTruncCauchy(loc=loc)._loc == loc
 
@@ -144,7 +144,7 @@ def test_rand_trunc_cauchy_loc_default() -> None:
     assert RandTruncCauchy()._loc == 0.0
 
 
-@mark.parametrize("scale", (1.0, 2.0))
+@pytest.mark.parametrize("scale", [1.0, 2.0])
 def test_rand_trunc_cauchy_scale(scale: float) -> None:
     assert RandTruncCauchy(scale=scale)._scale == scale
 
@@ -153,13 +153,13 @@ def test_rand_trunc_cauchy_scale_default() -> None:
     assert RandTruncCauchy()._scale == 1.0
 
 
-@mark.parametrize("scale", (0.0, -1.0))
+@pytest.mark.parametrize("scale", [0.0, -1.0])
 def test_rand_trunc_cauchy_incorrect_scale(scale: float) -> None:
-    with raises(ValueError, match="scale has to be greater than 0"):
+    with pytest.raises(ValueError, match="scale has to be greater than 0"):
         RandTruncCauchy(scale=scale)
 
 
-@mark.parametrize("min_value", (-1.0, -2.0))
+@pytest.mark.parametrize("min_value", [-1.0, -2.0])
 def test_rand_trunc_cauchy_min_value(min_value: float) -> None:
     assert RandTruncCauchy(min_value=min_value)._min_value == min_value
 
@@ -168,7 +168,7 @@ def test_rand_trunc_cauchy_min_value_default() -> None:
     assert RandTruncCauchy()._min_value == -2.0
 
 
-@mark.parametrize("max_value", (1.0, 2.0))
+@pytest.mark.parametrize("max_value", [1.0, 2.0])
 def test_rand_trunc_cauchy_max_value(max_value: float) -> None:
     assert RandTruncCauchy(max_value=max_value)._max_value == max_value
 
@@ -178,11 +178,11 @@ def test_rand_trunc_cauchy_max_value_default() -> None:
 
 
 def test_rand_trunc_cauchy_incorrect_min_max() -> None:
-    with raises(ValueError, match="max_value (.*) has to be greater or equal to min_value"):
+    with pytest.raises(ValueError, match="max_value (.*) has to be greater or equal to min_value"):
         RandTruncCauchy(min_value=1.0, max_value=-1.0)
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_rand_trunc_cauchy_generate(size: tuple[int, ...]) -> None:
     tensor = RandTruncCauchy().generate(size)
     assert tensor.shape == size
@@ -191,8 +191,8 @@ def test_rand_trunc_cauchy_generate(size: tuple[int, ...]) -> None:
     assert tensor.max() < 2.0
 
 
-@mark.parametrize("loc", (0, 1))
-@mark.parametrize("scale", (1, 2))
+@pytest.mark.parametrize("loc", [0, 1])
+@pytest.mark.parametrize("scale", [1, 2])
 def test_rand_trunc_cauchy_generate_loc_scale(loc: float, scale: float) -> None:
     generator = RandTruncCauchy(loc=loc, scale=scale)
     mock = Mock(return_value=torch.ones(2, 4))
@@ -202,8 +202,8 @@ def test_rand_trunc_cauchy_generate_loc_scale(loc: float, scale: float) -> None:
         assert mock.call_args.kwargs["scale"] == scale
 
 
-@mark.parametrize("max_value", (1.0, 2.0))
-@mark.parametrize("min_value", (-1.0, -2.0))
+@pytest.mark.parametrize("max_value", [1.0, 2.0])
+@pytest.mark.parametrize("min_value", [-1.0, -2.0])
 def test_rand_trunc_cauchy_generate_max_min(max_value: float, min_value: float) -> None:
     generator = RandTruncCauchy(min_value=min_value, max_value=max_value)
     mock = Mock(return_value=torch.ones(2, 4))
@@ -243,7 +243,7 @@ def test_trunc_cauchy_str() -> None:
     ).startswith("TruncCauchyTensorGenerator(")
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_trunc_cauchy_generate(size: tuple[int, ...]) -> None:
     tensor = TruncCauchy(
         loc=RandUniform(low=-1.0, high=1.0),

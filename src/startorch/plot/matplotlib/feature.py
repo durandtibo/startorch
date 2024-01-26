@@ -30,24 +30,21 @@ def hist_feature(
     with ``n`` histograms: one for each features.
 
     Args:
-    ----
         features (``torch.Tensor`` or ``numpy.ndarray`` of shape
             ``(batch_size, feature_size)``): Specifies the features.
         feature_names (``Sequence`` or ``None``, optional): Specifies
             the feature names. If ``None``, the feature names are
             generated automatically. Default: ``None``
-        ncols (int, optional): Specifies the number of columns.
+        ncols: Specifies the number of columns.
             Default: ``2``
         figsize (``tuple``, optional): Specifies the individual figure
             size. Default: ``(6, 4)``
         **kwargs: Additional keyword arguments for ``plt.hist``.
 
     Returns:
-    -------
         ``matplotlib.pyplot.Figure``: The generated figure.
 
     Raises:
-    ------
         RuntimeError if the ``features`` shape is invalid
         RuntimeError if ``features`` and ``feature_names`` are not
             consistent

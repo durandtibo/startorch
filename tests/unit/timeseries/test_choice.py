@@ -1,6 +1,6 @@
+import pytest
 import torch
 from coola import objects_are_equal
-from pytest import mark
 from redcat import BatchDict, BatchedTensorSeq
 
 from startorch import constants as ct
@@ -62,8 +62,8 @@ def test_multinomial_choice_weights() -> None:
     )._weights.equal(torch.tensor([2.0, 1.0, 3.0]))
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_multinomial_choice_generate(batch_size: int, seq_len: int) -> None:
     batch = MultinomialChoice(
         (

@@ -16,11 +16,10 @@ from startorch.tensor.base import BaseTensorGenerator, setup_tensor_generator
 
 
 class CauchyTensorGenerator(BaseTensorGenerator):
-    r"""Implements a class to generate tensor by sampling values from a
+    r"""Implement a class to generate tensor by sampling values from a
     Cauchy distribution.
 
     Args:
-    ----
         loc (``BaseTensorGenerator`` or dict): Specifies a tensor
             generator (or its configuration) to generate the location.
         scale (``BaseTensorGenerator`` or dict): Specifies a tensor
@@ -65,18 +64,16 @@ class CauchyTensorGenerator(BaseTensorGenerator):
 
 
 class RandCauchyTensorGenerator(BaseTensorGenerator):
-    r"""Implements a class to generate tensor by sampling values from a
+    r"""Implement a class to generate tensor by sampling values from a
     Cauchy distribution.
 
     Args:
-    ----
-        loc (float, optional): Specifies the location/median of the
+        loc: Specifies the location/median of the
             Cauchy distribution. Default: ``0.0``
-        scale (float, optional): Specifies the scale of the
+        scale: Specifies the scale of the
             distribution. Default: ``1.0``
 
     Raises:
-    ------
         ValueError if ``scale`` is not a positive number.
 
     Example usage:
@@ -115,22 +112,20 @@ class RandCauchyTensorGenerator(BaseTensorGenerator):
 
 
 class RandTruncCauchyTensorGenerator(BaseTensorGenerator):
-    r"""Implements a class to generate tensor by sampling values from a
+    r"""Implement a class to generate tensor by sampling values from a
     truncated Cauchy distribution.
 
     Args:
-    ----
-        loc (float, optional): Specifies the location/median of the
+        loc: Specifies the location/median of the
             Cauchy distribution. Default: ``0.0``
-        scale (float, optional): Specifies the scale of the
+        scale: Specifies the scale of the
             distribution. Default: ``1.0``
-        min_value (float, optional): Specifies the minimum value.
+        min_value: Specifies the minimum value.
             (included). Default: ``-2.0``
-        max_value (float, optional): Specifies the maximum value
+        max_value: Specifies the maximum value
             (excluded). Default: ``2.0``
 
     Raises:
-    ------
         ValueError if ``std`` is not a positive number.
         ValueError if ``max_value`` is lower than ``min_value``.
 
@@ -183,11 +178,10 @@ class RandTruncCauchyTensorGenerator(BaseTensorGenerator):
 
 
 class TruncCauchyTensorGenerator(BaseTensorGenerator):
-    r"""Implements a class to generate tensor by sampling values from a
+    r"""Implement a class to generate tensor by sampling values from a
     Cauchy distribution.
 
     Args:
-    ----
         loc (``BaseTensorGenerator`` or dict): Specifies a tensor
             generator (or its configuration) to generate the location.
         scale (``BaseTensorGenerator`` or dict): Specifies a tensor

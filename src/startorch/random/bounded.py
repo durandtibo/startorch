@@ -52,26 +52,23 @@ def rand_trunc_cauchy(
     Cauchy distribution.
 
     Args:
-    ----
         size (list or tuple): Specifies the tensor shape.
-        loc (float, optional): Specifies the location of the Cauchy
+        loc: Specifies the location of the Cauchy
             distribution. Default: ``0.0``
-        scale (float, optional): Specifies the scale of the Cauchy
+        scale: Specifies the scale of the Cauchy
             distribution. Default: ``1.0``
-        min_value (float, optional): Specifies the minimum value.
+        min_value: Specifies the minimum value.
             Default: ``-2.0``
-        max_value (float, optional): Specifies the maximum value.
+        max_value: Specifies the maximum value.
             Default: ``2.0``
         generator (``torch.Generator`` or None, optional): Specifies
             an optional random generator. Default: ``None``
 
     Returns:
-    -------
         ``torch.Tensor``: A tensor filled with values sampled from
             a truncated Cauchy distribution
 
     Raises:
-    ------
         ValueError if the ``max_value`` and ``min_value`` parameters
             are not valid.
 
@@ -109,7 +106,6 @@ def trunc_cauchy(
     Cauchy distribution.
 
     Args:
-    ----
         loc (``torch.Tensor`` of type float and shape
             ``(d0, d1, ..., dn)``): Specifies the location/median of
             the Cauchy distribution.
@@ -124,12 +120,10 @@ def trunc_cauchy(
             an optional random generator. Default: ``None``
 
     Returns:
-    -------
         ``torch.Tensor``: A tensor filled with values sampled from
             a truncated Cauchy distribution
 
     Raises:
-    ------
         ValueError if the ``loc``, ``scale``, ``max_value`` and
             ``min_value`` parameters are not valid.
 
@@ -179,22 +173,19 @@ def rand_trunc_exponential(
     Exponential distribution.
 
     Args:
-    ----
         size (list or tuple): Specifies the tensor shape.
-        rate (float, optional): Specifies the rate of the Exponential
+        rate: Specifies the rate of the Exponential
             distribution. Default: ``1.0``
-        max_value (float, optional): Specifies the maximum value.
+        max_value: Specifies the maximum value.
             Default: ``5.0``
         generator (``torch.Generator`` or None, optional): Specifies
             an optional random generator. Default: ``None``
 
     Returns:
-    -------
         ``torch.Tensor``: A tensor filled with values sampled from a
             truncated Exponential distribution
 
     Raises:
-    ------
         ValueError if the ``max_value`` parameter is not valid.
 
     Example usage:
@@ -227,7 +218,6 @@ def trunc_exponential(
     Exponential distribution.
 
     Args:
-    ----
         rate (``torch.Tensor`` of type float and shape
             ``(d0, d1, ..., dn)``): Specifies the rate
             of the Exponential distribution.
@@ -237,12 +227,10 @@ def trunc_exponential(
             an optional random generator. Default: ``None``
 
     Returns:
-    -------
         ``torch.Tensor``: A tensor filled with values sampled from
             a truncated Exponential distribution.
 
     Raises:
-    ------
         ValueError if the ``rate`` and ``max_value`` parameter are not
             valid.
 
@@ -287,22 +275,19 @@ def rand_trunc_half_cauchy(
     half-Cauchy distribution.
 
     Args:
-    ----
         size (list or tuple): Specifies the tensor shape.
-        scale (float, optional): Specifies the scale of the
+        scale: Specifies the scale of the
             half-Cauchy distribution. Default: ``1.0``
-        max_value (float, optional): Specifies the maximum value.
+        max_value: Specifies the maximum value.
             Default: ``4.0``
         generator (``torch.Generator`` or None, optional): Specifies
             an optional random generator. Default: ``None``
 
     Returns:
-    -------
         ``torch.Tensor``: A tensor filled with values sampled from a
             truncated half-Cauchy distribution.
 
     Raises:
-    ------
         ValueError if the ``max_value`` parameter is not valid.
 
     Example usage:
@@ -335,7 +320,6 @@ def trunc_half_cauchy(
     half-Cauchy distribution.
 
     Args:
-    ----
         scale (``torch.Tensor`` of type float and shape
             ``(d0, d1, ..., dn)``): Specifies the scale
             of the half-Cauchy distribution.
@@ -345,12 +329,10 @@ def trunc_half_cauchy(
             an optional random generator. Default: ``None``
 
     Returns:
-    -------
         ``torch.Tensor``: A tensor filled with values sampled from
             a truncated Cauchy distribution
 
     Raises:
-    ------
         ValueError if the ``scale`` and ``max_value`` parameter are
             not valid.
 
@@ -395,22 +377,19 @@ def rand_trunc_half_normal(
     half-Normal distribution.
 
     Args:
-    ----
         size (list or tuple): Specifies the tensor shape.
-        std (float, optional): Specifies the standard deviation of
+        std: Specifies the standard deviation of
             the half-Normal distribution. Default: ``1.0``
-        max_value (float, optional): Specifies the maximum value.
+        max_value: Specifies the maximum value.
             Default: ``5.0``
         generator (``torch.Generator`` or None, optional): Specifies
             an optional random generator. Default: ``None``
 
     Returns:
-    -------
         ``torch.Tensor``: A tensor filled with values sampled from a
             truncated half-Normal distribution.
 
     Raises:
-    ------
         ValueError if the ``max_value`` parameter is not valid.
 
     Example usage:
@@ -443,7 +422,6 @@ def trunc_half_normal(
     half-Normal distribution.
 
     Args:
-    ----
         std (``torch.Tensor`` of type float and shape
             ``(d0, d1, ..., dn)``): Specifies the standard deviation
             of the half-Normal distribution.
@@ -453,12 +431,10 @@ def trunc_half_normal(
             an optional random generator. Default: ``None``
 
     Returns:
-    -------
         ``torch.Tensor``: A tensor filled with values sampled from a
             truncated half-Normal distribution.
 
     Raises:
-    ------
         ValueError if the ``std`` and ``max_value`` parameters are not
             valid.
 
@@ -502,26 +478,23 @@ def rand_trunc_log_normal(
     Normal distribution.
 
     Args:
-    ----
         size (list or tuple): Specifies the tensor shape.
-        mean (float, optional): Specifies the mean of the underlying
+        mean: Specifies the mean of the underlying
             Normal distribution. Default: ``0.0``
-        std (float, optional): Specifies the standard deviation of
+        std: Specifies the standard deviation of
             the underlying Normal distribution. Default: ``1.0``
-        min_value (float, optional): Specifies the minimum value.
+        min_value: Specifies the minimum value.
             Default: ``0.0``
-        max_value (float, optional): Specifies the maximum value.
+        max_value: Specifies the maximum value.
             Default: ``5.0``
         generator (``torch.Generator`` or None, optional): Specifies
             an optional random generator. Default: ``None``
 
     Returns:
-    -------
         ``torch.Tensor``: A tensor filled with values sampled from a
             truncated log-Normal distribution.
 
     Raises:
-    ------
         ValueError if the ``min_value`` and ``max_value`` parameters
             are not valid.
 
@@ -559,7 +532,6 @@ def trunc_log_normal(
     Normal distribution.
 
     Args:
-    ----
         mean (``torch.Tensor`` of type float and shape
             ``(d0, d1, ..., dn)``): Specifies the mean of the
             underlying Normal distribution.
@@ -574,12 +546,10 @@ def trunc_log_normal(
             an optional random generator. Default: ``None``
 
     Returns:
-    -------
         ``torch.Tensor``: A tensor filled with values sampled from a
             truncated log-Normal distribution.
 
     Raises:
-    ------
         ValueError if the ``mean``, ``std``, ``min_value`` and
             ``max_value`` parameters are not valid.
 
@@ -632,26 +602,23 @@ def rand_trunc_normal(
     Normal distribution.
 
     Args:
-    ----
         size (list or tuple): Specifies the tensor shape.
-        mean (float, optional): Specifies the mean of the Normal
+        mean: Specifies the mean of the Normal
             distribution. Default: ``0.0``
-        std (float, optional): Specifies the standard deviation of
+        std: Specifies the standard deviation of
             the Normal distribution. Default: ``1.0``
-        min_value (float, optional): Specifies the minimum value.
+        min_value: Specifies the minimum value.
             Default: ``-3.0``
-        max_value (float, optional): Specifies the maximum value.
+        max_value: Specifies the maximum value.
             Default: ``3.0``
         generator (``torch.Generator`` or None, optional): Specifies
             an optional random generator. Default: ``None``
 
     Returns:
-    -------
         ``torch.Tensor``: A tensor filled with values sampled from a
             truncated Normal distribution.
 
     Raises:
-    ------
         ValueError if the ``min_value`` and  ``max_value`` parameters
             are not valid.
 
@@ -689,7 +656,6 @@ def trunc_normal(
     Normal distribution.
 
     Args:
-    ----
         mean (``torch.Tensor`` of type float and shape
             ``(d0, d1, ..., dn)``): Specifies the mean of the
             Normal distribution.
@@ -704,12 +670,10 @@ def trunc_normal(
             an optional random generator. Default: ``None``
 
     Returns:
-    -------
         ``torch.Tensor``: A tensor filled with values sampled from a
             truncated Normal distribution.
 
     Raises:
-    ------
         ValueError if the ``min_value`` and  ``max_value`` parameters
             are not valid.
 
@@ -760,22 +724,19 @@ def rand_uniform(
     distribution.
 
     Args:
-    ----
         size (list or tuple): Specifies the tensor shape.
-        low (float, optional): Specifies the minimum value
+        low: Specifies the minimum value
             (inclusive). Default: ``0.0``
-        high (float, optional): Specifies the maximum value
+        high: Specifies the maximum value
             (exclusive). Default: ``1.0``
         generator (``torch.Generator`` or None, optional): Specifies
             an optional random generator. Default: ``None``
 
     Returns:
-    -------
         ``torch.Tensor``: A tensor filled with values sampled from a
             uniform distribution.
 
     Raises:
-    ------
         ValueError if the ``low`` and  ``high`` parameters  are not
             valid.
 
@@ -805,7 +766,6 @@ def uniform(low: Tensor, high: Tensor, generator: torch.Generator | None = None)
     the output size.
 
     Args:
-    ----
         low (``torch.Tensor`` of type float and shape
             ``(d0, d1, ..., dn)``): Specifies the minimum values
             (inclusive).
@@ -816,7 +776,6 @@ def uniform(low: Tensor, high: Tensor, generator: torch.Generator | None = None)
             an optional random generator. Default: ``None``
 
     Returns:
-    -------
         ``torch.Tensor`` of type float and shape
             ``(d0, d1, ..., dn)``: A tensor filled with values sampled
             from a uniform distribution where the minimum and maximum
@@ -864,7 +823,6 @@ def rand_log_uniform(
     distribution in the log space.
 
     Args:
-    ----
         size (list or tuple): Specifies the tensor shape.
         low (float): Specifies the minimum value (inclusive).
             This value needs to be positive.
@@ -873,12 +831,10 @@ def rand_log_uniform(
             an optional random generator. Default: ``None``
 
     Returns:
-    -------
         ``torch.Tensor``: A tensor filled with values sampled from a
             uniform distribution in the log space.
 
     Raises:
-    ------
         ValueError if the ``low`` and  ``high`` parameters  are not
             valid.
 
@@ -907,7 +863,6 @@ def log_uniform(low: Tensor, high: Tensor, generator: torch.Generator | None = N
     distribution in the log space.
 
     Args:
-    ----
         low (``torch.Tensor`` of type float and shape
             ``(d0, d1, ..., dn)``): Specifies the minimum values
             (inclusive).
@@ -918,14 +873,12 @@ def log_uniform(low: Tensor, high: Tensor, generator: torch.Generator | None = N
             an optional random generator. Default: ``None``
 
     Returns:
-    -------
         ``torch.Tensor`` of type float and shape
             ``(d0, d1, ..., dn)``: A tensor filled with values sampled
             from a uniform distribution in the log space where the
             minimum and maximum values are given as input.
 
     Raises:
-    ------
         ValueError if the ``low`` and  ``high`` parameters  are not
             valid.
 
@@ -979,7 +932,6 @@ def rand_asinh_uniform(
             uniform distribution in the inverse hyperbolic sine space.
 
     Raises:
-    ------
         ValueError if the ``low`` and  ``high`` parameters  are not
             valid.
 
@@ -1025,7 +977,6 @@ def asinh_uniform(low: Tensor, high: Tensor, generator: torch.Generator | None =
             input.
 
     Raises:
-    ------
         ValueError if the ``low`` and  ``high`` parameters  are not
             valid.
 

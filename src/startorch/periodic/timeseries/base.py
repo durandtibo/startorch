@@ -54,21 +54,19 @@ class BasePeriodicTimeSeriesGenerator(ABC, metaclass=AbstractFactory):
     def generate(
         self, seq_len: int, period: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchDict:
-        r"""Generates a batch of periodic time series.
+        r"""Generate a batch of periodic time series.
 
         All the time series in the batch have the same length.
 
         Args:
-        ----
             seq_len (int): Specifies the sequence length.
             period (int): Specifies the period.
-            batch_size (int, optional): Specifies the batch size.
+            batch_size: Specifies the batch size.
                 Default: ``1``
             rng (``torch.Generator`` or None, optional): Specifies
                 an optional random number generator. Default: ``None``
 
         Returns:
-        -------
             ``BatchDict``: A batch of periodic time series.
 
         Example usage:
@@ -97,11 +95,9 @@ def is_periodic_timeseries_generator_config(config: dict) -> bool:
     the class.
 
     Args:
-    ----
         config (dict): Specifies the configuration to check.
 
     Returns:
-    -------
         bool: ``True`` if the input configuration is a configuration
             for a ``BasePeriodicTimeSeriesGenerator`` object.
 
@@ -136,12 +132,10 @@ def setup_periodic_timeseries_generator(
     using the ``BasePeriodicTimeSeriesGenerator`` factory function.
 
     Args:
-    ----
         generator (``BasePeriodicTimeSeriesGenerator`` or dict): Specifies a
             periodic time series generator or its configuration.
 
     Returns:
-    -------
         ``BasePeriodicTimeSeriesGenerator``: A periodic time series generator.
 
     Example usage:

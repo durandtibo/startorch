@@ -29,11 +29,10 @@ from startorch.utils.conversion import to_tuple
 
 
 class AsinhUniformSequenceGenerator(BaseSequenceGenerator):
-    r"""Implements a sequence generator to generate sequences by sampling
+    r"""Implement a sequence generator to generate sequences by sampling
     values from an asinh-uniform distribution.
 
     Args:
-    ----
         low (``BaseSequenceGenerator`` or dict): Specifies a sequence
             generator (or its configuration) to generate the minimum
             value (inclusive).
@@ -83,11 +82,10 @@ class AsinhUniformSequenceGenerator(BaseSequenceGenerator):
 
 
 class LogUniformSequenceGenerator(BaseSequenceGenerator):
-    r"""Implements a sequence generator to generate sequences by sampling
+    r"""Implement a sequence generator to generate sequences by sampling
     values from a log-uniform distribution.
 
     Args:
-    ----
         low (``BaseSequenceGenerator`` or dict): Specifies a sequence
             generator (or its configuration) to generate the minimum
             value (inclusive).
@@ -137,18 +135,16 @@ class LogUniformSequenceGenerator(BaseSequenceGenerator):
 
 
 class RandAsinhUniformSequenceGenerator(BaseSequenceGenerator):
-    r"""Implements a sequence generator to generate sequences by sampling
+    r"""Implement a sequence generator to generate sequences by sampling
     values from an asinh-uniform distribution.
 
     Args:
-    ----
         low (float): Specifies the minimum value (inclusive).
         high (float): Specifies the maximum value (exclusive).
         feature_size (tuple or list or int, optional): Specifies the
             feature size. Default: ``1``
 
     Raises:
-    ------
         ValueError if ``high`` is lower than ``low``.
 
     Example usage:
@@ -197,18 +193,16 @@ class RandAsinhUniformSequenceGenerator(BaseSequenceGenerator):
 
 
 class RandIntSequenceGenerator(BaseSequenceGenerator):
-    r"""Implements a class to generate sequences of uniformly distributed
+    r"""Implement a class to generate sequences of uniformly distributed
     integers.
 
     Args:
-    ----
         low (int): Specifies the minimum value (included).
         high (int): Specifies the maximum value (excluded).
         feature_size (tuple or list or int, optional): Specifies the
             feature size. Default: ``tuple()``
 
     Raises:
-    ------
         ValueError if ``high`` is lower than ``low``.
 
     Example usage:
@@ -257,18 +251,16 @@ class RandIntSequenceGenerator(BaseSequenceGenerator):
 
 
 class RandLogUniformSequenceGenerator(BaseSequenceGenerator):
-    r"""Implements a sequence generator to generate sequences by sampling
+    r"""Implement a sequence generator to generate sequences by sampling
     values from a log-uniform distribution.
 
     Args:
-    ----
         low (float): Specifies the minimum value (inclusive).
         high (float): Specifies the maximum value (exclusive).
         feature_size (tuple or list or int, optional): Specifies the
             feature size. Default: ``1``
 
     Raises:
-    ------
         ValueError if ``high`` is lower than ``low``.
 
     Example usage:
@@ -317,20 +309,18 @@ class RandLogUniformSequenceGenerator(BaseSequenceGenerator):
 
 
 class RandUniformSequenceGenerator(BaseSequenceGenerator):
-    r"""Implements a sequence generator to generate sequences by sampling
+    r"""Implement a sequence generator to generate sequences by sampling
     values from a uniform distribution.
 
     Args:
-    ----
-        low (float, optional): Specifies the minimum value
+        low: Specifies the minimum value
             (inclusive). Default: ``0.0``
-        high (float, optional): Specifies the maximum value
+        high: Specifies the maximum value
             (exclusive). Default: ``1.0``
         feature_size (tuple or list or int, optional): Specifies the
             feature size. Default: ``1``
 
     Raises:
-    ------
         ValueError if ``high`` is lower than ``low``.
 
     Example usage:
@@ -379,7 +369,7 @@ class RandUniformSequenceGenerator(BaseSequenceGenerator):
 
 
 class UniformSequenceGenerator(BaseSequenceGenerator):
-    r"""Implements a sequence generator to generate sequences by sampling
+    r"""Implement a sequence generator to generate sequences by sampling
     values from a uniform distribution.
 
     Args:
