@@ -1,12 +1,14 @@
+r"""Implement a time series generator to generate periodic time series
+from a regular time series generator."""
+
 from __future__ import annotations
 
 __all__ = ["PeriodicTimeSeriesGenerator"]
 
 import math
+from typing import TYPE_CHECKING
 
 from coola.utils import str_indent, str_mapping
-from redcat import BatchDict
-from torch import Generator
 
 from startorch.periodic.timeseries.base import BasePeriodicTimeSeriesGenerator
 from startorch.tensor.base import BaseTensorGenerator, setup_tensor_generator
@@ -15,44 +17,47 @@ from startorch.timeseries.base import (
     setup_timeseries_generator,
 )
 
+if TYPE_CHECKING:
+    from redcat import BatchDict
+    from torch import Generator
+
 
 class PeriodicTimeSeriesGenerator(BaseTimeSeriesGenerator):
     r"""Implement a time series generator to generate periodic time
     series from a regular time series generator.
 
     Args:
-        timeseries (``BaseTimeSeriesGenerator`` or
-            ``BasePeriodicTimeSeriesGenerator`` or dict): Specifies a
-            time series generator or its configuration that is used to
-            generate the periodic pattern.
-        period (``BaseTensorGenerator`` or dict): Specifies
-            the period length sampler or its configuration. This
-            sampler is used to sample the period length at each
-            batch.
+        timeseries: Specifies a time series generator or its
+            configuration that is used to generate the periodic
+            pattern.
+        period: Specifies the period length sampler or its
+            configuration. This sampler is used to sample the period
+            length at each batch.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.timeseries import Periodic, TimeSeries
+    >>> from startorch.sequence import RandUniform
+    >>> from startorch.tensor import RandInt
+    >>> generator = Periodic(
+    ...     TimeSeries({"value": RandUniform(), "time": RandUniform()}), period=RandInt(2, 5)
+    ... )
+    >>> generator
+    PeriodicTimeSeriesGenerator(
+      (sequence): TimeSeriesGenerator(
+          (value): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+          (time): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+        )
+      (period): RandIntTensorGenerator(low=2, high=5)
+    )
+    >>> generator.generate(seq_len=10, batch_size=2)
+    BatchDict(
+      (value): tensor([[...]], batch_dim=0, seq_dim=1)
+      (time): tensor([[...]], batch_dim=0, seq_dim=1)
+    )
 
-        >>> from startorch.timeseries import Periodic, TimeSeries
-        >>> from startorch.sequence import RandUniform
-        >>> from startorch.tensor import RandInt
-        >>> generator = Periodic(
-        ...     TimeSeries({"value": RandUniform(), "time": RandUniform()}), period=RandInt(2, 5)
-        ... )
-        >>> generator
-        PeriodicTimeSeriesGenerator(
-          (sequence): TimeSeriesGenerator(
-              (value): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
-              (time): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
-            )
-          (period): RandIntTensorGenerator(low=2, high=5)
-        )
-        >>> generator.generate(seq_len=10, batch_size=2)
-        BatchDict(
-          (value): tensor([[...]], batch_dim=0, seq_dim=1)
-          (time): tensor([[...]], batch_dim=0, seq_dim=1)
-        )
+    ```
     """
 
     def __init__(

@@ -43,5 +43,6 @@ def rand_poisson(
         tensor([...])
     """
     if rate <= 0:
-        raise ValueError(f"rate has to be greater than 0 (received: {rate})")
+        msg = f"rate has to be greater than 0 (received: {rate})"
+        raise ValueError(msg)
     return torch.poisson(torch.full(size, rate, dtype=torch.float), generator=generator)

@@ -9,7 +9,7 @@ from startorch.tensor.base import BaseTensorGenerator, setup_tensor_generator
 
 
 class BaseWrapperTensorGenerator(BaseTensorGenerator):
-    r"""Defines a base class to easily wrap a tensor generator.
+    r"""Define a base class to easily wrap a tensor generator.
 
     Args:
         tensor (``BaseTensorGenerator`` or dict):

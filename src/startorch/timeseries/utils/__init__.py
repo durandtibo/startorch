@@ -1,3 +1,5 @@
+r"""Contain utility functions for time series."""
+
 from __future__ import annotations
 
 __all__ = ["merge_timeseries_by_time", "mix2sequences"]

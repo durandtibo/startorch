@@ -56,7 +56,7 @@ class MultinomialTensorGenerator(BaseTensorGenerator):
         with the rule: ``w_i = 1``
 
         Args:
-            num_categories (int): Specifies the number of categories.
+            num_categories: Specifies the number of categories.
 
         Returns:
             ``MultinomialTensorGenerator``: A tensor generator where
@@ -88,7 +88,7 @@ class MultinomialTensorGenerator(BaseTensorGenerator):
         with the rule: ``w_i = num_categories - i``
 
         Args:
-            num_categories (int): Specifies the number of categories.
+            num_categories: Specifies the number of categories.
 
         Returns:
             ``MultinomialTensorGenerator``: A tensor generator where
@@ -121,7 +121,7 @@ class MultinomialTensorGenerator(BaseTensorGenerator):
         the rule: ``w_i = exp(-scale * i)``
 
         Args:
-            num_categories (int): Specifies the number of categories.
+            num_categories: Specifies the number of categories.
             scale: Specifies the scale parameter
                 that controls the exponential function.
                 Default: ``0.1``
@@ -156,7 +156,7 @@ class UniformCategoricalTensorGenerator(BaseTensorGenerator):
     ``Multinomial.generate_uniform_weights``.
 
     Args:
-        num_categories (int): Specifies the number of categories.
+        num_categories: Specifies the number of categories.
 
     Raises:
         ValueError if ``num_categories`` is negative.

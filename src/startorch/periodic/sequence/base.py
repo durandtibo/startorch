@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 
 
 class BasePeriodicSequenceGenerator(ABC, metaclass=AbstractFactory):
-    r"""Defines the base class to generate periodic sequences.
+    r"""Define the base class to generate periodic sequences.
 
     A child class has to implement the ``generate`` method.
 
@@ -49,8 +49,8 @@ class BasePeriodicSequenceGenerator(ABC, metaclass=AbstractFactory):
         All the sequences in the batch have the same length.
 
         Args:
-            seq_len (int): Specifies the sequence length.
-            period (int): Specifies the period.
+            seq_len: Specifies the sequence length.
+            period: Specifies the period.
             batch_size: Specifies the batch size.
                 Default: ``1``
             rng (``torch.Generator`` or None, optional): Specifies
@@ -76,7 +76,7 @@ class BasePeriodicSequenceGenerator(ABC, metaclass=AbstractFactory):
 
 
 def is_periodic_sequence_generator_config(config: dict) -> bool:
-    r"""Indicates if the input configuration is a configuration for a
+    r"""Indicate if the input configuration is a configuration for a
     ``BasePeriodicSequenceGenerator``.
 
     This function only checks if the value of the key  ``_target_``
