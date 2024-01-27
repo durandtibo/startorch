@@ -21,6 +21,7 @@ if TYPE_CHECKING:
     from collections.abc import Sequence
 
     from redcat import BatchDict
+    from torch import Generator
 
 
 class MultinomialChoiceTimeSeriesGenerator(BaseTimeSeriesGenerator):
@@ -94,7 +95,7 @@ class MultinomialChoiceTimeSeriesGenerator(BaseTimeSeriesGenerator):
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchDict:
         index = torch.multinomial(self._weights, num_samples=1, generator=rng).item()
         return self._generators[index].generate(seq_len=seq_len, batch_size=batch_size, rng=rng)

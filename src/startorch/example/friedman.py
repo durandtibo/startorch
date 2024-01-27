@@ -1,3 +1,7 @@
+r"""Contain example generators to generate regression data using the
+Friedman patterns."""
+
+
 from __future__ import annotations
 
 __all__ = [
@@ -10,6 +14,7 @@ __all__ = [
 ]
 
 import math
+from typing import TYPE_CHECKING
 
 import torch
 from redcat import BatchDict, BatchedTensor
@@ -18,6 +23,9 @@ from startorch import constants as ct
 from startorch.example.base import BaseExampleGenerator
 from startorch.example.utils import check_feature_size, check_num_examples, check_std
 from startorch.random import rand_normal, rand_uniform
+
+if TYPE_CHECKING:
+    from torch import Generator
 
 
 class Friedman1RegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
@@ -79,7 +87,7 @@ class Friedman1RegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
         return self._noise_std
 
     def generate(
-        self, batch_size: int = 1, rng: torch.Generator | None = None
+        self, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchDict[BatchedTensor]:
         return make_friedman1_regression(
             num_examples=batch_size,
@@ -100,13 +108,12 @@ class Friedman2RegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
             The feature size has to be greater than or equal to 4.
             Out of all features, only 4 are actually used to compute
             the targets. The remaining features are independent of
-            targets. Default: ``4``
-        noise_std: Specifies the standard deviation
-            of the Gaussian noise.
+            targets.
+        noise_std: Specifies the standard deviation of the Gaussian
+            noise.
 
     Raises:
-        ValueError if one of the parameters is not valid.
-
+        ValueError: if one of the parameters is not valid.
 
     Example usage:
 
@@ -150,7 +157,7 @@ class Friedman2RegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
         return self._noise_std
 
     def generate(
-        self, batch_size: int = 1, rng: torch.Generator | None = None
+        self, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchDict[BatchedTensor]:
         return make_friedman2_regression(
             num_examples=batch_size,
@@ -172,12 +179,11 @@ class Friedman3RegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
             Out of all features, only 4 are actually used to compute
             the targets. The remaining features are independent of
             targets.
-        noise_std: Specifies the standard deviation
-            of the Gaussian noise.
+        noise_std: Specifies the standard deviation of the Gaussian
+            noise.
 
     Raises:
-        ValueError if one of the parameters is not valid.
-
+        ValueError: if one of the parameters is not valid.
 
     Example usage:
 
@@ -221,7 +227,7 @@ class Friedman3RegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
         return self._noise_std
 
     def generate(
-        self, batch_size: int = 1, rng: torch.Generator | None = None
+        self, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchDict[BatchedTensor]:
         return make_friedman3_regression(
             num_examples=batch_size,
@@ -235,7 +241,7 @@ def make_friedman1_regression(
     num_examples: int = 100,
     feature_size: int = 10,
     noise_std: float = 0.0,
-    generator: torch.Generator | None = None,
+    generator: Generator | None = None,
 ) -> BatchDict[BatchedTensor]:
     r"""Generate the "Friedman #1" regression data.
 
@@ -297,7 +303,7 @@ def make_friedman2_regression(
     num_examples: int = 100,
     feature_size: int = 4,
     noise_std: float = 0.0,
-    generator: torch.Generator | None = None,
+    generator: Generator | None = None,
 ) -> BatchDict[BatchedTensor]:
     r"""Generate the "Friedman #2" regression data.
 
@@ -364,7 +370,7 @@ def make_friedman3_regression(
     num_examples: int = 100,
     feature_size: int = 4,
     noise_std: float = 0.0,
-    generator: torch.Generator | None = None,
+    generator: Generator | None = None,
 ) -> BatchDict[BatchedTensor]:
     r"""Generate the "Friedman #3" regression problem.
 
@@ -378,8 +384,8 @@ def make_friedman3_regression(
             Out of all features, only 4 are actually used to compute
             the targets. The remaining features are independent of
             targets.
-        noise_std: Specifies the standard deviation
-            of the Gaussian noise.
+        noise_std: Specifies the standard deviation of the Gaussian
+            noise.
         generator: Specifies an optional random number generator.
 
     Returns:

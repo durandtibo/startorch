@@ -57,7 +57,6 @@ def scale_batch(batch: BatchedTensor, scale: str = "identity") -> BatchedTensor:
     Args:
         batch: Specifies the batch to scale.
         scale: Specifies the scaling transformation.
-        Default: ``'identity'``
 
     Returns:
         The scaled batch.

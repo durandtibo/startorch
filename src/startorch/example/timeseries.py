@@ -1,18 +1,26 @@
+r"""Contain the implementation of example generator that generates
+sequences from a time series generator."""
+
 from __future__ import annotations
 
 __all__ = ["TimeSeriesExampleGenerator"]
 
+from typing import TYPE_CHECKING
 
 from coola.utils import str_indent, str_mapping
-from redcat import BatchDict, BatchedTensorSeq
-from torch import Generator
 
 from startorch.example.base import BaseExampleGenerator
-from startorch.tensor.base import BaseTensorGenerator, setup_tensor_generator
+from startorch.tensor.base import setup_tensor_generator
 from startorch.timeseries.base import (
     BaseTimeSeriesGenerator,
     setup_timeseries_generator,
 )
+
+if TYPE_CHECKING:
+    from redcat import BatchDict, BatchedTensorSeq
+    from torch import Generator
+
+    from startorch.tensor.base import BaseTensorGenerator
 
 
 class TimeSeriesExampleGenerator(BaseExampleGenerator):

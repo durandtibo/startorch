@@ -139,14 +139,15 @@ class RandTruncHalfCauchySequenceGenerator(BaseSequenceGenerator):
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.sequence import RandTruncHalfCauchy
+    >>> generator = RandTruncHalfCauchy(scale=1.0, max_value=5.0)
+    >>> generator
+    RandTruncHalfCauchySequenceGenerator(scale=1.0, max_value=5.0, feature_size=(1,))
+    >>> generator.generate(seq_len=6, batch_size=2)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> from startorch.sequence import RandTruncHalfCauchy
-        >>> generator = RandTruncHalfCauchy(scale=1.0, max_value=5.0)
-        >>> generator
-        RandTruncHalfCauchySequenceGenerator(scale=1.0, max_value=5.0, feature_size=(1,))
-        >>> generator.generate(seq_len=6, batch_size=2)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(

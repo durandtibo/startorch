@@ -1,3 +1,6 @@
+r"""Contain the base class to implement a periodic time series
+generator."""
+
 from __future__ import annotations
 
 __all__ = [
@@ -8,13 +11,16 @@ __all__ = [
 
 import logging
 from abc import ABC, abstractmethod
+from typing import TYPE_CHECKING
 
 from objectory import AbstractFactory
 from objectory.utils import is_object_config
-from redcat import BatchDict
-from torch import Generator
 
 from startorch.utils.format import str_target_object
+
+if TYPE_CHECKING:
+    from redcat import BatchDict
+    from torch import Generator
 
 logger = logging.getLogger(__name__)
 
@@ -26,28 +32,25 @@ class BasePeriodicTimeSeriesGenerator(ABC, metaclass=AbstractFactory):
 
     Example usage:
 
-    .. code-block:: pycon
-
-        Example usage:
-
-    .. code-block:: pycon
-
-        >>> from startorch.periodic.timeseries import Repeat
-        >>> from startorch.timeseries import TimeSeries
-        >>> from startorch.sequence import RandUniform
-        >>> generator = Repeat(TimeSeries({"value": RandUniform(), "time": RandUniform()}))
-        >>> generator
-        RepeatPeriodicTimeSeriesGenerator(
-          (generator): TimeSeriesGenerator(
-              (value): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
-              (time): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
-            )
+    ```pycon
+    >>> from startorch.periodic.timeseries import Repeat
+    >>> from startorch.timeseries import TimeSeries
+    >>> from startorch.sequence import RandUniform
+    >>> generator = Repeat(TimeSeries({"value": RandUniform(), "time": RandUniform()}))
+    >>> generator
+    RepeatPeriodicTimeSeriesGenerator(
+      (generator): TimeSeriesGenerator(
+          (value): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+          (time): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
         )
-        >>> generator.generate(seq_len=12, period=4, batch_size=4)
-        BatchDict(
-          (value): tensor([[...]], batch_dim=0, seq_dim=1)
-          (time): tensor([[...]], batch_dim=0, seq_dim=1)
-        )
+    )
+    >>> generator.generate(seq_len=12, period=4, batch_size=4)
+    BatchDict(
+      (value): tensor([[...]], batch_dim=0, seq_dim=1)
+      (time): tensor([[...]], batch_dim=0, seq_dim=1)
+    )
+
+    ```
     """
 
     @abstractmethod
@@ -62,26 +65,25 @@ class BasePeriodicTimeSeriesGenerator(ABC, metaclass=AbstractFactory):
             seq_len: Specifies the sequence length.
             period: Specifies the period.
             batch_size: Specifies the batch size.
-                Default: ``1``
-            rng (``torch.Generator`` or None, optional): Specifies
-                an optional random number generator.
+            rng: Specifies an optional random number generator.
 
         Returns:
-            ``BatchDict``: A batch of periodic time series.
+            A batch of periodic time series.
 
         Example usage:
 
-        .. code-block:: pycon
+        ```pycon
+        >>> from startorch.periodic.timeseries import Repeat
+        >>> from startorch.timeseries import TimeSeries
+        >>> from startorch.sequence import RandUniform
+        >>> generator = Repeat(TimeSeries({"value": RandUniform(), "time": RandUniform()}))
+        >>> generator.generate(seq_len=12, period=4, batch_size=4)
+        BatchDict(
+          (value): tensor([[...]], batch_dim=0, seq_dim=1)
+          (time): tensor([[...]], batch_dim=0, seq_dim=1)
+        )
 
-            >>> from startorch.periodic.timeseries import Repeat
-            >>> from startorch.timeseries import TimeSeries
-            >>> from startorch.sequence import RandUniform
-            >>> generator = Repeat(TimeSeries({"value": RandUniform(), "time": RandUniform()}))
-            >>> generator.generate(seq_len=12, period=4, batch_size=4)
-            BatchDict(
-              (value): tensor([[...]], batch_dim=0, seq_dim=1)
-              (time): tensor([[...]], batch_dim=0, seq_dim=1)
-            )
+        ```
         """
 
 
@@ -95,30 +97,31 @@ def is_periodic_timeseries_generator_config(config: dict) -> bool:
     the class.
 
     Args:
-        config (dict): Specifies the configuration to check.
+        config: Specifies the configuration to check.
 
     Returns:
-        bool: ``True`` if the input configuration is a configuration
+        ``True`` if the input configuration is a configuration
             for a ``BasePeriodicTimeSeriesGenerator`` object.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.periodic.timeseries import is_periodic_timeseries_generator_config
+    >>> is_periodic_timeseries_generator_config(
+    ...     {
+    ...         "_target_": "startorch.periodic.timeseries.Repeat",
+    ...         "generator": {
+    ...             "_target_": "startorch.timeseries.TimeSeries",
+    ...             "sequences": {
+    ...                 "value": {"_target_": "startorch.sequence.RandUniform"},
+    ...                 "time": {"_target_": "startorch.sequence.RandUniform"},
+    ...             },
+    ...         },
+    ...     }
+    ... )
+    True
 
-        >>> from startorch.periodic.timeseries import is_periodic_timeseries_generator_config
-        >>> is_periodic_timeseries_generator_config(
-        ...     {
-        ...         "_target_": "startorch.periodic.timeseries.Repeat",
-        ...         "generator": {
-        ...             "_target_": "startorch.timeseries.TimeSeries",
-        ...             "sequences": {
-        ...                 "value": {"_target_": "startorch.sequence.RandUniform"},
-        ...                 "time": {"_target_": "startorch.sequence.RandUniform"},
-        ...             },
-        ...         },
-        ...     }
-        ... )
-        True
+    ```
     """
     return is_object_config(config, BasePeriodicTimeSeriesGenerator)
 
@@ -126,41 +129,42 @@ def is_periodic_timeseries_generator_config(config: dict) -> bool:
 def setup_periodic_timeseries_generator(
     generator: BasePeriodicTimeSeriesGenerator | dict,
 ) -> BasePeriodicTimeSeriesGenerator:
-    r"""Sets up a periodic time series generator.
+    r"""Set up a periodic time series generator.
 
     The time series generator is instantiated from its configuration by
     using the ``BasePeriodicTimeSeriesGenerator`` factory function.
 
     Args:
-        generator (``BasePeriodicTimeSeriesGenerator`` or dict): Specifies a
-            periodic time series generator or its configuration.
+        generator: Specifies a periodic time series generator or its
+            configuration.
 
     Returns:
-        ``BasePeriodicTimeSeriesGenerator``: A periodic time series generator.
+        A periodic time series generator.
 
     Example usage:
 
-    .. code-block:: pycon
-
-        >>> from startorch.periodic.timeseries import setup_periodic_timeseries_generator
-        >>> setup_periodic_timeseries_generator(
-        ...     {
-        ...         "_target_": "startorch.periodic.timeseries.Repeat",
-        ...         "generator": {
-        ...             "_target_": "startorch.timeseries.TimeSeries",
-        ...             "sequences": {
-        ...                 "value": {"_target_": "startorch.sequence.RandUniform"},
-        ...                 "time": {"_target_": "startorch.sequence.RandUniform"},
-        ...             },
-        ...         },
-        ...     }
-        ... )
-        RepeatPeriodicTimeSeriesGenerator(
-          (generator): TimeSeriesGenerator(
-              (value): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
-              (time): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
-            )
+    ```pycon
+    >>> from startorch.periodic.timeseries import setup_periodic_timeseries_generator
+    >>> setup_periodic_timeseries_generator(
+    ...     {
+    ...         "_target_": "startorch.periodic.timeseries.Repeat",
+    ...         "generator": {
+    ...             "_target_": "startorch.timeseries.TimeSeries",
+    ...             "sequences": {
+    ...                 "value": {"_target_": "startorch.sequence.RandUniform"},
+    ...                 "time": {"_target_": "startorch.sequence.RandUniform"},
+    ...             },
+    ...         },
+    ...     }
+    ... )
+    RepeatPeriodicTimeSeriesGenerator(
+      (generator): TimeSeriesGenerator(
+          (value): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+          (time): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
         )
+    )
+
+    ```
     """
     if isinstance(generator, dict):
         logger.info(

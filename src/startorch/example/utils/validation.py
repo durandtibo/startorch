@@ -1,3 +1,5 @@
+r"""Contain utility functions to validate values."""
+
 from __future__ import annotations
 
 __all__ = [
@@ -58,14 +60,14 @@ def check_interval(value: float | Any, low: float, high: float, name: str) -> No
     ```
     """
     if not isinstance(value, (int, float)):
-        raise TypeError(
-            f"Incorrect type for {name}. Expected an integer or float but received {type(value)}"
-        )
+        msg = f"Incorrect type for {name}. Expected an integer or float but received {type(value)}"
+        raise TypeError(msg)
     if value < low or value >= high:
-        raise RuntimeError(
+        msg = (
             f"Incorrect value for {name}. Expected a value in interval [{low}, {high}) "
             f"but received {value}"
         )
+        raise RuntimeError(msg)
 
 
 def check_num_examples(value: int | Any) -> None:
@@ -112,13 +114,14 @@ def check_integer_ge(value: int | Any, low: int, name: str) -> None:
     ```
     """
     if not isinstance(value, int):
-        raise TypeError(
-            f"Incorrect type for {name}. Expected an integer but received {type(value)}"
-        )
+        msg = f"Incorrect type for {name}. Expected an integer but received {type(value)}"
+        raise TypeError(msg)
     if value < low:
-        raise RuntimeError(
-            f"Incorrect value for {name}. Expected a value greater or equal to {low} but received {value}"
+        msg = (
+            f"Incorrect value for {name}. Expected a value greater or equal to {low} but "
+            f"received {value}"
         )
+        raise RuntimeError(msg)
 
 
 def check_std(value: float | Any, name: str = "std") -> None:
@@ -142,10 +145,8 @@ def check_std(value: float | Any, name: str = "std") -> None:
     ```
     """
     if not isinstance(value, (int, float)):
-        raise TypeError(
-            f"Incorrect type for {name}. Expected an integer or float but received {type(value)}"
-        )
+        msg = f"Incorrect type for {name}. Expected an integer or float but received {type(value)}"
+        raise TypeError(msg)
     if value < 0:
-        raise RuntimeError(
-            f"Incorrect value for {name}. Expected a value greater than 0 but received {value}"
-        )
+        msg = f"Incorrect value for {name}. Expected a value greater than 0 but received {value}"
+        raise RuntimeError(msg)

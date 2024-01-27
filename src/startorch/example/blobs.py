@@ -1,8 +1,13 @@
+r"""Contain an example generator to generate binary classification
+example generator where the data are generated from isotropic Gaussian
+blobs."""
+
 from __future__ import annotations
 
 __all__ = ["BlobsClassificationExampleGenerator", "make_blobs_classification"]
 
 import math
+from typing import TYPE_CHECKING
 
 import torch
 from redcat import BatchDict, BatchedTensor
@@ -13,11 +18,13 @@ from startorch.example.utils import check_num_examples
 from startorch.random import normal
 from startorch.utils.seed import get_torch_generator
 
+if TYPE_CHECKING:
+    from torch import Generator
+
 
 class BlobsClassificationExampleGenerator(BaseExampleGenerator[BatchedTensor]):
     r"""Implement a binary classification example generator where the
-    data are generated with a large circle containing a smaller circle
-    in 2d.
+    data are generated from isotropic Gaussian blobs.
 
     The implementation is based on
     https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_blobs.html
@@ -59,10 +66,11 @@ class BlobsClassificationExampleGenerator(BaseExampleGenerator[BatchedTensor]):
         self._cluster_std = cluster_std
 
         if self._centers.shape != self._cluster_std.shape:
-            raise RuntimeError(
+            msg = (
                 f"centers and cluster_std do not match: {self._centers.shape} "
                 f"vs {self._cluster_std.shape}"
             )
+            raise RuntimeError(msg)
 
     def __repr__(self) -> str:
         return (
@@ -93,7 +101,7 @@ class BlobsClassificationExampleGenerator(BaseExampleGenerator[BatchedTensor]):
         return self._centers.shape[0]
 
     def generate(
-        self, batch_size: int = 1, rng: torch.Generator | None = None
+        self, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchDict[BatchedTensor]:
         return make_blobs_classification(
             num_examples=batch_size,
@@ -152,7 +160,7 @@ def make_blobs_classification(
     num_examples: int,
     centers: torch.Tensor,
     cluster_std: torch.Tensor | float = 1.0,
-    generator: torch.Generator | None = None,
+    generator: Generator | None = None,
 ) -> BatchDict[BatchedTensor]:
     r"""Generate a classification dataset where the data are gnerated
     from isotropic Gaussian blobs for clustering.
@@ -201,9 +209,8 @@ def make_blobs_classification(
     if not torch.is_tensor(cluster_std):
         cluster_std = torch.full_like(centers, cluster_std)
     if centers.shape != cluster_std.shape:
-        raise RuntimeError(
-            f"centers and cluster_std do not match: {centers.shape} vs {cluster_std.shape}"
-        )
+        msg = f"centers and cluster_std do not match: {centers.shape} vs {cluster_std.shape}"
+        raise RuntimeError(msg)
     num_examples_per_center = math.ceil(num_examples / num_centers)
 
     features = torch.empty(num_examples_per_center * num_centers, feature_size, dtype=torch.float)

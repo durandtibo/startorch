@@ -1,13 +1,19 @@
+r"""Contain a cache example generator that caches the last batch and
+returns it everytime a batch is generated."""
+
 from __future__ import annotations
 
 __all__ = ["CacheExampleGenerator"]
 
+from typing import TYPE_CHECKING
 
-import torch
 from coola.utils import str_indent, str_mapping
-from redcat import BatchDict
 
 from startorch.example.base import BaseExampleGenerator, setup_example_generator
+
+if TYPE_CHECKING:
+    from redcat import BatchDict
+    from torch import Generator
 
 
 class CacheExampleGenerator(BaseExampleGenerator):
@@ -53,7 +59,7 @@ class CacheExampleGenerator(BaseExampleGenerator):
         args = str_indent(str_mapping({"generator": self._generator, "deepcopy": self._deepcopy}))
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
-    def generate(self, batch_size: int = 1, rng: torch.Generator | None = None) -> BatchDict:
+    def generate(self, batch_size: int = 1, rng: Generator | None = None) -> BatchDict:
         if self._cache is None or self._cache.batch_size != batch_size:
             self._cache = self._generator.generate(batch_size=batch_size, rng=rng)
         batch = self._cache

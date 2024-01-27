@@ -1,3 +1,5 @@
+r"""Contain some periodic time series generators."""
+
 __all__ = [
     "BasePeriodicTimeSeriesGenerator",
     "Repeat",
