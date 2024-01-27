@@ -28,9 +28,7 @@ def get_random_seed(seed: int) -> int:
 
     ```
     """
-    return torch.randint(
-        -(2**63), 2**63 - 1, size=(1,), generator=get_torch_generator(seed)
-    ).item()
+    return torch.randint(-(2**63), 2**63 - 1, size=(1,), generator=get_torch_generator(seed)).item()
 
 
 def get_torch_generator(
