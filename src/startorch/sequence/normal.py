@@ -1,7 +1,6 @@
 r"""Contain the implementation of sequence generators where the values
 are sampled from a Normal distribution."""
 
-
 from __future__ import annotations
 
 __all__ = [

@@ -1,7 +1,6 @@
 r"""Contain example generators to generate regression data using the
 Friedman patterns."""
 
-
 from __future__ import annotations
 
 __all__ = [
