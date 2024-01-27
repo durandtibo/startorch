@@ -23,7 +23,7 @@ class SwissRollExampleGenerator(BaseExampleGenerator[BatchedTensor]):
     Args:
     ----
         noise_std (float, optional): Specifies the standard deviation
-            of the Gaussian noise. Default: ``0.0``
+            of the Gaussian noise.
         spin (float or int, optional): Specifies the number of spins
             of the Swiss roll. Default: ``1.5``
         hole (bool, optional): If ``True`` generates the Swiss roll
@@ -107,7 +107,7 @@ def make_swiss_roll(
         num_examples (int, optional): Specifies the number of examples.
             Default: ``100``
         noise_std (float, optional): Specifies the standard deviation
-            of the Gaussian noise. Default: ``0.0``
+            of the Gaussian noise.
         spin (float or int, optional): Specifies the number of spins
             of the Swiss roll. Default: ``1.5``
         hole (bool, optional): If ``True`` generates the Swiss roll

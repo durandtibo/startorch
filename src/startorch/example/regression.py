@@ -33,9 +33,9 @@ class LinearRegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
             ``collections.abc.Sequence``): Specifies the linear
             weights in the underlying linear model.
         bias (float, optional): Specifies the bias term in the
-            underlying linear model. Default: ``0.0``
+            underlying linear model.
         noise_std (float, optional): Specifies the standard deviation
-            of the Gaussian noise. Default: ``0.0``
+            of the Gaussian noise.
 
     Raises:
     ------
@@ -148,11 +148,11 @@ def make_linear_regression(
             Specifies the linear weights in the underlying linear
             model.
         bias (float, optional): Specifies the bias term in the
-            underlying linear model. Default: ``0.0``
+            underlying linear model.
         num_examples (int, optional): Specifies the number of examples
             to generate. Default: ``100``
         noise_std (float, optional): Specifies the standard deviation
-            of the Gaussian noise. Default: ``0.0``
+            of the Gaussian noise.
         generator (``torch.Generator`` or ``None``, optional):
             Specifies an optional random generator.
 

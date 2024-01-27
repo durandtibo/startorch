@@ -26,7 +26,7 @@ class CirclesClassificationExampleGenerator(BaseExampleGenerator[BatchedTensor])
         shuffle (bool, optional): If ``True``, the examples are
             shuffled. Default: ``True``
         noise_std (float, optional): Specifies the standard deviation
-            of the Gaussian noise. Default: ``0.0``
+            of the Gaussian noise.
         factor (float, optional): Specifies the scale factor between
             inner and outer circle in the range ``[0, 1)``.
             Default: ``0.8``
@@ -129,7 +129,7 @@ def make_circles_classification(
         shuffle (bool, optional): If ``True``, the examples are
             shuffled. Default: ``True``
         noise_std (float, optional): Specifies the standard deviation
-            of the Gaussian noise. Default: ``0.0``
+            of the Gaussian noise.
         factor (float, optional): Specifies the scale factor between
             inner and outer circle in the range ``[0, 1)``.
             Default: ``0.8``

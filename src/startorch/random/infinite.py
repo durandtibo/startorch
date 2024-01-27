@@ -1,46 +1,50 @@
+r"""Contain functions to sample values from continuous uni-variate
+distributions with infinite support."""
+
 from __future__ import annotations
 
 __all__ = ["cauchy", "normal", "rand_cauchy", "rand_normal"]
 
+from typing import TYPE_CHECKING
 
 import torch
 from torch import Tensor
+
+if TYPE_CHECKING:
+    from torch import Generator
 
 
 def rand_cauchy(
     size: list[int] | tuple[int, ...],
     loc: float = 0.0,
     scale: float = 1.0,
-    generator: torch.Generator | None = None,
+    generator: Generator | None = None,
 ) -> torch.Tensor:
     r"""Create a sequence of continuous variables sampled from a Cauchy
     distribution.
 
     Args:
-        size (list or tuple): Specifies the tensor shape.
-        loc: Specifies the location/median of the
-            Cauchy distribution. Default: ``0.0``
-        scale: Specifies the scale of the Cauchy
-            distribution. This value has to be greater than 0.
-            Default: ``1.0``
-        generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator.
+        size: Specifies the tensor shape.
+        loc: Specifies the location/median of the Cauchy distribution.
+        scale: Specifies the scale of the Cauchy distribution.
+            This value has to be greater than 0.
+        generator: Specifies an optional random generator.
 
     Returns:
-        ``torch.Tensor``: A tensor filled with values sampled from a
-            Cauchy distribution.
+        A tensor filled with values sampled from a Cauchy distribution.
 
     Raises:
         ValueError if the ``scale`` parameter is not valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.random import rand_cauchy
+    >>> rand_cauchy((2, 3), loc=1.0, scale=2.0)
+    tensor([[...]])
 
-        >>> import torch
-        >>> from startorch.random import rand_cauchy
-        >>> rand_cauchy((2, 3), loc=1.0, scale=2.0)
-        tensor([[...]])
+    ```
     """
     if scale <= 0:
         msg = f"scale has to be greater than 0 (received: {scale})"
@@ -50,7 +54,7 @@ def rand_cauchy(
     return sequence
 
 
-def cauchy(loc: Tensor, scale: Tensor, generator: torch.Generator | None = None) -> Tensor:
+def cauchy(loc: Tensor, scale: Tensor, generator: Generator | None = None) -> Tensor:
     r"""Create a tensor filled with values sampled from a Cauchy
     distribution.
 
@@ -60,31 +64,30 @@ def cauchy(loc: Tensor, scale: Tensor, generator: torch.Generator | None = None)
     the output size.
 
     Args:
-        loc (``torch.Tensor`` of type float and shape
-            ``(d0, d1, ..., dn)``): Specifies the location/median
-            of the Cauchy distribution.
-        scale (``torch.Tensor`` of type float and shape
-            ``(d0, d1, ..., dn)``): Specifies the standard
-            deviation of the Cauchy distribution.
-        generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator.
+        loc: Specifies the location/median of the Cauchy distribution.
+            It must be a float tensor of shape ``(d0, d1, ..., dn)``.
+        scale: Specifies the standard deviation of the Cauchy
+            distribution. It must be a float tensor of shape
+            ``(d0, d1, ..., dn)``.
+        generator: Specifies an optional random generator.
 
     Returns:
-        ``torch.Tensor``: A tensor filled with values sampled from a
-            Cauchy distribution.
+        A tensor of shape ``(d0, d1, ..., dn)`` filled with values
+            sampled from a Cauchy distribution.
 
     Raises:
-        ValueError if the ``loc`` and ``scale`` parameters are not
+        ValueError: if the ``loc`` and ``scale`` parameters are not
             valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.random import cauchy
+    >>> cauchy(loc=torch.tensor([-1.0, 0.0, 1.0]), scale=torch.tensor([1.0, 3.0, 5.0]))
+    tensor([...])
 
-        >>> import torch
-        >>> from startorch.random import cauchy
-        >>> cauchy(loc=torch.tensor([-1.0, 0.0, 1.0]), scale=torch.tensor([1.0, 3.0, 5.0]))
-        tensor([...])
+    ```
     """
     if loc.shape != scale.shape:
         msg = f"The shapes of loc and scale do not match ({loc.shape} vs {scale.shape})"
@@ -99,35 +102,33 @@ def rand_normal(
     size: list[int] | tuple[int, ...],
     mean: float = 0.0,
     std: float = 1.0,
-    generator: torch.Generator | None = None,
+    generator: Generator | None = None,
 ) -> Tensor:
     r"""Create a tensor filled with values sampled from a Normal
     distribution.
 
     Args:
-        size (list or tuple): Specifies the tensor shape.
-        mean: Specifies the mean of the Normal
-            distribution. Default: ``0.0``
-        std: Specifies the standard deviation of
-            the Normal distribution. Default: ``1.0``
-        generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator.
+        size: Specifies the tensor shape.
+        mean: Specifies the mean of the Normal distribution.
+        std: Specifies the standard deviation of the Normal
+            distribution.
+        generator: Specifies an optional random generator.
 
     Returns:
-        ``torch.Tensor``: A tensor filled with values sampled from a
-            Normal distribution.
+        A tensor filled with values sampled from a Normal distribution.
 
     Raises:
-        ValueError if the ``std`` parameter is not valid.
+        ValueError: if the ``std`` parameter is not valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.random import rand_normal
+    >>> rand_normal((2, 3), mean=1.0, std=2.0)
+    tensor([[...]])
 
-        >>> import torch
-        >>> from startorch.random import rand_normal
-        >>> rand_normal((2, 3), mean=1.0, std=2.0)
-        tensor([[...]])
+    ```
     """
     if std <= 0.0:
         msg = f"std has to be greater than 0 (received: {std})"
@@ -135,35 +136,34 @@ def rand_normal(
     return torch.randn(size, generator=generator).mul(std).add(mean)
 
 
-def normal(mean: Tensor, std: Tensor, generator: torch.Generator | None = None) -> Tensor:
+def normal(mean: Tensor, std: Tensor, generator: Generator | None = None) -> Tensor:
     r"""Create a tensor filled with values sampled from a Normal
     distribution.
 
     Args:
-        mean (``torch.Tensor`` of type float and shape
-            ``(d0, d1, ..., dn)``): Specifies the mean.
-        std (``torch.Tensor`` of type float and shape
-            ``(d0, d1, ..., dn)``): Specifies the standard
-            deviation.
-        generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator.
+        mean: Specifies the mean. It must be a float tensor of shape
+            ``(d0, d1, ..., dn)``.
+        std: Specifies the standard deviation. It must be a float
+            tensor of shape ``(d0, d1, ..., dn)``.
+        generator: Specifies an optional random generator.
 
     Returns:
-        ``torch.Tensor``: A tensor filled with values sampled from a
-            Normal distribution.
+        A tensor of shape ``(d0, d1, ..., dn)`` filled with values
+            sampled from a Normal distribution.
 
     Raises:
-        ValueError if the ``mean`` and ``std`` parameters are not
+        ValueError: if the ``mean`` and ``std`` parameters are not
             valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.random import normal
+    >>> normal(mean=torch.tensor([-1.0, 0.0, 1.0]), std=torch.tensor([1.0, 3.0, 5.0]))
+    tensor([...])
 
-        >>> import torch
-        >>> from startorch.random import normal
-        >>> normal(mean=torch.tensor([-1.0, 0.0, 1.0]), std=torch.tensor([1.0, 3.0, 5.0]))
-        tensor([...])
+    ```
     """
     if mean.shape != std.shape:
         msg = f"The shapes of mean and std do not match ({mean.shape} vs {std.shape})"

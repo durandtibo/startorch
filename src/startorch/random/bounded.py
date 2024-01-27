@@ -1,5 +1,5 @@
-r"""This module implements functions to sample values from continuous
-univariate distribution supported on a bounded interval."""
+r"""Contain functions to sample values from continuous uni-variate
+distribution supported on a bounded interval."""
 
 from __future__ import annotations
 
@@ -25,6 +25,7 @@ __all__ = [
 ]
 
 import math
+from typing import TYPE_CHECKING
 
 import torch
 from torch import Tensor
@@ -39,6 +40,9 @@ from torch.distributions import (
 
 from startorch.utils.tensor import shapes_are_equal
 
+if TYPE_CHECKING:
+    from torch import Generator
+
 
 def rand_trunc_cauchy(
     size: list[int] | tuple[int, ...],
@@ -46,40 +50,36 @@ def rand_trunc_cauchy(
     scale: float = 1.0,
     min_value: float = -2.0,
     max_value: float = 2.0,
-    generator: torch.Generator | None = None,
+    generator: Generator | None = None,
 ) -> Tensor:
     r"""Create a tensor filled with values sampled from a truncated
     Cauchy distribution.
 
     Args:
-        size (list or tuple): Specifies the tensor shape.
-        loc: Specifies the location of the Cauchy
-            distribution. Default: ``0.0``
-        scale: Specifies the scale of the Cauchy
-            distribution. Default: ``1.0``
+        size: Specifies the tensor shape.
+        loc: Specifies the location of the Cauchy distribution.
+        scale: Specifies the scale of the Cauchy distribution.
         min_value: Specifies the minimum value.
-            Default: ``-2.0``
         max_value: Specifies the maximum value.
-            Default: ``2.0``
-        generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator.
+        generator: Specifies an optional random generator.
 
     Returns:
-        ``torch.Tensor``: A tensor filled with values sampled from
-            a truncated Cauchy distribution
+        A tensor filled with values sampled from a truncated Cauchy
+            distribution
 
     Raises:
-        ValueError if the ``max_value`` and ``min_value`` parameters
+        ValueError: if the ``max_value`` and ``min_value`` parameters
             are not valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.random import rand_trunc_cauchy
+    >>> rand_trunc_cauchy((2, 3), loc=1.0, scale=2.0, min_value=-3.0, max_value=3.0)
+    tensor([[...]])
 
-        >>> import torch
-        >>> from startorch.random import rand_trunc_cauchy
-        >>> rand_trunc_cauchy((2, 3), loc=1.0, scale=2.0, min_value=-3.0, max_value=3.0)
-        tensor([[...]])
+    ```
     """
     if max_value < min_value:
         msg = f"`max_value` ({max_value}) has to be greater or equal to `min_value` ({min_value})"
@@ -99,46 +99,44 @@ def trunc_cauchy(
     scale: Tensor,
     min_value: Tensor,
     max_value: Tensor,
-    generator: torch.Generator | None = None,
+    generator: Generator | None = None,
 ) -> Tensor:
     r"""Create a tensor filled with values sampled from a truncated
     Cauchy distribution.
 
     Args:
-        loc (``torch.Tensor`` of type float and shape
-            ``(d0, d1, ..., dn)``): Specifies the location/median of
-            the Cauchy distribution.
-        scale (``torch.Tensor`` of type float and shape
-            ``(d0, d1, ..., dn)``): Specifies the scale
-            of the Cauchy distribution.
-        min_value (``torch.Tensor`` of type float and shape
-            ``(d0, d1, ..., dn)``): Specifies the minimum value.
-        max_value (``torch.Tensor`` of type float and shape
-            ``(d0, d1, ..., dn)``): Specifies the maximum value.
-        generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator.
+        loc: Specifies the location/median of the Cauchy distribution.
+            It must be a float tensor of shape ``(d0, d1, ..., dn)``.
+        scale: Specifies the scale of the Cauchy distribution.
+            It must be a float tensor of shape ``(d0, d1, ..., dn)``.
+        min_value: Specifies the minimum value. It must be a float
+            tensor of shape ``(d0, d1, ..., dn)``.
+        max_value: Specifies the maximum value. It must be a float
+            tensor of shape ``(d0, d1, ..., dn)``.
+        generator: Specifies an optional random generator.
 
     Returns:
-        ``torch.Tensor``: A tensor filled with values sampled from
-            a truncated Cauchy distribution
+        A tensor of shape ``(d0, d1, ..., dn)`` filled with values
+            sampled from a truncated Cauchy distribution
 
     Raises:
-        ValueError if the ``loc``, ``scale``, ``max_value`` and
+        ValueError: if the ``loc``, ``scale``, ``max_value`` and
             ``min_value`` parameters are not valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.random import trunc_cauchy
+    >>> trunc_cauchy(
+    ...     loc=torch.tensor([1.0, 0.0, -1.0]),
+    ...     scale=torch.tensor([1.0, 3.0, 5.0]),
+    ...     min_value=torch.tensor([-5.0, -10.0, -15.0]),
+    ...     max_value=torch.tensor([5.0, 10.0, 15.0]),
+    ... )
+    tensor([...])
 
-        >>> import torch
-        >>> from startorch.random import trunc_cauchy
-        >>> trunc_cauchy(
-        ...     loc=torch.tensor([1.0, 0.0, -1.0]),
-        ...     scale=torch.tensor([1.0, 3.0, 5.0]),
-        ...     min_value=torch.tensor([-5.0, -10.0, -15.0]),
-        ...     max_value=torch.tensor([5.0, 10.0, 15.0]),
-        ... )
-        tensor([...])
+    ```
     """
     if not shapes_are_equal((loc, scale, min_value, max_value)):
         msg = (
@@ -169,35 +167,33 @@ def rand_trunc_exponential(
     size: list[int] | tuple[int, ...],
     rate: float = 1.0,
     max_value: float = 5.0,
-    generator: torch.Generator | None = None,
+    generator: Generator | None = None,
 ) -> Tensor:
     r"""Create a tensor filled with values sampled from a truncated
     Exponential distribution.
 
     Args:
-        size (list or tuple): Specifies the tensor shape.
-        rate: Specifies the rate of the Exponential
-            distribution. Default: ``1.0``
+        size: Specifies the tensor shape.
+        rate: Specifies the rate of the Exponential distribution.
         max_value: Specifies the maximum value.
-            Default: ``5.0``
-        generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator.
+        generator: Specifies an optional random generator.
 
     Returns:
-        ``torch.Tensor``: A tensor filled with values sampled from a
-            truncated Exponential distribution
+        A tensor filled with values sampled from a truncated
+            Exponential distribution
 
     Raises:
-        ValueError if the ``max_value`` parameter is not valid.
+        ValueError: if the ``max_value`` parameter is not valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.random import rand_trunc_exponential
+    >>> rand_trunc_exponential((2, 3), rate=1.0, max_value=3.0)
+    tensor([[...]])
 
-        >>> import torch
-        >>> from startorch.random import rand_trunc_exponential
-        >>> rand_trunc_exponential((2, 3), rate=1.0, max_value=3.0)
-        tensor([[...]])
+    ```
     """
     if max_value <= 0:
         msg = f"`max_value` has to be greater than 0 (received: {max_value})"
@@ -215,39 +211,38 @@ def rand_trunc_exponential(
 def trunc_exponential(
     rate: Tensor,
     max_value: Tensor,
-    generator: torch.Generator | None = None,
+    generator: Generator | None = None,
 ) -> Tensor:
     r"""Create a tensor filled with values sampled from a truncated
     Exponential distribution.
 
     Args:
-        rate (``torch.Tensor`` of type float and shape
-            ``(d0, d1, ..., dn)``): Specifies the rate
-            of the Exponential distribution.
-        max_value (``torch.Tensor`` of type float and shape
-            ``(d0, d1, ..., dn)``): Specifies the maximum value.
-        generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator.
+        rate: Specifies the rate of the Exponential distribution.
+            It must be a float tensor of shape ``(d0, d1, ..., dn)``.
+        max_value: Specifies the maximum value. It must be a float
+            tensor of shape ``(d0, d1, ..., dn)``.
+        generator: Specifies an optional random generator.
 
     Returns:
-        ``torch.Tensor``: A tensor filled with values sampled from
-            a truncated Exponential distribution.
+        A tensor of shape ``(d0, d1, ..., dn)`` filled with values
+            sampled from a truncated Exponential distribution.
 
     Raises:
-        ValueError if the ``rate`` and ``max_value`` parameter are not
+        ValueError: if the ``rate`` and ``max_value`` parameter are not
             valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.random import trunc_exponential
+    >>> trunc_exponential(
+    ...     rate=torch.tensor([1.0, 3.0, 5.0]),
+    ...     max_value=torch.tensor([5.0, 10.0, 15.0]),
+    ... )
+    tensor([...])
 
-        >>> import torch
-        >>> from startorch.random import trunc_exponential
-        >>> trunc_exponential(
-        ...     rate=torch.tensor([1.0, 3.0, 5.0]),
-        ...     max_value=torch.tensor([5.0, 10.0, 15.0]),
-        ... )
-        tensor([...])
+    ```
     """
     if rate.shape != max_value.shape:
         msg = (
@@ -275,35 +270,33 @@ def rand_trunc_half_cauchy(
     size: list[int] | tuple[int, ...],
     scale: float = 1.0,
     max_value: float = 4.0,
-    generator: torch.Generator | None = None,
+    generator: Generator | None = None,
 ) -> Tensor:
     r"""Create a tensor filled with values sampled from a truncated half-
     Cauchy distribution.
 
     Args:
-        size (list or tuple): Specifies the tensor shape.
-        scale: Specifies the scale of the
-            half-Cauchy distribution. Default: ``1.0``
+        size: Specifies the tensor shape.
+        scale: Specifies the scale of the half-Cauchy distribution.
         max_value: Specifies the maximum value.
-            Default: ``4.0``
-        generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator.
+        generator: Specifies an optional random generator.
 
     Returns:
-        ``torch.Tensor``: A tensor filled with values sampled from a
-            truncated half-Cauchy distribution.
+        A tensor filled with values sampled from a truncated
+            half-Cauchy distribution.
 
     Raises:
-        ValueError if the ``max_value`` parameter is not valid.
+        ValueError: if the ``max_value`` parameter is not valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.random import rand_trunc_half_cauchy
+    >>> rand_trunc_half_cauchy((2, 3), scale=1.0, max_value=3.0)
+    tensor([[...]])
 
-        >>> import torch
-        >>> from startorch.random import rand_trunc_half_cauchy
-        >>> rand_trunc_half_cauchy((2, 3), scale=1.0, max_value=3.0)
-        tensor([[...]])
+    ```
     """
     if max_value <= 0:
         msg = f"`max_value` has to be greater than 0 (received: {max_value})"
@@ -321,39 +314,38 @@ def rand_trunc_half_cauchy(
 def trunc_half_cauchy(
     scale: Tensor,
     max_value: Tensor,
-    generator: torch.Generator | None = None,
+    generator: Generator | None = None,
 ) -> Tensor:
     r"""Create a tensor filled with values sampled from a truncated half-
     Cauchy distribution.
 
     Args:
-        scale (``torch.Tensor`` of type float and shape
-            ``(d0, d1, ..., dn)``): Specifies the scale
-            of the half-Cauchy distribution.
-        max_value (``torch.Tensor`` of type float and shape
-            ``(d0, d1, ..., dn)``): Specifies the maximum value.
-        generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator.
+        scale: Specifies the scale of the half-Cauchy distribution.
+            It must be a float tensor of shape ``(d0, d1, ..., dn)``.
+        max_value: Specifies the maximum value. It must be a float
+            tensor of shape ``(d0, d1, ..., dn)``.
+        generator: Specifies an optional random generator.
 
     Returns:
-        ``torch.Tensor``: A tensor filled with values sampled from
-            a truncated Cauchy distribution
+        A tensor of shape ``(d0, d1, ..., dn)`` filled with values
+            sampled from a truncated Cauchy distribution.
 
     Raises:
-        ValueError if the ``scale`` and ``max_value`` parameter are
+        ValueError: if the ``scale`` and ``max_value`` parameter are
             not valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.random import trunc_half_cauchy
+    >>> trunc_half_cauchy(
+    ...     scale=torch.tensor([1.0, 3.0, 5.0]),
+    ...     max_value=torch.tensor([5.0, 10.0, 15.0]),
+    ... )
+    tensor([...])
 
-        >>> import torch
-        >>> from startorch.random import trunc_half_cauchy
-        >>> trunc_half_cauchy(
-        ...     scale=torch.tensor([1.0, 3.0, 5.0]),
-        ...     max_value=torch.tensor([5.0, 10.0, 15.0]),
-        ... )
-        tensor([...])
+    ```
     """
     if scale.shape != max_value.shape:
         msg = (
@@ -381,35 +373,34 @@ def rand_trunc_half_normal(
     size: list[int] | tuple[int, ...],
     std: float = 1.0,
     max_value: float = 5.0,
-    generator: torch.Generator | None = None,
+    generator: Generator | None = None,
 ) -> Tensor:
     r"""Create a tensor filled with values sampled from a truncated half-
     Normal distribution.
 
     Args:
-        size (list or tuple): Specifies the tensor shape.
-        std: Specifies the standard deviation of
-            the half-Normal distribution. Default: ``1.0``
+        size: Specifies the tensor shape.
+        std: Specifies the standard deviation of the half-Normal
+            distribution.
         max_value: Specifies the maximum value.
-            Default: ``5.0``
-        generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator.
+        generator: Specifies an optional random generator.
 
     Returns:
-        ``torch.Tensor``: A tensor filled with values sampled from a
-            truncated half-Normal distribution.
+        A tensor filled with values sampled from a truncated
+            half-Normal distribution.
 
     Raises:
-        ValueError if the ``max_value`` parameter is not valid.
+        ValueError: if the ``max_value`` parameter is not valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.random import rand_trunc_half_normal
+    >>> rand_trunc_half_normal((2, 3), std=1.0, max_value=3.0)
+    tensor([[...]])
 
-        >>> import torch
-        >>> from startorch.random import rand_trunc_half_normal
-        >>> rand_trunc_half_normal((2, 3), std=1.0, max_value=3.0)
-        tensor([[...]])
+    ```
     """
     if max_value <= 0:
         msg = f"`max_value` has to be greater than 0 (received: {max_value})"
@@ -427,38 +418,38 @@ def rand_trunc_half_normal(
 def trunc_half_normal(
     std: Tensor,
     max_value: Tensor,
-    generator: torch.Generator | None = None,
+    generator: Generator | None = None,
 ) -> Tensor:
     r"""Create a tensor filled with values sampled from a truncated half-
     Normal distribution.
 
     Args:
-        std (``torch.Tensor`` of type float and shape
-            ``(d0, d1, ..., dn)``): Specifies the standard deviation
-            of the half-Normal distribution.
-        max_value (``torch.Tensor`` of type float and shape
-            ``(d0, d1, ..., dn)``): Specifies the maximum value.
-        generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator.
+        std: Specifies the standard deviation of the half-Normal
+            distribution. It must be a float tensor of shape
+            ``(d0, d1, ..., dn)``.
+        max_value: Specifies the maximum value. It must be a float
+            tensor of shape ``(d0, d1, ..., dn)``.
+        generator: Specifies an optional random generator.
 
     Returns:
-        ``torch.Tensor``: A tensor filled with values sampled from a
-            truncated half-Normal distribution.
+        A tensor of shape ``(d0, d1, ..., dn)`` filled with values
+            sampled from a truncated half-Normal distribution.
 
     Raises:
-        ValueError if the ``std`` and ``max_value`` parameters are not
+        ValueError: if the ``std`` and ``max_value`` parameters are not
             valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.random import trunc_half_normal
+    >>> trunc_half_normal(
+    ...     std=torch.tensor([1.0, 3.0, 5.0]), max_value=torch.tensor([5.0, 10.0, 15.0])
+    ... )
+    tensor([...])
 
-        >>> import torch
-        >>> from startorch.random import trunc_half_normal
-        >>> trunc_half_normal(
-        ...     std=torch.tensor([1.0, 3.0, 5.0]), max_value=torch.tensor([5.0, 10.0, 15.0])
-        ... )
-        tensor([...])
+    ```
     """
     if std.shape != max_value.shape:
         msg = (
@@ -486,40 +477,37 @@ def rand_trunc_log_normal(
     std: float = 1.0,
     min_value: float = 0.0,
     max_value: float = 5.0,
-    generator: torch.Generator | None = None,
+    generator: Generator | None = None,
 ) -> Tensor:
     r"""Create a tensor filled with values sampled from a truncated log-
     Normal distribution.
 
     Args:
-        size (list or tuple): Specifies the tensor shape.
-        mean: Specifies the mean of the underlying
-            Normal distribution. Default: ``0.0``
-        std: Specifies the standard deviation of
-            the underlying Normal distribution. Default: ``1.0``
+        size: Specifies the tensor shape.
+        mean: Specifies the mean of the underlying Normal distribution.
+        std: Specifies the standard deviation of the underlying Normal
+            distribution.
         min_value: Specifies the minimum value.
-            Default: ``0.0``
         max_value: Specifies the maximum value.
-            Default: ``5.0``
-        generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator.
+        generator: Specifies an optional random generator.
 
     Returns:
-        ``torch.Tensor``: A tensor filled with values sampled from a
-            truncated log-Normal distribution.
+        A tensor filled with values sampled from a truncated log-Normal
+            distribution.
 
     Raises:
-        ValueError if the ``min_value`` and ``max_value`` parameters
+        ValueError: if the ``min_value`` and ``max_value`` parameters
             are not valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.random import rand_trunc_log_normal
+    >>> rand_trunc_log_normal((2, 3), mean=0.0, std=1.0, min_value=1.0, max_value=4.0)
+    tensor([[...]])
 
-        >>> import torch
-        >>> from startorch.random import rand_trunc_log_normal
-        >>> rand_trunc_log_normal((2, 3), mean=0.0, std=1.0, min_value=1.0, max_value=4.0)
-        tensor([[...]])
+    ```
     """
     if max_value < min_value:
         mag = f"`max_value` ({max_value}) has to be greater or equal to `min_value` ({min_value})"
@@ -539,46 +527,46 @@ def trunc_log_normal(
     std: Tensor,
     min_value: Tensor,
     max_value: Tensor,
-    generator: torch.Generator | None = None,
+    generator: Generator | None = None,
 ) -> Tensor:
     r"""Create a tensor filled with values sampled from a truncated log-
     Normal distribution.
 
     Args:
-        mean (``torch.Tensor`` of type float and shape
-            ``(d0, d1, ..., dn)``): Specifies the mean of the
-            underlying Normal distribution.
-        std (``torch.Tensor`` of type float and shape
-            ``(d0, d1, ..., dn)``): Specifies the standard deviation
-            of the underlying Normal distribution.
-        min_value (``torch.Tensor`` of type float and shape
-            ``(d0, d1, ..., dn)``): Specifies the minimum value.
-        max_value (``torch.Tensor`` of type float and shape
-            ``(d0, d1, ..., dn)``): Specifies the maximum value.
-        generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator.
+        mean: Specifies the mean of the underlying Normal distribution.
+            It must be a float tensor of shape ``(d0, d1, ..., dn)``.
+        std: Specifies the standard deviation of the underlying Normal
+            distribution. It must be a float tensor of shape
+            ``(d0, d1, ..., dn)``.
+        min_value: Specifies the minimum value. It must be a float
+            tensor of shape ``(d0, d1, ..., dn)``.
+        max_value: Specifies the maximum value. It must be a float
+            tensor of shape ``(d0, d1, ..., dn)``.
+        generator: Specifies an optional random generator.
 
     Returns:
-        ``torch.Tensor``: A tensor filled with values sampled from a
-            truncated log-Normal distribution.
+        A tensor of shape ``(d0, d1, ..., dn)`` filled with values
+            sampled from a truncated log-Normal distribution.
 
     Raises:
-        ValueError if the ``mean``, ``std``, ``min_value`` and
+        ValueError: if the ``mean``, ``std``, ``min_value`` and
             ``max_value`` parameters are not valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
 
-        >>> import torch
-        >>> from startorch.random import trunc_log_normal
-        >>> trunc_log_normal(
-        ...     mean=torch.tensor([-1.0, 0.0, 1.0]),
-        ...     std=torch.tensor([1.0, 3.0, 5.0]),
-        ...     min_value=torch.tensor([0.0, 1.0, 2.0]),
-        ...     max_value=torch.tensor([5.0, 10.0, 15.0]),
-        ... )
-        tensor([...])
+    >>> import torch
+    >>> from startorch.random import trunc_log_normal
+    >>> trunc_log_normal(
+    ...     mean=torch.tensor([-1.0, 0.0, 1.0]),
+    ...     std=torch.tensor([1.0, 3.0, 5.0]),
+    ...     min_value=torch.tensor([0.0, 1.0, 2.0]),
+    ...     max_value=torch.tensor([5.0, 10.0, 15.0]),
+    ... )
+    tensor([...])
+
+    ```
     """
     if not shapes_are_equal((mean, std, min_value, max_value)):
         msg = (
@@ -612,40 +600,37 @@ def rand_trunc_normal(
     std: float = 1.0,
     min_value: float = -3.0,
     max_value: float = 3.0,
-    generator: torch.Generator | None = None,
+    generator: Generator | None = None,
 ) -> Tensor:
     r"""Create a tensor filled with values sampled from a truncated
     Normal distribution.
 
     Args:
-        size (list or tuple): Specifies the tensor shape.
-        mean: Specifies the mean of the Normal
-            distribution. Default: ``0.0``
-        std: Specifies the standard deviation of
-            the Normal distribution. Default: ``1.0``
+        size: Specifies the tensor shape.
+        mean: Specifies the mean of the Normal distribution.
+        std: Specifies the standard deviation of the Normal
+            distribution.
         min_value: Specifies the minimum value.
-            Default: ``-3.0``
         max_value: Specifies the maximum value.
-            Default: ``3.0``
-        generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator.
+        generator: Specifies an optional random generator.
 
     Returns:
-        ``torch.Tensor``: A tensor filled with values sampled from a
-            truncated Normal distribution.
+        A tensor filled with values sampled from a truncated Normal
+            distribution.
 
     Raises:
-        ValueError if the ``min_value`` and  ``max_value`` parameters
+        ValueError: if the ``min_value`` and  ``max_value`` parameters
             are not valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.random import rand_trunc_normal
+    >>> rand_trunc_normal((2, 3), mean=1.0, std=2.0, min_value=-5.0, max_value=5.0)
+    tensor([[...]])
 
-        >>> import torch
-        >>> from startorch.random import rand_trunc_normal
-        >>> rand_trunc_normal((2, 3), mean=1.0, std=2.0, min_value=-5.0, max_value=5.0)
-        tensor([[...]])
+    ```
     """
     if max_value < min_value:
         msg = f"`max_value` ({max_value}) has to be greater or equal to `min_value` ({min_value})"
@@ -665,46 +650,45 @@ def trunc_normal(
     std: Tensor,
     min_value: Tensor,
     max_value: Tensor,
-    generator: torch.Generator | None = None,
+    generator: Generator | None = None,
 ) -> Tensor:
     r"""Create a tensor filled with values sampled from a truncated
     Normal distribution.
 
     Args:
-        mean (``torch.Tensor`` of type float and shape
-            ``(d0, d1, ..., dn)``): Specifies the mean of the
-            Normal distribution.
-        std (``torch.Tensor`` of type float and shape
-            ``(d0, d1, ..., dn)``): Specifies the standard deviation
-            of the Normal distribution.
-        min_value (``torch.Tensor`` of type float and shape
-            ``(d0, d1, ..., dn)``): Specifies the minimum value.
-        max_value (``torch.Tensor`` of type float and shape
-            ``(d0, d1, ..., dn)``): Specifies the maximum value.
-        generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator.
+        mean: Specifies the mean of the Normal distribution.
+            It must be a float tensor of shape ``(d0, d1, ..., dn)``.
+        std: Specifies the standard deviation of the Normal
+            distribution. It must be a float tensor of shape
+            ``(d0, d1, ..., dn)``.
+        min_value: Specifies the minimum value. It must be a float
+            tensor of shape ``(d0, d1, ..., dn)``.
+        max_value: Specifies the maximum value. It must be a float
+            tensor of shape ``(d0, d1, ..., dn)``.
+        generator: Specifies an optional random generator.
 
     Returns:
-        ``torch.Tensor``: A tensor filled with values sampled from a
-            truncated Normal distribution.
+        A tensor of shape ``(d0, d1, ..., dn)`` filled with values
+            sampled from a truncated Normal distribution.
 
     Raises:
-        ValueError if the ``min_value`` and  ``max_value`` parameters
+        ValueError: if the ``min_value`` and  ``max_value`` parameters
             are not valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.random import trunc_normal
+    >>> trunc_normal(
+    ...     mean=torch.tensor([1.0, 0.0, -1.0]),
+    ...     std=torch.tensor([1.0, 3.0, 5.0]),
+    ...     min_value=torch.tensor([-5.0, -10.0, -15.0]),
+    ...     max_value=torch.tensor([5.0, 10.0, 15.0]),
+    ... )
+    tensor([...])
 
-        >>> import torch
-        >>> from startorch.random import trunc_normal
-        >>> trunc_normal(
-        ...     mean=torch.tensor([1.0, 0.0, -1.0]),
-        ...     std=torch.tensor([1.0, 3.0, 5.0]),
-        ...     min_value=torch.tensor([-5.0, -10.0, -15.0]),
-        ...     max_value=torch.tensor([5.0, 10.0, 15.0]),
-        ... )
-        tensor([...])
+    ```
     """
     if not shapes_are_equal((mean, std, min_value, max_value)):
         msg = (
@@ -736,36 +720,34 @@ def rand_uniform(
     size: list[int] | tuple[int, ...],
     low: float = 0.0,
     high: float = 1.0,
-    generator: torch.Generator | None = None,
+    generator: Generator | None = None,
 ) -> Tensor:
     r"""Create a tensor filled with values sampled from a uniform
     distribution.
 
     Args:
-        size (list or tuple): Specifies the tensor shape.
-        low: Specifies the minimum value
-            (inclusive). Default: ``0.0``
-        high: Specifies the maximum value
-            (exclusive). Default: ``1.0``
-        generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator.
+        size: Specifies the tensor shape.
+        low: Specifies the minimum value (inclusive).
+        high: Specifies the maximum value (exclusive).
+        generator: Specifies an optional random generator.
 
     Returns:
-        ``torch.Tensor``: A tensor filled with values sampled from a
-            uniform distribution.
+        A tensor filled with values sampled from a uniform
+            distribution.
 
     Raises:
-        ValueError if the ``low`` and  ``high`` parameters  are not
+        ValueError: if the ``low`` and  ``high`` parameters  are not
             valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.random import rand_uniform
+    >>> rand_uniform((2, 3), low=-1.0, high=2.0)
+    tensor([[...]])
 
-        >>> import torch
-        >>> from startorch.random import rand_uniform
-        >>> rand_uniform((2, 3), low=-1.0, high=2.0)
-        tensor([[...]])
+    ```
     """
     if high < low:
         msg = f"`high` ({high}) has to be greater or equal to `low` ({low})"
@@ -775,7 +757,7 @@ def rand_uniform(
     )
 
 
-def uniform(low: Tensor, high: Tensor, generator: torch.Generator | None = None) -> Tensor:
+def uniform(low: Tensor, high: Tensor, generator: Generator | None = None) -> Tensor:
     r"""Create a tensor filled with values sampled from a uniform
     distribution.
 
@@ -785,34 +767,31 @@ def uniform(low: Tensor, high: Tensor, generator: torch.Generator | None = None)
     the output size.
 
     Args:
-        low (``torch.Tensor`` of type float and shape
-            ``(d0, d1, ..., dn)``): Specifies the minimum values
-            (inclusive).
-        high (``torch.Tensor`` of type float and shape
-            ``(d0, d1, ..., dn)``): Specifies the maximum values
-            (exclusive).
-        generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator.
+        low: Specifies the minimum values (inclusive). It must be a
+            float tensor of shape ``(d0, d1, ..., dn)``.
+        high: Specifies the maximum values (exclusive). It must be a
+            float tensor of shape ``(d0, d1, ..., dn)``.
+        generator: Specifies an optional random generator.
 
     Returns:
-        ``torch.Tensor`` of type float and shape
-            ``(d0, d1, ..., dn)``: A tensor filled with values sampled
-            from a uniform distribution where the minimum and maximum
-            values are given as input.
+        A tensor of shape ``(d0, d1, ..., dn)`` filled with values
+            sampled from a uniform distribution where the minimum and
+            maximum values are given as input.
 
     Raises:
-        ValueError if the input tensor shapes do not match or if at
+        ValueError: if the input tensor shapes do not match or if at
             least one value in ``low`` tensor is higher than its
             associated high value in ``high``
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.random import uniform
+    >>> uniform(low=torch.tensor([-1.0, 0.0, 1.0]), high=torch.tensor([1.0, 3.0, 5.0]))
+    tensor([...])
 
-        >>> import torch
-        >>> from startorch.random import uniform
-        >>> uniform(low=torch.tensor([-1.0, 0.0, 1.0]), high=torch.tensor([1.0, 3.0, 5.0]))
-        tensor([...])
+    ```
     """
     if low.shape != high.shape:
         msg = (
@@ -838,34 +817,34 @@ def rand_log_uniform(
     size: list[int] | tuple[int, ...],
     low: float,
     high: float,
-    generator: torch.Generator | None = None,
+    generator: Generator | None = None,
 ) -> Tensor:
     r"""Create a tensor filled with values sampled from a uniform
     distribution in the log space.
 
     Args:
-        size (list or tuple): Specifies the tensor shape.
+        size: Specifies the tensor shape.
         low: Specifies the minimum value (inclusive).
             This value needs to be positive.
         high: Specifies the maximum value (exclusive).
-        generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator.
+        generator: Specifies an optional random generator.
 
     Returns:
-        ``torch.Tensor``: A tensor filled with values sampled from a
-            uniform distribution in the log space.
+        A tensor filled with values sampled from a uniform distribution
+            in the log space.
 
     Raises:
-        ValueError if the ``low`` and  ``high`` parameters  are not
+        ValueError: if the ``low`` and  ``high`` parameters  are not
             valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.random import rand_log_uniform
+    >>> rand_log_uniform((2, 3), low=0.1, high=1000.0)
+    tensor([[...]])
 
-        >>> from startorch.random import rand_log_uniform
-        >>> rand_log_uniform((2, 3), low=0.1, high=1000.0)
-        tensor([[...]])
+    ```
     """
     if high < low:
         msg = f"`high` ({high}) has to be greater or equal to `low` ({low})"
@@ -880,37 +859,34 @@ def rand_log_uniform(
     )
 
 
-def log_uniform(low: Tensor, high: Tensor, generator: torch.Generator | None = None) -> Tensor:
+def log_uniform(low: Tensor, high: Tensor, generator: Generator | None = None) -> Tensor:
     r"""Create a tensor filled with values sampled from a uniform
     distribution in the log space.
 
     Args:
-        low (``torch.Tensor`` of type float and shape
-            ``(d0, d1, ..., dn)``): Specifies the minimum values
-            (inclusive).
-        high (``torch.Tensor`` of type float and shape
-            ``(d0, d1, ..., dn)``): Specifies the maximum values
-            (exclusive).
-        generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator.
+        low: Specifies the minimum values (inclusive). It must be a
+            float tensor of shape ``(d0, d1, ..., dn)``.
+        high: Specifies the maximum values (exclusive). It must be a
+            float tensor of shape ``(d0, d1, ..., dn)``.
+        generator: Specifies an optional random generator.
 
     Returns:
-        ``torch.Tensor`` of type float and shape
-            ``(d0, d1, ..., dn)``: A tensor filled with values sampled
-            from a uniform distribution in the log space where the
-            minimum and maximum values are given as input.
+        A tensor of shape ``(d0, d1, ..., dn)`` filled with values
+            sampled from a uniform distribution in the log space where
+            the minimum and maximum values are given as input.
 
     Raises:
-        ValueError if the ``low`` and  ``high`` parameters  are not
+        ValueError: if the ``low`` and  ``high`` parameters  are not
             valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.random import log_uniform
+    >>> log_uniform(low=torch.tensor([0.01, 0.1, 1.0]), high=torch.tensor([1.0, 10.0, 100.0]))
+    tensor([...])
 
-        >>> from startorch.random import log_uniform
-        >>> log_uniform(low=torch.tensor([0.01, 0.1, 1.0]), high=torch.tensor([1.0, 10.0, 100.0]))
-        tensor([...])
+    ```
     """
     if low.shape != high.shape:
         msg = (
@@ -938,34 +914,34 @@ def rand_asinh_uniform(
     size: list[int] | tuple[int, ...],
     low: float,
     high: float,
-    generator: torch.Generator | None = None,
+    generator: Generator | None = None,
 ) -> Tensor:
     r"""Create a tensor filled with values sampled from a uniform
     distribution in the inverse hyperbolic sine space.
 
     Args:
-        size (list or tuple): Specifies the tensor shape.
+        size: Specifies the tensor shape.
         low: Specifies the minimum value (inclusive).
             This value needs to be positive.
         high: Specifies the maximum value (exclusive).
-        generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator.
+        generator: Specifies an optional random generator.
 
     Returns:
-        ``torch.Tensor``: A tensor filled with values sampled from a
-            uniform distribution in the inverse hyperbolic sine space.
+        A tensor filled with values sampled from a uniform distribution
+            in the inverse hyperbolic sine space.
 
     Raises:
-        ValueError if the ``low`` and  ``high`` parameters  are not
+        ValueError: if the ``low`` and  ``high`` parameters  are not
             valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.random import rand_asinh_uniform
+    >>> rand_asinh_uniform((2, 3), low=-1000.0, high=1000.0)
+    tensor([[...]])
 
-        >>> from startorch.random import rand_asinh_uniform
-        >>> rand_asinh_uniform((2, 3), low=-1000.0, high=1000.0)
-        tensor([[...]])
+    ```
     """
     if high < low:
         msg = f"`high` ({high}) has to be greater or equal to `low` ({low})"
@@ -980,41 +956,38 @@ def rand_asinh_uniform(
     )
 
 
-def asinh_uniform(low: Tensor, high: Tensor, generator: torch.Generator | None = None) -> Tensor:
+def asinh_uniform(low: Tensor, high: Tensor, generator: Generator | None = None) -> Tensor:
     r"""Create a tensor filled with values sampled from a uniform
     distribution in the inverse hyperbolic sine space.
 
     Args:
-        low (``torch.Tensor`` of type float and shape
-            ``(d0, d1, ..., dn)``): Specifies the minimum values
-            (inclusive).
-        high (``torch.Tensor`` of type float and shape
-            ``(d0, d1, ..., dn)``): Specifies the maximum values
-            (exclusive).
-        generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator.
+        low: Specifies the minimum values (inclusive). It must be a
+            float tensor of shape ``(d0, d1, ..., dn)``.
+        high: Specifies the maximum values (exclusive). It must be a
+            float tensor of shape ``(d0, d1, ..., dn)``.
+        generator: Specifies an optional random generator.
 
     Returns:
-        ``torch.Tensor`` of type float and shape
-            ``(d0, d1, ..., dn)``: A tensor filled with values sampled
-            from a uniform distribution in the inverse hyperbolic sine
-            space where the minimum and maximum values are given as
-            input.
+        A tensor of shape ``(d0, d1, ..., dn)`` filled with values
+            sampled from a uniform distribution in the inverse
+            hyperbolic sine space where the minimum and maximum values
+            are given as input.
 
     Raises:
-        ValueError if the ``low`` and  ``high`` parameters  are not
+        ValueError: if the ``low`` and  ``high`` parameters  are not
             valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.random import asinh_uniform
+    >>> asinh_uniform(
+    ...     low=torch.tensor([-10.0, 0.0, 1.0]),
+    ...     high=torch.tensor([1.0, 10.0, 100.0]),
+    ... )
+    tensor([...])
 
-        >>> from startorch.random import asinh_uniform
-        >>> asinh_uniform(
-        ...     low=torch.tensor([-10.0, 0.0, 1.0]),
-        ...     high=torch.tensor([1.0, 10.0, 100.0]),
-        ... )
-        tensor([...])
+    ```
     """
     if low.shape != high.shape:
         msg = (

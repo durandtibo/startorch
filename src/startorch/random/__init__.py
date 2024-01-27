@@ -1,3 +1,7 @@
+r"""Contain functions to generate tensors filled with random values."""
+
+from __future__ import annotations
+
 __all__ = [
     "asinh_uniform",
     "cauchy",
