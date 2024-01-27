@@ -2,7 +2,7 @@ r"""Contain utility functions to manage random seeds."""
 
 from __future__ import annotations
 
-__all__ = ["get_random_seed", "get_torch_generator"]
+__all__ = ["get_random_seed", "get_torch_generator", "setup_torch_generator"]
 
 
 import torch
@@ -62,3 +62,28 @@ def get_torch_generator(
     generator = torch.Generator(device)
     generator.manual_seed(random_seed)
     return generator
+
+
+def setup_torch_generator(generator_or_seed: int | torch.Generator) -> torch.Generator:
+    r"""Set up a ``torch.Generator`` object.
+
+    Args:
+        generator_or_seed: Specifies a ``torch.Generator`` object or
+            a random seed.
+
+    Returns:
+        A ``torch.Generator`` object.
+
+    Example usage:
+
+    ```pycon
+    >>> from startorch.utils.seed import setup_torch_generator
+    >>> generator = setup_torch_generator(42)
+    >>> generator
+    <torch._C.Generator object at 0x...>
+
+    ```
+    """
+    if isinstance(generator_or_seed, torch.Generator):
+        return generator_or_seed
+    return get_torch_generator(generator_or_seed)

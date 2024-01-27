@@ -9,11 +9,10 @@ from typing import TYPE_CHECKING, Any
 from unittest.mock import Mock
 
 import numpy as np
-from torch import Generator
 
 from startorch.utils.batch import merge_batches, scale_batch
 from startorch.utils.imports import check_plotly, is_plotly_available
-from startorch.utils.seed import get_torch_generator
+from startorch.utils.seed import setup_torch_generator
 
 if is_plotly_available():
     import plotly.graph_objects as go
@@ -22,6 +21,8 @@ else:  # pragma: no cover
 
 
 if TYPE_CHECKING:
+    from torch import Generator
+
     from startorch.sequence.base import BaseSequenceGenerator
 
 
@@ -63,8 +64,7 @@ def hist_sequence(
     ```
     """
     check_plotly()
-    if not isinstance(rng, Generator):
-        rng = get_torch_generator(random_seed=rng)
+    rng = setup_torch_generator(rng)
 
     batch = merge_batches(
         [
@@ -110,8 +110,7 @@ def plot_sequence(
     ```
     """
     check_plotly()
-    if not isinstance(rng, Generator):
-        rng = get_torch_generator(random_seed=rng)
+    rng = setup_torch_generator(rng)
 
     fig = go.Figure()
     for _ in range(num_batches):
