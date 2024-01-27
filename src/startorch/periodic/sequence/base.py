@@ -1,3 +1,6 @@
+r"""Contain the base class to implement a periodic sequence
+generator."""
+
 from __future__ import annotations
 
 __all__ = [
@@ -8,13 +11,16 @@ __all__ = [
 
 import logging
 from abc import ABC, abstractmethod
+from typing import TYPE_CHECKING
 
 from objectory import AbstractFactory
 from objectory.utils import is_object_config
-from redcat import BatchedTensorSeq
-from torch import Generator
 
 from startorch.utils.format import str_target_object
+
+if TYPE_CHECKING:
+    from redcat import BatchedTensorSeq
+    from torch import Generator
 
 logger = logging.getLogger(__name__)
 
@@ -26,18 +32,19 @@ class BasePeriodicSequenceGenerator(ABC, metaclass=AbstractFactory):
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.periodic.sequence import Repeat
+    >>> from startorch.sequence import RandUniform
+    >>> generator = Repeat(RandUniform())
+    >>> generator
+    RepeatPeriodicSequenceGenerator(
+      (generator): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+    )
+    >>> generator.generate(seq_len=12, period=4, batch_size=4)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> import torch
-        >>> from startorch.periodic.sequence import Repeat
-        >>> from startorch.sequence import RandUniform
-        >>> generator = Repeat(RandUniform())
-        >>> generator
-        RepeatPeriodicSequenceGenerator(
-          (generator): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
-        )
-        >>> generator.generate(seq_len=12, period=4, batch_size=4)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     @abstractmethod
@@ -52,26 +59,24 @@ class BasePeriodicSequenceGenerator(ABC, metaclass=AbstractFactory):
             seq_len: Specifies the sequence length.
             period: Specifies the period.
             batch_size: Specifies the batch size.
-                Default: ``1``
-            rng (``torch.Generator`` or None, optional): Specifies
-                an optional random number generator.
+            rng: Specifies an optional random number generator.
 
         Returns:
-            ``BatchedTensorSeq``: A batch of sequences. The data in the
-                batch are represented by a ``torch.Tensor`` of shape
+            A batch of sequences represented as a tensor of shape
                 ``(batch_size, sequence_length, *)`` where `*` means
                 any number of dimensions.
 
         Example usage:
 
-        .. code-block:: pycon
+        ```pycon
+        >>> import torch
+        >>> from startorch.periodic.sequence import Repeat
+        >>> from startorch.sequence import RandUniform
+        >>> generator = Repeat(RandUniform())
+        >>> generator.generate(seq_len=12, period=4, batch_size=4)
+        tensor([[...]], batch_dim=0, seq_dim=1)
 
-            >>> import torch
-            >>> from startorch.periodic.sequence import Repeat
-            >>> from startorch.sequence import RandUniform
-            >>> generator = Repeat(RandUniform())
-            >>> generator.generate(seq_len=12, period=4, batch_size=4)
-            tensor([[...]], batch_dim=0, seq_dim=1)
+        ```
         """
 
 
@@ -85,24 +90,25 @@ def is_periodic_sequence_generator_config(config: dict) -> bool:
     the class.
 
     Args:
-        config (dict): Specifies the configuration to check.
+        config: Specifies the configuration to check.
 
     Returns:
-        bool: ``True`` if the input configuration is a configuration
+        ``True`` if the input configuration is a configuration
             for a ``BasePeriodicSequenceGenerator`` object.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.periodic.sequence import is_periodic_sequence_generator_config
+    >>> is_periodic_sequence_generator_config(
+    ...     {
+    ...         "_target_": "startorch.periodic.sequence.Repeat",
+    ...         "generator": {"_target_": "startorch.sequence.RandUniform"},
+    ...     }
+    ... )
+    True
 
-        >>> from startorch.periodic.sequence import is_periodic_sequence_generator_config
-        >>> is_periodic_sequence_generator_config(
-        ...     {
-        ...         "_target_": "startorch.periodic.sequence.Repeat",
-        ...         "generator": {"_target_": "startorch.sequence.RandUniform"},
-        ...     }
-        ... )
-        True
+    ```
     """
     return is_object_config(config, BasePeriodicSequenceGenerator)
 
@@ -110,32 +116,33 @@ def is_periodic_sequence_generator_config(config: dict) -> bool:
 def setup_periodic_sequence_generator(
     generator: BasePeriodicSequenceGenerator | dict,
 ) -> BasePeriodicSequenceGenerator:
-    r"""Sets up a periodic sequence generator.
+    r"""Set up a periodic sequence generator.
 
     The sequence generator is instantiated from its configuration by
     using the ``BasePeriodicSequenceGenerator`` factory function.
 
     Args:
-        generator (``BasePeriodicSequenceGenerator`` or dict): Specifies a
-            periodic sequence generator or its configuration.
+        generator: Specifies a periodic sequence generator or its
+            configuration.
 
     Returns:
-        ``BasePeriodicSequenceGenerator``: A periodic sequence generator.
+        A periodic sequence generator.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.periodic.sequence import setup_periodic_sequence_generator
+    >>> setup_periodic_sequence_generator(
+    ...     {
+    ...         "_target_": "startorch.periodic.sequence.Repeat",
+    ...         "generator": {"_target_": "startorch.sequence.RandUniform"},
+    ...     }
+    ... )
+    RepeatPeriodicSequenceGenerator(
+      (generator): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+    )
 
-        >>> from startorch.periodic.sequence import setup_periodic_sequence_generator
-        >>> setup_periodic_sequence_generator(
-        ...     {
-        ...         "_target_": "startorch.periodic.sequence.Repeat",
-        ...         "generator": {"_target_": "startorch.sequence.RandUniform"},
-        ...     }
-        ... )
-        RepeatPeriodicSequenceGenerator(
-          (generator): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
-        )
+    ```
     """
     if isinstance(generator, dict):
         logger.info(

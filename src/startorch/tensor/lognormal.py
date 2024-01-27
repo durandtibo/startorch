@@ -135,14 +135,15 @@ class RandTruncLogNormalTensorGenerator(BaseTensorGenerator):
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.tensor import RandTruncLogNormal
+    >>> generator = RandTruncLogNormal(mean=0.0, std=1.0, min_value=0.0, max_value=1.0)
+    >>> generator
+    RandTruncLogNormalTensorGenerator(mean=0.0, std=1.0, min_value=0.0, max_value=1.0)
+    >>> generator.generate(size=(2, 6))
+    tensor([[...]])
 
-        >>> from startorch.tensor import RandTruncLogNormal
-        >>> generator = RandTruncLogNormal(mean=0.0, std=1.0, min_value=0.0, max_value=1.0)
-        >>> generator
-        RandTruncLogNormalTensorGenerator(mean=0.0, std=1.0, min_value=0.0, max_value=1.0)
-        >>> generator.generate(size=(2, 6))
-        tensor([[...]])
+    ```
     """
 
     def __init__(

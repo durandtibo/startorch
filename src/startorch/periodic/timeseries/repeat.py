@@ -1,15 +1,22 @@
+r"""Contain a periodic time series generator that generates periodic
+time series by using a ``BaseTimeSeriesGenerator`` object and repeating
+the generated time series."""
+
 from __future__ import annotations
 
 __all__ = ["RepeatPeriodicTimeSeriesGenerator"]
 
 import math
+from typing import TYPE_CHECKING
 
 from coola.utils import str_indent, str_mapping
-from redcat import BatchDict
-from torch import Generator
 
 from startorch.periodic.timeseries import BasePeriodicTimeSeriesGenerator
 from startorch.timeseries import BaseTimeSeriesGenerator, setup_timeseries_generator
+
+if TYPE_CHECKING:
+    from redcat import BatchDict
+    from torch import Generator
 
 
 class RepeatPeriodicTimeSeriesGenerator(BasePeriodicTimeSeriesGenerator):
@@ -18,29 +25,29 @@ class RepeatPeriodicTimeSeriesGenerator(BasePeriodicTimeSeriesGenerator):
     sequence.
 
     Args:
-        sequence (``BaseTimeSeriesGenerator`` or dict): Specifies
-            a sequence generator or its configuration.
+        generator: Specifies a sequence generator or its configuration.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.periodic.timeseries import Repeat
+    >>> from startorch.timeseries import TimeSeries
+    >>> from startorch.sequence import RandUniform
+    >>> generator = Repeat(TimeSeries({"value": RandUniform(), "time": RandUniform()}))
+    >>> generator
+    RepeatPeriodicTimeSeriesGenerator(
+      (generator): TimeSeriesGenerator(
+          (value): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+          (time): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+        )
+    )
+    >>> generator.generate(seq_len=12, period=4, batch_size=4)
+    BatchDict(
+      (value): tensor([[...]], batch_dim=0, seq_dim=1)
+      (time): tensor([[...]], batch_dim=0, seq_dim=1)
+    )
 
-        >>> from startorch.periodic.timeseries import Repeat
-        >>> from startorch.timeseries import TimeSeries
-        >>> from startorch.sequence import RandUniform
-        >>> generator = Repeat(TimeSeries({"value": RandUniform(), "time": RandUniform()}))
-        >>> generator
-        RepeatPeriodicTimeSeriesGenerator(
-          (generator): TimeSeriesGenerator(
-              (value): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
-              (time): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
-            )
-        )
-        >>> generator.generate(seq_len=12, period=4, batch_size=4)
-        BatchDict(
-          (value): tensor([[...]], batch_dim=0, seq_dim=1)
-          (time): tensor([[...]], batch_dim=0, seq_dim=1)
-        )
+    ```
     """
 
     def __init__(self, generator: BaseTimeSeriesGenerator | dict) -> None:

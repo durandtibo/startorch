@@ -66,14 +66,15 @@ class RandPoissonTensorGenerator(BaseTensorGenerator):
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.tensor import RandPoisson
+    >>> generator = RandPoisson(rate=1.0)
+    >>> generator
+    RandPoissonTensorGenerator(rate=1.0)
+    >>> generator.generate((2, 6))
+    tensor([[...]])
 
-        >>> from startorch.tensor import RandPoisson
-        >>> generator = RandPoisson(rate=1.0)
-        >>> generator
-        RandPoissonTensorGenerator(rate=1.0)
-        >>> generator.generate((2, 6))
-        tensor([[...]])
+    ```
     """
 
     def __init__(self, rate: float = 1.0) -> None:

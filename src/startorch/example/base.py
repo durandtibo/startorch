@@ -1,3 +1,5 @@
+r"""Contain the base class to implement an example generator."""
+
 from __future__ import annotations
 
 __all__ = [
@@ -8,14 +10,16 @@ __all__ = [
 
 import logging
 from abc import ABC, abstractmethod
-from typing import Generic, TypeVar
+from typing import TYPE_CHECKING, Generic, TypeVar
 
 from objectory import AbstractFactory
 from objectory.utils import is_object_config
-from redcat import BatchDict
-from torch import Generator
 
 from startorch.utils.format import str_target_object
+
+if TYPE_CHECKING:
+    from redcat import BatchDict
+    from torch import Generator
 
 logger = logging.getLogger(__name__)
 

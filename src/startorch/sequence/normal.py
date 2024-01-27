@@ -226,24 +226,25 @@ class TruncNormalSequenceGenerator(BaseSequenceGenerator):
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.sequence import RandUniform, TruncNormal
+    >>> generator = TruncNormal(
+    ...     mean=RandUniform(low=-1.0, high=1.0),
+    ...     std=RandUniform(low=1.0, high=2.0),
+    ...     min_value=RandUniform(low=-10.0, high=-5.0),
+    ...     max_value=RandUniform(low=5.0, high=10.0),
+    ... )
+    >>> generator
+    TruncNormalSequenceGenerator(
+      (mean): RandUniformSequenceGenerator(low=-1.0, high=1.0, feature_size=(1,))
+      (std): RandUniformSequenceGenerator(low=1.0, high=2.0, feature_size=(1,))
+      (min_value): RandUniformSequenceGenerator(low=-10.0, high=-5.0, feature_size=(1,))
+      (max_value): RandUniformSequenceGenerator(low=5.0, high=10.0, feature_size=(1,))
+    )
+    >>> generator.generate(seq_len=6, batch_size=2)
+    tensor([[...]], batch_dim=0, seq_dim=1)
 
-        >>> from startorch.sequence import RandUniform, TruncNormal
-        >>> generator = TruncNormal(
-        ...     mean=RandUniform(low=-1.0, high=1.0),
-        ...     std=RandUniform(low=1.0, high=2.0),
-        ...     min_value=RandUniform(low=-10.0, high=-5.0),
-        ...     max_value=RandUniform(low=5.0, high=10.0),
-        ... )
-        >>> generator
-        TruncNormalSequenceGenerator(
-          (mean): RandUniformSequenceGenerator(low=-1.0, high=1.0, feature_size=(1,))
-          (std): RandUniformSequenceGenerator(low=1.0, high=2.0, feature_size=(1,))
-          (min_value): RandUniformSequenceGenerator(low=-10.0, high=-5.0, feature_size=(1,))
-          (max_value): RandUniformSequenceGenerator(low=5.0, high=10.0, feature_size=(1,))
-        )
-        >>> generator.generate(seq_len=6, batch_size=2)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(

@@ -1,3 +1,5 @@
+r"""Contain some periodic sequence generators."""
+
 from __future__ import annotations
 
 __all__ = [

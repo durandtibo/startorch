@@ -1,3 +1,5 @@
+r"""Contain example generators."""
+
 from __future__ import annotations
 
 __all__ = [

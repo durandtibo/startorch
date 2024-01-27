@@ -1,3 +1,5 @@
+r"""Contain utility functions to generate examples."""
+
 from __future__ import annotations
 
 __all__ = [

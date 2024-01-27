@@ -1,8 +1,13 @@
+r"""Contain a example generators to generate binary classification data
+where the data are generated with a large circle containing a smaller
+circle in 2d."""
+
 from __future__ import annotations
 
 __all__ = ["CirclesClassificationExampleGenerator", "make_circles_classification"]
 
 import math
+from typing import TYPE_CHECKING
 
 import torch
 from redcat import BatchDict, BatchedTensor
@@ -11,6 +16,9 @@ from startorch import constants as ct
 from startorch.example.base import BaseExampleGenerator
 from startorch.example.utils import check_interval, check_num_examples, check_std
 from startorch.random import rand_normal
+
+if TYPE_CHECKING:
+    from torch import Generator
 
 
 class CirclesClassificationExampleGenerator(BaseExampleGenerator[BatchedTensor]):
@@ -22,37 +30,33 @@ class CirclesClassificationExampleGenerator(BaseExampleGenerator[BatchedTensor])
     https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_circles.html
 
     Args:
-    ----
-        shuffle (bool, optional): If ``True``, the examples are
-            shuffled. Default: ``True``
-        noise_std (float, optional): Specifies the standard deviation
-            of the Gaussian noise.
-        factor (float, optional): Specifies the scale factor between
-            inner and outer circle in the range ``[0, 1)``.
-            Default: ``0.8``
-        ratio (float, optional): Specifies the ratio between the
-            number of examples in outer circle and inner circle.
-            Default: ``0.5``
+        shuffle: If ``True``, the examples are shuffled.
+        noise_std: Specifies the standard deviation of the Gaussian
+            noise.
+        factor: Specifies the scale factor between inner and outer
+            circle in the range ``[0, 1)``.
+        ratio: Specifies the ratio between the number of examples in
+            outer circle and inner circle.
 
     Raises:
-    ------
         TypeError or RuntimeError if one of the parameters is not
             valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.example import CirclesClassification
+    >>> generator = CirclesClassification()
+    >>> generator
+    CirclesClassificationExampleGenerator(shuffle=True, noise_std=0.0, factor=0.8, ratio=0.5)
+    >>> batch = generator.generate(batch_size=10)
+    >>> batch
+    BatchDict(
+      (target): tensor([...], batch_dim=0)
+      (feature): tensor([[...]], batch_dim=0)
+    )
 
-        >>> from startorch.example import CirclesClassification
-        >>> generator = CirclesClassification()
-        >>> generator
-        CirclesClassificationExampleGenerator(shuffle=True, noise_std=0.0, factor=0.8, ratio=0.5)
-        >>> batch = generator.generate(batch_size=10)
-        >>> batch
-        BatchDict(
-          (target): tensor([...], batch_dim=0)
-          (feature): tensor([[...]], batch_dim=0)
-        )
+    ```
     """
 
     def __init__(
@@ -80,23 +84,22 @@ class CirclesClassificationExampleGenerator(BaseExampleGenerator[BatchedTensor])
 
     @property
     def factor(self) -> float:
-        r"""``float``: the scale factor between inner and outer
-        circle."""
+        r"""The scale factor between inner and outer circle."""
         return self._factor
 
     @property
     def noise_std(self) -> float:
-        r"""``float``: The standard deviation of the Gaussian noise."""
+        r"""The standard deviation of the Gaussian noise."""
         return self._noise_std
 
     @property
     def ratio(self) -> float:
-        r"""``float``: the ratio between the number of examples in outer
-        circle and inner circle."""
+        r"""The ratio between the number of examples in outer circle and
+        inner circle."""
         return self._ratio
 
     def generate(
-        self, batch_size: int = 1, rng: torch.Generator | None = None
+        self, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchDict[BatchedTensor]:
         return make_circles_classification(
             num_examples=batch_size,
@@ -114,34 +117,27 @@ def make_circles_classification(
     noise_std: float = 0.0,
     factor: float = 0.8,
     ratio: float = 0.5,
-    generator: torch.Generator | None = None,
+    generator: Generator | None = None,
 ) -> BatchDict[BatchedTensor]:
-    r"""Generates a binary classification dataset where the data are
+    r"""Generate a binary classification dataset where the data are
     generated with a large circle containing a smaller circle in 2d.
 
     The implementation is based on
     https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_circles.html
 
     Args:
-    ----
-        num_examples (int, optional): Specifies the number of examples.
-            Default: ``100``
-        shuffle (bool, optional): If ``True``, the examples are
-            shuffled. Default: ``True``
-        noise_std (float, optional): Specifies the standard deviation
-            of the Gaussian noise.
-        factor (float, optional): Specifies the scale factor between
-            inner and outer circle in the range ``[0, 1)``.
-            Default: ``0.8``
-        ratio (float, optional): Specifies the ratio between the
-            number of examples in outer circle and inner circle.
-            Default: ``0.5``
-        generator (``torch.Generator`` or ``None``, optional):
-            Specifies an optional random generator.
+        num_examples: Specifies the number of examples.
+        shuffle: If ``True``, the examples are shuffled.
+        noise_std: Specifies the standard deviation of the Gaussian
+            noise.
+        factor: Specifies the scale factor between inner and outer
+            circle in the range ``[0, 1)``.
+        ratio: Specifies the ratio between the number of examples in
+            outer circle and inner circle.
+        generator: Specifies an optional random generator.
 
     Returns:
-    -------
-        ``BatchDict``: A batch with two items:
+        A batch with two items:
             - ``'input'``: a ``BatchedTensor`` of type float and
                 shape ``(num_examples, 2)``. This
                 tensor represents the input features.
@@ -150,20 +146,20 @@ def make_circles_classification(
                 the targets.
 
     Raises:
-    ------
-        RuntimeError if one of the parameters is not valid.
+        RuntimeError: if one of the parameters is not valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.example import make_circles_classification
+    >>> batch = make_circles_classification(num_examples=10)
+    >>> batch
+    BatchDict(
+      (target): tensor([...], batch_dim=0)
+      (feature): tensor([[...]], batch_dim=0)
+    )
 
-        >>> from startorch.example import make_circles_classification
-        >>> batch = make_circles_classification(num_examples=10)
-        >>> batch
-        BatchDict(
-          (target): tensor([...], batch_dim=0)
-          (feature): tensor([[...]], batch_dim=0)
-        )
+    ```
     """
     check_num_examples(num_examples)
     check_std(noise_std, "noise_std")

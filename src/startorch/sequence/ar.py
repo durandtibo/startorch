@@ -35,7 +35,7 @@ class AutoRegressiveSequenceGenerator(BaseSequenceGenerator):
         warmup: Specifies the number of cycles used to
             initiate the AR. The initial value sampled do not follow
             an AR, so using warmup allows to initialize the AR so each
-            value follows an AR. Default: ``10``
+            value follows an AR.
 
     Raises:
         ValueError: if ``max_abs_value`` is not a positive number.

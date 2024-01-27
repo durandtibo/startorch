@@ -204,14 +204,15 @@ class RandLogUniformTensorGenerator(BaseTensorGenerator):
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.tensor import RandLogUniform
+    >>> generator = RandLogUniform(low=0.1, high=100.0)
+    >>> generator
+    RandLogUniformTensorGenerator(low=0.1, high=100.0)
+    >>> generator.generate((2, 6))
+    tensor([[...]])
 
-        >>> from startorch.tensor import RandLogUniform
-        >>> generator = RandLogUniform(low=0.1, high=100.0)
-        >>> generator
-        RandLogUniformTensorGenerator(low=0.1, high=100.0)
-        >>> generator.generate((2, 6))
-        tensor([[...]])
+    ```
     """
 
     def __init__(self, low: float, high: float) -> None:
@@ -244,14 +245,15 @@ class RandUniformTensorGenerator(BaseTensorGenerator):
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.tensor import RandUniform
+    >>> generator = RandUniform(low=0, high=10)
+    >>> generator
+    RandUniformTensorGenerator(low=0.0, high=10.0)
+    >>> generator.generate((2, 6))
+    tensor([[...]])
 
-        >>> from startorch.tensor import RandUniform
-        >>> generator = RandUniform(low=0, high=10)
-        >>> generator
-        RandUniformTensorGenerator(low=0.0, high=10.0)
-        >>> generator.generate((2, 6))
-        tensor([[...]])
+    ```
     """
 
     def __init__(self, low: float = 0.0, high: float = 1.0) -> None:
