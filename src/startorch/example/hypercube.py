@@ -12,7 +12,7 @@ from redcat import BatchDict, BatchedTensor
 
 from startorch import constants as ct
 from startorch.example.base import BaseExampleGenerator
-from startorch.example.utils import (
+from startorch.utils.validation import (
     check_feature_size,
     check_integer_ge,
     check_num_examples,
