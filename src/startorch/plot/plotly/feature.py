@@ -8,8 +8,7 @@ import math
 from typing import TYPE_CHECKING, Any
 from unittest.mock import Mock
 
-import torch
-
+from startorch.utils.conversion import to_array
 from startorch.utils.imports import check_plotly, is_plotly_available
 
 if is_plotly_available():
@@ -23,6 +22,7 @@ if TYPE_CHECKING:
     from collections.abc import Sequence
 
     import numpy as np
+    import torch
 
 
 def hist_feature(
@@ -67,8 +67,7 @@ def hist_feature(
     ```
     """
     check_plotly()
-    if torch.is_tensor(features):
-        features = features.numpy()
+    features = to_array(features)
     if features.ndim != 2:
         msg = f"Expected a 2D array/tensor but received {features.ndim} dimensions"
         raise RuntimeError(msg)

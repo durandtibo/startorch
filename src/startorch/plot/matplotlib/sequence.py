@@ -8,11 +8,9 @@ __all__ = ["hist_sequence", "plot_sequence"]
 from typing import TYPE_CHECKING, Any
 from unittest.mock import Mock
 
-from torch import Generator
-
 from startorch.utils.batch import merge_batches, scale_batch
 from startorch.utils.imports import check_matplotlib, is_matplotlib_available
-from startorch.utils.seed import get_torch_generator
+from startorch.utils.seed import setup_torch_generator
 
 if is_matplotlib_available():
     from matplotlib import pyplot as plt
@@ -20,6 +18,8 @@ else:  # pragma: no cover
     plt = Mock()
 
 if TYPE_CHECKING:
+    from torch import Generator
+
     from startorch.sequence.base import BaseSequenceGenerator
 
 
@@ -60,8 +60,7 @@ def hist_sequence(
     ```
     """
     check_matplotlib()
-    if not isinstance(rng, Generator):
-        rng = get_torch_generator(random_seed=rng)
+    rng = setup_torch_generator(rng)
 
     batch = merge_batches(
         [
@@ -112,8 +111,7 @@ def plot_sequence(
     ```
     """
     check_matplotlib()
-    if not isinstance(rng, Generator):
-        rng = get_torch_generator(random_seed=rng)
+    rng = setup_torch_generator(rng)
 
     fig, ax = plt.subplots(figsize=figsize)
     for _ in range(num_batches):
