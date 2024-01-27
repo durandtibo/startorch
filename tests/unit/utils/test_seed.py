@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import torch
+from coola import objects_are_equal
 
 from startorch.utils.seed import (
     get_random_seed,
@@ -53,4 +54,6 @@ def test_setup_torch_generator() -> None:
 
 
 def test_setup_torch_generator_seed() -> None:
-    assert setup_torch_generator(1) == get_torch_generator(1)
+    assert objects_are_equal(
+        setup_torch_generator(1).get_state(), get_torch_generator(1).get_state()
+    )
