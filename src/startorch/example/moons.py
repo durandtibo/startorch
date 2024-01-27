@@ -26,7 +26,7 @@ class MoonsClassificationExampleGenerator(BaseExampleGenerator[BatchedTensor]):
         shuffle (bool, optional): If ``True``, the examples are
             shuffled. Default: ``True``
         noise_std (float, optional): Specifies the standard deviation
-            of the Gaussian noise. Default: ``0.0``
+            of the Gaussian noise.
         ratio (float, optional): Specifies the ratio between the
             number of examples in outer circle and inner circle.
             Default: ``0.5``
@@ -109,7 +109,7 @@ def make_moons_classification(
         shuffle (bool, optional): If ``True``, the examples are
             shuffled. Default: ``True``
         noise_std (float, optional): Specifies the standard deviation
-            of the Gaussian noise. Default: ``0.0``
+            of the Gaussian noise.
         ratio (float, optional): Specifies the ratio between the
             number of examples in outer circle and inner circle.
             Default: ``0.5``

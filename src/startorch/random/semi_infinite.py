@@ -1,3 +1,6 @@
+r"""Contain functions to sample values from continuous uni-variate
+distributions with semi-infinite support."""
+
 from __future__ import annotations
 
 __all__ = [
@@ -11,11 +14,15 @@ __all__ = [
     "rand_log_normal",
 ]
 
+from typing import TYPE_CHECKING
 
 import torch
 from torch import Generator, Tensor
 
 from startorch.random import cauchy, normal, rand_cauchy, rand_normal
+
+if TYPE_CHECKING:
+    from torch import Generator
 
 
 def rand_exponential(
@@ -27,27 +34,26 @@ def rand_exponential(
     distribution.
 
     Args:
-        size (list or tuple): Specifies the tensor shape.
-        rate: Specifies the rate of the Exponential
-            distribution. Default: ``1.0``
-        generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator.
+        size: Specifies the tensor shape.
+        rate: Specifies the rate of the Exponential distribution.
+        generator: Specifies an optional random generator.
 
     Returns:
-        ``torch.Tensor``: A tensor filled with values sampled from an
-            Exponential distribution
+        A tensor filled with values sampled from an Exponential
+            distribution.
 
     Raises:
-        ValueError if the ``rate`` parameter is not valid.
+        ValueError: if the ``rate`` parameter is not valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.random import rand_exponential
+    >>> rand_exponential((2, 3), rate=1.0)
+    tensor([[...]])
 
-        >>> import torch
-        >>> from startorch.random import rand_exponential
-        >>> rand_exponential((2, 3), rate=1.0)
-        tensor([[...]])
+    ```
     """
     if rate <= 0:
         msg = f"rate has to be greater than 0 (received: {rate})"
@@ -57,7 +63,7 @@ def rand_exponential(
     return tensor
 
 
-def exponential(rate: torch.Tensor, generator: torch.Generator | None = None) -> torch.Tensor:
+def exponential(rate: torch.Tensor, generator: Generator | None = None) -> torch.Tensor:
     r"""Create a tensor filled with values sampled from an Exponential
     distribution.
 
@@ -66,29 +72,26 @@ def exponential(rate: torch.Tensor, generator: torch.Generator | None = None) ->
     The shape of the ``rate`` tensor is used to infer the output size.
 
     Args:
-        rate (``torch.Tensor`` of type float and shape
-            ``(d0, d1, ..., dn)``): Specifies the rates
-            of the Exponential distribution. The output has the
-            same shape that this input.
-        generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator.
+        rate: Specifies the rates of the Exponential distribution.
+            It must be a float tensor of shape ``(d0, d1, ..., dn)``.
+        generator: Specifies an optional random generator.
 
     Returns:
-        ``torch.Tensor`` of type float and shape
-            ``(d0, d1, ..., dn)``: A tensor filled with values sampled
-            from an Exponential distribution.
+        A tensor of shape ``(d0, d1, ..., dn)`` filled with values
+            sampled from an Exponential distribution.
 
     Raises:
-        ValueError if the ``rate`` parameter is not valid.
+        ValueError: if the ``rate`` parameter is not valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.random import exponential
+    >>> exponential(torch.tensor([1.0, 3.0, 5.0]))
+    tensor([...])
 
-        >>> import torch
-        >>> from startorch.random import exponential
-        >>> exponential(torch.tensor([1.0, 3.0, 5.0]))
-        tensor([...])
+    ```
     """
     rate = rate.float()
     if torch.any(rate <= 0.0):
@@ -106,28 +109,27 @@ def rand_half_cauchy(
     distribution.
 
     Args:
-        size (list or tuple): Specifies the tensor shape.
-        scale: Specifies the scale of the
-            half-Cauchy distribution. This value has to be greater
-            than 0. Default: ``1.0``
-        generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator.
+        size: Specifies the tensor shape.
+        scale: Specifies the scale of the half-Cauchy distribution.
+            This value has to be greater than 0.
+        generator: Specifies an optional random generator.
 
     Returns:
-        ``torch.Tensor``: A tensor filled with values sampled from a
-            half-Cauchy distribution.
+        A tensor filled with values sampled from a half-Cauchy
+            distribution.
 
     Raises:
-        ValueError if the ``scale`` parameter is not valid.
+        ValueError: if the ``scale`` parameter is not valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.random import rand_half_cauchy
+    >>> rand_half_cauchy((2, 3), scale=1.0)
+    tensor([[...]])
 
-        >>> import torch
-        >>> from startorch.random import rand_half_cauchy
-        >>> rand_half_cauchy((2, 3), scale=1.0)
-        tensor([[...]])
+    ```
     """
     return rand_cauchy(size=size, loc=0.0, scale=scale, generator=generator).abs()
 
@@ -142,27 +144,26 @@ def half_cauchy(scale: Tensor, generator: Generator | None = None) -> Tensor:
     the output size.
 
     Args:
-        scale (``torch.Tensor`` of type float and shape
-            ``(d0, d1, ..., dn)``): Specifies the scale
-            of the half-Cauchy distribution.
-        generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator.
+        scale: Specifies the scale of the half-Cauchy distribution.
+            It must be a float tensor of shape ``(d0, d1, ..., dn)``.
+        generator: Specifies an optional random generator.
 
     Returns:
-        ``torch.Tensor``: A tensor filled with values sampled from a
-            half-Cauchy distribution.
+        A tensor of shape ``(d0, d1, ..., dn)`` filled with values
+            sampled from a half-Cauchy distribution.
 
     Raises:
         ValueError if the ``scale`` parameter is not valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.random import half_cauchy
+    >>> half_cauchy(torch.tensor([1.0, 3.0, 5.0]))
+    tensor([...])
 
-        >>> import torch
-        >>> from startorch.random import half_cauchy
-        >>> half_cauchy(torch.tensor([1.0, 3.0, 5.0]))
-        tensor([...])
+    ```
     """
     return cauchy(loc=torch.zeros_like(scale), scale=scale, generator=generator).abs()
 
@@ -176,27 +177,27 @@ def rand_half_normal(
     distribution.
 
     Args:
-        size (list or tuple): Specifies the tensor shape.
-        std: Specifies the standard deviation of
-            the half-Normal distribution. Default: ``1.0``
-        generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator.
+        size: Specifies the tensor shape.
+        std: Specifies the standard deviation of the half-Normal
+            distribution.
+        generator: Specifies an optional random generator.
 
     Returns:
-        ``torch.Tensor``: A tensor filled with values sampled from a
-            half-Normal distribution.
+        A tensor filled with values sampled from a half-Normal
+            distribution.
 
     Raises:
-        ValueError if the ``std`` parameter is not valid.
+        ValueError: if the ``std`` parameter is not valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.random import rand_half_normal
+    >>> rand_half_normal((2, 3), std=1.0)
+    tensor([[...]])
 
-        >>> import torch
-        >>> from startorch.random import rand_half_normal
-        >>> rand_half_normal((2, 3), std=1.0)
-        tensor([[...]])
+    ```
     """
     if std <= 0:
         msg = f"std has to be greater than 0 (received: {std})"
@@ -214,27 +215,28 @@ def half_normal(std: Tensor, generator: Generator | None = None) -> Tensor:
     the output size.
 
     Args:
-        std (``torch.Tensor`` of type float and shape
-            ``(d0, d1, ..., dn)``): Specifies the standard
-            deviation of the half-Normal distribution.
-        generator (``torch.Generator`` or None, optional): Specifies
+        std: Specifies the standard deviation of the half-Normal
+            distribution. It must be a float tensor of shape
+            ``(d0, d1, ..., dn)``.
+        generator: Specifies
             an optional random generator.
 
     Returns:
-        ``torch.Tensor``: A tensor filled with values sampled from a
-            half-Normal distribution.
+        A tensor of shape ``(d0, d1, ..., dn)`` filled with values
+            sampled from a half-Normal distribution.
 
     Raises:
-        ValueError if the ``std`` parameter is not valid.
+        ValueError: if the ``std`` parameter is not valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.random import half_normal
+    >>> half_normal(torch.tensor([1.0, 3.0, 5.0]))
+    tensor([...])
 
-        >>> import torch
-        >>> from startorch.random import half_normal
-        >>> half_normal(torch.tensor([1.0, 3.0, 5.0]))
-        tensor([...])
+    ```
     """
     return normal(mean=torch.zeros_like(std), std=std, generator=generator).abs()
 
@@ -249,30 +251,29 @@ def rand_log_normal(
     distribution.
 
     Args:
-        size (list or tuple): Specifies the tensor shape.
-        mean: Specifies the mean of the underlying
-            Normal distribution. Default: ``0.0``
-        std: Specifies the standard deviation of
-            the underlying Normal distribution. Default: ``1.0``
-        generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator.
+        size: Specifies the tensor shape.
+        mean: Specifies the mean of the underlying Normal distribution.
+        std: Specifies the standard deviation of the underlying
+            Normal distribution.
+        generator: Specifies an optional random generator.
 
     Returns:
-        ``torch.Tensor``: A tensor filled with values sampled from a
-            log-Normal distribution.
+        A tensor of shape ``(d0, d1, ..., dn)`` filled with values
+            sampled from a log-Normal distribution.
 
     Raises:
-        ValueError if the ``mean`` and ``std`` parametera are not
+        ValueError: if the ``mean`` and ``std`` parametera are not
             valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.random import rand_log_normal
+    >>> rand_log_normal((2, 3), mean=1.0, std=2.0)
+    tensor([[...]])
 
-        >>> import torch
-        >>> from startorch.random import rand_log_normal
-        >>> rand_log_normal((2, 3), mean=1.0, std=2.0)
-        tensor([[...]])
+    ```
     """
     if std <= 0:
         msg = f"std has to be greater than 0 (received: {std})"
@@ -292,30 +293,29 @@ def log_normal(mean: Tensor, std: Tensor, generator: Generator | None = None) ->
     the output size.
 
     Args:
-        mean (``torch.Tensor`` of type float and shape
-            ``(d0, d1, ..., dn)``): Specifies the mean
-            of the log-Normal distribution.
-        std (``torch.Tensor`` of type float and shape
-            ``(d0, d1, ..., dn)``): Specifies the standard
-            deviation of the log-Normal distribution.
-        generator (``torch.Generator`` or None, optional): Specifies
-            an optional random generator.
+        mean: Specifies the mean of the log-Normal distribution.
+            It must be a float tensor of shape ``(d0, d1, ..., dn)``.
+        std: Specifies the standard deviation of the log-Normal
+            distribution. It must be a float tensor of shape
+            ``(d0, d1, ..., dn)``.
+        generator: Specifies an optional random generator.
 
     Returns:
-        ``torch.Tensor``: A tensor filled with values sampled from a
-            log-Normal distribution.
+        A tensor of shape ``(d0, d1, ..., dn)`` filled with values
+            sampled from a log-Normal distribution.
 
     Raises:
-        ValueError if the ``mean`` and ``std`` parametera are not
+        ValueError: if the ``mean`` and ``std`` parametera are not
             valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.random import log_normal
+    >>> log_normal(torch.tensor([-1.0, 0.0, 1.0]), torch.tensor([1.0, 3.0, 5.0]))
+    tensor([...])
 
-        >>> import torch
-        >>> from startorch.random import log_normal
-        >>> log_normal(torch.tensor([-1.0, 0.0, 1.0]), torch.tensor([1.0, 3.0, 5.0]))
-        tensor([...])
+    ```
     """
     return normal(mean=mean, std=std, generator=generator).exp()

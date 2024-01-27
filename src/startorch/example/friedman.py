@@ -102,7 +102,7 @@ class Friedman2RegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
             the targets. The remaining features are independent of
             targets. Default: ``4``
         noise_std: Specifies the standard deviation
-            of the Gaussian noise. Default: ``0.0``
+            of the Gaussian noise.
 
     Raises:
         ValueError if one of the parameters is not valid.
@@ -312,7 +312,7 @@ def make_friedman2_regression(
             the targets. The remaining features are independent of
             targets.
         noise_std: Specifies the standard deviation
-            of the Gaussian noise. Default: ``0.0``
+            of the Gaussian noise.
         generator: Specifies an optional random number generator.
 
     Returns:
@@ -379,7 +379,7 @@ def make_friedman3_regression(
             the targets. The remaining features are independent of
             targets.
         noise_std: Specifies the standard deviation
-            of the Gaussian noise. Default: ``0.0``
+            of the Gaussian noise.
         generator: Specifies an optional random number generator.
 
     Returns:
