@@ -14,9 +14,9 @@ from redcat import BatchDict, BatchedTensor
 
 from startorch import constants as ct
 from startorch.example.base import BaseExampleGenerator
-from startorch.example.utils import check_num_examples
 from startorch.random import normal
 from startorch.utils.seed import get_torch_generator
+from startorch.utils.validation import check_num_examples
 
 if TYPE_CHECKING:
     from torch import Generator

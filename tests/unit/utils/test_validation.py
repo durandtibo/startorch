@@ -5,7 +5,7 @@ from typing import Any
 
 import pytest
 
-from startorch.example.utils import (
+from startorch.utils.validation import (
     check_feature_size,
     check_integer_ge,
     check_interval,

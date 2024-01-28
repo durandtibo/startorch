@@ -18,9 +18,9 @@ from torch import Generator, Tensor
 
 from startorch import constants as ct
 from startorch.example.base import BaseExampleGenerator
-from startorch.example.utils import check_num_examples, check_std
 from startorch.random import rand_normal, rand_uniform
 from startorch.utils.seed import get_torch_generator
+from startorch.utils.validation import check_num_examples, check_std
 
 if TYPE_CHECKING:
     from collections.abc import Sequence

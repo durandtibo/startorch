@@ -29,7 +29,7 @@ def check_feature_size(value: int | Any, low: int = 1) -> None:
 
     ```pycon
     >>> import torch
-    >>> from startorch.example.utils import check_feature_size
+    >>> from startorch.utils.validation import check_feature_size
     >>> check_feature_size(5)
 
     ```
@@ -54,7 +54,7 @@ def check_interval(value: float | Any, low: float, high: float, name: str) -> No
 
     ```pycon
     >>> import torch
-    >>> from startorch.example.utils import check_interval
+    >>> from startorch.utils.validation import check_interval
     >>> check_interval(1, low=-1.0, high=2.0, name="my_variable")
 
     ```
@@ -84,7 +84,7 @@ def check_num_examples(value: int | Any) -> None:
 
     ```pycon
     >>> import torch
-    >>> from startorch.example.utils import check_num_examples
+    >>> from startorch.utils.validation import check_num_examples
     >>> check_num_examples(5)
 
     ```
@@ -108,7 +108,7 @@ def check_integer_ge(value: int | Any, low: int, name: str) -> None:
 
     ```pycon
     >>> import torch
-    >>> from startorch.example.utils import check_integer_ge
+    >>> from startorch.utils.validation import check_integer_ge
     >>> check_integer_ge(5, low=0, name="feature_size")
 
     ```
@@ -139,7 +139,7 @@ def check_std(value: float | Any, name: str = "std") -> None:
 
     ```pycon
     >>> import torch
-    >>> from startorch.example.utils import check_std
+    >>> from startorch.utils.validation import check_std
     >>> check_std(1.2)
 
     ```
