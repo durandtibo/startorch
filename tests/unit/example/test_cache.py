@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 import torch
-from redcat import BatchDict, BatchedTensor
+from coola import objects_are_equal
 
 from startorch import constants as ct
 from startorch.example import Cache, SwissRoll
@@ -22,24 +22,22 @@ def test_cache_str() -> None:
 
 @pytest.mark.parametrize("batch_size", SIZES)
 def test_cache_generate(batch_size: int) -> None:
-    data = Cache(SwissRoll()).generate(batch_size)
-    assert isinstance(data, BatchDict)
-    assert len(data) == 2
-    assert isinstance(data[ct.TARGET], BatchedTensor)
-    assert data[ct.TARGET].batch_size == batch_size
-    assert data[ct.TARGET].shape == (batch_size,)
-    assert data[ct.TARGET].dtype == torch.float
-    assert isinstance(data[ct.FEATURE], BatchedTensor)
-    assert data[ct.FEATURE].batch_size == batch_size
-    assert data[ct.FEATURE].shape == (batch_size, 3)
-    assert data[ct.FEATURE].dtype == torch.float
+    batch = Cache(SwissRoll()).generate(batch_size)
+    assert isinstance(batch, dict)
+    assert len(batch) == 2
+    assert isinstance(batch[ct.TARGET], torch.Tensor)
+    assert batch[ct.TARGET].shape == (batch_size,)
+    assert batch[ct.TARGET].dtype == torch.float
+    assert isinstance(batch[ct.FEATURE], torch.Tensor)
+    assert batch[ct.FEATURE].shape == (batch_size, 3)
+    assert batch[ct.FEATURE].dtype == torch.float
 
 
 def test_cache_generate_same_batch() -> None:
     generator = Cache(SwissRoll())
     batch1 = generator.generate(8)
     batch2 = generator.generate(8)
-    assert batch1.equal(batch2)
+    assert objects_are_equal(batch1, batch2)
     assert batch1 is batch2
 
 
@@ -47,7 +45,7 @@ def test_cache_generate_copied_batch() -> None:
     generator = Cache(SwissRoll(), deepcopy=True)
     batch1 = generator.generate(8)
     batch2 = generator.generate(8)
-    assert batch1.equal(batch2)
+    assert objects_are_equal(batch1, batch2)
     assert batch1 is not batch2
 
 
@@ -55,20 +53,22 @@ def test_cache_generate_different_batch_size() -> None:
     generator = Cache(SwissRoll(), deepcopy=True)
     batch1 = generator.generate(8)
     batch2 = generator.generate(6)
-    assert batch1.batch_size == 8
-    assert batch2.batch_size == 6
+    assert batch1[ct.TARGET].shape[0] == 8
+    assert batch2[ct.TARGET].shape[0] == 6
 
 
 def test_cache_generate_same_random_seed() -> None:
     generator = Cache(SwissRoll())
-    assert generator.generate(batch_size=64, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=64, rng=get_torch_generator(1))
+    assert objects_are_equal(
+        generator.generate(batch_size=64, rng=get_torch_generator(1)),
+        generator.generate(batch_size=64, rng=get_torch_generator(1)),
     )
 
 
 def test_cache_generate_different_random_seeds() -> None:
     generator = Cache(SwissRoll())
     # The batches are the same because the batch was cached
-    assert generator.generate(batch_size=64, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=64, rng=get_torch_generator(2))
+    assert objects_are_equal(
+        generator.generate(batch_size=64, rng=get_torch_generator(1)),
+        generator.generate(batch_size=64, rng=get_torch_generator(2)),
     )

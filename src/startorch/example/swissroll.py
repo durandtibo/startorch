@@ -9,7 +9,6 @@ import math
 from typing import TYPE_CHECKING
 
 import torch
-from redcat import BatchDict, BatchedTensor
 
 from startorch import constants as ct
 from startorch.example.base import BaseExampleGenerator
@@ -20,7 +19,7 @@ if TYPE_CHECKING:
     from torch import Generator
 
 
-class SwissRollExampleGenerator(BaseExampleGenerator[BatchedTensor]):
+class SwissRollExampleGenerator(BaseExampleGenerator):
     r"""Implements a manifold example generator based on the Swiss roll
     pattern.
 
@@ -45,10 +44,7 @@ class SwissRollExampleGenerator(BaseExampleGenerator[BatchedTensor]):
     SwissRollExampleGenerator(noise_std=0.0, spin=1.5, hole=False)
     >>> batch = generator.generate(batch_size=10)
     >>> batch
-    BatchDict(
-      (target): tensor([...], batch_dim=0)
-      (feature): tensor([[...]], batch_dim=0)
-    )
+    {'target': tensor([...]), 'feature': tensor([[...]])}
 
     ```
     """
@@ -84,7 +80,7 @@ class SwissRollExampleGenerator(BaseExampleGenerator[BatchedTensor]):
 
     def generate(
         self, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchDict[BatchedTensor]:
+    ) -> dict[str, torch.Tensor]:
         return make_swiss_roll(
             num_examples=batch_size,
             noise_std=self._noise_std,
@@ -100,7 +96,7 @@ def make_swiss_roll(
     spin: float = 1.5,
     hole: bool = False,
     generator: Generator | None = None,
-) -> BatchDict[BatchedTensor]:
+) -> dict[str, torch.Tensor]:
     r"""Generate a toy manifold dataset based on Swiss roll pattern.
 
     The implementation is based on
@@ -132,10 +128,7 @@ def make_swiss_roll(
     >>> from startorch.example import make_swiss_roll
     >>> batch = make_swiss_roll(num_examples=10)
     >>> batch
-    BatchDict(
-      (target): tensor([...], batch_dim=0)
-      (feature): tensor([[...]], batch_dim=0)
-    )
+    {'target': tensor([...]), 'feature': tensor([[...]])}
 
     ```
     """
@@ -166,6 +159,4 @@ def make_swiss_roll(
     features = torch.cat((x, y, z), dim=1)
     if noise_std > 0.0:
         features += rand_normal(size=(num_examples, 3), std=noise_std, generator=generator)
-    return BatchDict(
-        {ct.TARGET: BatchedTensor(targets.flatten()), ct.FEATURE: BatchedTensor(features)}
-    )
+    return {ct.TARGET: targets.flatten(), ct.FEATURE: features}

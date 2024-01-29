@@ -12,7 +12,6 @@ __all__ = [
 from typing import TYPE_CHECKING
 
 import torch
-from redcat import BatchDict, BatchedTensor
 from redcat.utils.tensor import to_tensor
 from torch import Generator, Tensor
 
@@ -28,7 +27,7 @@ if TYPE_CHECKING:
     from torch import Generator
 
 
-class LinearRegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
+class LinearRegressionExampleGenerator(BaseExampleGenerator):
     r"""Implement a regression example generator where the data are
     generated with an underlying linear model.
 
@@ -55,10 +54,7 @@ class LinearRegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
     LinearRegressionExampleGenerator(feature_size=100, bias=0.0, noise_std=0.0)
     >>> batch = generator.generate(batch_size=10)
     >>> batch
-    BatchDict(
-      (target): tensor([...], batch_dim=0)
-      (feature): tensor([[...]], batch_dim=0)
-    )
+    {'target': tensor([...]), 'feature': tensor([[...]])}
 
     ```
     """
@@ -104,7 +100,7 @@ class LinearRegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
 
     def generate(
         self, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchDict[BatchedTensor]:
+    ) -> dict[str, torch.Tensor]:
         return make_linear_regression(
             num_examples=batch_size,
             weights=self._weights,
@@ -140,7 +136,7 @@ def make_linear_regression(
     num_examples: int = 100,
     noise_std: float = 0.0,
     generator: Generator | None = None,
-) -> BatchDict[BatchedTensor]:
+) -> dict[str, torch.Tensor]:
     r"""Generate a regression dataset where the data are generated with
     an underlying linear model.
 
@@ -159,7 +155,7 @@ def make_linear_regression(
         generator: Specifies an optional random generator.
 
     Returns:
-        A batch with two items:
+        A dictionary with two items:
             - ``'input'``: a ``BatchedTensor`` of type float and
                 shape ``(num_examples, feature_size)``. This
                 tensor represents the input features.
@@ -176,10 +172,7 @@ def make_linear_regression(
     >>> from startorch.example import make_linear_regression
     >>> batch = make_linear_regression(weights=torch.rand(10), num_examples=10)
     >>> batch
-    BatchDict(
-      (target): tensor([...], batch_dim=0)
-      (feature): tensor([[...]], batch_dim=0)
-    )
+    {'target': tensor([...]), 'feature': tensor([[...]])}
 
     ```
     """
@@ -192,9 +185,7 @@ def make_linear_regression(
         features += rand_normal(
             size=(num_examples, feature_size), std=noise_std, generator=generator
         )
-    return BatchDict(
-        {ct.TARGET: BatchedTensor(targets.flatten()), ct.FEATURE: BatchedTensor(features)}
-    )
+    return {ct.TARGET: targets.flatten(), ct.FEATURE: features}
 
 
 def get_uniform_weights(

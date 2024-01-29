@@ -7,8 +7,6 @@ from unittest.mock import patch
 import pytest
 import torch
 from coola import objects_are_equal
-from redcat import BatchDict, BatchedTensor
-from torch import Tensor
 
 from startorch import constants as ct
 from startorch.example import LinearRegression, make_linear_regression
@@ -35,7 +33,7 @@ def test_linear_regression_str() -> None:
 @pytest.mark.parametrize(
     "weights", [torch.tensor([2.0, 1.0, 3.0]), [2.0, 1.0, 3.0], (2.0, 1.0, 3.0)]
 )
-def test_linear_regression_weights(weights: Tensor | Sequence) -> None:
+def test_linear_regression_weights(weights: torch.Tensor | Sequence) -> None:
     assert LinearRegression(weights=weights).weights.equal(torch.tensor([2.0, 1.0, 3.0]))
 
 
@@ -62,14 +60,12 @@ def test_linear_regression_incorrect_noise_std(noise_std: float) -> None:
 @pytest.mark.parametrize("feature_size", [5, 8, 10])
 def test_linear_regression_generate(batch_size: int, feature_size: int) -> None:
     data = LinearRegression.create_uniform_weights(feature_size=feature_size).generate(batch_size)
-    assert isinstance(data, BatchDict)
+    assert isinstance(data, dict)
     assert len(data) == 2
-    assert isinstance(data[ct.TARGET], BatchedTensor)
-    assert data[ct.TARGET].batch_size == batch_size
+    assert isinstance(data[ct.TARGET], torch.Tensor)
     assert data[ct.TARGET].shape == (batch_size,)
     assert data[ct.TARGET].dtype == torch.float
-    assert isinstance(data[ct.FEATURE], BatchedTensor)
-    assert data[ct.FEATURE].batch_size == batch_size
+    assert isinstance(data[ct.FEATURE], torch.Tensor)
     assert data[ct.FEATURE].shape == (batch_size, feature_size)
     assert data[ct.FEATURE].dtype == torch.float
 
@@ -78,8 +74,9 @@ def test_linear_regression_generate(batch_size: int, feature_size: int) -> None:
 @pytest.mark.parametrize("bias", [0.0, 1.0])
 def test_linear_regression_generate_same_random_seed(noise_std: float, bias: float) -> None:
     generator = LinearRegression.create_uniform_weights(noise_std=noise_std, bias=bias)
-    assert generator.generate(batch_size=64, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=64, rng=get_torch_generator(1))
+    assert objects_are_equal(
+        generator.generate(batch_size=64, rng=get_torch_generator(1)),
+        generator.generate(batch_size=64, rng=get_torch_generator(1)),
     )
 
 
@@ -87,8 +84,9 @@ def test_linear_regression_generate_same_random_seed(noise_std: float, bias: flo
 @pytest.mark.parametrize("bias", [0.0, 1.0])
 def test_linear_regression_generate_different_random_seeds(noise_std: float, bias: float) -> None:
     generator = LinearRegression.create_uniform_weights(noise_std=noise_std, bias=bias)
-    assert not generator.generate(batch_size=64, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=64, rng=get_torch_generator(2))
+    assert not objects_are_equal(
+        generator.generate(batch_size=64, rng=get_torch_generator(1)),
+        generator.generate(batch_size=64, rng=get_torch_generator(2)),
     )
 
 
@@ -141,14 +139,12 @@ def test_make_linear_regression_incorrect_noise_std(noise_std: float) -> None:
 
 def test_make_linear_regression() -> None:
     data = make_linear_regression(num_examples=10, weights=torch.ones(8))
-    assert isinstance(data, BatchDict)
+    assert isinstance(data, dict)
     assert len(data) == 2
-    assert isinstance(data[ct.TARGET], BatchedTensor)
-    assert data[ct.TARGET].batch_size == 10
+    assert isinstance(data[ct.TARGET], torch.Tensor)
     assert data[ct.TARGET].shape == (10,)
     assert data[ct.TARGET].dtype == torch.float
-    assert isinstance(data[ct.FEATURE], BatchedTensor)
-    assert data[ct.FEATURE].batch_size == 10
+    assert isinstance(data[ct.FEATURE], torch.Tensor)
     assert data[ct.FEATURE].shape == (10, 8)
     assert data[ct.FEATURE].dtype == torch.float
 
@@ -162,8 +158,8 @@ def test_make_linear_regression_incorrect_weights() -> None:
 def test_make_linear_regression_num_examples(num_examples: int) -> None:
     data = make_linear_regression(num_examples=num_examples, weights=torch.ones(10))
     assert len(data) == 2
-    assert data[ct.TARGET].batch_size == num_examples
-    assert data[ct.FEATURE].batch_size == num_examples
+    assert data[ct.TARGET].shape[0] == num_examples
+    assert data[ct.FEATURE].shape[0] == num_examples
 
 
 @pytest.mark.parametrize("feature_size", SIZES)

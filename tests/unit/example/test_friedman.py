@@ -6,7 +6,6 @@ from unittest.mock import patch
 import pytest
 import torch
 from coola import objects_are_equal
-from redcat import BatchDict, BatchedTensor
 
 from startorch import constants as ct
 from startorch.example import (
@@ -63,12 +62,12 @@ def test_friedman1_regression_incorrect_noise_std(noise_std: float) -> None:
 @pytest.mark.parametrize("feature_size", [5, 8, 10])
 def test_friedman1_regression_generate(batch_size: int, feature_size: int) -> None:
     data = Friedman1Regression(feature_size=feature_size).generate(batch_size)
-    assert isinstance(data, BatchDict)
+    assert isinstance(data, dict)
     assert len(data) == 2
-    assert isinstance(data[ct.TARGET], BatchedTensor)
+    assert isinstance(data[ct.TARGET], torch.Tensor)
     assert data[ct.TARGET].shape == (batch_size,)
     assert data[ct.TARGET].dtype == torch.float
-    assert isinstance(data[ct.FEATURE], BatchedTensor)
+    assert isinstance(data[ct.FEATURE], torch.Tensor)
     assert data[ct.FEATURE].shape == (batch_size, feature_size)
     assert data[ct.FEATURE].dtype == torch.float
 
@@ -76,16 +75,18 @@ def test_friedman1_regression_generate(batch_size: int, feature_size: int) -> No
 @pytest.mark.parametrize("noise_std", [0.0, 1.0])
 def test_friedman1_regression_generate_same_random_seed(noise_std: float) -> None:
     generator = Friedman1Regression(feature_size=8, noise_std=noise_std)
-    assert generator.generate(batch_size=64, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=64, rng=get_torch_generator(1))
+    assert objects_are_equal(
+        generator.generate(batch_size=64, rng=get_torch_generator(1)),
+        generator.generate(batch_size=64, rng=get_torch_generator(1)),
     )
 
 
 @pytest.mark.parametrize("noise_std", [0.0, 1.0])
 def test_friedman1_regression_generate_different_random_seeds(noise_std: float) -> None:
     generator = Friedman1Regression(feature_size=8, noise_std=noise_std)
-    assert not generator.generate(batch_size=64, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=64, rng=get_torch_generator(2))
+    assert not objects_are_equal(
+        generator.generate(batch_size=64, rng=get_torch_generator(1)),
+        generator.generate(batch_size=64, rng=get_torch_generator(2)),
     )
 
 
@@ -151,12 +152,12 @@ def test_friedman2_regression_incorrect_noise_std(noise_std: float) -> None:
 @pytest.mark.parametrize("feature_size", [5, 8, 10])
 def test_friedman2_regression_generate(batch_size: int, feature_size: int) -> None:
     data = Friedman2Regression(feature_size=feature_size).generate(batch_size)
-    assert isinstance(data, BatchDict)
+    assert isinstance(data, dict)
     assert len(data) == 2
-    assert isinstance(data[ct.TARGET], BatchedTensor)
+    assert isinstance(data[ct.TARGET], torch.Tensor)
     assert data[ct.TARGET].shape == (batch_size,)
     assert data[ct.TARGET].dtype == torch.float
-    assert isinstance(data[ct.FEATURE], BatchedTensor)
+    assert isinstance(data[ct.FEATURE], torch.Tensor)
     assert data[ct.FEATURE].shape == (batch_size, feature_size)
     assert data[ct.FEATURE].dtype == torch.float
 
@@ -164,16 +165,18 @@ def test_friedman2_regression_generate(batch_size: int, feature_size: int) -> No
 @pytest.mark.parametrize("noise_std", [0.0, 1.0])
 def test_friedman2_regression_generate_same_random_seed(noise_std: float) -> None:
     generator = Friedman2Regression(feature_size=8, noise_std=noise_std)
-    assert generator.generate(batch_size=64, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=64, rng=get_torch_generator(1))
+    assert objects_are_equal(
+        generator.generate(batch_size=64, rng=get_torch_generator(1)),
+        generator.generate(batch_size=64, rng=get_torch_generator(1)),
     )
 
 
 @pytest.mark.parametrize("noise_std", [0.0, 1.0])
 def test_friedman2_regression_generate_different_random_seeds(noise_std: float) -> None:
     generator = Friedman2Regression(feature_size=8, noise_std=noise_std)
-    assert not generator.generate(batch_size=64, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=64, rng=get_torch_generator(2))
+    assert not objects_are_equal(
+        generator.generate(batch_size=64, rng=get_torch_generator(1)),
+        generator.generate(batch_size=64, rng=get_torch_generator(2)),
     )
 
 
@@ -239,12 +242,12 @@ def test_friedman3_regression_incorrect_noise_std(noise_std: float) -> None:
 @pytest.mark.parametrize("feature_size", [5, 8, 10])
 def test_friedman3_regression_generate(batch_size: int, feature_size: int) -> None:
     data = Friedman3Regression(feature_size=feature_size).generate(batch_size)
-    assert isinstance(data, BatchDict)
+    assert isinstance(data, dict)
     assert len(data) == 2
-    assert isinstance(data[ct.TARGET], BatchedTensor)
+    assert isinstance(data[ct.TARGET], torch.Tensor)
     assert data[ct.TARGET].shape == (batch_size,)
     assert data[ct.TARGET].dtype == torch.float
-    assert isinstance(data[ct.FEATURE], BatchedTensor)
+    assert isinstance(data[ct.FEATURE], torch.Tensor)
     assert data[ct.FEATURE].shape == (batch_size, feature_size)
     assert data[ct.FEATURE].dtype == torch.float
 
@@ -252,16 +255,18 @@ def test_friedman3_regression_generate(batch_size: int, feature_size: int) -> No
 @pytest.mark.parametrize("noise_std", [0.0, 1.0])
 def test_friedman3_regression_generate_same_random_seed(noise_std: float) -> None:
     generator = Friedman3Regression(feature_size=8, noise_std=noise_std)
-    assert generator.generate(batch_size=64, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=64, rng=get_torch_generator(1))
+    assert objects_are_equal(
+        generator.generate(batch_size=64, rng=get_torch_generator(1)),
+        generator.generate(batch_size=64, rng=get_torch_generator(1)),
     )
 
 
 @pytest.mark.parametrize("noise_std", [0.0, 1.0])
 def test_friedman3_regression_generate_different_random_seeds(noise_std: float) -> None:
     generator = Friedman3Regression(feature_size=8, noise_std=noise_std)
-    assert not generator.generate(batch_size=64, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=64, rng=get_torch_generator(2))
+    assert not objects_are_equal(
+        generator.generate(batch_size=64, rng=get_torch_generator(1)),
+        generator.generate(batch_size=64, rng=get_torch_generator(2)),
     )
 
 
@@ -320,12 +325,12 @@ def test_make_friedman1_regression_incorrect_noise_std(noise_std: float) -> None
 
 def test_make_friedman1_regression() -> None:
     data = make_friedman1_regression(num_examples=10, feature_size=8)
-    assert isinstance(data, BatchDict)
+    assert isinstance(data, dict)
     assert len(data) == 2
-    assert isinstance(data[ct.TARGET], BatchedTensor)
+    assert isinstance(data[ct.TARGET], torch.Tensor)
     assert data[ct.TARGET].shape == (10,)
     assert data[ct.TARGET].dtype == torch.float
-    assert isinstance(data[ct.FEATURE], BatchedTensor)
+    assert isinstance(data[ct.FEATURE], torch.Tensor)
     assert data[ct.FEATURE].shape == (10, 8)
     assert data[ct.FEATURE].dtype == torch.float
 
@@ -334,8 +339,8 @@ def test_make_friedman1_regression() -> None:
 def test_make_friedman1_regression_num_examples(num_examples: int) -> None:
     data = make_friedman1_regression(num_examples)
     assert len(data) == 2
-    assert data[ct.TARGET].batch_size == num_examples
-    assert data[ct.FEATURE].batch_size == num_examples
+    assert data[ct.TARGET].shape[0] == num_examples
+    assert data[ct.FEATURE].shape[0] == num_examples
 
 
 @pytest.mark.parametrize("feature_size", [5, 8, 10])
@@ -414,13 +419,13 @@ def test_make_friedman2_regression_incorrect_noise_std(noise_std: float) -> None
 
 def test_make_friedman2_regression() -> None:
     data = make_friedman2_regression(num_examples=10)
-    assert isinstance(data, BatchDict)
+    assert isinstance(data, dict)
     assert len(data) == 2
-    assert isinstance(data[ct.TARGET], BatchedTensor)
+    assert isinstance(data[ct.TARGET], torch.Tensor)
     assert data[ct.TARGET].shape == (10,)
     assert data[ct.TARGET].dtype == torch.float
     features = data[ct.FEATURE]
-    assert isinstance(features, BatchedTensor)
+    assert isinstance(features, torch.Tensor)
     assert features.shape == (10, 4)
     assert features.dtype == torch.float
 
@@ -436,13 +441,13 @@ def test_make_friedman2_regression() -> None:
 
 def test_make_friedman2_regression_feature_size_8() -> None:
     data = make_friedman2_regression(num_examples=10, feature_size=8)
-    assert isinstance(data, BatchDict)
+    assert isinstance(data, dict)
     assert len(data) == 2
-    assert isinstance(data[ct.TARGET], BatchedTensor)
+    assert isinstance(data[ct.TARGET], torch.Tensor)
     assert data[ct.TARGET].shape == (10,)
     assert data[ct.TARGET].dtype == torch.float
     features = data[ct.FEATURE]
-    assert isinstance(features, BatchedTensor)
+    assert isinstance(features, torch.Tensor)
     assert features.shape == (10, 8)
     assert features.dtype == torch.float
 
@@ -462,8 +467,8 @@ def test_make_friedman2_regression_feature_size_8() -> None:
 def test_make_friedman2_regression_num_examples(num_examples: int) -> None:
     data = make_friedman2_regression(num_examples)
     assert len(data) == 2
-    assert data[ct.TARGET].batch_size == num_examples
-    assert data[ct.FEATURE].batch_size == num_examples
+    assert data[ct.TARGET].shape[0] == num_examples
+    assert data[ct.FEATURE].shape[0] == num_examples
 
 
 @pytest.mark.parametrize("feature_size", [5, 8, 10])
@@ -542,13 +547,13 @@ def test_make_friedman3_regression_incorrect_noise_std(noise_std: float) -> None
 
 def test_make_friedman3_regression() -> None:
     data = make_friedman3_regression(num_examples=10)
-    assert isinstance(data, BatchDict)
+    assert isinstance(data, dict)
     assert len(data) == 2
-    assert isinstance(data[ct.TARGET], BatchedTensor)
+    assert isinstance(data[ct.TARGET], torch.Tensor)
     assert data[ct.TARGET].shape == (10,)
     assert data[ct.TARGET].dtype == torch.float
     features = data[ct.FEATURE]
-    assert isinstance(features, BatchedTensor)
+    assert isinstance(features, torch.Tensor)
     assert features.shape == (10, 4)
     assert features.dtype == torch.float
 
@@ -564,13 +569,13 @@ def test_make_friedman3_regression() -> None:
 
 def test_make_friedman3_regression_feature_size_8() -> None:
     data = make_friedman3_regression(num_examples=10, feature_size=8)
-    assert isinstance(data, BatchDict)
+    assert isinstance(data, dict)
     assert len(data) == 2
-    assert isinstance(data[ct.TARGET], BatchedTensor)
+    assert isinstance(data[ct.TARGET], torch.Tensor)
     assert data[ct.TARGET].shape == (10,)
     assert data[ct.TARGET].dtype == torch.float
     features = data[ct.FEATURE]
-    assert isinstance(features, BatchedTensor)
+    assert isinstance(features, torch.Tensor)
     assert features.shape == (10, 8)
     assert features.dtype == torch.float
 
@@ -590,8 +595,8 @@ def test_make_friedman3_regression_feature_size_8() -> None:
 def test_make_friedman3_regression_num_examples(num_examples: int) -> None:
     data = make_friedman3_regression(num_examples)
     assert len(data) == 2
-    assert data[ct.TARGET].batch_size == num_examples
-    assert data[ct.FEATURE].batch_size == num_examples
+    assert data[ct.TARGET].shape[0] == num_examples
+    assert data[ct.FEATURE].shape[0] == num_examples
 
 
 @pytest.mark.parametrize("feature_size", [5, 8, 10])

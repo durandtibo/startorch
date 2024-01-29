@@ -3,7 +3,6 @@ from __future__ import annotations
 import pytest
 import torch
 from coola import objects_are_equal
-from redcat import BatchDict, BatchedTensor
 
 from startorch import constants as ct
 from startorch.example import make_sparse_uncorrelated_regression
@@ -46,26 +45,26 @@ def test_make_sparse_uncorrelated_regression_incorrect_noise_std(noise_std: floa
 
 def test_make_sparse_uncorrelated_regression() -> None:
     data = make_sparse_uncorrelated_regression(num_examples=10)
-    assert isinstance(data, BatchDict)
+    assert isinstance(data, dict)
     assert len(data) == 2
-    assert isinstance(data[ct.TARGET], BatchedTensor)
+    assert isinstance(data[ct.TARGET], torch.Tensor)
     assert data[ct.TARGET].shape == (10,)
     assert data[ct.TARGET].dtype == torch.float
     features = data[ct.FEATURE]
-    assert isinstance(features, BatchedTensor)
+    assert isinstance(features, torch.Tensor)
     assert features.shape == (10, 4)
     assert features.dtype == torch.float
 
 
 def test_make_sparse_uncorrelated_regression_feature_size_8() -> None:
     data = make_sparse_uncorrelated_regression(num_examples=10, feature_size=8)
-    assert isinstance(data, BatchDict)
+    assert isinstance(data, dict)
     assert len(data) == 2
-    assert isinstance(data[ct.TARGET], BatchedTensor)
+    assert isinstance(data[ct.TARGET], torch.Tensor)
     assert data[ct.TARGET].shape == (10,)
     assert data[ct.TARGET].dtype == torch.float
     features = data[ct.FEATURE]
-    assert isinstance(features, BatchedTensor)
+    assert isinstance(features, torch.Tensor)
     assert features.shape == (10, 8)
     assert features.dtype == torch.float
 
@@ -74,8 +73,8 @@ def test_make_sparse_uncorrelated_regression_feature_size_8() -> None:
 def test_make_sparse_uncorrelated_regression_num_examples(num_examples: int) -> None:
     data = make_sparse_uncorrelated_regression(num_examples)
     assert len(data) == 2
-    assert data[ct.TARGET].batch_size == num_examples
-    assert data[ct.FEATURE].batch_size == num_examples
+    assert data[ct.TARGET].shape[0] == num_examples
+    assert data[ct.FEATURE].shape[0] == num_examples
 
 
 @pytest.mark.parametrize("feature_size", [5, 8, 10])

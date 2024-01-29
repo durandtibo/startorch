@@ -5,7 +5,6 @@ from unittest.mock import patch
 import pytest
 import torch
 from coola import objects_are_equal
-from redcat import BatchDict, BatchedTensor
 
 from startorch import constants as ct
 from startorch.example import SwissRoll, make_swiss_roll
@@ -52,14 +51,12 @@ def test_swiss_roll_incorrect_spin(spin: float) -> None:
 @pytest.mark.parametrize("batch_size", SIZES)
 def test_swiss_roll_generate(batch_size: int) -> None:
     data = SwissRoll().generate(batch_size)
-    assert isinstance(data, BatchDict)
+    assert isinstance(data, dict)
     assert len(data) == 2
-    assert isinstance(data[ct.TARGET], BatchedTensor)
-    assert data[ct.TARGET].batch_size == batch_size
+    assert isinstance(data[ct.TARGET], torch.Tensor)
     assert data[ct.TARGET].shape == (batch_size,)
     assert data[ct.TARGET].dtype == torch.float
-    assert isinstance(data[ct.FEATURE], BatchedTensor)
-    assert data[ct.FEATURE].batch_size == batch_size
+    assert isinstance(data[ct.FEATURE], torch.Tensor)
     assert data[ct.FEATURE].shape == (batch_size, 3)
     assert data[ct.FEATURE].dtype == torch.float
 
@@ -68,8 +65,9 @@ def test_swiss_roll_generate(batch_size: int) -> None:
 @pytest.mark.parametrize("hole", [True, False])
 def test_swiss_roll_generate_same_random_seed(noise_std: float, hole: bool) -> None:
     generator = SwissRoll(noise_std=noise_std, hole=hole)
-    assert generator.generate(batch_size=64, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=64, rng=get_torch_generator(1))
+    assert objects_are_equal(
+        generator.generate(batch_size=64, rng=get_torch_generator(1)),
+        generator.generate(batch_size=64, rng=get_torch_generator(1)),
     )
 
 
@@ -77,16 +75,18 @@ def test_swiss_roll_generate_same_random_seed(noise_std: float, hole: bool) -> N
 @pytest.mark.parametrize("hole", [True, False])
 def test_swiss_roll_generate_different_random_seeds(noise_std: float, hole: bool) -> None:
     generator = SwissRoll(noise_std=noise_std, hole=hole)
-    assert not generator.generate(batch_size=64, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=64, rng=get_torch_generator(2))
+    assert not objects_are_equal(
+        generator.generate(batch_size=64, rng=get_torch_generator(1)),
+        generator.generate(batch_size=64, rng=get_torch_generator(2)),
     )
 
 
 def test_swiss_roll_generate_same_random_seed_hole() -> None:
     generator1 = SwissRoll(hole=True)
     generator2 = SwissRoll(hole=False)
-    assert not generator1.generate(batch_size=64, rng=get_torch_generator(1)).equal(
-        generator2.generate(batch_size=64, rng=get_torch_generator(1))
+    assert not objects_are_equal(
+        generator1.generate(batch_size=64, rng=get_torch_generator(1)),
+        generator2.generate(batch_size=64, rng=get_torch_generator(1)),
     )
 
 
@@ -142,14 +142,12 @@ def test_make_swiss_roll_incorrect_spin(spin: int) -> None:
 
 def test_make_swiss_roll() -> None:
     data = make_swiss_roll(num_examples=64)
-    assert isinstance(data, BatchDict)
+    assert isinstance(data, dict)
     assert len(data) == 2
-    assert isinstance(data[ct.TARGET], BatchedTensor)
-    assert data[ct.TARGET].batch_size == 64
+    assert isinstance(data[ct.TARGET], torch.Tensor)
     assert data[ct.TARGET].shape == (64,)
     assert data[ct.TARGET].dtype == torch.float
-    assert isinstance(data[ct.FEATURE], BatchedTensor)
-    assert data[ct.FEATURE].batch_size == 64
+    assert isinstance(data[ct.FEATURE], torch.Tensor)
     assert data[ct.FEATURE].shape == (64, 3)
     assert data[ct.FEATURE].dtype == torch.float
 
@@ -159,14 +157,12 @@ def test_make_swiss_roll() -> None:
 @pytest.mark.parametrize("hole", [True, False])
 def test_make_swiss_roll_params(spin: float, noise_std: float, hole: bool) -> None:
     data = make_swiss_roll(num_examples=64, spin=spin, noise_std=noise_std, hole=hole)
-    assert isinstance(data, BatchDict)
+    assert isinstance(data, dict)
     assert len(data) == 2
-    assert isinstance(data[ct.TARGET], BatchedTensor)
-    assert data[ct.TARGET].batch_size == 64
+    assert isinstance(data[ct.TARGET], torch.Tensor)
     assert data[ct.TARGET].shape == (64,)
     assert data[ct.TARGET].dtype == torch.float
-    assert isinstance(data[ct.FEATURE], BatchedTensor)
-    assert data[ct.FEATURE].batch_size == 64
+    assert isinstance(data[ct.FEATURE], torch.Tensor)
     assert data[ct.FEATURE].shape == (64, 3)
     assert data[ct.FEATURE].dtype == torch.float
 
@@ -175,8 +171,8 @@ def test_make_swiss_roll_params(spin: float, noise_std: float, hole: bool) -> No
 def test_make_swiss_roll_num_examples(num_examples: int) -> None:
     data = make_swiss_roll(num_examples)
     assert len(data) == 2
-    assert data[ct.TARGET].batch_size == num_examples
-    assert data[ct.FEATURE].batch_size == num_examples
+    assert data[ct.TARGET].shape[0] == num_examples
+    assert data[ct.FEATURE].shape[0] == num_examples
 
 
 @pytest.mark.parametrize("noise_std", [0.0, 1.0])

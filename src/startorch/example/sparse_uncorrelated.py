@@ -8,7 +8,6 @@ __all__ = ["make_sparse_uncorrelated_regression"]
 from typing import TYPE_CHECKING
 
 import torch
-from redcat import BatchDict, BatchedTensor
 
 from startorch import constants as ct
 from startorch.random import normal, rand_normal
@@ -23,7 +22,7 @@ def make_sparse_uncorrelated_regression(
     feature_size: int = 4,
     noise_std: float = 0.0,
     generator: Generator | None = None,
-) -> BatchDict[BatchedTensor]:
+) -> dict[str, torch.Tensor]:
     r"""Generate a random regression problem with sparse uncorrelated
     design.
 
@@ -56,12 +55,9 @@ def make_sparse_uncorrelated_regression(
 
     ```pycon
     >>> from startorch.example import make_sparse_uncorrelated_regression
-    >>> batch = make_sparse_uncorrelated_regression(num_examples=10)
-    >>> batch
-    BatchDict(
-      (target): tensor([...], batch_dim=0)
-      (feature): tensor([[...]], batch_dim=0)
-    )
+    >>> data = make_sparse_uncorrelated_regression(num_examples=10)
+    >>> data
+    {'target': tensor([...]), 'feature': tensor([[...]])}
 
     ```
     """
@@ -75,4 +71,4 @@ def make_sparse_uncorrelated_regression(
         std=torch.ones(num_examples),
         generator=generator,
     )
-    return BatchDict({ct.TARGET: BatchedTensor(targets), ct.FEATURE: BatchedTensor(features)})
+    return {ct.TARGET: targets, ct.FEATURE: features}
