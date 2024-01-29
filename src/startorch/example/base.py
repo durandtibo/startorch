@@ -38,10 +38,7 @@ class BaseExampleGenerator(Generic[T], ABC, metaclass=AbstractFactory):
     HypercubeClassificationExampleGenerator(num_classes=5, feature_size=6, noise_std=0.2)
     >>> batch = generator.generate(batch_size=10)
     >>> batch
-    BatchDict(
-      (target): tensor([...], batch_dim=0)
-      (feature): tensor([[...]], batch_dim=0)
-    )
+    {'target': tensor([...]), 'feature': tensor([[...]])}
 
     ```
     """
@@ -64,10 +61,7 @@ class BaseExampleGenerator(Generic[T], ABC, metaclass=AbstractFactory):
         >>> generator = HypercubeClassification(num_classes=5, feature_size=6)
         >>> batch = generator.generate(batch_size=10)
         >>> batch
-        BatchDict(
-          (target): tensor([...], batch_dim=0)
-          (feature): tensor([[...]], batch_dim=0)
-        )
+        {'target': tensor([...]), 'feature': tensor([[...]])}
 
         ```
         """

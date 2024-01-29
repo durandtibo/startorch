@@ -5,6 +5,7 @@ from __future__ import annotations
 
 __all__ = ["CacheExampleGenerator"]
 
+import copy
 from typing import TYPE_CHECKING
 
 from coola.utils import str_indent, str_mapping
@@ -12,8 +13,9 @@ from coola.utils import str_indent, str_mapping
 from startorch.example.base import BaseExampleGenerator, setup_example_generator
 
 if TYPE_CHECKING:
-    from redcat import BatchDict
-    from torch import Generator
+    from collections.abc import Hashable
+
+    import torch
 
 
 class CacheExampleGenerator(BaseExampleGenerator):
@@ -40,10 +42,7 @@ class CacheExampleGenerator(BaseExampleGenerator):
     )
     >>> batch = generator.generate(batch_size=10)
     >>> batch
-    BatchDict(
-      (target): tensor([...], batch_dim=0)
-      (feature): tensor([[...]], batch_dim=0)
-    )
+    {'target': tensor([...]), 'feature': tensor([[...]])}
 
     ```
     """
@@ -54,15 +53,19 @@ class CacheExampleGenerator(BaseExampleGenerator):
 
         # This variable is used to store the cached value.
         self._cache = None
+        self._cache_batch_size = 0
 
     def __repr__(self) -> str:
         args = str_indent(str_mapping({"generator": self._generator, "deepcopy": self._deepcopy}))
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
-    def generate(self, batch_size: int = 1, rng: Generator | None = None) -> BatchDict:
-        if self._cache is None or self._cache.batch_size != batch_size:
+    def generate(
+        self, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> dict[Hashable, torch.Tensor]:
+        if self._cache is None or self._cache_batch_size != batch_size:
             self._cache = self._generator.generate(batch_size=batch_size, rng=rng)
-        batch = self._cache
+        tensors = self._cache
+        self._cache_batch_size = next(iter(tensors.values())).shape[0]
         if self._deepcopy:
-            batch = batch.clone()
-        return batch
+            tensors = copy.deepcopy(tensors)
+        return tensors

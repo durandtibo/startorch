@@ -16,7 +16,6 @@ import math
 from typing import TYPE_CHECKING
 
 import torch
-from redcat import BatchDict, BatchedTensor
 
 from startorch import constants as ct
 from startorch.example.base import BaseExampleGenerator
@@ -27,7 +26,7 @@ if TYPE_CHECKING:
     from torch import Generator
 
 
-class Friedman1RegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
+class Friedman1RegressionExampleGenerator(BaseExampleGenerator):
     r"""Implement the "Friedman #1" regression example generator.
 
     The implementation is based on
@@ -53,10 +52,7 @@ class Friedman1RegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
     Friedman1RegressionExampleGenerator(feature_size=6, noise_std=0.0)
     >>> batch = generator.generate(batch_size=10)
     >>> batch
-    BatchDict(
-      (target): tensor([...], batch_dim=0)
-      (feature): tensor([[...]], batch_dim=0)
-    )
+    {'target': tensor([...]), 'feature': tensor([[...]])}
 
     ```
     """
@@ -87,7 +83,7 @@ class Friedman1RegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
 
     def generate(
         self, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchDict[BatchedTensor]:
+    ) -> dict[str, torch.Tensor]:
         return make_friedman1_regression(
             num_examples=batch_size,
             feature_size=self._feature_size,
@@ -96,7 +92,7 @@ class Friedman1RegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
         )
 
 
-class Friedman2RegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
+class Friedman2RegressionExampleGenerator(BaseExampleGenerator):
     r"""Implement the "Friedman #2" regression example generator.
 
     The implementation is based on
@@ -123,10 +119,7 @@ class Friedman2RegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
     Friedman2RegressionExampleGenerator(feature_size=6, noise_std=0.0)
     >>> batch = generator.generate(batch_size=10)
     >>> batch
-    BatchDict(
-      (target): tensor([...], batch_dim=0)
-      (feature): tensor([[...]], batch_dim=0)
-    )
+    {'target': tensor([...]), 'feature': tensor([[...]])}
 
     ```
     """
@@ -157,7 +150,7 @@ class Friedman2RegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
 
     def generate(
         self, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchDict[BatchedTensor]:
+    ) -> dict[str, torch.Tensor]:
         return make_friedman2_regression(
             num_examples=batch_size,
             feature_size=self._feature_size,
@@ -166,7 +159,7 @@ class Friedman2RegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
         )
 
 
-class Friedman3RegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
+class Friedman3RegressionExampleGenerator(BaseExampleGenerator):
     r"""Implement the "Friedman #3" regression example generator.
 
     The implementation is based on
@@ -193,10 +186,7 @@ class Friedman3RegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
     Friedman3RegressionExampleGenerator(feature_size=6, noise_std=0.0)
     >>> batch = generator.generate(batch_size=10)
     >>> batch
-    BatchDict(
-      (target): tensor([...], batch_dim=0)
-      (feature): tensor([[...]], batch_dim=0)
-    )
+    {'target': tensor([...]), 'feature': tensor([[...]])}
 
     ```
     """
@@ -227,7 +217,7 @@ class Friedman3RegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
 
     def generate(
         self, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchDict[BatchedTensor]:
+    ) -> dict[str, torch.Tensor]:
         return make_friedman3_regression(
             num_examples=batch_size,
             feature_size=self._feature_size,
@@ -241,7 +231,7 @@ def make_friedman1_regression(
     feature_size: int = 10,
     noise_std: float = 0.0,
     generator: Generator | None = None,
-) -> BatchDict[BatchedTensor]:
+) -> dict[str, torch.Tensor]:
     r"""Generate the "Friedman #1" regression data.
 
     The implementation is based on
@@ -258,7 +248,7 @@ def make_friedman1_regression(
         generator: Specifies an optional random number generator.
 
     Returns:
-        A batch with two items:
+        A dictionary with two items:
             - ``'input'``: a ``BatchedTensor`` of type float and
                 shape ``(num_examples, feature_size)``. This
                 tensor represents the input features.
@@ -275,10 +265,7 @@ def make_friedman1_regression(
     >>> from startorch.example import make_friedman1_regression
     >>> batch = make_friedman1_regression(num_examples=10)
     >>> batch
-    BatchDict(
-      (target): tensor([...], batch_dim=0)
-      (feature): tensor([[...]], batch_dim=0)
-    )
+    {'target': tensor([...]), 'feature': tensor([[...]])}
 
     ```
     """
@@ -295,7 +282,7 @@ def make_friedman1_regression(
     )
     if noise_std > 0.0:
         targets += rand_normal(size=(num_examples,), std=noise_std, generator=generator)
-    return BatchDict({ct.TARGET: BatchedTensor(targets), ct.FEATURE: BatchedTensor(features)})
+    return {ct.TARGET: targets, ct.FEATURE: features}
 
 
 def make_friedman2_regression(
@@ -303,7 +290,7 @@ def make_friedman2_regression(
     feature_size: int = 4,
     noise_std: float = 0.0,
     generator: Generator | None = None,
-) -> BatchDict[BatchedTensor]:
+) -> dict[str, torch.Tensor]:
     r"""Generate the "Friedman #2" regression data.
 
     The implementation is based on
@@ -321,7 +308,7 @@ def make_friedman2_regression(
         generator: Specifies an optional random number generator.
 
     Returns:
-        A batch with two items:
+        A dictionary with two items:
             - ``'input'``: a ``BatchedTensor`` of type float and
                 shape ``(num_examples, feature_size)``. This
                 tensor represents the input features.
@@ -338,10 +325,7 @@ def make_friedman2_regression(
     >>> from startorch.example import make_friedman2_regression
     >>> batch = make_friedman2_regression(num_examples=10)
     >>> batch
-    BatchDict(
-      (target): tensor([...], batch_dim=0)
-      (feature): tensor([[...]], batch_dim=0)
-    )
+    {'target': tensor([...]), 'feature': tensor([[...]])}
 
     ```
     """
@@ -362,7 +346,7 @@ def make_friedman2_regression(
     ) ** 0.5
     if noise_std > 0.0:
         targets += rand_normal(size=(num_examples,), std=noise_std, generator=generator)
-    return BatchDict({ct.TARGET: BatchedTensor(targets), ct.FEATURE: BatchedTensor(features)})
+    return {ct.TARGET: targets, ct.FEATURE: features}
 
 
 def make_friedman3_regression(
@@ -370,7 +354,7 @@ def make_friedman3_regression(
     feature_size: int = 4,
     noise_std: float = 0.0,
     generator: Generator | None = None,
-) -> BatchDict[BatchedTensor]:
+) -> dict[str, torch.Tensor]:
     r"""Generate the "Friedman #3" regression problem.
 
     The implementation is based on
@@ -388,7 +372,7 @@ def make_friedman3_regression(
         generator: Specifies an optional random number generator.
 
     Returns:
-        A batch with two items:
+        A dictionary with two items:
             - ``'input'``: a ``BatchedTensor`` of type float and
                 shape ``(num_examples, feature_size)``. This
                 tensor represents the input features.
@@ -405,10 +389,7 @@ def make_friedman3_regression(
     >>> from startorch.example import make_friedman3_regression
     >>> batch = make_friedman3_regression(num_examples=10)
     >>> batch
-    BatchDict(
-      (target): tensor([...], batch_dim=0)
-      (feature): tensor([[...]], batch_dim=0)
-    )
+    {'target': tensor([...]), 'feature': tensor([[...]])}
 
     ```
     """
@@ -428,4 +409,4 @@ def make_friedman3_regression(
     )
     if noise_std > 0.0:
         targets += rand_normal(size=(num_examples,), std=noise_std, generator=generator)
-    return BatchDict({ct.TARGET: BatchedTensor(targets), ct.FEATURE: BatchedTensor(features)})
+    return {ct.TARGET: targets, ct.FEATURE: features}
