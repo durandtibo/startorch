@@ -7,21 +7,17 @@ from __future__ import annotations
 __all__ = ["CirclesClassificationExampleGenerator", "make_circles_classification"]
 
 import math
-from typing import TYPE_CHECKING
 
 import torch
-from redcat import BatchDict, BatchedTensor
+from batchtensor.nested import shuffle_along_batch
 
 from startorch import constants as ct
 from startorch.example.base import BaseExampleGenerator
 from startorch.random import rand_normal
 from startorch.utils.validation import check_interval, check_num_examples, check_std
 
-if TYPE_CHECKING:
-    from torch import Generator
 
-
-class CirclesClassificationExampleGenerator(BaseExampleGenerator[BatchedTensor]):
+class CirclesClassificationExampleGenerator(BaseExampleGenerator):
     r"""Implements a binary classification example generator where the
     data are generated with a large circle containing a smaller circle
     in 2d.
@@ -51,10 +47,7 @@ class CirclesClassificationExampleGenerator(BaseExampleGenerator[BatchedTensor])
     CirclesClassificationExampleGenerator(shuffle=True, noise_std=0.0, factor=0.8, ratio=0.5)
     >>> batch = generator.generate(batch_size=10)
     >>> batch
-    BatchDict(
-      (target): tensor([...], batch_dim=0)
-      (feature): tensor([[...]], batch_dim=0)
-    )
+    {'target': tensor([...]), 'feature': tensor([[...]])}
 
     ```
     """
@@ -99,8 +92,8 @@ class CirclesClassificationExampleGenerator(BaseExampleGenerator[BatchedTensor])
         return self._ratio
 
     def generate(
-        self, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchDict[BatchedTensor]:
+        self, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> dict[str, torch.Tensor]:
         return make_circles_classification(
             num_examples=batch_size,
             shuffle=self._shuffle,
@@ -117,8 +110,8 @@ def make_circles_classification(
     noise_std: float = 0.0,
     factor: float = 0.8,
     ratio: float = 0.5,
-    generator: Generator | None = None,
-) -> BatchDict[BatchedTensor]:
+    generator: torch.Generator | None = None,
+) -> dict[str, torch.Tensor]:
     r"""Generate a binary classification dataset where the data are
     generated with a large circle containing a smaller circle in 2d.
 
@@ -137,7 +130,7 @@ def make_circles_classification(
         generator: Specifies an optional random generator.
 
     Returns:
-        A batch with two items:
+        A dictionary with two items:
             - ``'input'``: a ``BatchedTensor`` of type float and
                 shape ``(num_examples, 2)``. This
                 tensor represents the input features.
@@ -154,10 +147,7 @@ def make_circles_classification(
     >>> from startorch.example import make_circles_classification
     >>> batch = make_circles_classification(num_examples=10)
     >>> batch
-    BatchDict(
-      (target): tensor([...], batch_dim=0)
-      (feature): tensor([[...]], batch_dim=0)
-    )
+    {'target': tensor([...]), 'feature': tensor([[...]])}
 
     ```
     """
@@ -186,7 +176,7 @@ def make_circles_classification(
     if noise_std > 0.0:
         features += rand_normal(size=(num_examples, 2), std=noise_std, generator=generator)
 
-    batch = BatchDict({ct.TARGET: BatchedTensor(targets), ct.FEATURE: BatchedTensor(features)})
+    batch = {ct.TARGET: targets, ct.FEATURE: features}
     if shuffle:
-        batch.shuffle_along_batch_(generator)
+        batch = shuffle_along_batch(batch, generator)
     return batch

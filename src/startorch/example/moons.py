@@ -10,7 +10,7 @@ import math
 from typing import TYPE_CHECKING
 
 import torch
-from redcat import BatchDict, BatchedTensor
+from batchtensor.nested import shuffle_along_batch
 
 from startorch import constants as ct
 from startorch.example.base import BaseExampleGenerator
@@ -21,7 +21,7 @@ if TYPE_CHECKING:
     from torch import Generator
 
 
-class MoonsClassificationExampleGenerator(BaseExampleGenerator[BatchedTensor]):
+class MoonsClassificationExampleGenerator(BaseExampleGenerator):
     r"""Implements a binary classification example generator where the
     data are generated with a large circle containing a smaller circle
     in 2d.
@@ -49,10 +49,7 @@ class MoonsClassificationExampleGenerator(BaseExampleGenerator[BatchedTensor]):
     MoonsClassificationExampleGenerator(shuffle=True, noise_std=0.0, ratio=0.5)
     >>> batch = generator.generate(batch_size=10)
     >>> batch
-    BatchDict(
-      (target): tensor([...], batch_dim=0)
-      (feature): tensor([[...]], batch_dim=0)
-    )
+    {'target': tensor([...]), 'feature': tensor([[...]])}
 
     ```
     """
@@ -84,7 +81,7 @@ class MoonsClassificationExampleGenerator(BaseExampleGenerator[BatchedTensor]):
 
     def generate(
         self, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchDict[BatchedTensor]:
+    ) -> dict[str, torch.Tensor]:
         return make_moons_classification(
             num_examples=batch_size,
             shuffle=self._shuffle,
@@ -100,7 +97,7 @@ def make_moons_classification(
     noise_std: float = 0.0,
     ratio: float = 0.5,
     generator: Generator | None = None,
-) -> BatchDict[BatchedTensor]:
+) -> dict[str, torch.Tensor]:
     r"""Generate a binary classification dataset where the data are two
     interleaving half circles in 2d.
 
@@ -117,7 +114,7 @@ def make_moons_classification(
         generator: Specifies an optional random generator.
 
     Returns:
-        A batch with two items:
+        A dictionary with two items:
             - ``'input'``: a ``BatchedTensor`` of type float and
                 shape ``(num_examples, 2)``. This
                 tensor represents the input features.
@@ -134,10 +131,7 @@ def make_moons_classification(
     >>> from startorch.example import make_moons_classification
     >>> batch = make_moons_classification(num_examples=10)
     >>> batch
-    BatchDict(
-      (target): tensor([...], batch_dim=0)
-      (feature): tensor([[...]], batch_dim=0)
-    )
+    {'target': tensor([...]), 'feature': tensor([[...]])}
 
     ```
     """
@@ -165,7 +159,7 @@ def make_moons_classification(
     if noise_std > 0.0:
         features += rand_normal(size=(num_examples, 2), std=noise_std, generator=generator)
 
-    batch = BatchDict({ct.TARGET: BatchedTensor(targets), ct.FEATURE: BatchedTensor(features)})
+    batch = {ct.TARGET: targets, ct.FEATURE: features}
     if shuffle:
-        batch.shuffle_along_batch_(generator)
+        batch = shuffle_along_batch(batch, generator)
     return batch

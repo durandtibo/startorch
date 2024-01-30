@@ -5,7 +5,6 @@ from unittest.mock import patch
 import pytest
 import torch
 from coola import objects_are_equal
-from redcat import BatchDict, BatchedTensor
 
 from startorch import constants as ct
 from startorch.example import BlobsClassification, make_blobs_classification
@@ -66,34 +65,34 @@ def test_blobs_classification_num_clusters(num_clusters: int) -> None:
 @pytest.mark.parametrize("batch_size", SIZES)
 def test_blobs_classification_generate(centers: torch.Tensor, batch_size: int) -> None:
     data = BlobsClassification(centers=centers).generate(batch_size)
-    assert isinstance(data, BatchDict)
+    assert isinstance(data, dict)
     assert len(data) == 2
     targets = data[ct.TARGET]
-    assert isinstance(targets, BatchedTensor)
-    assert targets.batch_size == batch_size
+    assert isinstance(targets, torch.Tensor)
     assert targets.shape == (batch_size,)
     assert targets.dtype == torch.long
     assert targets.min() >= 0
     assert targets.max() <= 4
 
     features = data[ct.FEATURE]
-    assert isinstance(data[ct.FEATURE], BatchedTensor)
-    assert features.batch_size == batch_size
+    assert isinstance(data[ct.FEATURE], torch.Tensor)
     assert features.shape == (batch_size, 2)
     assert features.dtype == torch.float
 
 
 def test_blobs_classification_generate_same_random_seed(centers: torch.Tensor) -> None:
     generator = BlobsClassification(centers=centers)
-    assert generator.generate(batch_size=64, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=64, rng=get_torch_generator(1))
+    assert objects_are_equal(
+        generator.generate(batch_size=64, rng=get_torch_generator(1)),
+        generator.generate(batch_size=64, rng=get_torch_generator(1)),
     )
 
 
 def test_blobs_classification_generate_different_random_seeds(centers: torch.Tensor) -> None:
     generator = BlobsClassification(centers=centers)
-    assert not generator.generate(batch_size=64, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=64, rng=get_torch_generator(2))
+    assert not objects_are_equal(
+        generator.generate(batch_size=64, rng=get_torch_generator(1)),
+        generator.generate(batch_size=64, rng=get_torch_generator(2)),
     )
 
 
@@ -157,19 +156,17 @@ def test_make_blobs_classification_incorrect_centers_cluster_std(centers: torch.
 
 def test_make_blobs_classification(centers: torch.Tensor) -> None:
     data = make_blobs_classification(num_examples=100, centers=centers)
-    assert isinstance(data, BatchDict)
+    assert isinstance(data, dict)
     assert len(data) == 2
     targets = data[ct.TARGET]
-    assert isinstance(targets, BatchedTensor)
-    assert targets.batch_size == 100
+    assert isinstance(targets, torch.Tensor)
     assert targets.shape == (100,)
     assert targets.dtype == torch.long
     assert targets.min() >= 0
     assert targets.max() <= 4
 
     features = data[ct.FEATURE]
-    assert isinstance(data[ct.FEATURE], BatchedTensor)
-    assert features.batch_size == 100
+    assert isinstance(data[ct.FEATURE], torch.Tensor)
     assert features.shape == (100, 2)
     assert features.dtype == torch.float
 
@@ -178,19 +175,17 @@ def test_make_blobs_classification_cluster_std_tensor(centers: torch.Tensor) -> 
     data = make_blobs_classification(
         num_examples=100, centers=centers, cluster_std=torch.ones_like(centers)
     )
-    assert isinstance(data, BatchDict)
+    assert isinstance(data, dict)
     assert len(data) == 2
     targets = data[ct.TARGET]
-    assert isinstance(targets, BatchedTensor)
-    assert targets.batch_size == 100
+    assert isinstance(targets, torch.Tensor)
     assert targets.shape == (100,)
     assert targets.dtype == torch.long
     assert targets.min() >= 0
     assert targets.max() <= 4
 
     features = data[ct.FEATURE]
-    assert isinstance(data[ct.FEATURE], BatchedTensor)
-    assert features.batch_size == 100
+    assert isinstance(data[ct.FEATURE], torch.Tensor)
     assert features.shape == (100, 2)
     assert features.dtype == torch.float
 
@@ -202,8 +197,8 @@ def test_make_blobs_classification_num_examples(num_examples: int, centers: torc
         centers=centers,
     )
     assert len(data) == 2
-    assert data[ct.TARGET].batch_size == num_examples
-    assert data[ct.FEATURE].batch_size == num_examples
+    assert data[ct.TARGET].shape[0] == num_examples
+    assert data[ct.FEATURE].shape[0] == num_examples
 
 
 @pytest.mark.parametrize("num_centers", SIZES)
@@ -213,31 +208,29 @@ def test_make_blobs_classification_num_centers(num_centers: int, feature_size: i
         num_examples=64,
         centers=torch.rand(num_centers, feature_size),
     )
+    assert isinstance(data, dict)
     assert len(data) == 2
     targets = data[ct.TARGET]
-    assert isinstance(targets, BatchedTensor)
-    assert targets.batch_size == 64
+    assert isinstance(targets, torch.Tensor)
     assert targets.shape == (64,)
     assert targets.dtype == torch.long
     assert targets.min() >= 0
     assert targets.max() <= num_centers - 1
 
     features = data[ct.FEATURE]
-    assert isinstance(data[ct.FEATURE], BatchedTensor)
-    assert features.batch_size == 64
+    assert isinstance(data[ct.FEATURE], torch.Tensor)
     assert features.shape == (64, feature_size)
     assert features.dtype == torch.float
 
 
 def test_make_blobs_classification_1_center() -> None:
     data = make_blobs_classification(num_examples=64, centers=torch.rand(1, 4))
-    assert isinstance(data, BatchDict)
+    assert isinstance(data, dict)
     assert len(data) == 2
-    assert data[ct.TARGET].equal(BatchedTensor(torch.zeros(64, dtype=torch.long)))
+    assert objects_are_equal(data[ct.TARGET], torch.zeros(64, dtype=torch.long))
 
     features = data[ct.FEATURE]
-    assert isinstance(data[ct.FEATURE], BatchedTensor)
-    assert features.batch_size == 64
+    assert isinstance(data[ct.FEATURE], torch.Tensor)
     assert features.shape == (64, 4)
     assert features.dtype == torch.float
 
