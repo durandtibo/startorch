@@ -6,7 +6,6 @@ from __future__ import annotations
 __all__ = ["SwissRollExampleGenerator", "make_swiss_roll"]
 
 import math
-from typing import TYPE_CHECKING
 
 import torch
 
@@ -14,9 +13,6 @@ from startorch import constants as ct
 from startorch.example.base import BaseExampleGenerator
 from startorch.random import rand_normal, rand_uniform
 from startorch.utils.validation import check_interval, check_num_examples, check_std
-
-if TYPE_CHECKING:
-    from torch import Generator
 
 
 class SwissRollExampleGenerator(BaseExampleGenerator):
@@ -79,7 +75,7 @@ class SwissRollExampleGenerator(BaseExampleGenerator):
         return self._spin
 
     def generate(
-        self, batch_size: int = 1, rng: Generator | None = None
+        self, batch_size: int = 1, rng: torch.Generator | None = None
     ) -> dict[str, torch.Tensor]:
         return make_swiss_roll(
             num_examples=batch_size,
@@ -95,7 +91,7 @@ def make_swiss_roll(
     noise_std: float = 0.0,
     spin: float = 1.5,
     hole: bool = False,
-    generator: Generator | None = None,
+    generator: torch.Generator | None = None,
 ) -> dict[str, torch.Tensor]:
     r"""Generate a toy manifold dataset based on Swiss roll pattern.
 

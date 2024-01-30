@@ -5,7 +5,6 @@ from unittest.mock import patch
 import pytest
 import torch
 from coola import objects_are_equal
-from redcat import BatchDict, BatchedTensor
 
 from startorch import constants as ct
 from startorch.example import CirclesClassification, make_circles_classification
@@ -65,14 +64,12 @@ def test_circles_classification_incorrect_ratio(ratio: float) -> None:
 @pytest.mark.parametrize("batch_size", SIZES)
 def test_circles_classification_generate(batch_size: int) -> None:
     data = CirclesClassification().generate(batch_size)
-    assert isinstance(data, BatchDict)
+    assert isinstance(data, dict)
     assert len(data) == 2
-    assert isinstance(data[ct.TARGET], BatchedTensor)
-    assert data[ct.TARGET].batch_size == batch_size
+    assert isinstance(data[ct.TARGET], torch.Tensor)
     assert data[ct.TARGET].shape == (batch_size,)
     assert data[ct.TARGET].dtype == torch.long
-    assert isinstance(data[ct.FEATURE], BatchedTensor)
-    assert data[ct.FEATURE].batch_size == batch_size
+    assert isinstance(data[ct.FEATURE], torch.Tensor)
     assert data[ct.FEATURE].shape == (batch_size, 2)
     assert data[ct.FEATURE].dtype == torch.float
 
@@ -81,16 +78,18 @@ def test_circles_classification_generate(batch_size: int) -> None:
 @pytest.mark.parametrize("shuffle", [True, False])
 def test_circles_classification_generate_same_random_seed(noise_std: float, shuffle: bool) -> None:
     generator = CirclesClassification(noise_std=noise_std, shuffle=shuffle)
-    assert generator.generate(batch_size=64, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=64, rng=get_torch_generator(1))
+    assert objects_are_equal(
+        generator.generate(batch_size=64, rng=get_torch_generator(1)),
+        generator.generate(batch_size=64, rng=get_torch_generator(1)),
     )
 
 
 @pytest.mark.parametrize("noise_std", [0.0, 1.0])
 def test_circles_classification_generate_different_random_seeds(noise_std: float) -> None:
     generator = CirclesClassification(noise_std=noise_std)
-    assert not generator.generate(batch_size=64, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=64, rng=get_torch_generator(2))
+    assert not objects_are_equal(
+        generator.generate(batch_size=64, rng=get_torch_generator(1)),
+        generator.generate(batch_size=64, rng=get_torch_generator(2)),
     )
 
 
@@ -167,11 +166,10 @@ def test_make_circles_classification_incorrect_ratio(ratio: float) -> None:
 
 def test_make_circles_classification() -> None:
     data = make_circles_classification(num_examples=100)
-    assert isinstance(data, BatchDict)
+    assert isinstance(data, dict)
     assert len(data) == 2
     targets = data[ct.TARGET]
-    assert isinstance(targets, BatchedTensor)
-    assert targets.batch_size == 100
+    assert isinstance(targets, torch.Tensor)
     assert targets.shape == (100,)
     assert targets.dtype == torch.long
     assert targets.sum() == 50
@@ -179,8 +177,7 @@ def test_make_circles_classification() -> None:
     assert targets.max() <= 1
 
     features = data[ct.FEATURE]
-    assert isinstance(data[ct.FEATURE], BatchedTensor)
-    assert features.batch_size == 100
+    assert isinstance(data[ct.FEATURE], torch.Tensor)
     assert features.shape == (100, 2)
     assert features.dtype == torch.float
     assert features.min() >= -1.0
@@ -189,13 +186,12 @@ def test_make_circles_classification() -> None:
 
 def test_make_circles_classification_shuffle_false() -> None:
     data = make_circles_classification(num_examples=10, shuffle=False)
-    assert isinstance(data, BatchDict)
+    assert isinstance(data, dict)
     assert len(data) == 2
-    assert data[ct.TARGET].equal(BatchedTensor(torch.tensor([0, 0, 0, 0, 0, 1, 1, 1, 1, 1])))
+    assert objects_are_equal(data[ct.TARGET], torch.tensor([0, 0, 0, 0, 0, 1, 1, 1, 1, 1]))
 
     features = data[ct.FEATURE]
-    assert isinstance(data[ct.FEATURE], BatchedTensor)
-    assert features.batch_size == 10
+    assert isinstance(data[ct.FEATURE], torch.Tensor)
     assert features.shape == (10, 2)
     assert features.dtype == torch.float
     assert features.min() >= -1.0
@@ -205,11 +201,10 @@ def test_make_circles_classification_shuffle_false() -> None:
 @pytest.mark.parametrize("factor", [0.2, 0.5, 0.8])
 def test_make_circles_classification_factor(factor: float) -> None:
     data = make_circles_classification(num_examples=100, factor=factor)
-    assert isinstance(data, BatchDict)
+    assert isinstance(data, dict)
     assert len(data) == 2
     targets = data[ct.TARGET]
-    assert isinstance(targets, BatchedTensor)
-    assert targets.batch_size == 100
+    assert isinstance(targets, torch.Tensor)
     assert targets.shape == (100,)
     assert targets.dtype == torch.long
     assert targets.sum() == 50
@@ -217,8 +212,7 @@ def test_make_circles_classification_factor(factor: float) -> None:
     assert targets.max() <= 1
 
     features = data[ct.FEATURE]
-    assert isinstance(data[ct.FEATURE], BatchedTensor)
-    assert features.batch_size == 100
+    assert isinstance(data[ct.FEATURE], torch.Tensor)
     assert features.shape == (100, 2)
     assert features.dtype == torch.float
     assert features.min() >= -1.0
@@ -229,8 +223,8 @@ def test_make_circles_classification_factor(factor: float) -> None:
 def test_make_circles_classification_num_examples(num_examples: int) -> None:
     data = make_circles_classification(num_examples)
     assert len(data) == 2
-    assert data[ct.TARGET].batch_size == num_examples
-    assert data[ct.FEATURE].batch_size == num_examples
+    assert data[ct.TARGET].shape[0] == num_examples
+    assert data[ct.FEATURE].shape[0] == num_examples
 
 
 @pytest.mark.parametrize("noise_std", [0.0, 1.0])

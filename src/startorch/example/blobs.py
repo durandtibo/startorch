@@ -10,7 +10,7 @@ import math
 from typing import TYPE_CHECKING
 
 import torch
-from redcat import BatchDict, BatchedTensor
+from batchtensor.nested import shuffle_along_batch, slice_along_batch
 
 from startorch import constants as ct
 from startorch.example.base import BaseExampleGenerator
@@ -22,7 +22,7 @@ if TYPE_CHECKING:
     from torch import Generator
 
 
-class BlobsClassificationExampleGenerator(BaseExampleGenerator[BatchedTensor]):
+class BlobsClassificationExampleGenerator(BaseExampleGenerator):
     r"""Implement a binary classification example generator where the
     data are generated from isotropic Gaussian blobs.
 
@@ -51,10 +51,7 @@ class BlobsClassificationExampleGenerator(BaseExampleGenerator[BatchedTensor]):
     BlobsClassificationExampleGenerator(num_clusters=5, feature_size=4)
     >>> batch = generator.generate(batch_size=10)
     >>> batch
-    BatchDict(
-      (target): tensor([...], batch_dim=0)
-      (feature): tensor([[...]], batch_dim=0)
-    )
+    {'target': tensor([...]), 'feature': tensor([[...]])}
 
     ```
     """
@@ -102,7 +99,7 @@ class BlobsClassificationExampleGenerator(BaseExampleGenerator[BatchedTensor]):
 
     def generate(
         self, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchDict[BatchedTensor]:
+    ) -> dict[str, torch.Tensor]:
         return make_blobs_classification(
             num_examples=batch_size,
             centers=self._centers,
@@ -138,10 +135,7 @@ class BlobsClassificationExampleGenerator(BaseExampleGenerator[BatchedTensor]):
         BlobsClassificationExampleGenerator(num_clusters=3, feature_size=2)
         >>> batch = generator.generate(batch_size=10)
         >>> batch
-        BatchDict(
-          (target): tensor([...], batch_dim=0)
-          (feature): tensor([[...]], batch_dim=0)
-        )
+        {'target': tensor([...]), 'feature': tensor([[...]])}
 
         ```
         """
@@ -161,7 +155,7 @@ def make_blobs_classification(
     centers: torch.Tensor,
     cluster_std: torch.Tensor | float = 1.0,
     generator: Generator | None = None,
-) -> BatchDict[BatchedTensor]:
+) -> dict[str, torch.Tensor]:
     r"""Generate a classification dataset where the data are gnerated
     from isotropic Gaussian blobs for clustering.
 
@@ -179,7 +173,7 @@ def make_blobs_classification(
         generator: Specifies an optional random number generator.
 
     Returns:
-        A batch with two items:
+        A dictionary with two items:
             - ``'input'``: a ``BatchedTensor`` of type float and
                 shape ``(num_examples, feature_size)``. This
                 tensor represents the input features.
@@ -197,10 +191,7 @@ def make_blobs_classification(
     >>> from startorch.example import make_blobs_classification
     >>> batch = make_blobs_classification(num_examples=10, centers=torch.rand(5, 2))
     >>> batch
-    BatchDict(
-      (target): tensor([...], batch_dim=0)
-      (feature): tensor([[...]], batch_dim=0)
-    )
+    {'target': tensor([...]), 'feature': tensor([[...]])}
 
     ```
     """
@@ -226,6 +217,6 @@ def make_blobs_classification(
         )
         targets[start_idx:end_idx] = i
 
-    batch = BatchDict({ct.TARGET: BatchedTensor(targets), ct.FEATURE: BatchedTensor(features)})
-    batch.shuffle_along_batch_(generator)
-    return batch.slice_along_batch(stop=num_examples)
+    batch = {ct.TARGET: targets, ct.FEATURE: features}
+    batch = shuffle_along_batch(batch, generator)
+    return slice_along_batch(batch, stop=num_examples)
