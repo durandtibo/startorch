@@ -18,8 +18,10 @@ from objectory.utils import is_object_config
 from startorch.utils.format import str_target_object
 
 if TYPE_CHECKING:
+    from collections.abc import Hashable
+
+    import torch
     from redcat import BatchDict
-    from torch import Generator
 
 logger = logging.getLogger(__name__)
 
@@ -27,7 +29,7 @@ T = TypeVar("T")
 
 
 class BaseExampleGenerator(Generic[T], ABC, metaclass=AbstractFactory):
-    r"""Define the base class to generate time series.
+    r"""Define the base class to generate examples.
 
     Example usage:
 
@@ -44,15 +46,17 @@ class BaseExampleGenerator(Generic[T], ABC, metaclass=AbstractFactory):
     """
 
     @abstractmethod
-    def generate(self, batch_size: int = 1, rng: Generator | None = None) -> BatchDict[T]:
-        r"""Generate a time series.
+    def generate(
+        self, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> dict[Hashable, torch.Tensor] | BatchDict[T]:
+        r"""Generate a batch of examples.
 
         Args:
             batch_size: Specifies the batch size.
             rng: Specifies an optional random number generator.
 
         Returns:
-            A batch of time series.
+            A batch of examples.
 
         Example usage:
 
