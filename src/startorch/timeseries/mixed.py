@@ -5,6 +5,7 @@ from __future__ import annotations
 
 __all__ = ["MixedTimeSeriesGenerator"]
 
+
 from typing import TYPE_CHECKING
 
 from coola.utils import str_indent, str_mapping
@@ -16,8 +17,9 @@ from startorch.timeseries.base import (
 from startorch.timeseries.utils import mix2sequences
 
 if TYPE_CHECKING:
-    from redcat import BatchDict
-    from torch import Generator
+    from collections.abc import Hashable
+
+    import torch
 
 
 class MixedTimeSeriesGenerator(BaseTimeSeriesGenerator):
@@ -51,10 +53,7 @@ class MixedTimeSeriesGenerator(BaseTimeSeriesGenerator):
       (key2): key2
     )
     >>> generator.generate(seq_len=12, batch_size=10)
-    BatchDict(
-      (key1): tensor([[...]], batch_dim=0, seq_dim=1)
-      (key2): tensor([[...]], batch_dim=0, seq_dim=1)
-    )
+    {'key1': tensor([[...]]), 'key2': tensor([[...]])}
 
     ```
     """
@@ -77,8 +76,8 @@ class MixedTimeSeriesGenerator(BaseTimeSeriesGenerator):
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchDict:
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> dict[Hashable, torch.Tensor]:
         batch = self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
         seq1, seq2 = mix2sequences(batch[self._key1], batch[self._key2])
         batch[self._key1] = seq1

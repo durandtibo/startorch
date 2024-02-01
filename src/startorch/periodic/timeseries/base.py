@@ -19,8 +19,10 @@ from objectory.utils import is_object_config
 from startorch.utils.format import str_target_object
 
 if TYPE_CHECKING:
-    from redcat import BatchDict
-    from torch import Generator
+    from collections.abc import Hashable
+
+    import torch
+
 
 logger = logging.getLogger(__name__)
 
@@ -45,18 +47,15 @@ class BasePeriodicTimeSeriesGenerator(ABC, metaclass=AbstractFactory):
         )
     )
     >>> generator.generate(seq_len=12, period=4, batch_size=4)
-    BatchDict(
-      (value): tensor([[...]], batch_dim=0, seq_dim=1)
-      (time): tensor([[...]], batch_dim=0, seq_dim=1)
-    )
+    {'value': tensor([[...]]), 'time': tensor([[...]])}
 
     ```
     """
 
     @abstractmethod
     def generate(
-        self, seq_len: int, period: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchDict:
+        self, seq_len: int, period: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> dict[Hashable, torch.Tensor]:
         r"""Generate a batch of periodic time series.
 
         All the time series in the batch have the same length.
@@ -78,10 +77,7 @@ class BasePeriodicTimeSeriesGenerator(ABC, metaclass=AbstractFactory):
         >>> from startorch.sequence import RandUniform
         >>> generator = Repeat(TimeSeries({"value": RandUniform(), "time": RandUniform()}))
         >>> generator.generate(seq_len=12, period=4, batch_size=4)
-        BatchDict(
-          (value): tensor([[...]], batch_dim=0, seq_dim=1)
-          (time): tensor([[...]], batch_dim=0, seq_dim=1)
-        )
+        {'value': tensor([[...]]), 'time': tensor([[...]])}
 
         ```
         """

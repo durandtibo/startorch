@@ -4,7 +4,8 @@ from unittest.mock import Mock
 
 import pytest
 import torch
-from redcat import BatchDict, BatchedTensorSeq
+from batchtensor.nested import slice_along_seq
+from coola import objects_are_equal
 
 from startorch import constants as ct
 from startorch.periodic.timeseries import BasePeriodicTimeSeriesGenerator, Repeat
@@ -48,23 +49,18 @@ def test_periodic_generate(
         timeseries=timeseries,
         period=RandInt(2, 5),
     ).generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchDict)
-    assert batch.batch_size == batch_size
-    assert len(batch.data) == 2
+    assert isinstance(batch, dict)
+    assert len(batch) == 2
 
-    batch_value = batch.data[ct.VALUE]
-    assert isinstance(batch_value, BatchedTensorSeq)
-    assert batch_value.batch_size == batch_size
-    assert batch_value.seq_len == seq_len
-    assert batch_value.data.shape == (batch_size, seq_len, 1)
-    assert batch_value.data.dtype == torch.float
+    batch_value = batch[ct.VALUE]
+    assert isinstance(batch_value, torch.Tensor)
+    assert batch_value.shape == (batch_size, seq_len, 1)
+    assert batch_value.dtype == torch.float
 
-    batch_time = batch.data[ct.TIME]
-    assert isinstance(batch_time, BatchedTensorSeq)
-    assert batch_time.batch_size == batch_size
-    assert batch_time.seq_len == seq_len
-    assert batch_time.data.shape == (batch_size, seq_len, 1)
-    assert batch_time.data.dtype == torch.float
+    batch_time = batch[ct.TIME]
+    assert isinstance(batch_time, torch.Tensor)
+    assert batch_time.shape == (batch_size, seq_len, 1)
+    assert batch_time.dtype == torch.float
 
 
 @pytest.mark.parametrize(
@@ -81,10 +77,13 @@ def test_periodic_generate_period_4(
         timeseries=timeseries,
         period=Mock(spec=BaseTensorGenerator, generate=Mock(return_value=torch.tensor([4]))),
     ).generate(batch_size=2, seq_len=10)
-    assert isinstance(batch, BatchDict)
-    assert batch.batch_size == 2
-    assert batch.slice_along_seq(0, 4).equal(batch.slice_along_seq(4, 8))
-    assert batch.slice_along_seq(0, 2).equal(batch.slice_along_seq(8))
+    assert isinstance(batch, dict)
+    assert objects_are_equal(
+        slice_along_seq(batch, start=0, stop=4), slice_along_seq(batch, start=4, stop=8)
+    )
+    assert objects_are_equal(
+        slice_along_seq(batch, start=0, stop=2), slice_along_seq(batch, start=8)
+    )
 
 
 def test_periodic_generate_same_random_seed() -> None:
@@ -92,8 +91,9 @@ def test_periodic_generate_same_random_seed() -> None:
         timeseries=TimeSeries({ct.VALUE: RandUniform(), ct.TIME: RandUniform()}),
         period=RandInt(2, 5),
     )
-    assert generator.generate(seq_len=12, batch_size=4, rng=get_torch_generator(1)).equal(
-        generator.generate(seq_len=12, batch_size=4, rng=get_torch_generator(1))
+    assert objects_are_equal(
+        generator.generate(seq_len=12, batch_size=4, rng=get_torch_generator(1)),
+        generator.generate(seq_len=12, batch_size=4, rng=get_torch_generator(1)),
     )
 
 
@@ -102,6 +102,7 @@ def test_periodic_generate_different_random_seeds() -> None:
         timeseries=TimeSeries({ct.VALUE: RandUniform(), ct.TIME: RandUniform()}),
         period=RandInt(2, 5),
     )
-    assert not generator.generate(seq_len=12, batch_size=4, rng=get_torch_generator(1)).equal(
-        generator.generate(seq_len=12, batch_size=4, rng=get_torch_generator(2))
+    assert not objects_are_equal(
+        generator.generate(seq_len=12, batch_size=4, rng=get_torch_generator(1)),
+        generator.generate(seq_len=12, batch_size=4, rng=get_torch_generator(2)),
     )

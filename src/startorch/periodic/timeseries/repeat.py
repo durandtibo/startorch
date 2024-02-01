@@ -9,6 +9,7 @@ __all__ = ["RepeatPeriodicTimeSeriesGenerator"]
 import math
 from typing import TYPE_CHECKING
 
+from batchtensor.nested import repeat_along_seq, slice_along_seq
 from coola.utils import str_indent, str_mapping
 
 from startorch.periodic.timeseries import BasePeriodicTimeSeriesGenerator
@@ -42,10 +43,7 @@ class RepeatPeriodicTimeSeriesGenerator(BasePeriodicTimeSeriesGenerator):
         )
     )
     >>> generator.generate(seq_len=12, period=4, batch_size=4)
-    BatchDict(
-      (value): tensor([[...]], batch_dim=0, seq_dim=1)
-      (time): tensor([[...]], batch_dim=0, seq_dim=1)
-    )
+    {'value': tensor([[...]]), 'time': tensor([[...]])}
 
     ```
     """
@@ -61,8 +59,6 @@ class RepeatPeriodicTimeSeriesGenerator(BasePeriodicTimeSeriesGenerator):
     def generate(
         self, seq_len: int, period: int, batch_size: int = 1, rng: Generator | None = None
     ) -> BatchDict:
-        return (
-            self._generator.generate(seq_len=period, batch_size=batch_size, rng=rng)
-            .repeat_along_seq(math.ceil(seq_len / period))
-            .slice_along_seq(stop=seq_len)
-        )
+        data = self._generator.generate(seq_len=period, batch_size=batch_size, rng=rng)
+        data = repeat_along_seq(data, math.ceil(seq_len / period))
+        return slice_along_seq(data, stop=seq_len)

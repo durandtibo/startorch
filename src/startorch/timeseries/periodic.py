@@ -8,6 +8,7 @@ __all__ = ["PeriodicTimeSeriesGenerator"]
 import math
 from typing import TYPE_CHECKING
 
+from batchtensor.nested import repeat_along_seq, slice_along_seq
 from coola.utils import str_indent, str_mapping
 
 from startorch.periodic.timeseries.base import BasePeriodicTimeSeriesGenerator
@@ -18,8 +19,9 @@ from startorch.timeseries.base import (
 )
 
 if TYPE_CHECKING:
-    from redcat import BatchDict
-    from torch import Generator
+    from collections.abc import Hashable
+
+    import torch
 
 
 class PeriodicTimeSeriesGenerator(BaseTimeSeriesGenerator):
@@ -52,10 +54,7 @@ class PeriodicTimeSeriesGenerator(BaseTimeSeriesGenerator):
       (period): RandIntTensorGenerator(low=2, high=5)
     )
     >>> generator.generate(seq_len=10, batch_size=2)
-    BatchDict(
-      (value): tensor([[...]], batch_dim=0, seq_dim=1)
-      (time): tensor([[...]], batch_dim=0, seq_dim=1)
-    )
+    {'value': tensor([[...]]), 'time': tensor([[...]])}
 
     ```
     """
@@ -74,15 +73,13 @@ class PeriodicTimeSeriesGenerator(BaseTimeSeriesGenerator):
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchDict:
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> dict[Hashable, torch.Tensor]:
         period = int(self._period.generate((1,), rng=rng).item())
         if isinstance(self._timeseries, BasePeriodicTimeSeriesGenerator):
             return self._timeseries.generate(
                 seq_len=seq_len, period=period, batch_size=batch_size, rng=rng
             )
-        return (
-            self._timeseries.generate(seq_len=period, batch_size=batch_size, rng=rng)
-            .repeat_along_seq(math.ceil(seq_len / period))
-            .slice_along_seq(stop=seq_len)
-        )
+        data = self._timeseries.generate(seq_len=period, batch_size=batch_size, rng=rng)
+        data = repeat_along_seq(data, math.ceil(seq_len / period))
+        return slice_along_seq(data, stop=seq_len)

@@ -1,9 +1,11 @@
+from __future__ import annotations
+
 from unittest.mock import Mock
 
 import pytest
 import torch
 from coola import objects_are_equal
-from redcat import BatchDict, BatchedTensorSeq
+from redcat import BatchedTensorSeq
 
 from startorch.sequence import BaseSequenceGenerator, RandUniform
 from startorch.timeseries import MixedTimeSeries, TimeSeries
@@ -44,21 +46,16 @@ def test_mixed_timeseries_generator_generate(
         key2="key2",
     ).generate(batch_size=batch_size, seq_len=seq_len)
 
-    assert isinstance(batch, BatchDict)
-    assert batch.batch_size == batch_size
+    assert isinstance(batch, dict)
     assert len(batch) == 2
 
     key1 = batch["key1"]
-    assert isinstance(key1, BatchedTensorSeq)
-    assert key1.batch_size == batch_size
-    assert key1.seq_len == seq_len
+    assert isinstance(key1, torch.Tensor)
     assert key1.data.shape == (batch_size, seq_len, feature_size)
     assert key1.data.dtype == torch.float
 
     key2 = batch["key2"]
-    assert isinstance(key2, BatchedTensorSeq)
-    assert key2.batch_size == batch_size
-    assert key2.seq_len == seq_len
+    assert isinstance(key2, torch.Tensor)
     assert key2.data.shape == (batch_size, seq_len, feature_size)
     assert key2.data.dtype == torch.float
 
@@ -88,13 +85,12 @@ def test_mixed_timeseries_generator_generate_mock() -> None:
         key1="key1",
         key2="key2",
     ).generate(batch_size=2, seq_len=5)
-    assert batch.equal(
-        BatchDict(
-            {
-                "key1": BatchedTensorSeq(torch.tensor([[0, 11, 2, 13, 4], [5, 16, 7, 18, 9]])),
-                "key2": BatchedTensorSeq(torch.tensor([[10, 1, 12, 3, 14], [15, 6, 17, 8, 19]])),
-            }
-        )
+    assert objects_are_equal(
+        batch,
+        {
+            "key1": torch.tensor([[0, 11, 2, 13, 4], [5, 16, 7, 18, 9]]),
+            "key2": torch.tensor([[10, 1, 12, 3, 14], [15, 6, 17, 8, 19]]),
+        },
     )
 
 

@@ -5,6 +5,7 @@ from __future__ import annotations
 
 __all__ = ["TimeSeriesExampleGenerator"]
 
+
 from typing import TYPE_CHECKING
 
 from coola.utils import str_indent, str_mapping
@@ -17,8 +18,9 @@ from startorch.timeseries.base import (
 )
 
 if TYPE_CHECKING:
-    from redcat import BatchDict, BatchedTensorSeq
-    from torch import Generator
+    from collections.abc import Hashable
+
+    import torch
 
     from startorch.tensor.base import BaseTensorGenerator
 
@@ -53,10 +55,7 @@ class TimeSeriesExampleGenerator(BaseExampleGenerator):
       (seq_len): RandIntTensorGenerator(low=2, high=5)
     )
     >>> generator.generate(batch_size=10)
-    BatchDict(
-      (value): tensor([...], batch_dim=0, seq_dim=1)
-      (time): tensor([[...]], batch_dim=0, seq_dim=1)
-    )
+    {'value': tensor([[...]]), 'time': tensor([[...]])}
 
     ```
     """
@@ -75,7 +74,7 @@ class TimeSeriesExampleGenerator(BaseExampleGenerator):
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(
-        self, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchDict[BatchedTensorSeq]:
+        self, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> dict[Hashable, torch.Tensor]:
         seq_len = int(self._seq_len.generate((1,), rng=rng).item())
         return self._timeseries.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
