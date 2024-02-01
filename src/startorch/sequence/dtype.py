@@ -10,8 +10,7 @@ from typing import TYPE_CHECKING
 from startorch.sequence.wrapper import BaseWrapperSequenceGenerator
 
 if TYPE_CHECKING:
-    from redcat import BatchedTensorSeq
-    from torch import Generator
+    import torch
 
 
 class FloatSequenceGenerator(BaseWrapperSequenceGenerator):
@@ -34,8 +33,8 @@ class FloatSequenceGenerator(BaseWrapperSequenceGenerator):
     """
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
         return self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).float()
 
 
@@ -59,6 +58,6 @@ class LongSequenceGenerator(BaseWrapperSequenceGenerator):
     """
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
         return self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).long()

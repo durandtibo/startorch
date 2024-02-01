@@ -19,8 +19,7 @@ from objectory.utils import is_object_config
 from startorch.utils.format import str_target_object
 
 if TYPE_CHECKING:
-    from redcat import BatchedTensorSeq
-    from torch import Generator
+    import torch
 
 logger = logging.getLogger(__name__)
 
@@ -42,15 +41,15 @@ class BasePeriodicSequenceGenerator(ABC, metaclass=AbstractFactory):
       (generator): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
     )
     >>> generator.generate(seq_len=12, period=4, batch_size=4)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
 
     @abstractmethod
     def generate(
-        self, seq_len: int, period: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
+        self, seq_len: int, period: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
         r"""Generate a batch of periodic sequences.
 
         All the sequences in the batch have the same length.
@@ -74,7 +73,7 @@ class BasePeriodicSequenceGenerator(ABC, metaclass=AbstractFactory):
         >>> from startorch.sequence import RandUniform
         >>> generator = Repeat(RandUniform())
         >>> generator.generate(seq_len=12, period=4, batch_size=4)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+        tensor([[...]])
 
         ```
         """

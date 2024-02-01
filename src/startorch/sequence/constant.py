@@ -7,6 +7,7 @@ __all__ = ["ConstantSequenceGenerator", "FullSequenceGenerator"]
 
 
 import torch
+from batchtensor.tensor import repeat_along_seq
 
 from startorch.sequence.base import BaseSequenceGenerator
 from startorch.sequence.wrapper import BaseWrapperSequenceGenerator
@@ -36,9 +37,8 @@ class ConstantSequenceGenerator(BaseWrapperSequenceGenerator):
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
     ) -> torch.Tensor:
-        return self._generator.generate(seq_len=1, batch_size=batch_size, rng=rng).repeat_along_seq(
-            seq_len
-        )
+        data = self._generator.generate(seq_len=1, batch_size=batch_size, rng=rng)
+        return repeat_along_seq(data, seq_len)
 
 
 class FullSequenceGenerator(BaseSequenceGenerator):

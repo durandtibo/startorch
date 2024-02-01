@@ -7,14 +7,14 @@ __all__ = ["Cat2SequenceGenerator"]
 
 from typing import TYPE_CHECKING
 
+from batchtensor.tensor import cat_along_seq
 from coola.utils.format import str_indent, str_mapping
 
 from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_generator
 from startorch.tensor.base import BaseTensorGenerator, setup_tensor_generator
 
 if TYPE_CHECKING:
-    from redcat import BatchedTensorSeq
-    from torch import Generator
+    import torch
 
 
 class Cat2SequenceGenerator(BaseSequenceGenerator):
@@ -76,11 +76,11 @@ class Cat2SequenceGenerator(BaseSequenceGenerator):
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
         changepoint = max(min(int(self._changepoint.generate((1,), rng=rng).item()), seq_len), 0)
-        return self._generator1.generate(
-            seq_len=changepoint, batch_size=batch_size, rng=rng
-        ).cat_along_seq(
-            self._generator2.generate(seq_len=seq_len - changepoint, batch_size=batch_size, rng=rng)
+        seq1 = self._generator1.generate(seq_len=changepoint, batch_size=batch_size, rng=rng)
+        seq2 = self._generator2.generate(
+            seq_len=seq_len - changepoint, batch_size=batch_size, rng=rng
         )
+        return cat_along_seq([seq1, seq2])
