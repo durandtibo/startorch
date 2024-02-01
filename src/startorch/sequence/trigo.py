@@ -17,8 +17,7 @@ from typing import TYPE_CHECKING
 from startorch.sequence.wrapper import BaseWrapperSequenceGenerator
 
 if TYPE_CHECKING:
-    from redcat import BatchedTensorSeq
-    from torch import Generator
+    import torch
 
 
 class AcoshSequenceGenerator(BaseWrapperSequenceGenerator):
@@ -36,14 +35,14 @@ class AcoshSequenceGenerator(BaseWrapperSequenceGenerator):
       (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
     )
     >>> generator.generate(seq_len=12, batch_size=4)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
         return self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).acosh()
 
 
@@ -62,14 +61,14 @@ class AsinhSequenceGenerator(BaseWrapperSequenceGenerator):
       (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
     )
     >>> generator.generate(seq_len=12, batch_size=4)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
         return self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).asinh()
 
 
@@ -88,14 +87,14 @@ class AtanhSequenceGenerator(BaseWrapperSequenceGenerator):
       (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
     )
     >>> generator.generate(seq_len=12, batch_size=4)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
         return self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).atanh()
 
 
@@ -114,14 +113,14 @@ class CoshSequenceGenerator(BaseWrapperSequenceGenerator):
       (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
     )
     >>> generator.generate(seq_len=12, batch_size=4)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
         return self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).cosh()
 
 
@@ -140,14 +139,14 @@ class SinhSequenceGenerator(BaseWrapperSequenceGenerator):
       (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
     )
     >>> generator.generate(seq_len=12, batch_size=4)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
         return self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).sinh()
 
 
@@ -166,12 +165,12 @@ class TanhSequenceGenerator(BaseWrapperSequenceGenerator):
       (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
     )
     >>> generator.generate(seq_len=12, batch_size=4)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
         return self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).tanh()

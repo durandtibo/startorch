@@ -41,7 +41,7 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
       (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
     )
     >>> generator.generate(seq_len=12, batch_size=4)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
@@ -84,7 +84,7 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
             )
         )
         >>> generator.generate(seq_len=12, batch_size=4)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+        tensor([[...]])
 
         ```
         """
@@ -131,7 +131,7 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
             )
         )
         >>> generator.generate(seq_len=12, batch_size=4)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+        tensor([[...]])
 
         ```
         """
@@ -174,7 +174,7 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
             )
         )
         >>> generator.generate(seq_len=12, batch_size=4)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+        tensor([[...]])
 
         ```
         """
@@ -210,7 +210,7 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
             )
         )
         >>> generator.generate(seq_len=12, batch_size=4)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+        tensor([[...]])
 
         ```
         """
@@ -255,7 +255,7 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
             )
         )
         >>> generator.generate(seq_len=12, batch_size=4)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+        tensor([[...]])
 
         ```
         """
@@ -310,7 +310,7 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
             )
         )
         >>> generator.generate(seq_len=12, batch_size=4)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+        tensor([[...]])
 
         ```
         """
@@ -361,7 +361,7 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
                 )
             )
             >>> generator.generate(seq_len=12, batch_size=4)
-            tensor([[...]], batch_dim=0, seq_dim=1)
+            tensor([[...]])
         """
         if min_time < 0:
             msg = f"min_time has to be greater or equal to 0 (received: {min_time})"

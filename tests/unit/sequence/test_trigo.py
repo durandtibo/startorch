@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import pytest
 import torch
-from redcat import BatchedTensorSeq
 
 from startorch.sequence import (
     Acosh,
@@ -36,7 +35,7 @@ def test_acosh_generate(batch_size: int, seq_len: int, feature_size: int) -> Non
     assert (
         Acosh(Full(value=1.0, feature_size=feature_size))
         .generate(batch_size=batch_size, seq_len=seq_len)
-        .allclose(BatchedTensorSeq(torch.full((batch_size, seq_len, feature_size), 0.0)))
+        .allclose(torch.full((batch_size, seq_len, feature_size), 0.0))
     )
 
 
@@ -70,9 +69,7 @@ def test_asinh_generate(batch_size: int, seq_len: int, feature_size: int) -> Non
     assert (
         Asinh(Full(value=1.0, feature_size=feature_size))
         .generate(batch_size=batch_size, seq_len=seq_len)
-        .allclose(
-            BatchedTensorSeq(torch.full((batch_size, seq_len, feature_size), 0.881373587019543))
-        )
+        .allclose(torch.full((batch_size, seq_len, feature_size), 0.881373587019543))
     )
 
 
@@ -106,9 +103,7 @@ def test_atanh_generate(batch_size: int, seq_len: int, feature_size: int) -> Non
     assert (
         Atanh(Full(value=0.42, feature_size=feature_size))
         .generate(batch_size=batch_size, seq_len=seq_len)
-        .allclose(
-            BatchedTensorSeq(torch.full((batch_size, seq_len, feature_size), 0.44769202352742066))
-        )
+        .allclose(torch.full((batch_size, seq_len, feature_size), 0.44769202352742066))
     )
 
 
@@ -142,7 +137,7 @@ def test_cosh_generate(batch_size: int, seq_len: int, feature_size: int) -> None
     assert (
         Cosh(Full(value=0.0, feature_size=feature_size))
         .generate(batch_size=batch_size, seq_len=seq_len)
-        .allclose(BatchedTensorSeq(torch.full((batch_size, seq_len, feature_size), 1.0)))
+        .allclose(torch.full((batch_size, seq_len, feature_size), 1.0))
     )
 
 
@@ -176,9 +171,7 @@ def test_sinh_generate(batch_size: int, seq_len: int, feature_size: int) -> None
     assert (
         Sinh(Full(value=1.0, feature_size=feature_size))
         .generate(batch_size=batch_size, seq_len=seq_len)
-        .allclose(
-            BatchedTensorSeq(torch.full((batch_size, seq_len, feature_size), 1.1752011936438014))
-        )
+        .allclose(torch.full((batch_size, seq_len, feature_size), 1.1752011936438014))
     )
 
 
@@ -212,9 +205,7 @@ def test_tanh_generate(batch_size: int, seq_len: int, feature_size: int) -> None
     assert (
         Tanh(Full(value=1.0, feature_size=feature_size))
         .generate(batch_size=batch_size, seq_len=seq_len)
-        .allclose(
-            BatchedTensorSeq(torch.full((batch_size, seq_len, feature_size), 0.7615941559557649))
-        )
+        .allclose(torch.full((batch_size, seq_len, feature_size), 0.7615941559557649))
     )
 
 

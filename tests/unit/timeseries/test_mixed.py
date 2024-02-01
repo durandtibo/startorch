@@ -5,7 +5,6 @@ from unittest.mock import Mock
 import pytest
 import torch
 from coola import objects_are_equal
-from redcat import BatchedTensorSeq
 
 from startorch.sequence import BaseSequenceGenerator, RandUniform
 from startorch.timeseries import MixedTimeSeries, TimeSeries
@@ -66,18 +65,12 @@ def test_mixed_timeseries_generator_generate_mock() -> None:
             {
                 "key1": Mock(
                     spec=BaseSequenceGenerator,
-                    generate=Mock(
-                        return_value=BatchedTensorSeq(
-                            torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]])
-                        )
-                    ),
+                    generate=Mock(return_value=torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]])),
                 ),
                 "key2": Mock(
                     spec=BaseSequenceGenerator,
                     generate=Mock(
-                        return_value=BatchedTensorSeq(
-                            torch.tensor([[10, 11, 12, 13, 14], [15, 16, 17, 18, 19]])
-                        )
+                        return_value=torch.tensor([[10, 11, 12, 13, 14], [15, 16, 17, 18, 19]])
                     ),
                 ),
             }

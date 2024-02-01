@@ -60,7 +60,7 @@ class SineWaveSequenceGenerator(BaseSequenceGenerator):
         )
     )
     >>> generator.generate(seq_len=12, batch_size=4)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """

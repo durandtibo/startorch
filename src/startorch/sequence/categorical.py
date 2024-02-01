@@ -9,7 +9,6 @@ import math
 from typing import TYPE_CHECKING
 
 import torch
-from redcat import BatchedTensorSeq
 
 from startorch.sequence.base import BaseSequenceGenerator
 from startorch.utils.conversion import to_tuple
@@ -41,7 +40,7 @@ class MultinomialSequenceGenerator(BaseSequenceGenerator):
     >>> generator
     MultinomialSequenceGenerator(num_categories=5, feature_size=(1,))
     >>> generator.generate(seq_len=12, batch_size=4)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
@@ -63,15 +62,13 @@ class MultinomialSequenceGenerator(BaseSequenceGenerator):
 
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
-        return BatchedTensorSeq(
-            torch.multinomial(
-                self._probabilities,
-                batch_size * seq_len * math.prod(self._feature_size),
-                replacement=True,
-                generator=rng,
-            ).view(batch_size, seq_len, *self._feature_size)
-        )
+    ) -> torch.Tensor:
+        return torch.multinomial(
+            self._probabilities,
+            batch_size * seq_len * math.prod(self._feature_size),
+            replacement=True,
+            generator=rng,
+        ).view(batch_size, seq_len, *self._feature_size)
 
     @classmethod
     def create_uniform_weights(cls, num_categories: int) -> MultinomialSequenceGenerator:
@@ -155,7 +152,7 @@ class UniformCategoricalSequenceGenerator(BaseSequenceGenerator):
     >>> generator
     UniformCategoricalSequenceGenerator(num_categories=10, feature_size=())
     >>> generator.generate(seq_len=12, batch_size=4)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
@@ -180,12 +177,10 @@ class UniformCategoricalSequenceGenerator(BaseSequenceGenerator):
 
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
-        return BatchedTensorSeq(
-            torch.randint(
-                low=0,
-                high=self._num_categories,
-                size=(batch_size, seq_len) + self._feature_size,
-                generator=rng,
-            )
+    ) -> torch.Tensor:
+        return torch.randint(
+            low=0,
+            high=self._num_categories,
+            size=(batch_size, seq_len) + self._feature_size,
+            generator=rng,
         )

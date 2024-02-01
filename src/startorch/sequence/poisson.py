@@ -42,7 +42,7 @@ class PoissonSequenceGenerator(BaseSequenceGenerator):
       (rate): RandUniformSequenceGenerator(low=1.0, high=2.0, feature_size=(1,))
     )
     >>> generator.generate(seq_len=6, batch_size=2)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
@@ -119,7 +119,7 @@ class RandPoissonSequenceGenerator(BaseSequenceGenerator):
     >>> generator
     RandPoissonSequenceGenerator(rate=1.0, feature_size=(1,))
     >>> generator.generate(seq_len=6, batch_size=2)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """

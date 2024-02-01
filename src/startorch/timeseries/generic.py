@@ -57,6 +57,6 @@ class TimeSeriesGenerator(BaseTimeSeriesGenerator):
         self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
     ) -> dict[Hashable, torch.Tensor]:
         return {
-            key: generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).to_data()
+            key: generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
             for key, generator in self._sequences.items()
         }

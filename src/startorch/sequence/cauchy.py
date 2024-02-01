@@ -47,7 +47,7 @@ class CauchySequenceGenerator(BaseSequenceGenerator):
       (scale): RandUniformSequenceGenerator(low=1.0, high=2.0, feature_size=(1,))
     )
     >>> generator.generate(seq_len=6, batch_size=2)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
@@ -97,7 +97,7 @@ class RandCauchySequenceGenerator(BaseSequenceGenerator):
     >>> generator
     RandCauchySequenceGenerator(loc=0.0, scale=1.0, feature_size=(1,))
     >>> generator.generate(seq_len=6, batch_size=2)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
@@ -158,7 +158,7 @@ class RandTruncCauchySequenceGenerator(BaseSequenceGenerator):
     >>> generator
     RandTruncCauchySequenceGenerator(loc=0.0, scale=1.0, min_value=-5.0, max_value=5.0, feature_size=(1,))
     >>> generator.generate(seq_len=6, batch_size=2)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
@@ -239,7 +239,7 @@ class TruncCauchySequenceGenerator(BaseSequenceGenerator):
       (max_value): RandUniformSequenceGenerator(low=5.0, high=10.0, feature_size=(1,))
     )
     >>> generator.generate(seq_len=6, batch_size=2)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """

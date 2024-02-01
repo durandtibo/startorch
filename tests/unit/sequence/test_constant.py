@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 import torch
-from redcat import BatchedTensorSeq
+from batchtensor.tensor import select_along_seq
 
 from startorch.sequence import Constant, Full, RandUniform
 from startorch.utils.seed import get_torch_generator
@@ -26,18 +26,16 @@ def test_constant_generate(batch_size: int, seq_len: int, feature_size: int) -> 
     batch = Constant(RandUniform(feature_size=feature_size)).generate(
         batch_size=batch_size, seq_len=seq_len
     )
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
+    assert isinstance(batch, torch.Tensor)
     assert batch.data.shape == (batch_size, seq_len, feature_size)
     assert batch.data.dtype == torch.float
 
 
 def test_constant_generate_constant() -> None:
     batch = Constant(RandUniform(feature_size=3)).generate(batch_size=6, seq_len=4)
-    assert batch.select_along_seq(0).equal(batch.select_along_seq(1))
-    assert batch.select_along_seq(0).equal(batch.select_along_seq(2))
-    assert batch.select_along_seq(0).equal(batch.select_along_seq(3))
+    assert select_along_seq(batch, 0).equal(select_along_seq(batch, 1))
+    assert select_along_seq(batch, 0).equal(select_along_seq(batch, 2))
+    assert select_along_seq(batch, 0).equal(select_along_seq(batch, 3))
 
 
 def test_constant_generate_same_random_seed() -> None:
@@ -80,7 +78,7 @@ def test_full_generate_feature_size_default(batch_size: int, seq_len: int) -> No
     assert (
         Full(value=42.0)
         .generate(batch_size=batch_size, seq_len=seq_len)
-        .equal(BatchedTensorSeq(torch.full((batch_size, seq_len, 1), 42.0)))
+        .equal(torch.full((batch_size, seq_len, 1), 42.0))
     )
 
 
@@ -91,7 +89,7 @@ def test_full_generate_feature_size_int(batch_size: int, seq_len: int, feature_s
     assert (
         Full(value=42.0, feature_size=feature_size)
         .generate(batch_size=batch_size, seq_len=seq_len)
-        .equal(BatchedTensorSeq(torch.full((batch_size, seq_len, feature_size), 42.0)))
+        .equal(torch.full((batch_size, seq_len, feature_size), 42.0))
     )
 
 
@@ -101,7 +99,7 @@ def test_full_generate_feature_size_tuple(batch_size: int, seq_len: int) -> None
     assert (
         Full(value=42.0, feature_size=(3, 4))
         .generate(batch_size=batch_size, seq_len=seq_len)
-        .equal(BatchedTensorSeq(torch.full((batch_size, seq_len, 3, 4), 42.0)))
+        .equal(torch.full((batch_size, seq_len, 3, 4), 42.0))
     )
 
 
@@ -110,7 +108,7 @@ def test_full_generate_value(value: float) -> None:
     assert (
         Full(value=value, feature_size=1)
         .generate(batch_size=2, seq_len=4)
-        .equal(BatchedTensorSeq(torch.full((2, 4, 1), value)))
+        .equal(torch.full((2, 4, 1), value))
     )
 
 

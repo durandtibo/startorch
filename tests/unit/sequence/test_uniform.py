@@ -1,6 +1,8 @@
+from __future__ import annotations
+
 import pytest
 import torch
-from redcat import BatchedTensorSeq
+from coola import objects_are_allclose, objects_are_equal
 
 from startorch.sequence import (
     AsinhUniform,
@@ -39,9 +41,7 @@ def test_asinh_uniform_generate(batch_size: int, seq_len: int, feature_size: int
         low=RandUniform(low=-1000.0, high=-1.0, feature_size=feature_size),
         high=RandUniform(low=1.0, high=1000.0, feature_size=feature_size),
     ).generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
+    assert isinstance(batch, torch.Tensor)
     assert batch.data.shape == (batch_size, seq_len, feature_size)
     assert batch.data.dtype == torch.float
     assert batch.min() >= -1000.0
@@ -53,10 +53,8 @@ def test_asinh_uniform_generate_value_1() -> None:
         AsinhUniform(low=Full(1.0), high=Full(1.0))
         .generate(batch_size=2, seq_len=4)
         .allclose(
-            BatchedTensorSeq(
-                torch.tensor(
-                    [[[1.0], [1.0], [1.0], [1.0]], [[1.0], [1.0], [1.0], [1.0]]], dtype=torch.float
-                )
+            torch.tensor(
+                [[[1.0], [1.0], [1.0], [1.0]], [[1.0], [1.0], [1.0], [1.0]]], dtype=torch.float
             )
         )
     )
@@ -67,8 +65,9 @@ def test_asinh_uniform_generate_same_random_seed() -> None:
         low=RandUniform(low=-1000.0, high=-1.0),
         high=RandUniform(low=1.0, high=1000.0),
     )
-    assert generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1))
+    assert objects_are_equal(
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
     )
 
 
@@ -77,8 +76,9 @@ def test_asinh_uniform_generate_different_random_seeds() -> None:
         low=RandUniform(low=-1000.0, high=-1.0),
         high=RandUniform(low=1.0, high=1000.0),
     )
-    assert not generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(2))
+    assert not objects_are_equal(
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(2)),
     )
 
 
@@ -104,9 +104,7 @@ def test_log_uniform_generate(batch_size: int, seq_len: int, feature_size: int) 
         low=RandUniform(low=0.001, high=1.0, feature_size=feature_size),
         high=RandUniform(low=1.0, high=1000.0, feature_size=feature_size),
     ).generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
+    assert isinstance(batch, torch.Tensor)
     assert batch.data.shape == (batch_size, seq_len, feature_size)
     assert batch.data.dtype == torch.float
     assert batch.min() >= 0.001
@@ -118,10 +116,8 @@ def test_log_uniform_generate_value_1() -> None:
         LogUniform(low=Full(1.0), high=Full(1.0))
         .generate(batch_size=2, seq_len=4)
         .allclose(
-            BatchedTensorSeq(
-                torch.tensor(
-                    [[[1.0], [1.0], [1.0], [1.0]], [[1.0], [1.0], [1.0], [1.0]]], dtype=torch.float
-                )
+            torch.tensor(
+                [[[1.0], [1.0], [1.0], [1.0]], [[1.0], [1.0], [1.0], [1.0]]], dtype=torch.float
             )
         )
     )
@@ -132,8 +128,9 @@ def test_log_uniform_generate_same_random_seed() -> None:
         low=RandUniform(low=0.001, high=1.0),
         high=RandUniform(low=1.0, high=1000.0),
     )
-    assert generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1))
+    assert objects_are_equal(
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
     )
 
 
@@ -142,8 +139,9 @@ def test_log_uniform_generate_different_random_seeds() -> None:
         low=RandUniform(low=0.001, high=1.0),
         high=RandUniform(low=1.0, high=1000.0),
     )
-    assert not generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(2))
+    assert not objects_are_equal(
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(2)),
     )
 
 
@@ -183,9 +181,7 @@ def test_rand_asinh_uniform_generate_feature_size_default(batch_size: int, seq_l
     batch = RandAsinhUniform(low=-1000.0, high=1000.0).generate(
         batch_size=batch_size, seq_len=seq_len
     )
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
+    assert isinstance(batch, torch.Tensor)
     assert batch.data.shape == (batch_size, seq_len, 1)
     assert batch.data.dtype == torch.float
 
@@ -199,9 +195,7 @@ def test_rand_asinh_uniform_generate_feature_size_int(
     batch = RandAsinhUniform(low=-1000.0, high=1000.0, feature_size=feature_size).generate(
         batch_size=batch_size, seq_len=seq_len
     )
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
+    assert isinstance(batch, torch.Tensor)
     assert batch.data.shape == (batch_size, seq_len, feature_size)
     assert batch.data.dtype == torch.float
 
@@ -212,38 +206,33 @@ def test_rand_asinh_uniform_generate_feature_size_tuple(batch_size: int, seq_len
     batch = RandAsinhUniform(low=-1000.0, high=1000.0, feature_size=(3, 4)).generate(
         batch_size=batch_size, seq_len=seq_len
     )
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
+    assert isinstance(batch, torch.Tensor)
     assert batch.data.shape == (batch_size, seq_len, 3, 4)
     assert batch.data.dtype == torch.float
 
 
 def test_rand_asinh_uniform_value_1() -> None:
-    assert (
-        RandAsinhUniform(low=1.0, high=1.0)
-        .generate(batch_size=2, seq_len=4)
-        .allclose(
-            BatchedTensorSeq(
-                torch.tensor(
-                    [[[1.0], [1.0], [1.0], [1.0]], [[1.0], [1.0], [1.0], [1.0]]], dtype=torch.float
-                )
-            )
-        )
+    assert objects_are_allclose(
+        RandAsinhUniform(low=1.0, high=1.0).generate(batch_size=2, seq_len=4),
+        torch.tensor(
+            [[[1.0], [1.0], [1.0], [1.0]], [[1.0], [1.0], [1.0], [1.0]]], dtype=torch.float
+        ),
     )
 
 
 def test_rand_asinh_uniform_generate_same_random_seed() -> None:
     generator = RandAsinhUniform(low=-1000.0, high=1000.0)
-    assert generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1))
+    assert objects_are_equal(
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
     )
 
 
 def test_rand_asinh_uniform_generate_different_random_seeds() -> None:
     generator = RandAsinhUniform(low=-1000.0, high=1000.0)
-    assert not generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(2))
+    assert not objects_are_equal(
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(2)),
     )
 
 
@@ -275,9 +264,7 @@ def test_rand_int_incorrect_min_max() -> None:
 @pytest.mark.parametrize("seq_len", SIZES)
 def test_rand_int_generate_feature_size_default(batch_size: int, seq_len: int) -> None:
     batch = RandInt(low=5, high=20).generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
+    assert isinstance(batch, torch.Tensor)
     assert batch.data.shape == (batch_size, seq_len)
     assert batch.data.dtype == torch.long
 
@@ -291,9 +278,7 @@ def test_rand_int_generate_feature_size_int(
     batch = RandInt(low=5, high=20, feature_size=feature_size).generate(
         batch_size=batch_size, seq_len=seq_len
     )
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
+    assert isinstance(batch, torch.Tensor)
     assert batch.data.shape == (batch_size, seq_len, feature_size)
     assert batch.data.dtype == torch.long
 
@@ -304,9 +289,7 @@ def test_rand_int_generate_feature_size_tuple(batch_size: int, seq_len: int) -> 
     batch = RandInt(low=5, high=20, feature_size=(3, 4)).generate(
         batch_size=batch_size, seq_len=seq_len
     )
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
+    assert isinstance(batch, torch.Tensor)
     assert batch.data.shape == (batch_size, seq_len, 3, 4)
     assert batch.data.dtype == torch.long
 
@@ -320,24 +303,24 @@ def test_rand_int_generate_high(low: int, high: int) -> None:
 
 
 def test_rand_int_generate_high_1() -> None:
-    assert (
-        RandInt(low=1, high=2)
-        .generate(batch_size=2, seq_len=3)
-        .equal(BatchedTensorSeq(torch.ones(2, 3, dtype=torch.long)))
+    assert objects_are_equal(
+        RandInt(low=1, high=2).generate(batch_size=2, seq_len=3), torch.ones(2, 3, dtype=torch.long)
     )
 
 
 def test_rand_int_generate_same_random_seed() -> None:
     generator = RandInt(low=5, high=20)
-    assert generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1))
+    assert objects_are_equal(
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
     )
 
 
 def test_rand_int_generate_different_random_seeds() -> None:
     generator = RandInt(low=5, high=20)
-    assert not generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(2))
+    assert not objects_are_equal(
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(2)),
     )
 
 
@@ -375,9 +358,7 @@ def test_rand_log_uniform_feature_size_default() -> None:
 @pytest.mark.parametrize("seq_len", SIZES)
 def test_rand_log_uniform_generate_feature_size_default(batch_size: int, seq_len: int) -> None:
     batch = RandLogUniform(low=0.001, high=1000.0).generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
+    assert isinstance(batch, torch.Tensor)
     assert batch.data.shape == (batch_size, seq_len, 1)
     assert batch.data.dtype == torch.float
 
@@ -391,9 +372,7 @@ def test_rand_log_uniform_generate_feature_size_int(
     batch = RandLogUniform(low=0.001, high=1000.0, feature_size=feature_size).generate(
         batch_size=batch_size, seq_len=seq_len
     )
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
+    assert isinstance(batch, torch.Tensor)
     assert batch.data.shape == (batch_size, seq_len, feature_size)
     assert batch.data.dtype == torch.float
 
@@ -404,38 +383,33 @@ def test_rand_log_uniform_generate_feature_size_tuple(batch_size: int, seq_len: 
     batch = RandLogUniform(low=0.001, high=1000.0, feature_size=(3, 4)).generate(
         batch_size=batch_size, seq_len=seq_len
     )
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
+    assert isinstance(batch, torch.Tensor)
     assert batch.data.shape == (batch_size, seq_len, 3, 4)
     assert batch.data.dtype == torch.float
 
 
 def test_rand_log_uniform_value_1() -> None:
-    assert (
-        RandLogUniform(low=1.0, high=1.0)
-        .generate(batch_size=2, seq_len=4)
-        .allclose(
-            BatchedTensorSeq(
-                torch.tensor(
-                    [[[1.0], [1.0], [1.0], [1.0]], [[1.0], [1.0], [1.0], [1.0]]], dtype=torch.float
-                )
-            )
-        )
+    assert objects_are_equal(
+        RandLogUniform(low=1.0, high=1.0).generate(batch_size=2, seq_len=4),
+        torch.tensor(
+            [[[1.0], [1.0], [1.0], [1.0]], [[1.0], [1.0], [1.0], [1.0]]], dtype=torch.float
+        ),
     )
 
 
 def test_rand_log_uniform_generate_same_random_seed() -> None:
     generator = RandLogUniform(low=0.001, high=1000.0)
-    assert generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1))
+    assert objects_are_equal(
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
     )
 
 
 def test_rand_log_uniform_generate_different_random_seeds() -> None:
     generator = RandLogUniform(low=0.001, high=1000.0)
-    assert not generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(2))
+    assert not objects_are_equal(
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(2)),
     )
 
 
@@ -471,9 +445,7 @@ def test_rand_uniform_feature_size_default() -> None:
 @pytest.mark.parametrize("seq_len", SIZES)
 def test_rand_uniform_generate_feature_size_default(batch_size: int, seq_len: int) -> None:
     batch = RandUniform().generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
+    assert isinstance(batch, torch.Tensor)
     assert batch.data.shape == (batch_size, seq_len, 1)
     assert batch.data.dtype == torch.float
 
@@ -485,9 +457,7 @@ def test_rand_uniform_generate_feature_size_int(
     batch_size: int, seq_len: int, feature_size: int
 ) -> None:
     batch = RandUniform(feature_size=feature_size).generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
+    assert isinstance(batch, torch.Tensor)
     assert batch.data.shape == (batch_size, seq_len, feature_size)
     assert batch.data.dtype == torch.float
 
@@ -496,38 +466,33 @@ def test_rand_uniform_generate_feature_size_int(
 @pytest.mark.parametrize("seq_len", SIZES)
 def test_rand_uniform_generate_feature_size_tuple(batch_size: int, seq_len: int) -> None:
     batch = RandUniform(feature_size=(3, 4)).generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
+    assert isinstance(batch, torch.Tensor)
     assert batch.data.shape == (batch_size, seq_len, 3, 4)
     assert batch.data.dtype == torch.float
 
 
 def test_rand_uniform_value_1() -> None:
-    assert (
-        RandUniform(low=1, high=1)
-        .generate(batch_size=2, seq_len=4)
-        .allclose(
-            BatchedTensorSeq(
-                torch.tensor(
-                    [[[1.0], [1.0], [1.0], [1.0]], [[1.0], [1.0], [1.0], [1.0]]], dtype=torch.float
-                )
-            )
-        )
+    assert objects_are_allclose(
+        RandUniform(low=1, high=1).generate(batch_size=2, seq_len=4),
+        torch.tensor(
+            [[[1.0], [1.0], [1.0], [1.0]], [[1.0], [1.0], [1.0], [1.0]]], dtype=torch.float
+        ),
     )
 
 
 def test_rand_uniform_generate_same_random_seed() -> None:
     generator = RandUniform()
-    assert generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1))
+    assert objects_are_equal(
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
     )
 
 
 def test_rand_uniform_generate_different_random_seeds() -> None:
     generator = RandUniform()
-    assert not generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(2))
+    assert not objects_are_equal(
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(2)),
     )
 
 
@@ -553,9 +518,7 @@ def test_uniform_generate(batch_size: int, seq_len: int, feature_size: int) -> N
         low=RandUniform(low=-2.0, high=-1.0, feature_size=feature_size),
         high=RandUniform(low=1.0, high=2.0, feature_size=feature_size),
     ).generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
+    assert isinstance(batch, torch.Tensor)
     assert batch.data.shape == (batch_size, seq_len, feature_size)
     assert batch.data.dtype == torch.float
     assert batch.min() >= -2.0
@@ -563,28 +526,25 @@ def test_uniform_generate(batch_size: int, seq_len: int, feature_size: int) -> N
 
 
 def test_uniform_generate_value_1() -> None:
-    assert (
-        Uniform(low=Full(1.0), high=Full(1.0))
-        .generate(batch_size=2, seq_len=4)
-        .allclose(
-            BatchedTensorSeq(
-                torch.tensor(
-                    [[[1.0], [1.0], [1.0], [1.0]], [[1.0], [1.0], [1.0], [1.0]]], dtype=torch.float
-                )
-            )
-        )
+    assert objects_are_equal(
+        Uniform(low=Full(1.0), high=Full(1.0)).generate(batch_size=2, seq_len=4),
+        torch.tensor(
+            [[[1.0], [1.0], [1.0], [1.0]], [[1.0], [1.0], [1.0], [1.0]]], dtype=torch.float
+        ),
     )
 
 
 def test_uniform_generate_same_random_seed() -> None:
     generator = Uniform(low=RandUniform(low=-2.0, high=-1.0), high=RandUniform(low=1.0, high=2.0))
-    assert generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1))
+    assert objects_are_equal(
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
     )
 
 
 def test_uniform_generate_different_random_seeds() -> None:
     generator = Uniform(low=RandUniform(low=-2.0, high=-1.0), high=RandUniform(low=1.0, high=2.0))
-    assert not generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(2))
+    assert not objects_are_equal(
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(2)),
     )

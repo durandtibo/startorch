@@ -46,7 +46,7 @@ class HalfNormalSequenceGenerator(BaseSequenceGenerator):
       (std): RandUniformSequenceGenerator(low=1.0, high=2.0, feature_size=(1,))
     )
     >>> generator.generate(seq_len=6, batch_size=2)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
@@ -89,7 +89,7 @@ class RandHalfNormalSequenceGenerator(BaseSequenceGenerator):
     >>> generator
     RandHalfNormalSequenceGenerator(std=1.0, feature_size=(1,))
     >>> generator.generate(seq_len=6, batch_size=2)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
@@ -140,7 +140,7 @@ class RandTruncHalfNormalSequenceGenerator(BaseSequenceGenerator):
     >>> generator
     RandTruncHalfNormalSequenceGenerator(std=1.0, max_value=1.0, feature_size=(1,))
     >>> generator.generate(seq_len=6, batch_size=2)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
@@ -205,7 +205,7 @@ class TruncHalfNormalSequenceGenerator(BaseSequenceGenerator):
       (max_value): RandUniformSequenceGenerator(low=5.0, high=10.0, feature_size=(1,))
     )
     >>> generator.generate(seq_len=6, batch_size=2)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """

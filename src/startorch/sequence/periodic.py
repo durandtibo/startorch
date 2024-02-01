@@ -42,7 +42,7 @@ class PeriodicSequenceGenerator(BaseSequenceGenerator):
       (period): RandIntTensorGenerator(low=2, high=5)
     )
     >>> generator.generate(seq_len=10, batch_size=2)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """

@@ -7,8 +7,6 @@ __all__ = ["ArangeSequenceGenerator"]
 
 
 import torch
-from redcat import BatchedTensorSeq
-from torch import Generator
 
 from startorch.sequence.base import BaseSequenceGenerator
 from startorch.utils.conversion import to_tuple
@@ -30,7 +28,7 @@ class ArangeSequenceGenerator(BaseSequenceGenerator):
     ArangeSequenceGenerator(feature_size=())
     >>> generator.generate(seq_len=6, batch_size=2)
     tensor([[0, 1, 2, 3, 4, 5],
-            [0, 1, 2, 3, 4, 5]], batch_dim=0, seq_dim=1)
+            [0, 1, 2, 3, 4, 5]])
 
     ```
     """
@@ -43,9 +41,9 @@ class ArangeSequenceGenerator(BaseSequenceGenerator):
         return f"{self.__class__.__qualname__}(feature_size={self._feature_size})"
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
-        return BatchedTensorSeq(
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
+        return (
             torch.arange(0, seq_len)
             .view(1, seq_len, *((1,) * len(self._feature_size)))
             .repeat(batch_size, 1, *self._feature_size)

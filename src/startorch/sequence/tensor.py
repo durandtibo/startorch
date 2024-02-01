@@ -8,14 +8,13 @@ __all__ = ["TensorSequenceGenerator"]
 from typing import TYPE_CHECKING
 
 from coola.utils.format import str_indent, str_mapping
-from redcat import BatchedTensorSeq
 
 from startorch.sequence.base import BaseSequenceGenerator
 from startorch.tensor.base import BaseTensorGenerator, setup_tensor_generator
 from startorch.utils.conversion import to_tuple
 
 if TYPE_CHECKING:
-    from torch import Generator
+    import torch
 
 
 class TensorSequenceGenerator(BaseSequenceGenerator):
@@ -39,7 +38,7 @@ class TensorSequenceGenerator(BaseSequenceGenerator):
       (feature_size): ()
     )
     >>> generator.generate(seq_len=12, batch_size=4)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
@@ -58,8 +57,6 @@ class TensorSequenceGenerator(BaseSequenceGenerator):
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
-        return BatchedTensorSeq(
-            self._tensor.generate(size=(batch_size, seq_len) + self._feature_size, rng=rng)
-        )
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
+        return self._tensor.generate(size=(batch_size, seq_len) + self._feature_size, rng=rng)

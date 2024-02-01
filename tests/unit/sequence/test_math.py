@@ -3,7 +3,6 @@ from __future__ import annotations
 import pytest
 import torch
 from objectory import OBJECT_TARGET
-from redcat import BatchedTensorSeq
 
 from startorch.sequence import (
     Abs,
@@ -45,11 +44,9 @@ def test_abs_str() -> None:
 def test_abs_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     generator = Abs(RandNormal(feature_size=feature_size))
     batch = generator.generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, feature_size)
-    assert batch.data.dtype == torch.float
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, feature_size)
+    assert batch.dtype == torch.float
     assert batch.min() >= 0.0
 
 
@@ -57,11 +54,7 @@ def test_abs_generate_fixed_value() -> None:
     assert (
         Abs(Full(-1.0))
         .generate(4, 2)
-        .equal(
-            BatchedTensorSeq(
-                torch.tensor([[[1.0], [1.0], [1.0], [1.0]], [[1.0], [1.0], [1.0], [1.0]]])
-            )
-        )
+        .equal(torch.tensor([[[1.0], [1.0], [1.0], [1.0]], [[1.0], [1.0], [1.0], [1.0]]]))
     )
 
 
@@ -118,18 +111,16 @@ def test_add_sequences_empty() -> None:
 @pytest.mark.parametrize("seq_len", SIZES)
 def test_add_generate(batch_size: int, seq_len: int) -> None:
     batch = Add((RandUniform(), RandUniform())).generate(seq_len=seq_len, batch_size=batch_size)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, 1)
-    assert batch.data.dtype == torch.float
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, 1)
+    assert batch.dtype == torch.float
 
 
 def test_add_generate_fixed_values() -> None:
     assert (
         Add((Full(1.0), Full(2.0), Full(5.0)))
         .generate(seq_len=5, batch_size=2)
-        .equal(BatchedTensorSeq(torch.full((2, 5, 1), fill_value=8.0, dtype=torch.float)))
+        .equal(torch.full((2, 5, 1), fill_value=8.0, dtype=torch.float))
     )
 
 
@@ -163,11 +154,9 @@ def test_add_scalar_generate(batch_size: int, seq_len: int, feature_size: int) -
     batch = AddScalar(RandUniform(feature_size=feature_size), value=1.0).generate(
         batch_size=batch_size, seq_len=seq_len
     )
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, feature_size)
-    assert batch.data.dtype == torch.float
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, feature_size)
+    assert batch.dtype == torch.float
     assert batch.min() >= 1.0
     assert batch.max() < 2.0
 
@@ -176,11 +165,7 @@ def test_add_scalar_generate_2() -> None:
     assert (
         AddScalar(Full(1.0), 2.0)
         .generate(4, 2)
-        .equal(
-            BatchedTensorSeq(
-                torch.tensor([[[3.0], [3.0], [3.0], [3.0]], [[3.0], [3.0], [3.0], [3.0]]])
-            )
-        )
+        .equal(torch.tensor([[[3.0], [3.0], [3.0], [3.0]], [[3.0], [3.0], [3.0], [3.0]]]))
     )
 
 
@@ -188,11 +173,7 @@ def test_add_scalar_generate_3() -> None:
     assert (
         AddScalar(Full(1.0), -3.0)
         .generate(4, 2)
-        .equal(
-            BatchedTensorSeq(
-                torch.tensor([[[-2.0], [-2.0], [-2.0], [-2.0]], [[-2.0], [-2.0], [-2.0], [-2.0]]])
-            )
-        )
+        .equal(torch.tensor([[[-2.0], [-2.0], [-2.0], [-2.0]], [[-2.0], [-2.0], [-2.0], [-2.0]]]))
     )
 
 
@@ -241,11 +222,9 @@ def test_clamp_generate(batch_size: int, seq_len: int, feature_size: int) -> Non
     batch = Clamp(RandNormal(feature_size=feature_size), min=-2, max=2).generate(
         batch_size=batch_size, seq_len=seq_len
     )
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, feature_size)
-    assert batch.data.dtype == torch.float
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, feature_size)
+    assert batch.dtype == torch.float
 
 
 @pytest.mark.parametrize("min_value", [-1.0, -2.0])
@@ -312,22 +291,16 @@ def test_cumsum_generate(batch_size: int, seq_len: int, feature_size: int) -> No
     batch = Cumsum(RandUniform(feature_size=feature_size)).generate(
         batch_size=batch_size, seq_len=seq_len
     )
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, feature_size)
-    assert batch.data.dtype == torch.float
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, feature_size)
+    assert batch.dtype == torch.float
 
 
 def test_cumsum_generate_fixed_value() -> None:
     assert (
         Cumsum(Full(1.0))
         .generate(4, 2)
-        .equal(
-            BatchedTensorSeq(
-                torch.tensor([[[1.0], [2.0], [3.0], [4.0]], [[1.0], [2.0], [3.0], [4.0]]])
-            )
-        )
+        .equal(torch.tensor([[[1.0], [2.0], [3.0], [4.0]], [[1.0], [2.0], [3.0], [4.0]]]))
     )
 
 
@@ -363,11 +336,9 @@ def test_div_generate(batch_size: int, seq_len: int) -> None:
         dividend=RandUniform(low=0.1, high=2.0),
         divisor=RandUniform(low=0.1, high=2.0),
     ).generate(seq_len=seq_len, batch_size=batch_size)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, 1)
-    assert batch.data.dtype == torch.float
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, 1)
+    assert batch.dtype == torch.float
 
 
 @pytest.mark.parametrize("batch_size", SIZES)
@@ -376,7 +347,7 @@ def test_div_generate_rounding_mode_default(batch_size: int, seq_len: int) -> No
     assert (
         Div(dividend=Full(3.0), divisor=Full(2.0))
         .generate(seq_len=seq_len, batch_size=batch_size)
-        .equal(BatchedTensorSeq(torch.full((batch_size, seq_len, 1), 1.5)))
+        .equal(torch.full((batch_size, seq_len, 1), 1.5))
     )
 
 
@@ -386,7 +357,7 @@ def test_div_generate_rounding_mode_floor(batch_size: int, seq_len: int) -> None
     assert (
         Div(dividend=Full(3.0), divisor=Full(2.0), rounding_mode="floor")
         .generate(seq_len=seq_len, batch_size=batch_size)
-        .equal(BatchedTensorSeq(torch.ones(batch_size, seq_len, 1)))
+        .equal(torch.ones(batch_size, seq_len, 1))
     )
 
 
@@ -426,7 +397,7 @@ def test_exp_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     assert (
         Exp(Full(value=0.0, feature_size=feature_size))
         .generate(batch_size=batch_size, seq_len=seq_len)
-        .equal(BatchedTensorSeq(torch.ones(batch_size, seq_len, feature_size, dtype=torch.float)))
+        .equal(torch.ones(batch_size, seq_len, feature_size, dtype=torch.float))
     )
 
 
@@ -468,11 +439,7 @@ def test_fmod_generate_divisor_generator(batch_size: int, seq_len: int, feature_
             divisor=Full(10.0, feature_size=feature_size),
         )
         .generate(seq_len=seq_len, batch_size=batch_size)
-        .equal(
-            BatchedTensorSeq(
-                torch.full((batch_size, seq_len, feature_size), 5.0, dtype=torch.float)
-            )
-        )
+        .equal(torch.full((batch_size, seq_len, feature_size), 5.0, dtype=torch.float))
     )
 
 
@@ -483,11 +450,7 @@ def test_fmod_generate_divisor_number(batch_size: int, seq_len: int, feature_siz
     assert (
         Fmod(dividend=Full(5.0, feature_size=feature_size), divisor=10.0)
         .generate(seq_len=seq_len, batch_size=batch_size)
-        .equal(
-            BatchedTensorSeq(
-                torch.full((batch_size, seq_len, feature_size), 5.0, dtype=torch.float)
-            )
-        )
+        .equal(torch.full((batch_size, seq_len, feature_size), 5.0, dtype=torch.float))
     )
 
 
@@ -525,7 +488,7 @@ def test_log_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     assert (
         Log(Full(value=1.0, feature_size=feature_size))
         .generate(batch_size=batch_size, seq_len=seq_len)
-        .equal(BatchedTensorSeq(torch.zeros(batch_size, seq_len, feature_size, dtype=torch.float)))
+        .equal(torch.zeros(batch_size, seq_len, feature_size, dtype=torch.float))
     )
 
 
@@ -582,18 +545,16 @@ def test_mul_sequences_empty() -> None:
 @pytest.mark.parametrize("seq_len", SIZES)
 def test_mul_generate(batch_size: int, seq_len: int) -> None:
     batch = Mul((RandUniform(), RandUniform())).generate(seq_len=seq_len, batch_size=batch_size)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, 1)
-    assert batch.data.dtype == torch.float
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, 1)
+    assert batch.dtype == torch.float
 
 
 def test_mul_generate_weight() -> None:
     assert (
         Mul((Full(1.0), Full(2.0), Full(5.0)))
         .generate(seq_len=5, batch_size=2)
-        .equal(BatchedTensorSeq(torch.full((2, 5, 1), fill_value=10.0, dtype=torch.float)))
+        .equal(torch.full((2, 5, 1), fill_value=10.0, dtype=torch.float))
     )
 
 
@@ -627,11 +588,9 @@ def test_mul_scalar_generate(batch_size: int, seq_len: int, feature_size: int) -
     batch = MulScalar(RandUniform(feature_size=feature_size), value=2.0).generate(
         batch_size=batch_size, seq_len=seq_len
     )
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, feature_size)
-    assert batch.data.dtype == torch.float
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, feature_size)
+    assert batch.dtype == torch.float
     assert batch.min() >= 0.0
     assert batch.max() < 2.0
 
@@ -640,11 +599,7 @@ def test_mul_scalar_generate_2() -> None:
     assert (
         MulScalar(Full(1.0), 2.0)
         .generate(4, 2)
-        .equal(
-            BatchedTensorSeq(
-                torch.tensor([[[2.0], [2.0], [2.0], [2.0]], [[2.0], [2.0], [2.0], [2.0]]])
-            )
-        )
+        .equal(torch.tensor([[[2.0], [2.0], [2.0], [2.0]], [[2.0], [2.0], [2.0], [2.0]]]))
     )
 
 
@@ -652,11 +607,7 @@ def test_mul_scalar_generate_3() -> None:
     assert (
         MulScalar(Full(1.0), -3.0)
         .generate(4, 2)
-        .equal(
-            BatchedTensorSeq(
-                torch.tensor([[[-3.0], [-3.0], [-3.0], [-3.0]], [[-3.0], [-3.0], [-3.0], [-3.0]]])
-            )
-        )
+        .equal(torch.tensor([[[-3.0], [-3.0], [-3.0], [-3.0]], [[-3.0], [-3.0], [-3.0], [-3.0]]]))
     )
 
 
@@ -689,22 +640,16 @@ def test_neg_str() -> None:
 def test_neg_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     generator = Neg(RandUniform(feature_size=feature_size))
     batch = generator.generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, feature_size)
-    assert batch.data.dtype == torch.float
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, feature_size)
+    assert batch.dtype == torch.float
 
 
 def test_neg_generate_fixed_value() -> None:
     assert (
         Neg(Full(1.0))
         .generate(4, 2)
-        .equal(
-            BatchedTensorSeq(
-                torch.tensor([[[-1.0], [-1.0], [-1.0], [-1.0]], [[-1.0], [-1.0], [-1.0], [-1.0]]])
-            )
-        )
+        .equal(torch.tensor([[[-1.0], [-1.0], [-1.0], [-1.0]], [[-1.0], [-1.0], [-1.0], [-1.0]]]))
     )
 
 
@@ -738,11 +683,7 @@ def test_sqrt_generate(batch_size: int, seq_len: int, feature_size: int) -> None
     assert (
         Sqrt(Full(value=4.0, feature_size=feature_size))
         .generate(batch_size=batch_size, seq_len=seq_len)
-        .equal(
-            BatchedTensorSeq(
-                torch.full((batch_size, seq_len, feature_size), 2.0, dtype=torch.float)
-            )
-        )
+        .equal(torch.full((batch_size, seq_len, feature_size), 2.0, dtype=torch.float))
     )
 
 
@@ -777,11 +718,9 @@ def test_sub_generate(batch_size: int, seq_len: int) -> None:
     batch = Sub(sequence1=RandUniform(), sequence2=RandUniform()).generate(
         seq_len=seq_len, batch_size=batch_size
     )
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, 1)
-    assert batch.data.dtype == torch.float
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, 1)
+    assert batch.dtype == torch.float
 
 
 def test_sub_generate_same_random_seed() -> None:

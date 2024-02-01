@@ -47,7 +47,7 @@ class Cat2SequenceGenerator(BaseSequenceGenerator):
       (changepoint): RandIntTensorGenerator(low=0, high=12)
     )
     >>> generator.generate(seq_len=12, batch_size=4)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """

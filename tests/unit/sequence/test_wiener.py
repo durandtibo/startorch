@@ -4,7 +4,7 @@ from unittest.mock import patch
 
 import pytest
 import torch
-from redcat import BatchedTensorSeq
+from coola import objects_are_equal
 
 from startorch.sequence import RandWienerProcess
 from startorch.sequence.wiener import wiener_process
@@ -37,24 +37,24 @@ def test_rand_wiener_process_incorrect_min_max_value(step_size: float) -> None:
 @pytest.mark.parametrize("seq_len", SIZES)
 def test_rand_wiener_process_generate(batch_size: int, seq_len: int) -> None:
     batch = RandWienerProcess().generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
+    assert isinstance(batch, torch.Tensor)
     assert batch.data.shape == (batch_size, seq_len, 1)
     assert batch.data.dtype == torch.float
 
 
 def test_rand_wiener_process_generate_same_random_seed() -> None:
     generator = RandWienerProcess()
-    assert generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1))
+    assert objects_are_equal(
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
     )
 
 
 def test_rand_wiener_process_generate_different_random_seeds() -> None:
     generator = RandWienerProcess()
-    assert not generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(2))
+    assert not objects_are_equal(
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(2)),
     )
 
 
