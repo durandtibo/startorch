@@ -4,16 +4,18 @@ from __future__ import annotations
 
 __all__ = ["TimeSeriesGenerator"]
 
+
 from typing import TYPE_CHECKING
 
 from coola.utils import str_indent, str_mapping
-from redcat import BatchDict
 
 from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_generator
 from startorch.timeseries.base import BaseTimeSeriesGenerator
 
 if TYPE_CHECKING:
-    from torch import Generator
+    from collections.abc import Hashable
+
+    import torch
 
 
 class TimeSeriesGenerator(BaseTimeSeriesGenerator):
@@ -36,10 +38,7 @@ class TimeSeriesGenerator(BaseTimeSeriesGenerator):
       (time): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
     )
     >>> generator.generate(seq_len=12, batch_size=4)
-    BatchDict(
-      (value): tensor([[...]], batch_dim=0, seq_dim=1)
-      (time): tensor([[...]], batch_dim=0, seq_dim=1)
-    )
+    {'value': tensor([[...]]), 'time': tensor([[...]])}
 
     ```
     """
@@ -55,11 +54,9 @@ class TimeSeriesGenerator(BaseTimeSeriesGenerator):
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchDict:
-        return BatchDict(
-            {
-                key: generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
-                for key, generator in self._sequences.items()
-            }
-        )
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> dict[Hashable, torch.Tensor]:
+        return {
+            key: generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).to_data()
+            for key, generator in self._sequences.items()
+        }

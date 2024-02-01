@@ -6,20 +6,11 @@ __all__ = ["mix2sequences"]
 
 from typing import TYPE_CHECKING
 
-from redcat.utils.common import (
-    check_batch_dims,
-    check_seq_dims,
-    get_batch_dims,
-    get_seq_dims,
-)
-
 if TYPE_CHECKING:
-    from redcat import BatchedTensorSeq
+    import torch
 
 
-def mix2sequences(
-    x: BatchedTensorSeq, y: BatchedTensorSeq
-) -> tuple[BatchedTensorSeq, BatchedTensorSeq]:
+def mix2sequences(x: torch.Tensor, y: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
     r"""Mix the values of two batches along the sequence dimension.
 
     If the input batches are
@@ -40,37 +31,20 @@ def mix2sequences(
 
     ```pycon
     >>> import torch
-    >>> from redcat import BatchedTensorSeq
     >>> from startorch.timeseries.utils import mix2sequences
     >>> mix2sequences(
-    ...     BatchedTensorSeq(torch.arange(10).view(2, 5)),
-    ...     BatchedTensorSeq(torch.arange(10, 20).view(2, 5)),
+    ...     torch.arange(10).view(2, 5),
+    ...     torch.arange(10, 20).view(2, 5),
     ... )
-    (tensor([[ 0, 11,  2, 13,  4], [ 5, 16,  7, 18,  9]], batch_dim=0, seq_dim=1),
-     tensor([[10,  1, 12,  3, 14], [15,  6, 17,  8, 19]], batch_dim=0, seq_dim=1))
+    (tensor([[ 0, 11,  2, 13,  4], [ 5, 16,  7, 18,  9]]),
+     tensor([[10,  1, 12,  3, 14], [15,  6, 17,  8, 19]]))
 
     ```
     """
-    check_batch_dims(get_batch_dims([x, y]))
-    check_seq_dims(get_seq_dims([x, y]))
     if x.shape != y.shape:
         msg = f"x and y shapes do not match: {x.shape} vs {y.shape}"
         raise RuntimeError(msg)
-    t = x
-    seq_dim = x.seq_dim
-    if seq_dim >= 2:
-        x = x.align_to_seq_batch()
-        y = y.align_to_seq_batch()
     z = x.clone()
-    if seq_dim == 0:
-        x[1::2] = y[1::2]
-        y[1::2] = z[1::2]
-    elif seq_dim == 1:
-        x[:, 1::2] = y[:, 1::2]
-        y[:, 1::2] = z[:, 1::2]
-    else:
-        x[1::2] = y[1::2]
-        y[1::2] = z[1::2]
-        x = x.align_as(t)
-        y = y.align_as(t)
+    x[:, 1::2] = y[:, 1::2]
+    y[:, 1::2] = z[:, 1::2]
     return x, y

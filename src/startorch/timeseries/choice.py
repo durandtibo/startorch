@@ -18,10 +18,7 @@ from startorch.utils.format import str_weighted_modules
 from startorch.utils.weight import prepare_weighted_generators
 
 if TYPE_CHECKING:
-    from collections.abc import Sequence
-
-    from redcat import BatchDict
-    from torch import Generator
+    from collections.abc import Hashable, Sequence
 
 
 class MultinomialChoiceTimeSeriesGenerator(BaseTimeSeriesGenerator):
@@ -76,10 +73,7 @@ class MultinomialChoiceTimeSeriesGenerator(BaseTimeSeriesGenerator):
         )
     )
     >>> generator.generate(seq_len=12, batch_size=4)
-    BatchDict(
-      (value): tensor([[...]], batch_dim=0, seq_dim=1)
-      (time): tensor([[...]], batch_dim=0, seq_dim=1)
-    )
+    {'value': tensor([[...]]), 'time': tensor([[...]])}
 
     ```
     """
@@ -95,7 +89,7 @@ class MultinomialChoiceTimeSeriesGenerator(BaseTimeSeriesGenerator):
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchDict:
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> dict[Hashable, torch.Tensor]:
         index = torch.multinomial(self._weights, num_samples=1, generator=rng).item()
         return self._generators[index].generate(seq_len=seq_len, batch_size=batch_size, rng=rng)

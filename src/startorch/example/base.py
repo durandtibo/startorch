@@ -21,7 +21,6 @@ if TYPE_CHECKING:
     from collections.abc import Hashable
 
     import torch
-    from redcat import BatchDict
 
 logger = logging.getLogger(__name__)
 
@@ -48,7 +47,7 @@ class BaseExampleGenerator(Generic[T], ABC, metaclass=AbstractFactory):
     @abstractmethod
     def generate(
         self, batch_size: int = 1, rng: torch.Generator | None = None
-    ) -> dict[Hashable, torch.Tensor] | BatchDict[T]:
+    ) -> dict[Hashable, torch.Tensor]:
         r"""Generate a batch of examples.
 
         Args:

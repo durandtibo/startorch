@@ -12,12 +12,12 @@ __all__ = [
 from typing import TYPE_CHECKING
 
 import torch
-from redcat.utils.tensor import to_tensor
 from torch import Generator, Tensor
 
 from startorch import constants as ct
 from startorch.example.base import BaseExampleGenerator
 from startorch.random import rand_normal, rand_uniform
+from startorch.utils.conversion import to_tensor
 from startorch.utils.seed import get_torch_generator
 from startorch.utils.validation import check_num_examples, check_std
 

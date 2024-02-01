@@ -18,8 +18,9 @@ from objectory.utils import is_object_config
 from startorch.utils.format import str_target_object
 
 if TYPE_CHECKING:
-    from redcat import BatchDict
-    from torch import Generator
+    from collections.abc import Hashable
+
+    import torch
 
 logger = logging.getLogger(__name__)
 
@@ -40,18 +41,15 @@ class BaseTimeSeriesGenerator(ABC, metaclass=AbstractFactory):
       (time): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
     )
     >>> generator.generate(seq_len=12, batch_size=4)
-    BatchDict(
-      (value): tensor([[...]], batch_dim=0, seq_dim=1)
-      (time): tensor([[...]], batch_dim=0, seq_dim=1)
-    )
+    {'value': tensor([[...]]), 'time': tensor([[...]])}
 
     ```
     """
 
     @abstractmethod
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchDict:
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> dict[Hashable, torch.Tensor]:
         r"""Generate a time series.
 
         Args:
@@ -60,7 +58,7 @@ class BaseTimeSeriesGenerator(ABC, metaclass=AbstractFactory):
             rng: Specifies an optional random number generator.
 
         Returns:
-            ``BatchDict``: A batch of time series.
+            A batch of time series.
 
         Example usage:
 
@@ -70,10 +68,7 @@ class BaseTimeSeriesGenerator(ABC, metaclass=AbstractFactory):
         >>> from startorch.timeseries import TimeSeries
         >>> generator = TimeSeries({"value": RandUniform(), "time": RandUniform()})
         >>> generator.generate(seq_len=12, batch_size=4)
-        BatchDict(
-          (value): tensor([[...]], batch_dim=0, seq_dim=1)
-          (time): tensor([[...]], batch_dim=0, seq_dim=1)
-        )
+        {'value': tensor([[...]]), 'time': tensor([[...]])}
 
         ```
         """

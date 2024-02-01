@@ -6,6 +6,7 @@ __all__ = ["MergeTimeSeriesGenerator"]
 
 from typing import TYPE_CHECKING
 
+from batchtensor.nested import slice_along_seq
 from coola.utils import str_indent, str_sequence
 
 from startorch import constants as ct
@@ -16,10 +17,9 @@ from startorch.timeseries.base import (
 from startorch.timeseries.utils import merge_timeseries_by_time
 
 if TYPE_CHECKING:
-    from collections.abc import Sequence
+    from collections.abc import Hashable, Sequence
 
-    from redcat import BatchDict
-    from torch import Generator
+    import torch
 
 
 class MergeTimeSeriesGenerator(BaseTimeSeriesGenerator):
@@ -59,10 +59,7 @@ class MergeTimeSeriesGenerator(BaseTimeSeriesGenerator):
     )
     >>> batch = generator.generate(seq_len=12, batch_size=10)
     >>> batch
-    BatchDict(
-      (value): tensor([[...]], batch_dim=0, seq_dim=1)
-      (time): tensor([[...]], batch_dim=0, seq_dim=1)
-    )
+    {'value': tensor([[...]]), 'time': tensor([[...]])}
 
     ```
     """
@@ -79,12 +76,11 @@ class MergeTimeSeriesGenerator(BaseTimeSeriesGenerator):
         return f"{self.__class__.__qualname__}(\n  (time_key): {self._time_key}\n  {args}\n)"
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchDict:
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> dict[Hashable, torch.Tensor]:
         timeseries = [
             generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
             for generator in self._generators
         ]
-        return merge_timeseries_by_time(timeseries, time_key=self._time_key).slice_along_seq(
-            stop=seq_len
-        )
+        data = merge_timeseries_by_time(timeseries, time_key=self._time_key)
+        return slice_along_seq(data, stop=seq_len)
