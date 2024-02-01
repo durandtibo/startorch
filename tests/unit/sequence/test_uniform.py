@@ -42,8 +42,8 @@ def test_asinh_uniform_generate(batch_size: int, seq_len: int, feature_size: int
         high=RandUniform(low=1.0, high=1000.0, feature_size=feature_size),
     ).generate(batch_size=batch_size, seq_len=seq_len)
     assert isinstance(batch, torch.Tensor)
-    assert batch.data.shape == (batch_size, seq_len, feature_size)
-    assert batch.data.dtype == torch.float
+    assert batch.shape == (batch_size, seq_len, feature_size)
+    assert batch.dtype == torch.float
     assert batch.min() >= -1000.0
     assert batch.max() < 1000.0
 
@@ -105,8 +105,8 @@ def test_log_uniform_generate(batch_size: int, seq_len: int, feature_size: int) 
         high=RandUniform(low=1.0, high=1000.0, feature_size=feature_size),
     ).generate(batch_size=batch_size, seq_len=seq_len)
     assert isinstance(batch, torch.Tensor)
-    assert batch.data.shape == (batch_size, seq_len, feature_size)
-    assert batch.data.dtype == torch.float
+    assert batch.shape == (batch_size, seq_len, feature_size)
+    assert batch.dtype == torch.float
     assert batch.min() >= 0.001
     assert batch.max() < 1000.0
 
@@ -182,8 +182,8 @@ def test_rand_asinh_uniform_generate_feature_size_default(batch_size: int, seq_l
         batch_size=batch_size, seq_len=seq_len
     )
     assert isinstance(batch, torch.Tensor)
-    assert batch.data.shape == (batch_size, seq_len, 1)
-    assert batch.data.dtype == torch.float
+    assert batch.shape == (batch_size, seq_len, 1)
+    assert batch.dtype == torch.float
 
 
 @pytest.mark.parametrize("batch_size", SIZES)
@@ -196,8 +196,8 @@ def test_rand_asinh_uniform_generate_feature_size_int(
         batch_size=batch_size, seq_len=seq_len
     )
     assert isinstance(batch, torch.Tensor)
-    assert batch.data.shape == (batch_size, seq_len, feature_size)
-    assert batch.data.dtype == torch.float
+    assert batch.shape == (batch_size, seq_len, feature_size)
+    assert batch.dtype == torch.float
 
 
 @pytest.mark.parametrize("batch_size", SIZES)
@@ -207,8 +207,8 @@ def test_rand_asinh_uniform_generate_feature_size_tuple(batch_size: int, seq_len
         batch_size=batch_size, seq_len=seq_len
     )
     assert isinstance(batch, torch.Tensor)
-    assert batch.data.shape == (batch_size, seq_len, 3, 4)
-    assert batch.data.dtype == torch.float
+    assert batch.shape == (batch_size, seq_len, 3, 4)
+    assert batch.dtype == torch.float
 
 
 def test_rand_asinh_uniform_value_1() -> None:
@@ -265,8 +265,8 @@ def test_rand_int_incorrect_min_max() -> None:
 def test_rand_int_generate_feature_size_default(batch_size: int, seq_len: int) -> None:
     batch = RandInt(low=5, high=20).generate(batch_size=batch_size, seq_len=seq_len)
     assert isinstance(batch, torch.Tensor)
-    assert batch.data.shape == (batch_size, seq_len)
-    assert batch.data.dtype == torch.long
+    assert batch.shape == (batch_size, seq_len)
+    assert batch.dtype == torch.long
 
 
 @pytest.mark.parametrize("batch_size", SIZES)
@@ -279,8 +279,8 @@ def test_rand_int_generate_feature_size_int(
         batch_size=batch_size, seq_len=seq_len
     )
     assert isinstance(batch, torch.Tensor)
-    assert batch.data.shape == (batch_size, seq_len, feature_size)
-    assert batch.data.dtype == torch.long
+    assert batch.shape == (batch_size, seq_len, feature_size)
+    assert batch.dtype == torch.long
 
 
 @pytest.mark.parametrize("batch_size", SIZES)
@@ -290,8 +290,8 @@ def test_rand_int_generate_feature_size_tuple(batch_size: int, seq_len: int) -> 
         batch_size=batch_size, seq_len=seq_len
     )
     assert isinstance(batch, torch.Tensor)
-    assert batch.data.shape == (batch_size, seq_len, 3, 4)
-    assert batch.data.dtype == torch.long
+    assert batch.shape == (batch_size, seq_len, 3, 4)
+    assert batch.dtype == torch.long
 
 
 @pytest.mark.parametrize("low", [1, 5])
@@ -359,8 +359,8 @@ def test_rand_log_uniform_feature_size_default() -> None:
 def test_rand_log_uniform_generate_feature_size_default(batch_size: int, seq_len: int) -> None:
     batch = RandLogUniform(low=0.001, high=1000.0).generate(batch_size=batch_size, seq_len=seq_len)
     assert isinstance(batch, torch.Tensor)
-    assert batch.data.shape == (batch_size, seq_len, 1)
-    assert batch.data.dtype == torch.float
+    assert batch.shape == (batch_size, seq_len, 1)
+    assert batch.dtype == torch.float
 
 
 @pytest.mark.parametrize("batch_size", SIZES)
@@ -373,8 +373,8 @@ def test_rand_log_uniform_generate_feature_size_int(
         batch_size=batch_size, seq_len=seq_len
     )
     assert isinstance(batch, torch.Tensor)
-    assert batch.data.shape == (batch_size, seq_len, feature_size)
-    assert batch.data.dtype == torch.float
+    assert batch.shape == (batch_size, seq_len, feature_size)
+    assert batch.dtype == torch.float
 
 
 @pytest.mark.parametrize("batch_size", SIZES)
@@ -384,8 +384,8 @@ def test_rand_log_uniform_generate_feature_size_tuple(batch_size: int, seq_len: 
         batch_size=batch_size, seq_len=seq_len
     )
     assert isinstance(batch, torch.Tensor)
-    assert batch.data.shape == (batch_size, seq_len, 3, 4)
-    assert batch.data.dtype == torch.float
+    assert batch.shape == (batch_size, seq_len, 3, 4)
+    assert batch.dtype == torch.float
 
 
 def test_rand_log_uniform_value_1() -> None:
@@ -446,8 +446,8 @@ def test_rand_uniform_feature_size_default() -> None:
 def test_rand_uniform_generate_feature_size_default(batch_size: int, seq_len: int) -> None:
     batch = RandUniform().generate(batch_size=batch_size, seq_len=seq_len)
     assert isinstance(batch, torch.Tensor)
-    assert batch.data.shape == (batch_size, seq_len, 1)
-    assert batch.data.dtype == torch.float
+    assert batch.shape == (batch_size, seq_len, 1)
+    assert batch.dtype == torch.float
 
 
 @pytest.mark.parametrize("batch_size", SIZES)
@@ -458,8 +458,8 @@ def test_rand_uniform_generate_feature_size_int(
 ) -> None:
     batch = RandUniform(feature_size=feature_size).generate(batch_size=batch_size, seq_len=seq_len)
     assert isinstance(batch, torch.Tensor)
-    assert batch.data.shape == (batch_size, seq_len, feature_size)
-    assert batch.data.dtype == torch.float
+    assert batch.shape == (batch_size, seq_len, feature_size)
+    assert batch.dtype == torch.float
 
 
 @pytest.mark.parametrize("batch_size", SIZES)
@@ -467,8 +467,8 @@ def test_rand_uniform_generate_feature_size_int(
 def test_rand_uniform_generate_feature_size_tuple(batch_size: int, seq_len: int) -> None:
     batch = RandUniform(feature_size=(3, 4)).generate(batch_size=batch_size, seq_len=seq_len)
     assert isinstance(batch, torch.Tensor)
-    assert batch.data.shape == (batch_size, seq_len, 3, 4)
-    assert batch.data.dtype == torch.float
+    assert batch.shape == (batch_size, seq_len, 3, 4)
+    assert batch.dtype == torch.float
 
 
 def test_rand_uniform_value_1() -> None:
@@ -519,8 +519,8 @@ def test_uniform_generate(batch_size: int, seq_len: int, feature_size: int) -> N
         high=RandUniform(low=1.0, high=2.0, feature_size=feature_size),
     ).generate(batch_size=batch_size, seq_len=seq_len)
     assert isinstance(batch, torch.Tensor)
-    assert batch.data.shape == (batch_size, seq_len, feature_size)
-    assert batch.data.dtype == torch.float
+    assert batch.shape == (batch_size, seq_len, feature_size)
+    assert batch.dtype == torch.float
     assert batch.min() >= -2.0
     assert batch.max() < 2.0
 

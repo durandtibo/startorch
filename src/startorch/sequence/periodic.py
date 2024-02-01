@@ -8,6 +8,7 @@ __all__ = ["PeriodicSequenceGenerator"]
 import math
 from typing import TYPE_CHECKING
 
+from batchtensor.tensor import repeat_along_seq, slice_along_seq
 from coola.utils import str_indent, str_mapping
 
 from startorch.periodic.sequence.base import BasePeriodicSequenceGenerator
@@ -15,8 +16,7 @@ from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_genera
 from startorch.tensor.base import BaseTensorGenerator, setup_tensor_generator
 
 if TYPE_CHECKING:
-    from redcat import BatchedTensorSeq
-    from torch import Generator
+    import torch
 
 
 class PeriodicSequenceGenerator(BaseSequenceGenerator):
@@ -61,15 +61,13 @@ class PeriodicSequenceGenerator(BaseSequenceGenerator):
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
         period = int(self._period.generate((1,), rng=rng).item())
         if isinstance(self._sequence, BasePeriodicSequenceGenerator):
             return self._sequence.generate(
                 seq_len=seq_len, period=period, batch_size=batch_size, rng=rng
             )
-        return (
-            self._sequence.generate(seq_len=period, batch_size=batch_size, rng=rng)
-            .repeat_along_seq(math.ceil(seq_len / period))
-            .slice_along_seq(stop=seq_len)
-        )
+        sequence = self._sequence.generate(seq_len=period, batch_size=batch_size, rng=rng)
+        sequence = repeat_along_seq(sequence, math.ceil(seq_len / period))
+        return slice_along_seq(sequence, stop=seq_len)

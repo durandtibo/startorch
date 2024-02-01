@@ -64,8 +64,8 @@ def test_long_generate(batch_size: int, seq_len: int) -> None:
     assert isinstance(batch, BatchedTensorSeq)
     assert batch.batch_size == batch_size
     assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, 1)
-    assert batch.data.dtype == torch.long
+    assert batch.shape == (batch_size, seq_len, 1)
+    assert batch.dtype == torch.long
 
 
 def test_long_generate_same_random_seed() -> None:

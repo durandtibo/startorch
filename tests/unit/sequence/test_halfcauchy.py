@@ -4,7 +4,6 @@ from unittest.mock import Mock, patch
 
 import pytest
 import torch
-from redcat import BatchedTensorSeq
 
 from startorch.sequence import (
     HalfCauchy,
@@ -36,11 +35,9 @@ def test_half_cauchy_generate(batch_size: int, seq_len: int, feature_size: int) 
     batch = HalfCauchy(scale=RandUniform(low=1.0, high=2.0, feature_size=feature_size)).generate(
         batch_size=batch_size, seq_len=seq_len
     )
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, feature_size)
-    assert batch.data.dtype == torch.float
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, feature_size)
+    assert batch.dtype == torch.float
 
 
 def test_half_cauchy_generate_mock() -> None:
@@ -93,11 +90,9 @@ def test_rand_half_cauchy_feature_size_default() -> None:
 @pytest.mark.parametrize("seq_len", SIZES)
 def test_rand_half_cauchy_generate_feature_size_default(batch_size: int, seq_len: int) -> None:
     batch = RandHalfCauchy().generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, 1)
-    assert batch.data.dtype == torch.float
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, 1)
+    assert batch.dtype == torch.float
     assert batch.min() >= 0.0
 
 
@@ -110,11 +105,9 @@ def test_rand_half_cauchy_generate_feature_size_int(
     batch = RandHalfCauchy(feature_size=feature_size).generate(
         batch_size=batch_size, seq_len=seq_len
     )
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, feature_size)
-    assert batch.data.dtype == torch.float
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, feature_size)
+    assert batch.dtype == torch.float
     assert batch.min() >= 0.0
 
 
@@ -122,11 +115,10 @@ def test_rand_half_cauchy_generate_feature_size_int(
 @pytest.mark.parametrize("seq_len", SIZES)
 def test_rand_half_cauchy_generate_feature_size_tuple(batch_size: int, seq_len: int) -> None:
     batch = RandHalfCauchy(feature_size=(3, 4)).generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, 3, 4)
-    assert batch.data.dtype == torch.float
+    assert isinstance(batch, torch.Tensor)
+
+    assert batch.shape == (batch_size, seq_len, 3, 4)
+    assert batch.dtype == torch.float
     assert batch.min() >= 0.0
 
 
@@ -201,11 +193,9 @@ def test_rand_trunc_half_cauchy_generate_feature_size_default(
     batch_size: int, seq_len: int
 ) -> None:
     batch = RandTruncHalfCauchy().generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, 1)
-    assert batch.data.dtype == torch.float
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, 1)
+    assert batch.dtype == torch.float
     assert batch.min() >= 0
     assert batch.max() <= 4
 
@@ -219,11 +209,9 @@ def test_rand_trunc_half_cauchy_generate_feature_size_int(
     batch = RandTruncHalfCauchy(feature_size=feature_size).generate(
         batch_size=batch_size, seq_len=seq_len
     )
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, feature_size)
-    assert batch.data.dtype == torch.float
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, feature_size)
+    assert batch.dtype == torch.float
     assert batch.min() >= 0
     assert batch.max() <= 4
 
@@ -234,11 +222,9 @@ def test_rand_trunc_half_cauchy_generate_feature_size_tuple(batch_size: int, seq
     batch = RandTruncHalfCauchy(feature_size=(3, 4)).generate(
         batch_size=batch_size, seq_len=seq_len
     )
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, 3, 4)
-    assert batch.data.dtype == torch.float
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, 3, 4)
+    assert batch.dtype == torch.float
     assert batch.min() >= 0
     assert batch.max() <= 4
 
@@ -297,11 +283,9 @@ def test_trunc_half_cauchy_generate(batch_size: int, seq_len: int, feature_size:
         scale=RandUniform(low=1.0, high=2.0, feature_size=feature_size),
         max_value=RandUniform(low=5.0, high=10.0, feature_size=feature_size),
     ).generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, feature_size)
-    assert batch.data.dtype == torch.float
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, feature_size)
+    assert batch.dtype == torch.float
 
 
 def test_trunc_half_cauchy_generate_mock() -> None:

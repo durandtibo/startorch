@@ -40,8 +40,8 @@ def test_cauchy_generate(batch_size: int, seq_len: int, feature_size: int) -> No
     assert isinstance(batch, BatchedTensorSeq)
     assert batch.batch_size == batch_size
     assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, feature_size)
-    assert batch.data.dtype == torch.float
+    assert batch.shape == (batch_size, seq_len, feature_size)
+    assert batch.dtype == torch.float
 
 
 def test_cauchy_generate_mock() -> None:
@@ -110,8 +110,8 @@ def test_rand_cauchy_generate_feature_size_default(batch_size: int, seq_len: int
     assert isinstance(batch, BatchedTensorSeq)
     assert batch.batch_size == batch_size
     assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, 1)
-    assert batch.data.dtype == torch.float
+    assert batch.shape == (batch_size, seq_len, 1)
+    assert batch.dtype == torch.float
 
 
 @pytest.mark.parametrize("batch_size", SIZES)
@@ -124,8 +124,8 @@ def test_rand_cauchy_generate_feature_size_int(
     assert isinstance(batch, BatchedTensorSeq)
     assert batch.batch_size == batch_size
     assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, feature_size)
-    assert batch.data.dtype == torch.float
+    assert batch.shape == (batch_size, seq_len, feature_size)
+    assert batch.dtype == torch.float
 
 
 @pytest.mark.parametrize("batch_size", SIZES)
@@ -135,8 +135,8 @@ def test_rand_cauchy_generate_feature_size_tuple(batch_size: int, seq_len: int) 
     assert isinstance(batch, BatchedTensorSeq)
     assert batch.batch_size == batch_size
     assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, 3, 4)
-    assert batch.data.dtype == torch.float
+    assert batch.shape == (batch_size, seq_len, 3, 4)
+    assert batch.dtype == torch.float
 
 
 @pytest.mark.parametrize("loc", [0, 1])
@@ -231,8 +231,8 @@ def test_rand_trunc_cauchy_generate_feature_size_default(batch_size: int, seq_le
     assert isinstance(batch, BatchedTensorSeq)
     assert batch.batch_size == batch_size
     assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, 1)
-    assert batch.data.dtype == torch.float
+    assert batch.shape == (batch_size, seq_len, 1)
+    assert batch.dtype == torch.float
 
 
 @pytest.mark.parametrize("batch_size", SIZES)
@@ -247,8 +247,8 @@ def test_rand_trunc_cauchy_generate_feature_size_int(
     assert isinstance(batch, BatchedTensorSeq)
     assert batch.batch_size == batch_size
     assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, feature_size)
-    assert batch.data.dtype == torch.float
+    assert batch.shape == (batch_size, seq_len, feature_size)
+    assert batch.dtype == torch.float
 
 
 @pytest.mark.parametrize("batch_size", SIZES)
@@ -258,8 +258,8 @@ def test_rand_trunc_cauchy_generate_feature_size_tuple(batch_size: int, seq_len:
     assert isinstance(batch, BatchedTensorSeq)
     assert batch.batch_size == batch_size
     assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, 3, 4)
-    assert batch.data.dtype == torch.float
+    assert batch.shape == (batch_size, seq_len, 3, 4)
+    assert batch.dtype == torch.float
 
 
 @pytest.mark.parametrize("loc", [0, 1])
@@ -327,8 +327,8 @@ def test_trunc_cauchy_generate(batch_size: int, seq_len: int, feature_size: int)
     assert isinstance(batch, BatchedTensorSeq)
     assert batch.batch_size == batch_size
     assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, feature_size)
-    assert batch.data.dtype == torch.float
+    assert batch.shape == (batch_size, seq_len, feature_size)
+    assert batch.dtype == torch.float
 
 
 def test_trunc_cauchy_generate_mock() -> None:

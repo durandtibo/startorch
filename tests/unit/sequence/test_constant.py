@@ -27,8 +27,8 @@ def test_constant_generate(batch_size: int, seq_len: int, feature_size: int) -> 
         batch_size=batch_size, seq_len=seq_len
     )
     assert isinstance(batch, torch.Tensor)
-    assert batch.data.shape == (batch_size, seq_len, feature_size)
-    assert batch.data.dtype == torch.float
+    assert batch.shape == (batch_size, seq_len, feature_size)
+    assert batch.dtype == torch.float
 
 
 def test_constant_generate_constant() -> None:

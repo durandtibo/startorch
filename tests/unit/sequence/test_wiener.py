@@ -38,8 +38,8 @@ def test_rand_wiener_process_incorrect_min_max_value(step_size: float) -> None:
 def test_rand_wiener_process_generate(batch_size: int, seq_len: int) -> None:
     batch = RandWienerProcess().generate(batch_size=batch_size, seq_len=seq_len)
     assert isinstance(batch, torch.Tensor)
-    assert batch.data.shape == (batch_size, seq_len, 1)
-    assert batch.data.dtype == torch.float
+    assert batch.shape == (batch_size, seq_len, 1)
+    assert batch.dtype == torch.float
 
 
 def test_rand_wiener_process_generate_same_random_seed() -> None:

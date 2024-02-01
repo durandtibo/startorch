@@ -37,8 +37,8 @@ def test_linear_generate(batch_size: int, seq_len: int, feature_size: int) -> No
     assert isinstance(batch, BatchedTensorSeq)
     assert batch.batch_size == batch_size
     assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, feature_size)
-    assert batch.data.dtype == torch.float
+    assert batch.shape == (batch_size, seq_len, feature_size)
+    assert batch.dtype == torch.float
 
 
 def test_linear_generate_fixed() -> None:

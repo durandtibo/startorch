@@ -39,8 +39,8 @@ def test_sine_wave_generate(batch_size: int, seq_len: int, feature_size: int) ->
         amplitude=RandUniform(low=-1.0, high=1.0, feature_size=feature_size),
     ).generate(batch_size=batch_size, seq_len=seq_len)
     assert isinstance(batch, torch.Tensor)
-    assert batch.data.shape == (batch_size, seq_len, feature_size)
-    assert batch.data.dtype == torch.float
+    assert batch.shape == (batch_size, seq_len, feature_size)
+    assert batch.dtype == torch.float
 
 
 def test_sine_wave_generate_fixed() -> None:
