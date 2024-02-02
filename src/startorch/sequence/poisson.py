@@ -54,7 +54,7 @@ class PoissonSequenceGenerator(BaseSequenceGenerator):
         self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
     ) -> torch.Tensor:
         return torch.poisson(
-            self._rate.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).data,
+            self._rate.generate(seq_len=seq_len, batch_size=batch_size, rng=rng),
             generator=rng,
         )
 

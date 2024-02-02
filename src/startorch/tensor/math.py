@@ -29,7 +29,7 @@ from startorch.tensor.wrapper import BaseWrapperTensorGenerator
 if TYPE_CHECKING:
     from collections.abc import Sequence
 
-    from torch import Generator, Tensor
+    import torch
 
 
 class AbsTensorGenerator(BaseWrapperTensorGenerator):
@@ -53,7 +53,7 @@ class AbsTensorGenerator(BaseWrapperTensorGenerator):
     ```
     """
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return self._generator.generate(size=size, rng=rng).abs()
 
 
@@ -96,7 +96,7 @@ class AddScalarTensorGenerator(BaseWrapperTensorGenerator):
         args = str_indent(str_mapping({"tensor": self._generator, "value": self._value}))
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         tensor = self._generator.generate(size=size, rng=rng)
         tensor.add_(self._value)
         return tensor
@@ -140,7 +140,7 @@ class AddTensorGenerator(BaseTensorGenerator):
     def __repr__(self) -> str:
         return f"{self.__class__.__qualname__}(\n  {str_indent(str_sequence(self._generators))}\n)"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         output = self._generators[0].generate(size=size, rng=rng)
         for generator in self._generators[1:]:
             output.add_(generator.generate(size=size, rng=rng))
@@ -205,7 +205,7 @@ class ClampTensorGenerator(BaseWrapperTensorGenerator):
         )
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return self._generator.generate(size=size, rng=rng).clamp(self._min_value, self._max_value)
 
 
@@ -260,7 +260,7 @@ class DivTensorGenerator(BaseTensorGenerator):
         args = str_indent(str_mapping({"dividend": self._dividend, "divisor": self._divisor}))
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return self._dividend.generate(size=size, rng=rng).div(
             self._divisor.generate(size=size, rng=rng),
             rounding_mode=self._rounding_mode,
@@ -288,7 +288,7 @@ class ExpTensorGenerator(BaseWrapperTensorGenerator):
     ```
     """
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return self._generator.generate(size=size, rng=rng).exp()
 
 
@@ -343,7 +343,7 @@ class FmodTensorGenerator(BaseTensorGenerator):
         args = str_indent(str_mapping({"dividend": self._dividend, "divisor": self._divisor}))
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         tensor = self._dividend.generate(size=size, rng=rng)
         divisor = self._divisor
         if isinstance(divisor, BaseTensorGenerator):
@@ -373,7 +373,7 @@ class LogTensorGenerator(BaseWrapperTensorGenerator):
     ```
     """
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return self._generator.generate(size=size, rng=rng).log()
 
 
@@ -416,7 +416,7 @@ class MulTensorGenerator(BaseTensorGenerator):
     def __repr__(self) -> str:
         return f"{self.__class__.__qualname__}(\n  {str_indent(str_sequence(self._generators))}\n)"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         output = self._generators[0].generate(size=size, rng=rng)
         for generator in self._generators[1:]:
             output.mul_(generator.generate(size=size, rng=rng))
@@ -462,7 +462,7 @@ class MulScalarTensorGenerator(BaseWrapperTensorGenerator):
         args = str_indent(str_mapping({"tensor": self._generator}))
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         tensor = self._generator.generate(size=size, rng=rng)
         tensor.mul_(self._value)
         return tensor
@@ -490,7 +490,7 @@ class NegTensorGenerator(BaseWrapperTensorGenerator):
     ```
     """
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return -self._generator.generate(size=size, rng=rng)
 
 
@@ -515,7 +515,7 @@ class SqrtTensorGenerator(BaseWrapperTensorGenerator):
     ```
     """
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return self._generator.generate(size=size, rng=rng).sqrt()
 
 
@@ -558,7 +558,7 @@ class SubTensorGenerator(BaseTensorGenerator):
         args = str_indent(str_mapping({"tensor1": self._tensor1, "tensor2": self._tensor2}))
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return self._tensor1.generate(size=size, rng=rng).sub(
             self._tensor2.generate(size=size, rng=rng)
         )

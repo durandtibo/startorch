@@ -13,8 +13,8 @@ __all__ = [
     "UniformTensorGenerator",
 ]
 
+import torch
 from coola.utils.format import str_indent, str_mapping
-from torch import Generator, Tensor, randint
 
 from startorch.random import (
     asinh_uniform,
@@ -64,7 +64,7 @@ class AsinhUniformTensorGenerator(BaseTensorGenerator):
         args = str_indent(str_mapping({"low": self._low, "high": self._high}))
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return asinh_uniform(
             low=self._low.generate(size=size, rng=rng),
             high=self._high.generate(size=size, rng=rng),
@@ -109,7 +109,7 @@ class LogUniformTensorGenerator(BaseTensorGenerator):
         args = str_indent(str_mapping({"low": self._low, "high": self._high}))
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return log_uniform(
             low=self._low.generate(size=size, rng=rng),
             high=self._high.generate(size=size, rng=rng),
@@ -149,7 +149,7 @@ class RandAsinhUniformTensorGenerator(BaseTensorGenerator):
     def __repr__(self) -> str:
         return f"{self.__class__.__qualname__}(low={self._low}, high={self._high})"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return rand_asinh_uniform(
             size=size,
             low=self._low,
@@ -190,8 +190,8 @@ class RandIntTensorGenerator(BaseTensorGenerator):
     def __repr__(self) -> str:
         return f"{self.__class__.__qualname__}(low={self._low}, high={self._high})"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
-        return randint(size=size, low=self._low, high=self._high, generator=rng)
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
+        return torch.randint(size=size, low=self._low, high=self._high, generator=rng)
 
 
 class RandLogUniformTensorGenerator(BaseTensorGenerator):
@@ -226,7 +226,7 @@ class RandLogUniformTensorGenerator(BaseTensorGenerator):
     def __repr__(self) -> str:
         return f"{self.__class__.__qualname__}(low={self._low}, high={self._high})"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return rand_log_uniform(
             size=size,
             low=self._low,
@@ -267,7 +267,7 @@ class RandUniformTensorGenerator(BaseTensorGenerator):
     def __repr__(self) -> str:
         return f"{self.__class__.__qualname__}(low={self._low}, high={self._high})"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return rand_uniform(size=size, low=self._low, high=self._high, generator=rng)
 
 
@@ -308,7 +308,7 @@ class UniformTensorGenerator(BaseTensorGenerator):
         args = str_indent(str_mapping({"low": self._low, "high": self._high}))
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return uniform(
             low=self._low.generate(size, rng=rng),
             high=self._high.generate(size, rng=rng),

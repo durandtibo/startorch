@@ -21,7 +21,7 @@ else:  # pragma: no cover
     plt = Mock()
 
 if TYPE_CHECKING:
-    from torch import Generator
+    import torch
 
     from startorch.sequence.base import BaseSequenceGenerator
 
@@ -32,7 +32,7 @@ def hist_sequence(
     seq_len: int = 1000,
     batch_size: int = 10000,
     num_batches: int = 1,
-    rng: int | Generator = 13683624337160779813,
+    rng: int | torch.Generator = 13683624337160779813,
     figsize: tuple[float, float] = (16, 5),
     scale: str = "identity",
     **kwargs: Any,
@@ -82,7 +82,7 @@ def plot_sequence(
     seq_len: int = 128,
     batch_size: int = 1,
     num_batches: int = 1,
-    rng: int | Generator = 13683624337160779813,
+    rng: int | torch.Generator = 13683624337160779813,
     figsize: tuple[float, float] = (16, 5),
     xscale: str = "linear",
     yscale: str = "linear",

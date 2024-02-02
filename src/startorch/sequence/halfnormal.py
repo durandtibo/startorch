@@ -62,7 +62,7 @@ class HalfNormalSequenceGenerator(BaseSequenceGenerator):
         self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
     ) -> torch.Tensor:
         return half_normal(
-            std=self._std.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).data,
+            std=self._std.generate(seq_len=seq_len, batch_size=batch_size, rng=rng),
             generator=rng,
         )
 
@@ -218,9 +218,7 @@ class TruncHalfNormalSequenceGenerator(BaseSequenceGenerator):
         self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
     ) -> torch.Tensor:
         return trunc_half_normal(
-            std=self._std.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).data,
-            max_value=self._max_value.generate(
-                seq_len=seq_len, batch_size=batch_size, rng=rng
-            ).data,
+            std=self._std.generate(seq_len=seq_len, batch_size=batch_size, rng=rng),
+            max_value=self._max_value.generate(seq_len=seq_len, batch_size=batch_size, rng=rng),
             generator=rng,
         )

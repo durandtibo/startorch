@@ -7,7 +7,6 @@ from __future__ import annotations
 __all__ = ["MoonsClassificationExampleGenerator", "make_moons_classification"]
 
 import math
-from typing import TYPE_CHECKING
 
 import torch
 from batchtensor.nested import shuffle_along_batch
@@ -16,9 +15,6 @@ from startorch import constants as ct
 from startorch.example.base import BaseExampleGenerator
 from startorch.random import rand_normal
 from startorch.utils.validation import check_interval, check_num_examples, check_std
-
-if TYPE_CHECKING:
-    from torch import Generator
 
 
 class MoonsClassificationExampleGenerator(BaseExampleGenerator):
@@ -80,7 +76,7 @@ class MoonsClassificationExampleGenerator(BaseExampleGenerator):
         return self._ratio
 
     def generate(
-        self, batch_size: int = 1, rng: Generator | None = None
+        self, batch_size: int = 1, rng: torch.Generator | None = None
     ) -> dict[str, torch.Tensor]:
         return make_moons_classification(
             num_examples=batch_size,
@@ -96,7 +92,7 @@ def make_moons_classification(
     shuffle: bool = True,
     noise_std: float = 0.0,
     ratio: float = 0.5,
-    generator: Generator | None = None,
+    generator: torch.Generator | None = None,
 ) -> dict[str, torch.Tensor]:
     r"""Generate a binary classification dataset where the data are two
     interleaving half circles in 2d.

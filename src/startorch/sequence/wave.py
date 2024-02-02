@@ -13,8 +13,7 @@ from coola.utils.format import str_indent, str_mapping
 from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_generator
 
 if TYPE_CHECKING:
-    from redcat import BatchedTensorSeq
-    from torch import Generator
+    import torch
 
 
 class SineWaveSequenceGenerator(BaseSequenceGenerator):
@@ -92,8 +91,8 @@ class SineWaveSequenceGenerator(BaseSequenceGenerator):
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
         return (
             self._value.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
             .mul(self._frequency.generate(seq_len=seq_len, batch_size=batch_size, rng=rng))

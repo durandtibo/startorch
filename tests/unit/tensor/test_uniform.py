@@ -217,7 +217,7 @@ def test_rand_int_generate(size: tuple[int, ...]) -> None:
 def test_rand_int_generate_mock() -> None:
     generator = RandInt(0, 10)
     mock = Mock(return_value=torch.ones(2, 4))
-    with patch("startorch.tensor.uniform.randint", mock):
+    with patch("startorch.tensor.uniform.torch.randint", mock):
         assert generator.generate(size=(2, 4)).equal(torch.ones(2, 4))
         assert mock.call_args.kwargs["size"] == (2, 4)
         assert mock.call_args.kwargs["low"] == 0

@@ -23,7 +23,7 @@ from startorch.random import (
 from startorch.tensor.base import BaseTensorGenerator, setup_tensor_generator
 
 if TYPE_CHECKING:
-    from torch import Generator, Tensor
+    import torch
 
 
 class ExponentialTensorGenerator(BaseTensorGenerator):
@@ -61,7 +61,7 @@ class ExponentialTensorGenerator(BaseTensorGenerator):
         args = str_indent(str_mapping({"rate": self._rate}))
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return exponential(self._rate.generate(size=size, rng=rng), generator=rng)
 
 
@@ -98,7 +98,7 @@ class RandExponentialTensorGenerator(BaseTensorGenerator):
     def __repr__(self) -> str:
         return f"{self.__class__.__qualname__}(rate={self._rate})"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return rand_exponential(size=size, rate=self._rate, generator=rng)
 
 
@@ -141,7 +141,7 @@ class RandTruncExponentialTensorGenerator(BaseTensorGenerator):
     def __repr__(self) -> str:
         return f"{self.__class__.__qualname__}(rate={self._rate}, max_value={self._max_value})"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return rand_trunc_exponential(
             size=size,
             rate=self._rate,
@@ -190,7 +190,7 @@ class TruncExponentialTensorGenerator(BaseTensorGenerator):
         args = str_indent(str_mapping({"rate": self._rate, "max_value": self._max_value}))
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return trunc_exponential(
             rate=self._rate.generate(size=size, rng=rng),
             max_value=self._max_value.generate(size=size, rng=rng),

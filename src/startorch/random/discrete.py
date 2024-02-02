@@ -5,20 +5,15 @@ from __future__ import annotations
 
 __all__ = ["rand_poisson"]
 
-from typing import TYPE_CHECKING
 
 import torch
-from torch import Tensor
-
-if TYPE_CHECKING:
-    from torch import Generator
 
 
 def rand_poisson(
     size: list[int] | tuple[int, ...],
     rate: float = 1.0,
-    generator: Generator | None = None,
-) -> Tensor:
+    generator: torch.Generator | None = None,
+) -> torch.Tensor:
     r"""Create a tensor filled with values sampled from a Poisson
     distribution.
 

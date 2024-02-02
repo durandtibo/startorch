@@ -71,8 +71,8 @@ class AsinhUniformSequenceGenerator(BaseSequenceGenerator):
         self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
     ) -> torch.Tensor:
         return asinh_uniform(
-            low=self._low.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).data,
-            high=self._high.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).data,
+            low=self._low.generate(seq_len=seq_len, batch_size=batch_size, rng=rng),
+            high=self._high.generate(seq_len=seq_len, batch_size=batch_size, rng=rng),
             generator=rng,
         )
 
@@ -119,8 +119,8 @@ class LogUniformSequenceGenerator(BaseSequenceGenerator):
         self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
     ) -> torch.Tensor:
         return log_uniform(
-            low=self._low.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).data,
-            high=self._high.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).data,
+            low=self._low.generate(seq_len=seq_len, batch_size=batch_size, rng=rng),
+            high=self._high.generate(seq_len=seq_len, batch_size=batch_size, rng=rng),
             generator=rng,
         )
 
@@ -395,7 +395,7 @@ class UniformSequenceGenerator(BaseSequenceGenerator):
         self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
     ) -> torch.Tensor:
         return uniform(
-            low=self._low.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).data,
-            high=self._high.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).data,
+            low=self._low.generate(seq_len=seq_len, batch_size=batch_size, rng=rng),
+            high=self._high.generate(seq_len=seq_len, batch_size=batch_size, rng=rng),
             generator=rng,
         )

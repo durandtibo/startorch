@@ -8,7 +8,6 @@ __all__ = ["PoissonTensorGenerator", "RandPoissonTensorGenerator"]
 
 import torch
 from coola.utils.format import str_indent, str_mapping
-from torch import Generator, Tensor
 
 from startorch.random import rand_poisson
 from startorch.tensor.base import BaseTensorGenerator, setup_tensor_generator
@@ -49,7 +48,7 @@ class PoissonTensorGenerator(BaseTensorGenerator):
         args = str_indent(str_mapping({"rate": self._rate}))
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return torch.poisson(self._rate.generate(size=size, rng=rng), generator=rng)
 
 
@@ -87,5 +86,5 @@ class RandPoissonTensorGenerator(BaseTensorGenerator):
     def __repr__(self) -> str:
         return f"{self.__class__.__qualname__}(rate={self._rate})"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return rand_poisson(size=size, rate=self._rate, generator=rng)

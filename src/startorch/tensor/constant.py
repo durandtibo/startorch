@@ -5,14 +5,10 @@ from __future__ import annotations
 
 __all__ = ["FullTensorGenerator"]
 
-from typing import TYPE_CHECKING
 
 import torch
 
 from startorch.tensor.base import BaseTensorGenerator
-
-if TYPE_CHECKING:
-    from torch import Generator, Tensor
 
 
 class FullTensorGenerator(BaseTensorGenerator):
@@ -46,5 +42,5 @@ class FullTensorGenerator(BaseTensorGenerator):
     def __repr__(self) -> str:
         return f"{self.__class__.__qualname__}(value={self._value}, dtype={self._dtype})"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return torch.full(size=size, fill_value=self._value, dtype=self._dtype)

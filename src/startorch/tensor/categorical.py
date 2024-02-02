@@ -9,7 +9,6 @@ import math
 from typing import TYPE_CHECKING
 
 import torch
-from torch import Generator, Tensor
 
 from startorch.tensor.base import BaseTensorGenerator
 from startorch.utils.weight import prepare_probabilities
@@ -49,7 +48,7 @@ class MultinomialTensorGenerator(BaseTensorGenerator):
     def __repr__(self) -> str:
         return f"{self.__class__.__qualname__}(num_categories={self._probabilities.numel()})"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return torch.multinomial(
             self._probabilities, math.prod(size), replacement=True, generator=rng
         ).view(*size)
@@ -191,5 +190,5 @@ class UniformCategoricalTensorGenerator(BaseTensorGenerator):
     def __repr__(self) -> str:
         return f"{self.__class__.__qualname__}(num_categories={self._num_categories})"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return torch.randint(low=0, high=self._num_categories, size=size, generator=rng)

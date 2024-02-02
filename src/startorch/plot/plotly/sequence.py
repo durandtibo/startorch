@@ -24,7 +24,7 @@ else:  # pragma: no cover
 
 
 if TYPE_CHECKING:
-    from torch import Generator
+    import torch
 
     from startorch.sequence.base import BaseSequenceGenerator
 
@@ -35,7 +35,7 @@ def hist_sequence(
     seq_len: int = 1000,
     batch_size: int = 10000,
     num_batches: int = 1,
-    rng: int | Generator = 13683624337160779813,
+    rng: int | torch.Generator = 13683624337160779813,
     figsize: tuple[int, int] = (800, 600),
     scale: str = "identity",
     **kwargs: Any,
@@ -86,7 +86,7 @@ def plot_sequence(
     seq_len: int = 128,
     batch_size: int = 1,
     num_batches: int = 1,
-    rng: int | Generator = 13683624337160779813,
+    rng: int | torch.Generator = 13683624337160779813,
     **kwargs: Any,
 ) -> go.Figure:
     r"""Plot some sequences generated from a sequence generator.

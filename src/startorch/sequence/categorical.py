@@ -17,8 +17,6 @@ from startorch.utils.weight import prepare_probabilities
 if TYPE_CHECKING:
     from collections.abc import Sequence
 
-    from torch import Generator
-
 
 class MultinomialSequenceGenerator(BaseSequenceGenerator):
     r"""Implement a class to generate sequences of categorical variables
@@ -61,7 +59,7 @@ class MultinomialSequenceGenerator(BaseSequenceGenerator):
         )
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
     ) -> torch.Tensor:
         return torch.multinomial(
             self._probabilities,
@@ -176,7 +174,7 @@ class UniformCategoricalSequenceGenerator(BaseSequenceGenerator):
         )
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
     ) -> torch.Tensor:
         return torch.randint(
             low=0,

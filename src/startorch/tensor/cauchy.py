@@ -18,7 +18,7 @@ from startorch.random import cauchy, rand_cauchy, rand_trunc_cauchy, trunc_cauch
 from startorch.tensor.base import BaseTensorGenerator, setup_tensor_generator
 
 if TYPE_CHECKING:
-    from torch import Generator, Tensor
+    import torch
 
 
 class CauchyTensorGenerator(BaseTensorGenerator):
@@ -58,10 +58,10 @@ class CauchyTensorGenerator(BaseTensorGenerator):
         args = str_indent(str_mapping({"loc": self._loc, "scale": self._scale}))
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return cauchy(
-            loc=self._loc.generate(size=size, rng=rng).data,
-            scale=self._scale.generate(size=size, rng=rng).data,
+            loc=self._loc.generate(size=size, rng=rng),
+            scale=self._scale.generate(size=size, rng=rng),
             generator=rng,
         )
 
@@ -101,7 +101,7 @@ class RandCauchyTensorGenerator(BaseTensorGenerator):
     def __repr__(self) -> str:
         return f"{self.__class__.__qualname__}(loc={self._loc}, scale={self._scale})"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return rand_cauchy(
             size=size,
             loc=self._loc,
@@ -162,7 +162,7 @@ class RandTruncCauchyTensorGenerator(BaseTensorGenerator):
             f"min_value={self._min_value}, max_value={self._max_value})"
         )
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return rand_trunc_cauchy(
             size=size,
             loc=self._loc,
@@ -236,7 +236,7 @@ class TruncCauchyTensorGenerator(BaseTensorGenerator):
         )
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return trunc_cauchy(
             loc=self._loc.generate(size=size, rng=rng),
             scale=self._scale.generate(size=size, rng=rng),

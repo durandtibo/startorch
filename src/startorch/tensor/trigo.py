@@ -17,7 +17,7 @@ from typing import TYPE_CHECKING
 from startorch.tensor.wrapper import BaseWrapperTensorGenerator
 
 if TYPE_CHECKING:
-    from torch import Generator, Tensor
+    import torch
 
 
 class AcoshTensorGenerator(BaseWrapperTensorGenerator):
@@ -39,7 +39,7 @@ class AcoshTensorGenerator(BaseWrapperTensorGenerator):
     ```
     """
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return self._generator.generate(size=size, rng=rng).acosh()
 
 
@@ -62,7 +62,7 @@ class AsinhTensorGenerator(BaseWrapperTensorGenerator):
     ```
     """
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return self._generator.generate(size=size, rng=rng).asinh()
 
 
@@ -85,7 +85,7 @@ class AtanhTensorGenerator(BaseWrapperTensorGenerator):
     ```
     """
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return self._generator.generate(size=size, rng=rng).atanh()
 
 
@@ -108,7 +108,7 @@ class CoshTensorGenerator(BaseWrapperTensorGenerator):
     ```
     """
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return self._generator.generate(size=size, rng=rng).cosh()
 
 
@@ -131,7 +131,7 @@ class SinhTensorGenerator(BaseWrapperTensorGenerator):
     ```
     """
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return self._generator.generate(size=size, rng=rng).sinh()
 
 
@@ -154,5 +154,5 @@ class TanhTensorGenerator(BaseWrapperTensorGenerator):
     ```
     """
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return self._generator.generate(size=size, rng=rng).tanh()
