@@ -14,7 +14,7 @@ from objectory.utils import is_object_config
 from startorch.utils.format import str_target_object
 
 if TYPE_CHECKING:
-    from torch import Generator, Tensor
+    import torch
 
 logger = logging.getLogger(__name__)
 
@@ -39,7 +39,7 @@ class BaseTensorGenerator(ABC, metaclass=AbstractFactory):
     """
 
     @abstractmethod
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         r"""Generate a tensor.
 
         Args:

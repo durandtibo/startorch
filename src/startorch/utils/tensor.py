@@ -9,10 +9,10 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from collections.abc import Sequence
 
-    from torch import Tensor
+    import torch
 
 
-def shapes_are_equal(tensors: Sequence[Tensor]) -> bool:
+def shapes_are_equal(tensors: Sequence[torch.Tensor]) -> bool:
     r"""Return ``True`` if the shapes of several tensors are equal,
     otherwise ``False``.
 

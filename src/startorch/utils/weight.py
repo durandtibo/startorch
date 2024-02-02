@@ -7,8 +7,7 @@ __all__ = ["prepare_probabilities", "prepare_weighted_generators"]
 
 from typing import TYPE_CHECKING, Any
 
-import torch
-from torch import Tensor
+from startorch.utils.conversion import to_tensor
 
 GENERATOR = "generator"
 WEIGHT = "weight"
@@ -17,8 +16,10 @@ WEIGHT = "weight"
 if TYPE_CHECKING:
     from collections.abc import Sequence
 
+    import torch
 
-def prepare_probabilities(weights: Tensor | Sequence[float]) -> Tensor:
+
+def prepare_probabilities(weights: torch.Tensor | Sequence[float]) -> torch.Tensor:
     r"""Convert un-normalized positive weights to probabilities.
 
     Args:
@@ -44,8 +45,7 @@ def prepare_probabilities(weights: Tensor | Sequence[float]) -> Tensor:
 
     ```
     """
-    if not torch.is_tensor(weights):
-        weights = torch.as_tensor(weights)
+    weights = to_tensor(weights)
     if weights.ndim != 1:
         msg = f"weights has to be a 1D tensor (received a {weights.ndim}D tensor)"
         raise ValueError(msg)

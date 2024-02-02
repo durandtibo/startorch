@@ -17,8 +17,6 @@ from startorch.utils.weight import prepare_weighted_generators
 if TYPE_CHECKING:
     from collections.abc import Sequence
 
-    from torch import Generator, Tensor
-
 
 class MultinomialChoiceTensorGenerator(BaseTensorGenerator):
     r"""Implement a tensor generator that select a tensor generator at
@@ -73,6 +71,6 @@ class MultinomialChoiceTensorGenerator(BaseTensorGenerator):
         args = str_indent(str_weighted_modules(modules=self._generators, weights=self._weights))
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         index = torch.multinomial(self._weights, num_samples=1, generator=rng).item()
         return self._generators[index].generate(size=size, rng=rng)

@@ -23,7 +23,7 @@ from startorch.random import (
 from startorch.tensor.base import BaseTensorGenerator, setup_tensor_generator
 
 if TYPE_CHECKING:
-    from torch import Generator, Tensor
+    import torch
 
 
 class HalfCauchyTensorGenerator(BaseTensorGenerator):
@@ -57,7 +57,7 @@ class HalfCauchyTensorGenerator(BaseTensorGenerator):
         args = str_indent(str_mapping({"scale": self._scale}))
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return half_cauchy(
             scale=self._scale.generate(size=size, rng=rng),
             generator=rng,
@@ -97,7 +97,7 @@ class RandHalfCauchyTensorGenerator(BaseTensorGenerator):
     def __repr__(self) -> str:
         return f"{self.__class__.__qualname__}(scale={self._scale})"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return rand_half_cauchy(
             size=size,
             scale=self._scale,
@@ -148,7 +148,7 @@ class RandTruncHalfCauchyTensorGenerator(BaseTensorGenerator):
     def __repr__(self) -> str:
         return f"{self.__class__.__qualname__}(scale={self._scale}, max_value={self._max_value})"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return rand_trunc_half_cauchy(
             size=size,
             scale=self._scale,
@@ -199,7 +199,7 @@ class TruncHalfCauchyTensorGenerator(BaseTensorGenerator):
         args = str_indent(str_mapping({"scale": self._scale, "max_value": self._max_value}))
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return trunc_half_cauchy(
             scale=self._scale.generate(size=size, rng=rng),
             max_value=self._max_value.generate(size=size, rng=rng),

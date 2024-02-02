@@ -13,7 +13,6 @@ __all__ = [
 ]
 
 import math
-from typing import TYPE_CHECKING
 
 import torch
 
@@ -21,9 +20,6 @@ from startorch import constants as ct
 from startorch.example.base import BaseExampleGenerator
 from startorch.random import rand_normal, rand_uniform
 from startorch.utils.validation import check_feature_size, check_num_examples, check_std
-
-if TYPE_CHECKING:
-    from torch import Generator
 
 
 class Friedman1RegressionExampleGenerator(BaseExampleGenerator):
@@ -82,7 +78,7 @@ class Friedman1RegressionExampleGenerator(BaseExampleGenerator):
         return self._noise_std
 
     def generate(
-        self, batch_size: int = 1, rng: Generator | None = None
+        self, batch_size: int = 1, rng: torch.Generator | None = None
     ) -> dict[str, torch.Tensor]:
         return make_friedman1_regression(
             num_examples=batch_size,
@@ -149,7 +145,7 @@ class Friedman2RegressionExampleGenerator(BaseExampleGenerator):
         return self._noise_std
 
     def generate(
-        self, batch_size: int = 1, rng: Generator | None = None
+        self, batch_size: int = 1, rng: torch.Generator | None = None
     ) -> dict[str, torch.Tensor]:
         return make_friedman2_regression(
             num_examples=batch_size,
@@ -216,7 +212,7 @@ class Friedman3RegressionExampleGenerator(BaseExampleGenerator):
         return self._noise_std
 
     def generate(
-        self, batch_size: int = 1, rng: Generator | None = None
+        self, batch_size: int = 1, rng: torch.Generator | None = None
     ) -> dict[str, torch.Tensor]:
         return make_friedman3_regression(
             num_examples=batch_size,
@@ -230,7 +226,7 @@ def make_friedman1_regression(
     num_examples: int = 100,
     feature_size: int = 10,
     noise_std: float = 0.0,
-    generator: Generator | None = None,
+    generator: torch.Generator | None = None,
 ) -> dict[str, torch.Tensor]:
     r"""Generate the "Friedman #1" regression data.
 
@@ -289,7 +285,7 @@ def make_friedman2_regression(
     num_examples: int = 100,
     feature_size: int = 4,
     noise_std: float = 0.0,
-    generator: Generator | None = None,
+    generator: torch.Generator | None = None,
 ) -> dict[str, torch.Tensor]:
     r"""Generate the "Friedman #2" regression data.
 
@@ -353,7 +349,7 @@ def make_friedman3_regression(
     num_examples: int = 100,
     feature_size: int = 4,
     noise_std: float = 0.0,
-    generator: Generator | None = None,
+    generator: torch.Generator | None = None,
 ) -> dict[str, torch.Tensor]:
     r"""Generate the "Friedman #3" regression problem.
 

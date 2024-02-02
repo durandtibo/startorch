@@ -14,22 +14,17 @@ __all__ = [
     "rand_log_normal",
 ]
 
-from typing import TYPE_CHECKING
 
 import torch
-from torch import Generator, Tensor
 
 from startorch.random import cauchy, normal, rand_cauchy, rand_normal
-
-if TYPE_CHECKING:
-    from torch import Generator
 
 
 def rand_exponential(
     size: list[int] | tuple[int, ...],
     rate: float = 1.0,
-    generator: Generator | None = None,
-) -> Tensor:
+    generator: torch.Generator | None = None,
+) -> torch.Tensor:
     r"""Create a tensor filled with values sampled from an Exponential
     distribution.
 
@@ -63,7 +58,7 @@ def rand_exponential(
     return tensor
 
 
-def exponential(rate: torch.Tensor, generator: Generator | None = None) -> torch.Tensor:
+def exponential(rate: torch.Tensor, generator: torch.Generator | None = None) -> torch.Tensor:
     r"""Create a tensor filled with values sampled from an Exponential
     distribution.
 
@@ -103,8 +98,8 @@ def exponential(rate: torch.Tensor, generator: Generator | None = None) -> torch
 def rand_half_cauchy(
     size: list[int] | tuple[int, ...],
     scale: float = 1.0,
-    generator: Generator | None = None,
-) -> Tensor:
+    generator: torch.Generator | None = None,
+) -> torch.Tensor:
     r"""Create a tensor filled with values sampled from a half-Cauchy
     distribution.
 
@@ -134,7 +129,7 @@ def rand_half_cauchy(
     return rand_cauchy(size=size, loc=0.0, scale=scale, generator=generator).abs()
 
 
-def half_cauchy(scale: Tensor, generator: Generator | None = None) -> Tensor:
+def half_cauchy(scale: torch.Tensor, generator: torch.Generator | None = None) -> torch.Tensor:
     r"""Create a tensor filled with values sampled from a half-Cauchy
     distribution.
 
@@ -171,8 +166,8 @@ def half_cauchy(scale: Tensor, generator: Generator | None = None) -> Tensor:
 def rand_half_normal(
     size: list[int] | tuple[int, ...],
     std: float = 1.0,
-    generator: Generator | None = None,
-) -> Tensor:
+    generator: torch.Generator | None = None,
+) -> torch.Tensor:
     r"""Create a tensor filled with values sampled from a half-Normal
     distribution.
 
@@ -205,7 +200,7 @@ def rand_half_normal(
     return rand_normal(size=size, mean=0.0, std=std, generator=generator).abs()
 
 
-def half_normal(std: Tensor, generator: Generator | None = None) -> Tensor:
+def half_normal(std: torch.Tensor, generator: torch.Generator | None = None) -> torch.Tensor:
     r"""Create a tensor filled with values sampled from a half-Normal
     distribution.
 
@@ -245,8 +240,8 @@ def rand_log_normal(
     size: list[int] | tuple[int, ...],
     mean: float = 0.0,
     std: float = 1.0,
-    generator: Generator | None = None,
-) -> Tensor:
+    generator: torch.Generator | None = None,
+) -> torch.Tensor:
     r"""Create a tensor filled with values sampled from a log-Normal
     distribution.
 
@@ -283,7 +278,9 @@ def rand_log_normal(
     return tensor
 
 
-def log_normal(mean: Tensor, std: Tensor, generator: Generator | None = None) -> Tensor:
+def log_normal(
+    mean: torch.Tensor, std: torch.Tensor, generator: torch.Generator | None = None
+) -> torch.Tensor:
     r"""Create a tensor filled with values sampled from a log-Normal
     distribution.
 

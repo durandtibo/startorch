@@ -71,8 +71,8 @@ class LogNormalSequenceGenerator(BaseSequenceGenerator):
         self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
     ) -> torch.Tensor:
         return log_normal(
-            mean=self._mean.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).data,
-            std=self._std.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).data,
+            mean=self._mean.generate(seq_len=seq_len, batch_size=batch_size, rng=rng),
+            std=self._std.generate(seq_len=seq_len, batch_size=batch_size, rng=rng),
             generator=rng,
         )
 
@@ -275,13 +275,9 @@ class TruncLogNormalSequenceGenerator(BaseSequenceGenerator):
         self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
     ) -> torch.Tensor:
         return trunc_log_normal(
-            mean=self._mean.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).data,
-            std=self._std.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).data,
-            min_value=self._min_value.generate(
-                seq_len=seq_len, batch_size=batch_size, rng=rng
-            ).data,
-            max_value=self._max_value.generate(
-                seq_len=seq_len, batch_size=batch_size, rng=rng
-            ).data,
+            mean=self._mean.generate(seq_len=seq_len, batch_size=batch_size, rng=rng),
+            std=self._std.generate(seq_len=seq_len, batch_size=batch_size, rng=rng),
+            min_value=self._min_value.generate(seq_len=seq_len, batch_size=batch_size, rng=rng),
+            max_value=self._max_value.generate(seq_len=seq_len, batch_size=batch_size, rng=rng),
             generator=rng,
         )

@@ -25,10 +25,8 @@ __all__ = [
 ]
 
 import math
-from typing import TYPE_CHECKING
 
 import torch
-from torch import Tensor
 from torch.distributions import (
     Cauchy,
     Exponential,
@@ -40,9 +38,6 @@ from torch.distributions import (
 
 from startorch.utils.tensor import shapes_are_equal
 
-if TYPE_CHECKING:
-    from torch import Generator
-
 
 def rand_trunc_cauchy(
     size: list[int] | tuple[int, ...],
@@ -50,8 +45,8 @@ def rand_trunc_cauchy(
     scale: float = 1.0,
     min_value: float = -2.0,
     max_value: float = 2.0,
-    generator: Generator | None = None,
-) -> Tensor:
+    generator: torch.Generator | None = None,
+) -> torch.Tensor:
     r"""Create a tensor filled with values sampled from a truncated
     Cauchy distribution.
 
@@ -95,12 +90,12 @@ def rand_trunc_cauchy(
 
 
 def trunc_cauchy(
-    loc: Tensor,
-    scale: Tensor,
-    min_value: Tensor,
-    max_value: Tensor,
-    generator: Generator | None = None,
-) -> Tensor:
+    loc: torch.Tensor,
+    scale: torch.Tensor,
+    min_value: torch.Tensor,
+    max_value: torch.Tensor,
+    generator: torch.Generator | None = None,
+) -> torch.Tensor:
     r"""Create a tensor filled with values sampled from a truncated
     Cauchy distribution.
 
@@ -167,8 +162,8 @@ def rand_trunc_exponential(
     size: list[int] | tuple[int, ...],
     rate: float = 1.0,
     max_value: float = 5.0,
-    generator: Generator | None = None,
-) -> Tensor:
+    generator: torch.Generator | None = None,
+) -> torch.Tensor:
     r"""Create a tensor filled with values sampled from a truncated
     Exponential distribution.
 
@@ -209,10 +204,10 @@ def rand_trunc_exponential(
 
 
 def trunc_exponential(
-    rate: Tensor,
-    max_value: Tensor,
-    generator: Generator | None = None,
-) -> Tensor:
+    rate: torch.Tensor,
+    max_value: torch.Tensor,
+    generator: torch.Generator | None = None,
+) -> torch.Tensor:
     r"""Create a tensor filled with values sampled from a truncated
     Exponential distribution.
 
@@ -270,8 +265,8 @@ def rand_trunc_half_cauchy(
     size: list[int] | tuple[int, ...],
     scale: float = 1.0,
     max_value: float = 4.0,
-    generator: Generator | None = None,
-) -> Tensor:
+    generator: torch.Generator | None = None,
+) -> torch.Tensor:
     r"""Create a tensor filled with values sampled from a truncated half-
     Cauchy distribution.
 
@@ -312,10 +307,10 @@ def rand_trunc_half_cauchy(
 
 
 def trunc_half_cauchy(
-    scale: Tensor,
-    max_value: Tensor,
-    generator: Generator | None = None,
-) -> Tensor:
+    scale: torch.Tensor,
+    max_value: torch.Tensor,
+    generator: torch.Generator | None = None,
+) -> torch.Tensor:
     r"""Create a tensor filled with values sampled from a truncated half-
     Cauchy distribution.
 
@@ -373,8 +368,8 @@ def rand_trunc_half_normal(
     size: list[int] | tuple[int, ...],
     std: float = 1.0,
     max_value: float = 5.0,
-    generator: Generator | None = None,
-) -> Tensor:
+    generator: torch.Generator | None = None,
+) -> torch.Tensor:
     r"""Create a tensor filled with values sampled from a truncated half-
     Normal distribution.
 
@@ -416,10 +411,10 @@ def rand_trunc_half_normal(
 
 
 def trunc_half_normal(
-    std: Tensor,
-    max_value: Tensor,
-    generator: Generator | None = None,
-) -> Tensor:
+    std: torch.Tensor,
+    max_value: torch.Tensor,
+    generator: torch.Generator | None = None,
+) -> torch.Tensor:
     r"""Create a tensor filled with values sampled from a truncated half-
     Normal distribution.
 
@@ -477,8 +472,8 @@ def rand_trunc_log_normal(
     std: float = 1.0,
     min_value: float = 0.0,
     max_value: float = 5.0,
-    generator: Generator | None = None,
-) -> Tensor:
+    generator: torch.Generator | None = None,
+) -> torch.Tensor:
     r"""Create a tensor filled with values sampled from a truncated log-
     Normal distribution.
 
@@ -523,12 +518,12 @@ def rand_trunc_log_normal(
 
 
 def trunc_log_normal(
-    mean: Tensor,
-    std: Tensor,
-    min_value: Tensor,
-    max_value: Tensor,
-    generator: Generator | None = None,
-) -> Tensor:
+    mean: torch.Tensor,
+    std: torch.Tensor,
+    min_value: torch.Tensor,
+    max_value: torch.Tensor,
+    generator: torch.Generator | None = None,
+) -> torch.Tensor:
     r"""Create a tensor filled with values sampled from a truncated log-
     Normal distribution.
 
@@ -600,8 +595,8 @@ def rand_trunc_normal(
     std: float = 1.0,
     min_value: float = -3.0,
     max_value: float = 3.0,
-    generator: Generator | None = None,
-) -> Tensor:
+    generator: torch.Generator | None = None,
+) -> torch.Tensor:
     r"""Create a tensor filled with values sampled from a truncated
     Normal distribution.
 
@@ -646,12 +641,12 @@ def rand_trunc_normal(
 
 
 def trunc_normal(
-    mean: Tensor,
-    std: Tensor,
-    min_value: Tensor,
-    max_value: Tensor,
-    generator: Generator | None = None,
-) -> Tensor:
+    mean: torch.Tensor,
+    std: torch.Tensor,
+    min_value: torch.Tensor,
+    max_value: torch.Tensor,
+    generator: torch.Generator | None = None,
+) -> torch.Tensor:
     r"""Create a tensor filled with values sampled from a truncated
     Normal distribution.
 
@@ -720,8 +715,8 @@ def rand_uniform(
     size: list[int] | tuple[int, ...],
     low: float = 0.0,
     high: float = 1.0,
-    generator: Generator | None = None,
-) -> Tensor:
+    generator: torch.Generator | None = None,
+) -> torch.Tensor:
     r"""Create a tensor filled with values sampled from a uniform
     distribution.
 
@@ -757,7 +752,9 @@ def rand_uniform(
     )
 
 
-def uniform(low: Tensor, high: Tensor, generator: Generator | None = None) -> Tensor:
+def uniform(
+    low: torch.Tensor, high: torch.Tensor, generator: torch.Generator | None = None
+) -> torch.Tensor:
     r"""Create a tensor filled with values sampled from a uniform
     distribution.
 
@@ -817,8 +814,8 @@ def rand_log_uniform(
     size: list[int] | tuple[int, ...],
     low: float,
     high: float,
-    generator: Generator | None = None,
-) -> Tensor:
+    generator: torch.Generator | None = None,
+) -> torch.Tensor:
     r"""Create a tensor filled with values sampled from a uniform
     distribution in the log space.
 
@@ -859,7 +856,9 @@ def rand_log_uniform(
     )
 
 
-def log_uniform(low: Tensor, high: Tensor, generator: Generator | None = None) -> Tensor:
+def log_uniform(
+    low: torch.Tensor, high: torch.Tensor, generator: torch.Generator | None = None
+) -> torch.Tensor:
     r"""Create a tensor filled with values sampled from a uniform
     distribution in the log space.
 
@@ -914,8 +913,8 @@ def rand_asinh_uniform(
     size: list[int] | tuple[int, ...],
     low: float,
     high: float,
-    generator: Generator | None = None,
-) -> Tensor:
+    generator: torch.Generator | None = None,
+) -> torch.Tensor:
     r"""Create a tensor filled with values sampled from a uniform
     distribution in the inverse hyperbolic sine space.
 
@@ -956,7 +955,9 @@ def rand_asinh_uniform(
     )
 
 
-def asinh_uniform(low: Tensor, high: Tensor, generator: Generator | None = None) -> Tensor:
+def asinh_uniform(
+    low: torch.Tensor, high: torch.Tensor, generator: torch.Generator | None = None
+) -> torch.Tensor:
     r"""Create a tensor filled with values sampled from a uniform
     distribution in the inverse hyperbolic sine space.
 

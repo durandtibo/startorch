@@ -12,7 +12,6 @@ __all__ = [
 from typing import TYPE_CHECKING
 
 import torch
-from torch import Generator, Tensor
 
 from startorch import constants as ct
 from startorch.example.base import BaseExampleGenerator
@@ -23,8 +22,6 @@ from startorch.utils.validation import check_num_examples, check_std
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
-
-    from torch import Generator
 
 
 class LinearRegressionExampleGenerator(BaseExampleGenerator):
@@ -61,7 +58,7 @@ class LinearRegressionExampleGenerator(BaseExampleGenerator):
 
     def __init__(
         self,
-        weights: Tensor | Sequence[float],
+        weights: torch.Tensor | Sequence[float],
         bias: float = 0.0,
         noise_std: float = 0.0,
     ) -> None:
@@ -93,13 +90,13 @@ class LinearRegressionExampleGenerator(BaseExampleGenerator):
         return self._noise_std
 
     @property
-    def weights(self) -> Tensor:
+    def weights(self) -> torch.Tensor:
         r"""``torch.Tensor``: The weights of the underlying linear
         model."""
         return self._weights
 
     def generate(
-        self, batch_size: int = 1, rng: Generator | None = None
+        self, batch_size: int = 1, rng: torch.Generator | None = None
     ) -> dict[str, torch.Tensor]:
         return make_linear_regression(
             num_examples=batch_size,
@@ -131,11 +128,11 @@ class LinearRegressionExampleGenerator(BaseExampleGenerator):
 
 
 def make_linear_regression(
-    weights: Tensor,
+    weights: torch.Tensor,
     bias: float = 0.0,
     num_examples: int = 100,
     noise_std: float = 0.0,
-    generator: Generator | None = None,
+    generator: torch.Generator | None = None,
 ) -> dict[str, torch.Tensor]:
     r"""Generate a regression dataset where the data are generated with
     an underlying linear model.
@@ -191,8 +188,8 @@ def make_linear_regression(
 def get_uniform_weights(
     feature_size: int,
     informative_feature_size: int,
-    generator: Generator | None = None,
-) -> Tensor:
+    generator: torch.Generator | None = None,
+) -> torch.Tensor:
     """Generate the weights of the linear combination used to generate
     the targets from the features.
 

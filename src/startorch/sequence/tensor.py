@@ -31,9 +31,9 @@ class TensorSequenceGenerator(BaseSequenceGenerator):
     >>> import torch
     >>> from startorch.sequence import TensorSequence
     >>> from startorch.tensor import RandUniform
-    >>> generator = TensorSequence(RandUniform())
+    >>> generator = torch.TensorSequence(RandUniform())
     >>> generator
-    TensorSequenceGenerator(
+    torch.TensorSequenceGenerator(
       (tensor): RandUniformTensorGenerator(low=0.0, high=1.0)
       (feature_size): ()
     )

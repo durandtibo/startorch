@@ -10,7 +10,7 @@ from typing import TYPE_CHECKING
 from startorch.tensor.wrapper import BaseWrapperTensorGenerator
 
 if TYPE_CHECKING:
-    from torch import Generator, Tensor
+    import torch
 
 
 class FloatTensorGenerator(BaseWrapperTensorGenerator):
@@ -32,7 +32,7 @@ class FloatTensorGenerator(BaseWrapperTensorGenerator):
     ```
     """
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return self._generator.generate(size=size, rng=rng).float()
 
 
@@ -55,5 +55,5 @@ class LongTensorGenerator(BaseWrapperTensorGenerator):
     ```
     """
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return self._generator.generate(size=size, rng=rng).long()

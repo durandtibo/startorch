@@ -6,8 +6,6 @@ from __future__ import annotations
 __all__ = ["HypercubeClassificationExampleGenerator", "make_hypercube_classification"]
 
 
-from typing import TYPE_CHECKING
-
 import torch
 
 from startorch import constants as ct
@@ -18,9 +16,6 @@ from startorch.utils.validation import (
     check_num_examples,
     check_std,
 )
-
-if TYPE_CHECKING:
-    from torch import Generator
 
 
 class HypercubeClassificationExampleGenerator(BaseExampleGenerator):
@@ -94,7 +89,7 @@ class HypercubeClassificationExampleGenerator(BaseExampleGenerator):
         return self._noise_std
 
     def generate(
-        self, batch_size: int = 1, rng: Generator | None = None
+        self, batch_size: int = 1, rng: torch.Generator | None = None
     ) -> dict[str, torch.Tensor]:
         return make_hypercube_classification(
             num_examples=batch_size,
@@ -110,7 +105,7 @@ def make_hypercube_classification(
     num_classes: int = 50,
     feature_size: int = 64,
     noise_std: float = 0.2,
-    generator: Generator | None = None,
+    generator: torch.Generator | None = None,
 ) -> dict[str, torch.Tensor]:
     r"""Generate a synthetic classification dataset based on hypercube
     vertex structure.

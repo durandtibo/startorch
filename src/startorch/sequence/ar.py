@@ -120,7 +120,7 @@ class AutoRegressiveSequenceGenerator(BaseSequenceGenerator):
         noise = self._noise.generate(
             seq_len=seq_len + order * self._warmup, batch_size=batch_size, rng=rng
         )
-        coeffs = self._coefficient.generate(seq_len=order, batch_size=batch_size, rng=rng).data
+        coeffs = self._coefficient.generate(seq_len=order, batch_size=batch_size, rng=rng)
         for i in range(order, seq_len + order * self._warmup):
             x[:, i] = torch.fmod(
                 torch.sum(coeffs * x[:, i - order : i], dim=1) + noise[:, i], self._max_abs_value

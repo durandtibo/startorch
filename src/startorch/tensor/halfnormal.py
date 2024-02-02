@@ -23,7 +23,7 @@ from startorch.random import (
 from startorch.tensor.base import BaseTensorGenerator, setup_tensor_generator
 
 if TYPE_CHECKING:
-    from torch import Generator, Tensor
+    import torch
 
 
 class HalfNormalTensorGenerator(BaseTensorGenerator):
@@ -57,7 +57,7 @@ class HalfNormalTensorGenerator(BaseTensorGenerator):
         args = str_indent(str_mapping({"std": self._std}))
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return half_normal(
             std=self._std.generate(size=size, rng=rng),
             generator=rng,
@@ -97,7 +97,7 @@ class RandHalfNormalTensorGenerator(BaseTensorGenerator):
     def __repr__(self) -> str:
         return f"{self.__class__.__qualname__}(std={self._std})"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return rand_half_normal(
             size=size,
             std=self._std,
@@ -144,7 +144,7 @@ class RandTruncHalfNormalTensorGenerator(BaseTensorGenerator):
     def __repr__(self) -> str:
         return f"{self.__class__.__qualname__}(std={self._std}, max_value={self._max_value})"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return rand_trunc_half_normal(
             size=size,
             std=self._std,
@@ -193,7 +193,7 @@ class TruncHalfNormalTensorGenerator(BaseTensorGenerator):
         args = str_indent(str_mapping({"std": self._std, "max_value": self._max_value}))
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return trunc_half_normal(
             std=self._std.generate(size=size, rng=rng),
             max_value=self._max_value.generate(size=size, rng=rng),

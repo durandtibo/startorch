@@ -5,20 +5,15 @@ from __future__ import annotations
 
 __all__ = ["cauchy", "normal", "rand_cauchy", "rand_normal"]
 
-from typing import TYPE_CHECKING
 
 import torch
-from torch import Tensor
-
-if TYPE_CHECKING:
-    from torch import Generator
 
 
 def rand_cauchy(
     size: list[int] | tuple[int, ...],
     loc: float = 0.0,
     scale: float = 1.0,
-    generator: Generator | None = None,
+    generator: torch.Generator | None = None,
 ) -> torch.Tensor:
     r"""Create a sequence of continuous variables sampled from a Cauchy
     distribution.
@@ -54,7 +49,9 @@ def rand_cauchy(
     return sequence
 
 
-def cauchy(loc: Tensor, scale: Tensor, generator: Generator | None = None) -> Tensor:
+def cauchy(
+    loc: torch.Tensor, scale: torch.Tensor, generator: torch.Generator | None = None
+) -> torch.Tensor:
     r"""Create a tensor filled with values sampled from a Cauchy
     distribution.
 
@@ -102,8 +99,8 @@ def rand_normal(
     size: list[int] | tuple[int, ...],
     mean: float = 0.0,
     std: float = 1.0,
-    generator: Generator | None = None,
-) -> Tensor:
+    generator: torch.Generator | None = None,
+) -> torch.Tensor:
     r"""Create a tensor filled with values sampled from a Normal
     distribution.
 
@@ -136,7 +133,9 @@ def rand_normal(
     return torch.randn(size, generator=generator).mul(std).add(mean)
 
 
-def normal(mean: Tensor, std: Tensor, generator: Generator | None = None) -> Tensor:
+def normal(
+    mean: torch.Tensor, std: torch.Tensor, generator: torch.Generator | None = None
+) -> torch.Tensor:
     r"""Create a tensor filled with values sampled from a Normal
     distribution.
 

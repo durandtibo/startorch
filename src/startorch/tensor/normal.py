@@ -18,7 +18,7 @@ from startorch.random import normal, rand_normal, rand_trunc_normal, trunc_norma
 from startorch.tensor.base import BaseTensorGenerator, setup_tensor_generator
 
 if TYPE_CHECKING:
-    from torch import Generator, Tensor
+    import torch
 
 
 class NormalTensorGenerator(BaseTensorGenerator):
@@ -58,7 +58,7 @@ class NormalTensorGenerator(BaseTensorGenerator):
         args = str_indent(str_mapping({"mean": self._mean, "std": self._std}))
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return normal(
             mean=self._mean.generate(size=size, rng=rng),
             std=self._std.generate(size=size, rng=rng),
@@ -102,7 +102,7 @@ class RandNormalTensorGenerator(BaseTensorGenerator):
     def __repr__(self) -> str:
         return f"{self.__class__.__qualname__}(mean={self._mean}, std={self._std})"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return rand_normal(
             size=size,
             mean=self._mean,
@@ -164,7 +164,7 @@ class RandTruncNormalTensorGenerator(BaseTensorGenerator):
             f"min_value={self._min_value}, max_value={self._max_value})"
         )
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return rand_trunc_normal(
             size=size,
             mean=self._mean,
@@ -238,7 +238,7 @@ class TruncNormalTensorGenerator(BaseTensorGenerator):
         )
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
-    def generate(self, size: tuple[int, ...], rng: Generator | None = None) -> Tensor:
+    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
         return trunc_normal(
             mean=self._mean.generate(size=size, rng=rng),
             std=self._std.generate(size=size, rng=rng),
