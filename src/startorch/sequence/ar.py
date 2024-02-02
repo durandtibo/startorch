@@ -7,9 +7,8 @@ __all__ = ["AutoRegressiveSequenceGenerator"]
 
 
 import torch
+from batchtensor.tensor import slice_along_seq
 from coola.utils.format import str_indent, str_mapping
-from redcat import BatchedTensorSeq
-from torch import Generator
 
 from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_generator
 from startorch.tensor.base import BaseTensorGenerator, setup_tensor_generator
@@ -64,7 +63,7 @@ class AutoRegressiveSequenceGenerator(BaseSequenceGenerator):
       (warmup): 10
     )
     >>> generator.generate(seq_len=12, batch_size=4)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
@@ -109,21 +108,21 @@ class AutoRegressiveSequenceGenerator(BaseSequenceGenerator):
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
         order = int(self._order.generate((1,), rng=rng).item())
         if order < 1:
             msg = f"Order must be a positive integer but received {order}"
             raise RuntimeError(msg)
         x = self._value.generate(
             seq_len=seq_len + order * self._warmup, batch_size=batch_size, rng=rng
-        ).data
+        )
         noise = self._noise.generate(
             seq_len=seq_len + order * self._warmup, batch_size=batch_size, rng=rng
-        ).data
+        )
         coeffs = self._coefficient.generate(seq_len=order, batch_size=batch_size, rng=rng).data
         for i in range(order, seq_len + order * self._warmup):
             x[:, i] = torch.fmod(
                 torch.sum(coeffs * x[:, i - order : i], dim=1) + noise[:, i], self._max_abs_value
             )
-        return BatchedTensorSeq(x).slice_along_seq(order * self._warmup)
+        return slice_along_seq(x, order * self._warmup)

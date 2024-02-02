@@ -8,7 +8,10 @@ __all__ = ["hist_sequence", "plot_sequence"]
 from typing import TYPE_CHECKING, Any
 from unittest.mock import Mock
 
-from startorch.utils.batch import merge_batches, scale_batch
+from batchtensor.constants import BATCH_DIM
+from batchtensor.tensor import cat_along_batch, select_along_batch
+
+from startorch.utils.batch import scale_batch
 from startorch.utils.imports import check_matplotlib, is_matplotlib_available
 from startorch.utils.seed import setup_torch_generator
 
@@ -62,7 +65,7 @@ def hist_sequence(
     check_matplotlib()
     rng = setup_torch_generator(rng)
 
-    batch = merge_batches(
+    batch = cat_along_batch(
         [
             sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
             for _ in range(num_batches)
@@ -70,7 +73,7 @@ def hist_sequence(
     )
     batch = scale_batch(batch, scale=scale)
     fig, ax = plt.subplots(figsize=figsize)
-    ax.hist(batch.data.flatten().numpy(), bins=bins, **kwargs)
+    ax.hist(batch.flatten().numpy(), bins=bins, **kwargs)
     return fig
 
 
@@ -116,8 +119,8 @@ def plot_sequence(
     fig, ax = plt.subplots(figsize=figsize)
     for _ in range(num_batches):
         batch = sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
-        for i in range(batch.batch_size):
-            ax.plot(batch.select_along_batch(i).data.flatten().numpy(), marker="o", **kwargs)
+        for i in range(batch.shape[BATCH_DIM]):
+            ax.plot(select_along_batch(batch, i).flatten().numpy(), marker="o", **kwargs)
     ax.set_xscale(xscale)
     ax.set_yscale(yscale)
     return fig

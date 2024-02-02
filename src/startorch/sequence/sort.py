@@ -7,11 +7,12 @@ __all__ = ["SortSequenceGenerator"]
 
 from typing import TYPE_CHECKING
 
+from batchtensor.tensor import sort_along_seq
+
 from startorch.sequence.wrapper import BaseWrapperSequenceGenerator
 
 if TYPE_CHECKING:
-    from redcat import BatchedTensorSeq
-    from torch import Generator
+    import torch
 
     from startorch.sequence.base import BaseSequenceGenerator
 
@@ -36,7 +37,7 @@ class SortSequenceGenerator(BaseWrapperSequenceGenerator):
       (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
     )
     >>> generator.generate(seq_len=12, batch_size=4)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
@@ -50,8 +51,7 @@ class SortSequenceGenerator(BaseWrapperSequenceGenerator):
         self._descending = bool(descending)
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
-        return self._generator.generate(
-            seq_len=seq_len, batch_size=batch_size, rng=rng
-        ).sort_along_seq(self._descending)[0]
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
+        data = self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
+        return sort_along_seq(data, self._descending)[0]

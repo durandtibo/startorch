@@ -5,19 +5,14 @@ from __future__ import annotations
 
 __all__ = ["PoissonSequenceGenerator", "RandPoissonSequenceGenerator"]
 
-from typing import TYPE_CHECKING
 
 import torch
 from coola.utils import str_indent, str_mapping
-from redcat import BatchedTensorSeq
 
 from startorch.random import rand_poisson
 from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_generator
 from startorch.sequence.constant import ConstantSequenceGenerator
 from startorch.utils.conversion import to_tuple
-
-if TYPE_CHECKING:
-    from torch import Generator
 
 
 class PoissonSequenceGenerator(BaseSequenceGenerator):
@@ -42,7 +37,7 @@ class PoissonSequenceGenerator(BaseSequenceGenerator):
       (rate): RandUniformSequenceGenerator(low=1.0, high=2.0, feature_size=(1,))
     )
     >>> generator.generate(seq_len=6, batch_size=2)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
@@ -56,13 +51,11 @@ class PoissonSequenceGenerator(BaseSequenceGenerator):
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
-        return BatchedTensorSeq(
-            torch.poisson(
-                self._rate.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).data,
-                generator=rng,
-            )
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
+        return torch.poisson(
+            self._rate.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).data,
+            generator=rng,
         )
 
     @classmethod
@@ -119,7 +112,7 @@ class RandPoissonSequenceGenerator(BaseSequenceGenerator):
     >>> generator
     RandPoissonSequenceGenerator(rate=1.0, feature_size=(1,))
     >>> generator.generate(seq_len=6, batch_size=2)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
@@ -142,12 +135,10 @@ class RandPoissonSequenceGenerator(BaseSequenceGenerator):
         )
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
-        return BatchedTensorSeq(
-            rand_poisson(
-                size=(batch_size, seq_len) + self._feature_size,
-                rate=self._rate,
-                generator=rng,
-            )
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
+        return rand_poisson(
+            size=(batch_size, seq_len) + self._feature_size,
+            rate=self._rate,
+            generator=rng,
         )

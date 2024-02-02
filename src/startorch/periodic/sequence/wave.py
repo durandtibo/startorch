@@ -16,8 +16,7 @@ from startorch.periodic.sequence import (
 )
 
 if TYPE_CHECKING:
-    from redcat import BatchedTensorSeq
-    from torch import Generator
+    import torch
 
 
 class SineWavePeriodicSequenceGenerator(BasePeriodicSequenceGenerator):
@@ -60,7 +59,7 @@ class SineWavePeriodicSequenceGenerator(BasePeriodicSequenceGenerator):
         )
     )
     >>> generator.generate(seq_len=12, period=4, batch_size=4)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
@@ -83,8 +82,8 @@ class SineWavePeriodicSequenceGenerator(BasePeriodicSequenceGenerator):
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(
-        self, seq_len: int, period: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
+        self, seq_len: int, period: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
         return (
             self._value.generate(seq_len=seq_len, period=period, batch_size=batch_size, rng=rng)
             .mul(2.0 * math.pi / period)

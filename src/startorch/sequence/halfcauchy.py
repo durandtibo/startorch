@@ -13,7 +13,6 @@ __all__ = [
 from typing import TYPE_CHECKING
 
 from coola.utils.format import str_indent, str_mapping
-from redcat import BatchedTensorSeq
 
 from startorch.random import (
     half_cauchy,
@@ -25,7 +24,7 @@ from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_genera
 from startorch.utils.conversion import to_tuple
 
 if TYPE_CHECKING:
-    from torch import Generator
+    import torch
 
 
 class HalfCauchySequenceGenerator(BaseSequenceGenerator):
@@ -46,7 +45,7 @@ class HalfCauchySequenceGenerator(BaseSequenceGenerator):
       (scale): RandUniformSequenceGenerator(low=1.0, high=2.0, feature_size=(1,))
     )
     >>> generator.generate(seq_len=6, batch_size=2)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
@@ -60,13 +59,11 @@ class HalfCauchySequenceGenerator(BaseSequenceGenerator):
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
-        return BatchedTensorSeq(
-            half_cauchy(
-                scale=self._scale.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).data,
-                generator=rng,
-            )
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.tensor:
+        return half_cauchy(
+            scale=self._scale.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).data,
+            generator=rng,
         )
 
 
@@ -89,7 +86,7 @@ class RandHalfCauchySequenceGenerator(BaseSequenceGenerator):
     >>> generator
     RandHalfCauchySequenceGenerator(scale=1.0, feature_size=(1,))
     >>> generator.generate(seq_len=6, batch_size=2)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
@@ -113,14 +110,12 @@ class RandHalfCauchySequenceGenerator(BaseSequenceGenerator):
         )
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
-        return BatchedTensorSeq(
-            rand_half_cauchy(
-                size=(batch_size, seq_len) + self._feature_size,
-                scale=self._scale,
-                generator=rng,
-            )
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
+        return rand_half_cauchy(
+            size=(batch_size, seq_len) + self._feature_size,
+            scale=self._scale,
+            generator=rng,
         )
 
 
@@ -145,7 +140,7 @@ class RandTruncHalfCauchySequenceGenerator(BaseSequenceGenerator):
     >>> generator
     RandTruncHalfCauchySequenceGenerator(scale=1.0, max_value=5.0, feature_size=(1,))
     >>> generator.generate(seq_len=6, batch_size=2)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
@@ -174,15 +169,13 @@ class RandTruncHalfCauchySequenceGenerator(BaseSequenceGenerator):
         )
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
-        return BatchedTensorSeq(
-            rand_trunc_half_cauchy(
-                size=(batch_size, seq_len) + self._feature_size,
-                scale=self._scale,
-                max_value=self._max_value,
-                generator=rng,
-            )
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
+        return rand_trunc_half_cauchy(
+            size=(batch_size, seq_len) + self._feature_size,
+            scale=self._scale,
+            max_value=self._max_value,
+            generator=rng,
         )
 
 
@@ -210,7 +203,7 @@ class TruncHalfCauchySequenceGenerator(BaseSequenceGenerator):
       (max_value): RandUniformSequenceGenerator(low=5.0, high=10.0, feature_size=(1,))
     )
     >>> generator.generate(seq_len=6, batch_size=2)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
@@ -227,14 +220,12 @@ class TruncHalfCauchySequenceGenerator(BaseSequenceGenerator):
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
-        return BatchedTensorSeq(
-            trunc_half_cauchy(
-                scale=self._scale.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).data,
-                max_value=self._max_value.generate(
-                    seq_len=seq_len, batch_size=batch_size, rng=rng
-                ).data,
-                generator=rng,
-            )
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
+        return trunc_half_cauchy(
+            scale=self._scale.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).data,
+            max_value=self._max_value.generate(
+                seq_len=seq_len, batch_size=batch_size, rng=rng
+            ).data,
+            generator=rng,
         )

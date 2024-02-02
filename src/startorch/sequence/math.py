@@ -23,6 +23,7 @@ __all__ = [
 
 from typing import TYPE_CHECKING
 
+from batchtensor.tensor import cumsum_along_seq
 from coola.utils.format import str_indent, str_mapping, str_sequence
 
 from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_generator
@@ -31,8 +32,7 @@ from startorch.sequence.wrapper import BaseWrapperSequenceGenerator
 if TYPE_CHECKING:
     from collections.abc import Sequence
 
-    from redcat import BatchedTensorSeq
-    from torch import Generator
+    import torch
 
 
 class AbsSequenceGenerator(BaseWrapperSequenceGenerator):
@@ -50,14 +50,14 @@ class AbsSequenceGenerator(BaseWrapperSequenceGenerator):
       (sequence): RandNormalSequenceGenerator(mean=0.0, std=1.0, feature_size=(1,))
     )
     >>> generator.generate(seq_len=12, batch_size=4)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
         return self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).abs()
 
 
@@ -85,7 +85,7 @@ class AddSequenceGenerator(BaseSequenceGenerator):
       (1): RandNormalSequenceGenerator(mean=0.0, std=1.0, feature_size=(1,))
     )
     >>> generator.generate(seq_len=12, batch_size=4)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
@@ -101,8 +101,8 @@ class AddSequenceGenerator(BaseSequenceGenerator):
         return f"{self.__class__.__qualname__}(\n  {str_indent(str_sequence(self._sequences))}\n)"
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
         output = self._sequences[0].generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
         for sequence in self._sequences[1:]:
             output.add_(sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng))
@@ -130,7 +130,7 @@ class AddScalarSequenceGenerator(BaseWrapperSequenceGenerator):
       (value): 42.0
     )
     >>> generator.generate(seq_len=12, batch_size=4)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
@@ -148,8 +148,8 @@ class AddScalarSequenceGenerator(BaseWrapperSequenceGenerator):
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
         sequence = self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
         sequence.add_(self._value)
         return sequence
@@ -185,7 +185,7 @@ class ClampSequenceGenerator(BaseWrapperSequenceGenerator):
       (max): 1.0
     )
     >>> generator.generate(seq_len=12, batch_size=4)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
@@ -210,8 +210,8 @@ class ClampSequenceGenerator(BaseWrapperSequenceGenerator):
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
         return self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).clamp(
             min=self._min, max=self._max
         )
@@ -232,17 +232,17 @@ class CumsumSequenceGenerator(BaseWrapperSequenceGenerator):
       (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
     )
     >>> generator.generate(seq_len=12, batch_size=4)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
-        return self._generator.generate(
-            seq_len=seq_len, batch_size=batch_size, rng=rng
-        ).cumsum_along_seq()
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
+        return cumsum_along_seq(
+            self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
+        )
 
 
 class DivSequenceGenerator(BaseSequenceGenerator):
@@ -277,7 +277,7 @@ class DivSequenceGenerator(BaseSequenceGenerator):
       (rounding_mode): None
     )
     >>> generator.generate(seq_len=12, batch_size=4)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
@@ -306,8 +306,8 @@ class DivSequenceGenerator(BaseSequenceGenerator):
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
         return self._dividend.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).div(
             self._divisor.generate(seq_len=seq_len, batch_size=batch_size, rng=rng),
             rounding_mode=self._rounding_mode,
@@ -329,14 +329,14 @@ class ExpSequenceGenerator(BaseWrapperSequenceGenerator):
       (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
     )
     >>> generator.generate(seq_len=12, batch_size=4)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
         return self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).exp()
 
 
@@ -360,7 +360,7 @@ class FmodSequenceGenerator(BaseSequenceGenerator):
       (divisor): 10.0
     )
     >>> generator.generate(seq_len=6, batch_size=2)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
     >>> generator = Fmod(
     ...     dividend=RandUniform(low=-100, high=100), divisor=RandUniform(low=1, high=10)
     ... )
@@ -370,7 +370,7 @@ class FmodSequenceGenerator(BaseSequenceGenerator):
       (divisor): RandUniformSequenceGenerator(low=1.0, high=10.0, feature_size=(1,))
     )
     >>> generator.generate(seq_len=6, batch_size=2)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
@@ -389,8 +389,8 @@ class FmodSequenceGenerator(BaseSequenceGenerator):
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
         seq = self._dividend.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
         divisor = self._divisor
         if isinstance(divisor, BaseSequenceGenerator):
@@ -414,14 +414,14 @@ class LogSequenceGenerator(BaseWrapperSequenceGenerator):
       (sequence): RandUniformSequenceGenerator(low=1.0, high=10.0, feature_size=(1,))
     )
     >>> generator.generate(seq_len=12, batch_size=4)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
         return self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).log()
 
 
@@ -449,7 +449,7 @@ class MulSequenceGenerator(BaseSequenceGenerator):
       (1): RandNormalSequenceGenerator(mean=0.0, std=1.0, feature_size=(1,))
     )
     >>> generator.generate(seq_len=12, batch_size=4)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
@@ -468,8 +468,8 @@ class MulSequenceGenerator(BaseSequenceGenerator):
         return f"{self.__class__.__qualname__}(\n  {str_indent(str_sequence(self._sequences))}\n)"
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
         output = self._sequences[0].generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
         for generator in self._sequences[1:]:
             output.mul_(generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng))
@@ -497,7 +497,7 @@ class MulScalarSequenceGenerator(BaseWrapperSequenceGenerator):
       (value): 2.0
     )
     >>> generator.generate(seq_len=12, batch_size=4)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
@@ -515,8 +515,8 @@ class MulScalarSequenceGenerator(BaseWrapperSequenceGenerator):
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
         sequence = self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
         sequence.mul_(self._value)
         return sequence
@@ -537,14 +537,14 @@ class NegSequenceGenerator(BaseWrapperSequenceGenerator):
       (sequence): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
     )
     >>> generator.generate(seq_len=12, batch_size=4)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
         return -self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
 
 
@@ -563,14 +563,14 @@ class SqrtSequenceGenerator(BaseWrapperSequenceGenerator):
       (sequence): RandUniformSequenceGenerator(low=1.0, high=4.0, feature_size=(1,))
     )
     >>> generator.generate(seq_len=12, batch_size=4)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
         return self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).sqrt()
 
 
@@ -597,7 +597,7 @@ class SubSequenceGenerator(BaseSequenceGenerator):
       (sequence2): RandNormalSequenceGenerator(mean=0.0, std=1.0, feature_size=(1,))
     )
     >>> generator.generate(seq_len=12, batch_size=4)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
@@ -616,8 +616,8 @@ class SubSequenceGenerator(BaseSequenceGenerator):
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
         return self._sequence1.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).sub(
             self._sequence2.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
         )

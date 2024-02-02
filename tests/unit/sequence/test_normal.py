@@ -4,7 +4,6 @@ from unittest.mock import Mock, patch
 
 import pytest
 import torch
-from redcat import BatchedTensorSeq
 
 from startorch.sequence import (
     Normal,
@@ -37,11 +36,9 @@ def test_normal_generate(batch_size: int, seq_len: int, feature_size: int) -> No
         mean=RandUniform(low=-1.0, high=1.0, feature_size=feature_size),
         std=RandUniform(low=1.0, high=2.0, feature_size=feature_size),
     ).generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, feature_size)
-    assert batch.data.dtype == torch.float
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, feature_size)
+    assert batch.dtype == torch.float
 
 
 def test_normal_generate_mock() -> None:
@@ -107,11 +104,9 @@ def test_rand_normal_feature_size_default() -> None:
 @pytest.mark.parametrize("seq_len", SIZES)
 def test_rand_normal_generate_feature_size_default(batch_size: int, seq_len: int) -> None:
     batch = RandNormal().generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, 1)
-    assert batch.data.dtype == torch.float
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, 1)
+    assert batch.dtype == torch.float
 
 
 @pytest.mark.parametrize("batch_size", SIZES)
@@ -121,22 +116,18 @@ def test_rand_normal_generate_feature_size_int(
     batch_size: int, seq_len: int, feature_size: int
 ) -> None:
     batch = RandNormal(feature_size=feature_size).generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, feature_size)
-    assert batch.data.dtype == torch.float
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, feature_size)
+    assert batch.dtype == torch.float
 
 
 @pytest.mark.parametrize("batch_size", SIZES)
 @pytest.mark.parametrize("seq_len", SIZES)
 def test_rand_normal_generate_feature_size_tuple(batch_size: int, seq_len: int) -> None:
     batch = RandNormal(feature_size=(3, 4)).generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, 3, 4)
-    assert batch.data.dtype == torch.float
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, 3, 4)
+    assert batch.dtype == torch.float
 
 
 @pytest.mark.parametrize("mean", [0.0, 1.0])
@@ -228,11 +219,9 @@ def test_rand_trunc_normal_feature_size_default() -> None:
 @pytest.mark.parametrize("seq_len", SIZES)
 def test_rand_trunc_normal_generate_feature_size_default(batch_size: int, seq_len: int) -> None:
     batch = RandTruncNormal().generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, 1)
-    assert batch.data.dtype == torch.float
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, 1)
+    assert batch.dtype == torch.float
     assert batch.min() >= -3.0
     assert batch.max() <= 3.0
 
@@ -246,11 +235,9 @@ def test_rand_trunc_normal_generate_feature_size_int(
     batch = RandTruncNormal(feature_size=feature_size).generate(
         batch_size=batch_size, seq_len=seq_len
     )
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, feature_size)
-    assert batch.data.dtype == torch.float
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, feature_size)
+    assert batch.dtype == torch.float
     assert batch.min() >= -3.0
     assert batch.max() <= 3.0
 
@@ -259,11 +246,9 @@ def test_rand_trunc_normal_generate_feature_size_int(
 @pytest.mark.parametrize("seq_len", SIZES)
 def test_rand_trunc_normal_generate_feature_size_tuple(batch_size: int, seq_len: int) -> None:
     batch = RandTruncNormal(feature_size=(3, 4)).generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, 3, 4)
-    assert batch.data.dtype == torch.float
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, 3, 4)
+    assert batch.dtype == torch.float
     assert batch.min() >= -3.0
     assert batch.max() <= 3.0
 
@@ -330,11 +315,9 @@ def test_trunc_normal_generate(batch_size: int, seq_len: int, feature_size: int)
         min_value=RandUniform(low=-10.0, high=-5.0, feature_size=feature_size),
         max_value=RandUniform(low=5.0, high=10.0, feature_size=feature_size),
     ).generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, feature_size)
-    assert batch.data.dtype == torch.float
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, feature_size)
+    assert batch.dtype == torch.float
 
 
 def test_trunc_normal_generate_mock() -> None:

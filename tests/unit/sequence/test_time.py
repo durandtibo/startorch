@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pytest
-from redcat import BatchedTensorSeq
+import torch
 
 from startorch.sequence import Time
 
@@ -33,9 +33,8 @@ def test_time_str() -> None:
 @pytest.mark.parametrize("seq_len", SIZES)
 def test_time_generate(generator: Time, batch_size: int, seq_len: int) -> None:
     batch = generator.generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, 1)
 
 
 @pytest.mark.parametrize("min_time_diff", [-0.1, -1])

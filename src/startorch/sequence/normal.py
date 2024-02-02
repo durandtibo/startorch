@@ -13,14 +13,13 @@ __all__ = [
 from typing import TYPE_CHECKING
 
 from coola.utils.format import str_indent, str_mapping
-from redcat import BatchedTensorSeq
 
 from startorch.random import normal, rand_normal, rand_trunc_normal, trunc_normal
 from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_generator
 from startorch.utils.conversion import to_tuple
 
 if TYPE_CHECKING:
-    from torch import Generator
+    import torch
 
 
 class NormalSequenceGenerator(BaseSequenceGenerator):
@@ -46,7 +45,7 @@ class NormalSequenceGenerator(BaseSequenceGenerator):
       (std): RandUniformSequenceGenerator(low=1.0, high=2.0, feature_size=(1,))
     )
     >>> generator.generate(seq_len=6, batch_size=2)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
@@ -63,14 +62,12 @@ class NormalSequenceGenerator(BaseSequenceGenerator):
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
-        return BatchedTensorSeq(
-            normal(
-                mean=self._mean.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).data,
-                std=self._std.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).data,
-                generator=rng,
-            )
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
+        return normal(
+            mean=self._mean.generate(seq_len=seq_len, batch_size=batch_size, rng=rng),
+            std=self._std.generate(seq_len=seq_len, batch_size=batch_size, rng=rng),
+            generator=rng,
         )
 
 
@@ -95,7 +92,7 @@ class RandNormalSequenceGenerator(BaseSequenceGenerator):
     >>> generator
     RandNormalSequenceGenerator(mean=0.0, std=1.0, feature_size=(1,))
     >>> generator.generate(seq_len=6, batch_size=2)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
@@ -121,15 +118,13 @@ class RandNormalSequenceGenerator(BaseSequenceGenerator):
         )
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
-        return BatchedTensorSeq(
-            rand_normal(
-                size=(batch_size, seq_len) + self._feature_size,
-                mean=self._mean,
-                std=self._std,
-                generator=rng,
-            )
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
+        return rand_normal(
+            size=(batch_size, seq_len) + self._feature_size,
+            mean=self._mean,
+            std=self._std,
+            generator=rng,
         )
 
 
@@ -158,7 +153,7 @@ class RandTruncNormalSequenceGenerator(BaseSequenceGenerator):
     >>> generator
     RandTruncNormalSequenceGenerator(mean=0.0, std=1.0, min_value=-1.0, max_value=1.0, feature_size=(1,))
     >>> generator.generate(seq_len=6, batch_size=2)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
@@ -192,17 +187,15 @@ class RandTruncNormalSequenceGenerator(BaseSequenceGenerator):
         )
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
-        return BatchedTensorSeq(
-            rand_trunc_normal(
-                size=(batch_size, seq_len) + self._feature_size,
-                mean=self._mean,
-                std=self._std,
-                min_value=self._min_value,
-                max_value=self._max_value,
-                generator=rng,
-            )
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
+        return rand_trunc_normal(
+            size=(batch_size, seq_len) + self._feature_size,
+            mean=self._mean,
+            std=self._std,
+            min_value=self._min_value,
+            max_value=self._max_value,
+            generator=rng,
         )
 
 
@@ -241,7 +234,7 @@ class TruncNormalSequenceGenerator(BaseSequenceGenerator):
       (max_value): RandUniformSequenceGenerator(low=5.0, high=10.0, feature_size=(1,))
     )
     >>> generator.generate(seq_len=6, batch_size=2)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
@@ -273,18 +266,12 @@ class TruncNormalSequenceGenerator(BaseSequenceGenerator):
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
-        return BatchedTensorSeq(
-            trunc_normal(
-                mean=self._mean.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).data,
-                std=self._std.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).data,
-                min_value=self._min_value.generate(
-                    seq_len=seq_len, batch_size=batch_size, rng=rng
-                ).data,
-                max_value=self._max_value.generate(
-                    seq_len=seq_len, batch_size=batch_size, rng=rng
-                ).data,
-                generator=rng,
-            )
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
+        return trunc_normal(
+            mean=self._mean.generate(seq_len=seq_len, batch_size=batch_size, rng=rng),
+            std=self._std.generate(seq_len=seq_len, batch_size=batch_size, rng=rng),
+            min_value=self._min_value.generate(seq_len=seq_len, batch_size=batch_size, rng=rng),
+            max_value=self._max_value.generate(seq_len=seq_len, batch_size=batch_size, rng=rng),
+            generator=rng,
         )

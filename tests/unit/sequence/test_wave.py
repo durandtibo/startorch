@@ -4,7 +4,7 @@ import math
 
 import pytest
 import torch
-from redcat import BatchedTensorSeq
+from coola import objects_are_allclose, objects_are_equal
 
 from startorch.sequence import Cumsum, Full, RandUniform, SineWave
 from startorch.utils.seed import get_torch_generator
@@ -38,23 +38,20 @@ def test_sine_wave_generate(batch_size: int, seq_len: int, feature_size: int) ->
         phase=RandUniform(low=-1.0, high=1.0, feature_size=feature_size),
         amplitude=RandUniform(low=-1.0, high=1.0, feature_size=feature_size),
     ).generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, feature_size)
-    assert batch.data.dtype == torch.float
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, feature_size)
+    assert batch.dtype == torch.float
 
 
 def test_sine_wave_generate_fixed() -> None:
-    assert (
+    assert objects_are_allclose(
         SineWave(
             value=Cumsum(Full(1.0)),
             frequency=Full(1.0),
             phase=Full(0.0),
             amplitude=Full(1.0),
-        )
-        .generate(batch_size=1, seq_len=4)
-        .equal(BatchedTensorSeq(torch.arange(1, 5).mul(2 * math.pi).sin().view(1, 4, 1)))
+        ).generate(batch_size=1, seq_len=4),
+        torch.arange(1, 5).mul(2 * math.pi).sin().view(1, 4, 1),
     )
 
 
@@ -65,8 +62,9 @@ def test_sine_wave_generate_same_random_seed() -> None:
         phase=RandUniform(low=-1.0, high=1.0),
         amplitude=RandUniform(low=-1.0, high=1.0),
     )
-    assert generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1))
+    assert objects_are_equal(
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
     )
 
 
@@ -77,6 +75,7 @@ def test_sine_wave_generate_different_random_seeds() -> None:
         phase=RandUniform(low=-1.0, high=1.0),
         amplitude=RandUniform(low=-1.0, high=1.0),
     )
-    assert not generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(2))
+    assert not objects_are_equal(
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(2)),
     )

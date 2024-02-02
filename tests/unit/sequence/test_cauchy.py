@@ -4,7 +4,7 @@ from unittest.mock import Mock, patch
 
 import pytest
 import torch
-from redcat import BatchedTensorSeq
+from coola import objects_are_equal
 
 from startorch.sequence import (
     Cauchy,
@@ -37,11 +37,9 @@ def test_cauchy_generate(batch_size: int, seq_len: int, feature_size: int) -> No
         loc=RandUniform(low=-1.0, high=1.0, feature_size=feature_size),
         scale=RandUniform(low=1.0, high=2.0, feature_size=feature_size),
     ).generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, feature_size)
-    assert batch.data.dtype == torch.float
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, feature_size)
+    assert batch.dtype == torch.float
 
 
 def test_cauchy_generate_mock() -> None:
@@ -54,15 +52,17 @@ def test_cauchy_generate_mock() -> None:
 
 def test_cauchy_generate_same_random_seed() -> None:
     generator = Cauchy(loc=RandUniform(low=-1.0, high=1.0), scale=RandUniform(low=1.0, high=2.0))
-    assert generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1))
+    assert objects_are_equal(
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
     )
 
 
 def test_cauchy_generate_different_random_seeds() -> None:
     generator = Cauchy(loc=RandUniform(low=-1.0, high=1.0), scale=RandUniform(low=1.0, high=2.0))
-    assert not generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(2))
+    assert not objects_are_equal(
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(2)),
     )
 
 
@@ -107,11 +107,9 @@ def test_rand_cauchy_feature_size_default() -> None:
 @pytest.mark.parametrize("seq_len", SIZES)
 def test_rand_cauchy_generate_feature_size_default(batch_size: int, seq_len: int) -> None:
     batch = RandCauchy().generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, 1)
-    assert batch.data.dtype == torch.float
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, 1)
+    assert batch.dtype == torch.float
 
 
 @pytest.mark.parametrize("batch_size", SIZES)
@@ -121,22 +119,18 @@ def test_rand_cauchy_generate_feature_size_int(
     batch_size: int, seq_len: int, feature_size: int
 ) -> None:
     batch = RandCauchy(feature_size=feature_size).generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, feature_size)
-    assert batch.data.dtype == torch.float
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, feature_size)
+    assert batch.dtype == torch.float
 
 
 @pytest.mark.parametrize("batch_size", SIZES)
 @pytest.mark.parametrize("seq_len", SIZES)
 def test_rand_cauchy_generate_feature_size_tuple(batch_size: int, seq_len: int) -> None:
     batch = RandCauchy(feature_size=(3, 4)).generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, 3, 4)
-    assert batch.data.dtype == torch.float
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, 3, 4)
+    assert batch.dtype == torch.float
 
 
 @pytest.mark.parametrize("loc", [0, 1])
@@ -152,15 +146,17 @@ def test_rand_cauchy_generate_loc_scale(loc: float, scale: float) -> None:
 
 def test_rand_cauchy_generate_same_random_seed() -> None:
     generator = RandCauchy()
-    assert generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1))
+    assert objects_are_equal(
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
     )
 
 
 def test_rand_cauchy_generate_different_random_seeds() -> None:
     generator = RandCauchy()
-    assert not generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(2))
+    assert not objects_are_equal(
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(2)),
     )
 
 
@@ -228,11 +224,9 @@ def test_rand_trunc_cauchy_feature_size_default() -> None:
 @pytest.mark.parametrize("seq_len", SIZES)
 def test_rand_trunc_cauchy_generate_feature_size_default(batch_size: int, seq_len: int) -> None:
     batch = RandTruncCauchy().generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, 1)
-    assert batch.data.dtype == torch.float
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, 1)
+    assert batch.dtype == torch.float
 
 
 @pytest.mark.parametrize("batch_size", SIZES)
@@ -244,22 +238,18 @@ def test_rand_trunc_cauchy_generate_feature_size_int(
     batch = RandTruncCauchy(feature_size=feature_size).generate(
         batch_size=batch_size, seq_len=seq_len
     )
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, feature_size)
-    assert batch.data.dtype == torch.float
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, feature_size)
+    assert batch.dtype == torch.float
 
 
 @pytest.mark.parametrize("batch_size", SIZES)
 @pytest.mark.parametrize("seq_len", SIZES)
 def test_rand_trunc_cauchy_generate_feature_size_tuple(batch_size: int, seq_len: int) -> None:
     batch = RandTruncCauchy(feature_size=(3, 4)).generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, 3, 4)
-    assert batch.data.dtype == torch.float
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, 3, 4)
+    assert batch.dtype == torch.float
 
 
 @pytest.mark.parametrize("loc", [0, 1])
@@ -324,11 +314,9 @@ def test_trunc_cauchy_generate(batch_size: int, seq_len: int, feature_size: int)
         min_value=RandUniform(low=-10.0, high=-5.0, feature_size=feature_size),
         max_value=RandUniform(low=5.0, high=10.0, feature_size=feature_size),
     ).generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, feature_size)
-    assert batch.data.dtype == torch.float
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, feature_size)
+    assert batch.dtype == torch.float
 
 
 def test_trunc_cauchy_generate_mock() -> None:
@@ -351,8 +339,9 @@ def test_trunc_cauchy_generate_same_random_seed() -> None:
         min_value=RandUniform(low=-10.0, high=-5.0),
         max_value=RandUniform(low=5.0, high=10.0),
     )
-    assert generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1))
+    assert objects_are_equal(
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
     )
 
 
@@ -363,6 +352,7 @@ def test_trunc_cauchy_generate_different_random_seeds() -> None:
         min_value=RandUniform(low=-10.0, high=-5.0),
         max_value=RandUniform(low=5.0, high=10.0),
     )
-    assert not generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(2))
+    assert not objects_are_equal(
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(2)),
     )

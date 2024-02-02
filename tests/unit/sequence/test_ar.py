@@ -1,6 +1,8 @@
+from __future__ import annotations
+
 import pytest
 import torch
-from redcat import BatchedTensorSeq
+from coola import objects_are_equal
 
 from startorch.sequence import AutoRegressive, Full, RandNormal, RandUniform
 from startorch.tensor import RandInt
@@ -119,9 +121,7 @@ def test_auto_regressive_generate(batch_size: int, seq_len: int, feature_size: i
         order=RandInt(low=1, high=6),
         max_abs_value=100.0,
     ).generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
+    assert isinstance(batch, torch.Tensor)
     assert batch.shape == (batch_size, seq_len, feature_size)
     assert batch.dtype == torch.float
     assert batch.max() <= 100.0
@@ -148,8 +148,9 @@ def test_auto_regressive_generate_same_random_seed() -> None:
         order=RandInt(low=1, high=6),
         max_abs_value=100.0,
     )
-    assert generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1))
+    assert objects_are_equal(
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
     )
 
 
@@ -161,6 +162,7 @@ def test_auto_regressive_generate_different_random_seeds() -> None:
         order=RandInt(low=1, high=6),
         max_abs_value=100.0,
     )
-    assert not generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)).equal(
-        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(2))
+    assert not objects_are_equal(
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
+        generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(2)),
     )

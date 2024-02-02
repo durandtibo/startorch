@@ -4,7 +4,6 @@ from typing import TYPE_CHECKING
 
 import pytest
 import torch
-from redcat import BatchedTensorSeq
 from torch import Tensor
 
 from startorch.sequence import Multinomial, UniformCategorical
@@ -34,11 +33,9 @@ def test_multinomial_generate_feature_size_default(
     weights: Tensor | Sequence, batch_size: int, seq_len: int
 ) -> None:
     batch = Multinomial(weights).generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, 1)
-    assert batch.data.dtype == torch.long
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, 1)
+    assert batch.dtype == torch.long
     assert batch.min() >= 0
     assert batch.max() < 10
 
@@ -52,11 +49,9 @@ def test_multinomial_generate_feature_size_int(
     batch = Multinomial(torch.ones(10), feature_size=feature_size).generate(
         batch_size=batch_size, seq_len=seq_len
     )
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, feature_size)
-    assert batch.data.dtype == torch.long
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, feature_size)
+    assert batch.dtype == torch.long
     assert batch.min() >= 0
     assert batch.max() < 10
 
@@ -67,11 +62,9 @@ def test_multinomial_generate_feature_size_tuple(batch_size: int, seq_len: int) 
     batch = Multinomial(torch.ones(10), feature_size=(3, 4)).generate(
         batch_size=batch_size, seq_len=seq_len
     )
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, 3, 4)
-    assert batch.data.dtype == torch.long
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, 3, 4)
+    assert batch.dtype == torch.long
     assert batch.min() >= 0
     assert batch.max() < 10
 
@@ -79,11 +72,9 @@ def test_multinomial_generate_feature_size_tuple(batch_size: int, seq_len: int) 
 @pytest.mark.parametrize("num_categories", SIZES)
 def test_multinomial_generate_num_categories(num_categories: int) -> None:
     batch = Multinomial(torch.ones(num_categories)).generate(batch_size=4, seq_len=10)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == 4
-    assert batch.seq_len == 10
-    assert batch.data.shape == (4, 10, 1)
-    assert batch.data.dtype == torch.long
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (4, 10, 1)
+    assert batch.dtype == torch.long
     assert batch.min() >= 0
     assert batch.max() < num_categories
 
@@ -116,11 +107,9 @@ def test_multinomial_generate_predefined_settings(
     generator: Multinomial, batch_size: int, seq_len: int
 ) -> None:
     batch = generator.generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, 1)
-    assert batch.data.dtype == torch.long
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, 1)
+    assert batch.dtype == torch.long
     assert batch.min() >= 0
     assert batch.max() < 10
 
@@ -155,11 +144,9 @@ def test_uniform_categorical_feature_size_default() -> None:
 @pytest.mark.parametrize("seq_len", SIZES)
 def test_uniform_categorical_generate_feature_size_default(batch_size: int, seq_len: int) -> None:
     batch = UniformCategorical(num_categories=50).generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len)
-    assert batch.data.dtype == torch.long
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len)
+    assert batch.dtype == torch.long
     assert batch.min() >= 0
     assert batch.max() < 50
 
@@ -173,11 +160,9 @@ def test_uniform_categorical_generate_feature_size_int(
     batch = UniformCategorical(num_categories=50, feature_size=feature_size).generate(
         batch_size=batch_size, seq_len=seq_len
     )
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, feature_size)
-    assert batch.data.dtype == torch.long
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, feature_size)
+    assert batch.dtype == torch.long
     assert batch.min() >= 0
     assert batch.max() < 50
 
@@ -188,11 +173,9 @@ def test_uniform_categorical_generate_feature_size_tuple(batch_size: int, seq_le
     batch = UniformCategorical(num_categories=50, feature_size=(3, 4)).generate(
         batch_size=batch_size, seq_len=seq_len
     )
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, 3, 4)
-    assert batch.data.dtype == torch.long
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, 3, 4)
+    assert batch.dtype == torch.long
     assert batch.min() >= 0
     assert batch.max() < 50
 

@@ -10,8 +10,7 @@ from typing import TYPE_CHECKING
 from startorch.sequence.wrapper import BaseWrapperSequenceGenerator
 
 if TYPE_CHECKING:
-    from redcat import BatchedTensorSeq
-    from torch import Generator
+    import torch
 
 
 class FloatSequenceGenerator(BaseWrapperSequenceGenerator):
@@ -28,14 +27,14 @@ class FloatSequenceGenerator(BaseWrapperSequenceGenerator):
       (sequence): RandIntSequenceGenerator(low=0, high=10, feature_size=())
     )
     >>> generator.generate(seq_len=6, batch_size=2)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
         return self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).float()
 
 
@@ -53,12 +52,12 @@ class LongSequenceGenerator(BaseWrapperSequenceGenerator):
       (sequence): RandUniformSequenceGenerator(low=0.0, high=10.0, feature_size=(1,))
     )
     >>> generator.generate(seq_len=6, batch_size=2)
-    tensor([[...]], batch_dim=0, seq_dim=1)
+    tensor([[...]])
 
     ```
     """
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
         return self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).long()
