@@ -9,6 +9,7 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from collections.abc import Sequence
 
+    import torch
     from redcat import BatchedTensor
 
 
@@ -51,7 +52,7 @@ def merge_batches(batches: Sequence[BatchedTensor]) -> BatchedTensor:
     return batch
 
 
-def scale_batch(batch: BatchedTensor, scale: str = "identity") -> BatchedTensor:
+def scale_batch(batch: torch.Tensor, scale: str = "identity") -> torch.Tensor:
     r"""Scales a batch.
 
     Args:

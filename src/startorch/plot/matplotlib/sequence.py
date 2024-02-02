@@ -9,9 +9,9 @@ from typing import TYPE_CHECKING, Any
 from unittest.mock import Mock
 
 from batchtensor.constants import BATCH_DIM
-from batchtensor.tensor import select_along_batch
+from batchtensor.tensor import cat_along_batch, select_along_batch
 
-from startorch.utils.batch import merge_batches, scale_batch
+from startorch.utils.batch import scale_batch
 from startorch.utils.imports import check_matplotlib, is_matplotlib_available
 from startorch.utils.seed import setup_torch_generator
 
@@ -65,7 +65,7 @@ def hist_sequence(
     check_matplotlib()
     rng = setup_torch_generator(rng)
 
-    batch = merge_batches(
+    batch = cat_along_batch(
         [
             sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
             for _ in range(num_batches)
