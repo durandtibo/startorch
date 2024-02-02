@@ -16,8 +16,7 @@ from startorch.sequence.uniform import RandUniformSequenceGenerator
 from startorch.sequence.wrapper import BaseWrapperSequenceGenerator
 
 if TYPE_CHECKING:
-    from redcat import BatchedTensorSeq
-    from torch import Generator
+    import torch
 
 
 class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
@@ -47,8 +46,8 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
     """
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
         return self._generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
 
     @classmethod

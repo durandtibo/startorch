@@ -23,6 +23,7 @@ __all__ = [
 
 from typing import TYPE_CHECKING
 
+from batchtensor.tensor import cumsum_along_seq
 from coola.utils.format import str_indent, str_mapping, str_sequence
 
 from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_generator

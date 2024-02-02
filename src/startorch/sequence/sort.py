@@ -7,6 +7,8 @@ __all__ = ["SortSequenceGenerator"]
 
 from typing import TYPE_CHECKING
 
+from batchtensor.tensor import sort_along_seq
+
 from startorch.sequence.wrapper import BaseWrapperSequenceGenerator
 
 if TYPE_CHECKING:
