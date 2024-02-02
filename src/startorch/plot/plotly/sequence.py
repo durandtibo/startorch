@@ -9,6 +9,8 @@ from typing import TYPE_CHECKING, Any
 from unittest.mock import Mock
 
 import numpy as np
+from batchtensor.constants import BATCH_DIM
+from batchtensor.nested import select_along_batch
 
 from startorch.utils.batch import merge_batches, scale_batch
 from startorch.utils.imports import check_plotly, is_plotly_available
@@ -115,7 +117,7 @@ def plot_sequence(
     fig = go.Figure()
     for _ in range(num_batches):
         batch = sequence.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
-        for i in range(batch.batch_size):
-            y = batch.select_along_batch(i).data.flatten().numpy()
+        for i in range(batch.shape[BATCH_DIM]):
+            y = select_along_batch(batch, i).flatten().numpy()
             fig.add_trace(go.Scatter(x=np.arange(y.shape[0]), y=y, **kwargs))
     return fig

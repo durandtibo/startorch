@@ -15,7 +15,6 @@ from startorch.utils.format import str_target_object
 
 if TYPE_CHECKING:
     import torch
-    from redcat import BatchedTensorSeq
 
 logger = logging.getLogger(__name__)
 
@@ -42,7 +41,7 @@ class BaseSequenceGenerator(ABC, metaclass=AbstractFactory):
     @abstractmethod
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
-    ) -> torch.Tensor | BatchedTensorSeq:
+    ) -> torch.Tensor:
         r"""Generate a batch of sequences.
 
         All the sequences in the batch must have the same length.
