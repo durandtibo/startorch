@@ -30,7 +30,7 @@ packages = [
 [tool.poetry.dependencies]
 # Core dependencies
 batchtensor = ">=0.0.1a6,<0.1"
-coola = ">=0.0.20,<0.2"  # TODO: update
+coola = ">=0.1,<0.4"
 objectory = ">=0.0.7,<0.2"
 python = ">=3.9,<3.12"
 torch = ">=2.0,<3.0"
