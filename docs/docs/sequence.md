@@ -119,7 +119,7 @@ tensor([[[ 2.6437],
          [ 3.2380],
          [ 1.3003],
          [ 1.0235],
-         [-4.7955]]], batch_dim=0, seq_dim=1)
+         [-4.7955]]])
 ```
 
 `seq_len` controls the sequence length and `batch_size` controls the number of sequences in the
@@ -189,9 +189,9 @@ Output:
 
 ```textmate
 tensor([[0.7576, 0.2793, 0.4031, 0.7347, 0.0293, 0.7999],
-        [0.3971, 0.7544, 0.5695, 0.4388, 0.6387, 0.5247]], batch_dim=0, seq_dim=1)
+        [0.3971, 0.7544, 0.5695, 0.4388, 0.6387, 0.5247]])
 tensor([[0.7576, 0.2793, 0.4031, 0.7347, 0.0293, 0.7999],
-        [0.3971, 0.7544, 0.5695, 0.4388, 0.6387, 0.5247]], batch_dim=0, seq_dim=1)
+        [0.3971, 0.7544, 0.5695, 0.4388, 0.6387, 0.5247]])
 ```
 
 The two generated tensors have the same values.
@@ -210,11 +210,9 @@ number 42. The following piece of code shows how to implement this sequence gene
 from __future__ import annotations
 
 import torch
-from redcat import BatchedTensorSeq
-from torch import Generator
 
-from startorch.utils.conversion import to_tuple
 from startorch.sequence import BaseSequenceGenerator
+from startorch.utils.conversion import to_tuple
 
 
 class FortyTwoSequenceGenerator(BaseSequenceGenerator):
@@ -229,11 +227,9 @@ class FortyTwoSequenceGenerator(BaseSequenceGenerator):
         return f"{self.__class__.__qualname__}(feature_size={self._feature_size})"
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
-        return BatchedTensorSeq(
-            torch.full((batch_size, seq_len) + self._feature_size, 42.0)
-        )
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
+        return torch.full((batch_size, seq_len) + self._feature_size, 42.0)
 
 
 generator = FortyTwoSequenceGenerator(feature_size=())
@@ -246,7 +242,7 @@ Output:
 ```textmate
 FortyTwoSequenceGenerator(feature_size=())
 tensor([[42., 42., 42., 42., 42., 42.],
-        [42., 42., 42., 42., 42., 42.]], batch_dim=0, seq_dim=1)
+        [42., 42., 42., 42., 42., 42.]])
 ```
 
 This implementation allows to configure the feature size.

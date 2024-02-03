@@ -170,33 +170,6 @@ jobs:
         run: |
           python tests/package_checks.py
 
-  redcat:
-    runs-on: ${{ matrix.os }}
-    timeout-minutes: 10
-    strategy:
-      max-parallel: 8
-      fail-fast: false
-      matrix:
-        os: [ ubuntu-latest ]
-        python-version: [ '3.11', '3.10', '3.9' ]
-        redcat-version: [ 0.0.18, 0.0.17, 0.0.16 ]
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python-version }}
-
-      - name: Install package
-        run: |
-          pip install startorch redcat==${{ matrix.redcat-version }}
-
-      - name: Run some checks
-        run: |
-          python tests/package_checks.py
 
   torch:
     runs-on: ${{ matrix.os }}

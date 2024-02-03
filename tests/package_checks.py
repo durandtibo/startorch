@@ -3,14 +3,29 @@ from __future__ import annotations
 import logging
 
 import torch
-from redcat import BatchedTensorSeq
 from torch import Tensor
 
+from startorch import constants as ct
+from startorch.example import CirclesClassification
 from startorch.random import rand_uniform
 from startorch.sequence import RandUniform as SRandUniform
 from startorch.tensor import RandUniform as TRandUniform
 
 logger = logging.getLogger(__name__)
+
+
+def check_example() -> None:
+    logger.info("Checking startorch.example package...")
+    generator = CirclesClassification()
+    data = generator.generate(batch_size=12)
+    assert isinstance(data, dict)
+    assert len(data) == 2
+    assert isinstance(data[ct.TARGET], torch.Tensor)
+    assert data[ct.TARGET].shape == (12,)
+    assert data[ct.TARGET].dtype == torch.long
+    assert isinstance(data[ct.FEATURE], torch.Tensor)
+    assert data[ct.FEATURE].shape == (12, 2)
+    assert data[ct.FEATURE].dtype == torch.float
 
 
 def check_random() -> None:
@@ -22,9 +37,8 @@ def check_sequence() -> None:
     logger.info("Checking startorch.sequence package...")
     generator = SRandUniform()
     seq = generator.generate(seq_len=12, batch_size=4)
-    assert isinstance(seq, BatchedTensorSeq)
-    assert seq.batch_size == 4
-    assert seq.seq_len == 12
+    assert isinstance(seq, torch.Tensor)
+    assert seq.shape == (4, 12, 1)
 
 
 def check_tensor() -> None:

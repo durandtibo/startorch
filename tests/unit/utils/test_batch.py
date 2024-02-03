@@ -2,44 +2,8 @@ from __future__ import annotations
 
 import pytest
 import torch
-from redcat import BatchedTensor, BatchedTensorSeq
 
-from startorch.utils.batch import merge_batches, scale_batch
-
-BATCH_CLASSES = (BatchedTensor, BatchedTensorSeq)
-
-###################################
-#     Tests for merge_batches     #
-###################################
-
-
-def test_merge_batches_empty() -> None:
-    with pytest.raises(RuntimeError, match="No batch is provided"):
-        merge_batches([])
-
-
-@pytest.mark.parametrize("cls", BATCH_CLASSES)
-def test_merge_batches(cls: type[BatchedTensor]) -> None:
-    assert merge_batches(
-        [
-            cls(torch.arange(6).view(2, 3)),
-            cls(torch.ones(2, 3)),
-            cls(torch.zeros(1, 3)),
-        ]
-    ).equal(
-        cls(
-            torch.tensor(
-                [
-                    [0.0, 1.0, 2.0],
-                    [3.0, 4.0, 5.0],
-                    [1.0, 1.0, 1.0],
-                    [1.0, 1.0, 1.0],
-                    [0.0, 0.0, 0.0],
-                ]
-            )
-        )
-    )
-
+from startorch.utils.batch import scale_batch
 
 #################################
 #     Tests for scale_batch     #
