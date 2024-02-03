@@ -1,5 +1,7 @@
 r"""Contain the important constant values used in the library."""
 
+from __future__ import annotations
+
 __all__ = [
     "BATCH_SIZE",
     "FEATURE",

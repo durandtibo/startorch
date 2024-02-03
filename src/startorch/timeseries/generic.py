@@ -13,7 +13,7 @@ from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_genera
 from startorch.timeseries.base import BaseTimeSeriesGenerator
 
 if TYPE_CHECKING:
-    from collections.abc import Hashable
+    from collections.abc import Hashable, Mapping
 
     import torch
 
@@ -43,7 +43,7 @@ class TimeSeriesGenerator(BaseTimeSeriesGenerator):
     ```
     """
 
-    def __init__(self, sequences: dict[str, BaseSequenceGenerator | dict]) -> None:
+    def __init__(self, sequences: Mapping[str, BaseSequenceGenerator | dict]) -> None:
         super().__init__()
         self._sequences = {
             key: setup_sequence_generator(generator) for key, generator in sequences.items()

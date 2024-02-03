@@ -2,7 +2,7 @@ r"""Contain utility functions to merge batches."""
 
 from __future__ import annotations
 
-__all__ = ["merge_timeseries_by_time"]
+__all__ = ["merge_by_time"]
 
 from typing import TYPE_CHECKING
 
@@ -17,7 +17,7 @@ if TYPE_CHECKING:
     import torch
 
 
-def merge_timeseries_by_time(
+def merge_by_time(
     timeseries: Sequence[dict[Hashable, torch.Tensor]], time_key: str = ct.TIME
 ) -> dict[Hashable, torch.Tensor]:
     r"""Merge multiple time series by using the time.
@@ -56,8 +56,8 @@ def merge_timeseries_by_time(
     ```pycon
     >>> import torch
     >>> from startorch import constants as ct
-    >>> from startorch.timeseries.utils import merge_timeseries_by_time
-    >>> batch = merge_timeseries_by_time(
+    >>> from startorch.timeseries.utils import merge_by_time
+    >>> batch = merge_by_time(
     ...     [
     ...         {
     ...             ct.TIME: torch.tensor([[[5], [10], [15], [20], [25]]], dtype=torch.float),

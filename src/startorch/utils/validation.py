@@ -4,9 +4,9 @@ from __future__ import annotations
 
 __all__ = [
     "check_feature_size",
+    "check_integer_ge",
     "check_interval",
     "check_num_examples",
-    "check_integer_ge",
     "check_std",
 ]
 

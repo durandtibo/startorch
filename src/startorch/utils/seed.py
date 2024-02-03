@@ -41,7 +41,7 @@ def get_torch_generator(
         device: Specifies the desired device for the generator.
 
     Returns:
-        ``torch.Generator``
+        A ``torch.Generator`` object.
 
     Example usage:
 

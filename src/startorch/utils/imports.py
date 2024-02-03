@@ -20,7 +20,7 @@ def check_matplotlib() -> None:
     r"""Check if the ``matplotlib`` package is installed.
 
     Raises:
-        RuntimeError if the ``matplotlib`` package is not installed.
+        RuntimeError: if the ``matplotlib`` package is not installed.
 
     Example usage:
 
