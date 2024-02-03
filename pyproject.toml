@@ -29,12 +29,11 @@ packages = [
 
 [tool.poetry.dependencies]
 # Core dependencies
-coola = ">=0.0.20,<0.2"  # TODO: update
+batchtensor = ">=0.0.1a6,<0.1"
+coola = ">=0.1,<0.4"
 objectory = ">=0.0.7,<0.2"
 python = ">=3.9,<3.12"
-redcat = ">=0.0.16,<0.1"
 torch = ">=2.0,<3.0"
-batchtensor = ">=0.0.1a6,<0.1"
 
 # Optional dependencies
 matplotlib = { version = ">=3.6,<4.0", optional = true }
