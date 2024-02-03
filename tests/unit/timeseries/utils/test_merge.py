@@ -3,16 +3,16 @@ import torch
 from coola import objects_are_equal
 
 from startorch import constants as ct
-from startorch.timeseries.utils import merge_timeseries_by_time
+from startorch.timeseries.utils import merge_by_time
 
 #############################################
-#    Tests for merge_timeseries_by_time     #
+#    Tests for merge_by_time     #
 #############################################
 
 
-def test_merge_timeseries_by_time_batch_size_1() -> None:
+def test_merge_by_time_batch_size_1() -> None:
     assert objects_are_equal(
-        merge_timeseries_by_time(
+        merge_by_time(
             [
                 {
                     ct.TIME: torch.tensor([[[5], [10], [15], [20], [25]]], dtype=torch.float),
@@ -33,9 +33,9 @@ def test_merge_timeseries_by_time_batch_size_1() -> None:
     )
 
 
-def test_merge_timeseries_by_time_batch_size_2() -> None:
+def test_merge_by_time_batch_size_2() -> None:
     assert objects_are_equal(
-        merge_timeseries_by_time(
+        merge_by_time(
             [
                 {
                     ct.TIME: torch.tensor(
@@ -76,9 +76,9 @@ def test_merge_timeseries_by_time_batch_size_2() -> None:
     )
 
 
-def test_merge_timeseries_by_time_time_feature_0d() -> None:
+def test_merge_by_time_time_feature_0d() -> None:
     assert objects_are_equal(
-        merge_timeseries_by_time(
+        merge_by_time(
             [
                 {
                     ct.TIME: torch.tensor(
@@ -113,9 +113,9 @@ def test_merge_timeseries_by_time_time_feature_0d() -> None:
     )
 
 
-def test_merge_timeseries_by_time_only_time_feature() -> None:
+def test_merge_by_time_only_time_feature() -> None:
     assert objects_are_equal(
-        merge_timeseries_by_time(
+        merge_by_time(
             [
                 {
                     ct.TIME: torch.tensor([[[5], [10], [15], [20], [25]]], dtype=torch.float),
@@ -133,14 +133,14 @@ def test_merge_timeseries_by_time_only_time_feature() -> None:
     )
 
 
-def test_merge_timeseries_by_time_empty() -> None:
+def test_merge_by_time_empty() -> None:
     with pytest.raises(RuntimeError, match="No time series is provided so it is not possible"):
-        merge_timeseries_by_time([])
+        merge_by_time([])
 
 
-def test_merge_timeseries_by_time_missing_time_key() -> None:
+def test_merge_by_time_missing_time_key() -> None:
     with pytest.raises(KeyError, match="The key time is not in batch. Available keys are:"):
-        merge_timeseries_by_time(
+        merge_by_time(
             [
                 {
                     "key": torch.tensor([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),

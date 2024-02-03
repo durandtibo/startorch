@@ -14,7 +14,7 @@ from startorch.timeseries.base import (
     BaseTimeSeriesGenerator,
     setup_timeseries_generator,
 )
-from startorch.timeseries.utils import merge_timeseries_by_time
+from startorch.timeseries.utils import merge_by_time
 
 if TYPE_CHECKING:
     from collections.abc import Hashable, Sequence
@@ -82,5 +82,5 @@ class MergeTimeSeriesGenerator(BaseTimeSeriesGenerator):
             generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
             for generator in self._generators
         ]
-        data = merge_timeseries_by_time(timeseries, time_key=self._time_key)
+        data = merge_by_time(timeseries, time_key=self._time_key)
         return slice_along_seq(data, stop=seq_len)
