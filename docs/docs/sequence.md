@@ -8,14 +8,14 @@ This page does not present the implementation of the builtin sequence generators
 
 The main objects to generate synthetic sequences are the sequence generators.
 The API of the sequence generator is defined in `BaseSequenceGenerator`.
-Note that `startorch` generates sequence by batch to be more efficient.
+Note that `startorch` generates sequences by batch to be more efficient.
 It is not possible to generate a single sequence, but it is possible to generate a batch of one
 sequence.
 
 ## Builtin sequence generators
 
 `startorch` has a lot of builtin sequence generators.
-Below is a non exhaustive list of the sequence generators:
+Below is a non-exhaustive list of the sequence generators:
 
 - `Abs`
 - `Acosh`
