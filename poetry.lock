@@ -3727,4 +3727,4 @@ all = ["matplotlib", "plotly"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.13"
-content-hash = "d74886c346a95277db5739209dc8095adc2ffc187d830108274f373f4b3dc49e"
+content-hash = "3f4f088b41af89da1fbc040449bbf65c3aa52ffdf1c5df2e08f74a1d21b7e397"
