@@ -10,14 +10,14 @@ from startorch.example import CirclesClassification
 from startorch.random import rand_uniform
 from startorch.sequence import RandUniform as SRandUniform
 from startorch.tensor import RandUniform as TRandUniform
+from startorch.timeseries import TimeSeries
 
 logger = logging.getLogger(__name__)
 
 
 def check_example() -> None:
     logger.info("Checking startorch.example package...")
-    generator = CirclesClassification()
-    data = generator.generate(batch_size=12)
+    data = CirclesClassification().generate(batch_size=12)
     assert isinstance(data, dict)
     assert len(data) == 2
     assert isinstance(data[ct.TARGET], torch.Tensor)
@@ -35,24 +35,38 @@ def check_random() -> None:
 
 def check_sequence() -> None:
     logger.info("Checking startorch.sequence package...")
-    generator = SRandUniform()
-    seq = generator.generate(seq_len=12, batch_size=4)
+    seq = SRandUniform().generate(seq_len=12, batch_size=4)
     assert isinstance(seq, torch.Tensor)
     assert seq.shape == (4, 12, 1)
 
 
 def check_tensor() -> None:
     logger.info("Checking startorch.tensor package...")
-    generator = TRandUniform()
-    seq = generator.generate(size=(4, 12))
-    assert isinstance(seq, Tensor)
-    assert seq.shape == (4, 12)
+    tensor = TRandUniform().generate(size=(4, 12))
+    assert isinstance(tensor, Tensor)
+    assert tensor.shape == (4, 12)
+
+
+def check_timeseries() -> None:
+    logger.info("Checking startorch.timeseries package...")
+    data = TimeSeries({"value": SRandUniform(), "time": SRandUniform()}).generate(
+        seq_len=12, batch_size=4
+    )
+    assert isinstance(data, dict)
+    assert len(data) == 2
+    assert isinstance(data["value"], torch.Tensor)
+    assert data["value"].shape == (4, 12, 1)
+    assert data["value"].dtype == torch.float
+    assert isinstance(data["time"], torch.Tensor)
+    assert data["time"].shape == (4, 12, 1)
+    assert data["time"].dtype == torch.float
 
 
 def main() -> None:
     check_random()
     check_sequence()
     check_tensor()
+    check_timeseries()
 
 
 if __name__ == "__main__":
