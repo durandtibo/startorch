@@ -1,8 +1,7 @@
 from __future__ import annotations
 
+import pytest
 import torch
-from pytest import mark
-from redcat import BatchedTensorSeq
 
 from startorch.sequence import (
     Acosh,
@@ -17,7 +16,7 @@ from startorch.sequence import (
 )
 from startorch.utils.seed import get_torch_generator
 
-SIZES = (1, 2, 4)
+SIZES = [1, 2, 4]
 
 
 ###########################
@@ -29,14 +28,14 @@ def test_acosh_str() -> None:
     assert str(Acosh(RandUniform())).startswith("AcoshSequenceGenerator(")
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_acosh_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     assert (
         Acosh(Full(value=1.0, feature_size=feature_size))
         .generate(batch_size=batch_size, seq_len=seq_len)
-        .allclose(BatchedTensorSeq(torch.full((batch_size, seq_len, feature_size), 0.0)))
+        .allclose(torch.full((batch_size, seq_len, feature_size), 0.0))
     )
 
 
@@ -63,16 +62,14 @@ def test_asinh_str() -> None:
     assert str(Asinh(RandUniform())).startswith("AsinhSequenceGenerator(")
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_asinh_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     assert (
         Asinh(Full(value=1.0, feature_size=feature_size))
         .generate(batch_size=batch_size, seq_len=seq_len)
-        .allclose(
-            BatchedTensorSeq(torch.full((batch_size, seq_len, feature_size), 0.881373587019543))
-        )
+        .allclose(torch.full((batch_size, seq_len, feature_size), 0.881373587019543))
     )
 
 
@@ -99,16 +96,14 @@ def test_atanh_str() -> None:
     assert str(Atanh(RandUniform())).startswith("AtanhSequenceGenerator(")
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_atanh_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     assert (
         Atanh(Full(value=0.42, feature_size=feature_size))
         .generate(batch_size=batch_size, seq_len=seq_len)
-        .allclose(
-            BatchedTensorSeq(torch.full((batch_size, seq_len, feature_size), 0.44769202352742066))
-        )
+        .allclose(torch.full((batch_size, seq_len, feature_size), 0.44769202352742066))
     )
 
 
@@ -135,14 +130,14 @@ def test_cosh_str() -> None:
     assert str(Cosh(RandUniform())).startswith("CoshSequenceGenerator(")
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_cosh_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     assert (
         Cosh(Full(value=0.0, feature_size=feature_size))
         .generate(batch_size=batch_size, seq_len=seq_len)
-        .allclose(BatchedTensorSeq(torch.full((batch_size, seq_len, feature_size), 1.0)))
+        .allclose(torch.full((batch_size, seq_len, feature_size), 1.0))
     )
 
 
@@ -169,16 +164,14 @@ def test_sinh_str() -> None:
     assert str(Sinh(RandUniform())).startswith("SinhSequenceGenerator(")
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_sinh_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     assert (
         Sinh(Full(value=1.0, feature_size=feature_size))
         .generate(batch_size=batch_size, seq_len=seq_len)
-        .allclose(
-            BatchedTensorSeq(torch.full((batch_size, seq_len, feature_size), 1.1752011936438014))
-        )
+        .allclose(torch.full((batch_size, seq_len, feature_size), 1.1752011936438014))
     )
 
 
@@ -205,16 +198,14 @@ def test_tanh_str() -> None:
     assert str(Tanh(RandUniform())).startswith("TanhSequenceGenerator(")
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("feature_size", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("feature_size", SIZES)
 def test_tanh_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
     assert (
         Tanh(Full(value=1.0, feature_size=feature_size))
         .generate(batch_size=batch_size, seq_len=seq_len)
-        .allclose(
-            BatchedTensorSeq(torch.full((batch_size, seq_len, feature_size), 0.7615941559557649))
-        )
+        .allclose(torch.full((batch_size, seq_len, feature_size), 0.7615941559557649))
     )
 
 

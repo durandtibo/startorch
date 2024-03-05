@@ -1,7 +1,8 @@
+from __future__ import annotations
+
+import pytest
 import torch
 from coola import objects_are_equal
-from pytest import mark
-from redcat import BatchDict, BatchedTensorSeq
 
 from startorch import constants as ct
 from startorch.sequence import RandNormal, RandUniform
@@ -9,7 +10,7 @@ from startorch.timeseries import MultinomialChoice, TimeSeries
 from startorch.utils.seed import get_torch_generator
 from startorch.utils.weight import GENERATOR, WEIGHT
 
-SIZES = (1, 2)
+SIZES = (1, 2, 4)
 
 
 #######################################
@@ -62,8 +63,8 @@ def test_multinomial_choice_weights() -> None:
     )._weights.equal(torch.tensor([2.0, 1.0, 3.0]))
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
 def test_multinomial_choice_generate(batch_size: int, seq_len: int) -> None:
     batch = MultinomialChoice(
         (
@@ -77,21 +78,16 @@ def test_multinomial_choice_generate(batch_size: int, seq_len: int) -> None:
             },
         ),
     ).generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchDict)
-    assert batch.batch_size == batch_size
-    assert len(batch.data) == 2
+    assert isinstance(batch, dict)
+    assert len(batch) == 2
 
-    batch_value = batch.data[ct.VALUE]
-    assert isinstance(batch_value, BatchedTensorSeq)
-    assert batch_value.batch_size == batch_size
-    assert batch_value.seq_len == seq_len
+    batch_value = batch[ct.VALUE]
+    assert isinstance(batch_value, torch.Tensor)
     assert batch_value.data.shape == (batch_size, seq_len, 1)
     assert batch_value.data.dtype == torch.float
 
-    batch_time = batch.data[ct.TIME]
-    assert isinstance(batch_time, BatchedTensorSeq)
-    assert batch_time.batch_size == batch_size
-    assert batch_time.seq_len == seq_len
+    batch_time = batch[ct.TIME]
+    assert isinstance(batch_time, torch.Tensor)
     assert batch_time.data.shape == (batch_size, seq_len, 1)
     assert batch_time.data.dtype == torch.float
 

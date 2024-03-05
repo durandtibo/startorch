@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+import pytest
 import torch
-from pytest import mark
 
 from startorch.utils.tensor import shapes_are_equal
 
@@ -18,7 +18,7 @@ def test_shapes_are_equal_1_tensor() -> None:
     assert shapes_are_equal([torch.rand(2, 3)])
 
 
-@mark.parametrize("shape", ((4,), (2, 3), (2, 3, 4)))
+@pytest.mark.parametrize("shape", [(4,), (2, 3), (2, 3, 4)])
 def test_shapes_are_equal_true_2_tensors(shape: tuple[int, ...]) -> None:
     assert shapes_are_equal([torch.rand(*shape), torch.rand(*shape)])
 

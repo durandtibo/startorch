@@ -3,8 +3,8 @@ from __future__ import annotations
 from unittest.mock import patch
 
 import numpy as np
+import pytest
 import torch
-from pytest import mark, raises
 
 from startorch.plot.matplotlib import hist_feature
 from startorch.testing import matplotlib_available
@@ -19,9 +19,15 @@ if is_matplotlib_available():
 
 
 @matplotlib_available
-@mark.parametrize(
+@pytest.mark.parametrize(
     "features",
-    (torch.ones(2, 3), np.zeros((2, 3)), np.ones((6, 1)), np.ones((6, 2)), np.ones((6, 6))),
+    [
+        torch.ones(2, 3),
+        np.zeros((2, 3)),
+        np.ones((6, 1)),
+        np.ones((6, 2)),
+        np.ones((6, 6)),
+    ],
 )
 def test_hist_feature(features: torch.Tensor | np.ndarray) -> None:
     assert isinstance(hist_feature(features), plt.Figure)
@@ -29,13 +35,13 @@ def test_hist_feature(features: torch.Tensor | np.ndarray) -> None:
 
 @matplotlib_available
 def test_hist_feature_incorrect_feature_dims_1() -> None:
-    with raises(RuntimeError, match="Expected a 2D array/tensor but received .* dimensions"):
+    with pytest.raises(RuntimeError, match="Expected a 2D array/tensor but received .* dimensions"):
         hist_feature(np.ones((2,)))
 
 
 @matplotlib_available
 def test_hist_feature_incorrect_feature_dims_3() -> None:
-    with raises(RuntimeError, match="Expected a 2D array/tensor but received .* dimensions"):
+    with pytest.raises(RuntimeError, match="Expected a 2D array/tensor but received .* dimensions"):
         hist_feature(np.ones((2, 3, 4)))
 
 
@@ -46,7 +52,7 @@ def test_hist_feature_feature_names() -> None:
 
 @matplotlib_available
 def test_hist_feature_incorrect_not_enough_feature_names() -> None:
-    with raises(
+    with pytest.raises(
         RuntimeError,
         match="The number of features .* does not match with the number of feature names",
     ):
@@ -55,7 +61,7 @@ def test_hist_feature_incorrect_not_enough_feature_names() -> None:
 
 @matplotlib_available
 def test_hist_feature_incorrect_too_many_feature_names() -> None:
-    with raises(
+    with pytest.raises(
         RuntimeError,
         match="The number of features .* does not match with the number of feature names",
     ):
@@ -64,5 +70,5 @@ def test_hist_feature_incorrect_too_many_feature_names() -> None:
 
 @patch("startorch.utils.imports.is_matplotlib_available", lambda *args, **kwargs: False)
 def test_hist_feature_no_matplotlib() -> None:
-    with raises(RuntimeError, match="`matplotlib` package is required but not installed."):
+    with pytest.raises(RuntimeError, match="`matplotlib` package is required but not installed."):
         hist_feature(np.ones((2, 3)))

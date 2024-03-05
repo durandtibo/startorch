@@ -1,3 +1,6 @@
+r"""Contain example generators to generate regression data using the
+Friedman patterns."""
+
 from __future__ import annotations
 
 __all__ = [
@@ -12,49 +15,42 @@ __all__ = [
 import math
 
 import torch
-from redcat import BatchDict, BatchedTensor
 
 from startorch import constants as ct
 from startorch.example.base import BaseExampleGenerator
-from startorch.example.utils import check_feature_size, check_num_examples, check_std
 from startorch.random import rand_normal, rand_uniform
+from startorch.utils.validation import check_feature_size, check_num_examples, check_std
 
 
-class Friedman1RegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
-    r"""Implements the "Friedman #1" regression example generator.
+class Friedman1RegressionExampleGenerator(BaseExampleGenerator):
+    r"""Implement the "Friedman #1" regression example generator.
 
     The implementation is based on
     https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_friedman1.html
 
     Args:
-    ----
-        feature_size (int, optional): Specifies the feature size.
-            The feature size has to be greater than or equal to 5.
-            Out of all features, only 5 are actually used to compute
-            the targets. The remaining features are independent of
-            targets. Default: ``10``
-        noise_std (float, optional): Specifies the standard deviation
-            of the Gaussian noise. Default: ``0.0``
+        feature_size: Specifies the feature size. The feature size has
+            to be greater than or equal to 5. Out of all features,
+            only 5 are actually used to compute the targets.
+            The remaining features are independent of targets.
+        noise_std: Specifies the standard deviation of the Gaussian
+            noise.
 
     Raises:
-    ------
-        ValueError if one of the parameters is not valid.
-
+        ValueError: if one of the parameters is not valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.example import Friedman1Regression
+    >>> generator = Friedman1Regression(feature_size=6)
+    >>> generator
+    Friedman1RegressionExampleGenerator(feature_size=6, noise_std=0.0)
+    >>> batch = generator.generate(batch_size=10)
+    >>> batch
+    {'target': tensor([...]), 'feature': tensor([[...]])}
 
-        >>> from startorch.example import Friedman1Regression
-        >>> generator = Friedman1Regression(feature_size=6)
-        >>> generator
-        Friedman1RegressionExampleGenerator(feature_size=6, noise_std=0.0)
-        >>> batch = generator.generate(batch_size=10)
-        >>> batch
-        BatchDict(
-          (target): tensor([...], batch_dim=0)
-          (feature): tensor([[...]], batch_dim=0)
-        )
+    ```
     """
 
     def __init__(self, feature_size: int = 10, noise_std: float = 0.0) -> None:
@@ -73,17 +69,17 @@ class Friedman1RegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
 
     @property
     def feature_size(self) -> int:
-        r"""``int``: The feature size when the data are created."""
+        r"""The feature size when the data are created."""
         return self._feature_size
 
     @property
     def noise_std(self) -> float:
-        r"""``float``: The standard deviation of the Gaussian noise."""
+        r"""The standard deviation of the Gaussian noise."""
         return self._noise_std
 
     def generate(
         self, batch_size: int = 1, rng: torch.Generator | None = None
-    ) -> BatchDict[BatchedTensor]:
+    ) -> dict[str, torch.Tensor]:
         return make_friedman1_regression(
             num_examples=batch_size,
             feature_size=self._feature_size,
@@ -92,41 +88,36 @@ class Friedman1RegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
         )
 
 
-class Friedman2RegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
-    r"""Implements the "Friedman #2" regression example generator.
+class Friedman2RegressionExampleGenerator(BaseExampleGenerator):
+    r"""Implement the "Friedman #2" regression example generator.
 
     The implementation is based on
     https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_friedman2.html
 
     Args:
-    ----
-        feature_size (int, optional): Specifies the feature size.
+        feature_size: Specifies the feature size.
             The feature size has to be greater than or equal to 4.
             Out of all features, only 4 are actually used to compute
             the targets. The remaining features are independent of
-            targets. Default: ``4``
-        noise_std (float, optional): Specifies the standard deviation
-            of the Gaussian noise. Default: ``0.0``
+            targets.
+        noise_std: Specifies the standard deviation of the Gaussian
+            noise.
 
     Raises:
-    ------
-        ValueError if one of the parameters is not valid.
-
+        ValueError: if one of the parameters is not valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.example import Friedman2Regression
+    >>> generator = Friedman2Regression(feature_size=6)
+    >>> generator
+    Friedman2RegressionExampleGenerator(feature_size=6, noise_std=0.0)
+    >>> batch = generator.generate(batch_size=10)
+    >>> batch
+    {'target': tensor([...]), 'feature': tensor([[...]])}
 
-        >>> from startorch.example import Friedman2Regression
-        >>> generator = Friedman2Regression(feature_size=6)
-        >>> generator
-        Friedman2RegressionExampleGenerator(feature_size=6, noise_std=0.0)
-        >>> batch = generator.generate(batch_size=10)
-        >>> batch
-        BatchDict(
-          (target): tensor([...], batch_dim=0)
-          (feature): tensor([[...]], batch_dim=0)
-        )
+    ```
     """
 
     def __init__(self, feature_size: int = 4, noise_std: float = 0.0) -> None:
@@ -145,17 +136,17 @@ class Friedman2RegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
 
     @property
     def feature_size(self) -> int:
-        r"""``int``: The feature size when the data are created."""
+        r"""The feature size when the data are created."""
         return self._feature_size
 
     @property
     def noise_std(self) -> float:
-        r"""``float``: The standard deviation of the Gaussian noise."""
+        r"""The standard deviation of the Gaussian noise."""
         return self._noise_std
 
     def generate(
         self, batch_size: int = 1, rng: torch.Generator | None = None
-    ) -> BatchDict[BatchedTensor]:
+    ) -> dict[str, torch.Tensor]:
         return make_friedman2_regression(
             num_examples=batch_size,
             feature_size=self._feature_size,
@@ -164,41 +155,36 @@ class Friedman2RegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
         )
 
 
-class Friedman3RegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
-    r"""Implements the "Friedman #3" regression example generator.
+class Friedman3RegressionExampleGenerator(BaseExampleGenerator):
+    r"""Implement the "Friedman #3" regression example generator.
 
     The implementation is based on
     https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_friedman3.html
 
     Args:
-    ----
-        feature_size (int, optional): Specifies the feature size.
+        feature_size: Specifies the feature size.
             The feature size has to be greater than or equal to 4.
             Out of all features, only 4 are actually used to compute
             the targets. The remaining features are independent of
-            targets. Default: ``4``
-        noise_std (float, optional): Specifies the standard deviation
-            of the Gaussian noise. Default: ``0.0``
+            targets.
+        noise_std: Specifies the standard deviation of the Gaussian
+            noise.
 
     Raises:
-    ------
-        ValueError if one of the parameters is not valid.
-
+        ValueError: if one of the parameters is not valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.example import Friedman3Regression
+    >>> generator = Friedman3Regression(feature_size=6)
+    >>> generator
+    Friedman3RegressionExampleGenerator(feature_size=6, noise_std=0.0)
+    >>> batch = generator.generate(batch_size=10)
+    >>> batch
+    {'target': tensor([...]), 'feature': tensor([[...]])}
 
-        >>> from startorch.example import Friedman3Regression
-        >>> generator = Friedman3Regression(feature_size=6)
-        >>> generator
-        Friedman3RegressionExampleGenerator(feature_size=6, noise_std=0.0)
-        >>> batch = generator.generate(batch_size=10)
-        >>> batch
-        BatchDict(
-          (target): tensor([...], batch_dim=0)
-          (feature): tensor([[...]], batch_dim=0)
-        )
+    ```
     """
 
     def __init__(self, feature_size: int = 4, noise_std: float = 0.0) -> None:
@@ -217,17 +203,17 @@ class Friedman3RegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
 
     @property
     def feature_size(self) -> int:
-        r"""``int``: The feature size when the data are created."""
+        r"""The feature size when the data are created."""
         return self._feature_size
 
     @property
     def noise_std(self) -> float:
-        r"""``float``: The standard deviation of the Gaussian noise."""
+        r"""The standard deviation of the Gaussian noise."""
         return self._noise_std
 
     def generate(
         self, batch_size: int = 1, rng: torch.Generator | None = None
-    ) -> BatchDict[BatchedTensor]:
+    ) -> dict[str, torch.Tensor]:
         return make_friedman3_regression(
             num_examples=batch_size,
             feature_size=self._feature_size,
@@ -241,29 +227,24 @@ def make_friedman1_regression(
     feature_size: int = 10,
     noise_std: float = 0.0,
     generator: torch.Generator | None = None,
-) -> BatchDict[BatchedTensor]:
-    r"""Generates the "Friedman #1" regression data.
+) -> dict[str, torch.Tensor]:
+    r"""Generate the "Friedman #1" regression data.
 
     The implementation is based on
     https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_friedman1.html
 
     Args:
-    ----
-        num_examples (int, optional): Specifies the number of examples.
-            Default: ``100``
-        feature_size (int, optional): Specifies the feature size.
-            The feature size has to be greater than or equal to 5.
-            Out of all features, only 5 are actually used to compute
-            the targets. The remaining features are independent of
-            targets. Default: ``10``
-        noise_std (float, optional): Specifies the standard deviation
-            of the Gaussian noise. Default: ``0.0``
-        generator (``torch.Generator`` or ``None``, optional):
-            Specifies an optional random generator. Default: ``None``
+        num_examples: Specifies the number of examples.
+        feature_size: Specifies the feature size. The feature size has
+            to be greater than or equal to 5. Out of all features,
+            only 5 are actually used to compute the targets.
+            The remaining features are independent of targets.
+        noise_std: Specifies the standard deviation of the Gaussian
+            noise.
+        generator: Specifies an optional random number generator.
 
     Returns:
-    -------
-        ``BatchDict``: A batch with two items:
+        A dictionary with two items:
             - ``'input'``: a ``BatchedTensor`` of type float and
                 shape ``(num_examples, feature_size)``. This
                 tensor represents the input features.
@@ -272,20 +253,17 @@ def make_friedman1_regression(
                 the targets.
 
     Raises:
-    ------
-        RuntimeError if one of the parameters is not valid.
+        RuntimeError: if one of the parameters is not valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.example import make_friedman1_regression
+    >>> batch = make_friedman1_regression(num_examples=10)
+    >>> batch
+    {'target': tensor([...]), 'feature': tensor([[...]])}
 
-        >>> from startorch.example import make_friedman1_regression
-        >>> batch = make_friedman1_regression(num_examples=10)
-        >>> batch
-        BatchDict(
-          (target): tensor([...], batch_dim=0)
-          (feature): tensor([[...]], batch_dim=0)
-        )
+    ```
     """
     check_num_examples(num_examples)
     check_feature_size(feature_size, low=5)
@@ -300,7 +278,7 @@ def make_friedman1_regression(
     )
     if noise_std > 0.0:
         targets += rand_normal(size=(num_examples,), std=noise_std, generator=generator)
-    return BatchDict({ct.TARGET: BatchedTensor(targets), ct.FEATURE: BatchedTensor(features)})
+    return {ct.TARGET: targets, ct.FEATURE: features}
 
 
 def make_friedman2_regression(
@@ -308,29 +286,25 @@ def make_friedman2_regression(
     feature_size: int = 4,
     noise_std: float = 0.0,
     generator: torch.Generator | None = None,
-) -> BatchDict[BatchedTensor]:
-    r"""Generates the "Friedman #2" regression data.
+) -> dict[str, torch.Tensor]:
+    r"""Generate the "Friedman #2" regression data.
 
     The implementation is based on
     https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_friedman2.html
 
     Args:
-    ----
-        num_examples (int, optional): Specifies the number of examples.
-            Default: ``100``
-        feature_size (int, optional): Specifies the feature size.
+        num_examples: Specifies the number of examples.
+        feature_size: Specifies the feature size.
             The feature size has to be greater than or equal to 4.
             Out of all features, only 4 are actually used to compute
             the targets. The remaining features are independent of
-            targets. Default: ``4``
-        noise_std (float, optional): Specifies the standard deviation
-            of the Gaussian noise. Default: ``0.0``
-        generator (``torch.Generator`` or ``None``, optional):
-            Specifies an optional random generator. Default: ``None``
+            targets.
+        noise_std: Specifies the standard deviation
+            of the Gaussian noise.
+        generator: Specifies an optional random number generator.
 
     Returns:
-    -------
-        ``BatchDict``: A batch with two items:
+        A dictionary with two items:
             - ``'input'``: a ``BatchedTensor`` of type float and
                 shape ``(num_examples, feature_size)``. This
                 tensor represents the input features.
@@ -339,20 +313,17 @@ def make_friedman2_regression(
                 the targets.
 
     Raises:
-    ------
-        RuntimeError if one of the parameters is not valid.
+        RuntimeError: if one of the parameters is not valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.example import make_friedman2_regression
+    >>> batch = make_friedman2_regression(num_examples=10)
+    >>> batch
+    {'target': tensor([...]), 'feature': tensor([[...]])}
 
-        >>> from startorch.example import make_friedman2_regression
-        >>> batch = make_friedman2_regression(num_examples=10)
-        >>> batch
-        BatchDict(
-          (target): tensor([...], batch_dim=0)
-          (feature): tensor([[...]], batch_dim=0)
-        )
+    ```
     """
     check_num_examples(num_examples)
     check_feature_size(feature_size, low=4)
@@ -371,7 +342,7 @@ def make_friedman2_regression(
     ) ** 0.5
     if noise_std > 0.0:
         targets += rand_normal(size=(num_examples,), std=noise_std, generator=generator)
-    return BatchDict({ct.TARGET: BatchedTensor(targets), ct.FEATURE: BatchedTensor(features)})
+    return {ct.TARGET: targets, ct.FEATURE: features}
 
 
 def make_friedman3_regression(
@@ -379,29 +350,25 @@ def make_friedman3_regression(
     feature_size: int = 4,
     noise_std: float = 0.0,
     generator: torch.Generator | None = None,
-) -> BatchDict[BatchedTensor]:
-    r"""Generates the "Friedman #3" regression problem.
+) -> dict[str, torch.Tensor]:
+    r"""Generate the "Friedman #3" regression problem.
 
     The implementation is based on
     https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_friedman3.html
 
     Args:
-    ----
-        num_examples (int, optional): Specifies the number of examples.
-            Default: ``100``
-        feature_size (int, optional): Specifies the feature size.
+        num_examples: Specifies the number of examples.
+        feature_size: Specifies the feature size.
             The feature size has to be greater than or equal to 4.
             Out of all features, only 4 are actually used to compute
             the targets. The remaining features are independent of
-            targets. Default: ``4``
-        noise_std (float, optional): Specifies the standard deviation
-            of the Gaussian noise. Default: ``0.0``
-        generator (``torch.Generator`` or ``None``, optional):
-            Specifies an optional random generator. Default: ``None``
+            targets.
+        noise_std: Specifies the standard deviation of the Gaussian
+            noise.
+        generator: Specifies an optional random number generator.
 
     Returns:
-    -------
-        ``BatchDict``: A batch with two items:
+        A dictionary with two items:
             - ``'input'``: a ``BatchedTensor`` of type float and
                 shape ``(num_examples, feature_size)``. This
                 tensor represents the input features.
@@ -410,20 +377,17 @@ def make_friedman3_regression(
                 the targets.
 
     Raises:
-    ------
-        RuntimeError if one of the parameters is not valid.
+        RuntimeError: if one of the parameters is not valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.example import make_friedman3_regression
+    >>> batch = make_friedman3_regression(num_examples=10)
+    >>> batch
+    {'target': tensor([...]), 'feature': tensor([[...]])}
 
-        >>> from startorch.example import make_friedman3_regression
-        >>> batch = make_friedman3_regression(num_examples=10)
-        >>> batch
-        BatchDict(
-          (target): tensor([...], batch_dim=0)
-          (feature): tensor([[...]], batch_dim=0)
-        )
+    ```
     """
     check_num_examples(num_examples)
     check_feature_size(feature_size, low=4)
@@ -441,4 +405,4 @@ def make_friedman3_regression(
     )
     if noise_std > 0.0:
         targets += rand_normal(size=(num_examples,), std=noise_std, generator=generator)
-    return BatchDict({ct.TARGET: BatchedTensor(targets), ct.FEATURE: BatchedTensor(features)})
+    return {ct.TARGET: targets, ct.FEATURE: features}

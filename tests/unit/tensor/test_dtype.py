@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+import pytest
 import torch
-from pytest import mark
 
 from startorch.tensor import Float, Full, Long, RandInt, RandUniform
 from startorch.utils.seed import get_torch_generator
@@ -18,7 +18,7 @@ def test_float_str() -> None:
     assert str(Float(RandInt(low=0, high=10))).startswith("FloatTensorGenerator(")
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_float_generate(size: tuple[int, ...]) -> None:
     assert Float(Full(value=4)).generate(size).equal(torch.full((size), 4.0, dtype=torch.float))
 
@@ -46,7 +46,7 @@ def test_long_str() -> None:
     assert str(Long(RandUniform(low=0.0, high=50.0))).startswith("LongTensorGenerator(")
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_long_generate(size: tuple[int, ...]) -> None:
     tensor = Long(RandUniform(low=0.0, high=50.0)).generate(size)
     assert tensor.shape == size

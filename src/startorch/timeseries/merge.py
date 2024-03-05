@@ -1,63 +1,67 @@
+r"""Contain the base class to implement a time series generator."""
+
 from __future__ import annotations
 
 __all__ = ["MergeTimeSeriesGenerator"]
 
-from collections.abc import Generator, Sequence
+from typing import TYPE_CHECKING
 
+from batchtensor.nested import slice_along_seq
 from coola.utils import str_indent, str_sequence
-from redcat import BatchDict
 
 from startorch import constants as ct
 from startorch.timeseries.base import (
     BaseTimeSeriesGenerator,
     setup_timeseries_generator,
 )
-from startorch.timeseries.utils import merge_timeseries_by_time
+from startorch.timeseries.utils import merge_by_time
+
+if TYPE_CHECKING:
+    from collections.abc import Hashable, Sequence
+
+    import torch
 
 
 class MergeTimeSeriesGenerator(BaseTimeSeriesGenerator):
-    r"""Implements a time series creator that creates time series by
+    r"""Implement a time series creator that creates time series by
     combining several time series.
 
     The time series are combined by using the time information.
 
     Args:
-    ----
-        generators (``Sequence``): Specifies the time series
-            generators or their configuration.
-        time_key (str, optional): Specifies the key used to merge the
-            time series by time. Default: ``'time'``
+        generators: Specifies the time series generators or their
+            configuration.
+        time_key: Specifies the key used to merge the time series by
+            time.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.timeseries import Merge, TimeSeries
+    >>> from startorch.sequence import RandUniform, RandNormal
+    >>> generator = Merge(
+    ...     (
+    ...         TimeSeries({"value": RandUniform(), "time": RandUniform()}),
+    ...         TimeSeries({"value": RandNormal(), "time": RandNormal()}),
+    ...     )
+    ... )
+    >>> generator
+    MergeTimeSeriesGenerator(
+      (time_key): time
+      (0): TimeSeriesGenerator(
+          (value): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+          (time): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
+        )
+      (1): TimeSeriesGenerator(
+          (value): RandNormalSequenceGenerator(mean=0.0, std=1.0, feature_size=(1,))
+          (time): RandNormalSequenceGenerator(mean=0.0, std=1.0, feature_size=(1,))
+        )
+    )
+    >>> batch = generator.generate(seq_len=12, batch_size=10)
+    >>> batch
+    {'value': tensor([[...]]), 'time': tensor([[...]])}
 
-        >>> from startorch.timeseries import Merge, TimeSeries
-        >>> from startorch.sequence import RandUniform, RandNormal
-        >>> generator = Merge(
-        ...     (
-        ...         TimeSeries({"value": RandUniform(), "time": RandUniform()}),
-        ...         TimeSeries({"value": RandNormal(), "time": RandNormal()}),
-        ...     )
-        ... )
-        >>> generator
-        MergeTimeSeriesGenerator(
-          (time_key): time
-          (0): TimeSeriesGenerator(
-              (value): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
-              (time): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
-            )
-          (1): TimeSeriesGenerator(
-              (value): RandNormalSequenceGenerator(mean=0.0, std=1.0, feature_size=(1,))
-              (time): RandNormalSequenceGenerator(mean=0.0, std=1.0, feature_size=(1,))
-            )
-        )
-        >>> batch = generator.generate(seq_len=12, batch_size=10)
-        >>> batch
-        BatchDict(
-          (value): tensor([[...]], batch_dim=0, seq_dim=1)
-          (time): tensor([[...]], batch_dim=0, seq_dim=1)
-        )
+    ```
     """
 
     def __init__(
@@ -72,12 +76,11 @@ class MergeTimeSeriesGenerator(BaseTimeSeriesGenerator):
         return f"{self.__class__.__qualname__}(\n  (time_key): {self._time_key}\n  {args}\n)"
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchDict:
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> dict[Hashable, torch.Tensor]:
         timeseries = [
             generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
             for generator in self._generators
         ]
-        return merge_timeseries_by_time(timeseries, time_key=self._time_key).slice_along_seq(
-            stop=seq_len
-        )
+        data = merge_by_time(timeseries, time_key=self._time_key)
+        return slice_along_seq(data, stop=seq_len)

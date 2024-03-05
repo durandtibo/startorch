@@ -1,6 +1,6 @@
 from unittest.mock import patch
 
-from pytest import raises
+import pytest
 
 from startorch.utils.imports import (
     check_matplotlib,
@@ -20,9 +20,11 @@ def test_check_matplotlib_with_package() -> None:
 
 
 def test_check_matplotlib_without_package() -> None:
-    with patch("startorch.utils.imports.is_matplotlib_available", lambda *args: False):
-        with raises(RuntimeError, match="`matplotlib` package is required but not installed."):
-            check_matplotlib()
+    with (
+        patch("startorch.utils.imports.is_matplotlib_available", lambda *args: False),
+        pytest.raises(RuntimeError, match="`matplotlib` package is required but not installed."),
+    ):
+        check_matplotlib()
 
 
 def test_is_matplotlib_available() -> None:
@@ -40,9 +42,11 @@ def test_check_plotly_with_package() -> None:
 
 
 def test_check_plotly_without_package() -> None:
-    with patch("startorch.utils.imports.is_plotly_available", lambda *args: False):
-        with raises(RuntimeError, match="`plotly` package is required but not installed."):
-            check_plotly()
+    with (
+        patch("startorch.utils.imports.is_plotly_available", lambda *args: False),
+        pytest.raises(RuntimeError, match="`plotly` package is required but not installed."),
+    ):
+        check_plotly()
 
 
 def test_is_plotly_available() -> None:

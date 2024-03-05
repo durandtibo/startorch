@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+import pytest
 import torch
-from pytest import mark
 
 from startorch.tensor import MultinomialChoice, RandNormal, RandUniform
 from startorch.utils.seed import get_torch_generator
@@ -48,7 +48,7 @@ def test_multinomial_choice_weights() -> None:
     )._weights.equal(torch.tensor([2.0, 1.0, 3.0]))
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_multinomial_choice_generate(size: tuple[int, ...]) -> None:
     tensor = MultinomialChoice(
         (

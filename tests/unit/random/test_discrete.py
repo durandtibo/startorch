@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+import pytest
 import torch
-from pytest import mark, raises
 
 from startorch.random import rand_poisson
 from startorch.utils.seed import get_torch_generator
@@ -31,7 +31,7 @@ def test_rand_poisson_rate_2d() -> None:
     assert tensor.min() >= 0.0
 
 
-@mark.parametrize("rate", (1.0, 0.1))
+@pytest.mark.parametrize("rate", [1.0, 0.1])
 def test_rand_poisson_rate(rate: float) -> None:
     tensor = rand_poisson((100000,), rate=rate, generator=get_torch_generator(1))
     assert tensor.shape == (100000,)
@@ -41,9 +41,9 @@ def test_rand_poisson_rate(rate: float) -> None:
     assert tensor.min() >= 0.0
 
 
-@mark.parametrize("rate", (0.0, -1.0))
+@pytest.mark.parametrize("rate", [0.0, -1.0])
 def test_rand_poisson_incorrect_rate(rate: float) -> None:
-    with raises(ValueError, match="rate has to be greater than 0"):
+    with pytest.raises(ValueError, match="rate has to be greater than 0"):
         rand_poisson((1000,), rate=rate, generator=get_torch_generator(1))
 
 

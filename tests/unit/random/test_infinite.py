@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from unittest.mock import Mock, patch
 
+import pytest
 import torch
-from pytest import mark, raises
 
 from startorch.random import cauchy, normal, rand_cauchy, rand_normal
 from startorch.utils.seed import get_torch_generator
@@ -30,7 +30,7 @@ def test_rand_cauchy_2d() -> None:
     assert values.median().allclose(torch.tensor(0.0), atol=TOLERANCE)
 
 
-@mark.parametrize("loc", (-1.0, 0.0, 1.0))
+@pytest.mark.parametrize("loc", [-1.0, 0.0, 1.0])
 def test_rand_cauchy_loc(loc: float) -> None:
     values = rand_cauchy((100000,), loc=loc, generator=get_torch_generator(1))
     assert values.shape == (100000,)
@@ -46,9 +46,9 @@ def test_rand_cauchy_scale() -> None:
     )
 
 
-@mark.parametrize("scale", (0.0, -1.0))
+@pytest.mark.parametrize("scale", [0.0, -1.0])
 def test_rand_cauchy_scale_incorrect(scale: float) -> None:
-    with raises(ValueError, match="scale has to be greater than 0"):
+    with pytest.raises(ValueError, match="scale has to be greater than 0"):
         rand_cauchy((1000,), scale=scale, generator=get_torch_generator(1))
 
 
@@ -83,7 +83,7 @@ def test_cauchy_2d() -> None:
     assert values.median().allclose(torch.tensor(0.0), atol=TOLERANCE)
 
 
-@mark.parametrize("loc", (-1.0, 0.0, 1.0))
+@pytest.mark.parametrize("loc", [-1.0, 0.0, 1.0])
 def test_cauchy_loc(loc: float) -> None:
     values = cauchy(
         torch.full((100000,), loc), torch.ones(100000), generator=get_torch_generator(1)
@@ -105,14 +105,14 @@ def test_cauchy_scale() -> None:
     )
 
 
-@mark.parametrize("scale", (0.0, -1.0))
+@pytest.mark.parametrize("scale", [0.0, -1.0])
 def test_cauchy_scale_incorrect(scale: float) -> None:
-    with raises(ValueError, match="scale has to be greater than 0"):
+    with pytest.raises(ValueError, match="scale has to be greater than 0"):
         cauchy(torch.zeros(100000), torch.full((100000,), scale), generator=get_torch_generator(1))
 
 
 def test_cauchy_shape_mismatch() -> None:
-    with raises(ValueError, match="The shapes of loc and scale do not match"):
+    with pytest.raises(ValueError, match="The shapes of loc and scale do not match"):
         cauchy(torch.zeros(5), torch.ones(6), generator=get_torch_generator(1))
 
 
@@ -149,7 +149,7 @@ def test_rand_normal_2d() -> None:
     assert values.std().allclose(torch.tensor(1.0), atol=TOLERANCE)
 
 
-@mark.parametrize("mean", (-1.0, 0.0, 1.0))
+@pytest.mark.parametrize("mean", [-1.0, 0.0, 1.0])
 def test_rand_normal_mean(mean: float) -> None:
     values = rand_normal((100000,), mean=mean, generator=get_torch_generator(1))
     assert values.shape == (100000,)
@@ -158,7 +158,7 @@ def test_rand_normal_mean(mean: float) -> None:
     assert values.std().allclose(torch.tensor(1.0), atol=TOLERANCE)
 
 
-@mark.parametrize("std", (0.1, 0.5, 1.0))
+@pytest.mark.parametrize("std", [0.1, 0.5, 1.0])
 def test_rand_normal_std(std: float) -> None:
     values = rand_normal((100000,), std=std, generator=get_torch_generator(1))
     assert values.shape == (100000,)
@@ -167,9 +167,9 @@ def test_rand_normal_std(std: float) -> None:
     assert values.std().allclose(torch.tensor(std), atol=TOLERANCE)
 
 
-@mark.parametrize("std", (0.0, -1.0))
+@pytest.mark.parametrize("std", [0.0, -1.0])
 def test_rand_normal_std_incorrect(std: float) -> None:
-    with raises(ValueError, match="std has to be greater than 0"):
+    with pytest.raises(ValueError, match="std has to be greater than 0"):
         rand_normal((1000,), std=std, generator=get_torch_generator(1))
 
 
@@ -216,7 +216,7 @@ def test_normal_2d() -> None:
     assert values.std().allclose(torch.tensor(1.0), atol=TOLERANCE)
 
 
-@mark.parametrize("mean", (-1.0, 0.0, 1.0))
+@pytest.mark.parametrize("mean", [-1.0, 0.0, 1.0])
 def test_normal_mean(mean: float) -> None:
     values = normal(
         torch.full((100000,), mean), torch.ones(100000), generator=get_torch_generator(1)
@@ -227,7 +227,7 @@ def test_normal_mean(mean: float) -> None:
     assert values.std().allclose(torch.tensor(1.0), atol=TOLERANCE)
 
 
-@mark.parametrize("std", (0.1, 0.5, 1.0))
+@pytest.mark.parametrize("std", [0.1, 0.5, 1.0])
 def test_normal_std(std: float) -> None:
     values = normal(
         torch.zeros(100000), torch.full((100000,), std), generator=get_torch_generator(1)
@@ -248,14 +248,14 @@ def test_normal_mock() -> None:
         )
 
 
-@mark.parametrize("std", (0.0, -1.0))
+@pytest.mark.parametrize("std", [0.0, -1.0])
 def test_normal_std_incorrect(std: float) -> None:
-    with raises(ValueError, match="std has to be greater than 0"):
+    with pytest.raises(ValueError, match="std has to be greater than 0"):
         normal(torch.zeros(1000), torch.full((1000,), std))
 
 
 def test_normal_shape_mismatch() -> None:
-    with raises(ValueError, match="The shapes of mean and std do not match"):
+    with pytest.raises(ValueError, match="The shapes of mean and std do not match"):
         normal(torch.zeros(5), torch.ones(6), generator=get_torch_generator(1))
 
 

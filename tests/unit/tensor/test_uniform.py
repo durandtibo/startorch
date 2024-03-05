@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from unittest.mock import Mock, patch
 
+import pytest
 import torch
-from pytest import mark, raises
 
 from startorch.tensor import (
     AsinhUniform,
@@ -34,7 +34,7 @@ def test_asinh_uniform_str() -> None:
     ).startswith("AsinhUniformTensorGenerator(")
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_asinh_uniform_generate(size: tuple[int, ...]) -> None:
     tensor = AsinhUniform(
         low=RandUniform(low=-1000.0, high=-1.0),
@@ -86,7 +86,7 @@ def test_log_uniform_str() -> None:
     ).startswith("LogUniformTensorGenerator(")
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_log_uniform_generate(size: tuple[int, ...]) -> None:
     tensor = LogUniform(
         low=RandUniform(low=0.001, high=1.0),
@@ -133,22 +133,22 @@ def test_rand_asinh_uniform_str() -> None:
     )
 
 
-@mark.parametrize("low", (1.0, 2.0))
+@pytest.mark.parametrize("low", [1.0, 2.0])
 def test_rand_asinh_uniform_low(low: float) -> None:
     assert RandAsinhUniform(low=low, high=10)._low == low
 
 
-@mark.parametrize("high", (1.0, 10.0))
+@pytest.mark.parametrize("high", [1.0, 10.0])
 def test_rand_asinh_uniform_high(high: float) -> None:
     assert RandAsinhUniform(low=1, high=high)._high == high
 
 
 def test_rand_asinh_uniform_incorrect_min_high() -> None:
-    with raises(ValueError, match="high (.*) has to be greater or equal to low (.*)"):
+    with pytest.raises(ValueError, match="high (.*) has to be greater or equal to low (.*)"):
         RandAsinhUniform(low=2, high=1)
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_rand_asinh_uniform_generate(size: tuple[int, ...]) -> None:
     tensor = RandAsinhUniform(low=-1000.0, high=1000.0).generate(size)
     assert tensor.shape == size
@@ -190,22 +190,22 @@ def test_rand_int_str() -> None:
     assert str(RandInt(0, 10)).startswith("RandIntTensorGenerator(")
 
 
-@mark.parametrize("low", (1, 2))
+@pytest.mark.parametrize("low", [1, 2])
 def test_rand_int_low(low: int) -> None:
     assert RandInt(low=low, high=10)._low == low
 
 
-@mark.parametrize("high", (1, 10))
+@pytest.mark.parametrize("high", [1, 10])
 def test_rand_int_high(high: int) -> None:
     assert RandInt(low=0, high=high)._high == high
 
 
 def test_rand_int_incorrect_low_high() -> None:
-    with raises(ValueError, match="high (.*) has to be greater than low (.*)"):
+    with pytest.raises(ValueError, match="high (.*) has to be greater than low (.*)"):
         RandInt(low=1, high=1)
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_rand_int_generate(size: tuple[int, ...]) -> None:
     tensor = RandInt(0, 10).generate(size)
     assert tensor.shape == size
@@ -217,7 +217,7 @@ def test_rand_int_generate(size: tuple[int, ...]) -> None:
 def test_rand_int_generate_mock() -> None:
     generator = RandInt(0, 10)
     mock = Mock(return_value=torch.ones(2, 4))
-    with patch("startorch.tensor.uniform.randint", mock):
+    with patch("startorch.tensor.uniform.torch.randint", mock):
         assert generator.generate(size=(2, 4)).equal(torch.ones(2, 4))
         assert mock.call_args.kwargs["size"] == (2, 4)
         assert mock.call_args.kwargs["low"] == 0
@@ -251,22 +251,22 @@ def test_rand_log_uniform_str() -> None:
     assert str(RandLogUniform(low=0.001, high=1000.0)).startswith("RandLogUniformTensorGenerator(")
 
 
-@mark.parametrize("low", (1.0, 2.0))
+@pytest.mark.parametrize("low", [1.0, 2.0])
 def test_rand_log_uniform_low(low: float) -> None:
     assert RandLogUniform(low=low, high=10.0)._low == low
 
 
-@mark.parametrize("high", (1.0, 10.0))
+@pytest.mark.parametrize("high", [1.0, 10.0])
 def test_rand_log_uniform_high(high: float) -> None:
     assert RandLogUniform(low=0.1, high=high)._high == high
 
 
 def test_rand_log_uniform_incorrect_min_high() -> None:
-    with raises(ValueError, match="high (.*) has to be greater or equal to low"):
+    with pytest.raises(ValueError, match="high (.*) has to be greater or equal to low"):
         RandLogUniform(low=2.0, high=1.0)
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_rand_log_uniform_generate(size: tuple[int, ...]) -> None:
     tensor = RandLogUniform(low=0.001, high=1000.0).generate(size)
     assert tensor.shape == size
@@ -312,22 +312,22 @@ def test_rand_uniform_str() -> None:
     assert str(RandUniform()).startswith("RandUniformTensorGenerator(")
 
 
-@mark.parametrize("low", (1.0, 2.0))
+@pytest.mark.parametrize("low", [1.0, 2.0])
 def test_rand_uniform_low(low: float) -> None:
     assert RandUniform(low=low, high=10)._low == low
 
 
-@mark.parametrize("high", (1.0, 10.0))
+@pytest.mark.parametrize("high", [1.0, 10.0])
 def test_rand_uniform_high(high: float) -> None:
     assert RandUniform(low=1, high=high)._high == high
 
 
 def test_rand_uniform_incorrect_low_high() -> None:
-    with raises(ValueError, match="high (.*) has to be greater or equal to low (.*)"):
+    with pytest.raises(ValueError, match="high (.*) has to be greater or equal to low (.*)"):
         RandUniform(low=2, high=1)
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_rand_uniform_generate(size: tuple[int, ...]) -> None:
     tensor = RandUniform().generate(size)
     assert tensor.shape == size
@@ -382,7 +382,7 @@ def test_uniform_str() -> None:
     ).startswith("UniformTensorGenerator(")
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_uniform_generate(size: tuple[int, ...]) -> None:
     tensor = Uniform(
         low=RandUniform(low=-2.0, high=-1.0),

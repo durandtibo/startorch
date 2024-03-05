@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from unittest.mock import Mock, patch
 
+import pytest
 import torch
-from pytest import mark, raises
 
 from startorch.tensor import (
     LogNormal,
@@ -28,7 +28,7 @@ def test_log_normal_str() -> None:
     ).startswith("LogNormalTensorGenerator(")
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_log_normal_generate(size: tuple[int, ...]) -> None:
     tensor = LogNormal(
         mean=RandUniform(low=-1.0, high=1.0),
@@ -72,7 +72,7 @@ def test_rand_log_normal_str() -> None:
     assert str(RandLogNormal()).startswith("RandLogNormalTensorGenerator(")
 
 
-@mark.parametrize("mean", (-1.0, 0.0, 1.0))
+@pytest.mark.parametrize("mean", [-1.0, 0.0, 1.0])
 def test_rand_log_normal_mean(mean: float) -> None:
     assert RandLogNormal(mean=mean)._mean == mean
 
@@ -81,7 +81,7 @@ def test_rand_log_normal_mean_default() -> None:
     assert RandLogNormal()._mean == 0.0
 
 
-@mark.parametrize("std", (1.0, 2.0))
+@pytest.mark.parametrize("std", [1.0, 2.0])
 def test_rand_log_normal_std(std: float) -> None:
     assert RandLogNormal(std=std)._std == std
 
@@ -90,13 +90,13 @@ def test_rand_log_normal_std_default() -> None:
     assert RandLogNormal()._std == 1.0
 
 
-@mark.parametrize("std", (0.0, -1.0))
+@pytest.mark.parametrize("std", [0.0, -1.0])
 def test_rand_log_normal_incorrect_std(std: float) -> None:
-    with raises(ValueError, match="std has to be greater than 0"):
+    with pytest.raises(ValueError, match="std has to be greater than 0"):
         RandLogNormal(std=std)
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_rand_log_normal_generate_feature_size_tuple(size: tuple[int, ...]) -> None:
     tensor = RandLogNormal().generate(size)
     assert tensor.shape == size
@@ -104,8 +104,8 @@ def test_rand_log_normal_generate_feature_size_tuple(size: tuple[int, ...]) -> N
     assert tensor.min() >= 0.0
 
 
-@mark.parametrize("mean", (1.0, 2.0))
-@mark.parametrize("std", (1.0, 0.2))
+@pytest.mark.parametrize("mean", [1.0, 2.0])
+@pytest.mark.parametrize("std", [1.0, 0.2])
 def test_rand_log_normal_generate_mean_std(mean: float, std: float) -> None:
     generator = RandLogNormal(mean=mean, std=std)
     mock = Mock(return_value=torch.ones(2, 4))
@@ -139,7 +139,7 @@ def test_rand_trunc_log_normal_str() -> None:
     assert str(RandTruncLogNormal()).startswith("RandTruncLogNormalTensorGenerator(")
 
 
-@mark.parametrize("mean", (-1.0, 0.0, 1.0))
+@pytest.mark.parametrize("mean", [-1.0, 0.0, 1.0])
 def test_rand_trunc_log_normal_mean(mean: float) -> None:
     assert RandTruncLogNormal(mean=mean)._mean == mean
 
@@ -148,7 +148,7 @@ def test_rand_trunc_log_normal_mean_default() -> None:
     assert RandTruncLogNormal()._mean == 0.0
 
 
-@mark.parametrize("std", (1.0, 2.0))
+@pytest.mark.parametrize("std", [1.0, 2.0])
 def test_rand_trunc_log_normal_std(std: float) -> None:
     assert RandTruncLogNormal(std=std)._std == std
 
@@ -157,13 +157,13 @@ def test_rand_trunc_log_normal_std_default() -> None:
     assert RandTruncLogNormal()._std == 1.0
 
 
-@mark.parametrize("std", (0.0, -1.0))
+@pytest.mark.parametrize("std", [0.0, -1.0])
 def test_rand_trunc_log_normal_incorrect_std(std: float) -> None:
-    with raises(ValueError, match="std has to be greater than 0"):
+    with pytest.raises(ValueError, match="std has to be greater than 0"):
         RandTruncLogNormal(std=std)
 
 
-@mark.parametrize("min_value", (0.0, 1.0))
+@pytest.mark.parametrize("min_value", [0.0, 1.0])
 def test_rand_trunc_log_normal_min_value(min_value: float) -> None:
     assert RandTruncLogNormal(min_value=min_value)._min_value == min_value
 
@@ -172,7 +172,7 @@ def test_rand_trunc_log_normal_min_value_default() -> None:
     assert RandTruncLogNormal()._min_value == 0.0
 
 
-@mark.parametrize("max_value", (1.0, 2.0))
+@pytest.mark.parametrize("max_value", [1.0, 2.0])
 def test_rand_trunc_log_normal_max_value(max_value: float) -> None:
     assert RandTruncLogNormal(max_value=max_value)._max_value == max_value
 
@@ -182,11 +182,11 @@ def test_rand_trunc_log_normal_max_value_default() -> None:
 
 
 def test_rand_trunc_log_normal_incorrect_min_max_value() -> None:
-    with raises(ValueError, match="max_value (.*) has to be greater or equal to min_value"):
+    with pytest.raises(ValueError, match="max_value (.*) has to be greater or equal to min_value"):
         RandTruncLogNormal(min_value=3, max_value=2)
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_rand_trunc_log_normal_generate(size: tuple[int, ...]) -> None:
     tensor = RandTruncLogNormal().generate(size)
     assert tensor.shape == size
@@ -195,8 +195,8 @@ def test_rand_trunc_log_normal_generate(size: tuple[int, ...]) -> None:
     assert tensor.max() < 5.0
 
 
-@mark.parametrize("mean", (0.0, 1.0))
-@mark.parametrize("std", (0.1, 1.0))
+@pytest.mark.parametrize("mean", [0.0, 1.0])
+@pytest.mark.parametrize("std", [0.1, 1.0])
 def test_rand_trunc_log_normal_generate_mean_std(mean: float, std: float) -> None:
     generator = RandTruncLogNormal(mean=mean, std=std)
     mock = Mock(return_value=torch.ones(2, 4))
@@ -207,8 +207,8 @@ def test_rand_trunc_log_normal_generate_mean_std(mean: float, std: float) -> Non
         assert mock.call_args.kwargs["std"] == std
 
 
-@mark.parametrize("min_value", (-2.0, -1.0))
-@mark.parametrize("max_value", (2.0, 1.0))
+@pytest.mark.parametrize("min_value", [-2.0, -1.0])
+@pytest.mark.parametrize("max_value", [2.0, 1.0])
 def test_rand_trunc_log_normal_generate_min_max(min_value: float, max_value: float) -> None:
     generator = RandTruncLogNormal(min_value=min_value, max_value=max_value)
     mock = Mock(return_value=torch.ones(2, 4))
@@ -249,7 +249,7 @@ def test_trunc_log_normal_str() -> None:
     ).startswith("TruncLogNormalTensorGenerator(")
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_trunc_log_normal_generate(size: tuple[int, ...]) -> None:
     tensor = TruncLogNormal(
         mean=RandUniform(low=-1.0, high=1.0),

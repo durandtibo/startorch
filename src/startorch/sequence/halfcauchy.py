@@ -1,3 +1,6 @@
+r"""Contain the implementation of sequence generators where the values
+are sampled from a half-Cauchy distribution."""
+
 from __future__ import annotations
 
 __all__ = [
@@ -7,10 +10,9 @@ __all__ = [
     "TruncHalfCauchySequenceGenerator",
 ]
 
+from typing import TYPE_CHECKING
 
 from coola.utils.format import str_indent, str_mapping
-from redcat import BatchedTensorSeq
-from torch import Generator
 
 from startorch.random import (
     half_cauchy,
@@ -21,28 +23,31 @@ from startorch.random import (
 from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_generator
 from startorch.utils.conversion import to_tuple
 
+if TYPE_CHECKING:
+    import torch
+
 
 class HalfCauchySequenceGenerator(BaseSequenceGenerator):
-    r"""Implements a class to generate sequence by sampling values from a
+    r"""Implement a class to generate sequence by sampling values from a
     half-Cauchy distribution.
 
     Args:
-    ----
-        scale (``BaseSequenceGenerator`` or dict): Specifies a sequence
-            generator (or its configuration) to generate the scale.
+        scale: Specifies a sequence generator (or its configuration)
+            to generate the scale.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.sequence import HalfCauchy, RandUniform
+    >>> generator = HalfCauchy(scale=RandUniform(low=1.0, high=2.0))
+    >>> generator
+    HalfCauchySequenceGenerator(
+      (scale): RandUniformSequenceGenerator(low=1.0, high=2.0, feature_size=(1,))
+    )
+    >>> generator.generate(seq_len=6, batch_size=2)
+    tensor([[...]])
 
-        >>> from startorch.sequence import HalfCauchy, RandUniform
-        >>> generator = HalfCauchy(scale=RandUniform(low=1.0, high=2.0))
-        >>> generator
-        HalfCauchySequenceGenerator(
-          (scale): RandUniformSequenceGenerator(low=1.0, high=2.0, feature_size=(1,))
-        )
-        >>> generator.generate(seq_len=6, batch_size=2)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(self, scale: BaseSequenceGenerator | dict) -> None:
@@ -54,41 +59,36 @@ class HalfCauchySequenceGenerator(BaseSequenceGenerator):
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
-        return BatchedTensorSeq(
-            half_cauchy(
-                scale=self._scale.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).data,
-                generator=rng,
-            )
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.tensor:
+        return half_cauchy(
+            scale=self._scale.generate(seq_len=seq_len, batch_size=batch_size, rng=rng),
+            generator=rng,
         )
 
 
 class RandHalfCauchySequenceGenerator(BaseSequenceGenerator):
-    r"""Implements a class to generate sequence by sampling values from a
+    r"""Implement a class to generate sequence by sampling values from a
     half-Cauchy distribution.
 
     Args:
-    ----
-        scale (float, optional): Specifies the scale of the
-            distribution. Default: ``1.0``
-        feature_size (tuple or list or int, optional): Specifies the
-            feature size. Default: ``1``
+        scale: Specifies the scale of the distribution.
+        feature_size: Specifies the feature size.
 
     Raises:
-    ------
-        ValueError if ``scale`` is not a positive number.
+        ValueError: if ``scale`` is not a positive number.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.sequence import RandHalfCauchy
+    >>> generator = RandHalfCauchy(scale=1.0)
+    >>> generator
+    RandHalfCauchySequenceGenerator(scale=1.0, feature_size=(1,))
+    >>> generator.generate(seq_len=6, batch_size=2)
+    tensor([[...]])
 
-        >>> from startorch.sequence import RandHalfCauchy
-        >>> generator = RandHalfCauchy(scale=1.0)
-        >>> generator
-        RandHalfCauchySequenceGenerator(scale=1.0, feature_size=(1,))
-        >>> generator.generate(seq_len=6, batch_size=2)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(
@@ -98,7 +98,8 @@ class RandHalfCauchySequenceGenerator(BaseSequenceGenerator):
     ) -> None:
         super().__init__()
         if scale <= 0:
-            raise ValueError(f"scale has to be greater than 0 (received: {scale})")
+            msg = f"scale has to be greater than 0 (received: {scale})"
+            raise ValueError(msg)
         self._scale = float(scale)
         self._feature_size = to_tuple(feature_size)
 
@@ -109,45 +110,39 @@ class RandHalfCauchySequenceGenerator(BaseSequenceGenerator):
         )
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
-        return BatchedTensorSeq(
-            rand_half_cauchy(
-                size=(batch_size, seq_len) + self._feature_size,
-                scale=self._scale,
-                generator=rng,
-            )
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
+        return rand_half_cauchy(
+            size=(batch_size, seq_len) + self._feature_size,
+            scale=self._scale,
+            generator=rng,
         )
 
 
 class RandTruncHalfCauchySequenceGenerator(BaseSequenceGenerator):
-    r"""Implements a class to generate sequence by sampling values from a
+    r"""Implement a class to generate sequence by sampling values from a
     truncated half-Cauchy distribution.
 
     Args:
-    ----
-        scale (float, optional): Specifies the scale of the
-            distribution. Default: ``1.0``
-        max_value (float, optional): Specifies the maximum value.
-            Default: ``4.0``
-        feature_size (tuple or list or int, optional): Specifies the
-            feature size. Default: ``1``
+        scale: Specifies the scale of the distribution.
+        max_value: Specifies the maximum value.
+        feature_size: Specifies the feature size.
 
     Raises:
-    ------
-        ValueError if ``scale`` is not a positive number.
-        ValueError if ``max_value`` is not a positive number.
+        ValueError: if ``scale`` is not a positive number.
+        ValueError: if ``max_value`` is not a positive number.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.sequence import RandTruncHalfCauchy
+    >>> generator = RandTruncHalfCauchy(scale=1.0, max_value=5.0)
+    >>> generator
+    RandTruncHalfCauchySequenceGenerator(scale=1.0, max_value=5.0, feature_size=(1,))
+    >>> generator.generate(seq_len=6, batch_size=2)
+    tensor([[...]])
 
-        >>> from startorch.sequence import RandTruncHalfCauchy
-        >>> generator = RandTruncHalfCauchy(scale=1.0, max_value=5.0)
-        >>> generator
-        RandTruncHalfCauchySequenceGenerator(scale=1.0, max_value=5.0, feature_size=(1,))
-        >>> generator.generate(seq_len=6, batch_size=2)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(
@@ -158,10 +153,12 @@ class RandTruncHalfCauchySequenceGenerator(BaseSequenceGenerator):
     ) -> None:
         super().__init__()
         if scale <= 0:
-            raise ValueError(f"scale has to be greater than 0 (received: {scale})")
+            msg = f"scale has to be greater than 0 (received: {scale})"
+            raise ValueError(msg)
         self._scale = float(scale)
         if max_value <= 0:
-            raise ValueError(f"max_value has to be greater than 0 (received: {max_value})")
+            msg = f"max_value has to be greater than 0 (received: {max_value})"
+            raise ValueError(msg)
         self._max_value = float(max_value)
         self._feature_size = to_tuple(feature_size)
 
@@ -172,46 +169,43 @@ class RandTruncHalfCauchySequenceGenerator(BaseSequenceGenerator):
         )
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
-        return BatchedTensorSeq(
-            rand_trunc_half_cauchy(
-                size=(batch_size, seq_len) + self._feature_size,
-                scale=self._scale,
-                max_value=self._max_value,
-                generator=rng,
-            )
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
+        return rand_trunc_half_cauchy(
+            size=(batch_size, seq_len) + self._feature_size,
+            scale=self._scale,
+            max_value=self._max_value,
+            generator=rng,
         )
 
 
 class TruncHalfCauchySequenceGenerator(BaseSequenceGenerator):
-    r"""Implements a class to generate sequence by sampling values from a
+    r"""Implement a class to generate sequence by sampling values from a
     half-Cauchy distribution.
 
     Args:
-    ----
-        scale (``BaseSequenceGenerator`` or dict): Specifies a sequence
-            generator (or its configuration) to generate the scale.
-        max_value (``BaseSequenceGenerator`` or dict): Specifies a
-            sequence generator (or its configuration) to generate the
-            maximum value (excluded).
+        scale: Specifies a sequence generator (or its configuration)
+            to generate the scale.
+        max_value: Specifies a sequence generator (or its
+            configuration) to generate the maximum value (excluded).
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.sequence import RandUniform, TruncHalfCauchy
+    >>> generator = TruncHalfCauchy(
+    ...     scale=RandUniform(low=1.0, high=2.0),
+    ...     max_value=RandUniform(low=5.0, high=10.0),
+    ... )
+    >>> generator
+    TruncHalfCauchySequenceGenerator(
+      (scale): RandUniformSequenceGenerator(low=1.0, high=2.0, feature_size=(1,))
+      (max_value): RandUniformSequenceGenerator(low=5.0, high=10.0, feature_size=(1,))
+    )
+    >>> generator.generate(seq_len=6, batch_size=2)
+    tensor([[...]])
 
-        >>> from startorch.sequence import RandUniform, TruncHalfCauchy
-        >>> generator = TruncHalfCauchy(
-        ...     scale=RandUniform(low=1.0, high=2.0),
-        ...     max_value=RandUniform(low=5.0, high=10.0),
-        ... )
-        >>> generator
-        TruncHalfCauchySequenceGenerator(
-          (scale): RandUniformSequenceGenerator(low=1.0, high=2.0, feature_size=(1,))
-          (max_value): RandUniformSequenceGenerator(low=5.0, high=10.0, feature_size=(1,))
-        )
-        >>> generator.generate(seq_len=6, batch_size=2)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(
@@ -226,14 +220,10 @@ class TruncHalfCauchySequenceGenerator(BaseSequenceGenerator):
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
-        return BatchedTensorSeq(
-            trunc_half_cauchy(
-                scale=self._scale.generate(seq_len=seq_len, batch_size=batch_size, rng=rng).data,
-                max_value=self._max_value.generate(
-                    seq_len=seq_len, batch_size=batch_size, rng=rng
-                ).data,
-                generator=rng,
-            )
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
+        return trunc_half_cauchy(
+            scale=self._scale.generate(seq_len=seq_len, batch_size=batch_size, rng=rng),
+            max_value=self._max_value.generate(seq_len=seq_len, batch_size=batch_size, rng=rng),
+            generator=rng,
         )

@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from unittest.mock import Mock, patch
 
+import pytest
 import torch
-from pytest import mark, raises
 
 from startorch.tensor import (
     HalfCauchy,
@@ -28,7 +28,7 @@ def test_half_cauchy_str() -> None:
     )
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_half_cauchy_generate(size: tuple[int, ...]) -> None:
     tensor = HalfCauchy(scale=RandUniform(low=1.0, high=2.0)).generate(size)
     assert tensor.shape == size
@@ -66,18 +66,18 @@ def test_rand_half_cauchy_str() -> None:
     assert str(RandHalfCauchy()).startswith("RandHalfCauchyTensorGenerator(")
 
 
-@mark.parametrize("scale", (1.0, 2.0))
+@pytest.mark.parametrize("scale", [1.0, 2.0])
 def test_rand_half_cauchy_scale(scale: float) -> None:
     assert RandHalfCauchy(scale=scale)._scale == scale
 
 
-@mark.parametrize("scale", (0.0, -1.0))
+@pytest.mark.parametrize("scale", [0.0, -1.0])
 def test_rand_half_cauchy_incorrect_scale(scale: float) -> None:
-    with raises(ValueError, match="scale has to be greater than 0"):
+    with pytest.raises(ValueError, match="scale has to be greater than 0"):
         RandHalfCauchy(scale=scale)
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_rand_half_cauchy_generate(size: tuple[int, ...]) -> None:
     tensor = RandHalfCauchy().generate(size)
     assert tensor.shape == size
@@ -85,7 +85,7 @@ def test_rand_half_cauchy_generate(size: tuple[int, ...]) -> None:
     assert tensor.min() >= 0.0
 
 
-@mark.parametrize("scale", (1.0, 2.0))
+@pytest.mark.parametrize("scale", [1.0, 2.0])
 def test_rand_half_cauchy_generate_scale(scale: float) -> None:
     generator = RandHalfCauchy(scale=scale)
     mock = Mock(return_value=torch.ones(2, 4))
@@ -117,7 +117,7 @@ def test_rand_trunc_half_cauchy_str() -> None:
     assert str(RandTruncHalfCauchy()).startswith("RandTruncHalfCauchyTensorGenerator(")
 
 
-@mark.parametrize("scale", (1.0, 2.0))
+@pytest.mark.parametrize("scale", [1.0, 2.0])
 def test_rand_trunc_half_cauchy_scale(scale: float) -> None:
     assert RandTruncHalfCauchy(scale=scale)._scale == scale
 
@@ -126,13 +126,13 @@ def test_rand_trunc_half_cauchy_scale_default() -> None:
     assert RandTruncHalfCauchy()._scale == 1.0
 
 
-@mark.parametrize("scale", (0.0, -1.0))
+@pytest.mark.parametrize("scale", [0.0, -1.0])
 def test_rand_trunc_half_cauchy_incorrect_scale(scale: float) -> None:
-    with raises(ValueError, match="scale has to be greater than 0"):
+    with pytest.raises(ValueError, match="scale has to be greater than 0"):
         RandTruncHalfCauchy(scale=scale)
 
 
-@mark.parametrize("max_value", (1, 2))
+@pytest.mark.parametrize("max_value", [1, 2])
 def test_rand_trunc_half_cauchy_max_value(max_value: float) -> None:
     assert RandTruncHalfCauchy(max_value=max_value)._max_value == max_value
 
@@ -142,11 +142,11 @@ def test_rand_trunc_half_cauchy_max_value_default() -> None:
 
 
 def test_rand_trunc_half_cauchy_incorrect_max_value() -> None:
-    with raises(ValueError, match="max_value has to be greater than 0"):
+    with pytest.raises(ValueError, match="max_value has to be greater than 0"):
         RandTruncHalfCauchy(max_value=0.0)
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_rand_trunc_half_cauchy_generate(size: tuple[int, ...]) -> None:
     tensor = RandTruncHalfCauchy().generate(size)
     assert tensor.shape == size
@@ -155,7 +155,7 @@ def test_rand_trunc_half_cauchy_generate(size: tuple[int, ...]) -> None:
     assert tensor.max() <= 4
 
 
-@mark.parametrize("scale", (1.0, 2.0))
+@pytest.mark.parametrize("scale", [1.0, 2.0])
 def test_rand_trunc_half_cauchy_generate_scale(scale: float) -> None:
     generator = RandTruncHalfCauchy(scale=scale)
     mock = Mock(return_value=torch.ones(2, 4))
@@ -164,7 +164,7 @@ def test_rand_trunc_half_cauchy_generate_scale(scale: float) -> None:
         assert mock.call_args.kwargs["scale"] == scale
 
 
-@mark.parametrize("max_value", (1.0, 2.0))
+@pytest.mark.parametrize("max_value", [1.0, 2.0])
 def test_rand_trunc_half_cauchy_generate_max_value(max_value: float) -> None:
     generator = RandTruncHalfCauchy(max_value=max_value)
     mock = Mock(return_value=torch.ones(2, 4))
@@ -201,7 +201,7 @@ def test_trunc_half_cauchy_str() -> None:
     ).startswith("TruncHalfCauchyTensorGenerator(")
 
 
-@mark.parametrize("size", SIZES)
+@pytest.mark.parametrize("size", SIZES)
 def test_trunc_half_cauchy_generate(size: tuple[int, ...]) -> None:
     tensor = TruncHalfCauchy(
         scale=RandUniform(low=1.0, high=2.0),

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "startorch"
-version = "0.0.8"
+version = "0.0.9a1"
 description = "synthetic time-series generator in PyTorch"
 readme = "README.md"
 authors = ["Thibaut Durand <durand.tibo+gh@gmail.com>"]
@@ -19,6 +19,7 @@ classifiers = [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Topic :: Scientific/Engineering",
     "Topic :: Software Development :: Libraries",
 ]
@@ -29,10 +30,11 @@ packages = [
 
 [tool.poetry.dependencies]
 # Core dependencies
-coola = ">=0.0.20,<0.2"
-objectory = ">=0.0.7,<0.2"
-python = ">=3.9,<3.12"
-redcat = ">=0.0.16,<0.1"
+batchtensor = ">=0.0.2,<0.1"
+coola = ">=0.1,<1.0"
+numpy = ">=1.21,<2.0"
+objectory = ">=0.1,<1.0"
+python = ">=3.9,<3.13"
 torch = ">=2.0,<3.0"
 
 # Optional dependencies
@@ -57,15 +59,15 @@ mkdocs-material = "^9.5"
 mkdocstrings = "^0.24"
 
 [tool.poetry.group.dev.dependencies]
-black = ">=23.12"
+black = ">=24.1"
 coverage = { extras = ["toml"], version = "^7.4" }
 docformatter = { extras = ["tomli"], version = "^1.7" }
 pre-commit = "^3.6"
 pygments = "^2.17"
-pytest = "^7.4"
+pytest = "^8.0"
 pytest-cov = "^4.1"
 pytest-timeout = "^2.2"
-ruff = ">=0.1.14,<1.0"
+ruff = ">=0.2.0,<1.0"
 xdoctest = "^1.1"
 
 [build-system]
@@ -96,7 +98,7 @@ addopts = "--color yes --durations 10 -rf"
 
 [tool.black]
 line-length = 100
-target-version = ["py39", "py310"]
+target-version = ["py39", "py310", "py311", "py312"]
 include = '\.pyi?$'
 
 [tool.pylint.FORMAT]
@@ -112,35 +114,108 @@ wrap-descriptions = 72
 syntax = "google"
 
 [tool.ruff]
-select = [
-    "A",   # builtins
+line-length = 100
+target-version = "py39"
+src = ["src"]
+
+# List of rules: https://docs.astral.sh/ruff/rules/
+lint.select = [
+    "A", # builtins
     "ANN", # annotations
-    "B",   # bugbear
-    "BLE", # blind-except
-    "E",   # pycodestyle (Error)
-    "F",   # pyflakes
-    "N",   # naming
+    "B", # bugbear
+    "BLE", # flake8-blind-except
+    "C4", # flake8-comprehensions
+    "D", # pydocstyle
+    "E", # pycodestyle (Error)
+    "EM", # flake8-errmsg
+    "F", # pyflakes
+    "FA", # flake8-future-annotations
+    "FURB", # refurb
+    "ICN", # flake8-import-conventions
+    "INP", # flake8-no-pep420
+    "ISC", # flake8-implicit-str-concat
+    "LOG", # logging
+    "N", # naming
+    "PD", # pandas-vet
+    "PERF", # Perflint
+    "PGH", # pygrep-hooks
+    "PIE", # flake8-pie
+    "PL", # Pylint
+    "PT", # flake8-pytest-style
     "PTH", # pathlib
-    "UP",  # pyupgrade
-    "W",   # pycodestyle (Warning)
+    "PYI", # flake8-pyi
+    "Q", # flake8-quotes
+    "RET", # flake8-return
+    "RSE", # flake8-raise
+    "S", # flake8-bandit
+    "SIM", # flake8-simplify
+    "T20", # flake8-print
+    "TCH", # flake8-type-checking
+    "TD", # flake8-todos
+    "TID", # flake8-tidy-imports
+    "TRY", # tryceratops
+    "UP", # pyupgrade
+    "W", # pycodestyle (Warning)
 ]
-ignore = [
-    "A003",    # Class attribute `{name}` is shadowing a python builtin
-    "ANN002",  # Missing type annotation for `*args`
-    "ANN003",  # Missing type annotation for `**kwargs`
-    "ANN101",  # Missing type annotation for `self` in method
-    "ANN102",  # Missing type annotation for `cls` in classmethod
-    "ANN401",  # Dynamically typed expressions (typing.Any) are disallowed.
-    "B905",    # `zip()` without an explicit strict= parameter set. The `strict=` argument was added in Python 3.10
-    "E501",    # Line lengths are recommended to be no greater than 79 characters.
-    "W505",    # Doc line too long
+lint.ignore = [
+    "A003", # Class attribute `{name}` is shadowing a python builtin
+    "ANN101", # Missing type annotation for `self` in method
+    "ANN102", # Missing type annotation for `cls` in classmethod
+    "ANN401", # Dynamically typed expressions (typing.Any) are disallowed.
+    "B905", # `zip()` without an explicit strict= parameter set. The `strict=` argument was added in Python 3.10
+    "E501", # Line lengths are recommended to be no greater than 79 characters.
+    "W505", # Doc line too long
+    "PLR0913", # Too many arguments in function definition (8 > 5)
+    "PLR2004", # Magic value used in comparison, consider replacing 0.0 with a constant variable
+
+    # The following rules are ignored because they conflict with another library like docformatter.
+    "D102", # Missing docstring in public method
+    "D105", # Missing docstring in magic method
+    "D107", # Missing docstring in `__init__`
+    "D205", # 1 blank line required between summary line and description
+    "D209", # Multi-line docstring closing quotes should be on a separate line
 ]
 
 # Allow autofix for all enabled rules (when `--fix`) is provided.
-fixable = ["A", "ANN", "B", "E", "F", "PTH", "W"]
-unfixable = []
+lint.fixable = [
+    "A",
+    "ANN",
+    "B",
+    "BLE",
+    "C4",
+    "D",
+    "E",
+    "EM",
+    "F",
+    "FA",
+    "FURB",
+    "ICN",
+    "INP",
+    "ISC",
+    "LOG",
+    "PD",
+    "PERF",
+    "PGH",
+    "PIE",
+    "PL",
+    "PT",
+    "PTH",
+    "PYI",
+    "Q",
+    "RET",
+    "RSE",
+    "S",
+    "SIM",
+    "T20",
+    "TCH",
+    "TD",
+    "TID",
+    "TRY",
+    "W",
+]
+lint.unfixable = []
 
-exclude = [
+lint.exclude = [
     ".bzr",
     ".direnv",
     ".eggs",
@@ -162,24 +237,31 @@ exclude = [
     "venv",
 ]
 
-line-length = 100
-target-version = "py39"
-src = ["src"]
+# Enable on top of the Google convention.
+lint.extend-select = ["D400", "D401", "D404"]
 
-[tool.ruff.mccabe]
+[tool.ruff.lint.per-file-ignores]
+# Ignore all directories named `tests`.
+"tests/**" = [
+    "D", # pydocstyle
+    "PL", # Pylint
+    "S101", # flake8-bandit
+]
+
+[tool.ruff.lint.mccabe]
 max-complexity = 10
 
-[tool.ruff.pydocstyle]
+[tool.ruff.lint.pydocstyle]
 convention = "google"
 
-[tool.ruff.pycodestyle]
+[tool.ruff.lint.pycodestyle]
 max-doc-length = 72
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 force-sort-within-sections = true
 combine-as-imports = true
 known-first-party = ["src"]
 
-[tool.ruff.flake8-import-conventions]
-[tool.ruff.flake8-import-conventions.aliases]
+[tool.ruff.lint.flake8-import-conventions]
+[tool.ruff.lint.flake8-import-conventions.aliases]
 numpy = "np"

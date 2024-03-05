@@ -2,16 +2,17 @@ from __future__ import annotations
 
 from unittest.mock import Mock
 
+import pytest
 import torch
-from pytest import mark
-from redcat import BatchedTensorSeq
+from batchtensor.tensor import slice_along_seq
+from coola import objects_are_equal
 
 from startorch.periodic.sequence import BasePeriodicSequenceGenerator, Repeat
 from startorch.sequence import BaseSequenceGenerator, Periodic, RandUniform
 from startorch.tensor import BaseTensorGenerator, RandInt
 from startorch.utils.seed import get_torch_generator
 
-SIZES = (1, 2)
+SIZES = (1, 2, 4)
 
 
 ##############################
@@ -25,9 +26,9 @@ def test_periodic_str() -> None:
     )
 
 
-@mark.parametrize("batch_size", SIZES)
-@mark.parametrize("seq_len", SIZES)
-@mark.parametrize("sequence", (RandUniform(), Repeat(RandUniform())))
+@pytest.mark.parametrize("batch_size", SIZES)
+@pytest.mark.parametrize("seq_len", SIZES)
+@pytest.mark.parametrize("sequence", [RandUniform(), Repeat(RandUniform())])
 def test_periodic_generate(
     batch_size: int,
     seq_len: int,
@@ -37,14 +38,12 @@ def test_periodic_generate(
         sequence=sequence,
         period=RandInt(2, 5),
     ).generate(batch_size=batch_size, seq_len=seq_len)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == batch_size
-    assert batch.seq_len == seq_len
-    assert batch.data.shape == (batch_size, seq_len, 1)
-    assert batch.data.dtype == torch.float
+    assert isinstance(batch, torch.Tensor)
+    assert batch.shape == (batch_size, seq_len, 1)
+    assert batch.dtype == torch.float
 
 
-@mark.parametrize("sequence", (RandUniform(), Repeat(RandUniform())))
+@pytest.mark.parametrize("sequence", [RandUniform(), Repeat(RandUniform())])
 def test_periodic_generate_period_4(
     sequence: BaseSequenceGenerator | BasePeriodicSequenceGenerator,
 ) -> None:
@@ -52,22 +51,26 @@ def test_periodic_generate_period_4(
         sequence=sequence,
         period=Mock(spec=BaseTensorGenerator, generate=Mock(return_value=torch.tensor([4]))),
     ).generate(batch_size=2, seq_len=10)
-    assert isinstance(batch, BatchedTensorSeq)
-    assert batch.batch_size == 2
-    assert batch.seq_len == 10
-    assert batch.slice_along_seq(0, 4).equal(batch.slice_along_seq(4, 8))
-    assert batch.slice_along_seq(0, 2).equal(batch.slice_along_seq(8))
+    assert isinstance(batch, torch.Tensor)
+    assert objects_are_equal(
+        slice_along_seq(batch, start=0, stop=4), slice_along_seq(batch, start=4, stop=8)
+    )
+    assert objects_are_equal(
+        slice_along_seq(batch, start=0, stop=2), slice_along_seq(batch, start=8)
+    )
 
 
 def test_periodic_generate_same_random_seed() -> None:
     generator = Periodic(sequence=RandUniform(), period=RandInt(2, 5))
-    assert generator.generate(seq_len=12, batch_size=4, rng=get_torch_generator(1)).equal(
-        generator.generate(seq_len=12, batch_size=4, rng=get_torch_generator(1))
+    assert objects_are_equal(
+        generator.generate(seq_len=12, batch_size=4, rng=get_torch_generator(1)),
+        generator.generate(seq_len=12, batch_size=4, rng=get_torch_generator(1)),
     )
 
 
 def test_periodic_generate_different_random_seeds() -> None:
     generator = Periodic(sequence=RandUniform(), period=RandInt(2, 5))
-    assert not generator.generate(seq_len=12, batch_size=4, rng=get_torch_generator(1)).equal(
-        generator.generate(seq_len=12, batch_size=4, rng=get_torch_generator(2))
+    assert not objects_are_equal(
+        generator.generate(seq_len=12, batch_size=4, rng=get_torch_generator(1)),
+        generator.generate(seq_len=12, batch_size=4, rng=get_torch_generator(2)),
     )

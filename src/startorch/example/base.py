@@ -1,3 +1,5 @@
+r"""Contain the base class to implement an example generator."""
+
 from __future__ import annotations
 
 __all__ = [
@@ -8,72 +10,68 @@ __all__ = [
 
 import logging
 from abc import ABC, abstractmethod
-from collections.abc import Generator
-from typing import Generic, TypeVar
+from typing import TYPE_CHECKING, Generic, TypeVar
 
 from objectory import AbstractFactory
 from objectory.utils import is_object_config
-from redcat import BatchDict
 
 from startorch.utils.format import str_target_object
 
-logger = logging.getLogger(__name__)
+if TYPE_CHECKING:
+    from collections.abc import Hashable
 
+    import torch
+
+logger = logging.getLogger(__name__)
 
 T = TypeVar("T")
 
 
 class BaseExampleGenerator(Generic[T], ABC, metaclass=AbstractFactory):
-    r"""Defines the base class to generate time series.
+    r"""Define the base class to generate examples.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.example import HypercubeClassification
+    >>> generator = HypercubeClassification(num_classes=5, feature_size=6)
+    >>> generator
+    HypercubeClassificationExampleGenerator(num_classes=5, feature_size=6, noise_std=0.2)
+    >>> batch = generator.generate(batch_size=10)
+    >>> batch
+    {'target': tensor([...]), 'feature': tensor([[...]])}
 
-        >>> from startorch.example import HypercubeClassification
-        >>> generator = HypercubeClassification(num_classes=5, feature_size=6)
-        >>> generator
-        HypercubeClassificationExampleGenerator(num_classes=5, feature_size=6, noise_std=0.2)
-        >>> batch = generator.generate(batch_size=10)
-        >>> batch
-        BatchDict(
-          (target): tensor([...], batch_dim=0)
-          (feature): tensor([[...]], batch_dim=0)
-        )
+    ```
     """
 
     @abstractmethod
-    def generate(self, batch_size: int = 1, rng: Generator | None = None) -> BatchDict[T]:
-        r"""Generates a time series.
+    def generate(
+        self, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> dict[Hashable, torch.Tensor]:
+        r"""Generate a batch of examples.
 
         Args:
-        ----
-            batch_size (int, optional): Specifies the batch size.
-                Default: ``1``
-            rng (``torch.Generator`` or None, optional): Specifies
-                an optional random number generator. Default: ``None``
+            batch_size: Specifies the batch size.
+            rng: Specifies an optional random number generator.
 
         Returns:
-        -------
-            ``BatchDict``: A batch of time series.
+            A batch of examples.
 
         Example usage:
 
-        .. code-block:: pycon
+        ```pycon
+        >>> from startorch.example import HypercubeClassification
+        >>> generator = HypercubeClassification(num_classes=5, feature_size=6)
+        >>> batch = generator.generate(batch_size=10)
+        >>> batch
+        {'target': tensor([...]), 'feature': tensor([[...]])}
 
-            >>> from startorch.example import HypercubeClassification
-            >>> generator = HypercubeClassification(num_classes=5, feature_size=6)
-            >>> batch = generator.generate(batch_size=10)
-            >>> batch
-            BatchDict(
-              (target): tensor([...], batch_dim=0)
-              (feature): tensor([[...]], batch_dim=0)
-            )
+        ```
         """
 
 
 def is_example_generator_config(config: dict) -> bool:
-    r"""Indicates if the input configuration is a configuration for a
+    r"""Indicate if the input configuration is a configuration for a
     ``BaseExampleGenerator``.
 
     This function only checks if the value of the key  ``_target_``
@@ -82,17 +80,15 @@ def is_example_generator_config(config: dict) -> bool:
     the class.
 
     Args:
-    ----
-        config (dict): Specifies the configuration to check.
+        config: Specifies the configuration to check.
 
     Returns:
-    -------
-        bool: ``True`` if the input configuration is a configuration
-            for a ``BaseExampleGenerator`` object.
+        ``True`` if the input configuration is a configuration for a
+            ``BaseExampleGenerator`` object.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
 
         >>> from startorch.example import is_example_generator_config
         >>> is_example_generator_config({"_target_": "startorch.example.HypercubeClassification"})
@@ -104,30 +100,29 @@ def is_example_generator_config(config: dict) -> bool:
 def setup_example_generator(
     generator: BaseExampleGenerator | dict,
 ) -> BaseExampleGenerator:
-    r"""Sets up a time series generator.
+    r"""Set up a time series generator.
 
     The time series generator is instantiated from its configuration
     by using the ``BaseExampleGenerator`` factory function.
 
     Args:
-    ----
-        generator (``BaseExampleGenerator`` or dict): Specifies a time
-            series generator or its configuration.
+        generator: Specifies a time series generator or its
+            configuration.
 
     Returns:
-    -------
-        ``BaseExampleGenerator``: A time series generator.
+        A time series generator.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.example import setup_example_generator
+    >>> generator = setup_example_generator(
+    ...     {"_target_": "startorch.example.HypercubeClassification"}
+    ... )
+    >>> generator
+    HypercubeClassificationExampleGenerator(num_classes=50, feature_size=64, noise_std=0.2)
 
-        >>> from startorch.example import setup_example_generator
-        >>> generator = setup_example_generator(
-        ...     {"_target_": "startorch.example.HypercubeClassification"}
-        ... )
-        >>> generator
-        HypercubeClassificationExampleGenerator(num_classes=50, feature_size=64, noise_std=0.2)
+    ```
     """
     if isinstance(generator, dict):
         logger.info(

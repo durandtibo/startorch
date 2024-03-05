@@ -12,15 +12,15 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest ]
-        python-version: [ '3.11', '3.10', '3.9' ]
-        coola-version: [ 0.1.2, 0.1.1, 0.1.0, 0.0.26, 0.0.25, 0.0.24, 0.0.23, 0.0.22, 0.0.21, 0.0.20 ]
+        python-version: [ '3.12', '3.11', '3.10', '3.9' ]
+        coola-version: [ 0.3.0, 0.2.2, 0.1.2 ]
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -46,6 +46,61 @@ jobs:
           poetry run make unit-test-cov
 
 
+  numpy:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      max-parallel: 8
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest ]
+        python-version: [ '3.12', '3.11', '3.10', '3.9' ]
+        numpy-version: [ 1.26.4, 1.25.2, 1.24.3, 1.23.5, 1.22.4 ]
+        exclude:
+          # python 3.11
+          - numpy-version: 1.22.4
+            python-version: '3.11'
+          # python 3.12
+          - numpy-version: 1.22.4
+            python-version: '3.12'
+          - numpy-version: 1.23.5
+            python-version: '3.12'
+          - numpy-version: 1.24.3
+            python-version: '3.12'
+          - numpy-version: 1.25.2
+            python-version: '3.12'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Install packages
+        run: |
+          poetry run make config-poetry
+          poetry run make install
+
+      - name: Install NumPy
+        run: |
+          poetry run pip install numpy==${{ matrix.numpy-version }}
+
+      - name: Show installed packages
+        run: |
+          poetry run poetry show
+          poetry run poetry show --tree
+
+      - name: Run unit tests
+        run: |
+          poetry run make unit-test-cov
+
+
   objectory:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
@@ -54,15 +109,15 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest ]
-        python-version: [ '3.11', '3.10', '3.9' ]
-        objectory-version: [ 0.1.0, 0.0.9, 0.0.8, 0.0.7 ]
+        python-version: [ '3.12', '3.11', '3.10', '3.9' ]
+        objectory-version: [ 0.1.2 ]
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -88,48 +143,6 @@ jobs:
           poetry run make unit-test-cov
 
 
-  redcat:
-    runs-on: ${{ matrix.os }}
-    timeout-minutes: 10
-    strategy:
-      max-parallel: 8
-      fail-fast: false
-      matrix:
-        os: [ ubuntu-latest ]
-        python-version: [ '3.11', '3.10', '3.9' ]
-        redcat-version: [ 0.0.18, 0.0.17, 0.0.16 ]
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python-version }}
-
-      - name: Install Poetry
-        uses: snok/install-poetry@v1
-
-      - name: Install packages
-        run: |
-          poetry run make config-poetry
-          poetry run make install
-
-      - name: Install PyTorch
-        run: |
-          poetry run pip install redcat==${{ matrix.redcat-version }}
-
-      - name: Show installed packages
-        run: |
-          poetry run poetry show
-          poetry run poetry show --tree
-
-      - name: Run unit tests
-        run: |
-          poetry run make unit-test-cov
-
-
   torch:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
@@ -138,15 +151,21 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest ]
-        python-version: [ '3.11', '3.10', '3.9' ]
-        torch-version: [ 2.1.2, 2.0.1 ]
+        python-version: [ '3.12', '3.11', '3.10', '3.9' ]
+        torch-version: [ 2.2.0, 2.1.2, 2.0.1 ]
+        exclude:
+          # python 3.12
+          - torch-version: 2.0.1
+            python-version: 3.12
+          - torch-version: 2.1.2
+            python-version: 3.12
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -180,15 +199,15 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest ]
-        python-version: [ '3.11', '3.10', '3.9' ]
+        python-version: [ '3.12', '3.11', '3.10', '3.9' ]
         matplotlib-version: [ 3.8.2, 3.7.3, 3.6.3 ]
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -223,15 +242,15 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest ]
-        python-version: [ '3.11', '3.10', '3.9' ]
+        python-version: [ '3.12', '3.11', '3.10', '3.9' ]
         plotly-version: [ 5.18.0, 5.17.0, 5.16.1, 5.15.0, 5.14.1, 5.13.1, 5.12.0 ]
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 

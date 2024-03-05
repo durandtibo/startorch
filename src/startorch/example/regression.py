@@ -1,3 +1,6 @@
+r"""Contain an example generator to generate data using the sparse
+uncorrelated features."""
+
 from __future__ import annotations
 
 __all__ = [
@@ -6,60 +9,56 @@ __all__ = [
     "get_uniform_weights",
 ]
 
-from collections.abc import Sequence
+from typing import TYPE_CHECKING
 
 import torch
-from redcat import BatchDict, BatchedTensor
-from redcat.utils.tensor import to_tensor
-from torch import Tensor
 
 from startorch import constants as ct
 from startorch.example.base import BaseExampleGenerator
-from startorch.example.utils import check_num_examples, check_std
 from startorch.random import rand_normal, rand_uniform
+from startorch.utils.conversion import to_tensor
 from startorch.utils.seed import get_torch_generator
+from startorch.utils.validation import check_num_examples, check_std
+
+if TYPE_CHECKING:
+    from collections.abc import Sequence
 
 
-class LinearRegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
-    r"""Implements a regression example generator where the data are
+class LinearRegressionExampleGenerator(BaseExampleGenerator):
+    r"""Implement a regression example generator where the data are
     generated with an underlying linear model.
 
     The implementation is based on
     https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_regression.html
 
     Args:
-    ----
-        weights (``torch.Tensor`` of shape ``(feature_size,)`` or
-            ``collections.abc.Sequence``): Specifies the linear
-            weights in the underlying linear model.
-        bias (float, optional): Specifies the bias term in the
-            underlying linear model. Default: ``0.0``
-        noise_std (float, optional): Specifies the standard deviation
-            of the Gaussian noise. Default: ``0.0``
+        weights: Specifies the linear weights in the underlying linear
+            model. It must be a float tensor of shape
+            ``(feature_size,)``.
+        bias: Specifies the bias term in the underlying linear model.
+        noise_std: Specifies the standard deviation of the Gaussian
+            noise.
 
     Raises:
-    ------
-        ValueError if one of the parameters is not valid.
+        ValueError: if one of the parameters is not valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.example import LinearRegression
+    >>> generator = LinearRegression.create_uniform_weights()
+    >>> generator
+    LinearRegressionExampleGenerator(feature_size=100, bias=0.0, noise_std=0.0)
+    >>> batch = generator.generate(batch_size=10)
+    >>> batch
+    {'target': tensor([...]), 'feature': tensor([[...]])}
 
-        >>> from startorch.example import LinearRegression
-        >>> generator = LinearRegression.create_uniform_weights()
-        >>> generator
-        LinearRegressionExampleGenerator(feature_size=100, bias=0.0, noise_std=0.0)
-        >>> batch = generator.generate(batch_size=10)
-        >>> batch
-        BatchDict(
-          (target): tensor([...], batch_dim=0)
-          (feature): tensor([[...]], batch_dim=0)
-        )
+    ```
     """
 
     def __init__(
         self,
-        weights: Tensor | Sequence[float],
+        weights: torch.Tensor | Sequence[float],
         bias: float = 0.0,
         noise_std: float = 0.0,
     ) -> None:
@@ -77,28 +76,28 @@ class LinearRegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
 
     @property
     def bias(self) -> float:
-        r"""``float``: The bias of the underlying linear model."""
+        r"""The bias of the underlying linear model."""
         return self._bias
 
     @property
     def feature_size(self) -> int:
-        r"""``int``: The feature size."""
+        r"""The feature size."""
         return self._weights.shape[0]
 
     @property
     def noise_std(self) -> float:
-        r"""``float``: The standard deviation of the Gaussian noise."""
+        r"""The standard deviation of the Gaussian noise."""
         return self._noise_std
 
     @property
-    def weights(self) -> Tensor:
+    def weights(self) -> torch.Tensor:
         r"""``torch.Tensor``: The weights of the underlying linear
         model."""
         return self._weights
 
     def generate(
         self, batch_size: int = 1, rng: torch.Generator | None = None
-    ) -> BatchDict[BatchedTensor]:
+    ) -> dict[str, torch.Tensor]:
         return make_linear_regression(
             num_examples=batch_size,
             weights=self._weights,
@@ -116,7 +115,7 @@ class LinearRegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
         noise_std: float = 0.0,
         random_seed: int = 17532042831661189422,
     ) -> LinearRegressionExampleGenerator:
-        # TODO: add documentation
+        # TODO(thibaut): add missing documentation # noqa: TD003
         return cls(
             weights=get_uniform_weights(
                 feature_size=feature_size,
@@ -129,13 +128,13 @@ class LinearRegressionExampleGenerator(BaseExampleGenerator[BatchedTensor]):
 
 
 def make_linear_regression(
-    weights: Tensor,
+    weights: torch.Tensor,
     bias: float = 0.0,
     num_examples: int = 100,
     noise_std: float = 0.0,
     generator: torch.Generator | None = None,
-) -> BatchDict[BatchedTensor]:
-    r"""Generates a regression dataset where the data are generated with
+) -> dict[str, torch.Tensor]:
+    r"""Generate a regression dataset where the data are generated with
     an underlying linear model.
 
     The features are sampled from a Normal distribution.
@@ -143,22 +142,17 @@ def make_linear_regression(
     regression model.
 
     Args:
-    ----
-        weights (``torch.Tensor`` of shape ``(feature_size,)``):
-            Specifies the linear weights in the underlying linear
-            model.
-        bias (float, optional): Specifies the bias term in the
-            underlying linear model. Default: ``0.0``
-        num_examples (int, optional): Specifies the number of examples
-            to generate. Default: ``100``
-        noise_std (float, optional): Specifies the standard deviation
-            of the Gaussian noise. Default: ``0.0``
-        generator (``torch.Generator`` or ``None``, optional):
-            Specifies an optional random generator. Default: ``None``
+        weights: Specifies the linear weights in the underlying linear
+            model. It must be a float tensor of shape
+            ``(feature_size,)``.
+        bias: Specifies the bias term in the underlying linear model.
+        num_examples: Specifies the number of examples to generate.
+        noise_std: Specifies the standard deviation of the Gaussian
+            noise.
+        generator: Specifies an optional random generator.
 
     Returns:
-    -------
-        ``BatchDict``: A batch with two items:
+        A dictionary with two items:
             - ``'input'``: a ``BatchedTensor`` of type float and
                 shape ``(num_examples, feature_size)``. This
                 tensor represents the input features.
@@ -167,20 +161,17 @@ def make_linear_regression(
                 the targets.
 
     Raises:
-    ------
-        RuntimeError if one of the parameters is not valid.
+        RuntimeError: if one of the parameters is not valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.example import make_linear_regression
+    >>> batch = make_linear_regression(weights=torch.rand(10), num_examples=10)
+    >>> batch
+    {'target': tensor([...]), 'feature': tensor([[...]])}
 
-        >>> from startorch.example import make_linear_regression
-        >>> batch = make_linear_regression(weights=torch.rand(10), num_examples=10)
-        >>> batch
-        BatchDict(
-          (target): tensor([...], batch_dim=0)
-          (feature): tensor([[...]], batch_dim=0)
-        )
+    ```
     """
     check_num_examples(num_examples)
     check_std(noise_std, "noise_std")
@@ -191,17 +182,15 @@ def make_linear_regression(
         features += rand_normal(
             size=(num_examples, feature_size), std=noise_std, generator=generator
         )
-    return BatchDict(
-        {ct.TARGET: BatchedTensor(targets.flatten()), ct.FEATURE: BatchedTensor(features)}
-    )
+    return {ct.TARGET: targets.flatten(), ct.FEATURE: features}
 
 
 def get_uniform_weights(
     feature_size: int,
     informative_feature_size: int,
     generator: torch.Generator | None = None,
-) -> Tensor:
-    """Generates the weights of the linear combination used to generate
+) -> torch.Tensor:
+    """Generate the weights of the linear combination used to generate
     the targets from the features.
 
     The weights of the informative features are sampled from a uniform
@@ -210,27 +199,25 @@ def get_uniform_weights(
     ``make_normal_regression``.
 
     Args:
-    ----
-        feature_size (int): Specifies the feature size i.e. the
-            number of features.
-        informative_feature_size (int): Specifies the number of
-            informative features.
-        generator (``torch.Generator`` or ``None``, optional):
-            Specifies an optional random generator. Default: ``None``
+        feature_size: Specifies the feature size i.e. the number of
+            features.
+        informative_feature_size: Specifies the number of informative
+            features.
+        generator: Specifies an optional random generator.
 
     Returns:
-    -------
-        ``torch.Tensor`` of shape ``(feature_size,)``: The generated
-            weights.
+        The generated weights as a float tensor of shape
+            ``(feature_size,)``.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.example.regression import get_uniform_weights
+    >>> weights = get_uniform_weights(feature_size=10, informative_feature_size=5)
+    >>> weights
+    tensor([...])
 
-        >>> from startorch.example.regression import get_uniform_weights
-        >>> weights = get_uniform_weights(feature_size=10, informative_feature_size=5)
-        >>> weights
-        tensor([...])
+    ```
     """
     informative_feature_size = min(feature_size, informative_feature_size)
     weights = torch.zeros(feature_size)

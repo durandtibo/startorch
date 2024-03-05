@@ -1,3 +1,7 @@
+r"""Contain an example generator to generate binary classification
+example generator where the data are generated from isotropic Gaussian
+blobs."""
+
 from __future__ import annotations
 
 __all__ = ["BlobsClassificationExampleGenerator", "make_blobs_classification"]
@@ -5,68 +9,61 @@ __all__ = ["BlobsClassificationExampleGenerator", "make_blobs_classification"]
 import math
 
 import torch
-from redcat import BatchDict, BatchedTensor
+from batchtensor.nested import shuffle_along_batch, slice_along_batch
 
 from startorch import constants as ct
 from startorch.example.base import BaseExampleGenerator
-from startorch.example.utils import check_num_examples
 from startorch.random import normal
 from startorch.utils.seed import get_torch_generator
+from startorch.utils.validation import check_num_examples
 
 
-class BlobsClassificationExampleGenerator(BaseExampleGenerator[BatchedTensor]):
-    r"""Implements a binary classification example generator where the
-    data are generated with a large circle containing a smaller circle
-    in 2d.
+class BlobsClassificationExampleGenerator(BaseExampleGenerator):
+    r"""Implement a binary classification example generator where the
+    data are generated from isotropic Gaussian blobs.
 
     The implementation is based on
     https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_blobs.html
 
     Args:
-    ----
-        centers (``torch.Tensor`` of type float and shape
-            ``(num_clusters, feature_size)``): Specifies the cluster
-            centers used to generate the examples.
-        cluster_std (``torch.Tensor`` of type float and shape
-            ``(num_clusters, feature_size)`` or int or float):
-            Specifies standard deviation of the clusters.
-            Default: ``1.0``
+        centers: Specifies the cluster centers used to generate the
+            examples. It must be a float tensor of shape
+            ``(num_clusters, feature_size)``.
+        cluster_std: Specifies the standard deviation of the clusters.
+            It must be a float tensor of shape
+            ``(num_clusters, feature_size)``.
 
     Raises:
-    ------
-        TypeError or RuntimeError if one of the parameters is not
-            valid.
+        TypeError: if one of the parameters has an invalid type.
+        RuntimeError: if one of the parameters is not valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.example import BlobsClassification
+    >>> generator = BlobsClassification(torch.rand(5, 4))
+    >>> generator
+    BlobsClassificationExampleGenerator(num_clusters=5, feature_size=4)
+    >>> batch = generator.generate(batch_size=10)
+    >>> batch
+    {'target': tensor([...]), 'feature': tensor([[...]])}
 
-        >>> import torch
-        >>> from startorch.example import BlobsClassification
-        >>> generator = BlobsClassification(torch.rand(5, 4))
-        >>> generator
-        BlobsClassificationExampleGenerator(num_clusters=5, feature_size=4)
-        >>> batch = generator.generate(batch_size=10)
-        >>> batch
-        BatchDict(
-          (target): tensor([...], batch_dim=0)
-          (feature): tensor([[...]], batch_dim=0)
-        )
+    ```
     """
 
-    def __init__(
-        self, centers: torch.Tensor, cluster_std: torch.Tensor | int | float = 1.0
-    ) -> None:
+    def __init__(self, centers: torch.Tensor, cluster_std: torch.Tensor | float = 1.0) -> None:
         self._centers = centers
         if not torch.is_tensor(cluster_std):
             cluster_std = torch.full_like(centers, cluster_std)
         self._cluster_std = cluster_std
 
         if self._centers.shape != self._cluster_std.shape:
-            raise RuntimeError(
+            msg = (
                 f"centers and cluster_std do not match: {self._centers.shape} "
                 f"vs {self._cluster_std.shape}"
             )
+            raise RuntimeError(msg)
 
     def __repr__(self) -> str:
         return (
@@ -88,17 +85,17 @@ class BlobsClassificationExampleGenerator(BaseExampleGenerator[BatchedTensor]):
 
     @property
     def feature_size(self) -> int:
-        r"""int: The feature size i.e. the number of features."""
+        r"""The feature size i.e. the number of features."""
         return self._centers.shape[1]
 
     @property
     def num_clusters(self) -> int:
-        r"""int: The number of clusters i.e. categories."""
+        r"""The number of clusters i.e. categories."""
         return self._centers.shape[0]
 
     def generate(
         self, batch_size: int = 1, rng: torch.Generator | None = None
-    ) -> BatchDict[BatchedTensor]:
+    ) -> dict[str, torch.Tensor]:
         return make_blobs_classification(
             num_examples=batch_size,
             centers=self._centers,
@@ -113,38 +110,30 @@ class BlobsClassificationExampleGenerator(BaseExampleGenerator[BatchedTensor]):
         feature_size: int = 2,
         random_seed: int = 17532042831661189422,
     ) -> BlobsClassificationExampleGenerator:
-        r"""Instantiates a ``BlobsClassificationExampleGenerator`` where
+        r"""Instantiate a ``BlobsClassificationExampleGenerator`` where
         the centers are sampled from a uniform distribution.
 
         Args:
-        ----
-            num_clusters (int, optional): Specifies the number of
-                clusters. Default: ``3``
-            feature_size (int, optional): Specifies the feature size.
-                Default: ``2``
-            random_seed (int, optional): Specifies the random seed
-                used to generate the cluster centers.
-                Default: ``17532042831661189422``
+            num_clusters: Specifies the number of clusters.
+            feature_size: Specifies the feature size.
+            random_seed: Specifies the random seed used to generate
+                the cluster centers.
 
         Returns:
-        -------
-            ``BlobsClassificationExampleGenerator``: An instantiated
-                example generator.
+            An instantiated example generator.
 
         Example usage:
 
-        .. code-block:: pycon
+        ```pycon
+        >>> from startorch.example import BlobsClassification
+        >>> generator = BlobsClassification.create_uniform_centers()
+        >>> generator
+        BlobsClassificationExampleGenerator(num_clusters=3, feature_size=2)
+        >>> batch = generator.generate(batch_size=10)
+        >>> batch
+        {'target': tensor([...]), 'feature': tensor([[...]])}
 
-            >>> from startorch.example import BlobsClassification
-            >>> generator = BlobsClassification.create_uniform_centers()
-            >>> generator
-            BlobsClassificationExampleGenerator(num_clusters=3, feature_size=2)
-            >>> batch = generator.generate(batch_size=10)
-            >>> batch
-            BatchDict(
-              (target): tensor([...], batch_dim=0)
-              (feature): tensor([[...]], batch_dim=0)
-            )
+        ```
         """
         return cls(
             centers=torch.rand(
@@ -160,32 +149,27 @@ class BlobsClassificationExampleGenerator(BaseExampleGenerator[BatchedTensor]):
 def make_blobs_classification(
     num_examples: int,
     centers: torch.Tensor,
-    cluster_std: torch.Tensor | int | float = 1.0,
+    cluster_std: torch.Tensor | float = 1.0,
     generator: torch.Generator | None = None,
-) -> BatchDict[BatchedTensor]:
-    r"""Generates a classification dataset where the data are gnerated
+) -> dict[str, torch.Tensor]:
+    r"""Generate a classification dataset where the data are gnerated
     from isotropic Gaussian blobs for clustering.
 
     The implementation is based on
     https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_blobs.html
 
     Args:
-    ----
-        num_examples (int, optional): Specifies the number of examples.
-            Default: ``100``
-        centers (``torch.Tensor`` of type float and shape
-            ``(num_clusters, feature_size)``): Specifies the cluster
-            centers used to generate the examples.
-        cluster_std (``torch.Tensor`` of type float and shape
-            ``(num_clusters, feature_size)`` or int or float):
-            Specifies standard deviation of the clusters.
-            Default: ``1.0``
-        generator (``torch.Generator`` or ``None``, optional):
-            Specifies an optional random generator. Default: ``None``
+        num_examples: Specifies the number of examples.
+        centers: Specifies the cluster centers used to generate the
+            examples. It must be a float tensor of shape
+            ``(num_clusters, feature_size)``.
+        cluster_std: Specifies the standard deviation of the clusters.
+            It must be a float tensor of shape
+            ``(num_clusters, feature_size)``.
+        generator: Specifies an optional random number generator.
 
     Returns:
-    -------
-        ``BatchDict``: A batch with two items:
+        A dictionary with two items:
             - ``'input'``: a ``BatchedTensor`` of type float and
                 shape ``(num_examples, feature_size)``. This
                 tensor represents the input features.
@@ -194,30 +178,26 @@ def make_blobs_classification(
                 the targets.
 
     Raises:
-    ------
-        RuntimeError if one of the parameters is not valid.
+        RuntimeError: if one of the parameters is not valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> import torch
+    >>> from startorch.example import make_blobs_classification
+    >>> batch = make_blobs_classification(num_examples=10, centers=torch.rand(5, 2))
+    >>> batch
+    {'target': tensor([...]), 'feature': tensor([[...]])}
 
-        >>> import torch
-        >>> from startorch.example import make_blobs_classification
-        >>> batch = make_blobs_classification(num_examples=10, centers=torch.rand(5, 2))
-        >>> batch
-        BatchDict(
-          (target): tensor([...], batch_dim=0)
-          (feature): tensor([[...]], batch_dim=0)
-        )
+    ```
     """
     check_num_examples(num_examples)
     num_centers, feature_size = centers.shape
     if not torch.is_tensor(cluster_std):
         cluster_std = torch.full_like(centers, cluster_std)
     if centers.shape != cluster_std.shape:
-        raise RuntimeError(
-            f"centers and cluster_std do not match: {centers.shape} vs {cluster_std.shape}"
-        )
+        msg = f"centers and cluster_std do not match: {centers.shape} vs {cluster_std.shape}"
+        raise RuntimeError(msg)
     num_examples_per_center = math.ceil(num_examples / num_centers)
 
     features = torch.empty(num_examples_per_center * num_centers, feature_size, dtype=torch.float)
@@ -233,6 +213,6 @@ def make_blobs_classification(
         )
         targets[start_idx:end_idx] = i
 
-    batch = BatchDict({ct.TARGET: BatchedTensor(targets), ct.FEATURE: BatchedTensor(features)})
-    batch.shuffle_along_batch_(generator)
-    return batch.slice_along_batch(stop=num_examples)
+    batch = {ct.TARGET: targets, ct.FEATURE: features}
+    batch = shuffle_along_batch(batch, generator)
+    return slice_along_batch(batch, stop=num_examples)

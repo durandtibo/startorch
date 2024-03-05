@@ -13,14 +13,14 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest, macos-latest ]
-        python-version: [ '3.11', '3.10', '3.9' ]
+        python-version: [ '3.12', '3.11', '3.10', '3.9' ]
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -40,14 +40,14 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest, macos-latest ]
-        python-version: [ '3.11', '3.10', '3.9' ]
+        python-version: [ '3.12', '3.11', '3.10', '3.9' ]
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -67,14 +67,14 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest, macos-latest ]
-        python-version: [ '3.11', '3.10', '3.9' ]
+        python-version: [ '3.12', '3.11', '3.10', '3.9' ]
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -94,14 +94,14 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest, macos-latest ]
-        python-version: [ '3.11', '3.10', '3.9' ]
+        python-version: [ '3.12', '3.11', '3.10', '3.9' ]
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -122,15 +122,15 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest ]
-        python-version: [ '3.11', '3.10', '3.9' ]
-        coola-version: [ 0.1.2, 0.1.1, 0.1.0, 0.0.26, 0.0.25, 0.0.24, 0.0.23, 0.0.22, 0.0.21, 0.0.20 ]
+        python-version: [ '3.12', '3.11', '3.10', '3.9' ]
+        coola-version: [ 0.3.0, 0.2.2, 0.1.2 ]
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -142,6 +142,49 @@ jobs:
         run: |
           python tests/package_checks.py
 
+
+  numpy:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      max-parallel: 8
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest ]
+        python-version: [ '3.12', '3.11', '3.10', '3.9' ]
+        numpy-version: [ 1.26.4, 1.25.2, 1.24.3, 1.23.5, 1.22.4 ]
+        exclude:
+          # python 3.11
+          - numpy-version: 1.22.4
+            python-version: '3.11'
+          # python 3.12
+          - numpy-version: 1.22.4
+            python-version: '3.12'
+          - numpy-version: 1.23.5
+            python-version: '3.12'
+          - numpy-version: 1.24.3
+            python-version: '3.12'
+          - numpy-version: 1.25.2
+            python-version: '3.12'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install package
+        run: |
+          pip install startorch numpy==${{ matrix.numpy-version }}
+
+      - name: Run some checks
+        run: |
+          python tests/package_checks.py
+
+
   objectory:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
@@ -150,15 +193,15 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest ]
-        python-version: [ '3.11', '3.10', '3.9' ]
-        objectory-version: [ 0.1.0, 0.0.9, 0.0.8, 0.0.7 ]
+        python-version: [ '3.12', '3.11', '3.10', '3.9' ]
+        objectory-version: [ 0.1.2 ]
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -170,33 +213,6 @@ jobs:
         run: |
           python tests/package_checks.py
 
-  redcat:
-    runs-on: ${{ matrix.os }}
-    timeout-minutes: 10
-    strategy:
-      max-parallel: 8
-      fail-fast: false
-      matrix:
-        os: [ ubuntu-latest ]
-        python-version: [ '3.11', '3.10', '3.9' ]
-        redcat-version: [ 0.0.18, 0.0.17, 0.0.16 ]
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python-version }}
-
-      - name: Install package
-        run: |
-          pip install startorch redcat==${{ matrix.redcat-version }}
-
-      - name: Run some checks
-        run: |
-          python tests/package_checks.py
 
   torch:
     runs-on: ${{ matrix.os }}
@@ -206,15 +222,21 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest ]
-        python-version: [ '3.11', '3.10', '3.9' ]
-        torch-version: [ 2.1.2, 2.0.1 ]
+        python-version: [ '3.12', '3.11', '3.10', '3.9' ]
+        torch-version: [ 2.2.0, 2.1.2, 2.0.1 ]
+        exclude:
+          # python 3.12
+          - torch-version: 2.0.1
+            python-version: 3.12
+          - torch-version: 2.1.2
+            python-version: 3.12
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 

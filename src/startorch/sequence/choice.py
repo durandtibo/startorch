@@ -1,21 +1,26 @@
+r"""Contain the implementation of a sequence generator that select a
+sequence generator at each batch."""
+
 from __future__ import annotations
 
 __all__ = ["MultinomialChoiceSequenceGenerator"]
 
-from collections.abc import Sequence
+
+from typing import TYPE_CHECKING
 
 import torch
 from coola.utils.format import str_indent
-from redcat import BatchedTensorSeq
-from torch import Generator
 
 from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_generator
 from startorch.utils.format import str_weighted_modules
 from startorch.utils.weight import prepare_weighted_generators
 
+if TYPE_CHECKING:
+    from collections.abc import Sequence
+
 
 class MultinomialChoiceSequenceGenerator(BaseSequenceGenerator):
-    r"""Implements a sequence generator that select a sequence generator
+    r"""Implement a sequence generator that select a sequence generator
     at each batch.
 
     This sequence generator is used to generate sequences with different
@@ -33,24 +38,23 @@ class MultinomialChoiceSequenceGenerator(BaseSequenceGenerator):
             If this key is absent, the weight is set to ``1.0``.
 
     Args:
-    ----
-        sequences (sequence): Specifies the sequence
-            generators and their weights. See above to learn
-            about the expected format.
+        sequences: Specifies the sequence generators and their weights.
+            See above to learn about the expected format.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.sequence import MultinomialChoice, RandUniform, RandNormal
+    >>> generator = MultinomialChoice(
+    ...     (
+    ...         {"weight": 2.0, "generator": RandUniform()},
+    ...         {"weight": 1.0, "generator": RandNormal()},
+    ...     )
+    ... )
+    >>> generator.generate(seq_len=10, batch_size=2)
+    tensor([[...]])
 
-        >>> from startorch.sequence import MultinomialChoice, RandUniform, RandNormal
-        >>> generator = MultinomialChoice(
-        ...     (
-        ...         {"weight": 2.0, "generator": RandUniform()},
-        ...         {"weight": 1.0, "generator": RandNormal()},
-        ...     )
-        ... )
-        >>> generator.generate(seq_len=10, batch_size=2)
-        tensor([[...]], batch_dim=0, seq_dim=1)
+    ```
     """
 
     def __init__(self, sequences: Sequence[dict[str, BaseSequenceGenerator | dict]]) -> None:
@@ -64,7 +68,7 @@ class MultinomialChoiceSequenceGenerator(BaseSequenceGenerator):
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: Generator | None = None
-    ) -> BatchedTensorSeq:
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+    ) -> torch.Tensor:
         index = torch.multinomial(self._weights, num_samples=1, generator=rng).item()
         return self._sequences[index].generate(seq_len=seq_len, batch_size=batch_size, rng=rng)

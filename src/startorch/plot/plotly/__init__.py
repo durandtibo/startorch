@@ -1,3 +1,5 @@
+r"""Contain functions to plot the generated data with ``plotly``."""
+
 from __future__ import annotations
 
 __all__ = ["hist_feature", "hist_sequence", "plot_sequence"]

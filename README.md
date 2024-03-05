@@ -24,6 +24,19 @@
         <img src="https://api.codeclimate.com/v1/badges/05a12c503bf3be80a00b/test_coverage" />
     </a>
     <br/>
+    <a href="https://github.com/psf/black">
+        <img  alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg">
+    </a>
+    <a href="https://google.github.io/styleguide/pyguide.html#s3.8-comments-and-docstrings">
+        <img  alt="Doc style: google" src="https://img.shields.io/badge/%20style-google-3666d6.svg">
+    </a>
+    <a href="https://github.com/astral-sh/ruff">
+        <img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json" alt="Ruff" style="max-width:100%;">
+    </a>
+    <a href="https://github.com/guilatrova/tryceratops">
+        <img  alt="Doc style: google" src="https://img.shields.io/badge/try%2Fexcept%20style-tryceratops%20%F0%9F%A6%96%E2%9C%A8-black">
+    </a>
+    <br/>
     <a href="https://pypi.org/project/startorch/">
         <img alt="PYPI version" src="https://img.shields.io/pypi/v/startorch">
     </a>
@@ -32,12 +45,6 @@
     </a>
     <a href="https://opensource.org/licenses/BSD-3-Clause">
         <img alt="BSD-3-Clause" src="https://img.shields.io/pypi/l/startorch">
-    </a>
-    <a href="https://github.com/psf/black">
-        <img  alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg">
-    </a>
-    <a href="https://google.github.io/styleguide/pyguide.html#s3.8-comments-and-docstrings">
-        <img  alt="Doc style: google" src="https://img.shields.io/badge/%20style-google-3666d6.svg">
     </a>
     <br/>
     <a href="https://pepy.tech/project/startorch">
@@ -89,14 +96,15 @@ distribution.
 
 ## Dependencies
 
-| `startorch` | `coola`            | `objectory`      | `redcat`           | `torch`      | `matplotlib`<sup>*</sup> | `plotly`<sup>*</sup> | `python`      |
-|-------------|--------------------|------------------|--------------------|--------------|--------------------------|----------------------|---------------|
-| `main`      | `>=0.0.20,<0.2`    | `>=0.0.7,<0.2`   | `>=0.0.16,<0.1`    | `>=2.0,<3.0` | `>=3.6,<4.0`             | `>=5.12,<6.0`        | `>=3.9,<3.12` |
-| `0.0.7`     | `>=0.0.20,<0.0.25` | `>=0.0.7,<0.0.9` | `>=0.0.16,<0.0.18` | `>=2.0,<2.2` | `>=3.6,<3.9`             | `>=5.12,<5.18`       | `>=3.9,<3.12` |
-| `0.0.6`     | `>=0.0.20,<0.0.25` | `>=0.0.7,<0.0.9` | `>=0.0.16,<0.0.18` | `>=2.0,<2.2` | `>=3.6,<3.9`             |                      | `>=3.9,<3.12` |
-| `0.0.5`     | `>=0.0.20,<0.0.24` | `>=0.0.7,<0.0.8` | `>=0.0.16,<0.0.17` | `>=2.0,<2.1` | `>=3.6,<3.9`             |                      | `>=3.9,<3.12` |
-| `0.0.4`     | `>=0.0.20,<0.0.24` | `>=0.0.7,<0.0.8` | `>=0.0.16,<0.0.17` | `>=2.0,<2.1` | `>=3.6,<3.9`             |                      | `>=3.9,<3.12` |
-| `0.0.3`     | `>=0.0.20,<0.0.24` | `>=0.0.7,<0.0.8` | `>=0.0.9,<0.0.10`  | `>=2.0,<2.1` | `>=3.6,<3.9`             |                      | `>=3.9,<3.12` |
+| `startorch` | `batchtensor`  | `coola`            | `objectory`      | `numpy`       | `redcat`           | `torch`      | `matplotlib`<sup>*</sup> | `plotly`<sup>*</sup> | `python`      |
+|-------------|----------------|--------------------|------------------|---------------|--------------------|--------------|--------------------------|----------------------|---------------|
+| `main`      | `>=0.0.1,<0.1` | `>=0.1,<1.0`       | `>=0.1,<1.0`     | `>=1.22,<2.0` |                    | `>=2.0,<3.0` | `>=3.6,<4.0`             | `>=5.12,<6.0`        | `>=3.9,<3.12` |
+| `0.0.8`     |                | `>=0.0.20,<0.2`    | `>=0.0.7,<0.2`   |               | `>=0.0.16,<0.1`    | `>=2.0,<3.0` | `>=3.6,<4.0`             | `>=5.12,<6.0`        | `>=3.9,<3.12` |
+| `0.0.7`     |                | `>=0.0.20,<0.0.25` | `>=0.0.7,<0.0.9` |               | `>=0.0.16,<0.0.18` | `>=2.0,<2.2` | `>=3.6,<3.9`             | `>=5.12,<5.18`       | `>=3.9,<3.12` |
+| `0.0.6`     |                | `>=0.0.20,<0.0.25` | `>=0.0.7,<0.0.9` |               | `>=0.0.16,<0.0.18` | `>=2.0,<2.2` | `>=3.6,<3.9`             |                      | `>=3.9,<3.12` |
+| `0.0.5`     |                | `>=0.0.20,<0.0.24` | `>=0.0.7,<0.0.8` |               | `>=0.0.16,<0.0.17` | `>=2.0,<2.1` | `>=3.6,<3.9`             |                      | `>=3.9,<3.12` |
+| `0.0.4`     |                | `>=0.0.20,<0.0.24` | `>=0.0.7,<0.0.8` |               | `>=0.0.16,<0.0.17` | `>=2.0,<2.1` | `>=3.6,<3.9`             |                      | `>=3.9,<3.12` |
+| `0.0.3`     |                | `>=0.0.20,<0.0.24` | `>=0.0.7,<0.0.8` |               | `>=0.0.9,<0.0.10`  | `>=2.0,<2.1` | `>=3.6,<3.9`             |                      | `>=3.9,<3.12` |
 
 <sup>*</sup> indicates an optional dependency
 

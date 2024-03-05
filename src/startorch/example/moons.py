@@ -1,3 +1,7 @@
+r"""Contain an example generator to generate binary classification data
+where the data are generated with a large circle containing a smaller
+circle in 2d."""
+
 from __future__ import annotations
 
 __all__ = ["MoonsClassificationExampleGenerator", "make_moons_classification"]
@@ -5,15 +9,15 @@ __all__ = ["MoonsClassificationExampleGenerator", "make_moons_classification"]
 import math
 
 import torch
-from redcat import BatchDict, BatchedTensor
+from batchtensor.nested import shuffle_along_batch
 
 from startorch import constants as ct
 from startorch.example.base import BaseExampleGenerator
-from startorch.example.utils import check_interval, check_num_examples, check_std
 from startorch.random import rand_normal
+from startorch.utils.validation import check_interval, check_num_examples, check_std
 
 
-class MoonsClassificationExampleGenerator(BaseExampleGenerator[BatchedTensor]):
+class MoonsClassificationExampleGenerator(BaseExampleGenerator):
     r"""Implements a binary classification example generator where the
     data are generated with a large circle containing a smaller circle
     in 2d.
@@ -22,34 +26,28 @@ class MoonsClassificationExampleGenerator(BaseExampleGenerator[BatchedTensor]):
     https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_circles.html
 
     Args:
-    ----
-        shuffle (bool, optional): If ``True``, the examples are
-            shuffled. Default: ``True``
-        noise_std (float, optional): Specifies the standard deviation
-            of the Gaussian noise. Default: ``0.0``
-        ratio (float, optional): Specifies the ratio between the
-            number of examples in outer circle and inner circle.
-            Default: ``0.5``
+        shuffle: If ``True``, the examples are shuffled.
+        noise_std: Specifies the standard deviation of the Gaussian
+            noise.
+        ratio: Specifies the ratio between the number of examples in
+            outer circle and inner circle.
 
     Raises:
-    ------
-        TypeError or RuntimeError if one of the parameters is not
-            valid.
+        TypeError: if one of the parameters has an invalid type.
+        RuntimeError: if one of the parameters has an invalid value.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.example import MoonsClassification
+    >>> generator = MoonsClassification()
+    >>> generator
+    MoonsClassificationExampleGenerator(shuffle=True, noise_std=0.0, ratio=0.5)
+    >>> batch = generator.generate(batch_size=10)
+    >>> batch
+    {'target': tensor([...]), 'feature': tensor([[...]])}
 
-        >>> from startorch.example import MoonsClassification
-        >>> generator = MoonsClassification()
-        >>> generator
-        MoonsClassificationExampleGenerator(shuffle=True, noise_std=0.0, ratio=0.5)
-        >>> batch = generator.generate(batch_size=10)
-        >>> batch
-        BatchDict(
-          (target): tensor([...], batch_dim=0)
-          (feature): tensor([[...]], batch_dim=0)
-        )
+    ```
     """
 
     def __init__(self, shuffle: bool = True, noise_std: float = 0.0, ratio: float = 0.5) -> None:
@@ -68,18 +66,18 @@ class MoonsClassificationExampleGenerator(BaseExampleGenerator[BatchedTensor]):
 
     @property
     def noise_std(self) -> float:
-        r"""``float``: The standard deviation of the Gaussian noise."""
+        r"""The standard deviation of the Gaussian noise."""
         return self._noise_std
 
     @property
     def ratio(self) -> float:
-        r"""``float``: the ratio between the number of examples in outer
-        circle and inner circle."""
+        r"""The ratio between the number of examples in outer circle and
+        inner circle."""
         return self._ratio
 
     def generate(
         self, batch_size: int = 1, rng: torch.Generator | None = None
-    ) -> BatchDict[BatchedTensor]:
+    ) -> dict[str, torch.Tensor]:
         return make_moons_classification(
             num_examples=batch_size,
             shuffle=self._shuffle,
@@ -95,30 +93,24 @@ def make_moons_classification(
     noise_std: float = 0.0,
     ratio: float = 0.5,
     generator: torch.Generator | None = None,
-) -> BatchDict[BatchedTensor]:
-    r"""Generates a binary classification dataset where the data are two
+) -> dict[str, torch.Tensor]:
+    r"""Generate a binary classification dataset where the data are two
     interleaving half circles in 2d.
 
     The implementation is based on
     https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_moons.html
 
     Args:
-    ----
-        num_examples (int, optional): Specifies the number of examples.
-            Default: ``100``
-        shuffle (bool, optional): If ``True``, the examples are
-            shuffled. Default: ``True``
-        noise_std (float, optional): Specifies the standard deviation
-            of the Gaussian noise. Default: ``0.0``
-        ratio (float, optional): Specifies the ratio between the
-            number of examples in outer circle and inner circle.
-            Default: ``0.5``
-        generator (``torch.Generator`` or ``None``, optional):
-            Specifies an optional random generator. Default: ``None``
+        num_examples: Specifies the number of examples.
+        shuffle: If ``True``, the examples are shuffled.
+        noise_std: Specifies the standard deviation of the Gaussian
+            noise.
+        ratio: Specifies the ratio between the number of examples in
+            outer circle and inner circle.
+        generator: Specifies an optional random generator.
 
     Returns:
-    -------
-        ``BatchDict``: A batch with two items:
+        A dictionary with two items:
             - ``'input'``: a ``BatchedTensor`` of type float and
                 shape ``(num_examples, 2)``. This
                 tensor represents the input features.
@@ -127,20 +119,17 @@ def make_moons_classification(
                 the targets.
 
     Raises:
-    ------
-        RuntimeError if one of the parameters is not valid.
+        RuntimeError: if one of the parameters is not valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.example import make_moons_classification
+    >>> batch = make_moons_classification(num_examples=10)
+    >>> batch
+    {'target': tensor([...]), 'feature': tensor([[...]])}
 
-        >>> from startorch.example import make_moons_classification
-        >>> batch = make_moons_classification(num_examples=10)
-        >>> batch
-        BatchDict(
-          (target): tensor([...], batch_dim=0)
-          (feature): tensor([[...]], batch_dim=0)
-        )
+    ```
     """
     check_num_examples(num_examples)
     check_std(noise_std, "noise_std")
@@ -166,7 +155,7 @@ def make_moons_classification(
     if noise_std > 0.0:
         features += rand_normal(size=(num_examples, 2), std=noise_std, generator=generator)
 
-    batch = BatchDict({ct.TARGET: BatchedTensor(targets), ct.FEATURE: BatchedTensor(features)})
+    batch = {ct.TARGET: targets, ct.FEATURE: features}
     if shuffle:
-        batch.shuffle_along_batch_(generator)
+        batch = shuffle_along_batch(batch, generator)
     return batch

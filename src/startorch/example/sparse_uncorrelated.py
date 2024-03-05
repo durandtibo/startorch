@@ -1,13 +1,16 @@
+r"""Contain an example generator to generate regression data using the
+sparse uncorrelated features."""
+
 from __future__ import annotations
 
 __all__ = ["make_sparse_uncorrelated_regression"]
 
+
 import torch
-from redcat import BatchDict, BatchedTensor
 
 from startorch import constants as ct
-from startorch.example.utils import check_feature_size, check_num_examples, check_std
 from startorch.random import normal, rand_normal
+from startorch.utils.validation import check_feature_size, check_num_examples, check_std
 
 
 def make_sparse_uncorrelated_regression(
@@ -15,30 +18,25 @@ def make_sparse_uncorrelated_regression(
     feature_size: int = 4,
     noise_std: float = 0.0,
     generator: torch.Generator | None = None,
-) -> BatchDict[BatchedTensor]:
-    r"""Generates a random regression problem with sparse uncorrelated
+) -> dict[str, torch.Tensor]:
+    r"""Generate a random regression problem with sparse uncorrelated
     design.
 
     The implementation is based on
     https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_sparse_uncorrelated.html
 
     Args:
-    ----
-        num_examples (int, optional): Specifies the number of examples.
-            Default: ``100``
-        feature_size (int, optional): Specifies the feature size.
-            The feature size has to be greater than or equal to 4.
-            Out of all features, only 4 are actually used to compute
-            the targets. The remaining features are independent of
-            targets. Default: ``4``
-        noise_std (float, optional): Specifies the standard deviation
-            of the Gaussian noise. Default: ``0.0``
-        generator (``torch.Generator`` or ``None``, optional):
-            Specifies an optional random generator. Default: ``None``
+        num_examples: Specifies the number of examples.
+        feature_size: Specifies the feature size. The feature size has
+            to be greater than or equal to 4. Out of all features,
+            only 4 are actually used to compute the targets.
+            The remaining features are independent of targets.
+        noise_std: Specifies the standard deviation of the Gaussian
+            noise.
+        generator: Specifies an optional random generator.
 
     Returns:
-    -------
-        ``BatchDict``: A batch with two items:
+        A batch with two items:
             - ``'input'``: a ``BatchedTensor`` of type float and
                 shape ``(num_examples, feature_size)``. This
                 tensor represents the input features.
@@ -47,20 +45,17 @@ def make_sparse_uncorrelated_regression(
                 the targets.
 
     Raises:
-    ------
-        RuntimeError if one of the parameters is not valid.
+        RuntimeError: if one of the parameters is not valid.
 
     Example usage:
 
-    .. code-block:: pycon
+    ```pycon
+    >>> from startorch.example import make_sparse_uncorrelated_regression
+    >>> data = make_sparse_uncorrelated_regression(num_examples=10)
+    >>> data
+    {'target': tensor([...]), 'feature': tensor([[...]])}
 
-        >>> from startorch.example import make_sparse_uncorrelated_regression
-        >>> batch = make_sparse_uncorrelated_regression(num_examples=10)
-        >>> batch
-        BatchDict(
-          (target): tensor([...], batch_dim=0)
-          (feature): tensor([[...]], batch_dim=0)
-        )
+    ```
     """
     check_num_examples(num_examples)
     check_feature_size(feature_size, low=4)
@@ -72,4 +67,4 @@ def make_sparse_uncorrelated_regression(
         std=torch.ones(num_examples),
         generator=generator,
     )
-    return BatchDict({ct.TARGET: BatchedTensor(targets), ct.FEATURE: BatchedTensor(features)})
+    return {ct.TARGET: targets, ct.FEATURE: features}
