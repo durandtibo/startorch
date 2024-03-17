@@ -989,6 +989,24 @@ http2 = ["h2 (>=3,<5)"]
 socks = ["socksio (==1.*)"]
 
 [[package]]
+name = "iden"
+version = "0.0.2"
+description = "simple library to manage a dataset of shards to train machine learning models"
+optional = true
+python-versions = ">=3.9,<3.13"
+files = [
+    {file = "iden-0.0.2-py3-none-any.whl", hash = "sha256:3b4546ac62c05d7793f08b1df09b48727381e08748535d67dacca7be201523e3"},
+    {file = "iden-0.0.2.tar.gz", hash = "sha256:4accb766fb2ab13e5950e80ace787186da59ab252dc18f127914abe1862cae7c"},
+]
+
+[package.dependencies]
+coola = ">=0.4,<1.0"
+objectory = ">=0.1,<1.0"
+
+[package.extras]
+all = ["numpy (>=1.22,<2.0)", "pyyaml (>=6.0,<7.0)", "safetensors (>=0.4,<1.0)", "torch (>=1.11,<3.0)"]
+
+[[package]]
 name = "identify"
 version = "2.5.35"
 description = "File identification library for Python"
@@ -3801,4 +3819,4 @@ all = ["matplotlib", "plotly"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.13"
-content-hash = "e2719cfd7fe58aff6b79ddcf7a7fbfb75701feb5206d72c0f53aba44a08ec18e"
+content-hash = "8ad306e7cb11856b2423bed6fd0fde03a1fefc41ed63c47d1ac6a0b02761fbac"

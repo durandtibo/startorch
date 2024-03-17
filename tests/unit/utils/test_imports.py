@@ -3,11 +3,35 @@ from unittest.mock import patch
 import pytest
 
 from startorch.utils.imports import (
+    check_iden,
     check_matplotlib,
     check_plotly,
+    is_iden_available,
     is_matplotlib_available,
     is_plotly_available,
 )
+
+################################
+#     Tests for iden     #
+################################
+
+
+def test_check_iden_with_package() -> None:
+    with patch("startorch.utils.imports.is_iden_available", lambda *args: True):
+        check_iden()
+
+
+def test_check_iden_without_package() -> None:
+    with (
+        patch("startorch.utils.imports.is_iden_available", lambda *args: False),
+        pytest.raises(RuntimeError, match="`iden` package is required but not installed."),
+    ):
+        check_iden()
+
+
+def test_is_iden_available() -> None:
+    assert isinstance(is_iden_available(), bool)
+
 
 ################################
 #     Tests for matplotlib     #
