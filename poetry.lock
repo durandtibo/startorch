@@ -3814,9 +3814,9 @@ docs = ["furo", "jaraco.packaging (>=9.3)", "jaraco.tidelift (>=1.4)", "rst.link
 testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=2.2)", "pytest-ignore-flaky", "pytest-mypy", "pytest-ruff (>=0.2.1)"]
 
 [extras]
-all = ["matplotlib", "plotly"]
+all = ["iden", "matplotlib", "plotly"]
 
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.13"
-content-hash = "8ad306e7cb11856b2423bed6fd0fde03a1fefc41ed63c47d1ac6a0b02761fbac"
+content-hash = "8403f578136bad948312b3d1ced76ad3ba9da003d4d85e242b9fbc2cc7351a7c"
