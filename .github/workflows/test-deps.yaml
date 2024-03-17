@@ -247,7 +247,7 @@ jobs:
       matrix:
         os: [ ubuntu-latest ]
         python-version: [ '3.12', '3.11', '3.10', '3.9' ]
-        matplotlib-version: [ 3.8.2, 3.7.3, 3.6.3 ]
+        matplotlib-version: [ 3.8.3, 3.7.3, 3.6.3 ]
 
     steps:
       - name: Checkout
@@ -280,7 +280,6 @@ jobs:
           poetry run make unit-test-cov
 
 
-
   plotly:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
@@ -290,7 +289,7 @@ jobs:
       matrix:
         os: [ ubuntu-latest ]
         python-version: [ '3.12', '3.11', '3.10', '3.9' ]
-        plotly-version: [ 5.18.0, 5.17.0, 5.16.1, 5.15.0, 5.14.1, 5.13.1, 5.12.0 ]
+        plotly-version: [ 5.20.0, 5.19.0, 5.18.0, 5.17.0, 5.16.1, 5.15.0, 5.14.1, 5.13.1, 5.12.0 ]
 
     steps:
       - name: Checkout
