@@ -3819,4 +3819,4 @@ all = ["iden", "matplotlib", "plotly"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.13"
-content-hash = "8403f578136bad948312b3d1ced76ad3ba9da003d4d85e242b9fbc2cc7351a7c"
+content-hash = "a4f37108191beeec6ce7b6fe234e21815fab1f0b2b6d22d50150bd3b79ce495c"
