@@ -50,6 +50,7 @@ optional = true
 
 [tool.poetry.group.exp.dependencies]
 jupyterlab = "^4.0"
+safetensors = ">=0.4,<1.0"
 seaborn = "^0.13"
 
 [tool.poetry.group.docs]
