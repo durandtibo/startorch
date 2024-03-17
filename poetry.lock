@@ -989,6 +989,24 @@ http2 = ["h2 (>=3,<5)"]
 socks = ["socksio (==1.*)"]
 
 [[package]]
+name = "iden"
+version = "0.0.2"
+description = "simple library to manage a dataset of shards to train machine learning models"
+optional = true
+python-versions = ">=3.9,<3.13"
+files = [
+    {file = "iden-0.0.2-py3-none-any.whl", hash = "sha256:3b4546ac62c05d7793f08b1df09b48727381e08748535d67dacca7be201523e3"},
+    {file = "iden-0.0.2.tar.gz", hash = "sha256:4accb766fb2ab13e5950e80ace787186da59ab252dc18f127914abe1862cae7c"},
+]
+
+[package.dependencies]
+coola = ">=0.4,<1.0"
+objectory = ">=0.1,<1.0"
+
+[package.extras]
+all = ["numpy (>=1.22,<2.0)", "pyyaml (>=6.0,<7.0)", "safetensors (>=0.4,<1.0)", "torch (>=1.11,<3.0)"]
+
+[[package]]
 name = "identify"
 version = "2.5.35"
 description = "File identification library for Python"
@@ -3796,9 +3814,9 @@ docs = ["furo", "jaraco.packaging (>=9.3)", "jaraco.tidelift (>=1.4)", "rst.link
 testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=2.2)", "pytest-ignore-flaky", "pytest-mypy", "pytest-ruff (>=0.2.1)"]
 
 [extras]
-all = ["matplotlib", "plotly"]
+all = ["iden", "matplotlib", "plotly"]
 
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.13"
-content-hash = "e2719cfd7fe58aff6b79ddcf7a7fbfb75701feb5206d72c0f53aba44a08ec18e"
+content-hash = "8403f578136bad948312b3d1ced76ad3ba9da003d4d85e242b9fbc2cc7351a7c"

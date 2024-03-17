@@ -152,7 +152,7 @@ jobs:
       matrix:
         os: [ ubuntu-latest ]
         python-version: [ '3.12', '3.11', '3.10', '3.9' ]
-        torch-version: [ 2.2.0, 2.1.2, 2.0.1 ]
+        torch-version: [ 2.2.1, 2.1.2, 2.0.1 ]
         exclude:
           # python 3.12
           - torch-version: 2.0.1
@@ -191,6 +191,53 @@ jobs:
           poetry run make unit-test-cov
 
 
+  #################################
+  #     Optional dependencies     #
+  #################################
+
+
+  iden:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      max-parallel: 8
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest ]
+        python-version: [ '3.12', '3.11', '3.10', '3.9' ]
+        iden-version: [ 0.0.2 ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Install packages
+        run: |
+          poetry run make config-poetry
+          poetry run make install
+
+      - name: Install PyTorch
+        run: |
+          poetry run pip install iden==${{ matrix.iden-version }}
+
+      - name: Show installed packages
+        run: |
+          poetry run poetry show
+          poetry run poetry show --tree
+
+      - name: Run unit tests
+        run: |
+          poetry run make unit-test-cov
+
+
   matplotlib:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
@@ -200,7 +247,7 @@ jobs:
       matrix:
         os: [ ubuntu-latest ]
         python-version: [ '3.12', '3.11', '3.10', '3.9' ]
-        matplotlib-version: [ 3.8.2, 3.7.3, 3.6.3 ]
+        matplotlib-version: [ 3.8.3, 3.7.3, 3.6.3 ]
 
     steps:
       - name: Checkout
@@ -233,7 +280,6 @@ jobs:
           poetry run make unit-test-cov
 
 
-
   plotly:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
@@ -243,7 +289,7 @@ jobs:
       matrix:
         os: [ ubuntu-latest ]
         python-version: [ '3.12', '3.11', '3.10', '3.9' ]
-        plotly-version: [ 5.18.0, 5.17.0, 5.16.1, 5.15.0, 5.14.1, 5.13.1, 5.12.0 ]
+        plotly-version: [ 5.20.0, 5.19.0, 5.18.0, 5.17.0, 5.16.1, 5.15.0, 5.14.1, 5.13.1, 5.12.0 ]
 
     steps:
       - name: Checkout
