@@ -123,7 +123,7 @@ jobs:
       matrix:
         os: [ ubuntu-latest ]
         python-version: [ '3.12', '3.11', '3.10', '3.9' ]
-        coola-version: [ 0.3.0, 0.2.2, 0.1.2 ]
+        coola-version: [ 0.4.0, 0.3.2, 0.2.2 ]
 
     steps:
       - name: Checkout
@@ -223,7 +223,7 @@ jobs:
       matrix:
         os: [ ubuntu-latest ]
         python-version: [ '3.12', '3.11', '3.10', '3.9' ]
-        torch-version: [ 2.2.0, 2.1.2, 2.0.1 ]
+        torch-version: [ 2.2.1, 2.1.2, 2.0.1 ]
         exclude:
           # python 3.12
           - torch-version: 2.0.1
@@ -243,6 +243,98 @@ jobs:
       - name: Install package
         run: |
           pip install startorch torch==${{ matrix.torch-version }}
+
+      - name: Run some checks
+        run: |
+          python tests/package_checks.py
+
+
+  #################################
+  #     Optional dependencies     #
+  #################################
+
+
+  iden:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      max-parallel: 8
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest ]
+        python-version: [ '3.12', '3.11', '3.10', '3.9' ]
+        iden-version: [ 0.0.2 ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install package
+        run: |
+          pip install startorch iden==${{ matrix.iden-version }}
+
+      - name: Run some checks
+        run: |
+          python tests/package_checks.py
+
+
+  matplotlib:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      max-parallel: 8
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest ]
+        python-version: [ '3.12', '3.11', '3.10', '3.9' ]
+        matplotlib-version: [ 3.8.3, 3.7.3, 3.6.3 ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install package
+        run: |
+          pip install startorch matplotlib==${{ matrix.matplotlib-version }}
+
+      - name: Run some checks
+        run: |
+          python tests/package_checks.py
+
+
+  plotly:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      max-parallel: 8
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest ]
+        python-version: [ '3.12', '3.11', '3.10', '3.9' ]
+        plotly-version: [ 5.20.0, 5.0.0 ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install package
+        run: |
+          pip install startorch plotly==${{ matrix.plotly-version }}
 
       - name: Run some checks
         run: |
