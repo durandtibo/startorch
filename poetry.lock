@@ -176,13 +176,13 @@ dev = ["freezegun (>=1.0,<2.0)", "pytest (>=6.0)", "pytest-cov"]
 
 [[package]]
 name = "batchtensor"
-version = "0.0.2"
+version = "0.0.3"
 description = "Functions to manipulate batches of PyTorch tensors"
 optional = false
 python-versions = ">=3.9,<3.13"
 files = [
-    {file = "batchtensor-0.0.2-py3-none-any.whl", hash = "sha256:f1bf35c8858dc4ec5fd6da004b087a7cb0952b1e98acb32e931ff91f0f04c50f"},
-    {file = "batchtensor-0.0.2.tar.gz", hash = "sha256:324ed3ed5890e8e6f282909d00279a860bce6067bdb24a79c55a0a00f6f0b79f"},
+    {file = "batchtensor-0.0.3-py3-none-any.whl", hash = "sha256:9dd67fc1f2211e8fd561f53afaa8edcadca3b23d85fd4a1f9518ae36113cd4f8"},
+    {file = "batchtensor-0.0.3.tar.gz", hash = "sha256:8834ffbb1cc06b739cad06597e13eda7c6e81ea022ae5a9076b5d66037da466e"},
 ]
 
 [package.dependencies]
@@ -882,13 +882,13 @@ files = [
 
 [[package]]
 name = "fsspec"
-version = "2024.3.0"
+version = "2024.3.1"
 description = "File-system specification"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "fsspec-2024.3.0-py3-none-any.whl", hash = "sha256:779001bd0122c9c4975cf03827d5e86c3afb914a3ae27040f15d341ab506a693"},
-    {file = "fsspec-2024.3.0.tar.gz", hash = "sha256:f13a130c0ed07e15c4e1aeb0472a823e9c426b0b5792a1f40d902b0a71972d43"},
+    {file = "fsspec-2024.3.1-py3-none-any.whl", hash = "sha256:918d18d41bf73f0e2b261824baeb1b124bcf771767e3a26425cd7dec3332f512"},
+    {file = "fsspec-2024.3.1.tar.gz", hash = "sha256:f39780e282d7d117ffb42bb96992f8a90795e4d0fb0f661a70ca39fe9c43ded9"},
 ]
 
 [package.extras]
@@ -990,17 +990,17 @@ socks = ["socksio (==1.*)"]
 
 [[package]]
 name = "iden"
-version = "0.0.2"
+version = "0.0.3"
 description = "simple library to manage a dataset of shards to train machine learning models"
 optional = true
 python-versions = ">=3.9,<3.13"
 files = [
-    {file = "iden-0.0.2-py3-none-any.whl", hash = "sha256:3b4546ac62c05d7793f08b1df09b48727381e08748535d67dacca7be201523e3"},
-    {file = "iden-0.0.2.tar.gz", hash = "sha256:4accb766fb2ab13e5950e80ace787186da59ab252dc18f127914abe1862cae7c"},
+    {file = "iden-0.0.3-py3-none-any.whl", hash = "sha256:a674274f2621bedd6f2550e7bf9a476d3294258f5e8bf0730a4b4508a20ce059"},
+    {file = "iden-0.0.3.tar.gz", hash = "sha256:eaeb5bf37ec975771386fae17e224e50386fce279f031a54b888610381b7adc3"},
 ]
 
 [package.dependencies]
-coola = ">=0.4,<1.0"
+coola = ">=0.3,<1.0"
 objectory = ">=0.1,<1.0"
 
 [package.extras]
@@ -1309,13 +1309,13 @@ test = ["ipykernel", "pre-commit", "pytest (<8)", "pytest-cov", "pytest-timeout"
 
 [[package]]
 name = "jupyter-events"
-version = "0.9.1"
+version = "0.10.0"
 description = "Jupyter Event System library"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "jupyter_events-0.9.1-py3-none-any.whl", hash = "sha256:e51f43d2c25c2ddf02d7f7a5045f71fc1d5cb5ad04ef6db20da961c077654b9b"},
-    {file = "jupyter_events-0.9.1.tar.gz", hash = "sha256:a52e86f59eb317ee71ff2d7500c94b963b8a24f0b7a1517e2e653e24258e15c7"},
+    {file = "jupyter_events-0.10.0-py3-none-any.whl", hash = "sha256:4b72130875e59d57716d327ea70d3ebc3af1944d3717e5a498b8a06c6c159960"},
+    {file = "jupyter_events-0.10.0.tar.gz", hash = "sha256:670b8229d3cc882ec782144ed22e0d29e1c2d639263f92ca8383e66682845e22"},
 ]
 
 [package.dependencies]
@@ -1806,13 +1806,13 @@ mkdocs = ">=1.1"
 
 [[package]]
 name = "mkdocs-material"
-version = "9.5.13"
+version = "9.5.14"
 description = "Documentation that simply works"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "mkdocs_material-9.5.13-py3-none-any.whl", hash = "sha256:5cbe17fee4e3b4980c8420a04cc762d8dc052ef1e10532abd4fce88e5ea9ce6a"},
-    {file = "mkdocs_material-9.5.13.tar.gz", hash = "sha256:d8e4caae576312a88fd2609b81cf43d233cdbe36860d67a68702b018b425bd87"},
+    {file = "mkdocs_material-9.5.14-py3-none-any.whl", hash = "sha256:a45244ac221fda46ecf8337f00ec0e5cb5348ab9ffb203ca2a0c313b0d4dbc27"},
+    {file = "mkdocs_material-9.5.14.tar.gz", hash = "sha256:2a1f8e67cda2587ab93ecea9ba42d0ca61d1d7b5fad8cf690eeaeb39dcd4b9af"},
 ]
 
 [package.dependencies]
