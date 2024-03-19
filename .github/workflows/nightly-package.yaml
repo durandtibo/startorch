@@ -112,7 +112,7 @@ jobs:
       - name: Run some checks
         run: |
           python tests/package_checks.py
-          
+
 
   batchtensor:
     runs-on: ${{ matrix.os }}

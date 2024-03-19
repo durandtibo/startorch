@@ -44,7 +44,7 @@ jobs:
       - name: Run unit tests
         run: |
           poetry run make unit-test-cov
-  
+
 
   coola:
     runs-on: ${{ matrix.os }}
