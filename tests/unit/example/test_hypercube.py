@@ -160,7 +160,7 @@ def test_make_hypercube_classification_incorrect_noise_std(noise_std: float) -> 
         RuntimeError,
         match="Incorrect value for noise_std. Expected a value greater than 0",
     ):
-        make_hypercube_classification(noise_std=-1)
+        make_hypercube_classification(noise_std=noise_std)
 
 
 def test_make_hypercube_classification() -> None:

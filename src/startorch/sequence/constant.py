@@ -92,6 +92,9 @@ class FullSequenceGenerator(BaseSequenceGenerator):
         )
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+        self,
+        seq_len: int,
+        batch_size: int = 1,
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return torch.full((batch_size, seq_len) + self._feature_size, self._value)

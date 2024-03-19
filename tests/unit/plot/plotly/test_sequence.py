@@ -31,7 +31,7 @@ def test_hist_sequence_scale(scale: str) -> None:
     assert isinstance(hist_sequence(RandUniform(), batch_size=2, seq_len=6, scale=scale), go.Figure)
 
 
-@patch("startorch.utils.imports.is_plotly_available", lambda *args, **kwargs: True)
+@patch("startorch.utils.imports.is_plotly_available", lambda: True)
 @pytest.mark.parametrize("seq_len", [1, 2, 4])
 def test_hist_sequence_seq_len(seq_len: int) -> None:
     with patch("startorch.plot.plotly.sequence.go") as go:
@@ -39,7 +39,7 @@ def test_hist_sequence_seq_len(seq_len: int) -> None:
         assert go.Histogram.call_args.kwargs["x"].shape[0] == seq_len
 
 
-@patch("startorch.utils.imports.is_plotly_available", lambda *args, **kwargs: True)
+@patch("startorch.utils.imports.is_plotly_available", lambda: True)
 @pytest.mark.parametrize("batch_size", [1, 2, 4])
 def test_hist_sequence_batch_size(batch_size: int) -> None:
     with patch("startorch.plot.plotly.sequence.go") as go:
@@ -47,7 +47,7 @@ def test_hist_sequence_batch_size(batch_size: int) -> None:
         assert go.Histogram.call_args.kwargs["x"].shape[0] == batch_size
 
 
-@patch("startorch.utils.imports.is_plotly_available", lambda *args, **kwargs: True)
+@patch("startorch.utils.imports.is_plotly_available", lambda: True)
 @pytest.mark.parametrize("num_batches", [1, 2, 4])
 def test_hist_sequence_num_batches(num_batches: int) -> None:
     with patch("startorch.plot.plotly.sequence.go") as go:
@@ -55,7 +55,7 @@ def test_hist_sequence_num_batches(num_batches: int) -> None:
         assert go.Histogram.call_args.kwargs["x"].shape[0] == num_batches
 
 
-@patch("startorch.utils.imports.is_plotly_available", lambda *args, **kwargs: True)
+@patch("startorch.utils.imports.is_plotly_available", lambda: True)
 @pytest.mark.parametrize("seed", [1, 2, 4])
 def test_hist_sequence_rng(seed: int) -> None:
     with patch("startorch.plot.plotly.sequence.go") as go:
@@ -67,7 +67,7 @@ def test_hist_sequence_rng(seed: int) -> None:
         )
 
 
-@patch("startorch.utils.imports.is_plotly_available", lambda *args, **kwargs: False)
+@patch("startorch.utils.imports.is_plotly_available", lambda: False)
 def test_hist_sequence_no_plotly() -> None:
     with pytest.raises(RuntimeError, match="`plotly` package is required but not installed."):
         hist_sequence(RandUniform())
@@ -84,7 +84,7 @@ def test_plot_sequence_generator(generator: BaseSequenceGenerator) -> None:
     assert isinstance(plot_sequence(generator, batch_size=2, seq_len=6), go.Figure)
 
 
-@patch("startorch.utils.imports.is_plotly_available", lambda *args, **kwargs: True)
+@patch("startorch.utils.imports.is_plotly_available", lambda: True)
 @pytest.mark.parametrize("seq_len", [1, 2, 4])
 def test_plot_sequence_seq_len(seq_len: int) -> None:
     with patch("startorch.plot.plotly.sequence.go") as go:
@@ -92,7 +92,7 @@ def test_plot_sequence_seq_len(seq_len: int) -> None:
         assert go.Scatter.call_args.kwargs["x"].shape[0] == seq_len
 
 
-@patch("startorch.utils.imports.is_plotly_available", lambda *args, **kwargs: True)
+@patch("startorch.utils.imports.is_plotly_available", lambda: True)
 @pytest.mark.parametrize("batch_size", [1, 2, 4])
 def test_plot_sequence_batch_size(batch_size: int) -> None:
     with patch("startorch.plot.plotly.sequence.go") as go:
@@ -100,7 +100,7 @@ def test_plot_sequence_batch_size(batch_size: int) -> None:
         assert len(go.Scatter.call_args_list) == batch_size
 
 
-@patch("startorch.utils.imports.is_plotly_available", lambda *args, **kwargs: True)
+@patch("startorch.utils.imports.is_plotly_available", lambda: True)
 @pytest.mark.parametrize("num_batches", [1, 2, 4])
 def test_plot_sequence_num_batches(num_batches: int) -> None:
     with patch("startorch.plot.plotly.sequence.go") as go:
@@ -108,7 +108,7 @@ def test_plot_sequence_num_batches(num_batches: int) -> None:
         assert len(go.Scatter.call_args_list) == num_batches
 
 
-@patch("startorch.utils.imports.is_plotly_available", lambda *args, **kwargs: True)
+@patch("startorch.utils.imports.is_plotly_available", lambda: True)
 @pytest.mark.parametrize("seed", [1, 2, 4])
 def test_plot_sequence_rng(seed: int) -> None:
     with patch("startorch.plot.plotly.sequence.go") as go:
@@ -124,7 +124,7 @@ def test_plot_sequence_rng(seed: int) -> None:
         )
 
 
-@patch("startorch.utils.imports.is_plotly_available", lambda *args, **kwargs: False)
+@patch("startorch.utils.imports.is_plotly_available", lambda: False)
 def test_plot_sequence_no_plotly() -> None:
     with pytest.raises(RuntimeError, match="`plotly` package is required but not installed."):
         plot_sequence(RandUniform())
