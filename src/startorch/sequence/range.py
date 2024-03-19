@@ -41,7 +41,7 @@ class ArangeSequenceGenerator(BaseSequenceGenerator):
         return f"{self.__class__.__qualname__}(feature_size={self._feature_size})"
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
+        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None  # noqa: ARG002
     ) -> torch.Tensor:
         return (
             torch.arange(0, seq_len)

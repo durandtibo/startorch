@@ -42,5 +42,9 @@ class FullTensorGenerator(BaseTensorGenerator):
     def __repr__(self) -> str:
         return f"{self.__class__.__qualname__}(value={self._value}, dtype={self._dtype})"
 
-    def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
+    def generate(
+        self,
+        size: tuple[int, ...],
+        rng: torch.Generator | None = None,  # noqa: ARG002
+    ) -> torch.Tensor:
         return torch.full(size=size, fill_value=self._value, dtype=self._dtype)

@@ -17,13 +17,13 @@ from startorch.utils.imports import (
 
 
 def test_check_iden_with_package() -> None:
-    with patch("startorch.utils.imports.is_iden_available", lambda *args: True):
+    with patch("startorch.utils.imports.is_iden_available", lambda: True):
         check_iden()
 
 
 def test_check_iden_without_package() -> None:
     with (
-        patch("startorch.utils.imports.is_iden_available", lambda *args: False),
+        patch("startorch.utils.imports.is_iden_available", lambda: False),
         pytest.raises(RuntimeError, match="`iden` package is required but not installed."),
     ):
         check_iden()
@@ -39,13 +39,13 @@ def test_is_iden_available() -> None:
 
 
 def test_check_matplotlib_with_package() -> None:
-    with patch("startorch.utils.imports.is_matplotlib_available", lambda *args: True):
+    with patch("startorch.utils.imports.is_matplotlib_available", lambda: True):
         check_matplotlib()
 
 
 def test_check_matplotlib_without_package() -> None:
     with (
-        patch("startorch.utils.imports.is_matplotlib_available", lambda *args: False),
+        patch("startorch.utils.imports.is_matplotlib_available", lambda: False),
         pytest.raises(RuntimeError, match="`matplotlib` package is required but not installed."),
     ):
         check_matplotlib()
@@ -61,13 +61,13 @@ def test_is_matplotlib_available() -> None:
 
 
 def test_check_plotly_with_package() -> None:
-    with patch("startorch.utils.imports.is_plotly_available", lambda *args: True):
+    with patch("startorch.utils.imports.is_plotly_available", lambda: True):
         check_plotly()
 
 
 def test_check_plotly_without_package() -> None:
     with (
-        patch("startorch.utils.imports.is_plotly_available", lambda *args: False),
+        patch("startorch.utils.imports.is_plotly_available", lambda: False),
         pytest.raises(RuntimeError, match="`plotly` package is required but not installed."),
     ):
         check_plotly()

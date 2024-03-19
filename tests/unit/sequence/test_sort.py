@@ -35,7 +35,7 @@ def test_sort_generate(batch_size: int, seq_len: int, feature_size: int) -> None
 
 @patch(
     "startorch.sequence.RandUniform.generate",
-    lambda *args, **kwargs: torch.tensor(
+    lambda *args, **kwargs: torch.tensor(  # noqa: ARG005
         [[[2.0], [4.0], [1.0], [3.0]], [[3.0], [2.0], [1.0], [2.0]]], dtype=torch.float
     ),
 )
@@ -50,7 +50,7 @@ def test_sort_generate_descending_false() -> None:
 
 @patch(
     "startorch.sequence.RandUniform.generate",
-    lambda *args, **kwargs: torch.tensor(
+    lambda *args, **kwargs: torch.tensor(  # noqa: ARG005
         [[[2.0], [4.0], [1.0], [3.0]], [[3.0], [2.0], [1.0], [2.0]]], dtype=torch.float
     ),
 )

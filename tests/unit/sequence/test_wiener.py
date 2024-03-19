@@ -79,14 +79,20 @@ def test_wiener_process_step_size_0(batch_size: int, seq_len: int) -> None:
     )
 
 
-@patch("startorch.sequence.wiener.torch.randn", lambda *args, **kwargs: torch.ones(2, 4))
+@patch(
+    "startorch.sequence.wiener.torch.randn",
+    lambda *args, **kwargs: torch.ones(2, 4),  # noqa: ARG005
+)
 def test_wiener_process_step_size_1() -> None:
     assert wiener_process(step_size=1, batch_size=2, seq_len=4).equal(
         torch.tensor([[0, 1, 2, 3], [0, 1, 2, 3]], dtype=torch.float)
     )
 
 
-@patch("startorch.sequence.wiener.torch.randn", lambda *args, **kwargs: torch.ones(2, 4))
+@patch(
+    "startorch.sequence.wiener.torch.randn",
+    lambda *args, **kwargs: torch.ones(2, 4),  # noqa: ARG005
+)
 def test_wiener_process_step_size_4() -> None:
     assert wiener_process(step_size=4, batch_size=2, seq_len=4).equal(
         torch.tensor([[0, 2, 4, 6], [0, 2, 4, 6]], dtype=torch.float)
