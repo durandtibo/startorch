@@ -114,6 +114,35 @@ jobs:
           python tests/package_checks.py
 
 
+  batchtensor:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      max-parallel: 8
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest ]
+        python-version: [ '3.12', '3.11', '3.10', '3.9' ]
+        batchtensor-version: [ 0.0.3, 0.0.2 ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install package
+        run: |
+          pip install startorch batchtensor==${{ matrix.batchtensor-version }}
+
+      - name: Run some checks
+        run: |
+          python tests/package_checks.py
+
+
   coola:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
