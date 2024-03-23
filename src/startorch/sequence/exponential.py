@@ -200,7 +200,7 @@ class RandExponentialSequenceGenerator(BaseSequenceGenerator):
         self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
     ) -> torch.Tensor:
         return rand_exponential(
-            size=(batch_size, seq_len) + self._feature_size,
+            size=(batch_size, seq_len, *self._feature_size),
             rate=self._rate,
             generator=rng,
         )
@@ -259,7 +259,7 @@ class RandTruncExponentialSequenceGenerator(BaseSequenceGenerator):
         self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
     ) -> torch.Tensor:
         return rand_trunc_exponential(
-            size=(batch_size, seq_len) + self._feature_size,
+            size=(batch_size, seq_len, *self._feature_size),
             rate=self._rate,
             max_value=self._max_value,
             generator=rng,

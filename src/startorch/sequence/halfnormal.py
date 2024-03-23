@@ -108,7 +108,7 @@ class RandHalfNormalSequenceGenerator(BaseSequenceGenerator):
         self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
     ) -> torch.Tensor:
         return rand_half_normal(
-            size=(batch_size, seq_len) + self._feature_size,
+            size=(batch_size, seq_len, *self._feature_size),
             std=self._std,
             generator=rng,
         )
@@ -167,7 +167,7 @@ class RandTruncHalfNormalSequenceGenerator(BaseSequenceGenerator):
         self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
     ) -> torch.Tensor:
         return rand_trunc_half_normal(
-            size=(batch_size, seq_len) + self._feature_size,
+            size=(batch_size, seq_len, *self._feature_size),
             std=self._std,
             max_value=self._max_value,
             generator=rng,

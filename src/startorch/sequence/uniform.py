@@ -175,7 +175,7 @@ class RandAsinhUniformSequenceGenerator(BaseSequenceGenerator):
         self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
     ) -> torch.Tensor:
         return rand_asinh_uniform(
-            size=(batch_size, seq_len) + self._feature_size,
+            size=(batch_size, seq_len, *self._feature_size),
             low=self._low,
             high=self._high,
             generator=rng,
@@ -234,7 +234,7 @@ class RandIntSequenceGenerator(BaseSequenceGenerator):
         return torch.randint(
             low=self._low,
             high=self._high,
-            size=(batch_size, seq_len) + self._feature_size,
+            size=(batch_size, seq_len, *self._feature_size),
             generator=rng,
         )
 
@@ -289,7 +289,7 @@ class RandLogUniformSequenceGenerator(BaseSequenceGenerator):
         self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
     ) -> torch.Tensor:
         return rand_log_uniform(
-            size=(batch_size, seq_len) + self._feature_size,
+            size=(batch_size, seq_len, *self._feature_size),
             low=self._low,
             high=self._high,
             generator=rng,
@@ -346,7 +346,7 @@ class RandUniformSequenceGenerator(BaseSequenceGenerator):
         self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
     ) -> torch.Tensor:
         return rand_uniform(
-            size=(batch_size, seq_len) + self._feature_size,
+            size=(batch_size, seq_len, *self._feature_size),
             low=self._low,
             high=self._high,
             generator=rng,

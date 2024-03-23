@@ -123,7 +123,7 @@ class RandCauchySequenceGenerator(BaseSequenceGenerator):
         self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
     ) -> torch.Tensor:
         return rand_cauchy(
-            size=(batch_size, seq_len) + self._feature_size,
+            size=(batch_size, seq_len, *self._feature_size),
             loc=self._loc,
             scale=self._scale,
             generator=rng,
@@ -191,7 +191,7 @@ class RandTruncCauchySequenceGenerator(BaseSequenceGenerator):
         self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
     ) -> torch.Tensor:
         return rand_trunc_cauchy(
-            size=(batch_size, seq_len) + self._feature_size,
+            size=(batch_size, seq_len, *self._feature_size),
             loc=self._loc,
             scale=self._scale,
             min_value=self._min_value,

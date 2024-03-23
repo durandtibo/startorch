@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "startorch"
-version = "0.1.0"
+version = "0.1.1a0"
 description = "synthetic time-series generator in PyTorch"
 readme = "README.md"
 authors = ["Thibaut Durand <durand.tibo+gh@gmail.com>"]
@@ -116,10 +116,6 @@ wrap-descriptions = 72
 syntax = "google"
 
 [tool.ruff]
-line-length = 100
-target-version = "py39"
-src = ["src"]
-
 # List of rules: https://docs.astral.sh/ruff/rules/
 lint.select = [
     "A", # builtins
@@ -129,8 +125,10 @@ lint.select = [
     "BLE", # flake8-blind-except
     "C4", # flake8-comprehensions
     "D", # pydocstyle
+    "DTZ", # flake8-datetimez
     "E", # pycodestyle (Error)
     "EM", # flake8-errmsg
+    "EXE", # flake8-executable
     "F", # pyflakes
     "FA", # flake8-future-annotations
     "FURB", # refurb
@@ -150,6 +148,7 @@ lint.select = [
     "Q", # flake8-quotes
     "RET", # flake8-return
     "RSE", # flake8-raise
+    "RUF", # Ruff-specific rules
     "S", # flake8-bandit
     "SIM", # flake8-simplify
     "T20", # flake8-print
@@ -188,8 +187,10 @@ lint.fixable = [
     "BLE",
     "C4",
     "D",
+    "DTZ",
     "E",
     "EM",
+    "EXE",
     "F",
     "FA",
     "FURB",
@@ -208,6 +209,7 @@ lint.fixable = [
     "Q",
     "RET",
     "RSE",
+    "RUF",
     "S",
     "SIM",
     "T20",
@@ -243,6 +245,10 @@ lint.exclude = [
 
 # Enable on top of the Google convention.
 lint.extend-select = ["D400", "D401", "D404"]
+
+line-length = 100
+target-version = "py39"
+src = ["src"]
 
 [tool.ruff.lint.per-file-ignores]
 # Ignore all directories named `tests`.
