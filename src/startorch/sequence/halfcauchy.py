@@ -113,7 +113,7 @@ class RandHalfCauchySequenceGenerator(BaseSequenceGenerator):
         self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
     ) -> torch.Tensor:
         return rand_half_cauchy(
-            size=(batch_size, seq_len) + self._feature_size,
+            size=(batch_size, seq_len, *self._feature_size),
             scale=self._scale,
             generator=rng,
         )
@@ -172,7 +172,7 @@ class RandTruncHalfCauchySequenceGenerator(BaseSequenceGenerator):
         self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
     ) -> torch.Tensor:
         return rand_trunc_half_cauchy(
-            size=(batch_size, seq_len) + self._feature_size,
+            size=(batch_size, seq_len, *self._feature_size),
             scale=self._scale,
             max_value=self._max_value,
             generator=rng,

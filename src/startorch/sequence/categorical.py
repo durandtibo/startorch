@@ -179,6 +179,6 @@ class UniformCategoricalSequenceGenerator(BaseSequenceGenerator):
         return torch.randint(
             low=0,
             high=self._num_categories,
-            size=(batch_size, seq_len) + self._feature_size,
+            size=(batch_size, seq_len, *self._feature_size),
             generator=rng,
         )

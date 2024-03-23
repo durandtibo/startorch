@@ -50,9 +50,9 @@ repos:
     hooks:
       - id: blacken-docs
         additional_dependencies:
-          - black>=24.1.1
+          - black>=24.3.0
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.3.3
+    rev: v0.3.4
     hooks:
       - id: ruff
-        args: [--fix]
+        args: [ --fix, --unsafe-fixes ]

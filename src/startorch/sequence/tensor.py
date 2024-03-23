@@ -59,4 +59,4 @@ class TensorSequenceGenerator(BaseSequenceGenerator):
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
     ) -> torch.Tensor:
-        return self._tensor.generate(size=(batch_size, seq_len) + self._feature_size, rng=rng)
+        return self._tensor.generate(size=(batch_size, seq_len, *self._feature_size), rng=rng)
