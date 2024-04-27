@@ -20,7 +20,7 @@ nav:
   - Home: index.md
   - get_started.md
   - User Guide:
-#      - quickstart.md
+      #      - quickstart.md
       - sequence.md
   - GitHub: https://github.com/durandtibo/startorch
 
@@ -29,18 +29,41 @@ repo_name: durandtibo/startorch
 
 markdown_extensions:
   - md_in_html
+  - pymdownx.caret
+  - pymdownx.critic
   - pymdownx.highlight
-  - pymdownx.superfences
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
   - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tilde
   - pymdownx.emoji:
-      emoji_index: !!python/name:materialx.emoji.twemoji
-      emoji_generator: !!python/name:materialx.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - toc:
       permalink: true
 
 plugins:
   - search
-  - mkdocstrings
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          paths: [ ../src ]
+          options:
+            allow_inspection: true
+            docstring_style: google
+            separate_signature: true
+            show_bases: true
+            show_object_full_path: true
+            show_root_full_path: true
+            show_root_heading: true
+            show_root_toc_entry: true
+            show_signature: true
+            show_signature_annotations: true
+            show_source: false
+            signature_crossrefs: true
 
 extra:
   version:
