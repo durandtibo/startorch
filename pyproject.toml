@@ -10,7 +10,7 @@ keywords = ["synthetic", "time-series", "pytorch"]
 license = "BSD-3-Clause"
 
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
     "Intended Audience :: Information Technology",
     "Intended Audience :: Science/Research",
@@ -55,6 +55,7 @@ optional = true
 jupyterlab = "^4.0"
 safetensors = ">=0.4,<1.0"
 seaborn = "^0.13"
+scikit-learn = "^1.4"
 
 [tool.poetry.group.docs]
 optional = true
