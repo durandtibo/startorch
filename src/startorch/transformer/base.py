@@ -2,7 +2,7 @@ r"""Contain the base class to implement a transformer."""
 
 from __future__ import annotations
 
-__all__ = ["BaseTransformer", "is_transformer_config", "setup_transformer"]
+__all__ = ["BaseTransformer", "BaseTensorTransformer", "is_transformer_config", "setup_transformer"]
 
 import logging
 from abc import ABC, abstractmethod
@@ -11,10 +11,10 @@ from typing import TYPE_CHECKING
 from objectory import AbstractFactory
 from objectory.utils import is_object_config
 
+from startorch.transformer.utils import add_item, check_input_keys
 from startorch.utils.format import str_target_object
 
 if TYPE_CHECKING:
-
     import torch
 
 logger = logging.getLogger(__name__)
@@ -70,6 +70,81 @@ class BaseTransformer(ABC, metaclass=AbstractFactory):
                         [4., 5., 6.]])}
 
         ```
+        """
+
+
+class BaseTensorTransformer(BaseTransformer):
+    r"""Define the base class to transform a tensor.
+
+    Args:
+        input: The key that contains the input tensor.
+        output: The key that contains the output tensor.
+        exist_ok: If ``False``, an exception is raised if the output
+            key already exists. Otherwise, the value associated to the
+            output key is updated.
+
+    Example usage:
+
+    ```pycon
+
+    >>> import torch
+    >>> from startorch.transformer import Tanh
+    >>> transformer = Tanh(input="input", output="output")
+    >>> transformer
+    TanhTransformer(input=input, output=output, exist_ok=False)
+    >>> data = {"input": torch.tensor([[0.0, 1.0, 2.0], [4.0, 5.0, 6.0]])}
+    >>> out = transformer.transform(data)
+    >>> out
+    {'input': tensor([[0., 1., 2.],
+                      [4., 5., 6.]]),
+     'output': tensor([[0.0000, 0.7616, 0.9640],
+                       [0.9993, 0.9999, 1.0000]])}
+
+    ```
+    """
+
+    def __init__(self, input: str, output: str, exist_ok: bool = False) -> None:  # noqa: A002
+        self._input = input
+        self._output = output
+        self._exist_ok = exist_ok
+
+    def __repr__(self) -> str:
+        return (
+            f"{self.__class__.__qualname__}(input={self._input}, output={self._output}, "
+            f"exist_ok={self._exist_ok})"
+        )
+
+    def transform(
+        self,
+        data: dict[str, torch.Tensor],
+        *,
+        rng: torch.Transformer | None = None,
+    ) -> dict[str, torch.Tensor]:
+        check_input_keys(data, keys=[self._input])
+        data = data.copy()
+        add_item(
+            data,
+            key=self._output,
+            value=self._transform(tensor=data[self._input], rng=rng),
+            exist_ok=self._exist_ok,
+        )
+        return data
+
+    @abstractmethod
+    def _transform(
+        self,
+        tensor: torch.Tensor,
+        *,
+        rng: torch.Transformer | None = None,
+    ) -> torch.Tensor:
+        r"""Transform a tensor.
+
+        Args:
+            tensor: The tensor to transform.
+            rng: An optional random number transformer.
+
+        Returns:
+            The transformed tensor.
         """
 
 

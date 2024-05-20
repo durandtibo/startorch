@@ -11,7 +11,6 @@ from typing import TYPE_CHECKING
 from startorch.transformer.base import BaseTransformer
 
 if TYPE_CHECKING:
-
     import torch
 
 logger = logging.getLogger(__name__)

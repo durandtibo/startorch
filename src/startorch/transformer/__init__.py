@@ -9,6 +9,7 @@ __all__ = [
     "AsinhTransformer",
     "Atanh",
     "AtanhTransformer",
+    "BaseTensorTransformer",
     "BaseTransformer",
     "Cosh",
     "CoshTransformer",
@@ -25,6 +26,7 @@ __all__ = [
 ]
 
 from startorch.transformer.base import (
+    BaseTensorTransformer,
     BaseTransformer,
     is_transformer_config,
     setup_transformer,

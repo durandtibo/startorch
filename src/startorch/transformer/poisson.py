@@ -8,11 +8,10 @@ __all__ = ["PoissonTransformer"]
 
 import torch
 
-from startorch.transformer.base import BaseTransformer
-from startorch.transformer.utils import add_item, check_input_keys
+from startorch.transformer.base import BaseTensorTransformer
 
 
-class PoissonTransformer(BaseTransformer):
+class PoissonTransformer(BaseTensorTransformer):
     r"""Implement a tensor transformer that samples values from a Poisson
     distribution.
 
@@ -50,28 +49,18 @@ class PoissonTransformer(BaseTransformer):
     """
 
     def __init__(self, rate: str, output: str, exist_ok: bool = False) -> None:
-        self._rate = rate
-        self._output = output
-        self._exist_ok = exist_ok
+        super().__init__(input=rate, output=output, exist_ok=exist_ok)
 
     def __repr__(self) -> str:
         return (
-            f"{self.__class__.__qualname__}(rate={self._rate}, "
+            f"{self.__class__.__qualname__}(rate={self._input}, "
             f"output={self._output}, exist_ok={self._exist_ok})"
         )
 
-    def transform(
+    def _transform(
         self,
-        data: dict[str, torch.Tensor],
+        tensor: torch.Tensor,
         *,
         rng: torch.Transformer | None = None,
-    ) -> dict[str, torch.Tensor]:
-        check_input_keys(data, keys=[self._rate])
-        data = data.copy()
-        add_item(
-            data,
-            key=self._output,
-            value=torch.poisson(data[self._rate], generator=rng),
-            exist_ok=self._exist_ok,
-        )
-        return data
+    ) -> torch.Tensor:
+        return torch.poisson(tensor, generator=rng)
