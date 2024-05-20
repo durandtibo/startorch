@@ -24,9 +24,9 @@ from iden.utils.time import sync_perf_counter
 
 from startorch import constants as ct
 from startorch.example import BaseExampleGenerator, TimeSeriesExampleGenerator
+from startorch.integration.iden.data.generator import ExampleDataGenerator
 from startorch.sequence import RandUniformSequenceGenerator
 from startorch.tensor import FullTensorGenerator
-from startorch.th3rd.iden.data.generator import ExampleDataGenerator
 from startorch.timeseries import TimeSeriesGenerator
 
 logger = logging.getLogger(__name__)

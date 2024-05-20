@@ -4,4 +4,4 @@ from __future__ import annotations
 
 __all__ = ["ExampleDataGenerator"]
 
-from startorch.th3rd.iden.data.generator.example import ExampleDataGenerator
+from startorch.integration.iden.data.generator.example import ExampleDataGenerator
