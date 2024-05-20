@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 from objectory import OBJECT_TARGET
 
 from startorch.sequence import RandInt
-from startorch.transformer.tensor import (
+from startorch.transformer import (
     Identity,
     is_tensor_transformer_config,
     setup_tensor_transformer,
@@ -21,7 +21,7 @@ if TYPE_CHECKING:
 
 
 def test_is_tensor_transformer_config_true() -> None:
-    assert is_tensor_transformer_config({OBJECT_TARGET: "startorch.transformer.tensor.Identity"})
+    assert is_tensor_transformer_config({OBJECT_TARGET: "startorch.transformer.Identity"})
 
 
 def test_is_tensor_transformer_config_false() -> None:
@@ -40,7 +40,7 @@ def test_setup_tensor_transformer_object() -> None:
 
 def test_setup_tensor_transformer_dict() -> None:
     assert isinstance(
-        setup_tensor_transformer({OBJECT_TARGET: "startorch.transformer.tensor.Identity"}),
+        setup_tensor_transformer({OBJECT_TARGET: "startorch.transformer.Identity"}),
         Identity,
     )
 

@@ -4,7 +4,7 @@ import pytest
 import torch
 from coola import objects_are_equal
 
-from startorch.transformer.tensor import Poisson
+from startorch.transformer import Poisson
 from startorch.utils.seed import get_torch_generator
 
 #############################

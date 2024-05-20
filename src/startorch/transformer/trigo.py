@@ -14,7 +14,7 @@ __all__ = [
 
 from typing import TYPE_CHECKING
 
-from startorch.transformer.tensor.base import BaseTensorTransformer
+from startorch.transformer.base import BaseTensorTransformer
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
@@ -31,7 +31,7 @@ class AcoshTensorTransformer(BaseTensorTransformer):
     ```pycon
 
     >>> import torch
-    >>> from startorch.transformer.tensor import Acosh
+    >>> from startorch.transformer import Acosh
     >>> transformer = Acosh()
     >>> transformer
     AcoshTensorTransformer()
@@ -66,7 +66,7 @@ class AsinhTensorTransformer(BaseTensorTransformer):
     ```pycon
 
     >>> import torch
-    >>> from startorch.transformer.tensor import Asinh
+    >>> from startorch.transformer import Asinh
     >>> transformer = Asinh()
     >>> transformer
     AsinhTensorTransformer()
@@ -101,7 +101,7 @@ class AtanhTensorTransformer(BaseTensorTransformer):
     ```pycon
 
     >>> import torch
-    >>> from startorch.transformer.tensor import Atanh
+    >>> from startorch.transformer import Atanh
     >>> transformer = Atanh()
     >>> transformer
     AtanhTensorTransformer()
@@ -136,7 +136,7 @@ class CoshTensorTransformer(BaseTensorTransformer):
     ```pycon
 
     >>> import torch
-    >>> from startorch.transformer.tensor import Cosh
+    >>> from startorch.transformer import Cosh
     >>> transformer = Cosh()
     >>> transformer
     CoshTensorTransformer()
@@ -171,7 +171,7 @@ class SinhTensorTransformer(BaseTensorTransformer):
     ```pycon
 
     >>> import torch
-    >>> from startorch.transformer.tensor import Sinh
+    >>> from startorch.transformer import Sinh
     >>> transformer = Sinh()
     >>> transformer
     SinhTensorTransformer()
@@ -206,7 +206,7 @@ class TanhTensorTransformer(BaseTensorTransformer):
     ```pycon
 
     >>> import torch
-    >>> from startorch.transformer.tensor import Tanh
+    >>> from startorch.transformer import Tanh
     >>> transformer = Tanh()
     >>> transformer
     TanhTensorTransformer()
