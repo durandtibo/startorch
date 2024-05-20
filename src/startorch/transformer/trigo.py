@@ -4,17 +4,17 @@ trigonometric functions on tensors."""
 from __future__ import annotations
 
 __all__ = [
-    "AcoshTensorTransformer",
-    "AsinhTensorTransformer",
-    "AtanhTensorTransformer",
-    "CoshTensorTransformer",
-    "SinhTensorTransformer",
-    "TanhTensorTransformer",
+    "AcoshTransformer",
+    "AsinhTransformer",
+    "AtanhTransformer",
+    "CoshTransformer",
+    "SinhTransformer",
+    "TanhTransformer",
 ]
 
 from typing import TYPE_CHECKING
 
-from startorch.transformer.base import BaseTensorTransformer
+from startorch.transformer.base import BaseTransformer
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
@@ -22,7 +22,7 @@ if TYPE_CHECKING:
     import torch
 
 
-class AcoshTensorTransformer(BaseTensorTransformer):
+class AcoshTransformer(BaseTransformer):
     r"""Implement a tensor transformer that computes the inverse
     hyperbolic cosine (arccosh) of each value.
 
@@ -34,7 +34,7 @@ class AcoshTensorTransformer(BaseTensorTransformer):
     >>> from startorch.transformer import Acosh
     >>> transformer = Acosh()
     >>> transformer
-    AcoshTensorTransformer()
+    AcoshTransformer()
     >>> tensor = torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
     >>> out = transformer.transform([tensor])
     >>> out
@@ -57,7 +57,7 @@ class AcoshTensorTransformer(BaseTensorTransformer):
         return tensor.acosh()
 
 
-class AsinhTensorTransformer(BaseTensorTransformer):
+class AsinhTransformer(BaseTransformer):
     r"""Implement a tensor transformer that computes the inverse
     hyperbolic sine (arcsinh) of each value.
 
@@ -69,7 +69,7 @@ class AsinhTensorTransformer(BaseTensorTransformer):
     >>> from startorch.transformer import Asinh
     >>> transformer = Asinh()
     >>> transformer
-    AsinhTensorTransformer()
+    AsinhTransformer()
     >>> tensor = torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
     >>> out = transformer.transform([tensor])
     >>> out
@@ -92,7 +92,7 @@ class AsinhTensorTransformer(BaseTensorTransformer):
         return tensor.asinh()
 
 
-class AtanhTensorTransformer(BaseTensorTransformer):
+class AtanhTransformer(BaseTransformer):
     r"""Implement a tensor transformer that computes the inverse
     hyperbolic tangent (arctanh) of each value.
 
@@ -104,7 +104,7 @@ class AtanhTensorTransformer(BaseTensorTransformer):
     >>> from startorch.transformer import Atanh
     >>> transformer = Atanh()
     >>> transformer
-    AtanhTensorTransformer()
+    AtanhTransformer()
     >>> tensor = torch.tensor([[-0.5, -0.1, 0.0], [0.1, 0.2, 0.5]])
     >>> out = transformer.transform([tensor])
     >>> out
@@ -127,7 +127,7 @@ class AtanhTensorTransformer(BaseTensorTransformer):
         return tensor.atanh()
 
 
-class CoshTensorTransformer(BaseTensorTransformer):
+class CoshTransformer(BaseTransformer):
     r"""Implement a tensor transformer that computes the hyperbolic
     cosine (cosh) of each value.
 
@@ -139,7 +139,7 @@ class CoshTensorTransformer(BaseTensorTransformer):
     >>> from startorch.transformer import Cosh
     >>> transformer = Cosh()
     >>> transformer
-    CoshTensorTransformer()
+    CoshTransformer()
     >>> tensor = torch.tensor([[1.0, 2.0, 3.0], [4.0, 4.5, 6.0]])
     >>> out = transformer.transform([tensor])
     >>> out
@@ -162,7 +162,7 @@ class CoshTensorTransformer(BaseTensorTransformer):
         return tensor.cosh()
 
 
-class SinhTensorTransformer(BaseTensorTransformer):
+class SinhTransformer(BaseTransformer):
     r"""Implement a tensor transformer that computes the hyperbolic sine
     (sinh) of each value.
 
@@ -174,7 +174,7 @@ class SinhTensorTransformer(BaseTensorTransformer):
     >>> from startorch.transformer import Sinh
     >>> transformer = Sinh()
     >>> transformer
-    SinhTensorTransformer()
+    SinhTransformer()
     >>> tensor = torch.tensor([[0.0, 1.0, 2.0], [4.0, 5.0, 6.0]])
     >>> out = transformer.transform([tensor])
     >>> out
@@ -197,7 +197,7 @@ class SinhTensorTransformer(BaseTensorTransformer):
         return tensor.sinh()
 
 
-class TanhTensorTransformer(BaseTensorTransformer):
+class TanhTransformer(BaseTransformer):
     r"""Implement a tensor transformer that computes the hyperbolic
     tangent (tanh) of each value.
 
@@ -209,7 +209,7 @@ class TanhTensorTransformer(BaseTensorTransformer):
     >>> from startorch.transformer import Tanh
     >>> transformer = Tanh()
     >>> transformer
-    TanhTensorTransformer()
+    TanhTransformer()
     >>> tensor = torch.tensor([[0.0, 1.0, 2.0], [4.0, 5.0, 6.0]])
     >>> out = transformer.transform([tensor])
     >>> out

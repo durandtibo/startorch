@@ -2,13 +2,13 @@ r"""Contain the implementation of a tensor identity transformer."""
 
 from __future__ import annotations
 
-__all__ = ["IdentityTensorTransformer"]
+__all__ = ["IdentityTransformer"]
 
 import copy
 import logging
 from typing import TYPE_CHECKING
 
-from startorch.transformer.base import BaseTensorTransformer
+from startorch.transformer.base import BaseTransformer
 
 if TYPE_CHECKING:
 
@@ -17,7 +17,7 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 
-class IdentityTensorTransformer(BaseTensorTransformer):
+class IdentityTransformer(BaseTransformer):
     r"""Implement the identity transformation.
 
     Args:
@@ -32,7 +32,7 @@ class IdentityTensorTransformer(BaseTensorTransformer):
     >>> from startorch.transformer import Identity
     >>> transformer = Identity()
     >>> transformer
-    IdentityTensorTransformer(copy=True)
+    IdentityTransformer(copy=True)
     >>> data = {"key": torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])}
     >>> out = transformer.transform(data)
     >>> out

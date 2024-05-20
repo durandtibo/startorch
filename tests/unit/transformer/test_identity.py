@@ -12,7 +12,7 @@ from startorch.utils.seed import get_torch_generator
 
 
 def test_identity_str() -> None:
-    assert str(Identity()).startswith("IdentityTensorTransformer(")
+    assert str(Identity()).startswith("IdentityTransformer(")
 
 
 def test_identity_transform() -> None:
