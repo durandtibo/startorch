@@ -32,7 +32,7 @@ class AsinhUniformTensorGenerator(BaseTensorGenerator):
     values from an asinh-uniform distribution.
 
     Args:
-        low : Specifies a tensor generator (or its configuration) to
+        low: Specifies a tensor generator (or its configuration) to
             generate the minimum value (inclusive).
         high: Specifies a tensor generator (or its configuration) to
             generate the maximum value (exclusive).

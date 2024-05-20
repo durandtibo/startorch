@@ -22,6 +22,15 @@ nav:
   - User Guide:
       #      - quickstart.md
       - sequence.md
+  - Reference:
+      - example: refs/example.md
+      - periodic: refs/periodic.md
+      - plot: refs/plot.md
+      - sequence: refs/sequence.md
+      - tensor: refs/tensor.md
+      - timeseries: refs/timeseries.md
+      - random: refs/random.md
+      - utils: refs/utils.md
   - GitHub: https://github.com/durandtibo/startorch
 
 repo_url: https://github.com/durandtibo/startorch
