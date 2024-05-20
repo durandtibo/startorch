@@ -18,7 +18,7 @@ def test_add_item() -> None:
 
 def test_add_item_key_exist_ok_false() -> None:
     data = {"key": 0}
-    with pytest.raises(KeyError):
+    with pytest.raises(KeyError, match="Key key already exists."):
         add_item(data, "key", 1)
 
 
