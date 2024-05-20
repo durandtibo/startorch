@@ -6,7 +6,7 @@ from coola import objects_are_equal
 
 from startorch import constants as ct
 from startorch.example import SwissRoll
-from startorch.th3rd.iden.data.generator import ExampleDataGenerator
+from startorch.integration.iden.data.generator import ExampleDataGenerator
 
 SIZES = [1, 2, 4]
 
