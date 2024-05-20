@@ -140,11 +140,11 @@ class CoshTensorTransformer(BaseTensorTransformer):
     >>> transformer = Cosh()
     >>> transformer
     CoshTensorTransformer()
-    >>> tensor = torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
+    >>> tensor = torch.tensor([[1.0, 2.0, 3.0], [4.0, 4.5, 6.0]])
     >>> out = transformer.transform([tensor])
     >>> out
     tensor([[  1.5431,   3.7622,  10.0677],
-            [ 27.3082,  74.2099, 201.7156]])
+            [ 27.3082,  45.0141, 201.7156]])
 
     ```
     """
