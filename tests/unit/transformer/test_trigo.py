@@ -11,7 +11,7 @@ from startorch.utils.seed import get_torch_generator
 
 
 def test_acosh_str() -> None:
-    assert str(Acosh()).startswith("AcoshTensorTransformer(")
+    assert str(Acosh()).startswith("AcoshTransformer(")
 
 
 def test_acosh_transform() -> None:
@@ -52,7 +52,7 @@ def test_acosh_transform_different_random_seeds() -> None:
 
 
 def test_asinh_str() -> None:
-    assert str(Asinh()).startswith("AsinhTensorTransformer(")
+    assert str(Asinh()).startswith("AsinhTransformer(")
 
 
 def test_asinh_transform() -> None:
@@ -93,7 +93,7 @@ def test_asinh_transform_different_random_seeds() -> None:
 
 
 def test_atanh_str() -> None:
-    assert str(Atanh()).startswith("AtanhTensorTransformer(")
+    assert str(Atanh()).startswith("AtanhTransformer(")
 
 
 def test_atanh_transform() -> None:
@@ -134,7 +134,7 @@ def test_atanh_transform_different_random_seeds() -> None:
 
 
 def test_cosh_str() -> None:
-    assert str(Cosh()).startswith("CoshTensorTransformer(")
+    assert str(Cosh()).startswith("CoshTransformer(")
 
 
 def test_cosh_transform() -> None:
@@ -175,7 +175,7 @@ def test_cosh_transform_different_random_seeds() -> None:
 
 
 def test_sinh_str() -> None:
-    assert str(Sinh()).startswith("SinhTensorTransformer(")
+    assert str(Sinh()).startswith("SinhTransformer(")
 
 
 def test_sinh_transform() -> None:
@@ -216,7 +216,7 @@ def test_sinh_transform_different_random_seeds() -> None:
 
 
 def test_tanh_str() -> None:
-    assert str(Tanh()).startswith("TanhTensorTransformer(")
+    assert str(Tanh()).startswith("TanhTransformer(")
 
 
 def test_tanh_transform() -> None:

@@ -3,16 +3,16 @@ trigonometric functions on tensors."""
 
 from __future__ import annotations
 
-__all__ = ["PoissonTensorTransformer"]
+__all__ = ["PoissonTransformer"]
 
 
 import torch
 
-from startorch.transformer.base import BaseTensorTransformer
+from startorch.transformer.base import BaseTransformer
 from startorch.transformer.utils import add_item, check_input_keys
 
 
-class PoissonTensorTransformer(BaseTensorTransformer):
+class PoissonTransformer(BaseTransformer):
     r"""Implement a tensor transformer that samples values from a Poisson
     distribution.
 
@@ -37,7 +37,7 @@ class PoissonTensorTransformer(BaseTensorTransformer):
     >>> from startorch.transformer import Poisson
     >>> transformer = Poisson(rate="rate", output="output")
     >>> transformer
-    PoissonTensorTransformer(rate=rate, output=output, exist_ok=False)
+    PoissonTransformer(rate=rate, output=output, exist_ok=False)
     >>> data = {"rate": torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])}
     >>> out = transformer.transform(data)
     >>> out
