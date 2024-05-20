@@ -51,6 +51,7 @@ class IdentityTensorTransformer(BaseTensorTransformer):
     def transform(
         self,
         tensors: Sequence[torch.Tensor],
+        *,
         rng: torch.Transformer | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         (tensor,) = tensors

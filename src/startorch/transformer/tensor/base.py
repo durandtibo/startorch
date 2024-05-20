@@ -46,7 +46,7 @@ class BaseTensorTransformer(ABC, metaclass=AbstractFactory):
 
     @abstractmethod
     def transform(
-        self, tensors: Sequence[torch.Tensor], rng: torch.Transformer | None = None
+        self, tensors: Sequence[torch.Tensor], *, rng: torch.Transformer | None = None
     ) -> torch.Tensor:
         r"""Generate a tensor.
 

@@ -50,6 +50,7 @@ class AcoshTensorTransformer(BaseTensorTransformer):
     def transform(
         self,
         tensors: Sequence[torch.Tensor],
+        *,
         rng: torch.Transformer | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         (tensor,) = tensors
@@ -84,6 +85,7 @@ class AsinhTensorTransformer(BaseTensorTransformer):
     def transform(
         self,
         tensors: Sequence[torch.Tensor],
+        *,
         rng: torch.Transformer | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         (tensor,) = tensors
@@ -118,6 +120,7 @@ class AtanhTensorTransformer(BaseTensorTransformer):
     def transform(
         self,
         tensors: Sequence[torch.Tensor],
+        *,
         rng: torch.Transformer | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         (tensor,) = tensors
@@ -152,6 +155,7 @@ class CoshTensorTransformer(BaseTensorTransformer):
     def transform(
         self,
         tensors: Sequence[torch.Tensor],
+        *,
         rng: torch.Transformer | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         (tensor,) = tensors
@@ -186,6 +190,7 @@ class SinhTensorTransformer(BaseTensorTransformer):
     def transform(
         self,
         tensors: Sequence[torch.Tensor],
+        *,
         rng: torch.Transformer | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         (tensor,) = tensors
@@ -220,6 +225,7 @@ class TanhTensorTransformer(BaseTensorTransformer):
     def transform(
         self,
         tensors: Sequence[torch.Tensor],
+        *,
         rng: torch.Transformer | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         (tensor,) = tensors
