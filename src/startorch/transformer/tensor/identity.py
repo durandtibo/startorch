@@ -4,13 +4,13 @@ from __future__ import annotations
 
 __all__ = ["IdentityTensorTransformer"]
 
+import copy
 import logging
 from typing import TYPE_CHECKING
 
 from startorch.transformer.tensor.base import BaseTensorTransformer
 
 if TYPE_CHECKING:
-    from collections.abc import Sequence
 
     import torch
 
@@ -33,11 +33,11 @@ class IdentityTensorTransformer(BaseTensorTransformer):
     >>> transformer = Identity()
     >>> transformer
     IdentityTensorTransformer(copy=True)
-    >>> tensor = torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
-    >>> out = transformer.transform([tensor])
+    >>> data = {"key": torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])}
+    >>> out = transformer.transform(data)
     >>> out
-    tensor([[1., 2., 3.],
-            [4., 5., 6.]])
+    {'key': tensor([[1., 2., 3.],
+                    [4., 5., 6.]])}
 
     ```
     """
@@ -50,11 +50,10 @@ class IdentityTensorTransformer(BaseTensorTransformer):
 
     def transform(
         self,
-        tensors: Sequence[torch.Tensor],
+        data: dict[str, torch.Tensor],
         *,
         rng: torch.Transformer | None = None,  # noqa: ARG002
-    ) -> torch.Tensor:
-        (tensor,) = tensors
+    ) -> dict[str, torch.Tensor]:
         if self._copy:
-            return tensor.clone()
-        return tensor
+            return copy.deepcopy(data)
+        return data
