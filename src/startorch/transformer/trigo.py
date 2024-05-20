@@ -14,17 +14,22 @@ __all__ = [
 
 from typing import TYPE_CHECKING
 
-from startorch.transformer.base import BaseTransformer
+from startorch.transformer.base import BaseTensorTransformer
 
 if TYPE_CHECKING:
-    from collections.abc import Sequence
-
     import torch
 
 
-class AcoshTransformer(BaseTransformer):
+class AcoshTransformer(BaseTensorTransformer):
     r"""Implement a tensor transformer that computes the inverse
     hyperbolic cosine (arccosh) of each value.
+
+    Args:
+        input: The key that contains the input tensor.
+        output: The key that contains the output tensor.
+        exist_ok: If ``False``, an exception is raised if the output
+            key already exists. Otherwise, the value associated to the
+            output key is updated.
 
     Example usage:
 
@@ -32,34 +37,39 @@ class AcoshTransformer(BaseTransformer):
 
     >>> import torch
     >>> from startorch.transformer import Acosh
-    >>> transformer = Acosh()
+    >>> transformer = Acosh(input="input", output="output")
     >>> transformer
-    AcoshTransformer()
-    >>> tensor = torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
-    >>> out = transformer.transform([tensor])
+    AcoshTransformer(input=input, output=output, exist_ok=False)
+    >>> data = {"input": torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])}
+    >>> out = transformer.transform(data)
     >>> out
-    tensor([[0.0000, 1.3170, 1.7627],
-            [2.0634, 2.2924, 2.4779]])
+    {'input': tensor([[1., 2., 3.],
+                      [4., 5., 6.]]),
+     'output': tensor([[0.0000, 1.3170, 1.7627],
+                       [2.0634, 2.2924, 2.4779]])}
 
     ```
     """
 
-    def __repr__(self) -> str:
-        return f"{self.__class__.__qualname__}()"
-
-    def transform(
+    def _transform(
         self,
-        tensors: Sequence[torch.Tensor],
+        tensor: torch.Tensor,
         *,
         rng: torch.Transformer | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
-        (tensor,) = tensors
         return tensor.acosh()
 
 
-class AsinhTransformer(BaseTransformer):
+class AsinhTransformer(BaseTensorTransformer):
     r"""Implement a tensor transformer that computes the inverse
     hyperbolic sine (arcsinh) of each value.
+
+    Args:
+        input: The key that contains the input tensor.
+        output: The key that contains the output tensor.
+        exist_ok: If ``False``, an exception is raised if the output
+            key already exists. Otherwise, the value associated to the
+            output key is updated.
 
     Example usage:
 
@@ -67,34 +77,39 @@ class AsinhTransformer(BaseTransformer):
 
     >>> import torch
     >>> from startorch.transformer import Asinh
-    >>> transformer = Asinh()
+    >>> transformer = Asinh(input="input", output="output")
     >>> transformer
-    AsinhTransformer()
-    >>> tensor = torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
-    >>> out = transformer.transform([tensor])
+    AsinhTransformer(input=input, output=output, exist_ok=False)
+    >>> data = {'input': torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])}
+    >>> out = transformer.transform(data)
     >>> out
-    tensor([[0.8814, 1.4436, 1.8184],
-            [2.0947, 2.3124, 2.4918]])
+    {'input': tensor([[1., 2., 3.],
+                      [4., 5., 6.]]),
+     'output': tensor([[0.8814, 1.4436, 1.8184],
+                       [2.0947, 2.3124, 2.4918]])}
 
     ```
     """
 
-    def __repr__(self) -> str:
-        return f"{self.__class__.__qualname__}()"
-
-    def transform(
+    def _transform(
         self,
-        tensors: Sequence[torch.Tensor],
+        tensor: torch.Tensor,
         *,
         rng: torch.Transformer | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
-        (tensor,) = tensors
         return tensor.asinh()
 
 
-class AtanhTransformer(BaseTransformer):
+class AtanhTransformer(BaseTensorTransformer):
     r"""Implement a tensor transformer that computes the inverse
     hyperbolic tangent (arctanh) of each value.
+
+    Args:
+        input: The key that contains the input tensor.
+        output: The key that contains the output tensor.
+        exist_ok: If ``False``, an exception is raised if the output
+            key already exists. Otherwise, the value associated to the
+            output key is updated.
 
     Example usage:
 
@@ -102,34 +117,39 @@ class AtanhTransformer(BaseTransformer):
 
     >>> import torch
     >>> from startorch.transformer import Atanh
-    >>> transformer = Atanh()
+    >>> transformer = Atanh(input="input", output="output")
     >>> transformer
-    AtanhTransformer()
-    >>> tensor = torch.tensor([[-0.5, -0.1, 0.0], [0.1, 0.2, 0.5]])
-    >>> out = transformer.transform([tensor])
+    AtanhTransformer(input=input, output=output, exist_ok=False)
+    >>> data = {'input': torch.tensor([[-0.5, -0.1, 0.0], [0.1, 0.2, 0.5]])}
+    >>> out = transformer.transform(data)
     >>> out
-    tensor([[-0.5493, -0.1003,  0.0000],
-            [ 0.1003,  0.2027,  0.5493]])
+    {'input': tensor([[-0.5000, -0.1000,  0.0000],
+                      [ 0.1000,  0.2000,  0.5000]]),
+     'output': tensor([[-0.5493, -0.1003,  0.0000],
+                       [ 0.1003,  0.2027,  0.5493]])}
 
     ```
     """
 
-    def __repr__(self) -> str:
-        return f"{self.__class__.__qualname__}()"
-
-    def transform(
+    def _transform(
         self,
-        tensors: Sequence[torch.Tensor],
+        tensor: torch.Tensor,
         *,
         rng: torch.Transformer | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
-        (tensor,) = tensors
         return tensor.atanh()
 
 
-class CoshTransformer(BaseTransformer):
+class CoshTransformer(BaseTensorTransformer):
     r"""Implement a tensor transformer that computes the hyperbolic
     cosine (cosh) of each value.
+
+    Args:
+        input: The key that contains the input tensor.
+        output: The key that contains the output tensor.
+        exist_ok: If ``False``, an exception is raised if the output
+            key already exists. Otherwise, the value associated to the
+            output key is updated.
 
     Example usage:
 
@@ -137,34 +157,39 @@ class CoshTransformer(BaseTransformer):
 
     >>> import torch
     >>> from startorch.transformer import Cosh
-    >>> transformer = Cosh()
+    >>> transformer = Cosh(input="input", output="output")
     >>> transformer
-    CoshTransformer()
-    >>> tensor = torch.tensor([[1.0, 2.0, 3.0], [4.0, 4.5, 6.0]])
-    >>> out = transformer.transform([tensor])
+    CoshTransformer(input=input, output=output, exist_ok=False)
+    >>> data = {'input': torch.tensor([[1.0, 2.0, 3.0], [4.0, 4.5, 6.0]])}
+    >>> out = transformer.transform(data)
     >>> out
-    tensor([[  1.5431,   3.7622,  10.0677],
-            [ 27.3082,  45.0141, 201.7156]])
+    {'input': tensor([[1.0000, 2.0000, 3.0000],
+                      [4.0000, 4.5000, 6.0000]]),
+     'output': tensor([[  1.5431,   3.7622,  10.0677],
+                       [ 27.3082,  45.0141, 201.7156]])}
 
     ```
     """
 
-    def __repr__(self) -> str:
-        return f"{self.__class__.__qualname__}()"
-
-    def transform(
+    def _transform(
         self,
-        tensors: Sequence[torch.Tensor],
+        tensor: torch.Tensor,
         *,
         rng: torch.Transformer | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
-        (tensor,) = tensors
         return tensor.cosh()
 
 
-class SinhTransformer(BaseTransformer):
+class SinhTransformer(BaseTensorTransformer):
     r"""Implement a tensor transformer that computes the hyperbolic sine
     (sinh) of each value.
+
+    Args:
+        input: The key that contains the input tensor.
+        output: The key that contains the output tensor.
+        exist_ok: If ``False``, an exception is raised if the output
+            key already exists. Otherwise, the value associated to the
+            output key is updated.
 
     Example usage:
 
@@ -172,34 +197,40 @@ class SinhTransformer(BaseTransformer):
 
     >>> import torch
     >>> from startorch.transformer import Sinh
-    >>> transformer = Sinh()
+    >>> transformer = Sinh(input="input", output="output")
     >>> transformer
-    SinhTransformer()
-    >>> tensor = torch.tensor([[0.0, 1.0, 2.0], [4.0, 5.0, 6.0]])
-    >>> out = transformer.transform([tensor])
+    SinhTransformer(input=input, output=output, exist_ok=False)
+    >>> data = {'input': torch.tensor([[0.0, 1.0, 2.0], [4.0, 5.0, 6.0]])}
+    >>> out = transformer.transform(data)
     >>> out
-    tensor([[  0.0000,   1.1752,   3.6269],
-            [ 27.2899,  74.2032, 201.7132]])
+    {'input': tensor([[0., 1., 2.],
+                      [4., 5., 6.]]),
+     'output': tensor([[  0.0000,   1.1752,   3.6269],
+                       [ 27.2899,  74.2032, 201.7132]])}
+
 
     ```
     """
 
-    def __repr__(self) -> str:
-        return f"{self.__class__.__qualname__}()"
-
-    def transform(
+    def _transform(
         self,
-        tensors: Sequence[torch.Tensor],
+        tensor: torch.Tensor,
         *,
         rng: torch.Transformer | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
-        (tensor,) = tensors
         return tensor.sinh()
 
 
-class TanhTransformer(BaseTransformer):
+class TanhTransformer(BaseTensorTransformer):
     r"""Implement a tensor transformer that computes the hyperbolic
     tangent (tanh) of each value.
+
+    Args:
+        input: The key that contains the input tensor.
+        output: The key that contains the output tensor.
+        exist_ok: If ``False``, an exception is raised if the output
+            key already exists. Otherwise, the value associated to the
+            output key is updated.
 
     Example usage:
 
@@ -207,26 +238,24 @@ class TanhTransformer(BaseTransformer):
 
     >>> import torch
     >>> from startorch.transformer import Tanh
-    >>> transformer = Tanh()
+    >>> transformer = Tanh(input="input", output="output")
     >>> transformer
-    TanhTransformer()
-    >>> tensor = torch.tensor([[0.0, 1.0, 2.0], [4.0, 5.0, 6.0]])
-    >>> out = transformer.transform([tensor])
+    TanhTransformer(input=input, output=output, exist_ok=False)
+    >>> data = {"input": torch.tensor([[0.0, 1.0, 2.0], [4.0, 5.0, 6.0]])}
+    >>> out = transformer.transform(data)
     >>> out
-    tensor([[0.0000, 0.7616, 0.9640],
-            [0.9993, 0.9999, 1.0000]])
+    {'input': tensor([[0., 1., 2.],
+                      [4., 5., 6.]]),
+     'output': tensor([[0.0000, 0.7616, 0.9640],
+                       [0.9993, 0.9999, 1.0000]])}
 
     ```
     """
 
-    def __repr__(self) -> str:
-        return f"{self.__class__.__qualname__}()"
-
-    def transform(
+    def _transform(
         self,
-        tensors: Sequence[torch.Tensor],
+        tensor: torch.Tensor,
         *,
         rng: torch.Transformer | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
-        (tensor,) = tensors
         return tensor.tanh()
