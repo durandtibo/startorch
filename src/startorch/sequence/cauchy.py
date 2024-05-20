@@ -35,6 +35,7 @@ class CauchySequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.sequence import Cauchy, RandUniform
     >>> generator = Cauchy(
     ...     loc=RandUniform(low=-1.0, high=1.0),
@@ -89,6 +90,7 @@ class RandCauchySequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.sequence import RandCauchy
     >>> generator = RandCauchy(loc=0.0, scale=1.0)
     >>> generator
@@ -148,6 +150,7 @@ class RandTruncCauchySequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.sequence import RandTruncCauchy
     >>> generator = RandTruncCauchy(loc=0.0, scale=1.0, min_value=-5.0, max_value=5.0)
     >>> generator
@@ -217,6 +220,7 @@ class TruncCauchySequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.sequence import RandUniform, TruncCauchy
     >>> generator = TruncCauchy(
     ...     loc=RandUniform(low=-1.0, high=1.0),

@@ -30,6 +30,7 @@ class RepeatPeriodicTimeSeriesGenerator(BasePeriodicTimeSeriesGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.periodic.timeseries import Repeat
     >>> from startorch.timeseries import TimeSeries
     >>> from startorch.sequence import RandUniform

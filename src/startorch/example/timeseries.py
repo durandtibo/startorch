@@ -38,6 +38,7 @@ class TimeSeriesExampleGenerator(BaseExampleGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.example import TimeSeriesExampleGenerator
     >>> from startorch.timeseries import TimeSeriesGenerator
     >>> from startorch.sequence import Periodic, RandUniform

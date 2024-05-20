@@ -27,6 +27,7 @@ def str_target_object(config: dict) -> str:
     Example usage:
 
     ```pycon
+
     >>> from startorch.utils.format import str_target_object
     >>> str_target_object({OBJECT_TARGET: "something.MyClass"})
     [_target_: something.MyClass]
@@ -55,6 +56,7 @@ def str_weighted_modules(modules: Sequence, weights: Sequence, num_spaces: int =
     Example usage:
 
     ```pycon
+
     >>> from startorch.utils.format import str_weighted_modules
     >>> print(str_weighted_modules(modules=["abc", "something\nelse"], weights=[1, 2]))
     (0) [weight=1] abc

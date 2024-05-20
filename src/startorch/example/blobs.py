@@ -40,6 +40,7 @@ class BlobsClassificationExampleGenerator(BaseExampleGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.example import BlobsClassification
     >>> generator = BlobsClassification(torch.rand(5, 4))
@@ -183,6 +184,7 @@ def make_blobs_classification(
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.example import make_blobs_classification
     >>> batch = make_blobs_classification(num_examples=10, centers=torch.rand(5, 2))

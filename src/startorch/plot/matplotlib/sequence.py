@@ -56,6 +56,7 @@ def hist_sequence(
     Example usage:
 
     ```pycon
+
     >>> from startorch.plot.matplotlib import hist_sequence
     >>> from startorch.sequence import RandUniform
     >>> fig = hist_sequence(RandUniform(low=-5, high=5))
@@ -107,6 +108,7 @@ def plot_sequence(
     Example usage:
 
     ```pycon
+
     >>> from startorch.plot.matplotlib import plot_sequence
     >>> from startorch.sequence import RandUniform
     >>> fig = plot_sequence(RandUniform(low=-5, high=5), batch_size=4)

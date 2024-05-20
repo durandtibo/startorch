@@ -39,6 +39,7 @@ def prepare_probabilities(weights: torch.Tensor | Sequence[float]) -> torch.Tens
     Example usage:
 
     ```pycon
+
     >>> from startorch.utils.weight import prepare_probabilities
     >>> prepare_probabilities([1, 1, 1, 1])
     tensor([0.2500, 0.2500, 0.2500, 0.2500])
@@ -89,6 +90,7 @@ def prepare_weighted_generators(
     Example usage:
 
     ```pycon
+
     >>> from startorch.utils.weight import prepare_weighted_generators
     >>> from startorch.tensor import RandUniform, RandNormal
     >>> prepare_weighted_generators(

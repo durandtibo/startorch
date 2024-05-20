@@ -22,6 +22,7 @@ class ConstantSequenceGenerator(BaseWrapperSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.sequence import Constant, RandUniform
     >>> generator = Constant(RandUniform())
     >>> generator
@@ -55,6 +56,7 @@ class FullSequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.sequence import Full
     >>> generator = Full(42.0)
     >>> generator

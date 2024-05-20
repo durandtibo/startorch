@@ -27,6 +27,7 @@ class AcoshTensorGenerator(BaseWrapperTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import Acosh, RandUniform
     >>> generator = Acosh(RandUniform(low=1.0, high=5.0))
     >>> generator
@@ -50,6 +51,7 @@ class AsinhTensorGenerator(BaseWrapperTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import Asinh, RandUniform
     >>> generator = Asinh(RandUniform(low=0.0, high=1000.0))
     >>> generator
@@ -73,6 +75,7 @@ class AtanhTensorGenerator(BaseWrapperTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import Atanh, RandUniform
     >>> generator = Atanh(RandUniform(low=-0.5, high=0.5))
     >>> generator
@@ -96,6 +99,7 @@ class CoshTensorGenerator(BaseWrapperTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import Cosh, RandUniform
     >>> generator = Cosh(RandUniform())
     >>> generator
@@ -119,6 +123,7 @@ class SinhTensorGenerator(BaseWrapperTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import RandUniform, Sinh
     >>> generator = Sinh(RandUniform(low=0.0, high=1.0))
     >>> generator
@@ -142,6 +147,7 @@ class TanhTensorGenerator(BaseWrapperTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import RandUniform, Tanh
     >>> generator = Tanh(RandUniform(low=0.0, high=1.0))
     >>> generator

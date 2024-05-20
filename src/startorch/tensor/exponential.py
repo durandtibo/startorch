@@ -41,6 +41,7 @@ class ExponentialTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import Exponential, RandUniform
     >>> generator = Exponential(rate=RandUniform(low=1.0, high=100.0))
     >>> generator
@@ -78,6 +79,7 @@ class RandExponentialTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import RandExponential
     >>> generator = RandExponential(rate=1.0)
     >>> generator
@@ -117,6 +119,7 @@ class RandTruncExponentialTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import RandTruncExponential
     >>> generator = RandTruncExponential(rate=1.0, max_value=3.0)
     >>> generator
@@ -163,6 +166,7 @@ class TruncExponentialTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import RandUniform, TruncExponential
     >>> generator = TruncExponential(
     ...     rate=RandUniform(low=1.0, high=10.0),

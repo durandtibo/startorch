@@ -35,6 +35,7 @@ class BasePeriodicTimeSeriesGenerator(ABC, metaclass=AbstractFactory):
     Example usage:
 
     ```pycon
+
     >>> from startorch.periodic.timeseries import Repeat
     >>> from startorch.timeseries import TimeSeries
     >>> from startorch.sequence import RandUniform
@@ -102,6 +103,7 @@ def is_periodic_timeseries_generator_config(config: dict) -> bool:
     Example usage:
 
     ```pycon
+
     >>> from startorch.periodic.timeseries import is_periodic_timeseries_generator_config
     >>> is_periodic_timeseries_generator_config(
     ...     {
@@ -140,6 +142,7 @@ def setup_periodic_timeseries_generator(
     Example usage:
 
     ```pycon
+
     >>> from startorch.periodic.timeseries import setup_periodic_timeseries_generator
     >>> setup_periodic_timeseries_generator(
     ...     {

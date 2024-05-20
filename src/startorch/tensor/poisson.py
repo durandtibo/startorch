@@ -28,6 +28,7 @@ class PoissonTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import RandUniform, Poisson
     >>> generator = Poisson(rate=RandUniform(low=1.0, high=2.0))
     >>> generator
@@ -66,6 +67,7 @@ class RandPoissonTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import RandPoisson
     >>> generator = RandPoisson(rate=1.0)
     >>> generator

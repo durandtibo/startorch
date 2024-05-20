@@ -30,6 +30,7 @@ class MultinomialTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.tensor import Multinomial
     >>> generator = Multinomial(torch.ones(10))
@@ -169,6 +170,7 @@ class UniformCategoricalTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.tensor import UniformCategorical
     >>> generator = UniformCategorical(10)

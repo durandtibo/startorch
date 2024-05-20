@@ -31,6 +31,7 @@ class BaseTimeSeriesGenerator(ABC, metaclass=AbstractFactory):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.sequence import RandUniform
     >>> from startorch.timeseries import TimeSeries
@@ -93,6 +94,7 @@ def is_timeseries_generator_config(config: dict) -> bool:
     Example usage:
 
     ```pycon
+
     >>> from startorch.timeseries import is_timeseries_generator_config
     >>> is_timeseries_generator_config(
     ...     {
@@ -128,6 +130,7 @@ def setup_timeseries_generator(
     Example usage:
 
     ```pycon
+
     >>> from startorch.timeseries import setup_timeseries_generator
     >>> setup_timeseries_generator(
     ...     {

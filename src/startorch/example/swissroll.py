@@ -34,6 +34,7 @@ class SwissRollExampleGenerator(BaseExampleGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.example import SwissRoll
     >>> generator = SwissRoll()
     >>> generator
@@ -121,6 +122,7 @@ def make_swiss_roll(
     Example usage:
 
     ```pycon
+
     >>> from startorch.example import make_swiss_roll
     >>> batch = make_swiss_roll(num_examples=10)
     >>> batch

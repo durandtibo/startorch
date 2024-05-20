@@ -38,6 +38,7 @@ class SineWavePeriodicSequenceGenerator(BasePeriodicSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.periodic.sequence import Repeat, SineWave
     >>> from startorch.sequence import RandUniform

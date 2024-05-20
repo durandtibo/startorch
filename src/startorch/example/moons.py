@@ -39,6 +39,7 @@ class MoonsClassificationExampleGenerator(BaseExampleGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.example import MoonsClassification
     >>> generator = MoonsClassification()
     >>> generator
@@ -124,6 +125,7 @@ def make_moons_classification(
     Example usage:
 
     ```pycon
+
     >>> from startorch.example import make_moons_classification
     >>> batch = make_moons_classification(num_examples=10)
     >>> batch

@@ -43,6 +43,7 @@ class ExponentialSequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.sequence import Exponential, RandUniform
     >>> generator = Exponential(rate=RandUniform(low=1.0, high=10.0))
     >>> generator
@@ -168,6 +169,7 @@ class RandExponentialSequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.sequence import RandExponential
     >>> generator = RandExponential(rate=1.0)
     >>> generator
@@ -222,6 +224,7 @@ class RandTruncExponentialSequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.sequence import RandTruncExponential
     >>> generator = RandTruncExponential(rate=1.0, max_value=3.0)
     >>> generator
@@ -279,6 +282,7 @@ class TruncExponentialSequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.sequence import RandUniform, TruncExponential
     >>> generator = TruncExponential(
     ...     rate=RandUniform(low=1.0, high=10.0),

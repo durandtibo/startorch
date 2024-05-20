@@ -37,6 +37,7 @@ class SineWaveSequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.sequence import Arange, SineWave, RandUniform, Constant, RandLogUniform
     >>> generator = SineWave(
