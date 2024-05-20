@@ -34,6 +34,7 @@ def rand_cauchy(
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.random import rand_cauchy
     >>> rand_cauchy((2, 3), loc=1.0, scale=2.0)
@@ -79,6 +80,7 @@ def cauchy(
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.random import cauchy
     >>> cauchy(loc=torch.tensor([-1.0, 0.0, 1.0]), scale=torch.tensor([1.0, 3.0, 5.0]))
@@ -120,6 +122,7 @@ def rand_normal(
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.random import rand_normal
     >>> rand_normal((2, 3), mean=1.0, std=2.0)
@@ -157,6 +160,7 @@ def normal(
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.random import normal
     >>> normal(mean=torch.tensor([-1.0, 0.0, 1.0]), std=torch.tensor([1.0, 3.0, 5.0]))

@@ -44,6 +44,7 @@ class MultinomialChoiceSequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.sequence import MultinomialChoice, RandUniform, RandNormal
     >>> generator = MultinomialChoice(
     ...     (

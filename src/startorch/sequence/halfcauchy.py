@@ -38,6 +38,7 @@ class HalfCauchySequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.sequence import HalfCauchy, RandUniform
     >>> generator = HalfCauchy(scale=RandUniform(low=1.0, high=2.0))
     >>> generator
@@ -81,6 +82,7 @@ class RandHalfCauchySequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.sequence import RandHalfCauchy
     >>> generator = RandHalfCauchy(scale=1.0)
     >>> generator
@@ -135,6 +137,7 @@ class RandTruncHalfCauchySequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.sequence import RandTruncHalfCauchy
     >>> generator = RandTruncHalfCauchy(scale=1.0, max_value=5.0)
     >>> generator
@@ -192,6 +195,7 @@ class TruncHalfCauchySequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.sequence import RandUniform, TruncHalfCauchy
     >>> generator = TruncHalfCauchy(
     ...     scale=RandUniform(low=1.0, high=2.0),

@@ -4,44 +4,44 @@ from __future__ import annotations
 
 __all__ = [
     "Acosh",
-    "AcoshTensorTransformer",
+    "AcoshTransformer",
     "Asinh",
-    "AsinhTensorTransformer",
+    "AsinhTransformer",
     "Atanh",
-    "AtanhTensorTransformer",
-    "BaseTensorTransformer",
+    "AtanhTransformer",
+    "BaseTransformer",
     "Cosh",
-    "CoshTensorTransformer",
+    "CoshTransformer",
     "Identity",
-    "IdentityTensorTransformer",
+    "IdentityTransformer",
     "Poisson",
-    "PoissonTensorTransformer",
+    "PoissonTransformer",
     "Sinh",
-    "SinhTensorTransformer",
+    "SinhTransformer",
     "Tanh",
-    "TanhTensorTransformer",
-    "is_tensor_transformer_config",
-    "setup_tensor_transformer",
+    "TanhTransformer",
+    "is_transformer_config",
+    "setup_transformer",
 ]
 
 from startorch.transformer.base import (
-    BaseTensorTransformer,
-    is_tensor_transformer_config,
-    setup_tensor_transformer,
+    BaseTransformer,
+    is_transformer_config,
+    setup_transformer,
 )
-from startorch.transformer.identity import IdentityTensorTransformer
-from startorch.transformer.identity import IdentityTensorTransformer as Identity
-from startorch.transformer.poisson import PoissonTensorTransformer
-from startorch.transformer.poisson import PoissonTensorTransformer as Poisson
-from startorch.transformer.trigo import AcoshTensorTransformer
-from startorch.transformer.trigo import AcoshTensorTransformer as Acosh
-from startorch.transformer.trigo import AsinhTensorTransformer
-from startorch.transformer.trigo import AsinhTensorTransformer as Asinh
-from startorch.transformer.trigo import AtanhTensorTransformer
-from startorch.transformer.trigo import AtanhTensorTransformer as Atanh
-from startorch.transformer.trigo import CoshTensorTransformer
-from startorch.transformer.trigo import CoshTensorTransformer as Cosh
-from startorch.transformer.trigo import SinhTensorTransformer
-from startorch.transformer.trigo import SinhTensorTransformer as Sinh
-from startorch.transformer.trigo import TanhTensorTransformer
-from startorch.transformer.trigo import TanhTensorTransformer as Tanh
+from startorch.transformer.identity import IdentityTransformer
+from startorch.transformer.identity import IdentityTransformer as Identity
+from startorch.transformer.poisson import PoissonTransformer
+from startorch.transformer.poisson import PoissonTransformer as Poisson
+from startorch.transformer.trigo import AcoshTransformer
+from startorch.transformer.trigo import AcoshTransformer as Acosh
+from startorch.transformer.trigo import AsinhTransformer
+from startorch.transformer.trigo import AsinhTransformer as Asinh
+from startorch.transformer.trigo import AtanhTransformer
+from startorch.transformer.trigo import AtanhTransformer as Atanh
+from startorch.transformer.trigo import CoshTransformer
+from startorch.transformer.trigo import CoshTransformer as Cosh
+from startorch.transformer.trigo import SinhTransformer
+from startorch.transformer.trigo import SinhTransformer as Sinh
+from startorch.transformer.trigo import TanhTransformer
+from startorch.transformer.trigo import TanhTransformer as Tanh

@@ -13,7 +13,7 @@ from startorch.utils.seed import get_torch_generator
 
 
 def test_poisson_str() -> None:
-    assert str(Poisson(rate="rate", output="output")).startswith("PoissonTensorTransformer(")
+    assert str(Poisson(rate="rate", output="output")).startswith("PoissonTransformer(")
 
 
 def test_poisson_transform() -> None:

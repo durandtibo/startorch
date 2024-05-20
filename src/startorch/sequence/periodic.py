@@ -33,6 +33,7 @@ class PeriodicSequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.sequence import Periodic, RandUniform
     >>> from startorch.tensor import RandInt
     >>> generator = Periodic(sequence=RandUniform(), period=RandInt(2, 5))

@@ -40,6 +40,7 @@ class LogNormalTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import LogNormal, RandUniform
     >>> generator = LogNormal(
     ...     mean=RandUniform(low=-1.0, high=1.0), std=RandUniform(low=1.0, high=2.0)
@@ -87,6 +88,7 @@ class RandLogNormalTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import RandLogNormal
     >>> generator = RandLogNormal(mean=0.0, std=1.0)
     >>> generator
@@ -135,6 +137,7 @@ class RandTruncLogNormalTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import RandTruncLogNormal
     >>> generator = RandTruncLogNormal(mean=0.0, std=1.0, min_value=0.0, max_value=1.0)
     >>> generator
@@ -195,6 +198,7 @@ class TruncLogNormalTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import RandUniform, TruncLogNormal
     >>> generator = TruncLogNormal(
     ...     mean=RandUniform(low=-1.0, high=1.0),

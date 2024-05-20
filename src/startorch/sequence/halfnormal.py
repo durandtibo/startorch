@@ -38,6 +38,7 @@ class HalfNormalSequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.sequence import HalfNormal, RandUniform
     >>> generator = HalfNormal(std=RandUniform(low=1.0, high=2.0))
     >>> generator
@@ -81,6 +82,7 @@ class RandHalfNormalSequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.sequence import RandHalfNormal
     >>> generator = RandHalfNormal(std=1.0)
     >>> generator
@@ -130,6 +132,7 @@ class RandTruncHalfNormalSequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.sequence import RandTruncHalfNormal
     >>> generator = RandTruncHalfNormal(std=1.0, max_value=1.0)
     >>> generator
@@ -187,6 +190,7 @@ class TruncHalfNormalSequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.sequence import RandUniform, TruncHalfNormal
     >>> generator = TruncHalfNormal(
     ...     std=RandUniform(low=1.0, high=2.0),

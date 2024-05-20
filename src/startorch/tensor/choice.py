@@ -43,6 +43,7 @@ class MultinomialChoiceTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import MultinomialChoice, RandUniform, RandNormal
     >>> generator = MultinomialChoice(
     ...     (

@@ -26,6 +26,7 @@ def to_array(data: Sequence | torch.Tensor | np.ndarray) -> np.ndarray:
     Example usage:
 
     ```pycon
+
     >>> from startorch.utils.conversion import to_array
     >>> x = to_array([1, 2, 3, 4, 5])
     >>> x
@@ -52,6 +53,7 @@ def to_tensor(data: torch.Tensor | np.ndarray | Sequence) -> torch.Tensor:
     Example usage:
 
     ```pycon
+
     >>> from startorch.utils.conversion import to_tensor
     >>> x = to_tensor([1, 2, 3, 4, 5])
     >>> x
@@ -80,6 +82,7 @@ def to_tuple(value: Any) -> tuple:
     Example usage:
 
     ```pycon
+
     >>> from startorch.utils.conversion import to_tuple
     >>> to_tuple(1)
     (1,)

@@ -32,6 +32,7 @@ class BasePeriodicSequenceGenerator(ABC, metaclass=AbstractFactory):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.periodic.sequence import Repeat
     >>> from startorch.sequence import RandUniform
@@ -98,6 +99,7 @@ def is_periodic_sequence_generator_config(config: dict) -> bool:
     Example usage:
 
     ```pycon
+
     >>> from startorch.periodic.sequence import is_periodic_sequence_generator_config
     >>> is_periodic_sequence_generator_config(
     ...     {
@@ -130,6 +132,7 @@ def setup_periodic_sequence_generator(
     Example usage:
 
     ```pycon
+
     >>> from startorch.periodic.sequence import setup_periodic_sequence_generator
     >>> setup_periodic_sequence_generator(
     ...     {

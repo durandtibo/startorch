@@ -29,6 +29,7 @@ class SortSequenceGenerator(BaseWrapperSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.sequence import RandUniform, Sort
     >>> generator = Sort(RandUniform())

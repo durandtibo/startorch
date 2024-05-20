@@ -33,6 +33,7 @@ class CacheExampleGenerator(BaseExampleGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.example import Cache, SwissRoll
     >>> generator = Cache(SwissRoll())
     >>> generator

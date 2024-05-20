@@ -43,6 +43,7 @@ class AutoRegressiveSequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.sequence import AutoRegressive, RandUniform, RandNormal, Full
     >>> from startorch.tensor import RandInt

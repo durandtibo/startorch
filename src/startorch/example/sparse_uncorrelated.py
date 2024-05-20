@@ -50,6 +50,7 @@ def make_sparse_uncorrelated_regression(
     Example usage:
 
     ```pycon
+
     >>> from startorch.example import make_sparse_uncorrelated_regression
     >>> data = make_sparse_uncorrelated_regression(num_examples=10)
     >>> data

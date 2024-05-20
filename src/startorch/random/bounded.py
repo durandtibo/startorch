@@ -69,6 +69,7 @@ def rand_trunc_cauchy(
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.random import rand_trunc_cauchy
     >>> rand_trunc_cauchy((2, 3), loc=1.0, scale=2.0, min_value=-3.0, max_value=3.0)
@@ -121,6 +122,7 @@ def trunc_cauchy(
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.random import trunc_cauchy
     >>> trunc_cauchy(
@@ -183,6 +185,7 @@ def rand_trunc_exponential(
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.random import rand_trunc_exponential
     >>> rand_trunc_exponential((2, 3), rate=1.0, max_value=3.0)
@@ -229,6 +232,7 @@ def trunc_exponential(
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.random import trunc_exponential
     >>> trunc_exponential(
@@ -286,6 +290,7 @@ def rand_trunc_half_cauchy(
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.random import rand_trunc_half_cauchy
     >>> rand_trunc_half_cauchy((2, 3), scale=1.0, max_value=3.0)
@@ -332,6 +337,7 @@ def trunc_half_cauchy(
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.random import trunc_half_cauchy
     >>> trunc_half_cauchy(
@@ -390,6 +396,7 @@ def rand_trunc_half_normal(
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.random import rand_trunc_half_normal
     >>> rand_trunc_half_normal((2, 3), std=1.0, max_value=3.0)
@@ -437,6 +444,7 @@ def trunc_half_normal(
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.random import trunc_half_normal
     >>> trunc_half_normal(
@@ -497,6 +505,7 @@ def rand_trunc_log_normal(
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.random import rand_trunc_log_normal
     >>> rand_trunc_log_normal((2, 3), mean=0.0, std=1.0, min_value=1.0, max_value=4.0)
@@ -620,6 +629,7 @@ def rand_trunc_normal(
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.random import rand_trunc_normal
     >>> rand_trunc_normal((2, 3), mean=1.0, std=2.0, min_value=-5.0, max_value=5.0)
@@ -673,6 +683,7 @@ def trunc_normal(
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.random import trunc_normal
     >>> trunc_normal(
@@ -737,6 +748,7 @@ def rand_uniform(
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.random import rand_uniform
     >>> rand_uniform((2, 3), low=-1.0, high=2.0)
@@ -783,6 +795,7 @@ def uniform(
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.random import uniform
     >>> uniform(low=torch.tensor([-1.0, 0.0, 1.0]), high=torch.tensor([1.0, 3.0, 5.0]))
@@ -837,6 +850,7 @@ def rand_log_uniform(
     Example usage:
 
     ```pycon
+
     >>> from startorch.random import rand_log_uniform
     >>> rand_log_uniform((2, 3), low=0.1, high=1000.0)
     tensor([[...]])
@@ -881,6 +895,7 @@ def log_uniform(
     Example usage:
 
     ```pycon
+
     >>> from startorch.random import log_uniform
     >>> log_uniform(low=torch.tensor([0.01, 0.1, 1.0]), high=torch.tensor([1.0, 10.0, 100.0]))
     tensor([...])
@@ -936,6 +951,7 @@ def rand_asinh_uniform(
     Example usage:
 
     ```pycon
+
     >>> from startorch.random import rand_asinh_uniform
     >>> rand_asinh_uniform((2, 3), low=-1000.0, high=1000.0)
     tensor([[...]])
@@ -981,6 +997,7 @@ def asinh_uniform(
     Example usage:
 
     ```pycon
+
     >>> from startorch.random import asinh_uniform
     >>> asinh_uniform(
     ...     low=torch.tensor([-10.0, 0.0, 1.0]),

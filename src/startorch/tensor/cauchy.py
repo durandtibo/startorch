@@ -34,6 +34,7 @@ class CauchyTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import Cauchy, RandUniform
     >>> generator = Cauchy(
     ...     loc=RandUniform(low=-1.0, high=1.0), scale=RandUniform(low=1.0, high=2.0)
@@ -80,6 +81,7 @@ class RandCauchyTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import RandCauchy
     >>> generator = RandCauchy(loc=0.0, scale=1.0)
     >>> generator
@@ -127,6 +129,7 @@ class RandTruncCauchyTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import RandTruncCauchy
     >>> generator = RandTruncCauchy(loc=0.0, scale=1.0, min_value=-1.0, max_value=1.0)
     >>> generator
@@ -190,6 +193,7 @@ class TruncCauchyTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import RandUniform, TruncCauchy
     >>> generator = TruncCauchy(
     ...     loc=RandUniform(low=-1.0, high=1.0),

@@ -42,6 +42,7 @@ class AsinhUniformSequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.sequence import AsinhUniform, RandUniform
     >>> generator = AsinhUniform(low=RandUniform(-1.0, 0.0), high=RandUniform(0.0, 1.0))
@@ -90,6 +91,7 @@ class LogUniformSequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.sequence import LogUniform, RandUniform
     >>> generator = LogUniform(low=RandUniform(0.0, 1.0), high=RandUniform(5.0, 10.0))
@@ -140,6 +142,7 @@ class RandAsinhUniformSequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.sequence import RandAsinhUniform
     >>> generator = RandAsinhUniform(low=1.0, high=10.0)
@@ -197,6 +200,7 @@ class RandIntSequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.sequence import RandInt
     >>> generator = RandInt(0, 100)
@@ -254,6 +258,7 @@ class RandLogUniformSequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.sequence import RandLogUniform
     >>> generator = RandLogUniform(low=1.0, high=10.0)
@@ -311,6 +316,7 @@ class RandUniformSequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.sequence import RandUniform
     >>> generator = RandUniform()
@@ -366,6 +372,7 @@ class UniformSequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.sequence import Uniform, RandUniform
     >>> generator = Uniform(low=RandUniform(-1.0, 0.0), high=RandUniform(0.0, 1.0))

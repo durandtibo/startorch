@@ -33,6 +33,7 @@ def rand_poisson(
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.random import rand_poisson
     >>> rand_poisson(size=(2, 3), rate=2.0)

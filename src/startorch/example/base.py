@@ -33,6 +33,7 @@ class BaseExampleGenerator(Generic[T], ABC, metaclass=AbstractFactory):
     Example usage:
 
     ```pycon
+
     >>> from startorch.example import HypercubeClassification
     >>> generator = HypercubeClassification(num_classes=5, feature_size=6)
     >>> generator
@@ -115,6 +116,7 @@ def setup_example_generator(
     Example usage:
 
     ```pycon
+
     >>> from startorch.example import setup_example_generator
     >>> generator = setup_example_generator(
     ...     {"_target_": "startorch.example.HypercubeClassification"}

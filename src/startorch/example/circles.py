@@ -41,6 +41,7 @@ class CirclesClassificationExampleGenerator(BaseExampleGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.example import CirclesClassification
     >>> generator = CirclesClassification()
     >>> generator
@@ -144,6 +145,7 @@ def make_circles_classification(
     Example usage:
 
     ```pycon
+
     >>> from startorch.example import make_circles_classification
     >>> batch = make_circles_classification(num_examples=10)
     >>> batch

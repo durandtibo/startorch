@@ -30,6 +30,7 @@ def shapes_are_equal(tensors: Sequence[torch.Tensor]) -> bool:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.utils.tensor import shapes_are_equal
     >>> shapes_are_equal([torch.rand(2, 3), torch.rand(2, 3)])

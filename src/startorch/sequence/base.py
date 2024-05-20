@@ -27,6 +27,7 @@ class BaseSequenceGenerator(ABC, metaclass=AbstractFactory):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.sequence import RandUniform
     >>> generator = RandUniform()
@@ -89,6 +90,7 @@ def is_sequence_generator_config(config: dict) -> bool:
     Example usage:
 
     ```pycon
+
     >>> from startorch.sequence import is_sequence_generator_config
     >>> is_sequence_generator_config({"_target_": "startorch.sequence.RandUniform"})
     True
@@ -113,6 +115,7 @@ def setup_sequence_generator(generator: BaseSequenceGenerator | dict) -> BaseSeq
     Example usage:
 
     ```pycon
+
     >>> from startorch.sequence import setup_sequence_generator
     >>> setup_sequence_generator({"_target_": "startorch.sequence.RandUniform"})
     RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))

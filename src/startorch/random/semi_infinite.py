@@ -43,6 +43,7 @@ def rand_exponential(
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.random import rand_exponential
     >>> rand_exponential((2, 3), rate=1.0)
@@ -81,6 +82,7 @@ def exponential(rate: torch.Tensor, generator: torch.Generator | None = None) ->
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.random import exponential
     >>> exponential(torch.tensor([1.0, 3.0, 5.0]))
@@ -119,6 +121,7 @@ def rand_half_cauchy(
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.random import rand_half_cauchy
     >>> rand_half_cauchy((2, 3), scale=1.0)
@@ -153,6 +156,7 @@ def half_cauchy(scale: torch.Tensor, generator: torch.Generator | None = None) -
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.random import half_cauchy
     >>> half_cauchy(torch.tensor([1.0, 3.0, 5.0]))
@@ -187,6 +191,7 @@ def rand_half_normal(
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.random import rand_half_normal
     >>> rand_half_normal((2, 3), std=1.0)
@@ -226,6 +231,7 @@ def half_normal(std: torch.Tensor, generator: torch.Generator | None = None) -> 
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.random import half_normal
     >>> half_normal(torch.tensor([1.0, 3.0, 5.0]))
@@ -263,6 +269,7 @@ def rand_log_normal(
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.random import rand_log_normal
     >>> rand_log_normal((2, 3), mean=1.0, std=2.0)
@@ -308,6 +315,7 @@ def log_normal(
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.random import log_normal
     >>> log_normal(torch.tensor([-1.0, 0.0, 1.0]), torch.tensor([1.0, 3.0, 5.0]))

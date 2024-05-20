@@ -23,6 +23,7 @@ def scale_batch(batch: torch.Tensor, scale: str = "identity") -> torch.Tensor:
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.utils.batch import scale_batch
     >>> batch = torch.arange(10).view(2, 5)

@@ -42,6 +42,7 @@ class Friedman1RegressionExampleGenerator(BaseExampleGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.example import Friedman1Regression
     >>> generator = Friedman1Regression(feature_size=6)
     >>> generator
@@ -109,6 +110,7 @@ class Friedman2RegressionExampleGenerator(BaseExampleGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.example import Friedman2Regression
     >>> generator = Friedman2Regression(feature_size=6)
     >>> generator
@@ -176,6 +178,7 @@ class Friedman3RegressionExampleGenerator(BaseExampleGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.example import Friedman3Regression
     >>> generator = Friedman3Regression(feature_size=6)
     >>> generator
@@ -258,6 +261,7 @@ def make_friedman1_regression(
     Example usage:
 
     ```pycon
+
     >>> from startorch.example import make_friedman1_regression
     >>> batch = make_friedman1_regression(num_examples=10)
     >>> batch
@@ -318,6 +322,7 @@ def make_friedman2_regression(
     Example usage:
 
     ```pycon
+
     >>> from startorch.example import make_friedman2_regression
     >>> batch = make_friedman2_regression(num_examples=10)
     >>> batch
@@ -382,6 +387,7 @@ def make_friedman3_regression(
     Example usage:
 
     ```pycon
+
     >>> from startorch.example import make_friedman3_regression
     >>> batch = make_friedman3_regression(num_examples=10)
     >>> batch

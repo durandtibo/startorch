@@ -32,6 +32,7 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.sequence import RandUniform, Time
     >>> generator = Time(RandUniform())

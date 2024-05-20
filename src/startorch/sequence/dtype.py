@@ -20,6 +20,7 @@ class FloatSequenceGenerator(BaseWrapperSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.sequence import Float, RandInt
     >>> generator = Float(RandInt(low=0, high=10))
     >>> generator
@@ -45,6 +46,7 @@ class LongSequenceGenerator(BaseWrapperSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.sequence import Long, RandUniform
     >>> generator = Long(RandUniform(low=0, high=10))
     >>> generator

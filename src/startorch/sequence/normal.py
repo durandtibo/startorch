@@ -35,6 +35,7 @@ class NormalSequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.sequence import Normal, RandUniform
     >>> generator = Normal(
     ...     mean=RandUniform(low=-1.0, high=1.0), std=RandUniform(low=1.0, high=2.0)
@@ -87,6 +88,7 @@ class RandNormalSequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.sequence import RandNormal
     >>> generator = RandNormal(mean=0.0, std=1.0)
     >>> generator
@@ -219,6 +221,7 @@ class TruncNormalSequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.sequence import RandUniform, TruncNormal
     >>> generator = TruncNormal(
     ...     mean=RandUniform(low=-1.0, high=1.0),

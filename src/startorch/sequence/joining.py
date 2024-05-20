@@ -34,6 +34,7 @@ class Cat2SequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.sequence import Cat2, RandUniform, RandNormal
     >>> from startorch.tensor import RandInt

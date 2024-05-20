@@ -28,6 +28,7 @@ class TensorSequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.sequence import TensorSequence
     >>> from startorch.tensor import RandUniform

@@ -42,6 +42,7 @@ class AbsSequenceGenerator(BaseWrapperSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.sequence import Abs, RandNormal
     >>> generator = Abs(RandNormal())
@@ -76,6 +77,7 @@ class AddSequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.sequence import Add, RandUniform, RandNormal
     >>> generator = Add([RandUniform(), RandNormal()])
@@ -121,6 +123,7 @@ class AddScalarSequenceGenerator(BaseWrapperSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.sequence import AddScalar, RandUniform, RandNormal
     >>> generator = AddScalar(RandUniform(), 42.0)
@@ -175,6 +178,7 @@ class ClampSequenceGenerator(BaseWrapperSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.sequence import Clamp, RandNormal
     >>> generator = Clamp(RandNormal(), -1.0, 1.0)
@@ -224,6 +228,7 @@ class CumsumSequenceGenerator(BaseWrapperSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.sequence import Cumsum, RandUniform
     >>> generator = Cumsum(RandUniform())
@@ -267,6 +272,7 @@ class DivSequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.sequence import Div, RandUniform, RandNormal
     >>> generator = Div(RandNormal(), RandUniform(1.0, 10.0))
@@ -321,6 +327,7 @@ class ExpSequenceGenerator(BaseWrapperSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.sequence import Exp, RandUniform, RandNormal
     >>> generator = Exp(RandUniform())
@@ -352,6 +359,7 @@ class FmodSequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.sequence import Fmod, RandUniform
     >>> generator = Fmod(dividend=RandUniform(low=-100, high=100), divisor=10.0)
     >>> generator
@@ -406,6 +414,7 @@ class LogSequenceGenerator(BaseWrapperSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.sequence import Log, RandUniform, RandNormal
     >>> generator = Log(RandUniform(1.0, 10.0))
@@ -440,6 +449,7 @@ class MulSequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.sequence import Mul, RandUniform, RandNormal
     >>> generator = Mul([RandUniform(), RandNormal()])
@@ -488,6 +498,7 @@ class MulScalarSequenceGenerator(BaseWrapperSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.sequence import MulScalar, RandUniform, RandNormal
     >>> generator = MulScalar(RandUniform(), 2.0)
@@ -529,6 +540,7 @@ class NegSequenceGenerator(BaseWrapperSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.sequence import Neg, RandUniform, RandNormal
     >>> generator = Neg(RandUniform())
@@ -555,6 +567,7 @@ class SqrtSequenceGenerator(BaseWrapperSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.sequence import Sqrt, RandUniform, RandNormal
     >>> generator = Sqrt(RandUniform(1.0, 4.0))
@@ -588,6 +601,7 @@ class SubSequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.sequence import Sub, RandUniform, RandNormal
     >>> generator = Sub(RandUniform(), RandNormal())

@@ -28,6 +28,7 @@ class TimeSeriesGenerator(BaseTimeSeriesGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.sequence import RandUniform
     >>> from startorch.timeseries import TimeSeries
