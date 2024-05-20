@@ -50,6 +50,12 @@ jobs:
       - name: check startorch.timeseries
         run: |
           poetry run python -c "from startorch import timeseries"
+      - name: check startorch.transformer
+        run: |
+          poetry run python -c "from startorch import transformer"
+      - name: check startorch.transformer.tensor
+        run: |
+          poetry run python -c "from startorch.transformer import tensor"
       - name: check startorch.utils
         run: |
           poetry run python -c "from startorch import utils"

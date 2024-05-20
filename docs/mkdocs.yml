@@ -29,6 +29,7 @@ nav:
       - sequence: refs/sequence.md
       - tensor: refs/tensor.md
       - timeseries: refs/timeseries.md
+      - transformer: refs/transformer.md
       - random: refs/random.md
       - utils: refs/utils.md
   - GitHub: https://github.com/durandtibo/startorch
