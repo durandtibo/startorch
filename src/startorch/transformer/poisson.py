@@ -8,8 +8,8 @@ __all__ = ["PoissonTensorTransformer"]
 
 import torch
 
-from startorch.transformer.tensor.base import BaseTensorTransformer
-from startorch.transformer.tensor.utils import add_item, check_input_keys
+from startorch.transformer.base import BaseTensorTransformer
+from startorch.transformer.utils import add_item, check_input_keys
 
 
 class PoissonTensorTransformer(BaseTensorTransformer):
@@ -34,7 +34,7 @@ class PoissonTensorTransformer(BaseTensorTransformer):
     ```pycon
 
     >>> import torch
-    >>> from startorch.transformer.tensor import Poisson
+    >>> from startorch.transformer import Poisson
     >>> transformer = Poisson(rate="rate", output="output")
     >>> transformer
     PoissonTensorTransformer(rate=rate, output=output, exist_ok=False)

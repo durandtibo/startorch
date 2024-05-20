@@ -3,7 +3,7 @@ from __future__ import annotations
 import torch
 from coola import objects_are_equal
 
-from startorch.transformer.tensor import Identity
+from startorch.transformer import Identity
 from startorch.utils.seed import get_torch_generator
 
 ##############################

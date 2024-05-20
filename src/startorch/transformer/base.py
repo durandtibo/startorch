@@ -30,7 +30,7 @@ class BaseTensorTransformer(ABC, metaclass=AbstractFactory):
     ```pycon
 
     >>> import torch
-    >>> from startorch.transformer.tensor import Identity
+    >>> from startorch.transformer import Identity
     >>> transformer = Identity()
     >>> transformer
     IdentityTensorTransformer(copy=True)
@@ -61,7 +61,7 @@ class BaseTensorTransformer(ABC, metaclass=AbstractFactory):
         ```pycon
 
         >>> import torch
-        >>> from startorch.transformer.tensor import Identity
+        >>> from startorch.transformer import Identity
         >>> transformer = Identity()
         >>> data = {'key': torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])}
         >>> out = transformer.transform(data)
@@ -93,8 +93,8 @@ def is_tensor_transformer_config(config: dict) -> bool:
 
     ```pycon
 
-    >>> from startorch.transformer.tensor import is_tensor_transformer_config
-    >>> is_tensor_transformer_config({"_target_": "startorch.transformer.tensor.Identity"})
+    >>> from startorch.transformer import is_tensor_transformer_config
+    >>> is_tensor_transformer_config({"_target_": "startorch.transformer.Identity"})
     True
 
     ```
@@ -118,8 +118,8 @@ def setup_tensor_transformer(transformer: BaseTensorTransformer | dict) -> BaseT
 
     ```pycon
 
-    >>> from startorch.transformer.tensor import setup_tensor_transformer
-    >>> setup_tensor_transformer({"_target_": "startorch.transformer.tensor.Identity"})
+    >>> from startorch.transformer import setup_tensor_transformer
+    >>> setup_tensor_transformer({"_target_": "startorch.transformer.Identity"})
     IdentityTensorTransformer(copy=True)
 
     ```

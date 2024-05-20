@@ -3,7 +3,7 @@ from __future__ import annotations
 import pytest
 from coola import objects_are_equal
 
-from startorch.transformer.tensor.utils import add_item, check_input_keys
+from startorch.transformer.utils import add_item, check_input_keys
 
 ##############################
 #     Tests for add_item     #

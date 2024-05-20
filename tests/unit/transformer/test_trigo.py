@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import torch
 
-from startorch.transformer.tensor import Acosh, Asinh, Atanh, Cosh, Sinh, Tanh
+from startorch.transformer import Acosh, Asinh, Atanh, Cosh, Sinh, Tanh
 from startorch.utils.seed import get_torch_generator
 
 ###########################

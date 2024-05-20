@@ -8,7 +8,7 @@ import copy
 import logging
 from typing import TYPE_CHECKING
 
-from startorch.transformer.tensor.base import BaseTensorTransformer
+from startorch.transformer.base import BaseTensorTransformer
 
 if TYPE_CHECKING:
 
@@ -29,7 +29,7 @@ class IdentityTensorTransformer(BaseTensorTransformer):
     ```pycon
 
     >>> import torch
-    >>> from startorch.transformer.tensor import Identity
+    >>> from startorch.transformer import Identity
     >>> transformer = Identity()
     >>> transformer
     IdentityTensorTransformer(copy=True)
