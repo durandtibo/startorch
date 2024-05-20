@@ -32,7 +32,7 @@ class BaseTensorTransformer(ABC, metaclass=AbstractFactory):
     >>> from startorch.transformer.tensor import Identity
     >>> transformer = Identity()
     >>> transformer
-    IdentityTensorTransformer()
+    IdentityTensorTransformer(copy=True)
     >>> tensor = torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
     >>> out = transformer.transform(tensor)
     >>> out
@@ -115,7 +115,7 @@ def setup_tensor_transformer(transformer: BaseTensorTransformer | dict) -> BaseT
     ```pycon
     >>> from startorch.transformer.tensor import setup_tensor_transformer
     >>> setup_tensor_transformer({"_target_": "startorch.transformer.tensor.Identity"})
-    IdentityTensorTransformer()
+    IdentityTensorTransformer(copy=True)
 
     ```
     """
