@@ -14,6 +14,8 @@ __all__ = [
     "CoshTensorTransformer",
     "Identity",
     "IdentityTensorTransformer",
+    "Poisson",
+    "PoissonTensorTransformer",
     "Sinh",
     "SinhTensorTransformer",
     "Tanh",
@@ -29,6 +31,8 @@ from startorch.transformer.tensor.base import (
 )
 from startorch.transformer.tensor.identity import IdentityTensorTransformer
 from startorch.transformer.tensor.identity import IdentityTensorTransformer as Identity
+from startorch.transformer.tensor.poisson import PoissonTensorTransformer
+from startorch.transformer.tensor.poisson import PoissonTensorTransformer as Poisson
 from startorch.transformer.tensor.trigo import AcoshTensorTransformer
 from startorch.transformer.tensor.trigo import AcoshTensorTransformer as Acosh
 from startorch.transformer.tensor.trigo import AsinhTensorTransformer
