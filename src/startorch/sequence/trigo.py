@@ -27,6 +27,7 @@ class AcoshSequenceGenerator(BaseWrapperSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.sequence import Acosh, RandUniform
     >>> generator = Acosh(RandUniform())
@@ -53,6 +54,7 @@ class AsinhSequenceGenerator(BaseWrapperSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.sequence import Asinh, RandUniform
     >>> generator = Asinh(RandUniform())
@@ -79,6 +81,7 @@ class AtanhSequenceGenerator(BaseWrapperSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.sequence import Atanh, RandUniform
     >>> generator = Atanh(RandUniform())
@@ -105,6 +108,7 @@ class CoshSequenceGenerator(BaseWrapperSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.sequence import Cosh, RandUniform
     >>> generator = Cosh(RandUniform())
@@ -131,6 +135,7 @@ class SinhSequenceGenerator(BaseWrapperSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.sequence import Sinh, RandUniform
     >>> generator = Sinh(RandUniform())
@@ -157,6 +162,7 @@ class TanhSequenceGenerator(BaseWrapperSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.sequence import Tanh, RandUniform
     >>> generator = Tanh(RandUniform())

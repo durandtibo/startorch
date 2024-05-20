@@ -39,6 +39,7 @@ class PeriodicTimeSeriesGenerator(BaseTimeSeriesGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.timeseries import Periodic, TimeSeries
     >>> from startorch.sequence import RandUniform
     >>> from startorch.tensor import RandInt

@@ -27,6 +27,7 @@ def check_iden() -> None:
     Example usage:
 
     ```pycon
+
     >>> from startorch.utils.imports import check_iden
     >>> check_iden()
 
@@ -47,6 +48,7 @@ def is_iden_available() -> bool:
     Example usage:
 
     ```pycon
+
     >>> from startorch.utils.imports import is_iden_available
     >>> is_iden_available()
 
@@ -69,6 +71,7 @@ def check_matplotlib() -> None:
     Example usage:
 
     ```pycon
+
     >>> from startorch.utils.imports import check_matplotlib
     >>> check_matplotlib()
 
@@ -89,6 +92,7 @@ def is_matplotlib_available() -> bool:
     Example usage:
 
     ```pycon
+
     >>> from startorch.utils.imports import is_matplotlib_available
     >>> is_matplotlib_available()
 
@@ -111,6 +115,7 @@ def check_plotly() -> None:
     Example usage:
 
     ```pycon
+
     >>> from startorch.utils.imports import check_plotly
     >>> check_plotly()
 
@@ -131,6 +136,7 @@ def is_plotly_available() -> bool:
     Example usage:
 
     ```pycon
+
     >>> from startorch.utils.imports import is_plotly_available
     >>> is_plotly_available()
 

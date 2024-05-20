@@ -41,6 +41,7 @@ class AbsTensorGenerator(BaseWrapperTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import Abs, RandNormal
     >>> generator = Abs(RandNormal())
     >>> generator
@@ -71,6 +72,7 @@ class AddScalarTensorGenerator(BaseWrapperTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import AddScalar, RandUniform
     >>> generator = AddScalar(RandUniform(), 10.0)
     >>> generator
@@ -117,6 +119,7 @@ class AddTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import Add, RandNormal, RandUniform
     >>> generator = Add([RandUniform(), RandNormal()])
     >>> generator
@@ -166,6 +169,7 @@ class ClampTensorGenerator(BaseWrapperTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import Clamp, RandUniform
     >>> generator = Clamp(RandUniform(low=1.0, high=50.0), min_value=2.0, max_value=10.0)
     >>> generator
@@ -232,6 +236,7 @@ class DivTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import Div, RandUniform
     >>> generator = Div(RandUniform(), RandUniform(low=1.0, high=10.0))
     >>> generator
@@ -276,6 +281,7 @@ class ExpTensorGenerator(BaseWrapperTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import Exp, RandUniform
     >>> generator = Exp(RandUniform(low=1.0, high=5.0))
     >>> generator
@@ -307,6 +313,7 @@ class FmodTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import Fmod, RandUniform
     >>> generator = Fmod(dividend=RandUniform(low=-100, high=100), divisor=10.0)
     >>> generator
@@ -361,6 +368,7 @@ class LogTensorGenerator(BaseWrapperTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import Log, RandUniform
     >>> generator = Log(RandUniform(low=1.0, high=100.0))
     >>> generator
@@ -392,6 +400,7 @@ class MulTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.tensor import Mul, RandUniform, RandNormal
     >>> generator = Mul([RandUniform(), RandNormal()])
@@ -437,6 +446,7 @@ class MulScalarTensorGenerator(BaseWrapperTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.tensor import MulScalar, RandUniform, RandNormal
     >>> generator = MulScalar(RandUniform(), 42)
@@ -477,6 +487,7 @@ class NegTensorGenerator(BaseWrapperTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.tensor import Neg, RandNormal
     >>> generator = Neg(RandNormal())
@@ -503,6 +514,7 @@ class SqrtTensorGenerator(BaseWrapperTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import RandUniform, Sqrt
     >>> generator = Sqrt(RandUniform(low=1.0, high=100.0))
     >>> generator
@@ -534,6 +546,7 @@ class SubTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import RandNormal, RandUniform, Sub
     >>> generator = Sub(RandUniform(), RandNormal())
     >>> generator

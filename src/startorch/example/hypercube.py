@@ -39,6 +39,7 @@ class HypercubeClassificationExampleGenerator(BaseExampleGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.example import HypercubeClassification
     >>> generator = HypercubeClassification(num_classes=5, feature_size=6)
     >>> generator
@@ -139,6 +140,7 @@ def make_hypercube_classification(
     Example usage:
 
     ```pycon
+
     >>> from startorch.example.hypercube import make_hypercube_classification
     >>> batch = make_hypercube_classification(num_examples=10, num_classes=5, feature_size=10)
     >>> batch

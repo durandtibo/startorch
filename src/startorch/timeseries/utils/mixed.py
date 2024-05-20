@@ -30,6 +30,7 @@ def mix2sequences(x: torch.Tensor, y: torch.Tensor) -> tuple[torch.Tensor, torch
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.timeseries.utils import mix2sequences
     >>> mix2sequences(

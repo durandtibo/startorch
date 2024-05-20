@@ -37,6 +37,7 @@ class MergeTimeSeriesGenerator(BaseTimeSeriesGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.timeseries import Merge, TimeSeries
     >>> from startorch.sequence import RandUniform, RandNormal
     >>> generator = Merge(

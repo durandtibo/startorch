@@ -60,6 +60,7 @@ def hist_feature(
     Example usage:
 
     ```pycon
+
     >>> from startorch.plot.plotly import hist_feature
     >>> import numpy as np
     >>> fig = hist_feature(np.random.rand(10, 5))

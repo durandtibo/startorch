@@ -30,6 +30,7 @@ class PoissonSequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.sequence import RandUniform, Poisson
     >>> generator = Poisson(rate=RandUniform(low=1.0, high=2.0))
     >>> generator
@@ -107,6 +108,7 @@ class RandPoissonSequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.sequence import RandPoisson
     >>> generator = RandPoisson(rate=1.0)
     >>> generator

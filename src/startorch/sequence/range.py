@@ -22,6 +22,7 @@ class ArangeSequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.sequence import Arange
     >>> generator = Arange(feature_size=())
     >>> generator

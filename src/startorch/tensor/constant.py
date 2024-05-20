@@ -23,6 +23,7 @@ class FullTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import Full
     >>> generator = Full(value=42)
     >>> generator

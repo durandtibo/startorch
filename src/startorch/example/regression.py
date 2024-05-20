@@ -45,6 +45,7 @@ class LinearRegressionExampleGenerator(BaseExampleGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.example import LinearRegression
     >>> generator = LinearRegression.create_uniform_weights()
     >>> generator
@@ -166,6 +167,7 @@ def make_linear_regression(
     Example usage:
 
     ```pycon
+
     >>> from startorch.example import make_linear_regression
     >>> batch = make_linear_regression(weights=torch.rand(10), num_examples=10)
     >>> batch
@@ -212,6 +214,7 @@ def get_uniform_weights(
     Example usage:
 
     ```pycon
+
     >>> from startorch.example.regression import get_uniform_weights
     >>> weights = get_uniform_weights(feature_size=10, informative_feature_size=5)
     >>> weights

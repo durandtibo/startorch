@@ -37,6 +37,7 @@ class HalfCauchyTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import HalfCauchy, RandUniform
     >>> generator = HalfCauchy(scale=RandUniform(low=1.0, high=2.0))
     >>> generator
@@ -77,6 +78,7 @@ class RandHalfCauchyTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import RandHalfCauchy
     >>> generator = RandHalfCauchy(scale=1.0)
     >>> generator
@@ -120,6 +122,7 @@ class RandTruncHalfCauchyTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import RandTruncHalfCauchy
     >>> generator = RandTruncHalfCauchy(scale=1.0, max_value=5.0)
     >>> generator
@@ -170,6 +173,7 @@ class TruncHalfCauchyTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import RandUniform, TruncHalfCauchy
     >>> generator = TruncHalfCauchy(
     ...     scale=RandUniform(low=1.0, high=2.0),

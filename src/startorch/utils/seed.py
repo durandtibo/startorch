@@ -22,6 +22,7 @@ def get_random_seed(seed: int) -> int:
     Example usage:
 
     ```pycon
+
     >>> from startorch.utils.seed import get_random_seed
     >>> get_random_seed(44)
     6176747449835261347
@@ -46,6 +47,7 @@ def get_torch_generator(
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.utils.seed import get_torch_generator
     >>> generator = get_torch_generator(42)
@@ -77,6 +79,7 @@ def setup_torch_generator(generator_or_seed: int | torch.Generator) -> torch.Gen
     Example usage:
 
     ```pycon
+
     >>> from startorch.utils.seed import setup_torch_generator
     >>> generator = setup_torch_generator(42)
     >>> generator

@@ -54,6 +54,7 @@ def merge_by_time(
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch import constants as ct
     >>> from startorch.timeseries.utils import merge_by_time

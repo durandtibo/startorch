@@ -32,6 +32,7 @@ class MultinomialSequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.sequence import Multinomial
     >>> generator = Multinomial(weights=torch.ones(5))
@@ -144,6 +145,7 @@ class UniformCategoricalSequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.sequence import UniformCategorical
     >>> generator = UniformCategorical(10)

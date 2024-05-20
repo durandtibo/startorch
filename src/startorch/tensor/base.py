@@ -27,6 +27,7 @@ class BaseTensorGenerator(ABC, metaclass=AbstractFactory):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.tensor import RandUniform
     >>> generator = RandUniform()
@@ -81,6 +82,7 @@ def is_tensor_generator_config(config: dict) -> bool:
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import is_tensor_generator_config
     >>> is_tensor_generator_config({"_target_": "startorch.tensor.RandUniform"})
     True
@@ -105,6 +107,7 @@ def setup_tensor_generator(generator: BaseTensorGenerator | dict) -> BaseTensorG
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import setup_tensor_generator
     >>> setup_tensor_generator({"_target_": "startorch.tensor.RandUniform"})
     RandUniformTensorGenerator(low=0.0, high=1.0)

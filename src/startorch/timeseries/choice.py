@@ -47,6 +47,7 @@ class MultinomialChoiceTimeSeriesGenerator(BaseTimeSeriesGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.timeseries import MultinomialChoice, TimeSeries
     >>> from startorch.sequence import RandUniform, RandNormal
     >>> generator = MultinomialChoice(

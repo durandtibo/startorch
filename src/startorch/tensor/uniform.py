@@ -40,6 +40,7 @@ class AsinhUniformTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import RandUniform, AsinhUniform
     >>> generator = AsinhUniform(
     ...     low=RandUniform(low=-1000, high=-100), high=RandUniform(low=100, high=1000)
@@ -85,6 +86,7 @@ class LogUniformTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import RandUniform, LogUniform
     >>> generator = LogUniform(
     ...     low=RandUniform(low=0.1, high=1.0), high=RandUniform(low=100, high=1000)
@@ -128,6 +130,7 @@ class RandAsinhUniformTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import RandAsinhUniform
     >>> generator = RandAsinhUniform(low=-1000, high=1000)
     >>> generator
@@ -169,6 +172,7 @@ class RandIntTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import RandInt
     >>> generator = RandInt(low=0, high=10)
     >>> generator
@@ -205,6 +209,7 @@ class RandLogUniformTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import RandLogUniform
     >>> generator = RandLogUniform(low=0.1, high=100.0)
     >>> generator
@@ -246,6 +251,7 @@ class RandUniformTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import RandUniform
     >>> generator = RandUniform(low=0, high=10)
     >>> generator
@@ -284,6 +290,7 @@ class UniformTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import RandUniform, Uniform
     >>> generator = UniformTensorGenerator(
     ...     low=RandUniform(low=0, high=2), high=RandUniform(low=8, high=10)

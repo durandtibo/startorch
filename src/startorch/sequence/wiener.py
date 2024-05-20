@@ -27,6 +27,7 @@ class RandWienerProcessSequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.sequence import RandWienerProcess
     >>> generator = RandWienerProcess()
     >>> generator
@@ -85,6 +86,7 @@ def wiener_process(
     Example usage:
 
     ```pycon
+
     >>> from startorch.sequence.wiener import wiener_process
     >>> wiener_process(seq_len=12, batch_size=4)
     tensor([[...]])

@@ -35,6 +35,7 @@ class LinearSequenceGenerator(BaseSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.sequence import Linear, RandUniform
     >>> generator = Linear(
     ...     value=RandUniform(low=-1.0, high=1.0),

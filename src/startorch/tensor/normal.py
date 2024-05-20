@@ -34,6 +34,7 @@ class NormalTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import Normal, RandUniform
     >>> generator = Normal(
     ...     mean=RandUniform(low=-1.0, high=1.0), std=RandUniform(low=1.0, high=2.0)
@@ -81,6 +82,7 @@ class RandNormalTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import RandNormal
     >>> generator = RandNormal(mean=0.0, std=1.0)
     >>> generator
@@ -129,6 +131,7 @@ class RandTruncNormalTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import RandTruncNormal
     >>> generator = RandTruncNormal(mean=0.0, std=1.0, min_value=-1.0, max_value=1.0)
     >>> generator
@@ -192,6 +195,7 @@ class TruncNormalTensorGenerator(BaseTensorGenerator):
     Example usage:
 
     ```pycon
+
     >>> from startorch.tensor import RandUniform, TruncNormal
     >>> generator = TruncNormal(
     ...     mean=RandUniform(low=-1.0, high=1.0),

@@ -30,6 +30,7 @@ class RepeatPeriodicSequenceGenerator(BasePeriodicSequenceGenerator):
     Example usage:
 
     ```pycon
+
     >>> import torch
     >>> from startorch.periodic.sequence import Repeat
     >>> from startorch.sequence import RandUniform
