@@ -20,7 +20,9 @@ class PoissonTensorTransformer(BaseTensorTransformer):
     r"""Implement a tensor transformer that samples values from a Poisson
     distribution.
 
-    The input values are used as the rate parameters of the Poisson distribution.
+    The input must be a sequence of tensors with a single item.
+    This tensor is interpreted as the rate parameters of the Poisson
+    distribution.
 
     Example usage:
 
