@@ -30,7 +30,7 @@ class IdentityTensorTransformer(BaseTensorTransformer):
     >>> from startorch.transformer.tensor import Identity
     >>> transformer = Identity()
     >>> transformer
-    IdentityTensorTransformer()
+    IdentityTensorTransformer(copy=True)
     >>> tensor = torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
     >>> out = transformer.transform(tensor)
     >>> out
