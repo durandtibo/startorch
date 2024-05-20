@@ -17,6 +17,8 @@ from typing import TYPE_CHECKING
 from startorch.transformer.tensor.base import BaseTensorTransformer
 
 if TYPE_CHECKING:
+    from collections.abc import Sequence
+
     import torch
 
 
@@ -34,7 +36,7 @@ class AcoshTensorTransformer(BaseTensorTransformer):
     >>> transformer
     AcoshTensorTransformer()
     >>> tensor = torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
-    >>> out = transformer.transform(tensor)
+    >>> out = transformer.transform([tensor])
     >>> out
     tensor([[0.0000, 1.3170, 1.7627],
             [2.0634, 2.2924, 2.4779]])
@@ -47,9 +49,11 @@ class AcoshTensorTransformer(BaseTensorTransformer):
 
     def transform(
         self,
-        tensor: torch.Tensor,
+        tensors: Sequence[torch.Tensor],
+        *,
         rng: torch.Transformer | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
+        (tensor,) = tensors
         return tensor.acosh()
 
 
@@ -67,7 +71,7 @@ class AsinhTensorTransformer(BaseTensorTransformer):
     >>> transformer
     AsinhTensorTransformer()
     >>> tensor = torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
-    >>> out = transformer.transform(tensor)
+    >>> out = transformer.transform([tensor])
     >>> out
     tensor([[0.8814, 1.4436, 1.8184],
             [2.0947, 2.3124, 2.4918]])
@@ -80,9 +84,11 @@ class AsinhTensorTransformer(BaseTensorTransformer):
 
     def transform(
         self,
-        tensor: torch.Tensor,
+        tensors: Sequence[torch.Tensor],
+        *,
         rng: torch.Transformer | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
+        (tensor,) = tensors
         return tensor.asinh()
 
 
@@ -100,7 +106,7 @@ class AtanhTensorTransformer(BaseTensorTransformer):
     >>> transformer
     AtanhTensorTransformer()
     >>> tensor = torch.tensor([[-0.5, -0.1, 0.0], [0.1, 0.2, 0.5]])
-    >>> out = transformer.transform(tensor)
+    >>> out = transformer.transform([tensor])
     >>> out
     tensor([[-0.5493, -0.1003,  0.0000],
             [ 0.1003,  0.2027,  0.5493]])
@@ -113,9 +119,11 @@ class AtanhTensorTransformer(BaseTensorTransformer):
 
     def transform(
         self,
-        tensor: torch.Tensor,
+        tensors: Sequence[torch.Tensor],
+        *,
         rng: torch.Transformer | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
+        (tensor,) = tensors
         return tensor.atanh()
 
 
@@ -132,11 +140,11 @@ class CoshTensorTransformer(BaseTensorTransformer):
     >>> transformer = Cosh()
     >>> transformer
     CoshTensorTransformer()
-    >>> tensor = torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
-    >>> out = transformer.transform(tensor)
+    >>> tensor = torch.tensor([[1.0, 2.0, 3.0], [4.0, 4.5, 6.0]])
+    >>> out = transformer.transform([tensor])
     >>> out
     tensor([[  1.5431,   3.7622,  10.0677],
-            [ 27.3082,  74.2099, 201.7156]])
+            [ 27.3082,  45.0141, 201.7156]])
 
     ```
     """
@@ -146,9 +154,11 @@ class CoshTensorTransformer(BaseTensorTransformer):
 
     def transform(
         self,
-        tensor: torch.Tensor,
+        tensors: Sequence[torch.Tensor],
+        *,
         rng: torch.Transformer | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
+        (tensor,) = tensors
         return tensor.cosh()
 
 
@@ -166,7 +176,7 @@ class SinhTensorTransformer(BaseTensorTransformer):
     >>> transformer
     SinhTensorTransformer()
     >>> tensor = torch.tensor([[0.0, 1.0, 2.0], [4.0, 5.0, 6.0]])
-    >>> out = transformer.transform(tensor)
+    >>> out = transformer.transform([tensor])
     >>> out
     tensor([[  0.0000,   1.1752,   3.6269],
             [ 27.2899,  74.2032, 201.7132]])
@@ -179,9 +189,11 @@ class SinhTensorTransformer(BaseTensorTransformer):
 
     def transform(
         self,
-        tensor: torch.Tensor,
+        tensors: Sequence[torch.Tensor],
+        *,
         rng: torch.Transformer | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
+        (tensor,) = tensors
         return tensor.sinh()
 
 
@@ -199,7 +211,7 @@ class TanhTensorTransformer(BaseTensorTransformer):
     >>> transformer
     TanhTensorTransformer()
     >>> tensor = torch.tensor([[0.0, 1.0, 2.0], [4.0, 5.0, 6.0]])
-    >>> out = transformer.transform(tensor)
+    >>> out = transformer.transform([tensor])
     >>> out
     tensor([[0.0000, 0.7616, 0.9640],
             [0.9993, 0.9999, 1.0000]])
@@ -212,7 +224,9 @@ class TanhTensorTransformer(BaseTensorTransformer):
 
     def transform(
         self,
-        tensor: torch.Tensor,
+        tensors: Sequence[torch.Tensor],
+        *,
         rng: torch.Transformer | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
+        (tensor,) = tensors
         return tensor.tanh()

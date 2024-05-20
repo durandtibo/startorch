@@ -10,6 +10,8 @@ from typing import TYPE_CHECKING
 from startorch.transformer.tensor.base import BaseTensorTransformer
 
 if TYPE_CHECKING:
+    from collections.abc import Sequence
+
     import torch
 
 logger = logging.getLogger(__name__)
@@ -32,7 +34,7 @@ class IdentityTensorTransformer(BaseTensorTransformer):
     >>> transformer
     IdentityTensorTransformer(copy=True)
     >>> tensor = torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
-    >>> out = transformer.transform(tensor)
+    >>> out = transformer.transform([tensor])
     >>> out
     tensor([[1., 2., 3.],
             [4., 5., 6.]])
@@ -48,9 +50,11 @@ class IdentityTensorTransformer(BaseTensorTransformer):
 
     def transform(
         self,
-        tensor: torch.Tensor,
+        tensors: Sequence[torch.Tensor],
+        *,
         rng: torch.Transformer | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
+        (tensor,) = tensors
         if self._copy:
             return tensor.clone()
         return tensor
