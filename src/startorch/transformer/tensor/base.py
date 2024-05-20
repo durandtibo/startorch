@@ -1,4 +1,4 @@
-r"""Contain the base class to implement a tensor transformer."""
+r"""Contain the base class to implement a transformer."""
 
 from __future__ import annotations
 
@@ -14,7 +14,6 @@ from objectory.utils import is_object_config
 from startorch.utils.format import str_target_object
 
 if TYPE_CHECKING:
-    from collections.abc import Sequence
 
     import torch
 
@@ -22,7 +21,7 @@ logger = logging.getLogger(__name__)
 
 
 class BaseTensorTransformer(ABC, metaclass=AbstractFactory):
-    r"""Define the base class to transform a tensor.
+    r"""Define the base class to transform a batch of data.
 
     A child class has to implement the ``transform`` method.
 
@@ -35,27 +34,27 @@ class BaseTensorTransformer(ABC, metaclass=AbstractFactory):
     >>> transformer = Identity()
     >>> transformer
     IdentityTensorTransformer(copy=True)
-    >>> tensor = torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
-    >>> out = transformer.transform([tensor])
+    >>> data = {"key": torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])}
+    >>> out = transformer.transform(data)
     >>> out
-    tensor([[1., 2., 3.],
-            [4., 5., 6.]])
+    {'key': tensor([[1., 2., 3.],
+                    [4., 5., 6.]])}
 
     ```
     """
 
     @abstractmethod
     def transform(
-        self, tensors: Sequence[torch.Tensor], *, rng: torch.Transformer | None = None
-    ) -> torch.Tensor:
-        r"""Generate a tensor.
+        self, data: dict[str, torch.Tensor], *, rng: torch.Transformer | None = None
+    ) -> dict[str, torch.Tensor]:
+        r"""Transform the input data.
 
         Args:
-            tensors: The input tensors used to generate the output transform.
+            data: The data to transform.
             rng: An optional random number transformer.
 
         Returns:
-            The transformed tensor.
+            The transformed data.
 
         Example usage:
 
@@ -64,11 +63,11 @@ class BaseTensorTransformer(ABC, metaclass=AbstractFactory):
         >>> import torch
         >>> from startorch.transformer.tensor import Identity
         >>> transformer = Identity()
-        >>> tensor = torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
-        >>> out = transformer.transform([tensor])
+        >>> data = {'key': torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])}
+        >>> out = transformer.transform(data)
         >>> out
-        tensor([[1., 2., 3.],
-                [4., 5., 6.]])
+        {'key': tensor([[1., 2., 3.],
+                        [4., 5., 6.]])}
 
         ```
         """
@@ -93,6 +92,7 @@ def is_tensor_transformer_config(config: dict) -> bool:
     Example usage:
 
     ```pycon
+
     >>> from startorch.transformer.tensor import is_tensor_transformer_config
     >>> is_tensor_transformer_config({"_target_": "startorch.transformer.tensor.Identity"})
     True
@@ -117,6 +117,7 @@ def setup_tensor_transformer(transformer: BaseTensorTransformer | dict) -> BaseT
     Example usage:
 
     ```pycon
+
     >>> from startorch.transformer.tensor import setup_tensor_transformer
     >>> setup_tensor_transformer({"_target_": "startorch.transformer.tensor.Identity"})
     IdentityTensorTransformer(copy=True)
