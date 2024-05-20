@@ -17,7 +17,7 @@ def test_acosh_str() -> None:
 def test_acosh_transform() -> None:
     assert (
         Acosh()
-        .transform(torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]]))
+        .transform([torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])])
         .allclose(
             torch.tensor(
                 [
@@ -32,8 +32,8 @@ def test_acosh_transform() -> None:
 def test_acosh_transform_same_random_seed() -> None:
     transformer = Acosh()
     tensor = torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
-    assert transformer.transform(tensor, rng=get_torch_generator(1)).equal(
-        transformer.transform(tensor, rng=get_torch_generator(1))
+    assert transformer.transform([tensor], rng=get_torch_generator(1)).equal(
+        transformer.transform([tensor], rng=get_torch_generator(1))
     )
 
 
@@ -41,8 +41,8 @@ def test_acosh_transform_different_random_seeds() -> None:
     transformer = Acosh()
     tensor = torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
     # the outputs must be equal because this transformer does not have randomness
-    assert transformer.transform(tensor, rng=get_torch_generator(1)).equal(
-        transformer.transform(tensor, rng=get_torch_generator(2))
+    assert transformer.transform([tensor], rng=get_torch_generator(1)).equal(
+        transformer.transform([tensor], rng=get_torch_generator(2))
     )
 
 
@@ -58,7 +58,7 @@ def test_asinh_str() -> None:
 def test_asinh_transform() -> None:
     assert (
         Asinh()
-        .transform(torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]]))
+        .transform([torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])])
         .allclose(
             torch.tensor(
                 [
@@ -73,8 +73,8 @@ def test_asinh_transform() -> None:
 def test_asinh_transform_same_random_seed() -> None:
     transformer = Asinh()
     tensor = torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
-    assert transformer.transform(tensor, rng=get_torch_generator(1)).equal(
-        transformer.transform(tensor, rng=get_torch_generator(1))
+    assert transformer.transform([tensor], rng=get_torch_generator(1)).equal(
+        transformer.transform([tensor], rng=get_torch_generator(1))
     )
 
 
@@ -82,8 +82,8 @@ def test_asinh_transform_different_random_seeds() -> None:
     transformer = Asinh()
     tensor = torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
     # the outputs must be equal because this transformer does not have randomness
-    assert transformer.transform(tensor, rng=get_torch_generator(1)).equal(
-        transformer.transform(tensor, rng=get_torch_generator(2))
+    assert transformer.transform([tensor], rng=get_torch_generator(1)).equal(
+        transformer.transform([tensor], rng=get_torch_generator(2))
     )
 
 
@@ -99,7 +99,7 @@ def test_atanh_str() -> None:
 def test_atanh_transform() -> None:
     assert (
         Atanh()
-        .transform(torch.tensor([[-0.5, -0.1, 0.0], [0.1, 0.2, 0.5]]))
+        .transform([torch.tensor([[-0.5, -0.1, 0.0], [0.1, 0.2, 0.5]])])
         .allclose(
             torch.tensor(
                 [
@@ -114,8 +114,8 @@ def test_atanh_transform() -> None:
 def test_atanh_transform_same_random_seed() -> None:
     transformer = Atanh()
     tensor = torch.tensor([[-0.5, -0.1, 0.0], [0.1, 0.2, 0.5]])
-    assert transformer.transform(tensor, rng=get_torch_generator(1)).equal(
-        transformer.transform(tensor, rng=get_torch_generator(1))
+    assert transformer.transform([tensor], rng=get_torch_generator(1)).equal(
+        transformer.transform([tensor], rng=get_torch_generator(1))
     )
 
 
@@ -123,8 +123,8 @@ def test_atanh_transform_different_random_seeds() -> None:
     transformer = Atanh()
     tensor = torch.tensor([[-0.5, -0.1, 0.0], [0.1, 0.2, 0.5]])
     # the outputs must be equal because this transformer does not have randomness
-    assert transformer.transform(tensor, rng=get_torch_generator(1)).equal(
-        transformer.transform(tensor, rng=get_torch_generator(2))
+    assert transformer.transform([tensor], rng=get_torch_generator(1)).equal(
+        transformer.transform([tensor], rng=get_torch_generator(2))
     )
 
 
@@ -140,7 +140,7 @@ def test_cosh_str() -> None:
 def test_cosh_transform() -> None:
     assert (
         Cosh()
-        .transform(torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]]))
+        .transform([torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])])
         .allclose(
             torch.tensor(
                 [
@@ -155,8 +155,8 @@ def test_cosh_transform() -> None:
 def test_cosh_transform_same_random_seed() -> None:
     transformer = Cosh()
     tensor = torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
-    assert transformer.transform(tensor, rng=get_torch_generator(1)).equal(
-        transformer.transform(tensor, rng=get_torch_generator(1))
+    assert transformer.transform([tensor], rng=get_torch_generator(1)).equal(
+        transformer.transform([tensor], rng=get_torch_generator(1))
     )
 
 
@@ -164,8 +164,8 @@ def test_cosh_transform_different_random_seeds() -> None:
     transformer = Cosh()
     tensor = torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
     # the outputs must be equal because this transformer does not have randomness
-    assert transformer.transform(tensor, rng=get_torch_generator(1)).equal(
-        transformer.transform(tensor, rng=get_torch_generator(2))
+    assert transformer.transform([tensor], rng=get_torch_generator(1)).equal(
+        transformer.transform([tensor], rng=get_torch_generator(2))
     )
 
 
@@ -181,7 +181,7 @@ def test_sinh_str() -> None:
 def test_sinh_transform() -> None:
     assert (
         Sinh()
-        .transform(torch.tensor([[0.0, 1.0, 2.0], [4.0, 5.0, 6.0]]))
+        .transform([torch.tensor([[0.0, 1.0, 2.0], [4.0, 5.0, 6.0]])])
         .allclose(
             torch.tensor(
                 [
@@ -196,8 +196,8 @@ def test_sinh_transform() -> None:
 def test_sinh_transform_same_random_seed() -> None:
     transformer = Sinh()
     tensor = torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
-    assert transformer.transform(tensor, rng=get_torch_generator(1)).equal(
-        transformer.transform(tensor, rng=get_torch_generator(1))
+    assert transformer.transform([tensor], rng=get_torch_generator(1)).equal(
+        transformer.transform([tensor], rng=get_torch_generator(1))
     )
 
 
@@ -205,8 +205,8 @@ def test_sinh_transform_different_random_seeds() -> None:
     transformer = Sinh()
     tensor = torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
     # the outputs must be equal because this transformer does not have randomness
-    assert transformer.transform(tensor, rng=get_torch_generator(1)).equal(
-        transformer.transform(tensor, rng=get_torch_generator(2))
+    assert transformer.transform([tensor], rng=get_torch_generator(1)).equal(
+        transformer.transform([tensor], rng=get_torch_generator(2))
     )
 
 
@@ -222,7 +222,7 @@ def test_tanh_str() -> None:
 def test_tanh_transform() -> None:
     assert (
         Tanh()
-        .transform(torch.tensor([[0.0, 1.0, 2.0], [4.0, 5.0, 6.0]]))
+        .transform([torch.tensor([[0.0, 1.0, 2.0], [4.0, 5.0, 6.0]])])
         .allclose(
             torch.tensor(
                 [
@@ -237,8 +237,8 @@ def test_tanh_transform() -> None:
 def test_tanh_transform_same_random_seed() -> None:
     transformer = Tanh()
     tensor = torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
-    assert transformer.transform(tensor, rng=get_torch_generator(1)).equal(
-        transformer.transform(tensor, rng=get_torch_generator(1))
+    assert transformer.transform([tensor], rng=get_torch_generator(1)).equal(
+        transformer.transform([tensor], rng=get_torch_generator(1))
     )
 
 
@@ -246,6 +246,6 @@ def test_tanh_transform_different_random_seeds() -> None:
     transformer = Tanh()
     tensor = torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
     # the outputs must be equal because this transformer does not have randomness
-    assert transformer.transform(tensor, rng=get_torch_generator(1)).equal(
-        transformer.transform(tensor, rng=get_torch_generator(2))
+    assert transformer.transform([tensor], rng=get_torch_generator(1)).equal(
+        transformer.transform([tensor], rng=get_torch_generator(2))
     )
