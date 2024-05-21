@@ -32,7 +32,7 @@ packages = [
 # Core dependencies
 batchtensor = ">=0.0.2,<0.1"
 coola = ">=0.2,<1.0"
-numpy = ">=1.21,<2.0"
+numpy = ">=1.23,<2.0"
 objectory = ">=0.1,<1.0"
 python = ">=3.9,<3.13"
 torch = [
