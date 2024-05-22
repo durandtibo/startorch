@@ -15,6 +15,7 @@ from startorch.transformer.utils import add_item, check_input_keys
 from startorch.utils.format import str_target_object
 
 if TYPE_CHECKING:
+    from collections.abc import Hashable
     import torch
 
 logger = logging.getLogger(__name__)
@@ -45,8 +46,8 @@ class BaseTransformer(ABC, metaclass=AbstractFactory):
 
     @abstractmethod
     def transform(
-        self, data: dict[str, torch.Tensor], *, rng: torch.Transformer | None = None
-    ) -> dict[str, torch.Tensor]:
+        self, data: dict[Hashable, torch.Tensor], *, rng: torch.Transformer | None = None
+    ) -> dict[Hashable, torch.Tensor]:
         r"""Transform the input data.
 
         Args:
@@ -116,10 +117,10 @@ class BaseTensorTransformer(BaseTransformer):
 
     def transform(
         self,
-        data: dict[str, torch.Tensor],
+        data: dict[Hashable, torch.Tensor],
         *,
         rng: torch.Transformer | None = None,
-    ) -> dict[str, torch.Tensor]:
+    ) -> dict[Hashable, torch.Tensor]:
         check_input_keys(data, keys=[self._input])
         data = data.copy()
         add_item(

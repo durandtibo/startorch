@@ -12,7 +12,7 @@ from coola.utils import repr_indent, repr_sequence
 from startorch.transformer.base import BaseTransformer, setup_transformer
 
 if TYPE_CHECKING:
-    from collections.abc import Sequence
+    from collections.abc import Hashable, Sequence
 
     import torch
 
@@ -66,10 +66,10 @@ class SequentialTransformer(BaseTransformer):
 
     def transform(
         self,
-        data: dict[str, torch.Tensor],
+        data: dict[Hashable, torch.Tensor],
         *,
         rng: torch.Transformer | None = None,
-    ) -> dict[str, torch.Tensor]:
+    ) -> dict[Hashable, torch.Tensor]:
         for transformer in self._transformers:
             data = transformer.transform(data, rng=rng)
         return data
