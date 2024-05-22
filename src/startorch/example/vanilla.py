@@ -30,10 +30,7 @@ class VanillaExampleGenerator(BaseExampleGenerator):
     ```pycon
 
     >>> import torch
-    >>> from startorch.example import TimeSeriesExampleGenerator
-    >>> from startorch.timeseries import TimeSeriesGenerator
-    >>> from startorch.sequence import Periodic, RandUniform
-    >>> from startorch.tensor import RandInt
+    >>> from startorch.example import VanillaExampleGenerator
     >>> generator = VanillaExampleGenerator(
     ...     data={"value": torch.ones(10, 3), "time": torch.arange(10)}
     ... )
