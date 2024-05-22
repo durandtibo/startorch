@@ -26,6 +26,8 @@ __all__ = [
     "SwissRollExampleGenerator",
     "TimeSeries",
     "TimeSeriesExampleGenerator",
+    "Transformed",
+    "TransformedExampleGenerator",
     "is_example_generator_config",
     "make_blobs_classification",
     "make_circles_classification",
@@ -95,3 +97,5 @@ from startorch.example.swissroll import SwissRollExampleGenerator as SwissRoll
 from startorch.example.swissroll import make_swiss_roll
 from startorch.example.timeseries import TimeSeriesExampleGenerator
 from startorch.example.timeseries import TimeSeriesExampleGenerator as TimeSeries
+from startorch.example.transformation import TransformedExampleGenerator
+from startorch.example.transformation import TransformedExampleGenerator as Transformed
