@@ -11,6 +11,8 @@ from typing import TYPE_CHECKING
 from startorch.transformer.base import BaseTransformer
 
 if TYPE_CHECKING:
+    from collections.abc import Hashable
+
     import torch
 
 logger = logging.getLogger(__name__)
@@ -49,10 +51,10 @@ class IdentityTransformer(BaseTransformer):
 
     def transform(
         self,
-        data: dict[str, torch.Tensor],
+        data: dict[Hashable, torch.Tensor],
         *,
         rng: torch.Transformer | None = None,  # noqa: ARG002
-    ) -> dict[str, torch.Tensor]:
+    ) -> dict[Hashable, torch.Tensor]:
         if self._copy:
             return copy.deepcopy(data)
         return data
