@@ -31,7 +31,7 @@ class HalfCauchyTensorGenerator(BaseTensorGenerator):
     half-Cauchy distribution.
 
     Args:
-        scale: Specifies a tensor generator (or its configuration) to
+        scale: A tensor generator (or its configuration) to
             generate the scale.
 
     Example usage:
@@ -70,7 +70,7 @@ class RandHalfCauchyTensorGenerator(BaseTensorGenerator):
     half-Cauchy distribution.
 
     Args:
-        scale: Specifies the scale of the distribution.
+        scale: The scale of the distribution.
 
     Raises:
         ValueError: if ``scale`` is not a positive number.
@@ -112,8 +112,8 @@ class RandTruncHalfCauchyTensorGenerator(BaseTensorGenerator):
     truncated half-Cauchy distribution.
 
     Args:
-        scale: Specifies the scale of the distribution.
-        max_value: Specifies the maximum value.
+        scale: The scale of the distribution.
+        max_value: The maximum value.
 
     Raises:
         ValueError: if ``scale`` is not a positive number.
@@ -165,9 +165,9 @@ class TruncHalfCauchyTensorGenerator(BaseTensorGenerator):
     half-Cauchy distribution.
 
     Args:
-        scale: Specifies a tensor generator (or its configuration) to
+        scale: A tensor generator (or its configuration) to
             generate the scale.
-        max_value: Specifies a tensor generator (or its configuration)
+        max_value: A tensor generator (or its configuration)
             to generate the maximum value (excluded).
 
     Example usage:

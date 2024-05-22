@@ -14,8 +14,8 @@ def scale_batch(batch: torch.Tensor, scale: str = "identity") -> torch.Tensor:
     r"""Scale a batch.
 
     Args:
-        batch: Specifies the batch to scale.
-        scale: Specifies the scaling transformation.
+        batch: The batch to scale.
+        scale: The scaling transformation.
 
     Returns:
         The scaled batch.

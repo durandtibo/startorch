@@ -37,7 +37,7 @@ class ExponentialSequenceGenerator(BaseSequenceGenerator):
     value in the sequence.
 
     Args:
-        rate: Specifies the rate generator or its configuration.
+        rate: The rate generator or its configuration.
             The rate generator should return valid rate values.
 
     Example usage:
@@ -80,8 +80,8 @@ class ExponentialSequenceGenerator(BaseSequenceGenerator):
         from an Exponential distribution with a fixed rate.
 
         Args:
-            rate: Specifies the rate of the Exponential distribution.
-            feature_size: Specifies the feature size.
+            rate: The rate of the Exponential distribution.
+            feature_size: The feature size.
 
         Returns:
             A sequence generator where the rates of the Exponential
@@ -117,9 +117,9 @@ class ExponentialSequenceGenerator(BaseSequenceGenerator):
         One rate is sampled per sequence.
 
         Args:
-            min_rate: Specifies the minimum rate value.
-            max_rate: Specifies the maximum rate value.
-            feature_size: Specifies the feature size.
+            min_rate: The minimum rate value.
+            max_rate: The maximum rate value.
+            feature_size: The feature size.
 
         Returns:
             A sequence generator where the rates for each sequence are
@@ -160,8 +160,8 @@ class RandExponentialSequenceGenerator(BaseSequenceGenerator):
     an Exponential distribution.
 
     Args:
-        rate: Specifies the rate of the Exponential distribution.
-        feature_size: Specifies the feature size.
+        rate: The rate of the Exponential distribution.
+        feature_size: The feature size.
 
     Raises:
         ValueError: if ``rate`` is not a positive number.
@@ -213,9 +213,9 @@ class RandTruncExponentialSequenceGenerator(BaseSequenceGenerator):
     truncated Exponential distribution.
 
     Args:
-        rate: Specifies the rate of the Exponential distribution.
-        max_value: Specifies the maximum value.
-        feature_size: Specifies the feature size.
+        rate: The rate of the Exponential distribution.
+        max_value: The maximum value.
+        feature_size: The feature size.
 
     Raises:
         ValueError: if ``rate`` is not a positive number.
@@ -274,9 +274,9 @@ class TruncExponentialSequenceGenerator(BaseSequenceGenerator):
     Exponential distribution.
 
     Args:
-        rate: Specifies a sequence generator (or its configuration)
+        rate: A sequence generator (or its configuration)
             to generate the rate.
-        max_value: Specifies a sequence generator (or its
+        max_value: A sequence generator (or its
             configuration) to generate the maximum value (excluded).
 
     Example usage:

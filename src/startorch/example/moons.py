@@ -27,9 +27,9 @@ class MoonsClassificationExampleGenerator(BaseExampleGenerator):
 
     Args:
         shuffle: If ``True``, the examples are shuffled.
-        noise_std: Specifies the standard deviation of the Gaussian
+        noise_std: The standard deviation of the Gaussian
             noise.
-        ratio: Specifies the ratio between the number of examples in
+        ratio: The ratio between the number of examples in
             outer circle and inner circle.
 
     Raises:
@@ -102,13 +102,13 @@ def make_moons_classification(
     https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_moons.html
 
     Args:
-        num_examples: Specifies the number of examples.
+        num_examples: The number of examples.
         shuffle: If ``True``, the examples are shuffled.
-        noise_std: Specifies the standard deviation of the Gaussian
+        noise_std: The standard deviation of the Gaussian
             noise.
-        ratio: Specifies the ratio between the number of examples in
+        ratio: The ratio between the number of examples in
             outer circle and inner circle.
-        generator: Specifies an optional random generator.
+        generator: An optional random generator.
 
     Returns:
         A dictionary with two items:

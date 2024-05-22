@@ -26,9 +26,9 @@ class NormalTensorGenerator(BaseTensorGenerator):
     Normal distribution.
 
     Args:
-        mean: Specifies a tensor generator (or its configuration) to
+        mean: A tensor generator (or its configuration) to
             generate the mean.
-        std: Specifies a tensor generator (or its configuration) to
+        std: A tensor generator (or its configuration) to
             generate the standard deviation.
 
     Example usage:
@@ -72,8 +72,8 @@ class RandNormalTensorGenerator(BaseTensorGenerator):
     sampling values from a Normal distribution.
 
     Args:
-        mean: Specifies the mean of the Normal distribution.
-        std: Specifies the standard deviation of the Normal
+        mean: The mean of the Normal distribution.
+        std: The standard deviation of the Normal
             distribution.
 
     Raises:
@@ -118,11 +118,11 @@ class RandTruncNormalTensorGenerator(BaseTensorGenerator):
     sampling values from a truncated Normal distribution.
 
     Args:
-        mean: Specifies the mean of the Normal distribution.
-        std: Specifies the standard deviation of the Normal
+        mean: The mean of the Normal distribution.
+        std: The standard deviation of the Normal
             distribution.
-        min_value: Specifies the minimum value.
-        max_value: Specifies the maximum value.
+        min_value: The minimum value.
+        max_value: The maximum value.
 
     Raises:
         ValueError: if ``std`` is not a postive number.
@@ -183,13 +183,13 @@ class TruncNormalTensorGenerator(BaseTensorGenerator):
     truncated Normal distribution.
 
     Args:
-        mean: Specifies a sequence generator (or its configuration) to
+        mean: A sequence generator (or its configuration) to
             generate the mean.
-        std: Specifies a sequence generator (or its configuration) to
+        std: A sequence generator (or its configuration) to
             generate the standard deviation.
-        min_value: Specifies a sequence generator (or its
+        min_value: A sequence generator (or its
             configuration) to generate the minimum value (included).
-        max_value: Specifies a sequence generator (or its
+        max_value: A sequence generator (or its
             configuration) to generate the maximum value (excluded).
 
     Example usage:

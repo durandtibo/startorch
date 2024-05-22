@@ -44,8 +44,8 @@ class BaseTensorGenerator(ABC, metaclass=AbstractFactory):
         r"""Generate a tensor.
 
         Args:
-            size: Specifies the size of the tensor to generate.
-            rng: Specifies an optional random number generator.
+            size: The size of the tensor to generate.
+            rng: An optional random number generator.
 
         Returns:
             The generated tensor with the specified size.
@@ -73,7 +73,7 @@ def is_tensor_generator_config(config: dict) -> bool:
     the class.
 
     Args:
-        config: Specifies the configuration to check.
+        config: The configuration to check.
 
     Returns:
         ``True`` if the input configuration is a configuration for a
@@ -99,7 +99,7 @@ def setup_tensor_generator(generator: BaseTensorGenerator | dict) -> BaseTensorG
     using the ``BaseTensorGenerator`` factory function.
 
     Args:
-        generator: Specifies a tensor generator or its configuration.
+        generator: A tensor generator or its configuration.
 
     Returns:
         A tensor generator.

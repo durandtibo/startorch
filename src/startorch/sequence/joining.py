@@ -24,11 +24,11 @@ class Cat2SequenceGenerator(BaseSequenceGenerator):
     ``ouput = [sequence1, sequence2]``
 
     Args:
-        generator1: Specifies the first sequence generator or its
+        generator1: The first sequence generator or its
             configuration.
-        generator2: Specifies the second sequence generator or its
+        generator2: The second sequence generator or its
             configuration.
-        changepoint: Specifies the change point generator or its
+        changepoint: The change point generator or its
             configuration.
 
     Example usage:

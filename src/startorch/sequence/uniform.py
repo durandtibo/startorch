@@ -34,9 +34,9 @@ class AsinhUniformSequenceGenerator(BaseSequenceGenerator):
     values from an asinh-uniform distribution.
 
     Args:
-        low: Specifies a sequence generator (or its configuration) to
+        low: A sequence generator (or its configuration) to
             generate the minimum value (inclusive).
-        high: Specifies a sequence generator (or its configuration) to
+        high: A sequence generator (or its configuration) to
             generate the maximum value (exclusive).
 
     Example usage:
@@ -83,9 +83,9 @@ class LogUniformSequenceGenerator(BaseSequenceGenerator):
     values from a log-uniform distribution.
 
     Args:
-        low: Specifies a sequence generator (or its configuration) to
+        low: A sequence generator (or its configuration) to
             generate the minimum value (inclusive).
-        high: Specifies a sequence generator (or its configuration) to
+        high: A sequence generator (or its configuration) to
             generate the maximum value (exclusive).
 
     Example usage:
@@ -132,9 +132,9 @@ class RandAsinhUniformSequenceGenerator(BaseSequenceGenerator):
     values from an asinh-uniform distribution.
 
     Args:
-        low: Specifies the minimum value (inclusive).
-        high: Specifies the maximum value (exclusive).
-        feature_size: Specifies the feature size.
+        low: The minimum value (inclusive).
+        high: The maximum value (exclusive).
+        feature_size: The feature size.
 
     Raises:
         ValueError: if ``high`` is lower than ``low``.
@@ -190,12 +190,12 @@ class RandIntSequenceGenerator(BaseSequenceGenerator):
     integers.
 
     Args:
-        low: Specifies the minimum value (included).
-        high: Specifies the maximum value (excluded).
-        feature_size: Specifies the feature size.
+        low: The minimum value (included).
+        high: The maximum value (excluded).
+        feature_size: The feature size.
 
     Raises:
-        ValueError if ``high`` is lower than ``low``.
+        ValueError: if ``high`` is lower than ``low``.
 
     Example usage:
 
@@ -248,9 +248,9 @@ class RandLogUniformSequenceGenerator(BaseSequenceGenerator):
     values from a log-uniform distribution.
 
     Args:
-        low: Specifies the minimum value (inclusive).
-        high: Specifies the maximum value (exclusive).
-        feature_size: Specifies the feature size.
+        low: The minimum value (inclusive).
+        high: The maximum value (exclusive).
+        feature_size: The feature size.
 
     Raises:
         ValueError: if ``high`` is lower than ``low``.
@@ -306,9 +306,9 @@ class RandUniformSequenceGenerator(BaseSequenceGenerator):
     values from a uniform distribution.
 
     Args:
-        low: Specifies the minimum value (inclusive).
-        high: Specifies the maximum value (exclusive).
-        feature_size: Specifies the feature size.
+        low: The minimum value (inclusive).
+        high: The maximum value (exclusive).
+        feature_size: The feature size.
 
     Raises:
         ValueError: if ``high`` is lower than ``low``.
@@ -364,9 +364,9 @@ class UniformSequenceGenerator(BaseSequenceGenerator):
     values from a uniform distribution.
 
     Args:
-        low: Specifies a sequence generator (or its configuration) to
+        low: A sequence generator (or its configuration) to
             generate the minimum value (inclusive).
-        high: Specifies a sequence generator (or its configuration) to
+        high: A sequence generator (or its configuration) to
             generate the maximum value (exclusive).
 
     Example usage:

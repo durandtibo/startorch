@@ -25,7 +25,7 @@ class CacheExampleGenerator(BaseExampleGenerator):
     A new batch is generated only if the batch size changes.
 
     Args:
-        generator: Specifies the example generator or its
+        generator: The example generator or its
             configuration.
         deepcopy: If ``True``, the cached batch is deepcopied before to
             be return.

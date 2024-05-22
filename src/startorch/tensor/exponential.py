@@ -35,7 +35,7 @@ class ExponentialTensorGenerator(BaseTensorGenerator):
     value in the sequence.
 
     Args:
-        rate: Specifies the rate generator or its configuration.
+        rate: The rate generator or its configuration.
             The rate generator should return valid rate values.
 
     Example usage:
@@ -71,7 +71,7 @@ class RandExponentialTensorGenerator(BaseTensorGenerator):
     an Exponential distribution.
 
     Args:
-        rate: Specifies the rate of the Exponential distribution.
+        rate: The rate of the Exponential distribution.
 
     Raises:
         ValueError: if ``rate`` is not a positive number.
@@ -109,8 +109,8 @@ class RandTruncExponentialTensorGenerator(BaseTensorGenerator):
     truncated Exponential distribution.
 
     Args:
-        rate: Specifies the rate of the Exponential distribution.
-        max_value: Specifies the maximum value.
+        rate: The rate of the Exponential distribution.
+        max_value: The maximum value.
 
     Raises:
         ValueError: if ``rate`` is not a positive number.
@@ -158,9 +158,9 @@ class TruncExponentialTensorGenerator(BaseTensorGenerator):
     Exponential distribution.
 
     Args:
-        rate: Specifies a sequence generator (or its configuration) to
+        rate: A sequence generator (or its configuration) to
             generate the rate.
-        max_value: Specifies a sequence generator (or its
+        max_value: A sequence generator (or its
             configuration) to generate the maximum value (excluded).
 
     Example usage:

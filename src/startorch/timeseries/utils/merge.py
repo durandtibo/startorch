@@ -41,10 +41,10 @@ def merge_by_time(
     number of features.
 
     Args:
-        timeseries: Specifies the list of time series to merge.
+        timeseries: The list of time series to merge.
             See the description above to know the format of the time
             series.
-        time_key: Specifies the key that contains the time data used
+        time_key: The key that contains the time data used
             to merge the time series.
 
     Returns:

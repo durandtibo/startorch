@@ -24,7 +24,7 @@ class PoissonSequenceGenerator(BaseSequenceGenerator):
     in the sequence. The rate values should be greater than 0.
 
     Args:
-        rate: Specifies the rate generator or its configuration.
+        rate: The rate generator or its configuration.
             The rate generator should return valid rate values.
 
     Example usage:
@@ -70,9 +70,9 @@ class PoissonSequenceGenerator(BaseSequenceGenerator):
         distribution are sampled from a uniform distribution.
 
         Args:
-            min_rate: Specifies the minimum rate value.
-            max_rate: Specifies the maximum rate value.
-            feature_size: Specifies the feature size.
+            min_rate: The minimum rate value.
+            max_rate: The maximum rate value.
+            feature_size: The feature size.
 
         Returns:
             A sequence generator where the rates of the Poisson
@@ -98,9 +98,9 @@ class RandPoissonSequenceGenerator(BaseSequenceGenerator):
     Poisson distribution.
 
     Args:
-        rate: Specifies the rate of the Poisson distribution.
+        rate: The rate of the Poisson distribution.
             This value has to be greater than 0.
-        feature_size: Specifies the feature size.
+        feature_size: The feature size.
 
     Raises:
         ValueError: if ``rate`` is not a positive number.

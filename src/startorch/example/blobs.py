@@ -26,10 +26,10 @@ class BlobsClassificationExampleGenerator(BaseExampleGenerator):
     https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_blobs.html
 
     Args:
-        centers: Specifies the cluster centers used to generate the
+        centers: The cluster centers used to generate the
             examples. It must be a float tensor of shape
             ``(num_clusters, feature_size)``.
-        cluster_std: Specifies the standard deviation of the clusters.
+        cluster_std: The standard deviation of the clusters.
             It must be a float tensor of shape
             ``(num_clusters, feature_size)``.
 
@@ -115,9 +115,9 @@ class BlobsClassificationExampleGenerator(BaseExampleGenerator):
         the centers are sampled from a uniform distribution.
 
         Args:
-            num_clusters: Specifies the number of clusters.
-            feature_size: Specifies the feature size.
-            random_seed: Specifies the random seed used to generate
+            num_clusters: The number of clusters.
+            feature_size: The feature size.
+            random_seed: The random seed used to generate
                 the cluster centers.
 
         Returns:
@@ -160,14 +160,14 @@ def make_blobs_classification(
     https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_blobs.html
 
     Args:
-        num_examples: Specifies the number of examples.
-        centers: Specifies the cluster centers used to generate the
+        num_examples: The number of examples.
+        centers: The cluster centers used to generate the
             examples. It must be a float tensor of shape
             ``(num_clusters, feature_size)``.
-        cluster_std: Specifies the standard deviation of the clusters.
+        cluster_std: The standard deviation of the clusters.
             It must be a float tensor of shape
             ``(num_clusters, feature_size)``.
-        generator: Specifies an optional random number generator.
+        generator: An optional random number generator.
 
     Returns:
         A dictionary with two items:

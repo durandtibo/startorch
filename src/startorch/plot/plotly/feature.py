@@ -38,12 +38,12 @@ def hist_feature(
     with ``n`` histograms: one for each feature.
 
     Args:
-        features: Specifies the features. It must be a tensor of shape
+        features: The features. It must be a tensor of shape
             ``(d0, d1, ..., dn)``.
-        feature_names: Specifies the feature names. If ``None``,
+        feature_names: The feature names. If ``None``,
             the feature names are generated automatically.
-        ncols: Specifies the number of columns.
-        figsize: Specifies the individual figure size in pixels.
+        ncols: The number of columns.
+        figsize: The individual figure size in pixels.
             The first dimension is the width and the second is the
             height.
         **kwargs: Additional keyword arguments for

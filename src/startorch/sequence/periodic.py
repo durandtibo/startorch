@@ -24,9 +24,9 @@ class PeriodicSequenceGenerator(BaseSequenceGenerator):
     a regular sequence generator.
 
     Args:
-        sequence: Specifies a sequence generator or its configuration
+        sequence: A sequence generator or its configuration
             that is used to generate the periodic pattern.
-        period: Specifies the period length sampler or its
+        period: The period length sampler or its
             configuration. This sampler is used to sample the period
             length at each batch.
 

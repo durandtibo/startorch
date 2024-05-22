@@ -18,8 +18,8 @@ def check_feature_size(value: int | Any, low: int = 1) -> None:
     features.
 
     Args:
-        value: Specifies the value to check.
-        low: Specifies the minimum value (inclusive).
+        value: The value to check.
+        low: The minimum value (inclusive).
 
     Raises:
         TypeError: if the input is not an integer.
@@ -42,10 +42,10 @@ def check_interval(value: float | Any, low: float, high: float, name: str) -> No
     r"""Check if the given value is an interval.
 
     Args:
-        value: Specifies the value to check.
-        low: Specifies the minimum value (inclusive).
-        high: Specifies the maximum value (exclusive).
-        name: Specifies the variable name.
+        value: The value to check.
+        low: The minimum value (inclusive).
+        high: The maximum value (exclusive).
+        name: The variable name.
 
     Raises:
         TypeError: if the input is not an integer or float.
@@ -76,7 +76,7 @@ def check_num_examples(value: int | Any) -> None:
     r"""Check if the given value is a valid number of examples.
 
     Args:
-        value: Specifies the value to check.
+        value: The value to check.
 
     Raises:
         TypeError: if the input is not an integer.
@@ -99,9 +99,9 @@ def check_integer_ge(value: int | Any, low: int, name: str) -> None:
     r"""Check if the given value is a valid positive integer.
 
     Args:
-        value: Specifies the value to check.
-        low: Specifies the minimum value (inclusive).
-        name: Specifies the variable name.
+        value: The value to check.
+        low: The minimum value (inclusive).
+        name: The variable name.
 
     Raises:
         TypeError: if the input is not an integer.
@@ -132,8 +132,8 @@ def check_std(value: float | Any, name: str = "std") -> None:
     r"""Check if the given value is a valid standard deviation.
 
     Args:
-        value: Specifies the value to check.
-        name: Specifies the variable name.
+        value: The value to check.
+        name: The variable name.
 
     Raises:
         TypeError: if the input is not an integer or float.

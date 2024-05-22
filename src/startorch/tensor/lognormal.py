@@ -31,9 +31,9 @@ class LogNormalTensorGenerator(BaseTensorGenerator):
     log-Normal distribution.
 
     Args:
-        mean: Specifies a tensor generator (or its configuration) to
+        mean: A tensor generator (or its configuration) to
             generate the mean of the underlying Normal distribution.
-        std: Specifies a tensor generator (or its configuration) to
+        std: A tensor generator (or its configuration) to
             generate the standard deviation of the underlying Normal
             distribution.
 
@@ -78,8 +78,8 @@ class RandLogNormalTensorGenerator(BaseTensorGenerator):
     log-Normal distribution.
 
     Args:
-        mean: Specifies the mean of the underlying Normal distribution.
-        std: Specifies the standard deviation of the underlying Normal
+        mean: The mean of the underlying Normal distribution.
+        std: The standard deviation of the underlying Normal
             distribution.
 
     Raises:
@@ -124,11 +124,11 @@ class RandTruncLogNormalTensorGenerator(BaseTensorGenerator):
     sampling values from a truncated log-Normal distribution.
 
     Args:
-        mean: Specifies the mean of the log-Normal distribution.
-        std: Specifies the standard deviation of the log-Normal
+        mean: The mean of the log-Normal distribution.
+        std: The standard deviation of the log-Normal
             distribution.
-        min_value: Specifies the minimum value.
-        max_value: Specifies the maximum value.
+        min_value: The minimum value.
+        max_value: The maximum value.
 
     Raises:
         ValueError: if ``std`` is not a positive number.
@@ -185,14 +185,14 @@ class TruncLogNormalTensorGenerator(BaseTensorGenerator):
     truncated log-Normal distribution.
 
     Args:
-        mean: Specifies a tensor generator (or its configuration) to
+        mean: A tensor generator (or its configuration) to
             generate the mean of the underlying Normal distribution.
-        std: Specifies a tensor generator (or its configuration) to
+        std: A tensor generator (or its configuration) to
             generate the standard deviation of the underlying Normal
             distribution.
-        min_value: Specifies a tensor generator (or its configuration)
+        min_value: A tensor generator (or its configuration)
             to generate the minimum value (included).
-        max_value: Specifies a tensor generator (or its configuration)
+        max_value: A tensor generator (or its configuration)
             to generate the maximum value (excluded).
 
     Example usage:

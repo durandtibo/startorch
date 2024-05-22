@@ -23,9 +23,9 @@ class SwissRollExampleGenerator(BaseExampleGenerator):
     https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_swiss_roll.html
 
     Args:
-        noise_std: Specifies the standard deviation of the Gaussian
+        noise_std: The standard deviation of the Gaussian
             noise.
-        spin: Specifies the number of spins of the Swiss roll.
+        spin: The number of spins of the Swiss roll.
         hole: If ``True`` generates the Swiss roll with hole dataset.
 
     Raises:
@@ -100,12 +100,12 @@ def make_swiss_roll(
     https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_swiss_roll.html
 
     Args:
-        num_examples: Specifies the number of examples.
-        noise_std: Specifies the standard deviation of the Gaussian
+        num_examples: The number of examples.
+        noise_std: The standard deviation of the Gaussian
             noise.
-        spin: Specifies the number of spins of the Swiss roll.
+        spin: The number of spins of the Swiss roll.
         hole: If ``True`` generates the Swiss roll with hole dataset.
-        generator: Specifies an optional random generator.
+        generator: An optional random generator.
 
     Returns:
         A batch with two items:

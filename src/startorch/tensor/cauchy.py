@@ -26,9 +26,9 @@ class CauchyTensorGenerator(BaseTensorGenerator):
     Cauchy distribution.
 
     Args:
-        loc: Specifies a tensor generator (or its configuration) to
+        loc: A tensor generator (or its configuration) to
             generate the location.
-        scale: Specifies a tensor generator (or its configuration) to
+        scale: A tensor generator (or its configuration) to
             generate the scale.
 
     Example usage:
@@ -72,8 +72,8 @@ class RandCauchyTensorGenerator(BaseTensorGenerator):
     Cauchy distribution.
 
     Args:
-        loc: Specifies the location/median of the Cauchy distribution.
-        scale: Specifies the scale of the distribution.
+        loc: The location/median of the Cauchy distribution.
+        scale: The scale of the distribution.
 
     Raises:
         ValueError: if ``scale`` is not a positive number.
@@ -117,10 +117,10 @@ class RandTruncCauchyTensorGenerator(BaseTensorGenerator):
     truncated Cauchy distribution.
 
     Args:
-        loc: Specifies the location/median of the Cauchy distribution.
-        scale: Specifies the scale of the distribution.
-        min_value: Specifies the minimum value (included).
-        max_value: Specifies the maximum value (excluded).
+        loc: The location/median of the Cauchy distribution.
+        scale: The scale of the distribution.
+        min_value: The minimum value (included).
+        max_value: The maximum value (excluded).
 
     Raises:
         ValueError: if ``std`` is not a positive number.
@@ -181,13 +181,13 @@ class TruncCauchyTensorGenerator(BaseTensorGenerator):
     Cauchy distribution.
 
     Args:
-        loc: Specifies a tensor generator (or its configuration) to
+        loc: A tensor generator (or its configuration) to
             generate the location.
-        scale: Specifies a tensor generator (or its configuration) to
+        scale: A tensor generator (or its configuration) to
             generate the scale.
-        min_value: Specifies a tensor generator (or its configuration)
+        min_value: A tensor generator (or its configuration)
             to generate the minimum value (included).
-        max_value: Specifies a tensor generator (or its configuration)
+        max_value: A tensor generator (or its configuration)
             to generate the maximum value (excluded).
 
     Example usage:

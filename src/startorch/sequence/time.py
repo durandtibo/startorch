@@ -58,7 +58,7 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
         exponential distribution.
 
         Args:
-            rate: Specifies the rate of the exponential distribution.
+            rate: The rate of the exponential distribution.
 
         Returns:
             A time sequence generator where the time difference
@@ -107,7 +107,7 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
         distribution.
 
         Args:
-            rate: Specifies the rate of the exponential distribution.
+            rate: The rate of the exponential distribution.
 
         Returns:
             A time sequence generator where the time difference between
@@ -152,7 +152,7 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
         Poisson distribution.
 
         Args:
-            rate: Specifies the rate of the Poisson distribution.
+            rate: The rate of the Poisson distribution.
 
         Returns:
             A time sequence generator where the time difference
@@ -190,7 +190,7 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
         between two consecutive steps follows a Poisson distribution.
 
         Args:
-            rate: Specifies the rate of the Poisson distribution.
+            rate: The rate of the Poisson distribution.
 
         Returns:
             A time sequence generator where the time difference
@@ -227,9 +227,9 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
         uniform distribution.
 
         Args:
-            min_time_diff: Specifies the minimum time difference
+            min_time_diff: The minimum time difference
                 between two consecutive steps.
-            max_time_diff: Specifies the maximum time difference
+            max_time_diff: The maximum time difference
                 between two consecutive steps.
 
         Returns:
@@ -284,9 +284,9 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
         between two consecutive steps follows a uniform distribution.
 
         Args:
-            min_time_diff: Specifies the minimum time difference
+            min_time_diff: The minimum time difference
                 between two consecutive steps.
-            max_time_diff: Specifies the maximum time difference
+            max_time_diff: The maximum time difference
                 between two consecutive steps.
 
         Returns:
@@ -337,8 +337,8 @@ class TimeSequenceGenerator(BaseWrapperSequenceGenerator):
         from a uniform distribution.
 
         Args:
-            min_time: Specifies the minimum time.
-            max_time: Specifies the maximum time.
+            min_time: The minimum time.
+            max_time: The maximum time.
 
         Returns:
             A time sequence generator where the time is sampled from a

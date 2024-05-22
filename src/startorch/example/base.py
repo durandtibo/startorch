@@ -52,8 +52,8 @@ class BaseExampleGenerator(Generic[T], ABC, metaclass=AbstractFactory):
         r"""Generate a batch of examples.
 
         Args:
-            batch_size: Specifies the batch size.
-            rng: Specifies an optional random number generator.
+            batch_size: The batch size.
+            rng: An optional random number generator.
 
         Returns:
             A batch of examples.
@@ -81,7 +81,7 @@ def is_example_generator_config(config: dict) -> bool:
     the class.
 
     Args:
-        config: Specifies the configuration to check.
+        config: The configuration to check.
 
     Returns:
         ``True`` if the input configuration is a configuration for a
@@ -107,7 +107,7 @@ def setup_example_generator(
     by using the ``BaseExampleGenerator`` factory function.
 
     Args:
-        generator: Specifies a time series generator or its
+        generator: A time series generator or its
             configuration.
 
     Returns:

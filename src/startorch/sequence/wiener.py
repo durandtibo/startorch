@@ -19,7 +19,7 @@ class RandWienerProcessSequenceGenerator(BaseSequenceGenerator):
     Useful link: https://en.wikipedia.org/wiki/Wiener_process
 
     Args:
-        step_size: Specifies the time step size.
+        step_size: The time step size.
 
     Raises:
         ValueError: if ``step_size`` is not a positive number.
@@ -70,10 +70,10 @@ def wiener_process(
     Useful link: https://en.wikipedia.org/wiki/Wiener_process
 
     Args:
-        seq_len: Specifies the sequence length.
-        step_size: Specifies the time step size.
-        batch_size: Specifies the batch size.
-        generator: Specifies an optional random generator.
+        seq_len: The sequence length.
+        step_size: The time step size.
+        batch_size: The batch size.
+        generator: An optional random generator.
 
     Returns:
         A batch of sequences generated with a Wiener process.

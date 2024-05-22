@@ -32,11 +32,11 @@ class LinearRegressionExampleGenerator(BaseExampleGenerator):
     https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_regression.html
 
     Args:
-        weights: Specifies the linear weights in the underlying linear
+        weights: The linear weights in the underlying linear
             model. It must be a float tensor of shape
             ``(feature_size,)``.
-        bias: Specifies the bias term in the underlying linear model.
-        noise_std: Specifies the standard deviation of the Gaussian
+        bias: The bias term in the underlying linear model.
+        noise_std: The standard deviation of the Gaussian
             noise.
 
     Raises:
@@ -143,14 +143,14 @@ def make_linear_regression(
     regression model.
 
     Args:
-        weights: Specifies the linear weights in the underlying linear
+        weights: The linear weights in the underlying linear
             model. It must be a float tensor of shape
             ``(feature_size,)``.
-        bias: Specifies the bias term in the underlying linear model.
-        num_examples: Specifies the number of examples to generate.
-        noise_std: Specifies the standard deviation of the Gaussian
+        bias: The bias term in the underlying linear model.
+        num_examples: The number of examples to generate.
+        noise_std: The standard deviation of the Gaussian
             noise.
-        generator: Specifies an optional random generator.
+        generator: An optional random generator.
 
     Returns:
         A dictionary with two items:
@@ -201,11 +201,11 @@ def get_uniform_weights(
     ``make_normal_regression``.
 
     Args:
-        feature_size: Specifies the feature size i.e. the number of
+        feature_size: The feature size i.e. the number of
             features.
-        informative_feature_size: Specifies the number of informative
+        informative_feature_size: The number of informative
             features.
-        generator: Specifies an optional random generator.
+        generator: An optional random generator.
 
     Returns:
         The generated weights as a float tensor of shape

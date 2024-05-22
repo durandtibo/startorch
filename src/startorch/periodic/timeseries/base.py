@@ -62,10 +62,10 @@ class BasePeriodicTimeSeriesGenerator(ABC, metaclass=AbstractFactory):
         All the time series in the batch have the same length.
 
         Args:
-            seq_len: Specifies the sequence length.
-            period: Specifies the period.
-            batch_size: Specifies the batch size.
-            rng: Specifies an optional random number generator.
+            seq_len: The sequence length.
+            period: The period.
+            batch_size: The batch size.
+            rng: An optional random number generator.
 
         Returns:
             A batch of periodic time series.
@@ -94,7 +94,7 @@ def is_periodic_timeseries_generator_config(config: dict) -> bool:
     the class.
 
     Args:
-        config: Specifies the configuration to check.
+        config: The configuration to check.
 
     Returns:
         ``True`` if the input configuration is a configuration
@@ -133,7 +133,7 @@ def setup_periodic_timeseries_generator(
     using the ``BasePeriodicTimeSeriesGenerator`` factory function.
 
     Args:
-        generator: Specifies a periodic time series generator or its
+        generator: A periodic time series generator or its
             configuration.
 
     Returns:

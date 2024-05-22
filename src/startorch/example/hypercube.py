@@ -27,10 +27,10 @@ class HypercubeClassificationExampleGenerator(BaseExampleGenerator):
     be used for a multi-class classification task.
 
     Args:
-        num_classes: Specifies the number of classes.
-        feature_size: Specifies the feature size. The feature size has
+        num_classes: The number of classes.
+        feature_size: The feature size. The feature size has
             to be greater than the number of classes.
-        noise_std: Specifies the standard deviation of the Gaussian
+        noise_std: The standard deviation of the Gaussian
             noise.
 
     Raises:
@@ -117,13 +117,13 @@ def make_hypercube_classification(
     be used for a multi-class classification task.
 
     Args:
-        num_examples: Specifies the number of examples.
-        num_classes: Specifies the number of classes.
-        feature_size: Specifies the feature size. The feature size has
+        num_examples: The number of examples.
+        num_classes: The number of classes.
+        feature_size: The feature size. The feature size has
             to be greater than the number of classes.
-        noise_std: Specifies the standard deviation of the Gaussian
+        noise_std: The standard deviation of the Gaussian
             noise.
-        generator: Specifies an optional random generator.
+        generator: An optional random generator.
 
     Returns:
         A dictionary with two items:

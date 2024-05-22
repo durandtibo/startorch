@@ -16,8 +16,8 @@ class FullTensorGenerator(BaseTensorGenerator):
     value.
 
     Args:
-        value: Specifies the fill value.
-        dtype: Specifies the target dtype. ``None`` means the data type
+        value: The fill value.
+        dtype: The target dtype. ``None`` means the data type
             is infered from the value type.
 
     Example usage:

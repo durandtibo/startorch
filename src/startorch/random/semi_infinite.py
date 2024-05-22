@@ -29,9 +29,9 @@ def rand_exponential(
     distribution.
 
     Args:
-        size: Specifies the tensor shape.
-        rate: Specifies the rate of the Exponential distribution.
-        generator: Specifies an optional random generator.
+        size: The tensor shape.
+        rate: The rate of the Exponential distribution.
+        generator: An optional random generator.
 
     Returns:
         A tensor filled with values sampled from an Exponential
@@ -68,9 +68,9 @@ def exponential(rate: torch.Tensor, generator: torch.Generator | None = None) ->
     The shape of the ``rate`` tensor is used to infer the output size.
 
     Args:
-        rate: Specifies the rates of the Exponential distribution.
+        rate: The rates of the Exponential distribution.
             It must be a float tensor of shape ``(d0, d1, ..., dn)``.
-        generator: Specifies an optional random generator.
+        generator: An optional random generator.
 
     Returns:
         A tensor of shape ``(d0, d1, ..., dn)`` filled with values
@@ -106,10 +106,10 @@ def rand_half_cauchy(
     distribution.
 
     Args:
-        size: Specifies the tensor shape.
-        scale: Specifies the scale of the half-Cauchy distribution.
+        size: The tensor shape.
+        scale: The scale of the half-Cauchy distribution.
             This value has to be greater than 0.
-        generator: Specifies an optional random generator.
+        generator: An optional random generator.
 
     Returns:
         A tensor filled with values sampled from a half-Cauchy
@@ -142,16 +142,16 @@ def half_cauchy(scale: torch.Tensor, generator: torch.Generator | None = None) -
     the output size.
 
     Args:
-        scale: Specifies the scale of the half-Cauchy distribution.
+        scale: The scale of the half-Cauchy distribution.
             It must be a float tensor of shape ``(d0, d1, ..., dn)``.
-        generator: Specifies an optional random generator.
+        generator: An optional random generator.
 
     Returns:
         A tensor of shape ``(d0, d1, ..., dn)`` filled with values
             sampled from a half-Cauchy distribution.
 
     Raises:
-        ValueError if the ``scale`` parameter is not valid.
+        ValueError: if the ``scale`` parameter is not valid.
 
     Example usage:
 
@@ -176,10 +176,10 @@ def rand_half_normal(
     distribution.
 
     Args:
-        size: Specifies the tensor shape.
-        std: Specifies the standard deviation of the half-Normal
+        size: The tensor shape.
+        std: The standard deviation of the half-Normal
             distribution.
-        generator: Specifies an optional random generator.
+        generator: An optional random generator.
 
     Returns:
         A tensor filled with values sampled from a half-Normal
@@ -215,7 +215,7 @@ def half_normal(std: torch.Tensor, generator: torch.Generator | None = None) -> 
     the output size.
 
     Args:
-        std: Specifies the standard deviation of the half-Normal
+        std: The standard deviation of the half-Normal
             distribution. It must be a float tensor of shape
             ``(d0, d1, ..., dn)``.
         generator: Specifies
@@ -252,11 +252,11 @@ def rand_log_normal(
     distribution.
 
     Args:
-        size: Specifies the tensor shape.
-        mean: Specifies the mean of the underlying Normal distribution.
-        std: Specifies the standard deviation of the underlying
+        size: The tensor shape.
+        mean: The mean of the underlying Normal distribution.
+        std: The standard deviation of the underlying
             Normal distribution.
-        generator: Specifies an optional random generator.
+        generator: An optional random generator.
 
     Returns:
         A tensor of shape ``(d0, d1, ..., dn)`` filled with values
@@ -297,12 +297,12 @@ def log_normal(
     the output size.
 
     Args:
-        mean: Specifies the mean of the log-Normal distribution.
+        mean: The mean of the log-Normal distribution.
             It must be a float tensor of shape ``(d0, d1, ..., dn)``.
-        std: Specifies the standard deviation of the log-Normal
+        std: The standard deviation of the log-Normal
             distribution. It must be a float tensor of shape
             ``(d0, d1, ..., dn)``.
-        generator: Specifies an optional random generator.
+        generator: An optional random generator.
 
     Returns:
         A tensor of shape ``(d0, d1, ..., dn)`` filled with values

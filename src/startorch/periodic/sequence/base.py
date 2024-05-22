@@ -56,10 +56,10 @@ class BasePeriodicSequenceGenerator(ABC, metaclass=AbstractFactory):
         All the sequences in the batch have the same length.
 
         Args:
-            seq_len: Specifies the sequence length.
-            period: Specifies the period.
-            batch_size: Specifies the batch size.
-            rng: Specifies an optional random number generator.
+            seq_len: The sequence length.
+            period: The period.
+            batch_size: The batch size.
+            rng: An optional random number generator.
 
         Returns:
             A batch of sequences represented as a tensor of shape
@@ -90,7 +90,7 @@ def is_periodic_sequence_generator_config(config: dict) -> bool:
     the class.
 
     Args:
-        config: Specifies the configuration to check.
+        config: The configuration to check.
 
     Returns:
         ``True`` if the input configuration is a configuration
@@ -123,7 +123,7 @@ def setup_periodic_sequence_generator(
     using the ``BasePeriodicSequenceGenerator`` factory function.
 
     Args:
-        generator: Specifies a periodic sequence generator or its
+        generator: A periodic sequence generator or its
             configuration.
 
     Returns:

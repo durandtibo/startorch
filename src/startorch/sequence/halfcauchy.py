@@ -32,7 +32,7 @@ class HalfCauchySequenceGenerator(BaseSequenceGenerator):
     half-Cauchy distribution.
 
     Args:
-        scale: Specifies a sequence generator (or its configuration)
+        scale: A sequence generator (or its configuration)
             to generate the scale.
 
     Example usage:
@@ -73,8 +73,8 @@ class RandHalfCauchySequenceGenerator(BaseSequenceGenerator):
     half-Cauchy distribution.
 
     Args:
-        scale: Specifies the scale of the distribution.
-        feature_size: Specifies the feature size.
+        scale: The scale of the distribution.
+        feature_size: The feature size.
 
     Raises:
         ValueError: if ``scale`` is not a positive number.
@@ -126,9 +126,9 @@ class RandTruncHalfCauchySequenceGenerator(BaseSequenceGenerator):
     truncated half-Cauchy distribution.
 
     Args:
-        scale: Specifies the scale of the distribution.
-        max_value: Specifies the maximum value.
-        feature_size: Specifies the feature size.
+        scale: The scale of the distribution.
+        max_value: The maximum value.
+        feature_size: The feature size.
 
     Raises:
         ValueError: if ``scale`` is not a positive number.
@@ -187,9 +187,9 @@ class TruncHalfCauchySequenceGenerator(BaseSequenceGenerator):
     half-Cauchy distribution.
 
     Args:
-        scale: Specifies a sequence generator (or its configuration)
+        scale: A sequence generator (or its configuration)
             to generate the scale.
-        max_value: Specifies a sequence generator (or its
+        max_value: A sequence generator (or its
             configuration) to generate the maximum value (excluded).
 
     Example usage:
