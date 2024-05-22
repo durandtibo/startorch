@@ -7,10 +7,10 @@ __all__ = ["add_item", "check_input_keys"]
 from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
-    from collections.abc import Sequence
+    from collections.abc import Hashable, Sequence
 
 
-def add_item(data: dict, key: str, value: Any, exist_ok: bool = False) -> None:
+def add_item(data: dict, key: Hashable, value: Any, exist_ok: bool = False) -> None:
     r"""Add an item to a dictionary.
 
     Args:
@@ -30,7 +30,7 @@ def add_item(data: dict, key: str, value: Any, exist_ok: bool = False) -> None:
     data[key] = value
 
 
-def check_input_keys(data: dict, keys: Sequence[str]) -> None:
+def check_input_keys(data: dict, keys: Sequence[Hashable]) -> None:
     r"""Check if the keys exist.
 
     Args:
