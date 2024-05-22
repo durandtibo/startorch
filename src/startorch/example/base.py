@@ -101,17 +101,16 @@ def is_example_generator_config(config: dict) -> bool:
 def setup_example_generator(
     generator: BaseExampleGenerator | dict,
 ) -> BaseExampleGenerator:
-    r"""Set up a time series generator.
+    r"""Set up an example generator.
 
     The time series generator is instantiated from its configuration
     by using the ``BaseExampleGenerator`` factory function.
 
     Args:
-        generator: A time series generator or its
-            configuration.
+        generator: An example generator or its configuration.
 
     Returns:
-        A time series generator.
+        An example generator.
 
     Example usage:
 
