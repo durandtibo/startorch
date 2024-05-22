@@ -21,6 +21,8 @@ __all__ = [
     "IdentityTransformer",
     "Poisson",
     "PoissonTransformer",
+    "Sequential",
+    "SequentialTransformer",
     "Sinh",
     "SinhTransformer",
     "Tanh",
@@ -43,6 +45,8 @@ from startorch.transformer.math import ClampTransformer
 from startorch.transformer.math import ClampTransformer as Clamp
 from startorch.transformer.poisson import PoissonTransformer
 from startorch.transformer.poisson import PoissonTransformer as Poisson
+from startorch.transformer.sequential import SequentialTransformer
+from startorch.transformer.sequential import SequentialTransformer as Sequential
 from startorch.transformer.trigo import AcoshTransformer
 from startorch.transformer.trigo import AcoshTransformer as Acosh
 from startorch.transformer.trigo import AsinhTransformer
