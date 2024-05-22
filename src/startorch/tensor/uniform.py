@@ -32,9 +32,9 @@ class AsinhUniformTensorGenerator(BaseTensorGenerator):
     values from an asinh-uniform distribution.
 
     Args:
-        low: Specifies a tensor generator (or its configuration) to
+        low: A tensor generator (or its configuration) to
             generate the minimum value (inclusive).
-        high: Specifies a tensor generator (or its configuration) to
+        high: A tensor generator (or its configuration) to
             generate the maximum value (exclusive).
 
     Example usage:
@@ -78,9 +78,9 @@ class LogUniformTensorGenerator(BaseTensorGenerator):
     values from a log-uniform distribution.
 
     Args:
-        low: Specifies a tensor generator (or its configuration) to
+        low: A tensor generator (or its configuration) to
             generate the minimum value (inclusive).
-        high: Specifies a tensor generator (or its configuration) to
+        high: A tensor generator (or its configuration) to
             generate the maximum value (exclusive).
 
     Example usage:
@@ -124,8 +124,8 @@ class RandAsinhUniformTensorGenerator(BaseTensorGenerator):
     uniform distribution.
 
     Args:
-        low: Specifies the minimum value (inclusive).
-        high: Specifies the maximum value (exclusive).
+        low: The minimum value (inclusive).
+        high: The maximum value (exclusive).
 
     Example usage:
 
@@ -166,8 +166,8 @@ class RandIntTensorGenerator(BaseTensorGenerator):
     uniform distribution.
 
     Args:
-        low: Specifies the minimum value (inclusive).
-        high: Specifies the maximum value (exclusive).
+        low: The minimum value (inclusive).
+        high: The maximum value (exclusive).
 
     Example usage:
 
@@ -203,8 +203,8 @@ class RandLogUniformTensorGenerator(BaseTensorGenerator):
     values from a log-uniform distribution.
 
     Args:
-        low: Specifies the minimum value (inclusive).
-        high: Specifies the maximum value (exclusive).
+        low: The minimum value (inclusive).
+        high: The maximum value (exclusive).
 
     Example usage:
 
@@ -245,8 +245,8 @@ class RandUniformTensorGenerator(BaseTensorGenerator):
     distribution.
 
     Args:
-        low: Specifies the minimum value (inclusive).
-        high: Specifies the maximum value (exclusive).
+        low: The minimum value (inclusive).
+        high: The maximum value (exclusive).
 
     Example usage:
 
@@ -282,9 +282,9 @@ class UniformTensorGenerator(BaseTensorGenerator):
     distribution.
 
     Args:
-        low: Specifies a tensor generator (or its configuration) to
+        low: A tensor generator (or its configuration) to
             generate the minimum value (inclusive).
-        high: Specifies a tensor generator (or its configuration) to
+        high: A tensor generator (or its configuration) to
             generate the maximum value (exclusive).
 
     Example usage:

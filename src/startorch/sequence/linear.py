@@ -24,12 +24,12 @@ class LinearSequenceGenerator(BaseSequenceGenerator):
     ``output = slope * value + intercept``
 
     Args:
-        value: Specifies a sequence generator (or its configuration)
+        value: A sequence generator (or its configuration)
             to generate the sequence values. The linear transformation
             is applied on these values.
-        slope: Specifies a sequence generator (or its configuration)
+        slope: A sequence generator (or its configuration)
             to generate the slope values.
-        intercept: Specifies a sequence generator (or its
+        intercept: A sequence generator (or its
             configuration) to generate the intercept values.
 
     Example usage:

@@ -32,9 +32,9 @@ class LogNormalSequenceGenerator(BaseSequenceGenerator):
     log-Normal distribution.
 
     Args:
-        mean: Specifies a sequence generator (or its configuration) to
+        mean: A sequence generator (or its configuration) to
             generate the mean of the underlying Normal distribution.
-        std: Specifies a sequence generator (or its configuration) to
+        std: A sequence generator (or its configuration) to
             generate the standard deviation of the underlying Normal
             distribution.
 
@@ -83,10 +83,10 @@ class RandLogNormalSequenceGenerator(BaseSequenceGenerator):
     log-Normal distribution.
 
     Args:
-        mean: Specifies the mean of the underlying Normal distribution.
-        std: Specifies the standard deviation of the underlying Normal
+        mean: The mean of the underlying Normal distribution.
+        std: The standard deviation of the underlying Normal
             distribution.
-        feature_size: Specifies the feature size.
+        feature_size: The feature size.
 
     Raises:
         ValueError: if ``std`` is not a positive number.
@@ -141,12 +141,12 @@ class RandTruncLogNormalSequenceGenerator(BaseSequenceGenerator):
     sampling values from a truncated log-Normal distribution.
 
     Args:
-        mean: Specifies the mean of the log-Normal distribution.
-        std: Specifies the standard deviation of the log-Normal
+        mean: The mean of the log-Normal distribution.
+        std: The standard deviation of the log-Normal
             distribution.
-        min_value: Specifies the minimum value.
-        max_value: Specifies the maximum value.
-        feature_size: Specifies the feature size.
+        min_value: The minimum value.
+        max_value: The maximum value.
+        feature_size: The feature size.
 
     Raises:
         ValueError: if ``std`` is not a positive number.
@@ -212,16 +212,16 @@ class TruncLogNormalSequenceGenerator(BaseSequenceGenerator):
     truncated log-Normal distribution.
 
     Args:
-        mean: Specifies a sequence
+        mean: A sequence
             generator (or its configuration) to generate the mean of
             the underlying Normal distribution.
-        std: Specifies a sequence
+        std: A sequence
             generator (or its configuration) to generate the standard
             deviation of the underlying Normal distribution.
-        min_value: Specifies a
+        min_value: A
             sequence generator (or its configuration) to generate the
             minimum value (included).
-        max_value: Specifies a
+        max_value: A
             sequence generator (or its configuration) to generate the
             maximum value (excluded).
 

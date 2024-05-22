@@ -17,7 +17,7 @@ def str_target_object(config: dict) -> str:
     r"""Get a string that indicates the target object in the config.
 
     Args:
-        config: Specifies a config using the ``object_factory``
+        config: A config using the ``object_factory``
             library. This dict is expected to have a key
             ``'_target_'`` to indicate the target object.
 
@@ -44,10 +44,10 @@ def str_weighted_modules(modules: Sequence, weights: Sequence, num_spaces: int =
     each module is associated to a weight.
 
     Args:
-        modules: Specifies the modules.
-        weights: Specifies the weights. The ``weights`` should have
+        modules: The modules.
+        weights: The weights. The ``weights`` should have
             the same length that ``modules``.
-        num_spaces: Specifies the number of spaces used for the
+        num_spaces: The number of spaces used for the
             indentation.
 
     Returns:

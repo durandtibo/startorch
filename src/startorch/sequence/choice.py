@@ -38,7 +38,7 @@ class MultinomialChoiceSequenceGenerator(BaseSequenceGenerator):
             If this key is absent, the weight is set to ``1.0``.
 
     Args:
-        sequences: Specifies the sequence generators and their weights.
+        sequences: The sequence generators and their weights.
             See above to learn about the expected format.
 
     Example usage:

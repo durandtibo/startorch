@@ -28,11 +28,11 @@ class SineWavePeriodicSequenceGenerator(BasePeriodicSequenceGenerator):
     ``output = amplitude * sin(2 * pi * frequency * value + phase)``
 
     Args:
-        value: Specifies a sequence generator (or its configuration)
+        value: A sequence generator (or its configuration)
             to generate the sequence values.
-        phase: Specifies a sequence generator (or its configuration)
+        phase: A sequence generator (or its configuration)
             to generate the phase values.
-        amplitude: Specifies a sequence generator (or its
+        amplitude: A sequence generator (or its
             configuration) to generate the amplitude values.
 
     Example usage:

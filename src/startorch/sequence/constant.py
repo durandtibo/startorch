@@ -50,8 +50,8 @@ class FullSequenceGenerator(BaseSequenceGenerator):
     seed has no effect.
 
     Args:
-        value: Specifies the value.
-        feature_size: Specifies the feature size.
+        value: The value.
+        feature_size: The feature size.
 
     Example usage:
 

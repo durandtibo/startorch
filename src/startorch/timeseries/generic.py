@@ -22,7 +22,7 @@ class TimeSeriesGenerator(BaseTimeSeriesGenerator):
     r"""Implement a generic time series generator.
 
     Args:
-        sequences: Specifies the sequence generators or their
+        sequences: The sequence generators or their
             configurations.
 
     Example usage:

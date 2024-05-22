@@ -21,7 +21,7 @@ class BaseWrapperTensorGenerator(BaseTensorGenerator):
         more convenient and reduce duplicate code.
 
     Args:
-        generator: Specifies the tensor generator or its configuration.
+        generator: The tensor generator or its configuration.
     """
 
     def __init__(self, generator: BaseTensorGenerator | dict) -> None:

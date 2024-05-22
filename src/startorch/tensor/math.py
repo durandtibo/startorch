@@ -66,8 +66,8 @@ class AddScalarTensorGenerator(BaseWrapperTensorGenerator):
     ``output = tensor + scalar``
 
     Args:
-        generator: Specifies the tensor generator or its configuration.
-        value: Specifies the scalar value to add.
+        generator: The tensor generator or its configuration.
+        value: The scalar value to add.
 
     Example usage:
 
@@ -111,7 +111,7 @@ class AddTensorGenerator(BaseTensorGenerator):
     ``output = tensor_1 + tensor_2 + ... + tensor_n``
 
     Args:
-        generators: Specifies the tensor generators.
+        generators: The tensor generators.
 
     Raises:
         ValueError: if no sequence generator is provided.
@@ -157,10 +157,10 @@ class ClampTensorGenerator(BaseWrapperTensorGenerator):
     Note: ``min_value`` and ``max_value`` cannot be both ``None``.
 
     Args:
-        generator: Specifies the tensor generator or its configuration.
-        min_value: Specifies the lower bound. If ``min_value`` is
+        generator: The tensor generator or its configuration.
+        min_value: The lower bound. If ``min_value`` is
             ``None``, there is no lower bound.
-        max_value: Specifies the upper bound. If ``max_value`` is
+        max_value: The upper bound. If ``max_value`` is
             ``None``, there is no upper bound.
 
     Raises:
@@ -222,11 +222,11 @@ class DivTensorGenerator(BaseTensorGenerator):
         - ``output = dividend // divisor`` (a.k.a. floor division)
 
     Args:
-        dividend: Specifies the dividend tensor generator or its
+        dividend: The dividend tensor generator or its
             configuration.
-        divisor: Specifies the divisor tensor generator or its
+        divisor: The divisor tensor generator or its
             configuration.
-        rounding_mode: Specifies the
+        rounding_mode: The
             type of rounding applied to the result.
             - ``None``: true division.
             - ``"trunc"``: rounds the results of the division
@@ -306,9 +306,9 @@ class FmodTensorGenerator(BaseTensorGenerator):
     ``output = dividend % divisor``
 
     Args:
-        dividend: Specifies the tensor generator (or its configuration)
+        dividend: The tensor generator (or its configuration)
             that generates the dividend values.
-        divisor: Specifies the divisor.
+        divisor: The divisor.
 
     Example usage:
 
@@ -392,7 +392,7 @@ class MulTensorGenerator(BaseTensorGenerator):
     ``output = tensor_1 * tensor_2 * ... * tensor_n``
 
     Args:
-        generators: Specifies the tensor generators.
+        generators: The tensor generators.
 
     Raises:
         ValueError: if no sequence generator is provided.
@@ -440,8 +440,8 @@ class MulScalarTensorGenerator(BaseWrapperTensorGenerator):
     ``output = tensor * scalar``
 
     Args:
-        generator: Specifies the tensor generator or its configuration.
-        value: Specifies the scalar value to multiply.
+        generator: The tensor generator or its configuration.
+        value: The scalar value to multiply.
 
     Example usage:
 
@@ -538,9 +538,9 @@ class SubTensorGenerator(BaseTensorGenerator):
     ``output = tensor_1 - tensor_2``
 
     Args:
-        tensor1: Specifies the first tensor generator or its
+        tensor1: The first tensor generator or its
             configuration.
-        tensor2: Specifies the second tensor generator or its
+        tensor2: The second tensor generator or its
             configuration.
 
     Example usage:

@@ -20,8 +20,8 @@ def mix2sequences(x: torch.Tensor, y: torch.Tensor) -> tuple[torch.Tensor, torch
     ``y = [y[0], x[1], y[2], x[3], y[4], ...]``
 
     Args:
-        x: Specifies the first batch.
-        y: Specifies the second batch. It must have the same shape
+        x: The first batch.
+        y: The second batch. It must have the same shape
             as ``x``.
 
     Returns:

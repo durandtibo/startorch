@@ -51,12 +51,12 @@ def rand_trunc_cauchy(
     Cauchy distribution.
 
     Args:
-        size: Specifies the tensor shape.
-        loc: Specifies the location of the Cauchy distribution.
-        scale: Specifies the scale of the Cauchy distribution.
-        min_value: Specifies the minimum value.
-        max_value: Specifies the maximum value.
-        generator: Specifies an optional random generator.
+        size: The tensor shape.
+        loc: The location of the Cauchy distribution.
+        scale: The scale of the Cauchy distribution.
+        min_value: The minimum value.
+        max_value: The maximum value.
+        generator: An optional random generator.
 
     Returns:
         A tensor filled with values sampled from a truncated Cauchy
@@ -101,15 +101,15 @@ def trunc_cauchy(
     Cauchy distribution.
 
     Args:
-        loc: Specifies the location/median of the Cauchy distribution.
+        loc: The location/median of the Cauchy distribution.
             It must be a float tensor of shape ``(d0, d1, ..., dn)``.
-        scale: Specifies the scale of the Cauchy distribution.
+        scale: The scale of the Cauchy distribution.
             It must be a float tensor of shape ``(d0, d1, ..., dn)``.
-        min_value: Specifies the minimum value. It must be a float
+        min_value: The minimum value. It must be a float
             tensor of shape ``(d0, d1, ..., dn)``.
-        max_value: Specifies the maximum value. It must be a float
+        max_value: The maximum value. It must be a float
             tensor of shape ``(d0, d1, ..., dn)``.
-        generator: Specifies an optional random generator.
+        generator: An optional random generator.
 
     Returns:
         A tensor of shape ``(d0, d1, ..., dn)`` filled with values
@@ -170,10 +170,10 @@ def rand_trunc_exponential(
     Exponential distribution.
 
     Args:
-        size: Specifies the tensor shape.
-        rate: Specifies the rate of the Exponential distribution.
-        max_value: Specifies the maximum value.
-        generator: Specifies an optional random generator.
+        size: The tensor shape.
+        rate: The rate of the Exponential distribution.
+        max_value: The maximum value.
+        generator: An optional random generator.
 
     Returns:
         A tensor filled with values sampled from a truncated
@@ -215,11 +215,11 @@ def trunc_exponential(
     Exponential distribution.
 
     Args:
-        rate: Specifies the rate of the Exponential distribution.
+        rate: The rate of the Exponential distribution.
             It must be a float tensor of shape ``(d0, d1, ..., dn)``.
-        max_value: Specifies the maximum value. It must be a float
+        max_value: The maximum value. It must be a float
             tensor of shape ``(d0, d1, ..., dn)``.
-        generator: Specifies an optional random generator.
+        generator: An optional random generator.
 
     Returns:
         A tensor of shape ``(d0, d1, ..., dn)`` filled with values
@@ -275,10 +275,10 @@ def rand_trunc_half_cauchy(
     Cauchy distribution.
 
     Args:
-        size: Specifies the tensor shape.
-        scale: Specifies the scale of the half-Cauchy distribution.
-        max_value: Specifies the maximum value.
-        generator: Specifies an optional random generator.
+        size: The tensor shape.
+        scale: The scale of the half-Cauchy distribution.
+        max_value: The maximum value.
+        generator: An optional random generator.
 
     Returns:
         A tensor filled with values sampled from a truncated
@@ -320,11 +320,11 @@ def trunc_half_cauchy(
     Cauchy distribution.
 
     Args:
-        scale: Specifies the scale of the half-Cauchy distribution.
+        scale: The scale of the half-Cauchy distribution.
             It must be a float tensor of shape ``(d0, d1, ..., dn)``.
-        max_value: Specifies the maximum value. It must be a float
+        max_value: The maximum value. It must be a float
             tensor of shape ``(d0, d1, ..., dn)``.
-        generator: Specifies an optional random generator.
+        generator: An optional random generator.
 
     Returns:
         A tensor of shape ``(d0, d1, ..., dn)`` filled with values
@@ -380,11 +380,11 @@ def rand_trunc_half_normal(
     Normal distribution.
 
     Args:
-        size: Specifies the tensor shape.
-        std: Specifies the standard deviation of the half-Normal
+        size: The tensor shape.
+        std: The standard deviation of the half-Normal
             distribution.
-        max_value: Specifies the maximum value.
-        generator: Specifies an optional random generator.
+        max_value: The maximum value.
+        generator: An optional random generator.
 
     Returns:
         A tensor filled with values sampled from a truncated
@@ -426,12 +426,12 @@ def trunc_half_normal(
     Normal distribution.
 
     Args:
-        std: Specifies the standard deviation of the half-Normal
+        std: The standard deviation of the half-Normal
             distribution. It must be a float tensor of shape
             ``(d0, d1, ..., dn)``.
-        max_value: Specifies the maximum value. It must be a float
+        max_value: The maximum value. It must be a float
             tensor of shape ``(d0, d1, ..., dn)``.
-        generator: Specifies an optional random generator.
+        generator: An optional random generator.
 
     Returns:
         A tensor of shape ``(d0, d1, ..., dn)`` filled with values
@@ -486,13 +486,13 @@ def rand_trunc_log_normal(
     Normal distribution.
 
     Args:
-        size: Specifies the tensor shape.
-        mean: Specifies the mean of the underlying Normal distribution.
-        std: Specifies the standard deviation of the underlying Normal
+        size: The tensor shape.
+        mean: The mean of the underlying Normal distribution.
+        std: The standard deviation of the underlying Normal
             distribution.
-        min_value: Specifies the minimum value.
-        max_value: Specifies the maximum value.
-        generator: Specifies an optional random generator.
+        min_value: The minimum value.
+        max_value: The maximum value.
+        generator: An optional random generator.
 
     Returns:
         A tensor filled with values sampled from a truncated log-Normal
@@ -537,16 +537,16 @@ def trunc_log_normal(
     Normal distribution.
 
     Args:
-        mean: Specifies the mean of the underlying Normal distribution.
+        mean: The mean of the underlying Normal distribution.
             It must be a float tensor of shape ``(d0, d1, ..., dn)``.
-        std: Specifies the standard deviation of the underlying Normal
+        std: The standard deviation of the underlying Normal
             distribution. It must be a float tensor of shape
             ``(d0, d1, ..., dn)``.
-        min_value: Specifies the minimum value. It must be a float
+        min_value: The minimum value. It must be a float
             tensor of shape ``(d0, d1, ..., dn)``.
-        max_value: Specifies the maximum value. It must be a float
+        max_value: The maximum value. It must be a float
             tensor of shape ``(d0, d1, ..., dn)``.
-        generator: Specifies an optional random generator.
+        generator: An optional random generator.
 
     Returns:
         A tensor of shape ``(d0, d1, ..., dn)`` filled with values
@@ -610,13 +610,13 @@ def rand_trunc_normal(
     Normal distribution.
 
     Args:
-        size: Specifies the tensor shape.
-        mean: Specifies the mean of the Normal distribution.
-        std: Specifies the standard deviation of the Normal
+        size: The tensor shape.
+        mean: The mean of the Normal distribution.
+        std: The standard deviation of the Normal
             distribution.
-        min_value: Specifies the minimum value.
-        max_value: Specifies the maximum value.
-        generator: Specifies an optional random generator.
+        min_value: The minimum value.
+        max_value: The maximum value.
+        generator: An optional random generator.
 
     Returns:
         A tensor filled with values sampled from a truncated Normal
@@ -661,16 +661,16 @@ def trunc_normal(
     Normal distribution.
 
     Args:
-        mean: Specifies the mean of the Normal distribution.
+        mean: The mean of the Normal distribution.
             It must be a float tensor of shape ``(d0, d1, ..., dn)``.
-        std: Specifies the standard deviation of the Normal
+        std: The standard deviation of the Normal
             distribution. It must be a float tensor of shape
             ``(d0, d1, ..., dn)``.
-        min_value: Specifies the minimum value. It must be a float
+        min_value: The minimum value. It must be a float
             tensor of shape ``(d0, d1, ..., dn)``.
-        max_value: Specifies the maximum value. It must be a float
+        max_value: The maximum value. It must be a float
             tensor of shape ``(d0, d1, ..., dn)``.
-        generator: Specifies an optional random generator.
+        generator: An optional random generator.
 
     Returns:
         A tensor of shape ``(d0, d1, ..., dn)`` filled with values
@@ -732,10 +732,10 @@ def rand_uniform(
     distribution.
 
     Args:
-        size: Specifies the tensor shape.
-        low: Specifies the minimum value (inclusive).
-        high: Specifies the maximum value (exclusive).
-        generator: Specifies an optional random generator.
+        size: The tensor shape.
+        low: The minimum value (inclusive).
+        high: The maximum value (exclusive).
+        generator: An optional random generator.
 
     Returns:
         A tensor filled with values sampled from a uniform
@@ -776,11 +776,11 @@ def uniform(
     the output size.
 
     Args:
-        low: Specifies the minimum values (inclusive). It must be a
+        low: The minimum values (inclusive). It must be a
             float tensor of shape ``(d0, d1, ..., dn)``.
-        high: Specifies the maximum values (exclusive). It must be a
+        high: The maximum values (exclusive). It must be a
             float tensor of shape ``(d0, d1, ..., dn)``.
-        generator: Specifies an optional random generator.
+        generator: An optional random generator.
 
     Returns:
         A tensor of shape ``(d0, d1, ..., dn)`` filled with values
@@ -833,11 +833,11 @@ def rand_log_uniform(
     distribution in the log space.
 
     Args:
-        size: Specifies the tensor shape.
-        low: Specifies the minimum value (inclusive).
+        size: The tensor shape.
+        low: The minimum value (inclusive).
             This value needs to be positive.
-        high: Specifies the maximum value (exclusive).
-        generator: Specifies an optional random generator.
+        high: The maximum value (exclusive).
+        generator: An optional random generator.
 
     Returns:
         A tensor filled with values sampled from a uniform distribution
@@ -877,11 +877,11 @@ def log_uniform(
     distribution in the log space.
 
     Args:
-        low: Specifies the minimum values (inclusive). It must be a
+        low: The minimum values (inclusive). It must be a
             float tensor of shape ``(d0, d1, ..., dn)``.
-        high: Specifies the maximum values (exclusive). It must be a
+        high: The maximum values (exclusive). It must be a
             float tensor of shape ``(d0, d1, ..., dn)``.
-        generator: Specifies an optional random generator.
+        generator: An optional random generator.
 
     Returns:
         A tensor of shape ``(d0, d1, ..., dn)`` filled with values
@@ -934,11 +934,11 @@ def rand_asinh_uniform(
     distribution in the inverse hyperbolic sine space.
 
     Args:
-        size: Specifies the tensor shape.
-        low: Specifies the minimum value (inclusive).
+        size: The tensor shape.
+        low: The minimum value (inclusive).
             This value needs to be positive.
-        high: Specifies the maximum value (exclusive).
-        generator: Specifies an optional random generator.
+        high: The maximum value (exclusive).
+        generator: An optional random generator.
 
     Returns:
         A tensor filled with values sampled from a uniform distribution
@@ -978,11 +978,11 @@ def asinh_uniform(
     distribution in the inverse hyperbolic sine space.
 
     Args:
-        low: Specifies the minimum values (inclusive). It must be a
+        low: The minimum values (inclusive). It must be a
             float tensor of shape ``(d0, d1, ..., dn)``.
-        high: Specifies the maximum values (exclusive). It must be a
+        high: The maximum values (exclusive). It must be a
             float tensor of shape ``(d0, d1, ..., dn)``.
-        generator: Specifies an optional random generator.
+        generator: An optional random generator.
 
     Returns:
         A tensor of shape ``(d0, d1, ..., dn)`` filled with values

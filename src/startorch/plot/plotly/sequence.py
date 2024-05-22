@@ -43,14 +43,14 @@ def hist_sequence(
     r"""Plot the distribution from a sequence generator.
 
     Args:
-        sequence: Specifies the sequence generator.
-        bins: Specifies the number of histogram bins.
-        seq_len: Specifies the sequence length.
-        batch_size: Specifies the batch size.
-        num_batches: Specifies the number of batches to generate.
-        rng: Specifies a random number generator or a random seed.
-        figsize: Specifies the figure size.
-        scale: Specifies a scale transformation of the features.
+        sequence: The sequence generator.
+        bins: The number of histogram bins.
+        seq_len: The sequence length.
+        batch_size: The batch size.
+        num_batches: The number of batches to generate.
+        rng: A random number generator or a random seed.
+        figsize: The figure size.
+        scale: A scale transformation of the features.
         **kwargs: Additional keyword arguments for
             ``plotly.graph_objects.Histogram``.
 
@@ -93,12 +93,11 @@ def plot_sequence(
     r"""Plot some sequences generated from a sequence generator.
 
     Args:
-        sequence: Specifies the sequence generator.
-        seq_len: Specifies the sequence length.
-        batch_size: Specifies the batch size.
-        num_batches: Specifies the number of batches.
-        rng: Specifies a random number generator or a random seed.
-        figsize: Specifies the figure size.
+        sequence: The sequence generator.
+        seq_len: The sequence length.
+        batch_size: The batch size.
+        num_batches: The number of batches.
+        rng: A random number generator or a random seed.
         **kwargs: Additional keyword arguments for ``plt.plot``.
 
     Returns:

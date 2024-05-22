@@ -27,10 +27,10 @@ class MixedTimeSeriesGenerator(BaseTimeSeriesGenerator):
     mixing two sequences of a time series.
 
     Args:
-        generator: Specifies the time series generator or its
+        generator: The time series generator or its
             configuration.
-        key1: Specifies the key of the first sequence to mix.
-        key2: Specifies the key of the second sequence to mix.
+        key1: The key of the first sequence to mix.
+        key2: The key of the second sequence to mix.
 
     Example usage:
 

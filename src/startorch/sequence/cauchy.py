@@ -27,9 +27,9 @@ class CauchySequenceGenerator(BaseSequenceGenerator):
     Cauchy distribution.
 
     Args:
-        loc: Specifies a sequence generator (or its configuration) to
+        loc: A sequence generator (or its configuration) to
             generate the location.
-        scale: Specifies a sequence generator (or its configuration)
+        scale: A sequence generator (or its configuration)
             to generate the scale.
 
     Example usage:
@@ -80,9 +80,9 @@ class RandCauchySequenceGenerator(BaseSequenceGenerator):
     Cauchy distribution.
 
     Args:
-        loc: Specifies the location/median of the Cauchy distribution.
-        scale: Specifies the scale of the distribution.
-        feature_size: Specifies the feature size.
+        loc: The location/median of the Cauchy distribution.
+        scale: The scale of the distribution.
+        feature_size: The feature size.
 
     Raises:
         ValueError: if ``scale`` is not a positive number.
@@ -137,11 +137,11 @@ class RandTruncCauchySequenceGenerator(BaseSequenceGenerator):
     truncated Cauchy distribution.
 
     Args:
-        loc: Specifies the location/median of the Cauchy distribution.
-        scale: Specifies the scale of the distribution.
-        min_value: Specifies the minimum value (included).
-        max_value: Specifies the maximum value (excluded).
-        feature_size: Specifies the feature size.
+        loc: The location/median of the Cauchy distribution.
+        scale: The scale of the distribution.
+        min_value: The minimum value (included).
+        max_value: The maximum value (excluded).
+        feature_size: The feature size.
 
     Raises:
         ValueError: if ``std`` is not a positive number.
@@ -208,13 +208,13 @@ class TruncCauchySequenceGenerator(BaseSequenceGenerator):
     Cauchy distribution.
 
     Args:
-        loc: Specifies a sequence generator (or its configuration) to
+        loc: A sequence generator (or its configuration) to
             generate the location.
-        scale: Specifies a sequence generator (or its configuration)
+        scale: A sequence generator (or its configuration)
             to generate the scale.
-        min_value: Specifies a sequence generator (or its
+        min_value: A sequence generator (or its
             configuration) to generate the minimum value (included).
-        max_value: Specifies a sequence generator (or its
+        max_value: A sequence generator (or its
             configuration) to generate the  maximum value (excluded).
 
     Example usage:

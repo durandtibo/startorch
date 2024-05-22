@@ -54,9 +54,9 @@ class BaseTimeSeriesGenerator(ABC, metaclass=AbstractFactory):
         r"""Generate a time series.
 
         Args:
-            seq_len: Specifies the sequence length.
-            batch_size: Specifies the batch size.
-            rng: Specifies an optional random number generator.
+            seq_len: The sequence length.
+            batch_size: The batch size.
+            rng: An optional random number generator.
 
         Returns:
             A batch of time series.
@@ -85,7 +85,7 @@ def is_timeseries_generator_config(config: dict) -> bool:
     the class.
 
     Args:
-        config: Specifies the configuration to check.
+        config: The configuration to check.
 
     Returns:
         ``True`` if the input configuration is a configuration for a
@@ -121,7 +121,7 @@ def setup_timeseries_generator(
     by using the ``BaseTimeSeriesGenerator`` factory function.
 
     Args:
-        generator: Specifies a time series generator or its
+        generator: A time series generator or its
             configuration.
 
     Returns:

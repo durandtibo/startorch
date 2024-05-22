@@ -37,7 +37,7 @@ class MultinomialChoiceTensorGenerator(BaseTensorGenerator):
             If this key is absent, the weight is set to ``1.0``.
 
     Args:
-        generators: Specifies the tensor generators and their weights.
+        generators: The tensor generators and their weights.
             See above to learn about the expected format.
 
     Example usage:

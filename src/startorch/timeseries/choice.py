@@ -41,7 +41,7 @@ class MultinomialChoiceTimeSeriesGenerator(BaseTimeSeriesGenerator):
             If this key is absent, the weight is set to ``1.0``.
 
     Args:
-        generators: Specifies the time series generators and their
+        generators: The time series generators and their
             weights. See above to learn about the expected format.
 
     Example usage:

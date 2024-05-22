@@ -12,7 +12,7 @@ def get_random_seed(seed: int) -> int:
     r"""Get a random seed.
 
     Args:
-        seed: Specifies a random seed to make the process
+        seed: A random seed to make the process
             reproducible.
 
     Returns:
@@ -38,8 +38,8 @@ def get_torch_generator(
     r"""Create a ``torch.Generator`` initialized with a given seed.
 
     Args:
-        random_seed: Specifies a random seed.
-        device: Specifies the desired device for the generator.
+        random_seed: A random seed.
+        device: The desired device for the generator.
 
     Returns:
         A ``torch.Generator`` object.
@@ -70,7 +70,7 @@ def setup_torch_generator(generator_or_seed: int | torch.Generator) -> torch.Gen
     r"""Set up a ``torch.Generator`` object.
 
     Args:
-        generator_or_seed: Specifies a ``torch.Generator`` object or
+        generator_or_seed: A ``torch.Generator`` object or
             a random seed.
 
     Returns:

@@ -21,9 +21,8 @@ class SortSequenceGenerator(BaseWrapperSequenceGenerator):
     r"""Implement a sequence generator that sorts a generated sequence.
 
     Args:
-        sequence: Specifies the sequence generator or its
-            configuration.
-        descending: Controls the sorting order. If ``True``,
+        generator: The sequence generator or its configuration.
+        descending: Control the sorting order. If ``True``,
             the elements are sorted in descending order by value.
 
     Example usage:

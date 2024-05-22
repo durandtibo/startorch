@@ -22,8 +22,8 @@ class TensorSequenceGenerator(BaseSequenceGenerator):
     tensor generator.
 
     Args:
-        tensor: Specifies a tensor generator (or its configuration).
-        feature_size: Specifies the feature size.
+        tensor: A tensor generator (or its configuration).
+        feature_size: The feature size.
 
     Example usage:
 

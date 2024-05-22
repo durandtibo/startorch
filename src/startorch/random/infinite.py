@@ -19,17 +19,17 @@ def rand_cauchy(
     distribution.
 
     Args:
-        size: Specifies the tensor shape.
-        loc: Specifies the location/median of the Cauchy distribution.
-        scale: Specifies the scale of the Cauchy distribution.
+        size: The tensor shape.
+        loc: The location/median of the Cauchy distribution.
+        scale: The scale of the Cauchy distribution.
             This value has to be greater than 0.
-        generator: Specifies an optional random generator.
+        generator: An optional random generator.
 
     Returns:
         A tensor filled with values sampled from a Cauchy distribution.
 
     Raises:
-        ValueError if the ``scale`` parameter is not valid.
+        ValueError: if the ``scale`` parameter is not valid.
 
     Example usage:
 
@@ -62,12 +62,12 @@ def cauchy(
     the output size.
 
     Args:
-        loc: Specifies the location/median of the Cauchy distribution.
+        loc: The location/median of the Cauchy distribution.
             It must be a float tensor of shape ``(d0, d1, ..., dn)``.
-        scale: Specifies the standard deviation of the Cauchy
+        scale: The standard deviation of the Cauchy
             distribution. It must be a float tensor of shape
             ``(d0, d1, ..., dn)``.
-        generator: Specifies an optional random generator.
+        generator: An optional random generator.
 
     Returns:
         A tensor of shape ``(d0, d1, ..., dn)`` filled with values
@@ -107,11 +107,11 @@ def rand_normal(
     distribution.
 
     Args:
-        size: Specifies the tensor shape.
-        mean: Specifies the mean of the Normal distribution.
-        std: Specifies the standard deviation of the Normal
+        size: The tensor shape.
+        mean: The mean of the Normal distribution.
+        std: The standard deviation of the Normal
             distribution.
-        generator: Specifies an optional random generator.
+        generator: An optional random generator.
 
     Returns:
         A tensor filled with values sampled from a Normal distribution.
@@ -143,11 +143,11 @@ def normal(
     distribution.
 
     Args:
-        mean: Specifies the mean. It must be a float tensor of shape
+        mean: The mean. It must be a float tensor of shape
             ``(d0, d1, ..., dn)``.
-        std: Specifies the standard deviation. It must be a float
+        std: The standard deviation. It must be a float
             tensor of shape ``(d0, d1, ..., dn)``.
-        generator: Specifies an optional random generator.
+        generator: An optional random generator.
 
     Returns:
         A tensor of shape ``(d0, d1, ..., dn)`` filled with values

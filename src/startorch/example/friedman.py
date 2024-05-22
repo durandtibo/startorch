@@ -29,11 +29,11 @@ class Friedman1RegressionExampleGenerator(BaseExampleGenerator):
     https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_friedman1.html
 
     Args:
-        feature_size: Specifies the feature size. The feature size has
+        feature_size: The feature size. The feature size has
             to be greater than or equal to 5. Out of all features,
             only 5 are actually used to compute the targets.
             The remaining features are independent of targets.
-        noise_std: Specifies the standard deviation of the Gaussian
+        noise_std: The standard deviation of the Gaussian
             noise.
 
     Raises:
@@ -96,12 +96,12 @@ class Friedman2RegressionExampleGenerator(BaseExampleGenerator):
     https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_friedman2.html
 
     Args:
-        feature_size: Specifies the feature size.
+        feature_size: The feature size.
             The feature size has to be greater than or equal to 4.
             Out of all features, only 4 are actually used to compute
             the targets. The remaining features are independent of
             targets.
-        noise_std: Specifies the standard deviation of the Gaussian
+        noise_std: The standard deviation of the Gaussian
             noise.
 
     Raises:
@@ -164,12 +164,12 @@ class Friedman3RegressionExampleGenerator(BaseExampleGenerator):
     https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_friedman3.html
 
     Args:
-        feature_size: Specifies the feature size.
+        feature_size: The feature size.
             The feature size has to be greater than or equal to 4.
             Out of all features, only 4 are actually used to compute
             the targets. The remaining features are independent of
             targets.
-        noise_std: Specifies the standard deviation of the Gaussian
+        noise_std: The standard deviation of the Gaussian
             noise.
 
     Raises:
@@ -237,14 +237,14 @@ def make_friedman1_regression(
     https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_friedman1.html
 
     Args:
-        num_examples: Specifies the number of examples.
-        feature_size: Specifies the feature size. The feature size has
+        num_examples: The number of examples.
+        feature_size: The feature size. The feature size has
             to be greater than or equal to 5. Out of all features,
             only 5 are actually used to compute the targets.
             The remaining features are independent of targets.
-        noise_std: Specifies the standard deviation of the Gaussian
+        noise_std: The standard deviation of the Gaussian
             noise.
-        generator: Specifies an optional random number generator.
+        generator: An optional random number generator.
 
     Returns:
         A dictionary with two items:
@@ -297,15 +297,15 @@ def make_friedman2_regression(
     https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_friedman2.html
 
     Args:
-        num_examples: Specifies the number of examples.
-        feature_size: Specifies the feature size.
+        num_examples: The number of examples.
+        feature_size: The feature size.
             The feature size has to be greater than or equal to 4.
             Out of all features, only 4 are actually used to compute
             the targets. The remaining features are independent of
             targets.
-        noise_std: Specifies the standard deviation
+        noise_std: The standard deviation
             of the Gaussian noise.
-        generator: Specifies an optional random number generator.
+        generator: An optional random number generator.
 
     Returns:
         A dictionary with two items:
@@ -362,15 +362,15 @@ def make_friedman3_regression(
     https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_friedman3.html
 
     Args:
-        num_examples: Specifies the number of examples.
-        feature_size: Specifies the feature size.
+        num_examples: The number of examples.
+        feature_size: The feature size.
             The feature size has to be greater than or equal to 4.
             Out of all features, only 4 are actually used to compute
             the targets. The remaining features are independent of
             targets.
-        noise_std: Specifies the standard deviation of the Gaussian
+        noise_std: The standard deviation of the Gaussian
             noise.
-        generator: Specifies an optional random number generator.
+        generator: An optional random number generator.
 
     Returns:
         A dictionary with two items:

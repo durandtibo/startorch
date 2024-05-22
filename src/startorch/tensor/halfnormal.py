@@ -31,7 +31,7 @@ class HalfNormalTensorGenerator(BaseTensorGenerator):
     half-Normal distribution.
 
     Args:
-        std: Specifies a tensor generator (or its configuration) to
+        std: A tensor generator (or its configuration) to
             generate the standard deviation.
 
     Example usage:
@@ -70,7 +70,7 @@ class RandHalfNormalTensorGenerator(BaseTensorGenerator):
     half-Normal distribution.
 
     Args:
-        std: Specifies the std of the distribution.
+        std: The std of the distribution.
 
     Raises:
         ValueError: if ``std`` is not a positive number.
@@ -112,8 +112,8 @@ class RandTruncHalfNormalTensorGenerator(BaseTensorGenerator):
     truncated half-Normal distribution.
 
     Args:
-        std: Specifies the std of the distribution.
-        max_value: Specifies the maximum value.
+        std: The std of the distribution.
+        max_value: The maximum value.
 
     Raises:
         ValueError: if ``std`` is not a positive number.
@@ -161,9 +161,9 @@ class TruncHalfNormalTensorGenerator(BaseTensorGenerator):
     half-Normal distribution.
 
     Args:
-        std: Specifies a tensor generator (or its configuration) to
+        std: A tensor generator (or its configuration) to
             generate the std.
-        max_value: Specifies a tensor generator (or its configuration)
+        max_value: A tensor generator (or its configuration)
             to generate the maximum value (excluded).
 
     Example usage:

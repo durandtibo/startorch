@@ -22,7 +22,7 @@ class PoissonTensorGenerator(BaseTensorGenerator):
     in the tensor. The rate values should be greater than 0.
 
     Args:
-        rate: Specifies the rate generator or its configuration.
+        rate: The rate generator or its configuration.
             The rate generator should return valid rate values.
 
     Example usage:
@@ -58,7 +58,7 @@ class RandPoissonTensorGenerator(BaseTensorGenerator):
     Poisson distribution.
 
     Args:
-        rate: Specifies the rate of the Poisson distribution.
+        rate: The rate of the Poisson distribution.
             This value has to be greater than 0.
 
     Raises:

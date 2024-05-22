@@ -25,7 +25,7 @@ class RepeatPeriodicSequenceGenerator(BasePeriodicSequenceGenerator):
     sequence.
 
     Args:
-        sequence: Specifies a sequence generator or its configuration.
+        generator: A sequence generator or its configuration.
 
     Example usage:
 

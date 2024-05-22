@@ -29,9 +29,9 @@ class TimeSeriesExampleGenerator(BaseExampleGenerator):
     r"""Implement an example generator to generate time series.
 
     Args:
-        timeseries: Specifies a time series generator or its
+        timeseries: A time series generator or its
             configuration.
-        seq_len: Specifies the sequence length sampler or its
+        seq_len: The sequence length sampler or its
             configuration. This sampler is used to sample the
             sequence length at each batch.
 

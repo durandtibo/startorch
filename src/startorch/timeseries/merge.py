@@ -29,9 +29,9 @@ class MergeTimeSeriesGenerator(BaseTimeSeriesGenerator):
     The time series are combined by using the time information.
 
     Args:
-        generators: Specifies the time series generators or their
+        generators: The time series generators or their
             configuration.
-        time_key: Specifies the key used to merge the time series by
+        time_key: The key used to merge the time series by
             time.
 
     Example usage:

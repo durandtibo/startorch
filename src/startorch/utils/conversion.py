@@ -18,7 +18,7 @@ def to_array(data: Sequence | torch.Tensor | np.ndarray) -> np.ndarray:
     r"""Convert the input to a ``numpy.ndarray``.
 
     Args:
-        data: Specifies the data to convert to an array.
+        data: The data to convert to an array.
 
     Returns:
         A NumPy array.
@@ -45,7 +45,7 @@ def to_tensor(data: torch.Tensor | np.ndarray | Sequence) -> torch.Tensor:
     r"""Convert the input to a ``torch.Tensor``.
 
     Args:
-        data: Specifies the data to convert to a tensor.
+        data: The data to convert to a tensor.
 
     Returns:
         A tensor.
@@ -74,7 +74,7 @@ def to_tuple(value: Any) -> tuple:
     This function is a no-op if the input is a tuple.
 
     Args:
-        value: Specifies the value to convert.
+        value: The value to convert.
 
     Returns:
         The input value in a tuple.

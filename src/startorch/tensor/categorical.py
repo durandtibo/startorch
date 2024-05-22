@@ -22,7 +22,7 @@ class MultinomialTensorGenerator(BaseTensorGenerator):
     where each value is sampled from a multinomial distribution.
 
     Args:
-        weights: Specifies the vector of weights associated at each
+        weights: The vector of weights associated at each
             category. It must be a float tensor of shape
             ``(num_categories,)``. The weights have to be positive but
             do not need to sum to 1.
@@ -63,7 +63,7 @@ class MultinomialTensorGenerator(BaseTensorGenerator):
         with the rule: ``w_i = 1``
 
         Args:
-            num_categories: Specifies the number of categories.
+            num_categories: The number of categories.
 
         Returns:
             A tensor generator where the weights of the multinomial
@@ -95,7 +95,7 @@ class MultinomialTensorGenerator(BaseTensorGenerator):
         with the rule: ``w_i = num_categories - i``
 
         Args:
-            num_categories: Specifies the number of categories.
+            num_categories: The number of categories.
 
         Returns:
             A tensor generator where the weights of the multinomial
@@ -128,8 +128,8 @@ class MultinomialTensorGenerator(BaseTensorGenerator):
         the rule: ``w_i = exp(-scale * i)``
 
         Args:
-            num_categories: Specifies the number of categories.
-            scale: Specifies the scale parameter that controls the
+            num_categories: The number of categories.
+            scale: The scale parameter that controls the
                 exponential function.
 
         Returns:
@@ -162,7 +162,7 @@ class UniformCategoricalTensorGenerator(BaseTensorGenerator):
     ``Multinomial.generate_uniform_weights``.
 
     Args:
-        num_categories: Specifies the number of categories.
+        num_categories: The number of categories.
 
     Raises:
         ValueError: if ``num_categories`` is negative.

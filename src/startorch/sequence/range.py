@@ -17,7 +17,7 @@ class ArangeSequenceGenerator(BaseSequenceGenerator):
     values between ``0`` and ``seq_len-1``.
 
     Args:
-        feature_size: Specifies the feature size.
+        feature_size: The feature size.
 
     Example usage:
 

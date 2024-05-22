@@ -68,7 +68,7 @@ class AddSequenceGenerator(BaseSequenceGenerator):
     ``sequence = sequence_1 + sequence_2 + ... + sequence_n``
 
     Args:
-        sequences: Specifies the sequence generators or
+        sequences: The sequence generators or
             their configuration.
 
     Raises:
@@ -116,9 +116,9 @@ class AddScalarSequenceGenerator(BaseWrapperSequenceGenerator):
     generated batch of sequences.
 
     Args:
-        generator: Specifies the sequence generator or its
+        generator: The sequence generator or its
             configuration.
-        value: Specifies the scalar value to add.
+        value: The scalar value to add.
 
     Example usage:
 
@@ -165,11 +165,11 @@ class ClampSequenceGenerator(BaseWrapperSequenceGenerator):
     Note: ``min_value`` and ``max_value`` cannot be both ``None``.
 
     Args:
-        generator: Specifies the sequence generator or its
+        generator: The sequence generator or its
             configuration.
-        min: Specifies the lower bound. If ``min_value`` is ``None``,
+        min: The lower bound. If ``min_value`` is ``None``,
             there is no lower bound.
-        max: Specifies the upper bound. If ``max_value`` is ``None``,
+        max: The upper bound. If ``max_value`` is ``None``,
             there is no upper bound.
 
     Raises:
@@ -257,11 +257,11 @@ class DivSequenceGenerator(BaseSequenceGenerator):
     ``sequence = dividend / divisor`` (a.k.a. true division)
 
     Args:
-        dividend: Specifies the dividend sequence generator or its
+        dividend: The dividend sequence generator or its
             configuration.
-        divisor: Specifies the divisor sequence generator or its
+        divisor: The divisor sequence generator or its
             configuration.
-        rounding_mode: Specifies the type of rounding applied to the
+        rounding_mode: The type of rounding applied to the
             result:
                 - ``None``: true division.
                 - ``"trunc"``: rounds the results of the division
@@ -352,9 +352,9 @@ class FmodSequenceGenerator(BaseSequenceGenerator):
     remainder of division.
 
     Args:
-        dividend: Specifies the sequence generator (or its
+        dividend: The sequence generator (or its
             configuration) that generates the dividend values.
-        divisor: Specifies the divisor.
+        divisor: The divisor.
 
     Example usage:
 
@@ -441,7 +441,7 @@ class MulSequenceGenerator(BaseSequenceGenerator):
     ``sequence = sequence_1 * sequence_2 * ... * sequence_n``
 
     Args:
-        sequences: Specifies the sequence generators.
+        sequences: The sequence generators.
 
     Raises:
         ValueError: if no sequence generator is provided.
@@ -491,9 +491,9 @@ class MulScalarSequenceGenerator(BaseWrapperSequenceGenerator):
     a generated batch of sequences.
 
     Args:
-        generator: Specifies the sequence generator or its
+        generator: The sequence generator or its
             configuration.
-        value: Specifies the scalar value to multiply.
+        value: The scalar value to multiply.
 
     Example usage:
 
@@ -593,9 +593,9 @@ class SubSequenceGenerator(BaseSequenceGenerator):
     ``sequence = sequence_1 - sequence_2``
 
     Args:
-        sequence1: Specifies the first sequence generator or its
+        sequence1: The first sequence generator or its
             configuration.
-        sequence2: Specifies the second sequence generator or its
+        sequence2: The second sequence generator or its
             configuration.
 
     Example usage:

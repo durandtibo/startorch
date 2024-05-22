@@ -20,7 +20,7 @@ def shapes_are_equal(tensors: Sequence[torch.Tensor]) -> bool:
     tensors.
 
     Args:
-        tensors: Specifies the tensors to check.
+        tensors: The tensors to check.
 
     Returns:
         ``True`` if all the tensors have the same shape, otherwise

@@ -23,7 +23,7 @@ def prepare_probabilities(weights: torch.Tensor | Sequence[float]) -> torch.Tens
     r"""Convert un-normalized positive weights to probabilities.
 
     Args:
-        weights: Specifies the vector of weights associated to each
+        weights: The vector of weights associated to each
             category. The weights have to be positive. It must be a
             float tensor of shape ``(num_categories,)`` or a
             ``Sequence``.
@@ -79,7 +79,7 @@ def prepare_weighted_generators(
             If this key is absent, the weight is set to ``1.0``.
 
     Args:
-        generators: Specifies the tensor generators and their weights.
+        generators: The tensor generators and their weights.
             See above to learn about the expected format.
 
     Returns:

@@ -26,14 +26,14 @@ def make_sparse_uncorrelated_regression(
     https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_sparse_uncorrelated.html
 
     Args:
-        num_examples: Specifies the number of examples.
-        feature_size: Specifies the feature size. The feature size has
+        num_examples: The number of examples.
+        feature_size: The feature size. The feature size has
             to be greater than or equal to 4. Out of all features,
             only 4 are actually used to compute the targets.
             The remaining features are independent of targets.
-        noise_std: Specifies the standard deviation of the Gaussian
+        noise_std: The standard deviation of the Gaussian
             noise.
-        generator: Specifies an optional random generator.
+        generator: An optional random generator.
 
     Returns:
         A batch with two items:

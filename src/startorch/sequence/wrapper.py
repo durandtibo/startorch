@@ -20,7 +20,7 @@ class BaseWrapperSequenceGenerator(BaseSequenceGenerator):
         makes it more convenient and reduce duplicate code.
 
     Args:
-        generator: Specifies the sequence generator or its
+        generator: The sequence generator or its
             configuration.
     """
 

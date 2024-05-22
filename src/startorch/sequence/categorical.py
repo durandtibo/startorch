@@ -23,11 +23,11 @@ class MultinomialSequenceGenerator(BaseSequenceGenerator):
     where each value is sampled from a multinomial distribution.
 
     Args:
-        weights (``torch.Tensor`` of shape ``(num_categories,)`` and
-            type float): Specifies the vector of weights associated
-            at each category. The weights have to be positive but do
-            not need to sum to 1.
-        feature_size: Specifies the feature size.
+        weights: The vector of weights associated at each category.
+            The weights have to be positive but do not need to sum
+            to 1. The input is expected to be a ``torch.Tensor`` of
+            shape ``(num_categories,)`` and type float.
+        feature_size: The feature size.
 
     Example usage:
 
@@ -78,7 +78,7 @@ class MultinomialSequenceGenerator(BaseSequenceGenerator):
         with the rule: ``w_i = 1``
 
         Args:
-            num_categories: Specifies the number of categories.
+            num_categories: The number of categories.
 
         Returns:
             A sequence generator where the weights of the multinomial
@@ -94,7 +94,7 @@ class MultinomialSequenceGenerator(BaseSequenceGenerator):
         with the rule: ``w_i = num_categories - i``
 
         Args:
-            num_categories: Specifies the number of categories.
+            num_categories: The number of categories.
 
         Returns:
             A sequence generator where the weights of the multinomial
@@ -114,8 +114,8 @@ class MultinomialSequenceGenerator(BaseSequenceGenerator):
         the rule: ``w_i = exp(-scale * i)``
 
         Args:
-            num_categories: Specifies the number of categories.
-            scale: Specifies the scale parameter that controls the
+            num_categories: The number of categories.
+            scale: The scale parameter that controls the
                 exponential function.
 
         Returns:
@@ -136,8 +136,8 @@ class UniformCategoricalSequenceGenerator(BaseSequenceGenerator):
         ``Multinomial.generate_uniform_weights``.
 
     Args:
-        num_categories: Specifies the number of categories.
-        feature_size: Specifies the feature size.
+        num_categories: The number of categories.
+        feature_size: The feature size.
 
     Raises:
         ValueError: if ``num_categories`` is negative.

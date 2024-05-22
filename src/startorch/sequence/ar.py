@@ -19,19 +19,19 @@ class AutoRegressiveSequenceGenerator(BaseSequenceGenerator):
     autoregressive process.
 
     Args:
-        value: Specifies a sequence generator (or its configuration)
+        value: A sequence generator (or its configuration)
             used to generate the initial sequence values. These values
             are used to start the AR.
-        coefficient: Specifies a sequence generator (or its
+        coefficient: A sequence generator (or its
             configuration) used to generate the coefficients.
-        noise: Specifies a sequence generator (or its configuration)
+        noise: A sequence generator (or its configuration)
             used to generate the noise values.
-        order: Specifies a tensor generator (or its configuration)
+        order: A tensor generator (or its configuration)
             used to generate the order of the AR.
-        max_abs_value: Specifies the maximum absolute value.
+        max_abs_value: The maximum absolute value.
             This argument ensures the values stay in the range
             ``[-max_abs_value, max_abs_value]``.
-        warmup: Specifies the number of cycles used to
+        warmup: The number of cycles used to
             initiate the AR. The initial value sampled do not follow
             an AR, so using warmup allows to initialize the AR so each
             value follows an AR.
