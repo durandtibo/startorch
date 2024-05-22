@@ -16,6 +16,7 @@ from startorch.utils.format import str_target_object
 
 if TYPE_CHECKING:
     from collections.abc import Hashable
+
     import torch
 
 logger = logging.getLogger(__name__)

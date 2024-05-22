@@ -12,6 +12,7 @@ from startorch.transformer.base import BaseTransformer
 
 if TYPE_CHECKING:
     from collections.abc import Hashable
+
     import torch
 
 logger = logging.getLogger(__name__)
