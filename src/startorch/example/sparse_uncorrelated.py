@@ -23,7 +23,7 @@ def make_sparse_uncorrelated_regression(
     design.
 
     The implementation is based on
-    https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_sparse_uncorrelated.html
+    [`sklearn.datasets.make_sparse_uncorrelated`](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_sparse_uncorrelated.html).
 
     Args:
         num_examples: The number of examples.

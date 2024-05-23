@@ -23,7 +23,7 @@ class CirclesClassificationExampleGenerator(BaseExampleGenerator):
     in 2d.
 
     The implementation is based on
-    https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_circles.html
+    [`sklearn.datasets.make_circles`](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_circles.html).
 
     Args:
         shuffle: If ``True``, the examples are shuffled.
@@ -117,7 +117,7 @@ def make_circles_classification(
     generated with a large circle containing a smaller circle in 2d.
 
     The implementation is based on
-    https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_circles.html
+    [`sklearn.datasets.make_circles`](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_circles.html).
 
     Args:
         num_examples: The number of examples.

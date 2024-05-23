@@ -23,7 +23,7 @@ class MoonsClassificationExampleGenerator(BaseExampleGenerator):
     in 2d.
 
     The implementation is based on
-    https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_circles.html
+    [`sklearn.datasets.make_moons`](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_moons.html).
 
     Args:
         shuffle: If ``True``, the examples are shuffled.
@@ -99,7 +99,7 @@ def make_moons_classification(
     interleaving half circles in 2d.
 
     The implementation is based on
-    https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_moons.html
+    [`sklearn.datasets.make_moons`](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_moons.html).
 
     Args:
         num_examples: The number of examples.
