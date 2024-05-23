@@ -19,6 +19,8 @@ __all__ = [
     "CoshTransformer",
     "Identity",
     "IdentityTransformer",
+    "LookupTable",
+    "LookupTableTransformer",
     "Poisson",
     "PoissonTransformer",
     "Sequential",
@@ -39,6 +41,8 @@ from startorch.transformer.base import (
 )
 from startorch.transformer.identity import IdentityTransformer
 from startorch.transformer.identity import IdentityTransformer as Identity
+from startorch.transformer.lut import LookupTableTransformer
+from startorch.transformer.lut import LookupTableTransformer as LookupTable
 from startorch.transformer.math import AbsTransformer
 from startorch.transformer.math import AbsTransformer as Abs
 from startorch.transformer.math import ClampTransformer
