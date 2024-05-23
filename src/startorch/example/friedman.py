@@ -26,7 +26,7 @@ class Friedman1RegressionExampleGenerator(BaseExampleGenerator):
     r"""Implement the "Friedman #1" regression example generator.
 
     The implementation is based on
-    https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_friedman1.html
+    [`sklearn.datasets.make_friedman1`](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_friedman1.html).
 
     Args:
         feature_size: The feature size. The feature size has
@@ -93,7 +93,7 @@ class Friedman2RegressionExampleGenerator(BaseExampleGenerator):
     r"""Implement the "Friedman #2" regression example generator.
 
     The implementation is based on
-    https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_friedman2.html
+    [`sklearn.datasets.make_friedman2`](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_friedman2.html).
 
     Args:
         feature_size: The feature size.
@@ -161,7 +161,7 @@ class Friedman3RegressionExampleGenerator(BaseExampleGenerator):
     r"""Implement the "Friedman #3" regression example generator.
 
     The implementation is based on
-    https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_friedman3.html
+    [`sklearn.datasets.make_friedman3`](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_friedman3.html).
 
     Args:
         feature_size: The feature size.
@@ -234,7 +234,7 @@ def make_friedman1_regression(
     r"""Generate the "Friedman #1" regression data.
 
     The implementation is based on
-    https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_friedman1.html
+    [`sklearn.datasets.make_friedman1`](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_friedman1.html).
 
     Args:
         num_examples: The number of examples.
@@ -294,7 +294,7 @@ def make_friedman2_regression(
     r"""Generate the "Friedman #2" regression data.
 
     The implementation is based on
-    https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_friedman2.html
+    [`sklearn.datasets.make_friedman2`](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_friedman2.html).
 
     Args:
         num_examples: The number of examples.
@@ -359,7 +359,7 @@ def make_friedman3_regression(
     r"""Generate the "Friedman #3" regression problem.
 
     The implementation is based on
-    https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_friedman3.html
+    [`sklearn.datasets.make_friedman3`](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_friedman3.html).
 
     Args:
         num_examples: The number of examples.

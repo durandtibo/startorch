@@ -29,7 +29,7 @@ class LinearRegressionExampleGenerator(BaseExampleGenerator):
     generated with an underlying linear model.
 
     The implementation is based on
-    https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_regression.html
+    [`sklearn.datasets.make_regression`](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_regression.html).
 
     Args:
         weights: The linear weights in the underlying linear

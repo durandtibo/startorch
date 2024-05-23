@@ -20,13 +20,12 @@ class SwissRollExampleGenerator(BaseExampleGenerator):
     pattern.
 
     The implementation is based on
-    https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_swiss_roll.html
+    [`sklearn.datasets.make_swiss_roll`](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_swiss_roll.html).
 
     Args:
-        noise_std: The standard deviation of the Gaussian
-            noise.
+        noise_std: The standard deviation of the Gaussian noise.
         spin: The number of spins of the Swiss roll.
-        hole: If ``True`` generates the Swiss roll with hole dataset.
+        hole: If ``True`` generates the Swiss roll with a hole.
 
     Raises:
         ValueError: if one of the parameters is not valid.
@@ -97,7 +96,7 @@ def make_swiss_roll(
     r"""Generate a toy manifold dataset based on Swiss roll pattern.
 
     The implementation is based on
-    https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_swiss_roll.html
+    [`sklearn.datasets.make_swiss_roll`](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_swiss_roll.html).
 
     Args:
         num_examples: The number of examples.
