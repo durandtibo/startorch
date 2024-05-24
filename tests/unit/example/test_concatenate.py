@@ -24,10 +24,7 @@ def test_concatenate_str() -> None:
                     generators={"value": RandUniform(), "time": RandUniform()},
                     size=(6,),
                 ),
-                TensorExampleGenerator(
-                    generators={"label": RandInt(0, 10)},
-                    size=(),
-                ),
+                TensorExampleGenerator(generators={"label": RandInt(0, 10)}),
             ]
         )
     ).startswith("ConcatenateExampleGenerator(")
@@ -42,10 +39,7 @@ def test_concatenate_generate(batch_size: int, feature_size: int) -> None:
                 generators={"value": RandUniform(), "time": RandUniform()},
                 size=(feature_size,),
             ),
-            TensorExampleGenerator(
-                generators={"label": RandInt(0, 10)},
-                size=(),
-            ),
+            TensorExampleGenerator(generators={"label": RandInt(0, 10)}),
         ]
     ).generate(batch_size=batch_size)
     assert isinstance(batch, dict)
@@ -68,10 +62,7 @@ def test_concatenate_generate_no_randomness() -> None:
                 generators={"value": Full(1), "time": Full(2.0)},
                 size=(3,),
             ),
-            TensorExampleGenerator(
-                generators={"label": Full(42)},
-                size=(),
-            ),
+            TensorExampleGenerator(generators={"label": Full(42)}),
         ]
     ).generate(batch_size=5)
     assert objects_are_equal(
@@ -103,10 +94,7 @@ def test_concatenate_generate_same_random_seed() -> None:
                 generators={"value": RandUniform(), "time": RandUniform()},
                 size=(6,),
             ),
-            TensorExampleGenerator(
-                generators={"label": RandInt(0, 10)},
-                size=(),
-            ),
+            TensorExampleGenerator(generators={"label": RandInt(0, 10)}),
         ]
     )
     assert objects_are_equal(
@@ -122,10 +110,7 @@ def test_concatenate_generate_different_random_seeds() -> None:
                 generators={"value": RandUniform(), "time": RandUniform()},
                 size=(6,),
             ),
-            TensorExampleGenerator(
-                generators={"label": RandInt(0, 10)},
-                size=(),
-            ),
+            TensorExampleGenerator(generators={"label": RandInt(0, 10)}),
         ]
     )
     assert not objects_are_equal(

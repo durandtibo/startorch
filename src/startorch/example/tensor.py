@@ -53,7 +53,7 @@ class TensorExampleGenerator(BaseExampleGenerator):
     def __init__(
         self,
         generators: Mapping[str, BaseTensorGenerator | dict],
-        size: Sequence[int],
+        size: Sequence[int] = (),
     ) -> None:
         super().__init__()
         self._generators = {

@@ -38,10 +38,7 @@ class ConcatenateExampleGenerator(BaseExampleGenerator):
     ...             generators={"value": RandUniform(), "time": RandUniform()},
     ...             size=(6,),
     ...         ),
-    ...         TensorExampleGenerator(
-    ...             generators={"label": RandInt(0, 10)},
-    ...             size=(),
-    ...         ),
+    ...         TensorExampleGenerator(generators={"label": RandInt(0, 10)}),
     ...     ]
     ... )
     >>> generator
