@@ -10,6 +10,8 @@ __all__ = [
     "CacheExampleGenerator",
     "CirclesClassification",
     "CirclesClassificationExampleGenerator",
+    "Concatenate",
+    "ConcatenateExampleGenerator",
     "Friedman1Regression",
     "Friedman1RegressionExampleGenerator",
     "Friedman2Regression",
@@ -61,6 +63,8 @@ from startorch.example.circles import (
     CirclesClassificationExampleGenerator as CirclesClassification,
 )
 from startorch.example.circles import make_circles_classification
+from startorch.example.concatenate import ConcatenateExampleGenerator
+from startorch.example.concatenate import ConcatenateExampleGenerator as Concatenate
 from startorch.example.friedman import Friedman1RegressionExampleGenerator
 from startorch.example.friedman import (
     Friedman1RegressionExampleGenerator as Friedman1Regression,

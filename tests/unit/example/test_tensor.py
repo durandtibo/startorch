@@ -65,6 +65,13 @@ def test_tensor_example_generator_generate_no_randomness() -> None:
     )
 
 
+def test_tensor_example_generator_generate_empty() -> None:
+    assert objects_are_equal(
+        TensorExampleGenerator(generators={}, size=(3,)).generate(batch_size=5),
+        {},
+    )
+
+
 def test_tensor_example_generator_generate_same_random_seed() -> None:
     generator = TensorExampleGenerator(
         generators={"value": RandUniform(), "time": RandUniform()},
