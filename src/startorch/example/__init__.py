@@ -24,6 +24,7 @@ __all__ = [
     "MoonsClassificationExampleGenerator",
     "SwissRoll",
     "SwissRollExampleGenerator",
+    "TensorExampleGenerator",
     "TimeSeries",
     "TimeSeriesExampleGenerator",
     "Transformed",
@@ -96,6 +97,7 @@ from startorch.example.sparse_uncorrelated import make_sparse_uncorrelated_regre
 from startorch.example.swissroll import SwissRollExampleGenerator
 from startorch.example.swissroll import SwissRollExampleGenerator as SwissRoll
 from startorch.example.swissroll import make_swiss_roll
+from startorch.example.tensor import TensorExampleGenerator
 from startorch.example.timeseries import TimeSeriesExampleGenerator
 from startorch.example.timeseries import TimeSeriesExampleGenerator as TimeSeries
 from startorch.example.transformed import TransformedExampleGenerator
