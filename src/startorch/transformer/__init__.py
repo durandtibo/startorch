@@ -17,6 +17,8 @@ __all__ = [
     "ClampTransformer",
     "Cosh",
     "CoshTransformer",
+    "Exponential",
+    "ExponentialTransformer",
     "Identity",
     "IdentityTransformer",
     "LookupTable",
@@ -39,6 +41,8 @@ from startorch.transformer.base import (
     is_transformer_config,
     setup_transformer,
 )
+from startorch.transformer.exponential import ExponentialTransformer
+from startorch.transformer.exponential import ExponentialTransformer as Exponential
 from startorch.transformer.identity import IdentityTransformer
 from startorch.transformer.identity import IdentityTransformer as Identity
 from startorch.transformer.lut import LookupTableTransformer
