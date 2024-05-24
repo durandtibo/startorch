@@ -17,7 +17,7 @@ if TYPE_CHECKING:
 
     import torch
 
-    from startorch.tensor.base import BaseTensorGenerator
+    from startorch.tensor import BaseTensorGenerator
 
 
 class TensorExampleGenerator(BaseExampleGenerator):
