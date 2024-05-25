@@ -34,7 +34,7 @@ def test_mask_by_row_mock() -> None:
     mock = Mock(return_value=torch.tensor([3, 0, 1, 4, 2]))
     with patch("startorch.utils.mask.torch.randperm", mock):
         tensor = mask_by_row(tensor=torch.arange(20).view(4, 5).add(1), n=2)
-        mock.assert_called_with(5)
+        mock.assert_called_with(5, generator=None)
         assert objects_are_equal(
             tensor,
             torch.tensor(
