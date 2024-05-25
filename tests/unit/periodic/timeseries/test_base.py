@@ -27,7 +27,7 @@ def test_is_periodic_timeseries_generator_config_true() -> None:
             OBJECT_TARGET: "startorch.periodic.timeseries.Repeat",
             "generator": {
                 OBJECT_TARGET: "startorch.timeseries.TimeSeries",
-                "sequences": {
+                "generators": {
                     "value": {OBJECT_TARGET: "startorch.sequence.RandUniform"},
                     "time": {OBJECT_TARGET: "startorch.sequence.RandUniform"},
                 },
@@ -57,7 +57,7 @@ def test_setup_periodic_timeseries_generator_dict() -> None:
                 OBJECT_TARGET: "startorch.periodic.timeseries.Repeat",
                 "generator": {
                     OBJECT_TARGET: "startorch.timeseries.TimeSeries",
-                    "sequences": {
+                    "generators": {
                         "value": {OBJECT_TARGET: "startorch.sequence.RandUniform"},
                         "time": {OBJECT_TARGET: "startorch.sequence.RandUniform"},
                     },

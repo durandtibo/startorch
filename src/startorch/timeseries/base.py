@@ -99,7 +99,7 @@ def is_timeseries_generator_config(config: dict) -> bool:
     >>> is_timeseries_generator_config(
     ...     {
     ...         "_target_": "startorch.timeseries.TimeSeries",
-    ...         "sequences": {
+    ...         "generators": {
     ...             "value": {"_target_": "startorch.sequence.RandUniform"},
     ...             "time": {"_target_": "startorch.sequence.RandUniform"},
     ...         },
@@ -135,7 +135,7 @@ def setup_timeseries_generator(
     >>> setup_timeseries_generator(
     ...     {
     ...         "_target_": "startorch.timeseries.TimeSeries",
-    ...         "sequences": {
+    ...         "generators": {
     ...             "value": {"_target_": "startorch.sequence.RandUniform"},
     ...             "time": {"_target_": "startorch.sequence.RandUniform"},
     ...         },
