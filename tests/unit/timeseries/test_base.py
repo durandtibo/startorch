@@ -19,7 +19,7 @@ def test_is_timeseries_generator_config_true() -> None:
     assert is_timeseries_generator_config(
         {
             OBJECT_TARGET: "startorch.timeseries.TimeSeries",
-            "sequences": {
+            "generators": {
                 "value": {
                     OBJECT_TARGET: "startorch.sequence.UniformCategorical",
                     "num_categories": 10,
@@ -49,7 +49,7 @@ def test_setup_timeseries_generator_dict() -> None:
         setup_timeseries_generator(
             {
                 OBJECT_TARGET: "startorch.timeseries.TimeSeries",
-                "sequences": {
+                "generators": {
                     "value": {
                         OBJECT_TARGET: "startorch.sequence.UniformCategorical",
                         "num_categories": 10,

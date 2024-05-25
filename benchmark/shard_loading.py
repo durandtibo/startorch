@@ -83,7 +83,7 @@ def get_example_generator() -> BaseExampleGenerator:
     """
     return TimeSeriesExampleGenerator(
         timeseries=TimeSeriesGenerator(
-            sequences={
+            generators={
                 ct.TARGET: RandUniformSequenceGenerator(),
                 ct.VALUE: RandUniformSequenceGenerator(),
                 ct.TIME: RandUniformSequenceGenerator(),

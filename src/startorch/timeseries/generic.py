@@ -22,7 +22,7 @@ class TimeSeriesGenerator(BaseTimeSeriesGenerator):
     r"""Implement a generic time series generator.
 
     Args:
-        sequences: The sequence generators or their
+        generators: The sequence generators or their
             configurations.
 
     Example usage:
@@ -44,14 +44,14 @@ class TimeSeriesGenerator(BaseTimeSeriesGenerator):
     ```
     """
 
-    def __init__(self, sequences: Mapping[str, BaseSequenceGenerator | dict]) -> None:
+    def __init__(self, generators: Mapping[str, BaseSequenceGenerator | dict]) -> None:
         super().__init__()
-        self._sequences = {
-            key: setup_sequence_generator(generator) for key, generator in sequences.items()
+        self._generators = {
+            key: setup_sequence_generator(generator) for key, generator in generators.items()
         }
 
     def __repr__(self) -> str:
-        args = str_indent(str_mapping(self._sequences))
+        args = str_indent(str_mapping(self._generators))
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(
@@ -59,5 +59,5 @@ class TimeSeriesGenerator(BaseTimeSeriesGenerator):
     ) -> dict[Hashable, torch.Tensor]:
         return {
             key: generator.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
-            for key, generator in self._sequences.items()
+            for key, generator in self._generators.items()
         }

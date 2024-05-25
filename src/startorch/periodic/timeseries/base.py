@@ -110,7 +110,7 @@ def is_periodic_timeseries_generator_config(config: dict) -> bool:
     ...         "_target_": "startorch.periodic.timeseries.Repeat",
     ...         "generator": {
     ...             "_target_": "startorch.timeseries.TimeSeries",
-    ...             "sequences": {
+    ...             "generators": {
     ...                 "value": {"_target_": "startorch.sequence.RandUniform"},
     ...                 "time": {"_target_": "startorch.sequence.RandUniform"},
     ...             },
@@ -149,7 +149,7 @@ def setup_periodic_timeseries_generator(
     ...         "_target_": "startorch.periodic.timeseries.Repeat",
     ...         "generator": {
     ...             "_target_": "startorch.timeseries.TimeSeries",
-    ...             "sequences": {
+    ...             "generators": {
     ...                 "value": {"_target_": "startorch.sequence.RandUniform"},
     ...                 "time": {"_target_": "startorch.sequence.RandUniform"},
     ...             },

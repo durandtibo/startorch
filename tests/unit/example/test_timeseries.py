@@ -22,7 +22,7 @@ SIZES = (1, 2, 4)
 def test_timeseries_str() -> None:
     assert str(
         TimeSeries(
-            timeseries=timeseries.TimeSeries({"value": RandUniform(), "time": RandUniform()}),
+            generators=timeseries.TimeSeries({"value": RandUniform(), "time": RandUniform()}),
             seq_len=RandInt(2, 5),
         )
     ).startswith("TimeSeriesExampleGenerator(")
@@ -32,7 +32,7 @@ def test_timeseries_str() -> None:
 @pytest.mark.parametrize("seq_len", SIZES)
 def test_timeseries_generate(batch_size: int, seq_len: int) -> None:
     batch = TimeSeries(
-        timeseries=timeseries.TimeSeries({"value": RandUniform(), "time": RandUniform()}),
+        generators=timeseries.TimeSeries({"value": RandUniform(), "time": RandUniform()}),
         seq_len=Full(seq_len),
     ).generate(batch_size=batch_size)
     assert isinstance(batch, dict)
@@ -47,7 +47,7 @@ def test_timeseries_generate(batch_size: int, seq_len: int) -> None:
 
 def test_timeseries_generate_same_random_seed() -> None:
     generator = TimeSeries(
-        timeseries=timeseries.TimeSeries({"value": RandUniform(), "time": RandUniform()}),
+        generators=timeseries.TimeSeries({"value": RandUniform(), "time": RandUniform()}),
         seq_len=Full(5),
     )
     assert objects_are_equal(
@@ -58,7 +58,7 @@ def test_timeseries_generate_same_random_seed() -> None:
 
 def test_timeseries_generate_different_random_seeds() -> None:
     generator = TimeSeries(
-        timeseries=timeseries.TimeSeries({"value": RandUniform(), "time": RandUniform()}),
+        generators=timeseries.TimeSeries({"value": RandUniform(), "time": RandUniform()}),
         seq_len=Full(5),
     )
     assert not objects_are_equal(
