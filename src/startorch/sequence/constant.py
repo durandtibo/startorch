@@ -74,6 +74,12 @@ class FullSequenceGenerator(BaseSequenceGenerator):
              [42.],
              [42.],
              [42.]]])
+    >>> generator = Full(42, feature_size=())
+    >>> generator
+    FullSequenceGenerator(value=42, feature_size=())
+    >>> generator.generate(seq_len=6, batch_size=2)
+    tensor([[42, 42, 42, 42, 42, 42],
+            [42, 42, 42, 42, 42, 42]])
 
     ```
     """
@@ -84,7 +90,7 @@ class FullSequenceGenerator(BaseSequenceGenerator):
         feature_size: tuple[int, ...] | list[int] | int = 1,
     ) -> None:
         super().__init__()
-        self._value = float(value)
+        self._value = value
         self._feature_size = to_tuple(feature_size)
 
     def __repr__(self) -> str:

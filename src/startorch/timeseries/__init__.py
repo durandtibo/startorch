@@ -4,6 +4,8 @@ from __future__ import annotations
 
 __all__ = [
     "BaseTimeSeriesGenerator",
+    "Concatenate",
+    "ConcatenateTimeSeriesGenerator",
     "Merge",
     "MergeTimeSeriesGenerator",
     "MixedTimeSeries",
@@ -27,6 +29,10 @@ from startorch.timeseries.base import (
 from startorch.timeseries.choice import MultinomialChoiceTimeSeriesGenerator
 from startorch.timeseries.choice import (
     MultinomialChoiceTimeSeriesGenerator as MultinomialChoice,
+)
+from startorch.timeseries.concatenate import ConcatenateTimeSeriesGenerator
+from startorch.timeseries.concatenate import (
+    ConcatenateTimeSeriesGenerator as Concatenate,
 )
 from startorch.timeseries.generic import TimeSeriesGenerator
 from startorch.timeseries.generic import TimeSeriesGenerator as TimeSeries
