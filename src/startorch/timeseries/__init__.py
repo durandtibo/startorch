@@ -14,6 +14,7 @@ __all__ = [
     "MultinomialChoiceTimeSeriesGenerator",
     "Periodic",
     "PeriodicTimeSeriesGenerator",
+    "TensorTimeSeriesGenerator",
     "TimeSeries",
     "TimeSeriesGenerator",
     "is_timeseries_generator_config",
@@ -41,3 +42,4 @@ from startorch.timeseries.mixed import MixedTimeSeriesGenerator
 from startorch.timeseries.mixed import MixedTimeSeriesGenerator as MixedTimeSeries
 from startorch.timeseries.periodic import PeriodicTimeSeriesGenerator
 from startorch.timeseries.periodic import PeriodicTimeSeriesGenerator as Periodic
+from startorch.timeseries.tensor import TensorTimeSeriesGenerator
