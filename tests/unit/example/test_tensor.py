@@ -43,7 +43,20 @@ def test_tensor_example_generator_generate(batch_size: int, feature_size: int) -
     assert batch[ct.TIME].dtype == torch.float
 
 
-def test_tensor_example_generator_generate_no_randomness() -> None:
+def test_tensor_example_generator_generate_size_empty() -> None:
+    batch = TensorExampleGenerator(
+        generators={"value": Full(1), "time": Full(2.0)},
+    ).generate(batch_size=5)
+    assert objects_are_equal(
+        batch,
+        {
+            "value": torch.tensor([1, 1, 1, 1, 1]),
+            "time": torch.tensor([2.0, 2.0, 2.0, 2.0, 2.0]),
+        },
+    )
+
+
+def test_tensor_example_generator_generate_size_3() -> None:
     batch = TensorExampleGenerator(
         generators={"value": Full(1), "time": Full(2.0)},
         size=(3,),
@@ -67,7 +80,7 @@ def test_tensor_example_generator_generate_no_randomness() -> None:
 
 def test_tensor_example_generator_generate_empty() -> None:
     assert objects_are_equal(
-        TensorExampleGenerator(generators={}, size=(3,)).generate(batch_size=5),
+        TensorExampleGenerator(generators={}).generate(batch_size=5),
         {},
     )
 
