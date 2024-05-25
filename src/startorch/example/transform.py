@@ -3,7 +3,7 @@ examples and then transformed them."""
 
 from __future__ import annotations
 
-__all__ = ["TransformedExampleGenerator"]
+__all__ = ["TransformExampleGenerator"]
 
 
 from typing import TYPE_CHECKING
@@ -19,7 +19,7 @@ if TYPE_CHECKING:
     import torch
 
 
-class TransformedExampleGenerator(BaseExampleGenerator):
+class TransformExampleGenerator(BaseExampleGenerator):
     r"""Implement an example generator that generates examples, and then
     transformes them.
 
@@ -31,14 +31,14 @@ class TransformedExampleGenerator(BaseExampleGenerator):
 
     ```pycon
 
-    >>> from startorch.example import TransformedExampleGenerator, HypercubeClassification
+    >>> from startorch.example import TransformExampleGenerator, HypercubeClassification
     >>> from startorch.transformer import Abs
-    >>> generator = TransformedExampleGenerator(
+    >>> generator = TransformExampleGenerator(
     ...     generator=HypercubeClassification(num_classes=5, feature_size=6),
     ...     transformer=Abs(input="feature", output="feature_transformed"),
     ... )
     >>> generator
-    TransformedExampleGenerator(
+    TransformExampleGenerator(
       (generator): HypercubeClassificationExampleGenerator(num_classes=5, feature_size=6, noise_std=0.2)
       (transformer): AbsTransformer(input=feature, output=feature_transformed, exist_ok=False)
     )
