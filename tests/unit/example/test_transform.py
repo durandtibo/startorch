@@ -5,7 +5,7 @@ from coola import objects_are_equal
 
 from startorch.example import (
     HypercubeClassification,
-    Transformed,
+    Transform,
     VanillaExampleGenerator,
 )
 from startorch.transformer import Clamp
@@ -14,24 +14,24 @@ from startorch.utils.seed import get_torch_generator
 SIZES = (1, 2, 4)
 
 
-#################################################
-#     Tests for TransformedExampleGenerator     #
-#################################################
+###############################################
+#     Tests for TransformExampleGenerator     #
+###############################################
 
 
-def test_generator_str() -> None:
+def test_transform_str() -> None:
     assert str(
-        Transformed(
+        Transform(
             generator=VanillaExampleGenerator(
                 {"value": torch.arange(30).view(10, 3), "label": torch.arange(10)}
             ),
             transformer=Clamp(input="value", output="value_transformed", min=2.0, max=5.0),
         )
-    ).startswith("TransformedExampleGenerator(")
+    ).startswith("TransformExampleGenerator(")
 
 
-def test_generator_generate() -> None:
-    batch = Transformed(
+def test_transform_generate() -> None:
+    batch = Transform(
         generator=VanillaExampleGenerator(
             {"value": torch.arange(30, dtype=torch.float).view(10, 3), "label": torch.arange(10)}
         ),
@@ -65,8 +65,8 @@ def test_generator_generate() -> None:
     )
 
 
-def test_generator_generate_same_random_seed() -> None:
-    generator = Transformed(
+def test_transform_generate_same_random_seed() -> None:
+    generator = Transform(
         generator=HypercubeClassification(num_classes=5, feature_size=6),
         transformer=Clamp(input="feature", output="feature_transformed", min=-1.0, max=1.0),
     )
@@ -76,8 +76,8 @@ def test_generator_generate_same_random_seed() -> None:
     )
 
 
-def test_generator_generate_different_random_seeds() -> None:
-    generator = Transformed(
+def test_transform_generate_different_random_seeds() -> None:
+    generator = Transform(
         generator=HypercubeClassification(num_classes=5, feature_size=6),
         transformer=Clamp(input="feature", output="feature_transformed", min=-1.0, max=1.0),
     )
