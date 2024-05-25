@@ -6,7 +6,7 @@ from coola import objects_are_equal
 
 from startorch import constants as ct
 from startorch.sequence import RandNormal, RandUniform
-from startorch.timeseries import MultinomialChoice, TimeSeries
+from startorch.timeseries import MultinomialChoice, SequenceTimeSeries
 from startorch.utils.seed import get_torch_generator
 from startorch.utils.weight import GENERATOR, WEIGHT
 
@@ -24,11 +24,11 @@ def test_multinomial_choice_str() -> None:
             (
                 {
                     WEIGHT: 2.0,
-                    GENERATOR: TimeSeries({"value": RandUniform(), "time": RandUniform()}),
+                    GENERATOR: SequenceTimeSeries({"value": RandUniform(), "time": RandUniform()}),
                 },
                 {
                     WEIGHT: 1.0,
-                    GENERATOR: TimeSeries({"value": RandNormal(), "time": RandNormal()}),
+                    GENERATOR: SequenceTimeSeries({"value": RandNormal(), "time": RandNormal()}),
                 },
             ),
         )
@@ -40,25 +40,34 @@ def test_multinomial_choice_generators() -> None:
         (
             {
                 WEIGHT: 2.0,
-                GENERATOR: TimeSeries({"value": RandUniform(), "time": RandUniform()}),
+                GENERATOR: SequenceTimeSeries({"value": RandUniform(), "time": RandUniform()}),
             },
             {
                 WEIGHT: 1.0,
-                GENERATOR: TimeSeries({"value": RandNormal(), "time": RandNormal()}),
+                GENERATOR: SequenceTimeSeries({"value": RandNormal(), "time": RandNormal()}),
             },
         ),
     )
     assert len(generator._generators) == 2
-    assert isinstance(generator._generators[0], TimeSeries)
-    assert isinstance(generator._generators[1], TimeSeries)
+    assert isinstance(generator._generators[0], SequenceTimeSeries)
+    assert isinstance(generator._generators[1], SequenceTimeSeries)
 
 
 def test_multinomial_choice_weights() -> None:
     assert MultinomialChoice(
         (
-            {WEIGHT: 2.0, GENERATOR: TimeSeries({"value": RandUniform(), "time": RandUniform()})},
-            {WEIGHT: 1.0, GENERATOR: TimeSeries({"value": RandUniform(), "time": RandUniform()})},
-            {WEIGHT: 3.0, GENERATOR: TimeSeries({"value": RandUniform(), "time": RandUniform()})},
+            {
+                WEIGHT: 2.0,
+                GENERATOR: SequenceTimeSeries({"value": RandUniform(), "time": RandUniform()}),
+            },
+            {
+                WEIGHT: 1.0,
+                GENERATOR: SequenceTimeSeries({"value": RandUniform(), "time": RandUniform()}),
+            },
+            {
+                WEIGHT: 3.0,
+                GENERATOR: SequenceTimeSeries({"value": RandUniform(), "time": RandUniform()}),
+            },
         )
     )._weights.equal(torch.tensor([2.0, 1.0, 3.0]))
 
@@ -70,11 +79,11 @@ def test_multinomial_choice_generate(batch_size: int, seq_len: int) -> None:
         (
             {
                 WEIGHT: 2.0,
-                GENERATOR: TimeSeries({"value": RandUniform(), "time": RandUniform()}),
+                GENERATOR: SequenceTimeSeries({"value": RandUniform(), "time": RandUniform()}),
             },
             {
                 WEIGHT: 1.0,
-                GENERATOR: TimeSeries({"value": RandNormal(), "time": RandNormal()}),
+                GENERATOR: SequenceTimeSeries({"value": RandNormal(), "time": RandNormal()}),
             },
         ),
     ).generate(batch_size=batch_size, seq_len=seq_len)
@@ -97,11 +106,11 @@ def test_multinomial_choice_generate_same_random_seed() -> None:
         (
             {
                 WEIGHT: 2.0,
-                GENERATOR: TimeSeries({"value": RandUniform(), "time": RandUniform()}),
+                GENERATOR: SequenceTimeSeries({"value": RandUniform(), "time": RandUniform()}),
             },
             {
                 WEIGHT: 1.0,
-                GENERATOR: TimeSeries({"value": RandNormal(), "time": RandNormal()}),
+                GENERATOR: SequenceTimeSeries({"value": RandNormal(), "time": RandNormal()}),
             },
         ),
     )
@@ -116,11 +125,11 @@ def test_multinomial_choice_generate_different_random_seeds() -> None:
         (
             {
                 WEIGHT: 2.0,
-                GENERATOR: TimeSeries({"value": RandUniform(), "time": RandUniform()}),
+                GENERATOR: SequenceTimeSeries({"value": RandUniform(), "time": RandUniform()}),
             },
             {
                 WEIGHT: 1.0,
-                GENERATOR: TimeSeries({"value": RandNormal(), "time": RandNormal()}),
+                GENERATOR: SequenceTimeSeries({"value": RandNormal(), "time": RandNormal()}),
             },
         ),
     )

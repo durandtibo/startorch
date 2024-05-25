@@ -38,22 +38,22 @@ class MergeTimeSeriesGenerator(BaseTimeSeriesGenerator):
 
     ```pycon
 
-    >>> from startorch.timeseries import Merge, TimeSeries
+    >>> from startorch.timeseries import Merge, SequenceTimeSeriesGenerator
     >>> from startorch.sequence import RandUniform, RandNormal
     >>> generator = Merge(
     ...     (
-    ...         TimeSeries({"value": RandUniform(), "time": RandUniform()}),
-    ...         TimeSeries({"value": RandNormal(), "time": RandNormal()}),
+    ...         SequenceTimeSeriesGenerator({"value": RandUniform(), "time": RandUniform()}),
+    ...         SequenceTimeSeriesGenerator({"value": RandNormal(), "time": RandNormal()}),
     ...     )
     ... )
     >>> generator
     MergeTimeSeriesGenerator(
       (time_key): time
-      (0): TimeSeriesGenerator(
+      (0): SequenceTimeSeriesGenerator(
           (value): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
           (time): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
         )
-      (1): TimeSeriesGenerator(
+      (1): SequenceTimeSeriesGenerator(
           (value): RandNormalSequenceGenerator(mean=0.0, std=1.0, feature_size=(1,))
           (time): RandNormalSequenceGenerator(mean=0.0, std=1.0, feature_size=(1,))
         )

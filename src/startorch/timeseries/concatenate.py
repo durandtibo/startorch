@@ -33,23 +33,23 @@ class ConcatenateTimeSeriesGenerator(BaseTimeSeriesGenerator):
 
     ```pycon
 
-    >>> from startorch.timeseries import TimeSeriesGenerator, Concatenate
+    >>> from startorch.timeseries import SequenceTimeSeriesGenerator, Concatenate
     >>> from startorch.sequence import RandInt, RandUniform
     >>> generator = Concatenate(
     ...     [
-    ...         TimeSeriesGenerator(
+    ...         SequenceTimeSeriesGenerator(
     ...             generators={"value": RandUniform(), "time": RandUniform()},
     ...         ),
-    ...         TimeSeriesGenerator(generators={"label": RandInt(0, 10)}),
+    ...         SequenceTimeSeriesGenerator(generators={"label": RandInt(0, 10)}),
     ...     ]
     ... )
     >>> generator
     ConcatenateTimeSeriesGenerator(
-      (0): TimeSeriesGenerator(
+      (0): SequenceTimeSeriesGenerator(
           (value): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
           (time): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
         )
-      (1): TimeSeriesGenerator(
+      (1): SequenceTimeSeriesGenerator(
           (label): RandIntSequenceGenerator(low=0, high=10, feature_size=())
         )
     )

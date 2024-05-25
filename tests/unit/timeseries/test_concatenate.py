@@ -5,7 +5,7 @@ import torch
 from coola import objects_are_equal
 
 from startorch.sequence import Full, RandInt, RandUniform
-from startorch.timeseries import Concatenate, TimeSeriesGenerator
+from startorch.timeseries import Concatenate, SequenceTimeSeriesGenerator
 from startorch.utils.seed import get_torch_generator
 
 SIZES = (1, 2, 4)
@@ -20,10 +20,10 @@ def test_concatenate_str() -> None:
     assert str(
         Concatenate(
             generators=[
-                TimeSeriesGenerator(
+                SequenceTimeSeriesGenerator(
                     generators={"value": RandUniform(), "time": RandUniform()},
                 ),
-                TimeSeriesGenerator(generators={"label": RandInt(0, 10)}),
+                SequenceTimeSeriesGenerator(generators={"label": RandInt(0, 10)}),
             ]
         )
     ).startswith("ConcatenateTimeSeriesGenerator(")
@@ -34,10 +34,10 @@ def test_concatenate_str() -> None:
 def test_concatenate_generate(batch_size: int, seq_len: int) -> None:
     batch = Concatenate(
         generators=[
-            TimeSeriesGenerator(
+            SequenceTimeSeriesGenerator(
                 generators={"value": RandUniform(), "time": RandUniform()},
             ),
-            TimeSeriesGenerator(generators={"label": RandInt(0, 10)}),
+            SequenceTimeSeriesGenerator(generators={"label": RandInt(0, 10)}),
         ]
     ).generate(seq_len=seq_len, batch_size=batch_size)
     assert isinstance(batch, dict)
@@ -56,10 +56,10 @@ def test_concatenate_generate(batch_size: int, seq_len: int) -> None:
 def test_concatenate_generate_no_randomness() -> None:
     batch = Concatenate(
         generators=[
-            TimeSeriesGenerator(
+            SequenceTimeSeriesGenerator(
                 generators={"value": Full(1, feature_size=()), "time": Full(2.0, feature_size=())},
             ),
-            TimeSeriesGenerator(generators={"label": Full(42, feature_size=())}),
+            SequenceTimeSeriesGenerator(generators={"label": Full(42, feature_size=())}),
         ]
     ).generate(batch_size=5, seq_len=3)
     assert objects_are_equal(
@@ -95,10 +95,10 @@ def test_concatenate_generate_empty() -> None:
 def test_concatenate_generate_same_random_seed() -> None:
     generator = Concatenate(
         generators=[
-            TimeSeriesGenerator(
+            SequenceTimeSeriesGenerator(
                 generators={"value": RandUniform(), "time": RandUniform()},
             ),
-            TimeSeriesGenerator(generators={"label": RandInt(0, 10)}),
+            SequenceTimeSeriesGenerator(generators={"label": RandInt(0, 10)}),
         ]
     )
     assert objects_are_equal(
@@ -110,10 +110,10 @@ def test_concatenate_generate_same_random_seed() -> None:
 def test_concatenate_generate_different_random_seeds() -> None:
     generator = Concatenate(
         generators=[
-            TimeSeriesGenerator(
+            SequenceTimeSeriesGenerator(
                 generators={"value": RandUniform(), "time": RandUniform()},
             ),
-            TimeSeriesGenerator(generators={"label": RandInt(0, 10)}),
+            SequenceTimeSeriesGenerator(generators={"label": RandInt(0, 10)}),
         ]
     )
     assert not objects_are_equal(

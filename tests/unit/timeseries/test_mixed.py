@@ -7,7 +7,7 @@ import torch
 from coola import objects_are_equal
 
 from startorch.sequence import BaseSequenceGenerator, RandUniform
-from startorch.timeseries import MixedTimeSeries, TimeSeries
+from startorch.timeseries import MixedTimeSeries, SequenceTimeSeries
 from startorch.utils.seed import get_torch_generator
 
 SIZES = (1, 2, 4)
@@ -21,7 +21,7 @@ SIZES = (1, 2, 4)
 def test_mixed_timeseries_generator_str() -> None:
     assert str(
         MixedTimeSeries(
-            TimeSeries({"key1": RandUniform(), "key2": RandUniform()}),
+            SequenceTimeSeries({"key1": RandUniform(), "key2": RandUniform()}),
             key1="key1",
             key2="key2",
         )
@@ -35,7 +35,7 @@ def test_mixed_timeseries_generator_generate(
     batch_size: int, seq_len: int, feature_size: int
 ) -> None:
     batch = MixedTimeSeries(
-        TimeSeries(
+        SequenceTimeSeries(
             {
                 "key1": RandUniform(feature_size=feature_size),
                 "key2": RandUniform(feature_size=feature_size),
@@ -61,7 +61,7 @@ def test_mixed_timeseries_generator_generate(
 
 def test_mixed_timeseries_generator_generate_mock() -> None:
     batch = MixedTimeSeries(
-        TimeSeries(
+        SequenceTimeSeries(
             {
                 "key1": Mock(
                     spec=BaseSequenceGenerator,
@@ -89,7 +89,7 @@ def test_mixed_timeseries_generator_generate_mock() -> None:
 
 def test_mixed_timeseries_generator_generate_same_random_seed() -> None:
     generator = MixedTimeSeries(
-        TimeSeries({"key1": RandUniform(), "key2": RandUniform()}),
+        SequenceTimeSeries({"key1": RandUniform(), "key2": RandUniform()}),
         key1="key1",
         key2="key2",
     )
@@ -101,7 +101,7 @@ def test_mixed_timeseries_generator_generate_same_random_seed() -> None:
 
 def test_mixed_timeseries_generator_generate_different_random_seeds() -> None:
     generator = MixedTimeSeries(
-        TimeSeries({"key1": RandUniform(), "key2": RandUniform()}),
+        SequenceTimeSeries({"key1": RandUniform(), "key2": RandUniform()}),
         key1="key1",
         key2="key2",
     )

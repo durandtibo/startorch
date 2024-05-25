@@ -5,7 +5,7 @@ from objectory import OBJECT_TARGET
 
 from startorch.sequence import RandInt, RandUniform, UniformCategorical
 from startorch.timeseries import (
-    TimeSeries,
+    SequenceTimeSeries,
     is_timeseries_generator_config,
     setup_timeseries_generator,
 )
@@ -18,7 +18,7 @@ from startorch.timeseries import (
 def test_is_timeseries_generator_config_true() -> None:
     assert is_timeseries_generator_config(
         {
-            OBJECT_TARGET: "startorch.timeseries.TimeSeries",
+            OBJECT_TARGET: "startorch.timeseries.SequenceTimeSeries",
             "generators": {
                 "value": {
                     OBJECT_TARGET: "startorch.sequence.UniformCategorical",
@@ -40,7 +40,9 @@ def test_is_timeseries_generator_config_false() -> None:
 
 
 def test_setup_timeseries_generator_object() -> None:
-    generator = TimeSeries({"value": UniformCategorical(num_categories=10), "time": RandUniform()})
+    generator = SequenceTimeSeries(
+        {"value": UniformCategorical(num_categories=10), "time": RandUniform()}
+    )
     assert setup_timeseries_generator(generator) is generator
 
 
@@ -48,7 +50,7 @@ def test_setup_timeseries_generator_dict() -> None:
     assert isinstance(
         setup_timeseries_generator(
             {
-                OBJECT_TARGET: "startorch.timeseries.TimeSeries",
+                OBJECT_TARGET: "startorch.timeseries.SequenceTimeSeries",
                 "generators": {
                     "value": {
                         OBJECT_TARGET: "startorch.sequence.UniformCategorical",
@@ -58,7 +60,7 @@ def test_setup_timeseries_generator_dict() -> None:
                 },
             }
         ),
-        TimeSeries,
+        SequenceTimeSeries,
     )
 
 

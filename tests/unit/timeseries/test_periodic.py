@@ -11,7 +11,7 @@ from startorch import constants as ct
 from startorch.periodic.timeseries import BasePeriodicTimeSeriesGenerator, Repeat
 from startorch.sequence import RandUniform
 from startorch.tensor import BaseTensorGenerator, RandInt
-from startorch.timeseries import BaseTimeSeriesGenerator, Periodic, TimeSeries
+from startorch.timeseries import BaseTimeSeriesGenerator, Periodic, SequenceTimeSeries
 from startorch.utils.seed import get_torch_generator
 
 SIZES = (1, 2, 4)
@@ -25,7 +25,7 @@ SIZES = (1, 2, 4)
 def test_periodic_str() -> None:
     assert str(
         Periodic(
-            timeseries=TimeSeries({ct.VALUE: RandUniform(), ct.TIME: RandUniform()}),
+            timeseries=SequenceTimeSeries({ct.VALUE: RandUniform(), ct.TIME: RandUniform()}),
             period=RandInt(2, 5),
         )
     ).startswith("PeriodicTimeSeriesGenerator(")
@@ -36,8 +36,8 @@ def test_periodic_str() -> None:
 @pytest.mark.parametrize(
     "timeseries",
     [
-        TimeSeries({ct.VALUE: RandUniform(), ct.TIME: RandUniform()}),
-        Repeat(TimeSeries({ct.VALUE: RandUniform(), ct.TIME: RandUniform()})),
+        SequenceTimeSeries({ct.VALUE: RandUniform(), ct.TIME: RandUniform()}),
+        Repeat(SequenceTimeSeries({ct.VALUE: RandUniform(), ct.TIME: RandUniform()})),
     ],
 )
 def test_periodic_generate(
@@ -66,8 +66,8 @@ def test_periodic_generate(
 @pytest.mark.parametrize(
     "timeseries",
     [
-        TimeSeries({ct.VALUE: RandUniform(), ct.TIME: RandUniform()}),
-        Repeat(TimeSeries({ct.VALUE: RandUniform(), ct.TIME: RandUniform()})),
+        SequenceTimeSeries({ct.VALUE: RandUniform(), ct.TIME: RandUniform()}),
+        Repeat(SequenceTimeSeries({ct.VALUE: RandUniform(), ct.TIME: RandUniform()})),
     ],
 )
 def test_periodic_generate_period_4(
@@ -88,7 +88,7 @@ def test_periodic_generate_period_4(
 
 def test_periodic_generate_same_random_seed() -> None:
     generator = Periodic(
-        timeseries=TimeSeries({ct.VALUE: RandUniform(), ct.TIME: RandUniform()}),
+        timeseries=SequenceTimeSeries({ct.VALUE: RandUniform(), ct.TIME: RandUniform()}),
         period=RandInt(2, 5),
     )
     assert objects_are_equal(
@@ -99,7 +99,7 @@ def test_periodic_generate_same_random_seed() -> None:
 
 def test_periodic_generate_different_random_seeds() -> None:
     generator = Periodic(
-        timeseries=TimeSeries({ct.VALUE: RandUniform(), ct.TIME: RandUniform()}),
+        timeseries=SequenceTimeSeries({ct.VALUE: RandUniform(), ct.TIME: RandUniform()}),
         period=RandInt(2, 5),
     )
     assert not objects_are_equal(

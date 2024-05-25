@@ -32,12 +32,14 @@ class RepeatPeriodicTimeSeriesGenerator(BasePeriodicTimeSeriesGenerator):
     ```pycon
 
     >>> from startorch.periodic.timeseries import Repeat
-    >>> from startorch.timeseries import TimeSeries
+    >>> from startorch.timeseries import SequenceTimeSeriesGenerator
     >>> from startorch.sequence import RandUniform
-    >>> generator = Repeat(TimeSeries({"value": RandUniform(), "time": RandUniform()}))
+    >>> generator = Repeat(
+    ...     SequenceTimeSeriesGenerator({"value": RandUniform(), "time": RandUniform()})
+    ... )
     >>> generator
     RepeatPeriodicTimeSeriesGenerator(
-      (generator): TimeSeriesGenerator(
+      (generator): SequenceTimeSeriesGenerator(
           (value): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
           (time): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
         )

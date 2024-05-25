@@ -27,7 +27,7 @@ from startorch.example import BaseExampleGenerator, TimeSeriesExampleGenerator
 from startorch.integration.iden.data.generator import ExampleDataGenerator
 from startorch.sequence import RandUniformSequenceGenerator
 from startorch.tensor import FullTensorGenerator
-from startorch.timeseries import TimeSeriesGenerator
+from startorch.timeseries import SequenceTimeSeriesGenerator
 
 logger = logging.getLogger(__name__)
 
@@ -82,7 +82,7 @@ def get_example_generator() -> BaseExampleGenerator:
         An example generator.
     """
     return TimeSeriesExampleGenerator(
-        timeseries=TimeSeriesGenerator(
+        timeseries=SequenceTimeSeriesGenerator(
             generators={
                 ct.TARGET: RandUniformSequenceGenerator(),
                 ct.VALUE: RandUniformSequenceGenerator(),

@@ -40,15 +40,16 @@ class PeriodicTimeSeriesGenerator(BaseTimeSeriesGenerator):
 
     ```pycon
 
-    >>> from startorch.timeseries import Periodic, TimeSeries
+    >>> from startorch.timeseries import Periodic, SequenceTimeSeries
     >>> from startorch.sequence import RandUniform
     >>> from startorch.tensor import RandInt
     >>> generator = Periodic(
-    ...     TimeSeries({"value": RandUniform(), "time": RandUniform()}), period=RandInt(2, 5)
+    ...     SequenceTimeSeries({"value": RandUniform(), "time": RandUniform()}),
+    ...     period=RandInt(2, 5),
     ... )
     >>> generator
     PeriodicTimeSeriesGenerator(
-      (sequence): TimeSeriesGenerator(
+      (sequence): SequenceTimeSeriesGenerator(
           (value): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
           (time): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
         )

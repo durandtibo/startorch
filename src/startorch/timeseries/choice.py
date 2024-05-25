@@ -48,27 +48,31 @@ class MultinomialChoiceTimeSeriesGenerator(BaseTimeSeriesGenerator):
 
     ```pycon
 
-    >>> from startorch.timeseries import MultinomialChoice, TimeSeries
+    >>> from startorch.timeseries import MultinomialChoice, SequenceTimeSeries
     >>> from startorch.sequence import RandUniform, RandNormal
     >>> generator = MultinomialChoice(
     ...     (
     ...         {
     ...             "weight": 2.0,
-    ...             "generator": TimeSeries({"value": RandUniform(), "time": RandUniform()}),
+    ...             "generator": SequenceTimeSeries(
+    ...                 {"value": RandUniform(), "time": RandUniform()}
+    ...             ),
     ...         },
     ...         {
     ...             "weight": 1.0,
-    ...             "generator": TimeSeries({"value": RandNormal(), "time": RandNormal()}),
+    ...             "generator": SequenceTimeSeries(
+    ...                 {"value": RandNormal(), "time": RandNormal()}
+    ...             ),
     ...         },
     ...     )
     ... )
     >>> generator
     MultinomialChoiceTimeSeriesGenerator(
-      (0) [weight=2.0] TimeSeriesGenerator(
+      (0) [weight=2.0] SequenceTimeSeriesGenerator(
           (value): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
           (time): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
         )
-      (1) [weight=1.0] TimeSeriesGenerator(
+      (1) [weight=1.0] SequenceTimeSeriesGenerator(
           (value): RandNormalSequenceGenerator(mean=0.0, std=1.0, feature_size=(1,))
           (time): RandNormalSequenceGenerator(mean=0.0, std=1.0, feature_size=(1,))
         )
