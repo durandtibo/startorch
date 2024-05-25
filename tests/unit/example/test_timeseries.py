@@ -5,10 +5,10 @@ import torch
 from coola import objects_are_equal
 
 from startorch import constants as ct
-from startorch import timeseries
 from startorch.example import TimeSeries
 from startorch.sequence import RandUniform
 from startorch.tensor import Full, RandInt
+from startorch.timeseries import SequenceTimeSeries
 from startorch.utils.seed import get_torch_generator
 
 SIZES = (1, 2, 4)
@@ -22,7 +22,7 @@ SIZES = (1, 2, 4)
 def test_timeseries_str() -> None:
     assert str(
         TimeSeries(
-            generators=timeseries.TimeSeries({"value": RandUniform(), "time": RandUniform()}),
+            generators=SequenceTimeSeries({"value": RandUniform(), "time": RandUniform()}),
             seq_len=RandInt(2, 5),
         )
     ).startswith("TimeSeriesExampleGenerator(")
@@ -32,7 +32,7 @@ def test_timeseries_str() -> None:
 @pytest.mark.parametrize("seq_len", SIZES)
 def test_timeseries_generate(batch_size: int, seq_len: int) -> None:
     batch = TimeSeries(
-        generators=timeseries.TimeSeries({"value": RandUniform(), "time": RandUniform()}),
+        generators=SequenceTimeSeries({"value": RandUniform(), "time": RandUniform()}),
         seq_len=Full(seq_len),
     ).generate(batch_size=batch_size)
     assert isinstance(batch, dict)
@@ -47,7 +47,7 @@ def test_timeseries_generate(batch_size: int, seq_len: int) -> None:
 
 def test_timeseries_generate_same_random_seed() -> None:
     generator = TimeSeries(
-        generators=timeseries.TimeSeries({"value": RandUniform(), "time": RandUniform()}),
+        generators=SequenceTimeSeries({"value": RandUniform(), "time": RandUniform()}),
         seq_len=Full(5),
     )
     assert objects_are_equal(
@@ -58,7 +58,7 @@ def test_timeseries_generate_same_random_seed() -> None:
 
 def test_timeseries_generate_different_random_seeds() -> None:
     generator = TimeSeries(
-        generators=timeseries.TimeSeries({"value": RandUniform(), "time": RandUniform()}),
+        generators=SequenceTimeSeries({"value": RandUniform(), "time": RandUniform()}),
         seq_len=Full(5),
     )
     assert not objects_are_equal(

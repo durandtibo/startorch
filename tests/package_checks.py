@@ -10,7 +10,7 @@ from startorch.example import CirclesClassification
 from startorch.random import rand_uniform
 from startorch.sequence import RandUniform as SRandUniform
 from startorch.tensor import RandUniform as TRandUniform
-from startorch.timeseries import TimeSeries
+from startorch.timeseries import SequenceTimeSeries
 
 logger = logging.getLogger(__name__)
 
@@ -49,7 +49,7 @@ def check_tensor() -> None:
 
 def check_timeseries() -> None:
     logger.info("Checking startorch.timeseries package...")
-    data = TimeSeries({"value": SRandUniform(), "time": SRandUniform()}).generate(
+    data = SequenceTimeSeries({"value": SRandUniform(), "time": SRandUniform()}).generate(
         seq_len=12, batch_size=4
     )
     assert isinstance(data, dict)

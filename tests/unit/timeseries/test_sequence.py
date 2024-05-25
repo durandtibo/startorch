@@ -4,20 +4,20 @@ from coola import objects_are_equal
 
 from startorch import constants as ct
 from startorch.sequence import RandUniform, UniformCategorical
-from startorch.timeseries import TimeSeries
+from startorch.timeseries import SequenceTimeSeries
 from startorch.utils.seed import get_torch_generator
 
 SIZES = (1, 2, 4)
 
 
-################################
-#     Tests for TimeSeries     #
-################################
+########################################
+#     Tests for SequenceTimeSeries     #
+########################################
 
 
 def test_timeseries_generator_str() -> None:
-    assert str(TimeSeries({ct.VALUE: RandUniform(), ct.TIME: RandUniform()})).startswith(
-        "TimeSeriesGenerator("
+    assert str(SequenceTimeSeries({ct.VALUE: RandUniform(), ct.TIME: RandUniform()})).startswith(
+        "SequenceTimeSeriesGenerator("
     )
 
 
@@ -27,7 +27,7 @@ def test_timeseries_generator_str() -> None:
 def test_timeseries_generator_generate_float(
     batch_size: int, seq_len: int, feature_size: int
 ) -> None:
-    batch = TimeSeries(
+    batch = SequenceTimeSeries(
         {ct.VALUE: RandUniform(feature_size=feature_size), ct.TIME: RandUniform()},
     ).generate(batch_size=batch_size, seq_len=seq_len)
 
@@ -48,7 +48,7 @@ def test_timeseries_generator_generate_float(
 @pytest.mark.parametrize("batch_size", SIZES)
 @pytest.mark.parametrize("seq_len", SIZES)
 def test_timeseries_generator_generate_long(batch_size: int, seq_len: int) -> None:
-    batch = TimeSeries(
+    batch = SequenceTimeSeries(
         {ct.VALUE: UniformCategorical(num_categories=10), ct.TIME: RandUniform()}
     ).generate(batch_size=batch_size, seq_len=seq_len)
 
@@ -69,7 +69,7 @@ def test_timeseries_generator_generate_long(batch_size: int, seq_len: int) -> No
 @pytest.mark.parametrize("batch_size", SIZES)
 @pytest.mark.parametrize("seq_len", SIZES)
 def test_timeseries_generator_generate_1(batch_size: int, seq_len: int) -> None:
-    batch = TimeSeries(
+    batch = SequenceTimeSeries(
         {ct.VALUE: RandUniform()},
     ).generate(batch_size=batch_size, seq_len=seq_len)
 
@@ -85,7 +85,7 @@ def test_timeseries_generator_generate_1(batch_size: int, seq_len: int) -> None:
 @pytest.mark.parametrize("batch_size", SIZES)
 @pytest.mark.parametrize("seq_len", SIZES)
 def test_timeseries_generator_generate_3(batch_size: int, seq_len: int) -> None:
-    batch = TimeSeries(
+    batch = SequenceTimeSeries(
         {
             ct.VALUE: RandUniform(),
             ct.TIME: RandUniform(),
@@ -113,7 +113,7 @@ def test_timeseries_generator_generate_3(batch_size: int, seq_len: int) -> None:
 
 
 def test_timeseries_generator_generate_same_random_seed() -> None:
-    generator = TimeSeries({ct.VALUE: RandUniform(), ct.TIME: RandUniform()})
+    generator = SequenceTimeSeries({ct.VALUE: RandUniform(), ct.TIME: RandUniform()})
     assert objects_are_equal(
         generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
         generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
@@ -121,7 +121,7 @@ def test_timeseries_generator_generate_same_random_seed() -> None:
 
 
 def test_timeseries_generator_generate_different_random_seeds() -> None:
-    generator = TimeSeries({ct.VALUE: RandUniform(), ct.TIME: RandUniform()})
+    generator = SequenceTimeSeries({ct.VALUE: RandUniform(), ct.TIME: RandUniform()})
     assert not objects_are_equal(
         generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(1)),
         generator.generate(batch_size=4, seq_len=12, rng=get_torch_generator(2)),

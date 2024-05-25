@@ -34,10 +34,10 @@ class BaseTimeSeriesGenerator(ABC, metaclass=AbstractFactory):
 
     >>> import torch
     >>> from startorch.sequence import RandUniform
-    >>> from startorch.timeseries import TimeSeries
-    >>> generator = TimeSeries({"value": RandUniform(), "time": RandUniform()})
+    >>> from startorch.timeseries import SequenceTimeSeriesGenerator
+    >>> generator = SequenceTimeSeriesGenerator({"value": RandUniform(), "time": RandUniform()})
     >>> generator
-    TimeSeriesGenerator(
+    SequenceTimeSeriesGenerator(
       (value): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
       (time): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
     )
@@ -66,8 +66,8 @@ class BaseTimeSeriesGenerator(ABC, metaclass=AbstractFactory):
         ```pycon
         >>> import torch
         >>> from startorch.sequence import RandUniform
-        >>> from startorch.timeseries import TimeSeries
-        >>> generator = TimeSeries({"value": RandUniform(), "time": RandUniform()})
+        >>> from startorch.timeseries import SequenceTimeSeriesGenerator
+        >>> generator = SequenceTimeSeriesGenerator({"value": RandUniform(), "time": RandUniform()})
         >>> generator.generate(seq_len=12, batch_size=4)
         {'value': tensor([[...]]), 'time': tensor([[...]])}
 
@@ -98,7 +98,7 @@ def is_timeseries_generator_config(config: dict) -> bool:
     >>> from startorch.timeseries import is_timeseries_generator_config
     >>> is_timeseries_generator_config(
     ...     {
-    ...         "_target_": "startorch.timeseries.TimeSeries",
+    ...         "_target_": "startorch.timeseries.SequenceTimeSeriesGenerator",
     ...         "generators": {
     ...             "value": {"_target_": "startorch.sequence.RandUniform"},
     ...             "time": {"_target_": "startorch.sequence.RandUniform"},
@@ -134,14 +134,14 @@ def setup_timeseries_generator(
     >>> from startorch.timeseries import setup_timeseries_generator
     >>> setup_timeseries_generator(
     ...     {
-    ...         "_target_": "startorch.timeseries.TimeSeries",
+    ...         "_target_": "startorch.timeseries.SequenceTimeSeriesGenerator",
     ...         "generators": {
     ...             "value": {"_target_": "startorch.sequence.RandUniform"},
     ...             "time": {"_target_": "startorch.sequence.RandUniform"},
     ...         },
     ...     }
     ... )
-    TimeSeriesGenerator(
+    SequenceTimeSeriesGenerator(
       (value): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
       (time): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
     )

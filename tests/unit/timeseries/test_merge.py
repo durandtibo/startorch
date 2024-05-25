@@ -4,7 +4,7 @@ from coola import objects_are_equal
 
 from startorch import constants as ct
 from startorch.sequence import RandNormal, RandUniform
-from startorch.timeseries import Merge, TimeSeries
+from startorch.timeseries import Merge, SequenceTimeSeries
 from startorch.utils.seed import get_torch_generator
 
 SIZES = (1, 2, 4)
@@ -19,8 +19,8 @@ def test_merge_str() -> None:
     assert str(
         Merge(
             [
-                TimeSeries({"value": RandUniform(), "time": RandUniform()}),
-                TimeSeries({"value": RandNormal(), "time": RandNormal()}),
+                SequenceTimeSeries({"value": RandUniform(), "time": RandUniform()}),
+                SequenceTimeSeries({"value": RandNormal(), "time": RandNormal()}),
             ],
         )
     ).startswith("MergeTimeSeriesGenerator(")
@@ -29,13 +29,13 @@ def test_merge_str() -> None:
 def test_merge_generators() -> None:
     generator = Merge(
         [
-            TimeSeries({"value": RandUniform(), "time": RandUniform()}),
-            TimeSeries({"value": RandNormal(), "time": RandNormal()}),
+            SequenceTimeSeries({"value": RandUniform(), "time": RandUniform()}),
+            SequenceTimeSeries({"value": RandNormal(), "time": RandNormal()}),
         ],
     )
     assert len(generator._generators) == 2
-    assert isinstance(generator._generators[0], TimeSeries)
-    assert isinstance(generator._generators[1], TimeSeries)
+    assert isinstance(generator._generators[0], SequenceTimeSeries)
+    assert isinstance(generator._generators[1], SequenceTimeSeries)
 
 
 @pytest.mark.parametrize("batch_size", SIZES)
@@ -43,8 +43,8 @@ def test_merge_generators() -> None:
 def test_merge_generate(batch_size: int, seq_len: int) -> None:
     batch = Merge(
         [
-            TimeSeries({"value": RandUniform(), "time": RandUniform()}),
-            TimeSeries({"value": RandNormal(), "time": RandNormal()}),
+            SequenceTimeSeries({"value": RandUniform(), "time": RandUniform()}),
+            SequenceTimeSeries({"value": RandNormal(), "time": RandNormal()}),
         ],
     ).generate(batch_size=batch_size, seq_len=seq_len)
     assert isinstance(batch, dict)
@@ -66,8 +66,8 @@ def test_merge_generate(batch_size: int, seq_len: int) -> None:
 def test_merge_generate_time_0d(batch_size: int, seq_len: int) -> None:
     batch = Merge(
         [
-            TimeSeries({"value": RandUniform(), "time": RandUniform(feature_size=[])}),
-            TimeSeries({"value": RandNormal(), "time": RandNormal(feature_size=[])}),
+            SequenceTimeSeries({"value": RandUniform(), "time": RandUniform(feature_size=[])}),
+            SequenceTimeSeries({"value": RandNormal(), "time": RandNormal(feature_size=[])}),
         ],
     ).generate(batch_size=batch_size, seq_len=seq_len)
     assert isinstance(batch, dict)
@@ -89,8 +89,8 @@ def test_merge_generate_time_0d(batch_size: int, seq_len: int) -> None:
 def test_merge_generate_value_0d(batch_size: int, seq_len: int) -> None:
     batch = Merge(
         [
-            TimeSeries({"value": RandUniform(feature_size=[]), "time": RandUniform()}),
-            TimeSeries({"value": RandNormal(feature_size=[]), "time": RandNormal()}),
+            SequenceTimeSeries({"value": RandUniform(feature_size=[]), "time": RandUniform()}),
+            SequenceTimeSeries({"value": RandNormal(feature_size=[]), "time": RandNormal()}),
         ],
     ).generate(batch_size=batch_size, seq_len=seq_len)
     assert isinstance(batch, dict)
@@ -110,8 +110,8 @@ def test_merge_generate_value_0d(batch_size: int, seq_len: int) -> None:
 def test_merge_generate_same_random_seed() -> None:
     generator = Merge(
         [
-            TimeSeries({"value": RandUniform(), "time": RandUniform()}),
-            TimeSeries({"value": RandNormal(), "time": RandNormal()}),
+            SequenceTimeSeries({"value": RandUniform(), "time": RandUniform()}),
+            SequenceTimeSeries({"value": RandNormal(), "time": RandNormal()}),
         ],
     )
     assert objects_are_equal(
@@ -123,8 +123,8 @@ def test_merge_generate_same_random_seed() -> None:
 def test_merge_generate_different_random_seeds() -> None:
     generator = Merge(
         [
-            TimeSeries({"value": RandUniform(), "time": RandUniform()}),
-            TimeSeries({"value": RandNormal(), "time": RandNormal()}),
+            SequenceTimeSeries({"value": RandUniform(), "time": RandUniform()}),
+            SequenceTimeSeries({"value": RandNormal(), "time": RandNormal()}),
         ],
     )
     assert not objects_are_equal(

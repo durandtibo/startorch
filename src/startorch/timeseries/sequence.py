@@ -1,8 +1,9 @@
-r"""Contain the implementation of a generic time series generator."""
+r"""Contain the implementation of a time series generator that generates
+time series with sequence generators."""
 
 from __future__ import annotations
 
-__all__ = ["TimeSeriesGenerator"]
+__all__ = ["SequenceTimeSeriesGenerator"]
 
 
 from typing import TYPE_CHECKING
@@ -18,8 +19,9 @@ if TYPE_CHECKING:
     import torch
 
 
-class TimeSeriesGenerator(BaseTimeSeriesGenerator):
-    r"""Implement a generic time series generator.
+class SequenceTimeSeriesGenerator(BaseTimeSeriesGenerator):
+    r"""Implement a time series generator that generates time series with
+    sequence generators.
 
     Args:
         generators: The sequence generators or their
@@ -31,10 +33,10 @@ class TimeSeriesGenerator(BaseTimeSeriesGenerator):
 
     >>> import torch
     >>> from startorch.sequence import RandUniform
-    >>> from startorch.timeseries import TimeSeries
-    >>> generator = TimeSeries({"value": RandUniform(), "time": RandUniform()})
+    >>> from startorch.timeseries import SequenceTimeSeries
+    >>> generator = SequenceTimeSeries({"value": RandUniform(), "time": RandUniform()})
     >>> generator
-    TimeSeriesGenerator(
+    SequenceTimeSeriesGenerator(
       (value): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
       (time): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
     )

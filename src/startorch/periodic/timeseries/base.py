@@ -37,12 +37,14 @@ class BasePeriodicTimeSeriesGenerator(ABC, metaclass=AbstractFactory):
     ```pycon
 
     >>> from startorch.periodic.timeseries import Repeat
-    >>> from startorch.timeseries import TimeSeries
+    >>> from startorch.timeseries import SequenceTimeSeriesGenerator
     >>> from startorch.sequence import RandUniform
-    >>> generator = Repeat(TimeSeries({"value": RandUniform(), "time": RandUniform()}))
+    >>> generator = Repeat(
+    ...     SequenceTimeSeriesGenerator({"value": RandUniform(), "time": RandUniform()})
+    ... )
     >>> generator
     RepeatPeriodicTimeSeriesGenerator(
-      (generator): TimeSeriesGenerator(
+      (generator): SequenceTimeSeriesGenerator(
           (value): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
           (time): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
         )
@@ -74,9 +76,9 @@ class BasePeriodicTimeSeriesGenerator(ABC, metaclass=AbstractFactory):
 
         ```pycon
         >>> from startorch.periodic.timeseries import Repeat
-        >>> from startorch.timeseries import TimeSeries
+        >>> from startorch.timeseries import SequenceTimeSeriesGenerator
         >>> from startorch.sequence import RandUniform
-        >>> generator = Repeat(TimeSeries({"value": RandUniform(), "time": RandUniform()}))
+        >>> generator = Repeat(SequenceTimeSeriesGenerator({"value": RandUniform(), "time": RandUniform()}))
         >>> generator.generate(seq_len=12, period=4, batch_size=4)
         {'value': tensor([[...]]), 'time': tensor([[...]])}
 
@@ -109,7 +111,7 @@ def is_periodic_timeseries_generator_config(config: dict) -> bool:
     ...     {
     ...         "_target_": "startorch.periodic.timeseries.Repeat",
     ...         "generator": {
-    ...             "_target_": "startorch.timeseries.TimeSeries",
+    ...             "_target_": "startorch.timeseries.SequenceTimeSeriesGenerator",
     ...             "generators": {
     ...                 "value": {"_target_": "startorch.sequence.RandUniform"},
     ...                 "time": {"_target_": "startorch.sequence.RandUniform"},
@@ -148,7 +150,7 @@ def setup_periodic_timeseries_generator(
     ...     {
     ...         "_target_": "startorch.periodic.timeseries.Repeat",
     ...         "generator": {
-    ...             "_target_": "startorch.timeseries.TimeSeries",
+    ...             "_target_": "startorch.timeseries.SequenceTimeSeriesGenerator",
     ...             "generators": {
     ...                 "value": {"_target_": "startorch.sequence.RandUniform"},
     ...                 "time": {"_target_": "startorch.sequence.RandUniform"},
@@ -157,7 +159,7 @@ def setup_periodic_timeseries_generator(
     ...     }
     ... )
     RepeatPeriodicTimeSeriesGenerator(
-      (generator): TimeSeriesGenerator(
+      (generator): SequenceTimeSeriesGenerator(
           (value): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
           (time): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
         )

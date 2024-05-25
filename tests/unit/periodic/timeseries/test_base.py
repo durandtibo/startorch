@@ -11,7 +11,7 @@ from startorch.periodic.timeseries import (
     setup_periodic_timeseries_generator,
 )
 from startorch.sequence import RandUniform
-from startorch.timeseries import TimeSeries
+from startorch.timeseries import SequenceTimeSeries
 
 if TYPE_CHECKING:
     import pytest
@@ -26,7 +26,7 @@ def test_is_periodic_timeseries_generator_config_true() -> None:
         {
             OBJECT_TARGET: "startorch.periodic.timeseries.Repeat",
             "generator": {
-                OBJECT_TARGET: "startorch.timeseries.TimeSeries",
+                OBJECT_TARGET: "startorch.timeseries.SequenceTimeSeries",
                 "generators": {
                     "value": {OBJECT_TARGET: "startorch.sequence.RandUniform"},
                     "time": {OBJECT_TARGET: "startorch.sequence.RandUniform"},
@@ -46,7 +46,7 @@ def test_is_periodic_timeseries_generator_config_false() -> None:
 
 
 def test_setup_periodic_timeseries_generator_object() -> None:
-    generator = Repeat(TimeSeries({"value": RandUniform(), "time": RandUniform()}))
+    generator = Repeat(SequenceTimeSeries({"value": RandUniform(), "time": RandUniform()}))
     assert setup_periodic_timeseries_generator(generator) is generator
 
 
@@ -56,7 +56,7 @@ def test_setup_periodic_timeseries_generator_dict() -> None:
             {
                 OBJECT_TARGET: "startorch.periodic.timeseries.Repeat",
                 "generator": {
-                    OBJECT_TARGET: "startorch.timeseries.TimeSeries",
+                    OBJECT_TARGET: "startorch.timeseries.SequenceTimeSeries",
                     "generators": {
                         "value": {OBJECT_TARGET: "startorch.sequence.RandUniform"},
                         "time": {OBJECT_TARGET: "startorch.sequence.RandUniform"},

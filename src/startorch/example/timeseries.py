@@ -40,16 +40,18 @@ class TimeSeriesExampleGenerator(BaseExampleGenerator):
     ```pycon
 
     >>> from startorch.example import TimeSeriesExampleGenerator
-    >>> from startorch.timeseries import TimeSeriesGenerator
+    >>> from startorch.timeseries import SequenceTimeSeriesGenerator
     >>> from startorch.sequence import Periodic, RandUniform
     >>> from startorch.tensor import RandInt
     >>> generator = TimeSeriesExampleGenerator(
-    ...     generators=TimeSeriesGenerator({"value": RandUniform(), "time": RandUniform()}),
+    ...     generators=SequenceTimeSeriesGenerator(
+    ...         {"value": RandUniform(), "time": RandUniform()}
+    ...     ),
     ...     seq_len=RandInt(2, 5),
     ... )
     >>> generator
     TimeSeriesExampleGenerator(
-      (generators): TimeSeriesGenerator(
+      (generators): SequenceTimeSeriesGenerator(
           (value): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
           (time): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
         )

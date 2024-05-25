@@ -38,15 +38,15 @@ class MixedTimeSeriesGenerator(BaseTimeSeriesGenerator):
 
     >>> import torch
     >>> from startorch.sequence import RandUniform
-    >>> from startorch.timeseries import MixedTimeSeries, TimeSeries
+    >>> from startorch.timeseries import MixedTimeSeries, SequenceTimeSeries
     >>> generator = MixedTimeSeries(
-    ...     TimeSeries({"key1": RandUniform(), "key2": RandUniform()}),
+    ...     SequenceTimeSeries({"key1": RandUniform(), "key2": RandUniform()}),
     ...     key1="key1",
     ...     key2="key2",
     ... )
     >>> generator
     MixedTimeSeriesGenerator(
-      (generator): TimeSeriesGenerator(
+      (generator): SequenceTimeSeriesGenerator(
           (key1): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
           (key2): RandUniformSequenceGenerator(low=0.0, high=1.0, feature_size=(1,))
         )
