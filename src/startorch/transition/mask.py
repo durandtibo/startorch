@@ -13,7 +13,7 @@ from startorch.transition.base import (
     BaseTransitionGenerator,
     setup_transition_generator,
 )
-from startorch.utils.mask import mask_by_row
+from startorch.utils.mask import mask_square_matrix
 
 if TYPE_CHECKING:
     import torch
@@ -64,4 +64,4 @@ class MaskedTransitionGenerator(BaseTransitionGenerator):
         n: int,
         rng: torch.Generator | None = None,
     ) -> torch.Tensor:
-        return mask_by_row(self._generator.generate(n=n, rng=rng), n=self._num_mask, rng=rng)
+        return mask_square_matrix(self._generator.generate(n=n, rng=rng), n=self._num_mask, rng=rng)

@@ -36,7 +36,7 @@ def test_masked_str() -> None:
 )
 @pytest.mark.parametrize("n", [1, 2, 6])
 def test_masked_generate(generator: BaseTransitionGenerator | dict, n: int) -> None:
-    out = MaskedTransitionGenerator(generator, num_mask=n-1).generate(n=n)
+    out = MaskedTransitionGenerator(generator, num_mask=n - 1).generate(n=n)
     assert out.shape == (n, n)
     assert out.dtype == torch.float
     assert objects_are_equal(out.sum(dim=0), torch.ones(n))
