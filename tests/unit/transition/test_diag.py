@@ -4,15 +4,15 @@ import pytest
 import torch
 from coola import objects_are_equal
 
-from startorch.utils.transition import DiagonalTransitionGenerator
+from startorch.transition import Diagonal
 
 #################################################
 #     Tests for DiagonalTransitionGenerator     #
 #################################################
 
 
-def test_diagonal_transition_generator_str() -> None:
-    assert str(DiagonalTransitionGenerator()).startswith("DiagonalTransitionGenerator(")
+def test_diagonal_str() -> None:
+    assert str(Diagonal()).startswith("DiagonalTransitionGenerator(")
 
 
 @pytest.mark.parametrize(
@@ -35,5 +35,5 @@ def test_diagonal_transition_generator_str() -> None:
         ),
     ],
 )
-def test_diagonal_transition_generator_generate_n_1(n: int, output: torch.Tensor) -> None:
-    assert objects_are_equal(DiagonalTransitionGenerator().generate(n=n), output)
+def test_diagonal_generate_n_1(n: int, output: torch.Tensor) -> None:
+    assert objects_are_equal(Diagonal().generate(n=n), output)

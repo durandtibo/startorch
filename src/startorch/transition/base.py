@@ -2,12 +2,15 @@ r"""Contain transition matrix generators."""
 
 from __future__ import annotations
 
-__all__ = ["BaseTransitionGenerator", "DiagonalTransitionGenerator"]
+__all__ = ["BaseTransitionGenerator"]
 
 from abc import ABC, abstractmethod
+from typing import TYPE_CHECKING
 
-import torch
 from objectory import AbstractFactory
+
+if TYPE_CHECKING:
+    import torch
 
 
 class BaseTransitionGenerator(ABC, metaclass=AbstractFactory):
@@ -20,8 +23,8 @@ class BaseTransitionGenerator(ABC, metaclass=AbstractFactory):
     ```pycon
 
     >>> import torch
-    >>> from startorch.utils.transition import DiagonalTransitionGenerator
-    >>> generator = DiagonalTransitionGenerator()
+    >>> from startorch.transition import Diagonal
+    >>> generator = Diagonal()
     >>> generator
     DiagonalTransitionGenerator()
     >>> generator.generate(n=6)
@@ -52,8 +55,8 @@ class BaseTransitionGenerator(ABC, metaclass=AbstractFactory):
         ```pycon
 
         >>> import torch
-        >>> from startorch.utils.transition import DiagonalTransitionGenerator
-        >>> generator = DiagonalTransitionGenerator()
+        >>> from startorch.transition import Diagonal
+        >>> generator = Diagonal()
         >>> generator.generate(n=6)
         tensor([[1., 0., 0., 0., 0., 0.],
                 [0., 1., 0., 0., 0., 0.],
@@ -64,37 +67,3 @@ class BaseTransitionGenerator(ABC, metaclass=AbstractFactory):
 
         ```
         """
-
-
-class DiagonalTransitionGenerator(BaseTransitionGenerator):
-    r"""Implement a simple diagonal transition matrix generator.
-
-    Example usage:
-
-    ```pycon
-
-    >>> import torch
-    >>> from startorch.utils.transition import DiagonalTransitionGenerator
-    >>> generator = DiagonalTransitionGenerator()
-    >>> generator
-    DiagonalTransitionGenerator()
-    >>> generator.generate(n=6)
-    tensor([[1., 0., 0., 0., 0., 0.],
-            [0., 1., 0., 0., 0., 0.],
-            [0., 0., 1., 0., 0., 0.],
-            [0., 0., 0., 1., 0., 0.],
-            [0., 0., 0., 0., 1., 0.],
-            [0., 0., 0., 0., 0., 1.]])
-
-    ```
-    """
-
-    def __repr__(self) -> str:
-        return f"{self.__class__.__qualname__}()"
-
-    def generate(
-        self,
-        n: int,
-        rng: torch.Generator | None = None,  # noqa: ARG002
-    ) -> torch.Tensor:
-        return torch.diag(torch.ones(n))
