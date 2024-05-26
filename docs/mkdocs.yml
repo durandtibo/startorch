@@ -26,11 +26,12 @@ nav:
       - example: refs/example.md
       - periodic: refs/periodic.md
       - plot: refs/plot.md
+      - random: refs/random.md
       - sequence: refs/sequence.md
       - tensor: refs/tensor.md
       - timeseries: refs/timeseries.md
       - transformer: refs/transformer.md
-      - random: refs/random.md
+      - transition: refs/transition.md
       - utils: refs/utils.md
   - GitHub: https://github.com/durandtibo/startorch
 
