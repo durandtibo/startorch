@@ -2,14 +2,14 @@ r"""Contain utility functions for PyTorch tensors."""
 
 from __future__ import annotations
 
-__all__ = ["shapes_are_equal"]
+__all__ = ["shapes_are_equal", "circulant"]
 
 from typing import TYPE_CHECKING
 
+import torch
+
 if TYPE_CHECKING:
     from collections.abc import Sequence
-
-    import torch
 
 
 def shapes_are_equal(tensors: Sequence[torch.Tensor]) -> bool:
@@ -44,3 +44,52 @@ def shapes_are_equal(tensors: Sequence[torch.Tensor]) -> bool:
         return False
     shape = tensors[0].shape
     return all(shape == tensor.shape for tensor in tensors[1:])
+
+
+def circulant(vector: torch.Tensor) -> torch.Tensor:
+    r"""Return a circulant matrix of shape ``(n, n)``.
+
+    Args:
+        vector: The base vector of shape ``(n,)`` used to generate
+            the circulant matrix.
+
+    Returns:
+        A circulant matrix of shape ``(n, n)``.
+
+    Raises:
+        ValueError: if the input tensor is not a vector.
+
+    Example usage:
+
+    ```pycon
+
+    >>> import torch
+    >>> from startorch.utils.tensor import circulant
+    >>> c = circulant(torch.arange(5))
+    >>> c
+    tensor([[0, 1, 2, 3, 4],
+            [4, 0, 1, 2, 3],
+            [3, 4, 0, 1, 2],
+            [2, 3, 4, 0, 1],
+            [1, 2, 3, 4, 0]])
+    >>> c = circulant(torch.tensor([1, 2, 3, 0]))
+    >>> c
+    tensor([[1, 2, 3, 0],
+            [0, 1, 2, 3],
+            [3, 0, 1, 2],
+            [2, 3, 0, 1]])
+
+    ```
+    """
+    if vector.ndim != 1:
+        msg = f"Expected a vector but received a {vector.ndim}-d tensor"
+        raise ValueError(msg)
+    n = vector.shape[0]
+    return (
+        torch.cat(
+            [vector.flip((0,)), torch.narrow(vector.flip((0,)), dim=0, start=0, length=n - 1)],
+            dim=0,
+        )
+        .unfold(0, n, 1)
+        .flip((1,))
+    )
