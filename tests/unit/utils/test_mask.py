@@ -6,7 +6,7 @@ import pytest
 import torch
 from coola import objects_are_equal
 
-from startorch.utils.mask import mask_by_row
+from startorch.utils.mask import mask_by_row, mask_square_matrix
 from startorch.utils.seed import get_torch_generator
 
 #################################
@@ -102,4 +102,61 @@ def test_mask_by_row_different_random_seeds() -> None:
     assert not objects_are_equal(
         mask_by_row(tensor, n=2, rng=get_torch_generator(1)),
         mask_by_row(tensor, n=2, rng=get_torch_generator(2)),
+    )
+
+
+########################################
+#     Tests for mask_square_matrix     #
+########################################
+
+
+@pytest.mark.parametrize("n", [0, 1, 2, 3, 4, 5])
+def test_mask_square_matrix_long(n: int) -> None:
+    matrix = mask_square_matrix(matrix=torch.arange(25).view(5, 5).add(1), n=n)
+    assert matrix.dtype == torch.long
+    assert matrix.shape == (5, 5)
+    assert objects_are_equal(matrix.eq(0).sum(dim=0), torch.full((5,), fill_value=n))
+    assert objects_are_equal(matrix.eq(0).sum(dim=1), torch.full((5,), fill_value=n))
+
+
+@pytest.mark.parametrize("n", [0, 1, 2, 3, 4, 5])
+def test_mask_square_matrix_float(n: int) -> None:
+    matrix = mask_square_matrix(matrix=torch.arange(25, dtype=torch.float).view(5, 5).add(1), n=n)
+    assert matrix.dtype == torch.float
+    assert matrix.shape == (5, 5)
+    assert objects_are_equal(matrix.eq(0).sum(dim=0), torch.full((5,), fill_value=n))
+    assert objects_are_equal(matrix.eq(0).sum(dim=1), torch.full((5,), fill_value=n))
+
+
+def test_mask_square_matrix_incorrect_dims() -> None:
+    with pytest.raises(
+        ValueError, match="Expected a 2D tensor but received a tensor with 1 dimensions"
+    ):
+        mask_square_matrix(torch.ones(5), n=1)
+
+
+def test_mask_square_matrix_incorrect_shape() -> None:
+    with pytest.raises(ValueError, match="Expected a square matrix but received"):
+        mask_square_matrix(torch.ones(5, 4), n=1)
+
+
+@pytest.mark.parametrize("n", [-1, 6])
+def test_mask_square_matrix_incorrect_n(n: int) -> None:
+    with pytest.raises(ValueError, match="Incorrect number of values to mask:"):
+        mask_square_matrix(torch.ones(5, 5), n=n)
+
+
+def test_mask_square_matrix_same_random_seed() -> None:
+    matrix = torch.arange(25).view(5, 5).add(1)
+    assert objects_are_equal(
+        mask_square_matrix(matrix, n=2, rng=get_torch_generator(1)),
+        mask_square_matrix(matrix, n=2, rng=get_torch_generator(1)),
+    )
+
+
+def test_mask_square_matrix_different_random_seeds() -> None:
+    matrix = torch.arange(25).view(5, 5).add(1)
+    assert not objects_are_equal(
+        mask_square_matrix(matrix, n=2, rng=get_torch_generator(1)),
+        mask_square_matrix(matrix, n=2, rng=get_torch_generator(2)),
     )
