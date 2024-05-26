@@ -119,6 +119,15 @@ def test_mask_square_matrix_long(n: int) -> None:
     assert objects_are_equal(matrix.eq(0).sum(dim=1), torch.full((5,), fill_value=n))
 
 
+@pytest.mark.parametrize("n", [0, 1, 2, 3, 4, 5])
+def test_mask_square_matrix_float(n: int) -> None:
+    matrix = mask_square_matrix(matrix=torch.arange(25, dtype=torch.float).view(5, 5).add(1), n=n)
+    assert matrix.dtype == torch.float
+    assert matrix.shape == (5, 5)
+    assert objects_are_equal(matrix.eq(0).sum(dim=0), torch.full((5,), fill_value=n))
+    assert objects_are_equal(matrix.eq(0).sum(dim=1), torch.full((5,), fill_value=n))
+
+
 def test_mask_square_matrix_incorrect_dims() -> None:
     with pytest.raises(
         ValueError, match="Expected a 2D tensor but received a tensor with 1 dimensions"
