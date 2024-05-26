@@ -8,6 +8,7 @@ __all__ = [
     "DiagonalTransitionGenerator",
     "PermutedDiagonal",
     "PermutedDiagonalTransitionGenerator",
+    "TensorTransitionGenerator",
     "is_transition_generator_config",
     "setup_transition_generator",
 ]
@@ -23,3 +24,4 @@ from startorch.transition.diag import PermutedDiagonalTransitionGenerator
 from startorch.transition.diag import (
     PermutedDiagonalTransitionGenerator as PermutedDiagonal,
 )
+from startorch.transition.tensor import TensorTransitionGenerator
