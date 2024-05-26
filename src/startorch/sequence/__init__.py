@@ -61,6 +61,8 @@ __all__ = [
     "LogUniformSequenceGenerator",
     "Long",
     "LongSequenceGenerator",
+    "MarkovChain",
+    "MarkovChainSequenceGenerator",
     "Mul",
     "MulScalar",
     "MulScalarSequenceGenerator",
@@ -241,6 +243,8 @@ from startorch.sequence.lognormal import TruncLogNormalSequenceGenerator
 from startorch.sequence.lognormal import (
     TruncLogNormalSequenceGenerator as TruncLogNormal,
 )
+from startorch.sequence.markov import MarkovChainSequenceGenerator
+from startorch.sequence.markov import MarkovChainSequenceGenerator as MarkovChain
 from startorch.sequence.math import AbsSequenceGenerator
 from startorch.sequence.math import AbsSequenceGenerator as Abs
 from startorch.sequence.math import AddScalarSequenceGenerator
