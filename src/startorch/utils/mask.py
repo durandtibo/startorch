@@ -60,7 +60,10 @@ def mask_by_row(
 def mask_square_matrix(
     matrix: torch.Tensor, n: int, mask_value: float = 0.0, rng: torch.Generator | None = None
 ) -> torch.Tensor:
-    r"""Set to 0 some values in each row.
+    r"""Mask some values of a square matrix.
+
+    This function is designed to mask all the rows and columns
+    with the same number.
 
     Args:
         matrix: The input tensor with the data to zero.
