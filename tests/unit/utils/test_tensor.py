@@ -2,8 +2,9 @@ from __future__ import annotations
 
 import pytest
 import torch
+from coola import objects_are_equal
 
-from startorch.utils.tensor import shapes_are_equal
+from startorch.utils.tensor import circulant, shapes_are_equal
 
 ######################################
 #     Tests for shapes_are_equal     #
@@ -33,3 +34,28 @@ def test_shapes_are_equal_false_2_tensors() -> None:
 
 def test_shapes_are_equal_false_3_tensors() -> None:
     assert not shapes_are_equal([torch.rand(2, 3), torch.zeros(2, 3, 4), torch.ones(2)])
+
+
+###############################
+#     Tests for circulant     #
+###############################
+
+
+def test_circulant_dim_1() -> None:
+    assert objects_are_equal(circulant(torch.tensor([1])), torch.tensor([[1]]))
+
+
+def test_circulant_dim_2() -> None:
+    assert objects_are_equal(circulant(torch.tensor([1, 2])), torch.tensor([[1, 2], [2, 1]]))
+
+
+def test_circulant_dim_4() -> None:
+    assert objects_are_equal(
+        circulant(torch.tensor([1, 2, 3, 0])),
+        torch.tensor([[1, 2, 3, 0], [0, 1, 2, 3], [3, 0, 1, 2], [2, 3, 0, 1]]),
+    )
+
+
+def test_circulant_incorrect_shape() -> None:
+    with pytest.raises(ValueError, match="Expected a vector but received a 2-d tensor"):
+        circulant(torch.tensor([[1, 2]]))
