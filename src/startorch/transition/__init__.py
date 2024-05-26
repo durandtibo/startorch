@@ -6,6 +6,8 @@ __all__ = [
     "BaseTransitionGenerator",
     "Diagonal",
     "DiagonalTransitionGenerator",
+    "PermutedDiagonal",
+    "PermutedDiagonalTransitionGenerator",
     "is_transition_generator_config",
     "setup_transition_generator",
 ]
@@ -17,3 +19,7 @@ from startorch.transition.base import (
 )
 from startorch.transition.diag import DiagonalTransitionGenerator
 from startorch.transition.diag import DiagonalTransitionGenerator as Diagonal
+from startorch.transition.diag import PermutedDiagonalTransitionGenerator
+from startorch.transition.diag import (
+    PermutedDiagonalTransitionGenerator as PermutedDiagonal,
+)
