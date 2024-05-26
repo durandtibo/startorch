@@ -56,6 +56,22 @@ def test_circulant_dim_4() -> None:
     )
 
 
+def test_circulant_long() -> None:
+    assert objects_are_equal(
+        circulant(torch.tensor([1, 2, 3, 0])),
+        torch.tensor([[1, 2, 3, 0], [0, 1, 2, 3], [3, 0, 1, 2], [2, 3, 0, 1]]),
+    )
+
+
+def test_circulant_float() -> None:
+    assert objects_are_equal(
+        circulant(torch.tensor([1.0, 2.0, 3.0, 0.0])),
+        torch.tensor(
+            [[1.0, 2.0, 3.0, 0.0], [0.0, 1.0, 2.0, 3.0], [3.0, 0.0, 1.0, 2.0], [2.0, 3.0, 0.0, 1.0]]
+        ),
+    )
+
+
 def test_circulant_incorrect_shape() -> None:
     with pytest.raises(ValueError, match="Expected a vector but received a 2-d tensor"):
         circulant(torch.tensor([[1, 2]]))

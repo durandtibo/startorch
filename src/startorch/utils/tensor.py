@@ -54,7 +54,7 @@ def circulant(vector: torch.Tensor) -> torch.Tensor:
             the circulant matrix.
 
     Returns:
-        A circulant matrix of shape ``(n, n)`` and data type long.
+        A circulant matrix of shape ``(n, n)``.
 
     Raises:
         ValueError: if the input tensor is not a vector.
