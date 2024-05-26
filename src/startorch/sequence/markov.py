@@ -9,6 +9,8 @@ __all__ = ["MarkovChainSequenceGenerator", "make_markov_chain"]
 import torch
 
 from startorch.sequence.base import BaseSequenceGenerator
+from startorch.tensor import BaseTensorGenerator, setup_tensor_generator
+from startorch.transition import BaseTransitionGenerator, setup_transition_generator
 
 
 class MarkovChainSequenceGenerator(BaseSequenceGenerator):
@@ -44,7 +46,7 @@ class MarkovChainSequenceGenerator(BaseSequenceGenerator):
         self._init = init
 
     def __repr__(self) -> str:
-        init = self._init if self._init is None else tuple(self._init)
+        init = self._init if self._init is None else tuple(self._init.shape)
         return f"{self.__class__.__qualname__}(transition={tuple(self._transition.shape)}, init={init})"
 
     def generate(
@@ -57,6 +59,51 @@ class MarkovChainSequenceGenerator(BaseSequenceGenerator):
             init=self._init,
             rng=rng,
         )
+
+    @classmethod
+    def create_from_generators(
+        cls,
+        n: int,
+        transition: BaseTransitionGenerator | dict,
+        init: BaseTensorGenerator | dict | None = None,
+        rng: torch.Generator | None = None,
+    ) -> MarkovChainSequenceGenerator:
+        r"""Create the Markov chain sequence generator where the
+        transition matrix and initial probabilities are generated from
+        generators.
+
+        Args:
+            n: The number of states in the Markov chain i.e. the size
+                of the transition matrix.
+            transition: The transition matrix generator or its
+                configuration.
+            init: The initial probabilities generator or its
+                configuration.
+            rng: An optional random number generator.
+
+        Returns:
+            The instantiated Markov chain sequence generator.
+
+        Example usage:
+
+        ```pycon
+
+        >>> import torch
+        >>> from startorch.sequence import MarkovChain
+        >>> generator = MarkovChain.create_from_generators(
+        ...     n=6,
+        ...     transition={'_target_': 'startorch.transition.Diagonal'},
+        ...     init={'_target_': 'startorch.tensor.RandUniform'},
+        ... )
+        >>> generator
+        MarkovChainSequenceGenerator(transition=(6, 6), init=(6,))
+
+        ```
+        """
+        transition = setup_transition_generator(transition)
+        if init is not None:
+            init = setup_tensor_generator(init).generate(size=(n,), rng=rng)
+        return cls(transition=transition.generate(n=n, rng=rng), init=init)
 
 
 def make_markov_chain(

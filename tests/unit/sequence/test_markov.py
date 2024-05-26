@@ -3,6 +3,7 @@ from __future__ import annotations
 import pytest
 import torch
 from coola import objects_are_equal
+from objectory import OBJECT_TARGET
 
 from startorch.sequence import MarkovChain
 from startorch.sequence.markov import make_markov_chain
@@ -74,6 +75,27 @@ def test_markov_chain_generate_different_random_seeds() -> None:
         generator.generate(batch_size=10, seq_len=16, rng=get_torch_generator(1)),
         generator.generate(batch_size=10, seq_len=16, rng=get_torch_generator(2)),
     )
+
+
+def test_markov_chain_create_from_generators_no_init() -> None:
+    out = MarkovChain.create_from_generators(
+        n=6, transition={OBJECT_TARGET: "startorch.transition.Diagonal"}
+    ).generate(batch_size=2, seq_len=5)
+    assert out.dtype == torch.long
+    assert out.shape == (2, 5)
+
+
+def test_markov_chain_create_from_generators_init() -> None:
+    generator = MarkovChain.create_from_generators(
+        n=6,
+        transition={OBJECT_TARGET: "startorch.transition.Diagonal"},
+        init={"_target_": "startorch.tensor.RandUniform"},
+    )
+    assert generator._transition.shape == (6, 6)
+    assert generator._init.shape == (6,)
+    out = generator.generate(batch_size=2, seq_len=5)
+    assert out.dtype == torch.long
+    assert out.shape == (2, 5)
 
 
 #######################################
