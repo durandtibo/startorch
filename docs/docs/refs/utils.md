@@ -3,6 +3,7 @@
 ::: startorch.utils.conversion
 ::: startorch.utils.format
 ::: startorch.utils.imports
+::: startorch.utils.mask
 ::: startorch.utils.tensor
 ::: startorch.utils.validation
 ::: startorch.utils.weight
