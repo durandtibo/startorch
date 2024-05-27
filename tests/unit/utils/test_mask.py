@@ -128,6 +128,24 @@ def test_mask_square_matrix_float(n: int) -> None:
     assert objects_are_equal(matrix.eq(0).sum(dim=1), torch.full((5,), fill_value=n))
 
 
+def test_mask_square_matrix_mask_value() -> None:
+    mock = Mock(return_value=torch.tensor([3, 0, 1, 4, 2]))
+    with patch("startorch.utils.mask.torch.randperm", mock):
+        tensor = mask_square_matrix(matrix=torch.arange(25).view(5, 5).add(1), n=2, mask_value=-1)
+        assert objects_are_equal(
+            tensor,
+            torch.tensor(
+                [
+                    [-1, 2, 3, -1, 5],
+                    [6, -1, -1, 9, 10],
+                    [11, 12, -1, 14, -1],
+                    [16, -1, 18, -1, 20],
+                    [-1, 22, 23, 24, -1],
+                ]
+            ),
+        )
+
+
 def test_mask_square_matrix_incorrect_dims() -> None:
     with pytest.raises(
         ValueError, match="Expected a 2D tensor but received a tensor with 1 dimensions"
