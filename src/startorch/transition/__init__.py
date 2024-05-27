@@ -8,6 +8,8 @@ __all__ = [
     "DiagonalTransitionGenerator",
     "Masked",
     "MaskedTransitionGenerator",
+    "Normalize",
+    "NormalizeTransitionGenerator",
     "PermutedDiagonal",
     "PermutedDiagonalTransitionGenerator",
     "TensorTransitionGenerator",
@@ -28,4 +30,6 @@ from startorch.transition.diag import (
 )
 from startorch.transition.mask import MaskedTransitionGenerator
 from startorch.transition.mask import MaskedTransitionGenerator as Masked
+from startorch.transition.normalize import NormalizeTransitionGenerator
+from startorch.transition.normalize import NormalizeTransitionGenerator as Normalize
 from startorch.transition.tensor import TensorTransitionGenerator
