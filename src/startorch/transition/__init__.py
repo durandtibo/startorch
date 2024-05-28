@@ -13,6 +13,8 @@ __all__ = [
     "PermutedDiagonal",
     "PermutedDiagonalTransitionGenerator",
     "TensorTransitionGenerator",
+    "Transform",
+    "TransformTransitionGenerator",
     "is_transition_generator_config",
     "setup_transition_generator",
 ]
@@ -33,3 +35,5 @@ from startorch.transition.mask import MaskedTransitionGenerator as Masked
 from startorch.transition.normalize import NormalizeTransitionGenerator
 from startorch.transition.normalize import NormalizeTransitionGenerator as Normalize
 from startorch.transition.tensor import TensorTransitionGenerator
+from startorch.transition.transform import TransformTransitionGenerator
+from startorch.transition.transform import TransformTransitionGenerator as Transform
