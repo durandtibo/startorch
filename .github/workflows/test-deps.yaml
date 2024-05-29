@@ -13,7 +13,7 @@ jobs:
       matrix:
         os: [ ubuntu-latest ]
         python-version: [ '3.12', '3.11', '3.10', '3.9' ]
-        batchtensor-version: [ 0.0.3, 0.0.2 ]
+        batchtensor-version: [ 0.0.4, 0.0.3, 0.0.2 ]
 
     steps:
       - name: Checkout
@@ -242,7 +242,7 @@ jobs:
       matrix:
         os: [ ubuntu-latest ]
         python-version: [ '3.12', '3.11', '3.10', '3.9' ]
-        iden-version: [ 0.0.3, 0.0.2 ]
+        iden-version: [ 0.0.4, 0.0.3, 0.0.2 ]
 
     steps:
       - name: Checkout
