@@ -6,6 +6,8 @@ from __future__ import annotations
 __all__ = [
     "AbsTensorTransformer",
     "ClampTensorTransformer",
+    "ExpTensorTransformer",
+    "LogTensorTransformer",
 ]
 
 from typing import TYPE_CHECKING
@@ -103,3 +105,71 @@ class ClampTensorTransformer(BaseTensorTransformer):
         rng: torch.Transformer | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.clamp(self._min, self._max)
+
+
+class ExpTensorTransformer(BaseTensorTransformer):
+    r"""Implement a tensor transformer that computes the exponential of
+    the input tensor.
+
+    This tensor transformer is equivalent to: ``output = exp(input)``
+
+    Example usage:
+
+    ```pycon
+
+    >>> import torch
+    >>> from startorch.tensor.transformer import Exp
+    >>> transformer = Exp()
+    >>> transformer
+    ExpTensorTransformer()
+    >>> out = transformer.transform(torch.tensor([[1.0, -2.0, 3.0], [-4.0, 5.0, -6.0]]))
+    >>> out
+    tensor([[2.7183e+00, 1.3534e-01, 2.0086e+01], [1.8316e-02, 1.4841e+02, 2.4788e-03]])
+
+    ```
+    """
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__qualname__}()"
+
+    def transform(
+        self,
+        tensor: torch.Tensor,
+        *,
+        rng: torch.Transformer | None = None,  # noqa: ARG002
+    ) -> torch.Tensor:
+        return tensor.exp()
+
+
+class LogTensorTransformer(BaseTensorTransformer):
+    r"""Implement a tensor transformer that computes the logarithm of the
+    input tensor.
+
+    This tensor transformer is equivalent to: ``output = log(input)``
+
+    Example usage:
+
+    ```pycon
+
+    >>> import torch
+    >>> from startorch.tensor.transformer import Log
+    >>> transformer = Log()
+    >>> transformer
+    LogTensorTransformer()
+    >>> out = transformer.transform(torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]]))
+    >>> out
+    tensor([[0.0000, 0.6931, 1.0986], [1.3863, 1.6094, 1.7918]])
+
+    ```
+    """
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__qualname__}()"
+
+    def transform(
+        self,
+        tensor: torch.Tensor,
+        *,
+        rng: torch.Transformer | None = None,  # noqa: ARG002
+    ) -> torch.Tensor:
+        return tensor.log()

@@ -26,6 +26,10 @@ __all__ = [
     "TanhTensorTransformer",
     "is_tensor_transformer_config",
     "setup_tensor_transformer",
+    "Exp",
+    "ExpTensorTransformer",
+    "Log",
+    "LogTensorTransformer",
 ]
 
 from startorch.tensor.transformer.base import (
@@ -39,6 +43,10 @@ from startorch.tensor.transformer.math import AbsTensorTransformer
 from startorch.tensor.transformer.math import AbsTensorTransformer as Abs
 from startorch.tensor.transformer.math import ClampTensorTransformer
 from startorch.tensor.transformer.math import ClampTensorTransformer as Clamp
+from startorch.tensor.transformer.math import ExpTensorTransformer
+from startorch.tensor.transformer.math import ExpTensorTransformer as Exp
+from startorch.tensor.transformer.math import LogTensorTransformer
+from startorch.tensor.transformer.math import LogTensorTransformer as Log
 from startorch.tensor.transformer.sequential import SequentialTensorTransformer
 from startorch.tensor.transformer.sequential import (
     SequentialTensorTransformer as Sequential,

@@ -4,7 +4,12 @@ import pytest
 import torch
 from coola import objects_are_allclose, objects_are_equal
 
-from startorch.tensor.transformer import AbsTensorTransformer, ClampTensorTransformer
+from startorch.tensor.transformer import (
+    AbsTensorTransformer,
+    ClampTensorTransformer,
+    ExpTensorTransformer,
+    LogTensorTransformer,
+)
 from startorch.utils.seed import get_torch_generator
 
 ##########################################
@@ -100,6 +105,86 @@ def test_clamp_transform_same_random_seed() -> None:
 def test_clamp_transform_different_random_seeds() -> None:
     transformer = ClampTensorTransformer(min=-2, max=2)
     tensor = torch.tensor([[1.0, -2.0, 3.0], [-4.0, 5.0, -6.0]])
+    # the outputs must be equal because this transformer does not have randomness
+    assert objects_are_equal(
+        transformer.transform(tensor, rng=get_torch_generator(1)),
+        transformer.transform(tensor, rng=get_torch_generator(2)),
+    )
+
+
+##########################################
+#     Tests for ExpTensorTransformer     #
+##########################################
+
+
+def test_exp_str() -> None:
+    assert str(ExpTensorTransformer()).startswith("ExpTensorTransformer(")
+
+
+def test_exp_transform() -> None:
+    assert objects_are_allclose(
+        ExpTensorTransformer().transform(torch.tensor([[1.0, -2.0, 3.0], [-4.0, 5.0, -6.0]])),
+        torch.tensor(
+            [
+                [2.7182817459106445, 0.1353352814912796, 20.08553695678711],
+                [0.018315639346837997, 148.4131622314453, 0.0024787522852420807],
+            ]
+        ),
+    )
+
+
+def test_exp_transform_same_random_seed() -> None:
+    transformer = ExpTensorTransformer()
+    tensor = torch.tensor([[1.0, -2.0, 3.0], [-4.0, 5.0, -6.0]])
+    assert objects_are_equal(
+        transformer.transform(tensor, rng=get_torch_generator(1)),
+        transformer.transform(tensor, rng=get_torch_generator(1)),
+    )
+
+
+def test_exp_transform_different_random_seeds() -> None:
+    transformer = ExpTensorTransformer()
+    tensor = torch.tensor([[1.0, -2.0, 3.0], [-4.0, 5.0, -6.0]])
+    # the outputs must be equal because this transformer does not have randomness
+    assert objects_are_equal(
+        transformer.transform(tensor, rng=get_torch_generator(1)),
+        transformer.transform(tensor, rng=get_torch_generator(2)),
+    )
+
+
+##########################################
+#     Tests for LogTensorTransformer     #
+##########################################
+
+
+def test_log_str() -> None:
+    assert str(LogTensorTransformer()).startswith("LogTensorTransformer(")
+
+
+def test_log_transform() -> None:
+    assert objects_are_allclose(
+        LogTensorTransformer().transform(torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])),
+        torch.tensor(
+            [
+                [0.0, 0.6931471824645996, 1.0986123085021973],
+                [1.3862943649291992, 1.6094379425048828, 1.7917594909667969],
+            ]
+        ),
+    )
+
+
+def test_log_transform_same_random_seed() -> None:
+    transformer = LogTensorTransformer()
+    tensor = torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
+    assert objects_are_equal(
+        transformer.transform(tensor, rng=get_torch_generator(1)),
+        transformer.transform(tensor, rng=get_torch_generator(1)),
+    )
+
+
+def test_log_transform_different_random_seeds() -> None:
+    transformer = LogTensorTransformer()
+    tensor = torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
     # the outputs must be equal because this transformer does not have randomness
     assert objects_are_equal(
         transformer.transform(tensor, rng=get_torch_generator(1)),
