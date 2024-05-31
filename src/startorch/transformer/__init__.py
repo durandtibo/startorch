@@ -3,8 +3,6 @@ r"""Contain data transformers."""
 from __future__ import annotations
 
 __all__ = [
-    "Abs",
-    "AbsTransformer",
     "Acosh",
     "AcoshTransformer",
     "Asinh",
@@ -13,8 +11,6 @@ __all__ = [
     "AtanhTransformer",
     "BaseTensorTransformer",
     "BaseTransformer",
-    "Clamp",
-    "ClampTransformer",
     "Cosh",
     "CoshTransformer",
     "Exponential",
@@ -48,10 +44,6 @@ from startorch.transformer.identity import IdentityTransformer
 from startorch.transformer.identity import IdentityTransformer as Identity
 from startorch.transformer.lut import LookupTableTransformer
 from startorch.transformer.lut import LookupTableTransformer as LookupTable
-from startorch.transformer.math import AbsTransformer
-from startorch.transformer.math import AbsTransformer as Abs
-from startorch.transformer.math import ClampTransformer
-from startorch.transformer.math import ClampTransformer as Clamp
 from startorch.transformer.poisson import PoissonTransformer
 from startorch.transformer.poisson import PoissonTransformer as Poisson
 from startorch.transformer.sequential import SequentialTransformer

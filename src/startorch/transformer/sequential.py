@@ -33,17 +33,30 @@ class SequentialTransformer(BaseTransformer):
     ```pycon
 
     >>> import torch
-    >>> from startorch.transformer import Sequential, Abs, Clamp
+    >>> from startorch.transformer import Sequential, TensorTransformer
+    >>> from startorch.tensor.transformer import Abs, Clamp
     >>> transformer = Sequential(
     ...     [
-    ...         Abs(input="input", output="output1"),
-    ...         Clamp(input="input", output="output2", min=-1, max=2),
+    ...         TensorTransformer(transformer=Abs(), input="input", output="output1"),
+    ...         TensorTransformer(
+    ...             transformer=Clamp(min=-1, max=2), input="input", output="output2"
+    ...         ),
     ...     ]
     ... )
     >>> transformer
     SequentialTransformer(
-      (0): AbsTransformer(input=input, output=output1, exist_ok=False)
-      (1): ClampTransformer(input=input, output=output2, min=-1, max=2, exist_ok=False)
+      (0): TensorTransformer(
+          (transformer): AbsTensorTransformer()
+          (input): input
+          (output): output1
+          (exist_ok): False
+        )
+      (1): TensorTransformer(
+          (transformer): ClampTensorTransformer(min=-1, max=2)
+          (input): input
+          (output): output2
+          (exist_ok): False
+        )
     )
     >>> data = {"input": torch.tensor([[1.0, -2.0, 3.0], [-4.0, 5.0, -6.0]])}
     >>> out = transformer.transform(data)

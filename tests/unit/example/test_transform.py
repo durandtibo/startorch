@@ -8,11 +8,9 @@ from startorch.example import (
     Transform,
     VanillaExampleGenerator,
 )
-from startorch.transformer import Clamp
+from startorch.tensor.transformer import Clamp
+from startorch.transformer import TensorTransformer
 from startorch.utils.seed import get_torch_generator
-
-SIZES = (1, 2, 4)
-
 
 ###############################################
 #     Tests for TransformExampleGenerator     #
@@ -25,7 +23,9 @@ def test_transform_str() -> None:
             generator=VanillaExampleGenerator(
                 {"value": torch.arange(30).view(10, 3), "label": torch.arange(10)}
             ),
-            transformer=Clamp(input="value", output="value_transformed", min=2.0, max=5.0),
+            transformer=TensorTransformer(
+                transformer=Clamp(min=2.0, max=5.0), input="value", output="value_transformed"
+            ),
         )
     ).startswith("TransformExampleGenerator(")
 
@@ -35,7 +35,9 @@ def test_transform_generate() -> None:
         generator=VanillaExampleGenerator(
             {"value": torch.arange(30, dtype=torch.float).view(10, 3), "label": torch.arange(10)}
         ),
-        transformer=Clamp(input="value", output="value_transformed", min=2.0, max=5.0),
+        transformer=TensorTransformer(
+            transformer=Clamp(min=2.0, max=5.0), input="value", output="value_transformed"
+        ),
     ).generate(batch_size=5)
     assert objects_are_equal(
         batch,
@@ -68,7 +70,9 @@ def test_transform_generate() -> None:
 def test_transform_generate_same_random_seed() -> None:
     generator = Transform(
         generator=HypercubeClassification(num_classes=5, feature_size=6),
-        transformer=Clamp(input="feature", output="feature_transformed", min=-1.0, max=1.0),
+        transformer=TensorTransformer(
+            transformer=Clamp(min=-1.0, max=1.0), input="feature", output="feature_transformed"
+        ),
     )
     assert objects_are_equal(
         generator.generate(batch_size=64, rng=get_torch_generator(1)),
@@ -79,7 +83,9 @@ def test_transform_generate_same_random_seed() -> None:
 def test_transform_generate_different_random_seeds() -> None:
     generator = Transform(
         generator=HypercubeClassification(num_classes=5, feature_size=6),
-        transformer=Clamp(input="feature", output="feature_transformed", min=-1.0, max=1.0),
+        transformer=TensorTransformer(
+            transformer=Clamp(min=-1.0, max=1.0), input="feature", output="vfeature_transformed"
+        ),
     )
     assert not objects_are_equal(
         generator.generate(batch_size=64, rng=get_torch_generator(1)),
