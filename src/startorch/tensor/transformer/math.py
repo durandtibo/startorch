@@ -8,6 +8,7 @@ __all__ = [
     "ClampTensorTransformer",
     "ExpTensorTransformer",
     "LogTensorTransformer",
+    "Log1pTensorTransformer",
 ]
 
 from typing import TYPE_CHECKING
@@ -141,6 +142,40 @@ class ExpTensorTransformer(BaseTensorTransformer):
         return tensor.exp()
 
 
+class Expm1TensorTransformer(BaseTensorTransformer):
+    r"""Implement a tensor transformer that computes the exponential of
+    the input tensor.
+
+    This tensor transformer is equivalent to: ``output = exp(input) - 1``
+
+    Example usage:
+
+    ```pycon
+
+    >>> import torch
+    >>> from startorch.tensor.transformer import Expm1
+    >>> transformer = Expm1()
+    >>> transformer
+    Expm1TensorTransformer()
+    >>> out = transformer.transform(torch.tensor([[1.0, -2.0, 3.0], [-4.0, 5.0, -6.0]]))
+    >>> out
+    tensor([[  1.7183,  -0.8647,  19.0855], [ -0.9817, 147.4132,  -0.9975]])
+
+    ```
+    """
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__qualname__}()"
+
+    def transform(
+        self,
+        tensor: torch.Tensor,
+        *,
+        rng: torch.Transformer | None = None,  # noqa: ARG002
+    ) -> torch.Tensor:
+        return tensor.expm1()
+
+
 class LogTensorTransformer(BaseTensorTransformer):
     r"""Implement a tensor transformer that computes the logarithm of the
     input tensor.
@@ -173,3 +208,37 @@ class LogTensorTransformer(BaseTensorTransformer):
         rng: torch.Transformer | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.log()
+
+
+class Log1pTensorTransformer(BaseTensorTransformer):
+    r"""Implement a tensor transformer that computes the logarithm of the
+    input tensor.
+
+    This tensor transformer is equivalent to: ``output = log(input + 1)``
+
+    Example usage:
+
+    ```pycon
+
+    >>> import torch
+    >>> from startorch.tensor.transformer import Log1p
+    >>> transformer = Log1p()
+    >>> transformer
+    Log1pTensorTransformer()
+    >>> out = transformer.transform(torch.tensor([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]]))
+    >>> out
+    tensor([[0.0000, 0.6931, 1.0986], [1.3863, 1.6094, 1.7918]])
+
+    ```
+    """
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__qualname__}()"
+
+    def transform(
+        self,
+        tensor: torch.Tensor,
+        *,
+        rng: torch.Transformer | None = None,  # noqa: ARG002
+    ) -> torch.Tensor:
+        return tensor.log1p()
