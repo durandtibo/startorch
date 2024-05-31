@@ -90,17 +90,16 @@ class BaseTensorTransformer(BaseTransformer):
     ```pycon
 
     >>> import torch
-    >>> from startorch.transformer import Tanh
-    >>> transformer = Tanh(input="input", output="output")
+    >>> from startorch.transformer import LookupTable
+    >>> transformer = LookupTable(
+    ...     weights=torch.tensor([5.0, 4.0, 3.0, 2.0, 1.0, 0.0]), index="index", output="output"
+    ... )
     >>> transformer
-    TanhTransformer(input=input, output=output, exist_ok=False)
-    >>> data = {"input": torch.tensor([[0.0, 1.0, 2.0], [4.0, 5.0, 6.0]])}
+    LookupTableTransformer(size=6, index=index, output=output, exist_ok=False)
+    >>> data = {"index": torch.tensor([[1, 2, 3], [4, 0, 2]])}
     >>> out = transformer.transform(data)
     >>> out
-    {'input': tensor([[0., 1., 2.],
-                      [4., 5., 6.]]),
-     'output': tensor([[0.0000, 0.7616, 0.9640],
-                       [0.9993, 0.9999, 1.0000]])}
+    {'index': tensor([[1, 2, 3], [4, 0, 2]]), 'output': tensor([[4., 3., 2.], [1., 5., 3.]])}
 
     ```
     """
@@ -110,11 +109,11 @@ class BaseTensorTransformer(BaseTransformer):
         self._output = output
         self._exist_ok = exist_ok
 
-    def __repr__(self) -> str:
-        return (
-            f"{self.__class__.__qualname__}(input={self._input}, output={self._output}, "
-            f"exist_ok={self._exist_ok})"
-        )
+    # def __repr__(self) -> str:
+    #     return (
+    #         f"{self.__class__.__qualname__}(input={self._input}, output={self._output}, "
+    #         f"exist_ok={self._exist_ok})"
+    #     )
 
     def transform(
         self,
