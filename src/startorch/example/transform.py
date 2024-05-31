@@ -32,15 +32,23 @@ class TransformExampleGenerator(BaseExampleGenerator):
     ```pycon
 
     >>> from startorch.example import TransformExampleGenerator, HypercubeClassification
-    >>> from startorch.transformer import Abs
+    >>> from startorch.transformer import TensorTransformer
+    >>> from startorch.tensor.transformer import Abs
     >>> generator = TransformExampleGenerator(
     ...     generator=HypercubeClassification(num_classes=5, feature_size=6),
-    ...     transformer=Abs(input="feature", output="feature_transformed"),
+    ...     transformer=TensorTransformer(
+    ...         transformer=Abs(), input="feature", output="feature_transformed"
+    ...     ),
     ... )
     >>> generator
     TransformExampleGenerator(
       (generator): HypercubeClassificationExampleGenerator(num_classes=5, feature_size=6, noise_std=0.2)
-      (transformer): AbsTransformer(input=feature, output=feature_transformed, exist_ok=False)
+      (transformer): TensorTransformer(
+          (transformer): AbsTensorTransformer()
+          (input): feature
+          (output): feature_transformed
+          (exist_ok): False
+        )
     )
     >>> generator.generate(batch_size=10)
     {'target': tensor([...]), 'feature': tensor([[...]]), 'feature_transformed': tensor([[...]])}
