@@ -29,6 +29,7 @@ nav:
       - random: refs/random.md
       - sequence: refs/sequence.md
       - tensor: refs/tensor.md
+      - tensor.transformer: refs/tensor_transformer.md
       - timeseries: refs/timeseries.md
       - transformer: refs/transformer.md
       - transition: refs/transition.md
