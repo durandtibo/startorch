@@ -31,6 +31,7 @@ __all__ = [
     "SinhTransformer",
     "Tanh",
     "TanhTransformer",
+    "TensorTransformer",
     "is_transformer_config",
     "setup_transformer",
 ]
@@ -55,6 +56,7 @@ from startorch.transformer.poisson import PoissonTransformer
 from startorch.transformer.poisson import PoissonTransformer as Poisson
 from startorch.transformer.sequential import SequentialTransformer
 from startorch.transformer.sequential import SequentialTransformer as Sequential
+from startorch.transformer.tensor import TensorTransformer
 from startorch.transformer.trigo import AcoshTransformer
 from startorch.transformer.trigo import AcoshTransformer as Acosh
 from startorch.transformer.trigo import AsinhTransformer
