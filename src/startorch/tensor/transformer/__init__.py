@@ -18,6 +18,8 @@ __all__ = [
     "CoshTensorTransformer",
     "Identity",
     "IdentityTensorTransformer",
+    "Sequential",
+    "SequentialTensorTransformer",
     "Sinh",
     "SinhTensorTransformer",
     "Tanh",
@@ -37,6 +39,10 @@ from startorch.tensor.transformer.math import AbsTensorTransformer
 from startorch.tensor.transformer.math import AbsTensorTransformer as Abs
 from startorch.tensor.transformer.math import ClampTensorTransformer
 from startorch.tensor.transformer.math import ClampTensorTransformer as Clamp
+from startorch.tensor.transformer.sequential import SequentialTensorTransformer
+from startorch.tensor.transformer.sequential import (
+    SequentialTensorTransformer as Sequential,
+)
 from startorch.tensor.transformer.trigo import AcoshTensorTransformer
 from startorch.tensor.transformer.trigo import AcoshTensorTransformer as Acosh
 from startorch.tensor.transformer.trigo import AsinhTensorTransformer

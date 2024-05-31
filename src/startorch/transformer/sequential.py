@@ -1,4 +1,5 @@
-r"""Contain the implementation of a tensor identity transformer."""
+r"""Contain the implementation a transformer that sequentially computes
+transformations."""
 
 from __future__ import annotations
 
