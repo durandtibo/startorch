@@ -7,6 +7,8 @@ __all__ = [
     "AbsTensorTransformer",
     "Acosh",
     "AcoshTensorTransformer",
+    "Add",
+    "AddTensorTransformer",
     "Asinh",
     "AsinhTensorTransformer",
     "Atanh",
@@ -26,6 +28,8 @@ __all__ = [
     "Log1p",
     "Log1pTensorTransformer",
     "LogTensorTransformer",
+    "Mul",
+    "MulTensorTransformer",
     "Neg",
     "NegTensorTransformer",
     "Sequential",
@@ -40,6 +44,10 @@ __all__ = [
     "setup_tensor_transformer",
 ]
 
+from startorch.tensor.transformer.arithmetic import AddTensorTransformer
+from startorch.tensor.transformer.arithmetic import AddTensorTransformer as Add
+from startorch.tensor.transformer.arithmetic import MulTensorTransformer
+from startorch.tensor.transformer.arithmetic import MulTensorTransformer as Mul
 from startorch.tensor.transformer.base import (
     BaseTensorTransformer,
     is_tensor_transformer_config,
