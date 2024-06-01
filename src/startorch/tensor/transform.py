@@ -1,3 +1,6 @@
+r"""Contain the implementation of a tensor generator that generates a
+tensor and then transform it."""
+
 from __future__ import annotations
 
 __all__ = ["TransformTensorGenerator"]
