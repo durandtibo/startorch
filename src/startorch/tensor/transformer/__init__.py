@@ -26,10 +26,14 @@ __all__ = [
     "Log1p",
     "Log1pTensorTransformer",
     "LogTensorTransformer",
+    "Neg",
+    "NegTensorTransformer",
     "Sequential",
     "SequentialTensorTransformer",
     "Sinh",
     "SinhTensorTransformer",
+    "Sqrt",
+    "SqrtTensorTransformer",
     "Tanh",
     "TanhTensorTransformer",
     "is_tensor_transformer_config",
@@ -55,6 +59,10 @@ from startorch.tensor.transformer.math import Log1pTensorTransformer
 from startorch.tensor.transformer.math import Log1pTensorTransformer as Log1p
 from startorch.tensor.transformer.math import LogTensorTransformer
 from startorch.tensor.transformer.math import LogTensorTransformer as Log
+from startorch.tensor.transformer.math import NegTensorTransformer
+from startorch.tensor.transformer.math import NegTensorTransformer as Neg
+from startorch.tensor.transformer.math import SqrtTensorTransformer
+from startorch.tensor.transformer.math import SqrtTensorTransformer as Sqrt
 from startorch.tensor.transformer.sequential import SequentialTensorTransformer
 from startorch.tensor.transformer.sequential import (
     SequentialTensorTransformer as Sequential,
