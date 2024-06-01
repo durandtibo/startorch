@@ -11,7 +11,6 @@ from startorch.tensor.transformer import (
     ExpTensorTransformer,
     Log1pTensorTransformer,
     LogTensorTransformer,
-    NegTensorTransformer,
     SqrtTensorTransformer,
 )
 from startorch.utils.seed import get_torch_generator
@@ -269,41 +268,6 @@ def test_log1p_transform_same_random_seed() -> None:
 def test_log1p_transform_different_random_seeds() -> None:
     transformer = Log1pTensorTransformer()
     tensor = torch.tensor([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]])
-    # the outputs must be equal because this transformer does not have randomness
-    assert objects_are_equal(
-        transformer.transform(tensor, rng=get_torch_generator(1)),
-        transformer.transform(tensor, rng=get_torch_generator(2)),
-    )
-
-
-##########################################
-#     Tests for NegTensorTransformer     #
-##########################################
-
-
-def test_neg_str() -> None:
-    assert str(NegTensorTransformer()).startswith("NegTensorTransformer(")
-
-
-def test_neg_transform() -> None:
-    assert objects_are_allclose(
-        NegTensorTransformer().transform(torch.tensor([[1.0, -2.0, 3.0], [-4.0, 5.0, -6.0]])),
-        torch.tensor([[-1.0, 2.0, -3.0], [4.0, -5.0, 6.0]]),
-    )
-
-
-def test_neg_transform_same_random_seed() -> None:
-    transformer = NegTensorTransformer()
-    tensor = torch.tensor([[1.0, -2.0, 3.0], [-4.0, 5.0, -6.0]])
-    assert objects_are_equal(
-        transformer.transform(tensor, rng=get_torch_generator(1)),
-        transformer.transform(tensor, rng=get_torch_generator(1)),
-    )
-
-
-def test_neg_transform_different_random_seeds() -> None:
-    transformer = NegTensorTransformer()
-    tensor = torch.tensor([[1.0, -2.0, 3.0], [-4.0, 5.0, -6.0]])
     # the outputs must be equal because this transformer does not have randomness
     assert objects_are_equal(
         transformer.transform(tensor, rng=get_torch_generator(1)),

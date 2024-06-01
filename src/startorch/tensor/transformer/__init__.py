@@ -56,6 +56,8 @@ from startorch.tensor.transformer.arithmetic import FmodTensorTransformer
 from startorch.tensor.transformer.arithmetic import FmodTensorTransformer as Fmod
 from startorch.tensor.transformer.arithmetic import MulTensorTransformer
 from startorch.tensor.transformer.arithmetic import MulTensorTransformer as Mul
+from startorch.tensor.transformer.arithmetic import NegTensorTransformer
+from startorch.tensor.transformer.arithmetic import NegTensorTransformer as Neg
 from startorch.tensor.transformer.base import (
     BaseTensorTransformer,
     is_tensor_transformer_config,
@@ -75,8 +77,6 @@ from startorch.tensor.transformer.math import Log1pTensorTransformer
 from startorch.tensor.transformer.math import Log1pTensorTransformer as Log1p
 from startorch.tensor.transformer.math import LogTensorTransformer
 from startorch.tensor.transformer.math import LogTensorTransformer as Log
-from startorch.tensor.transformer.math import NegTensorTransformer
-from startorch.tensor.transformer.math import NegTensorTransformer as Neg
 from startorch.tensor.transformer.math import SqrtTensorTransformer
 from startorch.tensor.transformer.math import SqrtTensorTransformer as Sqrt
 from startorch.tensor.transformer.sequential import SequentialTensorTransformer
