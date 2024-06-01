@@ -24,6 +24,8 @@ __all__ = [
     "ExpTensorTransformer",
     "Expm1",
     "Expm1TensorTransformer",
+    "Float",
+    "FloatTensorTransformer",
     "Fmod",
     "FmodTensorTransformer",
     "Identity",
@@ -32,10 +34,14 @@ __all__ = [
     "Log1p",
     "Log1pTensorTransformer",
     "LogTensorTransformer",
+    "Long",
+    "LongTensorTransformer",
     "Mul",
     "MulTensorTransformer",
     "Neg",
     "NegTensorTransformer",
+    "Pow",
+    "PowTensorTransformer",
     "Sequential",
     "SequentialTensorTransformer",
     "Sinh",
@@ -46,8 +52,6 @@ __all__ = [
     "TanhTensorTransformer",
     "is_tensor_transformer_config",
     "setup_tensor_transformer",
-    "Pow",
-    "PowTensorTransformer",
 ]
 
 from startorch.tensor.transformer.arithmetic import AddTensorTransformer
@@ -65,6 +69,10 @@ from startorch.tensor.transformer.base import (
     is_tensor_transformer_config,
     setup_tensor_transformer,
 )
+from startorch.tensor.transformer.dtype import FloatTensorTransformer
+from startorch.tensor.transformer.dtype import FloatTensorTransformer as Float
+from startorch.tensor.transformer.dtype import LongTensorTransformer
+from startorch.tensor.transformer.dtype import LongTensorTransformer as Long
 from startorch.tensor.transformer.identity import IdentityTensorTransformer
 from startorch.tensor.transformer.identity import IdentityTensorTransformer as Identity
 from startorch.tensor.transformer.math import AbsTensorTransformer
