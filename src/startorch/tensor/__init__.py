@@ -105,6 +105,7 @@ __all__ = [
     "SubTensorGenerator",
     "Tanh",
     "TanhTensorGenerator",
+    "TransformTensorGenerator",
     "TruncCauchy",
     "TruncCauchyTensorGenerator",
     "TruncExponential",
@@ -240,6 +241,7 @@ from startorch.tensor.poisson import PoissonTensorGenerator
 from startorch.tensor.poisson import PoissonTensorGenerator as Poisson
 from startorch.tensor.poisson import RandPoissonTensorGenerator
 from startorch.tensor.poisson import RandPoissonTensorGenerator as RandPoisson
+from startorch.tensor.transform import TransformTensorGenerator
 from startorch.tensor.trigo import AcoshTensorGenerator
 from startorch.tensor.trigo import AcoshTensorGenerator as Acosh
 from startorch.tensor.trigo import AsinhTensorGenerator
