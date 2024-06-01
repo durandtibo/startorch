@@ -10,7 +10,6 @@ __all__ = [
     "Expm1TensorTransformer",
     "LogTensorTransformer",
     "Log1pTensorTransformer",
-    "NegTensorTransformer",
     "SqrtTensorTransformer",
 ]
 
@@ -244,40 +243,6 @@ class Log1pTensorTransformer(BaseTensorTransformer):
         rng: torch.Transformer | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.log1p()
-
-
-class NegTensorTransformer(BaseTensorTransformer):
-    r"""Implement a tensor transformer that computes the negative of the
-    input tensor.
-
-    This tensor transformer is equivalent to: ``output = sqrt(input)``
-
-    Example usage:
-
-    ```pycon
-
-    >>> import torch
-    >>> from startorch.tensor.transformer import Neg
-    >>> transformer = Neg()
-    >>> transformer
-    NegTensorTransformer()
-    >>> out = transformer.transform(torch.tensor([[0.0, -1.0, 2.0], [-3.0, 4.0, -5.0]]))
-    >>> out
-    tensor([[-0.,  1., -2.], [ 3., -4.,  5.]])
-
-    ```
-    """
-
-    def __repr__(self) -> str:
-        return f"{self.__class__.__qualname__}()"
-
-    def transform(
-        self,
-        tensor: torch.Tensor,
-        *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
-    ) -> torch.Tensor:
-        return tensor.neg()
 
 
 class SqrtTensorTransformer(BaseTensorTransformer):
