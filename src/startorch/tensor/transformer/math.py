@@ -10,6 +10,7 @@ __all__ = [
     "Expm1TensorTransformer",
     "LogTensorTransformer",
     "Log1pTensorTransformer",
+    "PowTensorTransformer",
     "SqrtTensorTransformer",
 ]
 
@@ -243,6 +244,47 @@ class Log1pTensorTransformer(BaseTensorTransformer):
         rng: torch.Transformer | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.log1p()
+
+
+class PowTensorTransformer(BaseTensorTransformer):
+    r"""Implement a tensor transformer that computes  the power of each
+    element in the input tensor.
+
+    This tensor transformer is equivalent to:
+    ``output = input ** exponent``
+
+    Args:
+        exponent: The exponent value.
+
+    Example usage:
+
+    ```pycon
+
+    >>> import torch
+    >>> from startorch.tensor.transformer import Pow
+    >>> transformer = Pow(2)
+    >>> transformer
+    PowTensorTransformer(exponent=2)
+    >>> out = transformer.transform(torch.tensor([[1.0, -2.0, 3.0], [-4.0, 5.0, -6.0]]))
+    >>> out
+    tensor([[ 1.,  4.,  9.], [16., 25., 36.]])
+
+    ```
+    """
+
+    def __init__(self, exponent: float) -> None:
+        self._exponent = exponent
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__qualname__}(exponent={self._exponent})"
+
+    def transform(
+        self,
+        tensor: torch.Tensor,
+        *,
+        rng: torch.Transformer | None = None,  # noqa: ARG002
+    ) -> torch.Tensor:
+        return tensor.pow(self._exponent)
 
 
 class SqrtTensorTransformer(BaseTensorTransformer):

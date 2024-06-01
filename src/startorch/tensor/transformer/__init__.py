@@ -46,6 +46,8 @@ __all__ = [
     "TanhTensorTransformer",
     "is_tensor_transformer_config",
     "setup_tensor_transformer",
+    "Pow",
+    "PowTensorTransformer",
 ]
 
 from startorch.tensor.transformer.arithmetic import AddTensorTransformer
@@ -77,6 +79,8 @@ from startorch.tensor.transformer.math import Log1pTensorTransformer
 from startorch.tensor.transformer.math import Log1pTensorTransformer as Log1p
 from startorch.tensor.transformer.math import LogTensorTransformer
 from startorch.tensor.transformer.math import LogTensorTransformer as Log
+from startorch.tensor.transformer.math import PowTensorTransformer
+from startorch.tensor.transformer.math import PowTensorTransformer as Pow
 from startorch.tensor.transformer.math import SqrtTensorTransformer
 from startorch.tensor.transformer.math import SqrtTensorTransformer as Sqrt
 from startorch.tensor.transformer.sequential import SequentialTensorTransformer
