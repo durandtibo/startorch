@@ -18,10 +18,14 @@ __all__ = [
     "ClampTensorTransformer",
     "Cosh",
     "CoshTensorTransformer",
+    "Div",
+    "DivTensorTransformer",
     "Exp",
     "ExpTensorTransformer",
     "Expm1",
     "Expm1TensorTransformer",
+    "Fmod",
+    "FmodTensorTransformer",
     "Identity",
     "IdentityTensorTransformer",
     "Log",
@@ -46,6 +50,10 @@ __all__ = [
 
 from startorch.tensor.transformer.arithmetic import AddTensorTransformer
 from startorch.tensor.transformer.arithmetic import AddTensorTransformer as Add
+from startorch.tensor.transformer.arithmetic import DivTensorTransformer
+from startorch.tensor.transformer.arithmetic import DivTensorTransformer as Div
+from startorch.tensor.transformer.arithmetic import FmodTensorTransformer
+from startorch.tensor.transformer.arithmetic import FmodTensorTransformer as Fmod
 from startorch.tensor.transformer.arithmetic import MulTensorTransformer
 from startorch.tensor.transformer.arithmetic import MulTensorTransformer as Mul
 from startorch.tensor.transformer.base import (
