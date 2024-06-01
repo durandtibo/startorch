@@ -82,10 +82,10 @@ class DivTensorTransformer(BaseTensorTransformer):
     >>> from startorch.tensor.transformer import Div
     >>> transformer = Div(divisor=4)
     >>> transformer
-    DivTensorTransformer(divisor=4)
+    DivTensorTransformer(divisor=4, rounding_mode=None)
     >>> out = transformer.transform(torch.tensor([[1.0, -2.0, 3.0], [-4.0, 5.0, -6.0]]))
     >>> out
-    tensor([[ 1., -2.,  3.], [-0.,  1., -2.]])
+    tensor([[ 0.2500, -0.5000,  0.7500], [-1.0000,  1.2500, -1.5000]])
 
     ```
     """

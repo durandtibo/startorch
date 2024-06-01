@@ -2,7 +2,7 @@ r"""Contain diagonal based transition matrix generators."""
 
 from __future__ import annotations
 
-__all__ = ["DiagonalTransitionGenerator", "PermutedDiagonalTransitionGenerator"]
+__all__ = ["DiagonalTransitionGenerator", "PermuteDiagonalTransitionGenerator"]
 
 import torch
 
@@ -43,7 +43,7 @@ class DiagonalTransitionGenerator(BaseTransitionGenerator):
         return torch.diag(torch.ones(n))
 
 
-class PermutedDiagonalTransitionGenerator(BaseTransitionGenerator):
+class PermuteDiagonalTransitionGenerator(BaseTransitionGenerator):
     r"""Implement a simple diagonal transition matrix generator.
 
     Example usage:
@@ -51,10 +51,10 @@ class PermutedDiagonalTransitionGenerator(BaseTransitionGenerator):
     ```pycon
 
     >>> import torch
-    >>> from startorch.transition import PermutedDiagonal
-    >>> generator = PermutedDiagonal()
+    >>> from startorch.transition import PermuteDiagonal
+    >>> generator = PermuteDiagonal()
     >>> generator
-    PermutedDiagonalTransitionGenerator()
+    PermuteDiagonalTransitionGenerator()
     >>> generator.generate(n=6)
     tensor([...]])
 

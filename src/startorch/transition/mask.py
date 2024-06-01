@@ -3,7 +3,7 @@ a tensor generator."""
 
 from __future__ import annotations
 
-__all__ = ["MaskedTransitionGenerator"]
+__all__ = ["MaskTransitionGenerator"]
 
 from typing import TYPE_CHECKING
 
@@ -19,7 +19,7 @@ if TYPE_CHECKING:
     import torch
 
 
-class MaskedTransitionGenerator(BaseTransitionGenerator):
+class MaskTransitionGenerator(BaseTransitionGenerator):
     r"""Implement a transition matrix generator that uses a tensor
     generator.
 
@@ -33,13 +33,13 @@ class MaskedTransitionGenerator(BaseTransitionGenerator):
     ```pycon
 
     >>> import torch
-    >>> from startorch.transition import Masked, TensorTransitionGenerator
+    >>> from startorch.transition import MaskTransitionGenerator, TensorTransitionGenerator
     >>> from startorch.tensor import Full
-    >>> generator = MaskedTransitionGenerator(
+    >>> generator = MaskTransitionGenerator(
     ...     generator=TensorTransitionGenerator(Full(1.0)), num_mask=4
     ... )
     >>> generator
-    MaskedTransitionGenerator(
+    MaskTransitionGenerator(
       (generator): TensorTransitionGenerator(
           (generator): FullTensorGenerator(value=1.0, dtype=None)
         )
