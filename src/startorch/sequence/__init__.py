@@ -130,6 +130,7 @@ __all__ = [
     "TensorSequence",
     "Time",
     "TimeSequenceGenerator",
+    "TransformSequenceGenerator",
     "TruncCauchy",
     "TruncCauchySequenceGenerator",
     "TruncExponential",
@@ -296,6 +297,7 @@ from startorch.sequence.sort import SortSequenceGenerator as Sort
 from startorch.sequence.tensor import TensorSequenceGenerator as TensorSequence
 from startorch.sequence.time import TimeSequenceGenerator
 from startorch.sequence.time import TimeSequenceGenerator as Time
+from startorch.sequence.transform import TransformSequenceGenerator
 from startorch.sequence.trigo import AcoshSequenceGenerator
 from startorch.sequence.trigo import AcoshSequenceGenerator as Acosh
 from startorch.sequence.trigo import AsinhSequenceGenerator
