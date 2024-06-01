@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 
 
 class FloatTensorGenerator(BaseWrapperTensorGenerator):
-    r"""Implement a sequence generator that converts tensor values to
+    r"""Implement a tensor generator that converts tensor values to
     float.
 
     Example usage:
@@ -38,7 +38,7 @@ class FloatTensorGenerator(BaseWrapperTensorGenerator):
 
 
 class LongTensorGenerator(BaseWrapperTensorGenerator):
-    r"""Implement a sequence generator that converts a tensor values to
+    r"""Implement a tensor generator that converts a tensor values to
     long.
 
     Example usage:
