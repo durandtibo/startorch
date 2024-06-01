@@ -4,7 +4,7 @@ import pytest
 import torch
 from coola import objects_are_equal
 
-from startorch.transition import Diagonal, PermutedDiagonal
+from startorch.transition import Diagonal, PermuteDiagonal
 from startorch.utils.seed import get_torch_generator
 
 #################################################
@@ -57,34 +57,34 @@ def test_diagonal_generate_different_random_seeds() -> None:
     )
 
 
-#########################################################
-#     Tests for PermutedDiagonalTransitionGenerator     #
-#########################################################
+########################################################
+#     Tests for PermuteDiagonalTransitionGenerator     #
+########################################################
 
 
-def test_permuted_diagonal_str() -> None:
-    assert str(PermutedDiagonal()).startswith("PermutedDiagonalTransitionGenerator(")
+def test_permute_diagonal_str() -> None:
+    assert str(PermuteDiagonal()).startswith("PermuteDiagonalTransitionGenerator(")
 
 
 @pytest.mark.parametrize("n", [1, 2, 6])
-def test_permuted_diagonal_generate(n: int) -> None:
-    out = PermutedDiagonal().generate(n=n)
+def test_permute_diagonal_generate(n: int) -> None:
+    out = PermuteDiagonal().generate(n=n)
     assert out.shape == (n, n)
     assert out.dtype == torch.float
     assert objects_are_equal(out.sum(dim=0), torch.ones(n))
     assert objects_are_equal(out.sum(dim=1), torch.ones(n))
 
 
-def test_permuted_diagonal_generate_same_random_seed() -> None:
-    generator = PermutedDiagonal()
+def test_permute_diagonal_generate_same_random_seed() -> None:
+    generator = PermuteDiagonal()
     assert objects_are_equal(
         generator.generate(n=9, rng=get_torch_generator(1)),
         generator.generate(n=9, rng=get_torch_generator(1)),
     )
 
 
-def test_permuted_diagonal_generate_different_random_seeds() -> None:
-    generator = PermutedDiagonal()
+def test_permute_diagonal_generate_different_random_seeds() -> None:
+    generator = PermuteDiagonal()
     assert not objects_are_equal(
         generator.generate(n=9, rng=get_torch_generator(1)),
         generator.generate(n=9, rng=get_torch_generator(2)),

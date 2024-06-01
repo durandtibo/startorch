@@ -8,20 +8,20 @@ from objectory import OBJECT_TARGET
 from startorch.tensor import Full, RandUniform
 from startorch.transition import (
     BaseTransitionGenerator,
-    MaskedTransitionGenerator,
+    MaskTransitionGenerator,
     TensorTransitionGenerator,
 )
 from startorch.utils.seed import get_torch_generator
 
-###############################################
-#     Tests for MaskedTransitionGenerator     #
-###############################################
+#############################################
+#     Tests for MaskTransitionGenerator     #
+#############################################
 
 
-def test_masked_str() -> None:
+def test_mask_transition_generator_str() -> None:
     assert str(
-        MaskedTransitionGenerator(generator=TensorTransitionGenerator(Full(1.0)), num_mask=4)
-    ).startswith("MaskedTransitionGenerator(")
+        MaskTransitionGenerator(generator=TensorTransitionGenerator(Full(1.0)), num_mask=4)
+    ).startswith("MaskTransitionGenerator(")
 
 
 @pytest.mark.parametrize(
@@ -35,16 +35,18 @@ def test_masked_str() -> None:
     ],
 )
 @pytest.mark.parametrize("n", [1, 2, 6])
-def test_masked_generate(generator: BaseTransitionGenerator | dict, n: int) -> None:
-    out = MaskedTransitionGenerator(generator, num_mask=n - 1).generate(n=n)
+def test_mask_transition_generator_generate(
+    generator: BaseTransitionGenerator | dict, n: int
+) -> None:
+    out = MaskTransitionGenerator(generator, num_mask=n - 1).generate(n=n)
     assert out.shape == (n, n)
     assert out.dtype == torch.float
     assert objects_are_equal(out.sum(dim=0), torch.ones(n))
     assert objects_are_equal(out.sum(dim=1), torch.ones(n))
 
 
-def test_masked_generate_same_random_seed() -> None:
-    generator = MaskedTransitionGenerator(
+def test_mask_transition_generator_generate_same_random_seed() -> None:
+    generator = MaskTransitionGenerator(
         generator=TensorTransitionGenerator(RandUniform()), num_mask=5
     )
     assert objects_are_equal(
@@ -53,8 +55,8 @@ def test_masked_generate_same_random_seed() -> None:
     )
 
 
-def test_masked_generate_different_random_seeds() -> None:
-    generator = MaskedTransitionGenerator(
+def test_mask_transition_generator_generate_different_random_seeds() -> None:
+    generator = MaskTransitionGenerator(
         generator=TensorTransitionGenerator(RandUniform()), num_mask=5
     )
     assert not objects_are_equal(

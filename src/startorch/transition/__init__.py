@@ -6,12 +6,12 @@ __all__ = [
     "BaseTransitionGenerator",
     "Diagonal",
     "DiagonalTransitionGenerator",
-    "Masked",
-    "MaskedTransitionGenerator",
+    "Mask",
+    "MaskTransitionGenerator",
     "Normalize",
     "NormalizeTransitionGenerator",
-    "PermutedDiagonal",
-    "PermutedDiagonalTransitionGenerator",
+    "PermuteDiagonal",
+    "PermuteDiagonalTransitionGenerator",
     "TensorTransitionGenerator",
     "Transform",
     "TransformTransitionGenerator",
@@ -26,12 +26,12 @@ from startorch.transition.base import (
 )
 from startorch.transition.diag import DiagonalTransitionGenerator
 from startorch.transition.diag import DiagonalTransitionGenerator as Diagonal
-from startorch.transition.diag import PermutedDiagonalTransitionGenerator
+from startorch.transition.diag import PermuteDiagonalTransitionGenerator
 from startorch.transition.diag import (
-    PermutedDiagonalTransitionGenerator as PermutedDiagonal,
+    PermuteDiagonalTransitionGenerator as PermuteDiagonal,
 )
-from startorch.transition.mask import MaskedTransitionGenerator
-from startorch.transition.mask import MaskedTransitionGenerator as Masked
+from startorch.transition.mask import MaskTransitionGenerator
+from startorch.transition.mask import MaskTransitionGenerator as Mask
 from startorch.transition.normalize import NormalizeTransitionGenerator
 from startorch.transition.normalize import NormalizeTransitionGenerator as Normalize
 from startorch.transition.tensor import TensorTransitionGenerator
