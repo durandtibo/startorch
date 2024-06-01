@@ -2,7 +2,12 @@ r"""Contain arithmetic tensor transformers."""
 
 from __future__ import annotations
 
-__all__ = ["AddTensorTransformer", "MulTensorTransformer"]
+__all__ = [
+    "AddTensorTransformer",
+    "DivTensorTransformer",
+    "FmodTensorTransformer",
+    "MulTensorTransformer",
+]
 
 from typing import TYPE_CHECKING
 
@@ -16,7 +21,11 @@ class AddTensorTransformer(BaseTensorTransformer):
     r"""Implement a tensor transformer that adds a scalar value to the
     input tensor.
 
-    This tensor transformer is equivalent to: ``output = input + value``
+    This tensor transformer is equivalent to:
+    ``output = input + value``
+
+    Args:
+        value: The value to add to the input tensor.
 
     Example usage:
 
@@ -49,11 +58,111 @@ class AddTensorTransformer(BaseTensorTransformer):
         return tensor.add(self._value)
 
 
+class DivTensorTransformer(BaseTensorTransformer):
+    r"""Implement a tensor transformer that computes the division
+    operation.
+
+    This tensor transformer is equivalent to:
+    ``output = input % divisor``
+
+    Args:
+        divisor: The divisor value.
+        rounding_mode: The
+            type of rounding applied to the result.
+            - ``None``: true division.
+            - ``"trunc"``: rounds the results of the division
+                towards zero.
+            - ``"floor"``: floor division.
+
+    Example usage:
+
+    ```pycon
+
+    >>> import torch
+    >>> from startorch.tensor.transformer import Div
+    >>> transformer = Div(divisor=4)
+    >>> transformer
+    DivTensorTransformer(divisor=4)
+    >>> out = transformer.transform(torch.tensor([[1.0, -2.0, 3.0], [-4.0, 5.0, -6.0]]))
+    >>> out
+    tensor([[ 1., -2.,  3.], [-0.,  1., -2.]])
+
+    ```
+    """
+
+    def __init__(
+        self,
+        divisor: float,
+        rounding_mode: str | None = None,
+    ) -> None:
+        self._divisor = divisor
+        self._rounding_mode = rounding_mode
+
+    def __repr__(self) -> str:
+        return (
+            f"{self.__class__.__qualname__}(divisor={self._divisor}, "
+            f"rounding_mode={self._rounding_mode})"
+        )
+
+    def transform(
+        self,
+        tensor: torch.Tensor,
+        *,
+        rng: torch.Transformer | None = None,  # noqa: ARG002
+    ) -> torch.Tensor:
+        return tensor.div(self._divisor, rounding_mode=self._rounding_mode)
+
+
+class FmodTensorTransformer(BaseTensorTransformer):
+    r"""Implement a tensor transformer that computes the floating-point
+    remainder of the division operation.
+
+    This tensor transformer is equivalent to:
+    ``output = input % divisor``
+
+    Args:
+        value: The divisor value.
+
+    Example usage:
+
+    ```pycon
+
+    >>> import torch
+    >>> from startorch.tensor.transformer import Fmod
+    >>> transformer = Fmod(divisor=4)
+    >>> transformer
+    FmodTensorTransformer(divisor=4)
+    >>> out = transformer.transform(torch.tensor([[1.0, -2.0, 3.0], [-4.0, 5.0, -6.0]]))
+    >>> out
+    tensor([[ 1., -2.,  3.], [-0.,  1., -2.]])
+
+    ```
+    """
+
+    def __init__(self, divisor: float) -> None:
+        self._divisor = divisor
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__qualname__}(divisor={self._divisor})"
+
+    def transform(
+        self,
+        tensor: torch.Tensor,
+        *,
+        rng: torch.Transformer | None = None,  # noqa: ARG002
+    ) -> torch.Tensor:
+        return tensor.fmod(self._divisor)
+
+
 class MulTensorTransformer(BaseTensorTransformer):
     r"""Implement a tensor transformer that multiplies a scalar value to
     the input tensor.
 
-    This tensor transformer is equivalent to: ``output = input * value``
+    This tensor transformer is equivalent to:
+    ``output = input * value``
+
+    Args:
+        value: The value to multiply to the input tensor.
 
     Example usage:
 
