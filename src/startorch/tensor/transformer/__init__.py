@@ -64,6 +64,8 @@ __all__ = [
     "TanhTensorTransformer",
     "is_tensor_transformer_config",
     "setup_tensor_transformer",
+    "Sigmoid",
+    "SigmoidTensorTransformer",
 ]
 
 from startorch.tensor.transformer.arithmetic import AddTensorTransformer
@@ -113,6 +115,8 @@ from startorch.tensor.transformer.math import RoundTensorTransformer
 from startorch.tensor.transformer.math import RoundTensorTransformer as Round
 from startorch.tensor.transformer.math import RsqrtTensorTransformer
 from startorch.tensor.transformer.math import RsqrtTensorTransformer as Rsqrt
+from startorch.tensor.transformer.math import SigmoidTensorTransformer
+from startorch.tensor.transformer.math import SigmoidTensorTransformer as Sigmoid
 from startorch.tensor.transformer.math import SqrtTensorTransformer
 from startorch.tensor.transformer.math import SqrtTensorTransformer as Sqrt
 from startorch.tensor.transformer.sequential import SequentialTensorTransformer
