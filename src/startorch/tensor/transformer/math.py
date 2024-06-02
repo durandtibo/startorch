@@ -14,8 +14,9 @@ __all__ = [
     "Log1pTensorTransformer",
     "LogTensorTransformer",
     "PowTensorTransformer",
-    "SqrtTensorTransformer",
     "RoundTensorTransformer",
+    "RsqrtTensorTransformer",
+    "SqrtTensorTransformer",
 ]
 
 from typing import TYPE_CHECKING
@@ -469,6 +470,41 @@ class RoundTensorTransformer(BaseTensorTransformer):
         rng: torch.Transformer | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.round(decimals=self._decimals)
+
+
+class RsqrtTensorTransformer(BaseTensorTransformer):
+    r"""Implement a tensor transformer that computes the reciprocal of
+    the square-root of each of the elements of the input tensor.
+
+    This tensor transformer is equivalent to:
+    ``output = rsqrt(input)``
+
+    Example usage:
+
+    ```pycon
+
+    >>> import torch
+    >>> from startorch.tensor.transformer import Rsqrt
+    >>> transformer = Rsqrt()
+    >>> transformer
+    RsqrtTensorTransformer()
+    >>> out = transformer.transform(torch.tensor([[1.0, 4.0, 16.0], [1.0, 2.0, 3.0]]))
+    >>> out
+    tensor([[1.0000, 0.5000, 0.2500], [1.0000, 0.7071, 0.5774]])
+
+    ```
+    """
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__qualname__}()"
+
+    def transform(
+        self,
+        tensor: torch.Tensor,
+        *,
+        rng: torch.Transformer | None = None,  # noqa: ARG002
+    ) -> torch.Tensor:
+        return tensor.rsqrt()
 
 
 class SqrtTensorTransformer(BaseTensorTransformer):

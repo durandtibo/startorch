@@ -30,16 +30,18 @@ __all__ = [
     "FloatTensorTransformer",
     "Floor",
     "FloorTensorTransformer",
-    "Frac",
-    "FracTensorTransformer",
     "Fmod",
     "FmodTensorTransformer",
+    "Frac",
+    "FracTensorTransformer",
     "Identity",
     "IdentityTensorTransformer",
     "Log",
     "Log1p",
     "Log1pTensorTransformer",
     "LogTensorTransformer",
+    "Logit",
+    "LogitTensorTransformer",
     "Long",
     "LongTensorTransformer",
     "Mul",
@@ -48,6 +50,10 @@ __all__ = [
     "NegTensorTransformer",
     "Pow",
     "PowTensorTransformer",
+    "Round",
+    "RoundTensorTransformer",
+    "Rsqrt",
+    "RsqrtTensorTransformer",
     "Sequential",
     "SequentialTensorTransformer",
     "Sinh",
@@ -58,10 +64,6 @@ __all__ = [
     "TanhTensorTransformer",
     "is_tensor_transformer_config",
     "setup_tensor_transformer",
-    "Logit",
-    "LogitTensorTransformer",
-    "Round",
-    "RoundTensorTransformer",
 ]
 
 from startorch.tensor.transformer.arithmetic import AddTensorTransformer
@@ -109,6 +111,8 @@ from startorch.tensor.transformer.math import PowTensorTransformer
 from startorch.tensor.transformer.math import PowTensorTransformer as Pow
 from startorch.tensor.transformer.math import RoundTensorTransformer
 from startorch.tensor.transformer.math import RoundTensorTransformer as Round
+from startorch.tensor.transformer.math import RsqrtTensorTransformer
+from startorch.tensor.transformer.math import RsqrtTensorTransformer as Rsqrt
 from startorch.tensor.transformer.math import SqrtTensorTransformer
 from startorch.tensor.transformer.math import SqrtTensorTransformer as Sqrt
 from startorch.tensor.transformer.sequential import SequentialTensorTransformer
