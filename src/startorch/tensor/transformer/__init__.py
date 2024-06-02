@@ -56,6 +56,10 @@ __all__ = [
     "RsqrtTensorTransformer",
     "Sequential",
     "SequentialTensorTransformer",
+    "Sigmoid",
+    "SigmoidTensorTransformer",
+    "Sinc",
+    "SincTensorTransformer",
     "Sinh",
     "SinhTensorTransformer",
     "Sqrt",
@@ -64,8 +68,6 @@ __all__ = [
     "TanhTensorTransformer",
     "is_tensor_transformer_config",
     "setup_tensor_transformer",
-    "Sigmoid",
-    "SigmoidTensorTransformer",
 ]
 
 from startorch.tensor.transformer.arithmetic import AddTensorTransformer
@@ -131,6 +133,8 @@ from startorch.tensor.transformer.trigo import AtanhTensorTransformer
 from startorch.tensor.transformer.trigo import AtanhTensorTransformer as Atanh
 from startorch.tensor.transformer.trigo import CoshTensorTransformer
 from startorch.tensor.transformer.trigo import CoshTensorTransformer as Cosh
+from startorch.tensor.transformer.trigo import SincTensorTransformer
+from startorch.tensor.transformer.trigo import SincTensorTransformer as Sinc
 from startorch.tensor.transformer.trigo import SinhTensorTransformer
 from startorch.tensor.transformer.trigo import SinhTensorTransformer as Sinh
 from startorch.tensor.transformer.trigo import TanhTensorTransformer

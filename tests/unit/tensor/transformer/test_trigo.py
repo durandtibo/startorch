@@ -3,7 +3,15 @@ from __future__ import annotations
 import torch
 from coola import objects_are_allclose, objects_are_equal
 
-from startorch.tensor.transformer import Acosh, Asinh, Atanh, Cosh, Sinh, Tanh
+from startorch.tensor.transformer import (
+    Acosh,
+    Asinh,
+    Atanh,
+    Cosh,
+    SincTensorTransformer,
+    Sinh,
+    Tanh,
+)
 from startorch.utils.seed import get_torch_generator
 
 ###########################
@@ -159,6 +167,46 @@ def test_cosh_transform_same_random_seed() -> None:
 def test_cosh_transform_different_random_seeds() -> None:
     transformer = Cosh()
     tensor = torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
+    # the outputs must be equal because this transformer does not have randomness
+    assert objects_are_equal(
+        transformer.transform(tensor, rng=get_torch_generator(1)),
+        transformer.transform(tensor, rng=get_torch_generator(2)),
+    )
+
+
+###########################################
+#     Tests for SincTensorTransformer     #
+###########################################
+
+
+def test_sinc_str() -> None:
+    assert str(SincTensorTransformer()).startswith("SincTensorTransformer(")
+
+
+def test_sinc_transform() -> None:
+    assert objects_are_allclose(
+        SincTensorTransformer().transform(torch.tensor([[0.0, 0.1, 0.2], [0.3, 0.4, 0.5]])),
+        torch.tensor(
+            [
+                [1.0, 0.9836316704750061, 0.9354892373085022],
+                [0.858393669128418, 0.7568266987800598, 0.6366197466850281],
+            ]
+        ),
+    )
+
+
+def test_sinc_transform_same_random_seed() -> None:
+    transformer = SincTensorTransformer()
+    tensor = torch.tensor([[0.0, 0.1, 0.2], [0.3, 0.4, 0.5]])
+    assert objects_are_equal(
+        transformer.transform(tensor, rng=get_torch_generator(1)),
+        transformer.transform(tensor, rng=get_torch_generator(1)),
+    )
+
+
+def test_sinc_transform_different_random_seeds() -> None:
+    transformer = SincTensorTransformer()
+    tensor = torch.tensor([[0.0, 0.1, 0.2], [0.3, 0.4, 0.5]])
     # the outputs must be equal because this transformer does not have randomness
     assert objects_are_equal(
         transformer.transform(tensor, rng=get_torch_generator(1)),
