@@ -122,7 +122,7 @@ class FmodTensorTransformer(BaseTensorTransformer):
     ``output = input % divisor``
 
     Args:
-        value: The divisor value.
+        divisor: The divisor value.
 
     Example usage:
 
