@@ -28,6 +28,8 @@ __all__ = [
     "Expm1TensorTransformer",
     "Float",
     "FloatTensorTransformer",
+    "Floor",
+    "FloorTensorTransformer",
     "Fmod",
     "FmodTensorTransformer",
     "Identity",
@@ -87,6 +89,8 @@ from startorch.tensor.transformer.math import Expm1TensorTransformer
 from startorch.tensor.transformer.math import Expm1TensorTransformer as Expm1
 from startorch.tensor.transformer.math import ExpTensorTransformer
 from startorch.tensor.transformer.math import ExpTensorTransformer as Exp
+from startorch.tensor.transformer.math import FloorTensorTransformer
+from startorch.tensor.transformer.math import FloorTensorTransformer as Floor
 from startorch.tensor.transformer.math import Log1pTensorTransformer
 from startorch.tensor.transformer.math import Log1pTensorTransformer as Log1p
 from startorch.tensor.transformer.math import LogTensorTransformer

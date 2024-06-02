@@ -5,14 +5,15 @@ from __future__ import annotations
 
 __all__ = [
     "AbsTensorTransformer",
+    "CeilTensorTransformer",
     "ClampTensorTransformer",
     "ExpTensorTransformer",
     "Expm1TensorTransformer",
-    "LogTensorTransformer",
+    "FloorTensorTransformer",
     "Log1pTensorTransformer",
+    "LogTensorTransformer",
     "PowTensorTransformer",
     "SqrtTensorTransformer",
-    "CeilTensorTransformer",
 ]
 
 from typing import TYPE_CHECKING
@@ -211,6 +212,40 @@ class Expm1TensorTransformer(BaseTensorTransformer):
         rng: torch.Transformer | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.expm1()
+
+
+class FloorTensorTransformer(BaseTensorTransformer):
+    r"""Implement a tensor transformer that computes the floor of the
+    elements of the input tensor.
+
+    This tensor transformer is equivalent to: ``output = floor(input)``
+
+    Example usage:
+
+    ```pycon
+
+    >>> import torch
+    >>> from startorch.tensor.transformer import Floor
+    >>> transformer = Floor()
+    >>> transformer
+    FloorTensorTransformer()
+    >>> out = transformer.transform(torch.tensor([[-0.6, -1.4, 2.2], [-1.1,  0.5, 0.2]]))
+    >>> out
+    tensor([[-1., -2.,  2.], [-2.,  0.,  0.]])
+
+    ```
+    """
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__qualname__}()"
+
+    def transform(
+        self,
+        tensor: torch.Tensor,
+        *,
+        rng: torch.Transformer | None = None,  # noqa: ARG002
+    ) -> torch.Tensor:
+        return tensor.floor()
 
 
 class LogTensorTransformer(BaseTensorTransformer):
