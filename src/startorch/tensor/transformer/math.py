@@ -10,6 +10,7 @@ __all__ = [
     "ExpTensorTransformer",
     "Expm1TensorTransformer",
     "FloorTensorTransformer",
+    "FracTensorTransformer",
     "Log1pTensorTransformer",
     "LogTensorTransformer",
     "PowTensorTransformer",
@@ -246,6 +247,40 @@ class FloorTensorTransformer(BaseTensorTransformer):
         rng: torch.Transformer | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.floor()
+
+
+class FracTensorTransformer(BaseTensorTransformer):
+    r"""Implement a tensor transformer that computes the fractional
+    portion of each element of the input tensor.
+
+    This tensor transformer is equivalent to: ``output = frac(input)``
+
+    Example usage:
+
+    ```pycon
+
+    >>> import torch
+    >>> from startorch.tensor.transformer import Frac
+    >>> transformer = Frac()
+    >>> transformer
+    FracTensorTransformer()
+    >>> out = transformer.transform(torch.tensor([[-0.6, -1.4, 2.2], [-1.1,  0.5, 0.2]]))
+    >>> out
+    tensor([[-0.6000, -0.4000,  0.2000], [-0.1000,  0.5000,  0.2000]])
+
+    ```
+    """
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__qualname__}()"
+
+    def transform(
+        self,
+        tensor: torch.Tensor,
+        *,
+        rng: torch.Transformer | None = None,  # noqa: ARG002
+    ) -> torch.Tensor:
+        return tensor.frac()
 
 
 class LogTensorTransformer(BaseTensorTransformer):
