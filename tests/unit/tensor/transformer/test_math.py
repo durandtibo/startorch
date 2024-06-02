@@ -17,6 +17,7 @@ from startorch.tensor.transformer import (
     LogTensorTransformer,
     PowTensorTransformer,
     RoundTensorTransformer,
+    RsqrtTensorTransformer,
     SqrtTensorTransformer,
 )
 from startorch.utils.seed import get_torch_generator
@@ -509,6 +510,41 @@ def test_round_transform_same_random_seed() -> None:
 def test_round_transform_different_random_seeds() -> None:
     transformer = RoundTensorTransformer()
     tensor = torch.tensor([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]])
+    # the outputs must be equal because this transformer does not have randomness
+    assert objects_are_equal(
+        transformer.transform(tensor, rng=get_torch_generator(1)),
+        transformer.transform(tensor, rng=get_torch_generator(2)),
+    )
+
+
+############################################
+#     Tests for RsqrtTensorTransformer     #
+############################################
+
+
+def test_rsqrt_str() -> None:
+    assert str(RsqrtTensorTransformer()).startswith("RsqrtTensorTransformer(")
+
+
+def test_rsqrt_transform() -> None:
+    assert objects_are_allclose(
+        RsqrtTensorTransformer().transform(torch.tensor([[1.0, 4.0, 16.0], [1.0, 2.0, 3.0]])),
+        torch.tensor([[1.0, 0.5, 0.25], [1.0, 0.7071067690849304, 0.5773502588272095]]),
+    )
+
+
+def test_rsqrt_transform_same_random_seed() -> None:
+    transformer = RsqrtTensorTransformer()
+    tensor = torch.tensor([[1.0, 4.0, 16.0], [1.0, 2.0, 3.0]])
+    assert objects_are_equal(
+        transformer.transform(tensor, rng=get_torch_generator(1)),
+        transformer.transform(tensor, rng=get_torch_generator(1)),
+    )
+
+
+def test_rsqrt_transform_different_random_seeds() -> None:
+    transformer = RsqrtTensorTransformer()
+    tensor = torch.tensor([[1.0, 4.0, 16.0], [1.0, 2.0, 3.0]])
     # the outputs must be equal because this transformer does not have randomness
     assert objects_are_equal(
         transformer.transform(tensor, rng=get_torch_generator(1)),
