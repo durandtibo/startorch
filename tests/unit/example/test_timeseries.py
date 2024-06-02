@@ -5,7 +5,7 @@ import torch
 from coola import objects_are_equal
 
 from startorch import constants as ct
-from startorch.example import TimeSeries
+from startorch.example import TimeSeriesExampleGenerator
 from startorch.sequence import RandUniform
 from startorch.tensor import Full, RandInt
 from startorch.timeseries import SequenceTimeSeries
@@ -21,7 +21,7 @@ SIZES = (1, 2, 4)
 
 def test_timeseries_str() -> None:
     assert str(
-        TimeSeries(
+        TimeSeriesExampleGenerator(
             generators=SequenceTimeSeries({"value": RandUniform(), "time": RandUniform()}),
             seq_len=RandInt(2, 5),
         )
@@ -31,7 +31,7 @@ def test_timeseries_str() -> None:
 @pytest.mark.parametrize("batch_size", SIZES)
 @pytest.mark.parametrize("seq_len", SIZES)
 def test_timeseries_generate(batch_size: int, seq_len: int) -> None:
-    batch = TimeSeries(
+    batch = TimeSeriesExampleGenerator(
         generators=SequenceTimeSeries({"value": RandUniform(), "time": RandUniform()}),
         seq_len=Full(seq_len),
     ).generate(batch_size=batch_size)
@@ -46,7 +46,7 @@ def test_timeseries_generate(batch_size: int, seq_len: int) -> None:
 
 
 def test_timeseries_generate_same_random_seed() -> None:
-    generator = TimeSeries(
+    generator = TimeSeriesExampleGenerator(
         generators=SequenceTimeSeries({"value": RandUniform(), "time": RandUniform()}),
         seq_len=Full(5),
     )
@@ -57,7 +57,7 @@ def test_timeseries_generate_same_random_seed() -> None:
 
 
 def test_timeseries_generate_different_random_seeds() -> None:
-    generator = TimeSeries(
+    generator = TimeSeriesExampleGenerator(
         generators=SequenceTimeSeries({"value": RandUniform(), "time": RandUniform()}),
         seq_len=Full(5),
     )
