@@ -13,6 +13,8 @@ __all__ = [
     "IdentityTransformer",
     "LookupTable",
     "LookupTableTransformer",
+    "Mul",
+    "MulTransformer",
     "Poisson",
     "PoissonTransformer",
     "Sequential",
@@ -24,6 +26,8 @@ __all__ = [
 
 from startorch.transformer.arithmetic import AddTransformer
 from startorch.transformer.arithmetic import AddTransformer as Add
+from startorch.transformer.arithmetic import MulTransformer
+from startorch.transformer.arithmetic import MulTransformer as Mul
 from startorch.transformer.base import (
     BaseTensorTransformer,
     BaseTransformer,
