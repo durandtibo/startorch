@@ -16,6 +16,7 @@ __all__ = [
     "PowTensorTransformer",
     "RoundTensorTransformer",
     "RsqrtTensorTransformer",
+    "SigmoidTensorTransformer",
     "SqrtTensorTransformer",
 ]
 
@@ -505,6 +506,40 @@ class RsqrtTensorTransformer(BaseTensorTransformer):
         rng: torch.Transformer | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.rsqrt()
+
+
+class SigmoidTensorTransformer(BaseTensorTransformer):
+    r"""Implement a tensor transformer that computes the sigmoid of the
+    input tensor.
+
+    This tensor transformer is equivalent to: ``output = sigmoid(input)``
+
+    Example usage:
+
+    ```pycon
+
+    >>> import torch
+    >>> from startorch.tensor.transformer import Sigmoid
+    >>> transformer = Sigmoid()
+    >>> transformer
+    SigmoidTensorTransformer()
+    >>> out = transformer.transform(torch.tensor([[0.0, 4.0, 16.0], [1.0, 2.0, 3.0]]))
+    >>> out
+    tensor([[0.5000, 0.9820, 1.0000], [0.7311, 0.8808, 0.9526]])
+
+    ```
+    """
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__qualname__}()"
+
+    def transform(
+        self,
+        tensor: torch.Tensor,
+        *,
+        rng: torch.Transformer | None = None,  # noqa: ARG002
+    ) -> torch.Tensor:
+        return tensor.sigmoid()
 
 
 class SqrtTensorTransformer(BaseTensorTransformer):
