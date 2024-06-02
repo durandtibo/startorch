@@ -11,6 +11,7 @@ from startorch.tensor.transformer import (
     Expm1TensorTransformer,
     ExpTensorTransformer,
     FloorTensorTransformer,
+    FracTensorTransformer,
     Log1pTensorTransformer,
     LogTensorTransformer,
     PowTensorTransformer,
@@ -260,6 +261,41 @@ def test_floor_transform_same_random_seed() -> None:
 
 def test_floor_transform_different_random_seeds() -> None:
     transformer = FloorTensorTransformer()
+    tensor = torch.tensor([[-0.6, -1.4, 2.2], [-1.1, 0.5, 0.2]])
+    # the outputs must be equal because this transformer does not have randomness
+    assert objects_are_equal(
+        transformer.transform(tensor, rng=get_torch_generator(1)),
+        transformer.transform(tensor, rng=get_torch_generator(2)),
+    )
+
+
+###########################################
+#     Tests for FracTensorTransformer     #
+###########################################
+
+
+def test_frac_str() -> None:
+    assert str(FracTensorTransformer()).startswith("FracTensorTransformer(")
+
+
+def test_frac_transform() -> None:
+    assert objects_are_allclose(
+        FracTensorTransformer().transform(torch.tensor([[-0.6, -1.4, 2.2], [-1.1, 0.5, 0.2]])),
+        torch.tensor([[-0.6, -0.4, 0.2], [-0.1, 0.5, 0.2]]),
+    )
+
+
+def test_frac_transform_same_random_seed() -> None:
+    transformer = FracTensorTransformer()
+    tensor = torch.tensor([[-0.6, -1.4, 2.2], [-1.1, 0.5, 0.2]])
+    assert objects_are_equal(
+        transformer.transform(tensor, rng=get_torch_generator(1)),
+        transformer.transform(tensor, rng=get_torch_generator(1)),
+    )
+
+
+def test_frac_transform_different_random_seeds() -> None:
+    transformer = FracTensorTransformer()
     tensor = torch.tensor([[-0.6, -1.4, 2.2], [-1.1, 0.5, 0.2]])
     # the outputs must be equal because this transformer does not have randomness
     assert objects_are_equal(

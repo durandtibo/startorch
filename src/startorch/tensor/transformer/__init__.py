@@ -30,6 +30,8 @@ __all__ = [
     "FloatTensorTransformer",
     "Floor",
     "FloorTensorTransformer",
+    "Frac",
+    "FracTensorTransformer",
     "Fmod",
     "FmodTensorTransformer",
     "Identity",
@@ -91,6 +93,8 @@ from startorch.tensor.transformer.math import ExpTensorTransformer
 from startorch.tensor.transformer.math import ExpTensorTransformer as Exp
 from startorch.tensor.transformer.math import FloorTensorTransformer
 from startorch.tensor.transformer.math import FloorTensorTransformer as Floor
+from startorch.tensor.transformer.math import FracTensorTransformer
+from startorch.tensor.transformer.math import FracTensorTransformer as Frac
 from startorch.tensor.transformer.math import Log1pTensorTransformer
 from startorch.tensor.transformer.math import Log1pTensorTransformer as Log1p
 from startorch.tensor.transformer.math import LogTensorTransformer
