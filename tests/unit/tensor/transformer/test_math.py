@@ -13,6 +13,7 @@ from startorch.tensor.transformer import (
     FloorTensorTransformer,
     FracTensorTransformer,
     Log1pTensorTransformer,
+    LogitTensorTransformer,
     LogTensorTransformer,
     PowTensorTransformer,
     SqrtTensorTransformer,
@@ -377,6 +378,46 @@ def test_log1p_transform_same_random_seed() -> None:
 def test_log1p_transform_different_random_seeds() -> None:
     transformer = Log1pTensorTransformer()
     tensor = torch.tensor([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]])
+    # the outputs must be equal because this transformer does not have randomness
+    assert objects_are_equal(
+        transformer.transform(tensor, rng=get_torch_generator(1)),
+        transformer.transform(tensor, rng=get_torch_generator(2)),
+    )
+
+
+############################################
+#     Tests for LogitTensorTransformer     #
+############################################
+
+
+def test_logit_str() -> None:
+    assert str(LogitTensorTransformer()).startswith("LogitTensorTransformer(")
+
+
+def test_logit_transform() -> None:
+    assert objects_are_allclose(
+        LogitTensorTransformer().transform(torch.tensor([[0.6, 0.4, 0.3], [0.1, 0.5, 0.2]])),
+        torch.tensor(
+            [
+                [0.40546518564224243, -0.40546515583992004, -0.8472977876663208],
+                [-2.1972246170043945, 0.0, -1.3862943649291992],
+            ]
+        ),
+    )
+
+
+def test_logit_transform_same_random_seed() -> None:
+    transformer = LogitTensorTransformer()
+    tensor = torch.tensor([[0.6, 0.4, 0.3], [0.1, 0.5, 0.2]])
+    assert objects_are_equal(
+        transformer.transform(tensor, rng=get_torch_generator(1)),
+        transformer.transform(tensor, rng=get_torch_generator(1)),
+    )
+
+
+def test_logit_transform_different_random_seeds() -> None:
+    transformer = LogitTensorTransformer()
+    tensor = torch.tensor([[0.6, 0.4, 0.3], [0.1, 0.5, 0.2]])
     # the outputs must be equal because this transformer does not have randomness
     assert objects_are_equal(
         transformer.transform(tensor, rng=get_torch_generator(1)),

@@ -58,6 +58,8 @@ __all__ = [
     "TanhTensorTransformer",
     "is_tensor_transformer_config",
     "setup_tensor_transformer",
+    "Logit",
+    "LogitTensorTransformer",
 ]
 
 from startorch.tensor.transformer.arithmetic import AddTensorTransformer
@@ -97,6 +99,8 @@ from startorch.tensor.transformer.math import FracTensorTransformer
 from startorch.tensor.transformer.math import FracTensorTransformer as Frac
 from startorch.tensor.transformer.math import Log1pTensorTransformer
 from startorch.tensor.transformer.math import Log1pTensorTransformer as Log1p
+from startorch.tensor.transformer.math import LogitTensorTransformer
+from startorch.tensor.transformer.math import LogitTensorTransformer as Logit
 from startorch.tensor.transformer.math import LogTensorTransformer
 from startorch.tensor.transformer.math import LogTensorTransformer as Log
 from startorch.tensor.transformer.math import PowTensorTransformer
