@@ -60,6 +60,8 @@ __all__ = [
     "setup_tensor_transformer",
     "Logit",
     "LogitTensorTransformer",
+    "Round",
+    "RoundTensorTransformer",
 ]
 
 from startorch.tensor.transformer.arithmetic import AddTensorTransformer
@@ -105,6 +107,8 @@ from startorch.tensor.transformer.math import LogTensorTransformer
 from startorch.tensor.transformer.math import LogTensorTransformer as Log
 from startorch.tensor.transformer.math import PowTensorTransformer
 from startorch.tensor.transformer.math import PowTensorTransformer as Pow
+from startorch.tensor.transformer.math import RoundTensorTransformer
+from startorch.tensor.transformer.math import RoundTensorTransformer as Round
 from startorch.tensor.transformer.math import SqrtTensorTransformer
 from startorch.tensor.transformer.math import SqrtTensorTransformer as Sqrt
 from startorch.tensor.transformer.sequential import SequentialTensorTransformer
