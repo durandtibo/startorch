@@ -15,6 +15,7 @@ __all__ = [
     "LogTensorTransformer",
     "PowTensorTransformer",
     "SqrtTensorTransformer",
+    "RoundTensorTransformer",
 ]
 
 from typing import TYPE_CHECKING
@@ -428,6 +429,46 @@ class PowTensorTransformer(BaseTensorTransformer):
         rng: torch.Transformer | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.pow(self._exponent)
+
+
+class RoundTensorTransformer(BaseTensorTransformer):
+    r"""Implement a tensor transformer that rounds elements of input
+    tensor to the nearest integer.
+
+    Args:
+        decimals: The number of decimal places to round to.
+            If decimals is negative, it specifies the number of
+            positions to the left of the decimal point.
+
+    Example usage:
+
+    ```pycon
+
+    >>> import torch
+    >>> from startorch.tensor.transformer import Round
+    >>> transformer = Round()
+    >>> transformer
+    RoundTensorTransformer(decimals=0)
+    >>> out = transformer.transform(torch.tensor([[-0.6, -1.4, 2.2], [-1.1,  0.7, 0.2]]))
+    >>> out
+    tensor([[-1., -1.,  2.], [-1.,  1.,  0.]])
+
+    ```
+    """
+
+    def __init__(self, decimals: int = 0) -> None:
+        self._decimals = decimals
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__qualname__}(decimals={self._decimals})"
+
+    def transform(
+        self,
+        tensor: torch.Tensor,
+        *,
+        rng: torch.Transformer | None = None,  # noqa: ARG002
+    ) -> torch.Tensor:
+        return tensor.round(decimals=self._decimals)
 
 
 class SqrtTensorTransformer(BaseTensorTransformer):

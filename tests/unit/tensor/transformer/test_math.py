@@ -16,6 +16,7 @@ from startorch.tensor.transformer import (
     LogitTensorTransformer,
     LogTensorTransformer,
     PowTensorTransformer,
+    RoundTensorTransformer,
     SqrtTensorTransformer,
 )
 from startorch.utils.seed import get_torch_generator
@@ -434,12 +435,21 @@ def test_pow_str() -> None:
     assert str(PowTensorTransformer(exponent=2)).startswith("PowTensorTransformer(")
 
 
-def test_pow_transform() -> None:
+def test_pow_transform_exponent_2() -> None:
     assert objects_are_allclose(
         PowTensorTransformer(exponent=2).transform(
             torch.tensor([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]])
         ),
         torch.tensor([[0.0, 1.0, 4.0], [9.0, 16.0, 25.0]]),
+    )
+
+
+def test_pow_transform_exponent_3() -> None:
+    assert objects_are_allclose(
+        PowTensorTransformer(exponent=3).transform(
+            torch.tensor([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]])
+        ),
+        torch.tensor([[0.0, 1.0, 8.0], [27.0, 64.0, 125.0]]),
     )
 
 
@@ -454,6 +464,50 @@ def test_pow_transform_same_random_seed() -> None:
 
 def test_pow_transform_different_random_seeds() -> None:
     transformer = PowTensorTransformer(exponent=2)
+    tensor = torch.tensor([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]])
+    # the outputs must be equal because this transformer does not have randomness
+    assert objects_are_equal(
+        transformer.transform(tensor, rng=get_torch_generator(1)),
+        transformer.transform(tensor, rng=get_torch_generator(2)),
+    )
+
+
+############################################
+#     Tests for RoundTensorTransformer     #
+############################################
+
+
+def test_round_str() -> None:
+    assert str(RoundTensorTransformer()).startswith("RoundTensorTransformer(")
+
+
+def test_round_transform() -> None:
+    assert objects_are_allclose(
+        RoundTensorTransformer().transform(torch.tensor([[-0.6, -1.4, 2.2], [-1.1, 0.7, 0.2]])),
+        torch.tensor([[-1.0, -1.0, 2.0], [-1.0, 1.0, 0.0]]),
+    )
+
+
+def test_round_transform_decimals_2() -> None:
+    assert objects_are_allclose(
+        RoundTensorTransformer(decimals=2).transform(
+            torch.tensor([[-0.6666, -1.4444, 2.2222], [-1.1111, 0.7777, 0.2222]])
+        ),
+        torch.tensor([[-0.67, -1.44, 2.22], [-1.11, 0.78, 0.22]]),
+    )
+
+
+def test_round_transform_same_random_seed() -> None:
+    transformer = RoundTensorTransformer()
+    tensor = torch.tensor([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]])
+    assert objects_are_equal(
+        transformer.transform(tensor, rng=get_torch_generator(1)),
+        transformer.transform(tensor, rng=get_torch_generator(1)),
+    )
+
+
+def test_round_transform_different_random_seeds() -> None:
+    transformer = RoundTensorTransformer()
     tensor = torch.tensor([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]])
     # the outputs must be equal because this transformer does not have randomness
     assert objects_are_equal(
