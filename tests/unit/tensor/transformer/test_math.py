@@ -6,6 +6,7 @@ from coola import objects_are_allclose, objects_are_equal
 
 from startorch.tensor.transformer import (
     AbsTensorTransformer,
+    CeilTensorTransformer,
     ClampTensorTransformer,
     Expm1TensorTransformer,
     ExpTensorTransformer,
@@ -44,6 +45,41 @@ def test_abs_transform_same_random_seed() -> None:
 def test_abs_transform_different_random_seeds() -> None:
     transformer = AbsTensorTransformer()
     tensor = torch.tensor([[1.0, -2.0, 3.0], [-4.0, 5.0, -6.0]])
+    # the outputs must be equal because this transformer does not have randomness
+    assert objects_are_equal(
+        transformer.transform(tensor, rng=get_torch_generator(1)),
+        transformer.transform(tensor, rng=get_torch_generator(2)),
+    )
+
+
+###########################################
+#     Tests for CeilTensorTransformer     #
+###########################################
+
+
+def test_ceil_str() -> None:
+    assert str(CeilTensorTransformer()).startswith("CeilTensorTransformer(")
+
+
+def test_ceil_transform() -> None:
+    assert objects_are_allclose(
+        CeilTensorTransformer().transform(torch.tensor([[-0.6, -1.4, 2.2], [-1.1, 0.5, 0.2]])),
+        torch.tensor([[-0.0, -1.0, 3.0], [-1.0, 1.0, 1.0]]),
+    )
+
+
+def test_ceil_transform_same_random_seed() -> None:
+    transformer = CeilTensorTransformer()
+    tensor = torch.tensor([[-0.6, -1.4, 2.2], [-1.1, 0.5, 0.2]])
+    assert objects_are_equal(
+        transformer.transform(tensor, rng=get_torch_generator(1)),
+        transformer.transform(tensor, rng=get_torch_generator(1)),
+    )
+
+
+def test_ceil_transform_different_random_seeds() -> None:
+    transformer = CeilTensorTransformer()
+    tensor = torch.tensor([[-0.6, -1.4, 2.2], [-1.1, 0.5, 0.2]])
     # the outputs must be equal because this transformer does not have randomness
     assert objects_are_equal(
         transformer.transform(tensor, rng=get_torch_generator(1)),

@@ -12,6 +12,7 @@ __all__ = [
     "Log1pTensorTransformer",
     "PowTensorTransformer",
     "SqrtTensorTransformer",
+    "CeilTensorTransformer",
 ]
 
 from typing import TYPE_CHECKING
@@ -54,6 +55,40 @@ class AbsTensorTransformer(BaseTensorTransformer):
         rng: torch.Transformer | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.abs()
+
+
+class CeilTensorTransformer(BaseTensorTransformer):
+    r"""Implement a tensor transformer that computes the ceil of the
+    elements of the input tensor.
+
+    This tensor transformer is equivalent to: ``output = ceil(input)``
+
+    Example usage:
+
+    ```pycon
+
+    >>> import torch
+    >>> from startorch.tensor.transformer import Ceil
+    >>> transformer = Ceil()
+    >>> transformer
+    CeilTensorTransformer()
+    >>> out = transformer.transform(torch.tensor([[-0.6, -1.4, 2.2], [-1.1,  0.5, 0.2]]))
+    >>> out
+    tensor([[-0., -1.,  3.], [-1.,  1.,  1.]])
+
+    ```
+    """
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__qualname__}()"
+
+    def transform(
+        self,
+        tensor: torch.Tensor,
+        *,
+        rng: torch.Transformer | None = None,  # noqa: ARG002
+    ) -> torch.Tensor:
+        return tensor.ceil()
 
 
 class ClampTensorTransformer(BaseTensorTransformer):
