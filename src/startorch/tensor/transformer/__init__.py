@@ -14,6 +14,8 @@ __all__ = [
     "Atanh",
     "AtanhTensorTransformer",
     "BaseTensorTransformer",
+    "Ceil",
+    "CeilTensorTransformer",
     "Clamp",
     "ClampTensorTransformer",
     "Cosh",
@@ -77,6 +79,8 @@ from startorch.tensor.transformer.identity import IdentityTensorTransformer
 from startorch.tensor.transformer.identity import IdentityTensorTransformer as Identity
 from startorch.tensor.transformer.math import AbsTensorTransformer
 from startorch.tensor.transformer.math import AbsTensorTransformer as Abs
+from startorch.tensor.transformer.math import CeilTensorTransformer
+from startorch.tensor.transformer.math import CeilTensorTransformer as Ceil
 from startorch.tensor.transformer.math import ClampTensorTransformer
 from startorch.tensor.transformer.math import ClampTensorTransformer as Clamp
 from startorch.tensor.transformer.math import Expm1TensorTransformer
