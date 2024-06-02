@@ -18,6 +18,7 @@ __all__ = [
     "SequenceTimeSeriesGenerator",
     "TensorTimeSeries",
     "TensorTimeSeriesGenerator",
+    "TransformTimeSeriesGenerator",
     "is_timeseries_generator_config",
     "setup_timeseries_generator",
 ]
@@ -47,3 +48,4 @@ from startorch.timeseries.sequence import (
 )
 from startorch.timeseries.tensor import TensorTimeSeriesGenerator
 from startorch.timeseries.tensor import TensorTimeSeriesGenerator as TensorTimeSeries
+from startorch.timeseries.transform import TransformTimeSeriesGenerator
