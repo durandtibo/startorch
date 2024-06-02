@@ -3,6 +3,8 @@ r"""Contain data transformers."""
 from __future__ import annotations
 
 __all__ = [
+    "Add",
+    "AddTransformer",
     "BaseTensorTransformer",
     "BaseTransformer",
     "Exponential",
@@ -20,6 +22,8 @@ __all__ = [
     "setup_transformer",
 ]
 
+from startorch.transformer.arithmetic import AddTransformer
+from startorch.transformer.arithmetic import AddTransformer as Add
 from startorch.transformer.base import (
     BaseTensorTransformer,
     BaseTransformer,

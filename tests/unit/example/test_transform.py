@@ -5,7 +5,7 @@ from coola import objects_are_equal
 
 from startorch.example import (
     HypercubeClassification,
-    Transform,
+    TransformExampleGenerator,
     VanillaExampleGenerator,
 )
 from startorch.tensor.transformer import Clamp
@@ -19,7 +19,7 @@ from startorch.utils.seed import get_torch_generator
 
 def test_transform_str() -> None:
     assert str(
-        Transform(
+        TransformExampleGenerator(
             generator=VanillaExampleGenerator(
                 {"value": torch.arange(30).view(10, 3), "label": torch.arange(10)}
             ),
@@ -31,7 +31,7 @@ def test_transform_str() -> None:
 
 
 def test_transform_generate() -> None:
-    batch = Transform(
+    batch = TransformExampleGenerator(
         generator=VanillaExampleGenerator(
             {"value": torch.arange(30, dtype=torch.float).view(10, 3), "label": torch.arange(10)}
         ),
@@ -68,7 +68,7 @@ def test_transform_generate() -> None:
 
 
 def test_transform_generate_same_random_seed() -> None:
-    generator = Transform(
+    generator = TransformExampleGenerator(
         generator=HypercubeClassification(num_classes=5, feature_size=6),
         transformer=TensorTransformer(
             transformer=Clamp(min=-1.0, max=1.0), input="feature", output="feature_transformed"
@@ -81,7 +81,7 @@ def test_transform_generate_same_random_seed() -> None:
 
 
 def test_transform_generate_different_random_seeds() -> None:
-    generator = Transform(
+    generator = TransformExampleGenerator(
         generator=HypercubeClassification(num_classes=5, feature_size=6),
         transformer=TensorTransformer(
             transformer=Clamp(min=-1.0, max=1.0), input="feature", output="vfeature_transformed"
