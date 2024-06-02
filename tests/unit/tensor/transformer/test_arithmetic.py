@@ -21,12 +21,21 @@ def test_add_str() -> None:
     assert str(AddTensorTransformer(value=1)).startswith("AddTensorTransformer(")
 
 
-def test_add_transform() -> None:
+def test_add_transform_value_1() -> None:
     assert objects_are_allclose(
         AddTensorTransformer(value=1).transform(
             torch.tensor([[1.0, -2.0, 3.0], [-4.0, 5.0, -6.0]])
         ),
         torch.tensor([[2.0, -1.0, 4.0], [-3.0, 6.0, -5.0]]),
+    )
+
+
+def test_add_transform_value_2() -> None:
+    assert objects_are_allclose(
+        AddTensorTransformer(value=2).transform(
+            torch.tensor([[1.0, -2.0, 3.0], [-4.0, 5.0, -6.0]])
+        ),
+        torch.tensor([[3.0, 0.0, 5.0], [-2.0, 7.0, -4.0]]),
     )
 
 
@@ -58,7 +67,16 @@ def test_div_str() -> None:
     assert str(DivTensorTransformer(divisor=4)).startswith("DivTensorTransformer(")
 
 
-def test_div_transform() -> None:
+def test_div_transform_divisor_2() -> None:
+    assert objects_are_allclose(
+        DivTensorTransformer(divisor=2).transform(
+            torch.tensor([[1.0, -2.0, 3.0], [-4.0, 5.0, -6.0]])
+        ),
+        torch.tensor([[0.5, -1.0, 1.5], [-2.0, 2.5, -3.0]]),
+    )
+
+
+def test_div_transform_divisor_4() -> None:
     assert objects_are_allclose(
         DivTensorTransformer(divisor=4).transform(
             torch.tensor([[1.0, -2.0, 3.0], [-4.0, 5.0, -6.0]])
@@ -113,7 +131,16 @@ def test_fmod_str() -> None:
     assert str(FmodTensorTransformer(divisor=4)).startswith("FmodTensorTransformer(")
 
 
-def test_fmod_transform() -> None:
+def test_fmod_transform_divisor_2() -> None:
+    assert objects_are_allclose(
+        FmodTensorTransformer(divisor=2).transform(
+            torch.tensor([[1.0, -2.0, 3.0], [-4.0, 5.0, -6.0]])
+        ),
+        torch.tensor([[1.0, 0.0, 1.0], [0.0, 1.0, 0.0]]),
+    )
+
+
+def test_fmod_transform_divisor_4() -> None:
     assert objects_are_allclose(
         FmodTensorTransformer(divisor=4).transform(
             torch.tensor([[1.0, -2.0, 3.0], [-4.0, 5.0, -6.0]])
@@ -150,12 +177,21 @@ def test_mul_str() -> None:
     assert str(MulTensorTransformer(value=2)).startswith("MulTensorTransformer(")
 
 
-def test_mul_transform() -> None:
+def test_mul_transform_value_2() -> None:
     assert objects_are_allclose(
         MulTensorTransformer(value=2).transform(
             torch.tensor([[1.0, -2.0, 3.0], [-4.0, 5.0, -6.0]])
         ),
         torch.tensor([[2.0, -4.0, 6.0], [-8.0, 10.0, -12.0]]),
+    )
+
+
+def test_mul_transform_value_4() -> None:
+    assert objects_are_allclose(
+        MulTensorTransformer(value=4).transform(
+            torch.tensor([[1.0, -2.0, 3.0], [-4.0, 5.0, -6.0]])
+        ),
+        torch.tensor([[4.0, -8.0, 12.0], [-16.0, 20.0, -24.0]]),
     )
 
 
