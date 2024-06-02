@@ -8,6 +8,7 @@ __all__ = [
     "AsinhTensorTransformer",
     "AtanhTensorTransformer",
     "CoshTensorTransformer",
+    "SincTensorTransformer",
     "SinhTensorTransformer",
     "TanhTensorTransformer",
 ]
@@ -146,6 +147,39 @@ class CoshTensorTransformer(BaseTensorTransformer):
         rng: torch.Transformer | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.cosh()
+
+
+class SincTensorTransformer(BaseTensorTransformer):
+    r"""Implement a tensor transformer that computes the normalized sinc
+    of each value.
+
+    Example usage:
+
+    ```pycon
+
+    >>> import torch
+    >>> from startorch.tensor.transformer import Sinc
+    >>> transformer = Sinc()
+    >>> transformer
+    SincTensorTransformer()
+    >>> out = transformer.transform(torch.tensor([[0.0, 0.1, 0.2], [0.3, 0.4, 0.5]]))
+    >>> out
+    tensor([[1.0000, 0.9836, 0.9355], [0.8584, 0.7568, 0.6366]])
+
+
+    ```
+    """
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__qualname__}()"
+
+    def transform(
+        self,
+        tensor: torch.Tensor,
+        *,
+        rng: torch.Transformer | None = None,  # noqa: ARG002
+    ) -> torch.Tensor:
+        return tensor.sinc()
 
 
 class SinhTensorTransformer(BaseTensorTransformer):
