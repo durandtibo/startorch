@@ -351,6 +351,44 @@ class Log1pTensorTransformer(BaseTensorTransformer):
         return tensor.log1p()
 
 
+class LogitTensorTransformer(BaseTensorTransformer):
+    r"""Implement a tensor transformer that computes the logit of each
+    element of the input tensor.
+
+    Args:
+        eps: The epsilon for input clamp bound.
+
+    Example usage:
+
+    ```pycon
+
+    >>> import torch
+    >>> from startorch.tensor.transformer import Logit
+    >>> transformer = Logit()
+    >>> transformer
+    LogitTensorTransformer(eps=None)
+    >>> out = transformer.transform(torch.tensor([[0.6, 0.4, 0.3], [0.1, 0.5, 0.2]]))
+    >>> out
+    tensor([[ 0.4055, -0.4055, -0.8473], [-2.1972,  0.0000, -1.3863]])
+
+    ```
+    """
+
+    def __init__(self, eps: float | None = None) -> None:
+        self._eps = eps
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__qualname__}(eps={self._eps})"
+
+    def transform(
+        self,
+        tensor: torch.Tensor,
+        *,
+        rng: torch.Transformer | None = None,  # noqa: ARG002
+    ) -> torch.Tensor:
+        return tensor.logit(self._eps)
+
+
 class PowTensorTransformer(BaseTensorTransformer):
     r"""Implement a tensor transformer that computes  the power of each
     element in the input tensor.
