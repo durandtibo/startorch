@@ -26,6 +26,8 @@ __all__ = [
     "ExpTensorTransformer",
     "Expm1",
     "Expm1TensorTransformer",
+    "Exponential",
+    "ExponentialTensorTransformer",
     "Float",
     "FloatTensorTransformer",
     "Floor",
@@ -89,6 +91,10 @@ from startorch.tensor.transformer.dtype import FloatTensorTransformer
 from startorch.tensor.transformer.dtype import FloatTensorTransformer as Float
 from startorch.tensor.transformer.dtype import LongTensorTransformer
 from startorch.tensor.transformer.dtype import LongTensorTransformer as Long
+from startorch.tensor.transformer.exponential import ExponentialTensorTransformer
+from startorch.tensor.transformer.exponential import (
+    ExponentialTensorTransformer as Exponential,
+)
 from startorch.tensor.transformer.identity import IdentityTensorTransformer
 from startorch.tensor.transformer.identity import IdentityTensorTransformer as Identity
 from startorch.tensor.transformer.math import AbsTensorTransformer
