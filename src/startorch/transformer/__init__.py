@@ -22,12 +22,16 @@ __all__ = [
     "TensorTransformer",
     "is_transformer_config",
     "setup_transformer",
+    "Sub",
+    "SubTransformer",
 ]
 
 from startorch.transformer.arithmetic import AddTransformer
 from startorch.transformer.arithmetic import AddTransformer as Add
 from startorch.transformer.arithmetic import MulTransformer
 from startorch.transformer.arithmetic import MulTransformer as Mul
+from startorch.transformer.arithmetic import SubTransformer
+from startorch.transformer.arithmetic import SubTransformer as Sub
 from startorch.transformer.base import (
     BaseTensorTransformer,
     BaseTransformer,
