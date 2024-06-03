@@ -50,6 +50,8 @@ __all__ = [
     "MulTensorTransformer",
     "Neg",
     "NegTensorTransformer",
+    "Poisson",
+    "PoissonTensorTransformer",
     "Pow",
     "PowTensorTransformer",
     "Round",
@@ -127,6 +129,8 @@ from startorch.tensor.transformer.math import SigmoidTensorTransformer
 from startorch.tensor.transformer.math import SigmoidTensorTransformer as Sigmoid
 from startorch.tensor.transformer.math import SqrtTensorTransformer
 from startorch.tensor.transformer.math import SqrtTensorTransformer as Sqrt
+from startorch.tensor.transformer.poisson import PoissonTensorTransformer
+from startorch.tensor.transformer.poisson import PoissonTensorTransformer as Poisson
 from startorch.tensor.transformer.sequential import SequentialTensorTransformer
 from startorch.tensor.transformer.sequential import (
     SequentialTensorTransformer as Sequential,
