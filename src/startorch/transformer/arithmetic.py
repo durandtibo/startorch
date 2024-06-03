@@ -2,7 +2,7 @@ r"""Contain the implementation of a generic tensor transformer."""
 
 from __future__ import annotations
 
-__all__ = ["AddTransformer", "MulTransformer", "SubTransformer"]
+__all__ = ["AddTransformer", "DivTransformer", "MulTransformer", "SubTransformer"]
 
 import logging
 from typing import TYPE_CHECKING
@@ -99,6 +99,87 @@ class AddTransformer(BaseTransformer):
         return data
 
 
+class DivTransformer(BaseTransformer):
+    r"""Implements a tensor transformer that computes the division
+    between two tensors.
+
+    This transformer is equivalent to:
+    ``output = dividend / divisor``
+
+    Args:
+        dividend: The key that contains the dividend.
+        divisor: The key that contains the divisor.
+        output: The key that contains the output tensor.
+        rounding_mode: The
+            type of rounding applied to the result.
+            - ``None``: true division.
+            - ``"trunc"``: rounds the results of the division
+                towards zero.
+            - ``"floor"``: floor division.
+        exist_ok: If ``False``, an exception is raised if the output
+            key already exists. Otherwise, the value associated to the
+            output key is updated.
+
+    Example usage:
+
+    ```pycon
+
+    >>> import torch
+    >>> from startorch.transformer import DivTransformer
+    >>> transformer = DivTransformer(dividend="input1", divisor="input2", output="output")
+    >>> transformer
+    DivTransformer(dividend=input1, divisor=input2, output=output, rounding_mode=None, exist_ok=False)
+    >>> data = {
+    ...     "input1": torch.tensor([[0.0, -1.0, 2.0], [-4.0, 5.0, -6.0]]),
+    ...     "input2": torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]]),
+    ... }
+    >>> out = transformer.transform(data)
+    >>> out
+    {'input1': tensor([[ 0., -1.,  2.], [-4.,  5., -6.]]),
+     'input2': tensor([[1., 2., 3.], [4., 5., 6.]]),
+     'output': tensor([[ 0.0000, -0.5000,  0.6667], [-1.0000,  1.0000, -1.0000]])}
+
+    ```
+    """
+
+    def __init__(
+        self,
+        dividend: str,
+        divisor: str,
+        output: str,
+        rounding_mode: str | None = None,
+        exist_ok: bool = False,
+    ) -> None:
+        self._dividend = dividend
+        self._divisor = divisor
+        self._output = output
+        self._rounding_mode = rounding_mode
+        self._exist_ok = exist_ok
+
+    def __repr__(self) -> str:
+        return (
+            f"{self.__class__.__qualname__}(dividend={self._dividend}, "
+            f"divisor={self._divisor}, output={self._output}, "
+            f"rounding_mode={self._rounding_mode}, exist_ok={self._exist_ok})"
+        )
+
+    def transform(
+        self,
+        data: dict[Hashable, torch.Tensor],
+        *,
+        rng: torch.Transformer | None = None,  # noqa: ARG002
+    ) -> dict[Hashable, torch.Tensor]:
+        check_input_keys(data, keys=[self._dividend, self._divisor])
+        data = data.copy()
+        add_item(
+            data,
+            key=self._output,
+            value=data[self._dividend].div(data[self._divisor], rounding_mode=self._rounding_mode),
+            exist_ok=self._exist_ok,
+        )
+        return data
+
+
 class MulTransformer(BaseTransformer):
     r"""Implements a tensor transformer that multiplies multiple tensors.
 
@@ -179,7 +260,8 @@ class MulTransformer(BaseTransformer):
 
 
 class SubTransformer(BaseTransformer):
-    r"""Implements a tensor transformer that adds multiple tensors.
+    r"""Implements a tensor transformer that computes the difference
+    between two tensors.
 
     This transformer is equivalent to:
     ``output = minuend - subtrahend``
