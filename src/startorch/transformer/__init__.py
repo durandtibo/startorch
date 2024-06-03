@@ -7,6 +7,8 @@ __all__ = [
     "AddTransformer",
     "BaseTensorTransformer",
     "BaseTransformer",
+    "Div",
+    "DivTransformer",
     "Exponential",
     "ExponentialTransformer",
     "Identity",
@@ -19,15 +21,17 @@ __all__ = [
     "PoissonTransformer",
     "Sequential",
     "SequentialTransformer",
+    "Sub",
+    "SubTransformer",
     "TensorTransformer",
     "is_transformer_config",
     "setup_transformer",
-    "Sub",
-    "SubTransformer",
 ]
 
 from startorch.transformer.arithmetic import AddTransformer
 from startorch.transformer.arithmetic import AddTransformer as Add
+from startorch.transformer.arithmetic import DivTransformer
+from startorch.transformer.arithmetic import DivTransformer as Div
 from startorch.transformer.arithmetic import MulTransformer
 from startorch.transformer.arithmetic import MulTransformer as Mul
 from startorch.transformer.arithmetic import SubTransformer
