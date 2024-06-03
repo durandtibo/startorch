@@ -21,6 +21,8 @@ __all__ = [
     "MulTransformer",
     "Poisson",
     "PoissonTransformer",
+    "SelectKeys",
+    "SelectKeysTransformer",
     "Sequential",
     "SequentialTransformer",
     "Sub",
@@ -54,6 +56,8 @@ from startorch.transformer.lut import LookupTableTransformer
 from startorch.transformer.lut import LookupTableTransformer as LookupTable
 from startorch.transformer.poisson import PoissonTransformer
 from startorch.transformer.poisson import PoissonTransformer as Poisson
+from startorch.transformer.selection import SelectKeysTransformer
+from startorch.transformer.selection import SelectKeysTransformer as SelectKeys
 from startorch.transformer.sequential import SequentialTransformer
 from startorch.transformer.sequential import SequentialTransformer as Sequential
 from startorch.transformer.tensor import TensorTransformer
