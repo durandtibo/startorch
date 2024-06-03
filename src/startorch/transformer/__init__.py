@@ -11,6 +11,8 @@ __all__ = [
     "DivTransformer",
     "Exponential",
     "ExponentialTransformer",
+    "Fmod",
+    "FmodTransformer",
     "Identity",
     "IdentityTransformer",
     "LookupTable",
@@ -32,6 +34,8 @@ from startorch.transformer.arithmetic import AddTransformer
 from startorch.transformer.arithmetic import AddTransformer as Add
 from startorch.transformer.arithmetic import DivTransformer
 from startorch.transformer.arithmetic import DivTransformer as Div
+from startorch.transformer.arithmetic import FmodTransformer
+from startorch.transformer.arithmetic import FmodTransformer as Fmod
 from startorch.transformer.arithmetic import MulTransformer
 from startorch.transformer.arithmetic import MulTransformer as Mul
 from startorch.transformer.arithmetic import SubTransformer
