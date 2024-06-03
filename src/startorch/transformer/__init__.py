@@ -30,6 +30,8 @@ __all__ = [
     "TensorTransformer",
     "is_transformer_config",
     "setup_transformer",
+    "RemoveKeys",
+    "RemoveKeysTransformer",
 ]
 
 from startorch.transformer.arithmetic import AddTransformer
@@ -56,6 +58,8 @@ from startorch.transformer.lut import LookupTableTransformer
 from startorch.transformer.lut import LookupTableTransformer as LookupTable
 from startorch.transformer.poisson import PoissonTransformer
 from startorch.transformer.poisson import PoissonTransformer as Poisson
+from startorch.transformer.selection import RemoveKeysTransformer
+from startorch.transformer.selection import RemoveKeysTransformer as RemoveKeys
 from startorch.transformer.selection import SelectKeysTransformer
 from startorch.transformer.selection import SelectKeysTransformer as SelectKeys
 from startorch.transformer.sequential import SequentialTransformer
