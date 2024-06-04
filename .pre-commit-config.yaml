@@ -4,11 +4,19 @@ default_language_version:
 default_stages: [ commit ]
 
 repos:
+  - repo: https://github.com/nbQA-dev/nbQA
+    rev: 1.8.5
+    hooks:
+      - id: nbqa-black
+      - id: nbqa-pyupgrade
+        args: [ "--py39-plus" ]
+      - id: nbqa-isort
+        args: [ "--float-to-top" ]
   - repo: https://github.com/asottile/pyupgrade
     rev: v3.15.2
     hooks:
       - id: pyupgrade
-        args: [--py39-plus]
+        args: [ --py39-plus ]
   - repo: https://github.com/PyCQA/docformatter
     rev: v1.7.5
     hooks:
@@ -52,7 +60,7 @@ repos:
         additional_dependencies:
           - black>=24.4.0
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.4.6
+    rev: v0.4.7
     hooks:
       - id: ruff
         types_or: [ python, pyi, jupyter ]
