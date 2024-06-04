@@ -26,6 +26,8 @@ __all__ = [
     "ExpTensorTransformer",
     "Expm1",
     "Expm1TensorTransformer",
+    "Exponential",
+    "ExponentialTensorTransformer",
     "Float",
     "FloatTensorTransformer",
     "Floor",
@@ -48,6 +50,8 @@ __all__ = [
     "MulTensorTransformer",
     "Neg",
     "NegTensorTransformer",
+    "Poisson",
+    "PoissonTensorTransformer",
     "Pow",
     "PowTensorTransformer",
     "Round",
@@ -89,6 +93,10 @@ from startorch.tensor.transformer.dtype import FloatTensorTransformer
 from startorch.tensor.transformer.dtype import FloatTensorTransformer as Float
 from startorch.tensor.transformer.dtype import LongTensorTransformer
 from startorch.tensor.transformer.dtype import LongTensorTransformer as Long
+from startorch.tensor.transformer.exponential import ExponentialTensorTransformer
+from startorch.tensor.transformer.exponential import (
+    ExponentialTensorTransformer as Exponential,
+)
 from startorch.tensor.transformer.identity import IdentityTensorTransformer
 from startorch.tensor.transformer.identity import IdentityTensorTransformer as Identity
 from startorch.tensor.transformer.math import AbsTensorTransformer
@@ -121,6 +129,8 @@ from startorch.tensor.transformer.math import SigmoidTensorTransformer
 from startorch.tensor.transformer.math import SigmoidTensorTransformer as Sigmoid
 from startorch.tensor.transformer.math import SqrtTensorTransformer
 from startorch.tensor.transformer.math import SqrtTensorTransformer as Sqrt
+from startorch.tensor.transformer.poisson import PoissonTensorTransformer
+from startorch.tensor.transformer.poisson import PoissonTensorTransformer as Poisson
 from startorch.tensor.transformer.sequential import SequentialTensorTransformer
 from startorch.tensor.transformer.sequential import (
     SequentialTensorTransformer as Sequential,
