@@ -15,12 +15,16 @@ __all__ = [
     "FmodTransformer",
     "Identity",
     "IdentityTransformer",
+    "Linear",
+    "LinearTransformer",
     "LookupTable",
     "LookupTableTransformer",
     "Mul",
     "MulTransformer",
     "Poisson",
     "PoissonTransformer",
+    "RemoveKeys",
+    "RemoveKeysTransformer",
     "SelectKeys",
     "SelectKeysTransformer",
     "Sequential",
@@ -30,8 +34,6 @@ __all__ = [
     "TensorTransformer",
     "is_transformer_config",
     "setup_transformer",
-    "RemoveKeys",
-    "RemoveKeysTransformer",
 ]
 
 from startorch.transformer.arithmetic import AddTransformer
@@ -54,6 +56,8 @@ from startorch.transformer.exponential import ExponentialTransformer
 from startorch.transformer.exponential import ExponentialTransformer as Exponential
 from startorch.transformer.identity import IdentityTransformer
 from startorch.transformer.identity import IdentityTransformer as Identity
+from startorch.transformer.linear import LinearTransformer
+from startorch.transformer.linear import LinearTransformer as Linear
 from startorch.transformer.lut import LookupTableTransformer
 from startorch.transformer.lut import LookupTableTransformer as LookupTable
 from startorch.transformer.poisson import PoissonTransformer
