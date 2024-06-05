@@ -6,7 +6,13 @@ import pytest
 import torch
 from coola import objects_are_allclose, objects_are_equal
 
-from startorch.sequence import Cumsum, Full, RandUniform, SineWave
+from startorch.sequence import (
+    Cumsum,
+    Full,
+    RandUniform,
+    SineWave,
+    VanillaSequenceGenerator,
+)
 from startorch.utils.seed import get_torch_generator
 
 SIZES = [1, 2, 4]
@@ -28,10 +34,41 @@ def test_sine_wave_str() -> None:
     ).startswith("SineWaveSequenceGenerator(")
 
 
+def test_sine_wave_generate() -> None:
+    assert objects_are_allclose(
+        SineWave(
+            value=VanillaSequenceGenerator(
+                torch.tensor(
+                    [
+                        [0.0, 0.5, 1.0, 1.5, 2.0],
+                        [0.0, 0.25, 0.5, 0.75, 1.0],
+                    ]
+                )
+            ),
+            frequency=VanillaSequenceGenerator(
+                torch.tensor([[0.5, 0.5, 0.5, 0.5, 0.5], [1.0, 1.0, 1.0, 1.0, 1.0]])
+            ),
+            phase=VanillaSequenceGenerator(
+                torch.tensor(
+                    [
+                        [0.0, 0.0, 0.0, 0.0, 0.0],
+                        [0.5 * math.pi, 0.5 * math.pi, 0.5 * math.pi, 0.5 * math.pi, 0.5 * math.pi],
+                    ]
+                )
+            ),
+            amplitude=VanillaSequenceGenerator(
+                torch.tensor([[2.0, 2.0, 2.0, 2.0, 2.0], [1.0, 1.0, 1.0, 1.0, 1.0]])
+            ),
+        ).generate(batch_size=2, seq_len=5),
+        torch.tensor([[0.0, 2.0, 0.0, -2.0, 0.0], [1.0, 0.0, -1.0, 0.0, 1.0]]),
+        atol=1e-6,
+    )
+
+
 @pytest.mark.parametrize("batch_size", SIZES)
 @pytest.mark.parametrize("seq_len", SIZES)
 @pytest.mark.parametrize("feature_size", SIZES)
-def test_sine_wave_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
+def test_sine_wave_generate_shape(batch_size: int, seq_len: int, feature_size: int) -> None:
     batch = SineWave(
         value=RandUniform(low=-1.0, high=1.0, feature_size=feature_size),
         frequency=RandUniform(low=-1.0, high=1.0, feature_size=feature_size),
