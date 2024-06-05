@@ -5,12 +5,12 @@ from __future__ import annotations
 
 __all__ = ["SineWaveSequenceGenerator"]
 
-import math
 from typing import TYPE_CHECKING
 
 from coola.utils.format import str_indent, str_mapping
 
 from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_generator
+from startorch.transformer import sine_wave
 
 if TYPE_CHECKING:
     import torch
@@ -94,11 +94,9 @@ class SineWaveSequenceGenerator(BaseSequenceGenerator):
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
     ) -> torch.Tensor:
-        return (
-            self._value.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
-            .mul(self._frequency.generate(seq_len=seq_len, batch_size=batch_size, rng=rng))
-            .mul(2.0 * math.pi)
-            .add(self._phase.generate(seq_len=seq_len, batch_size=batch_size, rng=rng))
-            .sin()
-            .mul(self._amplitude.generate(seq_len=seq_len, batch_size=batch_size, rng=rng))
+        return sine_wave(
+            value=self._value.generate(seq_len=seq_len, batch_size=batch_size, rng=rng),
+            frequency=self._frequency.generate(seq_len=seq_len, batch_size=batch_size, rng=rng),
+            phase=self._phase.generate(seq_len=seq_len, batch_size=batch_size, rng=rng),
+            amplitude=self._amplitude.generate(seq_len=seq_len, batch_size=batch_size, rng=rng),
         )
