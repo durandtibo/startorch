@@ -29,11 +29,14 @@ __all__ = [
     "SelectKeysTransformer",
     "Sequential",
     "SequentialTransformer",
+    "SineWave",
+    "SineWaveTransformer",
     "Sub",
     "SubTransformer",
     "TensorTransformer",
     "is_transformer_config",
     "setup_transformer",
+    "sine_wave",
 ]
 
 from startorch.transformer.arithmetic import AddTransformer
@@ -69,3 +72,6 @@ from startorch.transformer.selection import SelectKeysTransformer as SelectKeys
 from startorch.transformer.sequential import SequentialTransformer
 from startorch.transformer.sequential import SequentialTransformer as Sequential
 from startorch.transformer.tensor import TensorTransformer
+from startorch.transformer.wave import SineWaveTransformer
+from startorch.transformer.wave import SineWaveTransformer as SineWave
+from startorch.transformer.wave import sine_wave
