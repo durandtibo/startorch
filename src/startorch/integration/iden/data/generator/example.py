@@ -36,7 +36,7 @@ class ExampleDataGenerator(BaseDataGenerator[dict[Hashable, torch.Tensor]]):
             repr_mapping(
                 {
                     "example": self._example,
-                    "batch_size": self._batch_size,
+                    "batch_size": f"{self._batch_size:,}",
                     "random_seed": self._rng.initial_seed(),
                 }
             )
@@ -48,7 +48,7 @@ class ExampleDataGenerator(BaseDataGenerator[dict[Hashable, torch.Tensor]]):
             str_mapping(
                 {
                     "example": self._example,
-                    "batch_size": self._batch_size,
+                    "batch_size": f"{self._batch_size:,}",
                     "random_seed": self._rng.initial_seed(),
                 }
             )
