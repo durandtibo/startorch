@@ -4,7 +4,7 @@ import pytest
 import torch
 from coola import objects_are_equal
 
-from startorch.sequence import Full, Linear, RandUniform
+from startorch.sequence import Full, Linear, RandUniform, VanillaSequenceGenerator
 from startorch.utils.seed import get_torch_generator
 
 SIZES = [1, 2, 4]
