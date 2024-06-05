@@ -25,10 +25,21 @@ def test_linear_str() -> None:
     ).startswith("LinearSequenceGenerator(")
 
 
+def test_linear_generate() -> None:
+    assert objects_are_equal(
+        Linear(
+            value=VanillaSequenceGenerator(torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])),
+            slope=VanillaSequenceGenerator(torch.tensor([[2.0, 2.0, 2.0], [4.0, 4.0, 4.0]])),
+            intercept=VanillaSequenceGenerator(torch.tensor([[1.0, 1.0, 1.0], [-1.0, -1.0, -1.0]])),
+        ).generate(batch_size=2, seq_len=3),
+        torch.tensor([[3.0, 5.0, 7.0], [15.0, 19.0, 23.0]]),
+    )
+
+
 @pytest.mark.parametrize("batch_size", SIZES)
 @pytest.mark.parametrize("seq_len", SIZES)
 @pytest.mark.parametrize("feature_size", SIZES)
-def test_linear_generate(batch_size: int, seq_len: int, feature_size: int) -> None:
+def test_linear_generate_shape(batch_size: int, seq_len: int, feature_size: int) -> None:
     batch = Linear(
         value=RandUniform(low=-1.0, high=1.0, feature_size=feature_size),
         slope=RandUniform(low=-1.0, high=1.0, feature_size=feature_size),

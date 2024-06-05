@@ -10,6 +10,7 @@ from typing import TYPE_CHECKING
 from coola.utils import str_indent, str_mapping
 
 from startorch.sequence.base import BaseSequenceGenerator, setup_sequence_generator
+from startorch.transformer import linear
 
 if TYPE_CHECKING:
     import torch
@@ -74,8 +75,8 @@ class LinearSequenceGenerator(BaseSequenceGenerator):
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
     ) -> torch.Tensor:
-        return (
-            self._value.generate(seq_len=seq_len, batch_size=batch_size, rng=rng)
-            .mul(self._slope.generate(seq_len=seq_len, batch_size=batch_size, rng=rng))
-            .add(self._intercept.generate(seq_len=seq_len, batch_size=batch_size, rng=rng))
+        return linear(
+            value=self._value.generate(seq_len=seq_len, batch_size=batch_size, rng=rng),
+            slope=self._slope.generate(seq_len=seq_len, batch_size=batch_size, rng=rng),
+            intercept=self._intercept.generate(seq_len=seq_len, batch_size=batch_size, rng=rng),
         )
