@@ -113,7 +113,7 @@ def sine_wave(
     phase: torch.Tensor,
     amplitude: torch.Tensor,
 ) -> torch.Tensor:
-    r"""Return the sine-wave transformation.
+    r"""Return the output of the sine-wave transformation.
 
     This function computes the following transformation:
     ``output = sin(2 * PI * value + phase) * amplitude``

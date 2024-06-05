@@ -3,7 +3,7 @@ transformation."""
 
 from __future__ import annotations
 
-__all__ = ["LinearTransformer"]
+__all__ = ["LinearTransformer", "linear"]
 
 from typing import TYPE_CHECKING
 
@@ -17,8 +17,7 @@ if TYPE_CHECKING:
 
 
 class LinearTransformer(BaseTransformer):
-    r"""Implement a tensor transformer that computes a linear
-    transformation.
+    r"""Implement a transformer that computes a linear transformation.
 
     Args:
         value: The key that contains the input values. The linear
@@ -82,7 +81,43 @@ class LinearTransformer(BaseTransformer):
         add_item(
             data,
             key=self._output,
-            value=data[self._value].mul(data[self._slope]).add(data[self._intercept]),
+            value=linear(
+                value=data[self._value], slope=data[self._slope], intercept=data[self._intercept]
+            ),
             exist_ok=self._exist_ok,
         )
         return data
+
+
+def linear(value: torch.Tensor, slope: torch.Tensor, intercept: torch.Tensor) -> torch.Tensor:
+    r"""Return the output of the linear transformation.
+
+    This function computes the following transformation:
+    ``output = value * slope + intercept``
+
+    Args:
+        value: The values that are used as input.
+        slope: The slope values.
+        intercept: The intercept values.
+
+    Returns:
+        The transformed values.
+
+    Example usage:
+
+    ```pycon
+
+    >>> import math
+    >>> import torch
+    >>> from startorch.transformer import linear
+    >>> out = linear(
+    ...     value=torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]]),
+    ...     slope=torch.tensor([[2.0, 2.0, 2.0], [4.0, 4.0, 4.0]]),
+    ...     intercept=torch.tensor([[1.0, 1.0, 1.0], [-1.0, -1.0, -1.0]]),
+    ... )
+    >>> out
+    tensor([[ 3.,  5.,  7.], [15., 19., 23.]])
+
+    ```
+    """
+    return value.mul(slope).add(intercept)

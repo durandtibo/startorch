@@ -35,6 +35,7 @@ __all__ = [
     "SubTransformer",
     "TensorTransformer",
     "is_transformer_config",
+    "linear",
     "setup_transformer",
     "sine_wave",
 ]
@@ -61,6 +62,7 @@ from startorch.transformer.identity import IdentityTransformer
 from startorch.transformer.identity import IdentityTransformer as Identity
 from startorch.transformer.linear import LinearTransformer
 from startorch.transformer.linear import LinearTransformer as Linear
+from startorch.transformer.linear import linear
 from startorch.transformer.lut import LookupTableTransformer
 from startorch.transformer.lut import LookupTableTransformer as LookupTable
 from startorch.transformer.poisson import PoissonTransformer
