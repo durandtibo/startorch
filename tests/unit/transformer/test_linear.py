@@ -4,7 +4,7 @@ import pytest
 import torch
 from coola import objects_are_allclose, objects_are_equal
 
-from startorch.transformer import LinearTransformer
+from startorch.transformer import LinearTransformer, linear
 from startorch.utils.seed import get_torch_generator
 
 #######################################
@@ -109,4 +109,20 @@ def test_linear_transformer_transform_different_random_seeds() -> None:
     assert objects_are_equal(
         transformer.transform(data, rng=get_torch_generator(1)),
         transformer.transform(data, rng=get_torch_generator(2)),
+    )
+
+
+############################
+#     Tests for linear     #
+############################
+
+
+def test_linear() -> None:
+    assert objects_are_allclose(
+        linear(
+            value=torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]]),
+            slope=torch.tensor([[2.0, 2.0, 2.0], [4.0, 4.0, 4.0]]),
+            intercept=torch.tensor([[1.0, 1.0, 1.0], [-1.0, -1.0, -1.0]]),
+        ),
+        torch.tensor([[3.0, 5.0, 7.0], [15.0, 19.0, 23.0]]),
     )
