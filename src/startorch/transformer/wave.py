@@ -116,7 +116,7 @@ def sine_wave(
     r"""Return the output of the sine-wave transformation.
 
     This function computes the following transformation:
-    ``output = sin(2 * PI * value + phase) * amplitude``
+    ``output = amplitude * sin(2 * pi * frequency * value + phase)``
 
     All the tensors must have the same shape.
 
