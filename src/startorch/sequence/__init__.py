@@ -147,6 +147,7 @@ __all__ = [
     "UniformCategorical",
     "UniformCategoricalSequenceGenerator",
     "UniformSequenceGenerator",
+    "VanillaSequenceGenerator",
     "is_sequence_generator_config",
     "setup_sequence_generator",
 ]
@@ -326,6 +327,7 @@ from startorch.sequence.uniform import RandUniformSequenceGenerator
 from startorch.sequence.uniform import RandUniformSequenceGenerator as RandUniform
 from startorch.sequence.uniform import UniformSequenceGenerator
 from startorch.sequence.uniform import UniformSequenceGenerator as Uniform
+from startorch.sequence.vanilla import VanillaSequenceGenerator
 from startorch.sequence.wave import SineWaveSequenceGenerator
 from startorch.sequence.wave import SineWaveSequenceGenerator as SineWave
 from startorch.sequence.wiener import RandWienerProcessSequenceGenerator
