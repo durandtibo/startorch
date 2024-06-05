@@ -1,4 +1,4 @@
-r"""Contain an example generator to "generate" the input data."""
+r"""Contain a time series generator to "generate" the input data."""
 
 from __future__ import annotations
 
