@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "startorch"
-version = "0.2.0a0"
+version = "0.2.0"
 description = "synthetic time-series generator in PyTorch"
 readme = "README.md"
 authors = ["Thibaut Durand <durand.tibo+gh@gmail.com>"]
