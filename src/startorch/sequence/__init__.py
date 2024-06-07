@@ -128,6 +128,7 @@ __all__ = [
     "Tanh",
     "TanhSequenceGenerator",
     "TensorSequence",
+    "TensorSequenceGenerator",
     "Time",
     "TimeSequenceGenerator",
     "TransformSequenceGenerator",
@@ -295,6 +296,7 @@ from startorch.sequence.range import ArangeSequenceGenerator
 from startorch.sequence.range import ArangeSequenceGenerator as Arange
 from startorch.sequence.sort import SortSequenceGenerator
 from startorch.sequence.sort import SortSequenceGenerator as Sort
+from startorch.sequence.tensor import TensorSequenceGenerator
 from startorch.sequence.tensor import TensorSequenceGenerator as TensorSequence
 from startorch.sequence.time import TimeSequenceGenerator
 from startorch.sequence.time import TimeSequenceGenerator as Time
