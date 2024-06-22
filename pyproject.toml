@@ -30,7 +30,7 @@ packages = [
 
 [tool.poetry.dependencies]
 # Core dependencies
-batchtensor = ">=0.0.2,<0.1"
+batchtensor = ">=0.0.2,<1.0"
 coola = ">=0.2,<1.0"
 numpy = [
     # numpy 2.0 is supported starting torch 2.3.0 but there is no binaries for mac intel
@@ -45,7 +45,7 @@ torch = [
 ]
 
 # Optional dependencies
-iden = { version = ">=0.0.2,<0.1", optional = true }
+iden = { version = ">=0.0.2,<1.0", optional = true }
 matplotlib = { version = ">=3.6,<4.0", optional = true }
 plotly = { version = ">=5.0,<6.0", optional = true }
 
