@@ -32,7 +32,7 @@ jobs:
           poetry run make config-poetry
           poetry run make install
 
-      - name: Install PyTorch
+      - name: Install batchtensor
         run: |
           poetry run pip install batchtensor==${{ matrix.batchtensor-version }}
 
@@ -55,7 +55,7 @@ jobs:
       matrix:
         os: [ ubuntu-latest ]
         python-version: [ '3.12', '3.11', '3.10', '3.9' ]
-        coola-version: [ 0.7.0, 0.6.2, 0.5.1, 0.4.0, 0.3.2, 0.2.2 ]
+        coola-version: [ 0.7.1, 0.6.2, 0.5.1, 0.4.0, 0.3.2, 0.2.2 ]
 
     steps:
       - name: Checkout
@@ -74,7 +74,7 @@ jobs:
           poetry run make config-poetry
           poetry run make install
 
-      - name: Install PyTorch
+      - name: Install coola
         run: |
           poetry run pip install coola==${{ matrix.coola-version }}
 
@@ -97,7 +97,7 @@ jobs:
       matrix:
         os: [ ubuntu-latest ]
         python-version: [ '3.12', '3.11', '3.10', '3.9' ]
-        numpy-version: [ 1.26.4, 1.25.2, 1.24.3, 1.23.5 ]
+        numpy-version: [ 2.0.0, 1.26.4, 1.25.2, 1.24.3, 1.23.5 ]
         exclude:
           # python 3.12
           - numpy-version: 1.23.5
@@ -124,7 +124,7 @@ jobs:
           poetry run make config-poetry
           poetry run make install
 
-      - name: Install NumPy
+      - name: Install numpy
         run: |
           poetry run pip install numpy==${{ matrix.numpy-version }}
 
@@ -166,7 +166,7 @@ jobs:
           poetry run make config-poetry
           poetry run make install
 
-      - name: Install PyTorch
+      - name: Install objectory
         run: |
           poetry run pip install objectory==${{ matrix.objectory-version }}
 
@@ -214,9 +214,9 @@ jobs:
           poetry run make config-poetry
           poetry run make install
 
-      - name: Install PyTorch
+      - name: Install torch
         run: |
-          poetry run pip install torch==${{ matrix.torch-version }}
+          poetry run python -c "from feu import install_package; install_package('torch', '${{ matrix.torch-version }}')"
 
       - name: Show installed packages
         run: |
@@ -261,7 +261,7 @@ jobs:
           poetry run make config-poetry
           poetry run make install
 
-      - name: Install PyTorch
+      - name: Install iden
         run: |
           poetry run pip install iden==${{ matrix.iden-version }}
 
@@ -303,9 +303,9 @@ jobs:
           poetry run make config-poetry
           poetry run make install
 
-      - name: Install PyTorch
+      - name: Install matplotlib
         run: |
-          poetry run pip install matplotlib==${{ matrix.matplotlib-version }}
+          poetry run python -c "from feu import install_package; install_package('matplotlib', '${{ matrix.matplotlib-version }}')"
 
       - name: Show installed packages
         run: |
@@ -345,7 +345,7 @@ jobs:
           poetry run make config-poetry
           poetry run make install
 
-      - name: Install PyTorch
+      - name: Install plotly
         run: |
           poetry run pip install plotly==${{ matrix.plotly-version }}
 
