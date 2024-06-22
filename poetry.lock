@@ -792,6 +792,20 @@ files = [
 devel = ["colorama", "json-spec", "jsonschema", "pylint", "pytest", "pytest-benchmark", "pytest-cache", "validictory"]
 
 [[package]]
+name = "feu"
+version = "0.0.4"
+description = "A light library to help to manage packages"
+optional = false
+python-versions = "<3.13,>=3.9"
+files = [
+    {file = "feu-0.0.4-py3-none-any.whl", hash = "sha256:600fc324becbd8ac6ee89b179062e14cebbdc37b580b2923bc0ffbc2491aaa21"},
+    {file = "feu-0.0.4.tar.gz", hash = "sha256:13644ae047822c11a60cfadd8b36fbeaf43be3153fa35178866d128f3f9d0c8f"},
+]
+
+[package.dependencies]
+packaging = ">=21.0,<25.0"
+
+[[package]]
 name = "filelock"
 version = "3.15.4"
 description = "A platform independent file lock."
@@ -4319,4 +4333,4 @@ all = ["iden", "matplotlib", "plotly"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.13"
-content-hash = "de128c34f3752613b431c4a5ce1012c44156f966b36dca0fa7c1a3eafbf84745"
+content-hash = "4ca801077549ce6ea0ef1f5f5a047acbd006de3962b5d5a898fd6920dc90e2a0"

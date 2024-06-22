@@ -216,7 +216,7 @@ jobs:
 
       - name: Install PyTorch
         run: |
-          poetry run pip install torch==${{ matrix.torch-version }}
+          poetry run python -c "from feu import install_package; install_package('torch', '${{ matrix.torch-version }}')"
 
       - name: Show installed packages
         run: |
