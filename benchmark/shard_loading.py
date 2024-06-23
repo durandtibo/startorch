@@ -5,13 +5,13 @@ from __future__ import annotations
 import logging
 from dataclasses import dataclass
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from batchtensor.nested import split_along_batch
 from coola.utils import str_mapping
 from iden.dataset import BaseDataset, load_from_uri
 from iden.dataset.generator import VanillaDatasetGenerator
 from iden.shard.generator import (
-    BaseShardGenerator,
     PickleShardGenerator,
     ShardDictGenerator,
     ShardTupleGenerator,
@@ -25,9 +25,12 @@ from iden.utils.time import sync_perf_counter
 from startorch import constants as ct
 from startorch.example import BaseExampleGenerator, TimeSeriesExampleGenerator
 from startorch.integration.iden.data.generator import ExampleDataGenerator
-from startorch.sequence import RandUniformSequenceGenerator
+from startorch.sequence import FullSequenceGenerator
 from startorch.tensor import FullTensorGenerator
 from startorch.timeseries import SequenceTimeSeriesGenerator
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 logger = logging.getLogger(__name__)
 
@@ -49,7 +52,7 @@ class DatasetConfig:
     path: Path
     batch_size: int
     num_shards: int
-    shard_generator_type: type[BaseShardGenerator]
+    shard_generator_type: Callable
     splits: tuple[str, ...] = ("train", "val", "test")
 
 
@@ -63,14 +66,16 @@ def benchmark_data_loading(dataset: BaseDataset) -> float:
         The data loading time in second.
     """
     start_time = sync_perf_counter()
+    num_examples = 0
     total = 0
     for split in dataset.get_splits():
         shards = dataset.get_shards(split)
         for data in ShardIterable(shards):
             for batch in split_along_batch(data, split_size_or_sections=128):
-                total += batch[ct.TARGET].shape[0]
+                num_examples += batch[ct.TARGET].shape[0]
+                total += batch[ct.TARGET].sum()
     end_time = sync_perf_counter()
-    logger.info(f"total: {total:,}")
+    logger.info(f"num_examples: {num_examples:,}  |  total: {total:,}")
     logger.info(f"total time: {human_time(sync_perf_counter() - start_time)}")
     return end_time - start_time
 
@@ -82,11 +87,11 @@ def get_example_generator() -> BaseExampleGenerator:
         An example generator.
     """
     return TimeSeriesExampleGenerator(
-        timeseries=SequenceTimeSeriesGenerator(
+        generators=SequenceTimeSeriesGenerator(
             generators={
-                ct.TARGET: RandUniformSequenceGenerator(),
-                ct.VALUE: RandUniformSequenceGenerator(),
-                ct.TIME: RandUniformSequenceGenerator(),
+                ct.TARGET: FullSequenceGenerator(value=1.0),
+                ct.VALUE: FullSequenceGenerator(value=2.0),
+                ct.TIME: FullSequenceGenerator(value=3.0),
             }
         ),
         seq_len=FullTensorGenerator(value=256),
