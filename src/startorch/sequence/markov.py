@@ -92,8 +92,8 @@ class MarkovChainSequenceGenerator(BaseSequenceGenerator):
         >>> from startorch.sequence import MarkovChain
         >>> generator = MarkovChain.create_from_generators(
         ...     n=6,
-        ...     transition={'_target_': 'startorch.transition.Diagonal'},
-        ...     init={'_target_': 'startorch.tensor.RandUniform'},
+        ...     transition={"_target_": "startorch.transition.Diagonal"},
+        ...     init={"_target_": "startorch.tensor.RandUniform"},
         ... )
         >>> generator
         MarkovChainSequenceGenerator(transition=(6, 6), init=(6,))

@@ -78,7 +78,9 @@ class BasePeriodicTimeSeriesGenerator(ABC, metaclass=AbstractFactory):
         >>> from startorch.periodic.timeseries import Repeat
         >>> from startorch.timeseries import SequenceTimeSeriesGenerator
         >>> from startorch.sequence import RandUniform
-        >>> generator = Repeat(SequenceTimeSeriesGenerator({"value": RandUniform(), "time": RandUniform()}))
+        >>> generator = Repeat(
+        ...     SequenceTimeSeriesGenerator({"value": RandUniform(), "time": RandUniform()})
+        ... )
         >>> generator.generate(seq_len=12, period=4, batch_size=4)
         {'value': tensor([[...]]), 'time': tensor([[...]])}
 

@@ -77,7 +77,7 @@ class CeilTensorTransformer(BaseTensorTransformer):
     >>> transformer = Ceil()
     >>> transformer
     CeilTensorTransformer()
-    >>> out = transformer.transform(torch.tensor([[-0.6, -1.4, 2.2], [-1.1,  0.5, 0.2]]))
+    >>> out = transformer.transform(torch.tensor([[-0.6, -1.4, 2.2], [-1.1, 0.5, 0.2]]))
     >>> out
     tensor([[-0., -1.,  3.], [-1.,  1.,  1.]])
 
@@ -233,7 +233,7 @@ class FloorTensorTransformer(BaseTensorTransformer):
     >>> transformer = Floor()
     >>> transformer
     FloorTensorTransformer()
-    >>> out = transformer.transform(torch.tensor([[-0.6, -1.4, 2.2], [-1.1,  0.5, 0.2]]))
+    >>> out = transformer.transform(torch.tensor([[-0.6, -1.4, 2.2], [-1.1, 0.5, 0.2]]))
     >>> out
     tensor([[-1., -2.,  2.], [-2.,  0.,  0.]])
 
@@ -267,7 +267,7 @@ class FracTensorTransformer(BaseTensorTransformer):
     >>> transformer = Frac()
     >>> transformer
     FracTensorTransformer()
-    >>> out = transformer.transform(torch.tensor([[-0.6, -1.4, 2.2], [-1.1,  0.5, 0.2]]))
+    >>> out = transformer.transform(torch.tensor([[-0.6, -1.4, 2.2], [-1.1, 0.5, 0.2]]))
     >>> out
     tensor([[-0.6000, -0.4000,  0.2000], [-0.1000,  0.5000,  0.2000]])
 
@@ -451,7 +451,7 @@ class RoundTensorTransformer(BaseTensorTransformer):
     >>> transformer = Round()
     >>> transformer
     RoundTensorTransformer(decimals=0)
-    >>> out = transformer.transform(torch.tensor([[-0.6, -1.4, 2.2], [-1.1,  0.7, 0.2]]))
+    >>> out = transformer.transform(torch.tensor([[-0.6, -1.4, 2.2], [-1.1, 0.7, 0.2]]))
     >>> out
     tensor([[-1., -1.,  2.], [-1.,  1.,  0.]])
 
