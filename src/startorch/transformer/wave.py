@@ -139,7 +139,12 @@ def sine_wave(
     >>> out = sine_wave(
     ...     value=torch.tensor([[0.0, 0.5, 1.0, 1.5, 2.0], [0.0, 0.25, 0.5, 0.75, 1.0]]),
     ...     frequency=torch.tensor([[0.5, 0.5, 0.5, 0.5, 0.5], [1.0, 1.0, 1.0, 1.0, 1.0]]),
-    ...     phase=torch.tensor([[0.0, 0.0, 0.0, 0.0, 0.0], [0.5 * math.pi, 0.5 * math.pi, 0.5 * math.pi, 0.5 * math.pi, 0.5 * math.pi]]),
+    ...     phase=torch.tensor(
+    ...         [
+    ...             [0.0, 0.0, 0.0, 0.0, 0.0],
+    ...             [0.5 * math.pi, 0.5 * math.pi, 0.5 * math.pi, 0.5 * math.pi, 0.5 * math.pi],
+    ...         ]
+    ...     ),
     ...     amplitude=torch.tensor([[2.0, 2.0, 2.0, 2.0, 2.0], [1.0, 1.0, 1.0, 1.0, 1.0]]),
     ... )
     >>> out

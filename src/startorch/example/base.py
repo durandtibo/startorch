@@ -91,9 +91,11 @@ def is_example_generator_config(config: dict) -> bool:
 
     ```pycon
 
-        >>> from startorch.example import is_example_generator_config
-        >>> is_example_generator_config({"_target_": "startorch.example.HypercubeClassification"})
-        True
+    >>> from startorch.example import is_example_generator_config
+    >>> is_example_generator_config({"_target_": "startorch.example.HypercubeClassification"})
+    True
+
+    ```
     """
     return is_object_config(config, BaseExampleGenerator)
 

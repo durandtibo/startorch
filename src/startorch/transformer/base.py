@@ -65,7 +65,7 @@ class BaseTransformer(ABC, metaclass=AbstractFactory):
         >>> import torch
         >>> from startorch.transformer import Identity
         >>> transformer = Identity()
-        >>> data = {'key': torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])}
+        >>> data = {"key": torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])}
         >>> out = transformer.transform(data)
         >>> out
         {'key': tensor([[1., 2., 3.],
