@@ -2,7 +2,7 @@ r"""Contain the base class to implement a transformer."""
 
 from __future__ import annotations
 
-__all__ = ["BaseTransformer", "BaseTensorTransformer", "is_transformer_config", "setup_transformer"]
+__all__ = ["BaseTensorTransformer", "BaseTransformer", "is_transformer_config", "setup_transformer"]
 
 import logging
 from abc import ABC, abstractmethod

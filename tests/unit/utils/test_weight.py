@@ -92,7 +92,7 @@ def test_prepare_weighted_generators_2_generators(generators: Sequence[dict]) ->
 
 
 def test_prepare_weighted_generators_missing_weight() -> None:
-    generators, weights = prepare_weighted_generators(
+    _generators, weights = prepare_weighted_generators(
         ({GENERATOR: RandUniform()}, {GENERATOR: RandNormal()})
     )
     assert weights == (1.0, 1.0)

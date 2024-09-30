@@ -3,12 +3,12 @@ r"""Implement some utility functions to manage optional dependencies."""
 from __future__ import annotations
 
 __all__ = [
+    "check_iden",
     "check_matplotlib",
     "check_plotly",
+    "is_iden_available",
     "is_matplotlib_available",
     "is_plotly_available",
-    "is_iden_available",
-    "check_iden",
 ]
 
 from importlib.util import find_spec
