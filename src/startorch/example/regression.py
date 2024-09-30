@@ -5,8 +5,8 @@ from __future__ import annotations
 
 __all__ = [
     "LinearRegressionExampleGenerator",
-    "make_linear_regression",
     "get_uniform_weights",
+    "make_linear_regression",
 ]
 
 from typing import TYPE_CHECKING

@@ -2,7 +2,7 @@ r"""Contain utility functions for PyTorch tensors."""
 
 from __future__ import annotations
 
-__all__ = ["shapes_are_equal", "circulant"]
+__all__ = ["circulant", "shapes_are_equal"]
 
 from typing import TYPE_CHECKING
 

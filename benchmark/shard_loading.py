@@ -198,7 +198,7 @@ def main() -> None:
         "\n"
         + str_mapping(
             {
-                name: human_time(t) + f"\tx{t/min_value:.2f}"
+                name: human_time(t) + f"\tx{t / min_value:.2f}"
                 for name, t in data_loading_times.items()
             }
         )
