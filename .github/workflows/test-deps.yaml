@@ -16,6 +16,10 @@ jobs:
         batchtensor-version: [ 0.0.4, 0.0.3, 0.0.2 ]
 
     steps:
+      - name: Free Disk Space (Ubuntu)
+        if: runner.os == 'Linux'
+        uses: jlumbroso/free-disk-space@1.3.1
+
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -61,6 +65,10 @@ jobs:
         coola-version: [ 0.8.3, 0.7.2, 0.6.2, 0.5.1, 0.4.0, 0.3.2, 0.2.2 ]
 
     steps:
+      - name: Free Disk Space (Ubuntu)
+        if: runner.os == 'Linux'
+        uses: jlumbroso/free-disk-space@1.3.1
+
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -106,6 +114,10 @@ jobs:
         numpy-version: [ 2.1.1, 2.0.2, 1.26.4, 1.25.2, 1.24.3, 1.23.5 ]
 
     steps:
+      - name: Free Disk Space (Ubuntu)
+        if: runner.os == 'Linux'
+        uses: jlumbroso/free-disk-space@1.3.1
+
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -151,6 +163,10 @@ jobs:
         objectory-version: [ 0.1.2, 0.1.0 ]
 
     steps:
+      - name: Free Disk Space (Ubuntu)
+        if: runner.os == 'Linux'
+        uses: jlumbroso/free-disk-space@1.3.1
+
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -196,6 +212,10 @@ jobs:
         torch-version: [ 2.4.1, 2.3.1, 2.2.2, 2.1.2, 2.0.1 ]
 
     steps:
+      - name: Free Disk Space (Ubuntu)
+        if: runner.os == 'Linux'
+        uses: jlumbroso/free-disk-space@1.3.1
+
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -246,6 +266,10 @@ jobs:
         iden-version: [ 0.0.4, 0.0.3, 0.0.2 ]
 
     steps:
+      - name: Free Disk Space (Ubuntu)
+        if: runner.os == 'Linux'
+        uses: jlumbroso/free-disk-space@1.3.1
+
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -291,6 +315,10 @@ jobs:
         matplotlib-version: [ 3.9.2, 3.8.3, 3.7.3, 3.6.3 ]
 
     steps:
+      - name: Free Disk Space (Ubuntu)
+        if: runner.os == 'Linux'
+        uses: jlumbroso/free-disk-space@1.3.1
+
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -336,6 +364,10 @@ jobs:
         plotly-version: [ 5.24.1, 5.0.0 ]
 
     steps:
+      - name: Free Disk Space (Ubuntu)
+        if: runner.os == 'Linux'
+        uses: jlumbroso/free-disk-space@1.3.1
+
       - name: Checkout
         uses: actions/checkout@v4
 
