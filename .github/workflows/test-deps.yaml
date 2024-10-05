@@ -16,10 +16,6 @@ jobs:
         batchtensor-version: [ 0.0.4, 0.0.3, 0.0.2 ]
 
     steps:
-      - name: Free Disk Space (Ubuntu)
-        if: runner.os == 'Linux'
-        uses: jlumbroso/free-disk-space@main
-
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -31,13 +27,17 @@ jobs:
       - name: Install Poetry
         uses: snok/install-poetry@v1
 
+      - name: Set environment variable
+        run: |
+          echo $(poetry run poetry env info --path)/bin >> $GITHUB_PATH
+
       - name: Install packages
         run: |
           poetry run make config-poetry
           poetry run make install
 
       - name: Install valid package version
-        uses: durandtibo/pip-install-package-action@v0.2.3
+        uses: durandtibo/pip-install-package-action@v0.3.0
         with:
           package-name: 'batchtensor'
           package-version: ${{ matrix.batchtensor-version }}
@@ -52,7 +52,8 @@ jobs:
         run: |
           poetry run make unit-test-cov
 
-  batchtensor-2:
+
+  coola:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
     strategy:
@@ -61,19 +62,23 @@ jobs:
       matrix:
         os: [ ubuntu-latest ]
         python-version: [ '3.12', '3.11', '3.10', '3.9' ]
-        batchtensor-version: [ 0.0.4, 0.0.3, 0.0.2 ]
+        coola-version: [ 0.8.3, 0.7.2, 0.6.2, 0.5.1, 0.4.0, 0.3.2, 0.2.2 ]
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Poetry
-        uses: snok/install-poetry@v1
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Set environment variable
+        run: |
+          echo $(poetry run poetry env info --path)/bin >> $GITHUB_PATH
 
       - name: Install packages
         run: |
@@ -81,10 +86,10 @@ jobs:
           poetry run make install
 
       - name: Install valid package version
-        uses: durandtibo/pip-install-package-action@v0.2.3
+        uses: durandtibo/pip-install-package-action@v0.3.0
         with:
-          package-name: 'batchtensor'
-          package-version: ${{ matrix.batchtensor-version }}
+          package-name: 'coola'
+          package-version: ${{ matrix.coola-version }}
           python-version: ${{ matrix.python-version }}
 
       - name: Show installed packages
@@ -96,7 +101,8 @@ jobs:
         run: |
           poetry run make unit-test-cov
 
-  batchtensor-3:
+
+  numpy:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
     strategy:
@@ -105,7 +111,7 @@ jobs:
       matrix:
         os: [ ubuntu-latest ]
         python-version: [ '3.12', '3.11', '3.10', '3.9' ]
-        batchtensor-version: [ 0.0.4, 0.0.3, 0.0.2 ]
+        numpy-version: [ 2.1.1, 2.0.2, 1.26.4, 1.25.2, 1.24.3, 1.23.5 ]
 
     steps:
       - name: Checkout
@@ -119,14 +125,21 @@ jobs:
       - name: Install Poetry
         uses: snok/install-poetry@v1
 
+      - name: Set environment variable
+        run: |
+          echo $(poetry run poetry env info --path)/bin >> $GITHUB_PATH
+
       - name: Install packages
         run: |
           poetry run make config-poetry
           poetry run make install
 
-      - name: Install batchtensor
-        run: |
-          poetry run pip install batchtensor==${{ matrix.batchtensor-version }}
+      - name: Install valid package version
+        uses: durandtibo/pip-install-package-action@v0.3.0
+        with:
+          package-name: 'numpy'
+          package-version: ${{ matrix.numpy-version }}
+          python-version: ${{ matrix.python-version }}
 
       - name: Show installed packages
         run: |
@@ -138,325 +151,251 @@ jobs:
           poetry run make unit-test-cov
 
 
-#  coola:
-#    runs-on: ${{ matrix.os }}
-#    timeout-minutes: 10
-#    strategy:
-#      max-parallel: 8
-#      fail-fast: false
-#      matrix:
-#        os: [ ubuntu-latest ]
-#        python-version: [ '3.12', '3.11', '3.10', '3.9' ]
-#        coola-version: [ 0.8.3, 0.7.2, 0.6.2, 0.5.1, 0.4.0, 0.3.2, 0.2.2 ]
-#
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v4
-#
-#      - name: Set up Python
-#        uses: actions/setup-python@v5
-#        with:
-#          python-version: ${{ matrix.python-version }}
-#
-#      - name: Install Poetry
-#        uses: snok/install-poetry@v1
-#
-#      - name: Install packages
-#        run: |
-#          poetry run make config-poetry
-#          poetry run make install
-#
-#      - name: Install valid package version
-#        uses: durandtibo/pip-install-package-action@v0.2.3
-#        with:
-#          package-name: 'coola'
-#          package-version: ${{ matrix.coola-version }}
-#          python-version: ${{ matrix.python-version }}
-#
-#      - name: Show installed packages
-#        run: |
-#          poetry run poetry show
-#          poetry run poetry show --tree
-#
-#      - name: Run unit tests
-#        run: |
-#          poetry run make unit-test-cov
-#
-#
-#  numpy:
-#    runs-on: ${{ matrix.os }}
-#    timeout-minutes: 10
-#    strategy:
-#      max-parallel: 8
-#      fail-fast: false
-#      matrix:
-#        os: [ ubuntu-latest ]
-#        python-version: [ '3.12', '3.11', '3.10', '3.9' ]
-#        numpy-version: [ 2.1.1, 2.0.2, 1.26.4, 1.25.2, 1.24.3, 1.23.5 ]
-#
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v4
-#
-#      - name: Set up Python
-#        uses: actions/setup-python@v5
-#        with:
-#          python-version: ${{ matrix.python-version }}
-#
-#      - name: Install Poetry
-#        uses: snok/install-poetry@v1
-#
-#      - name: Install packages
-#        run: |
-#          poetry run make config-poetry
-#          poetry run make install
-#
-#      - name: Install valid package version
-#        uses: durandtibo/pip-install-package-action@v0.2.3
-#        with:
-#          package-name: 'numpy'
-#          package-version: ${{ matrix.numpy-version }}
-#          python-version: ${{ matrix.python-version }}
-#
-#      - name: Show installed packages
-#        run: |
-#          poetry run poetry show
-#          poetry run poetry show --tree
-#
-#      - name: Run unit tests
-#        run: |
-#          poetry run make unit-test-cov
-#
-#
-#  objectory:
-#    runs-on: ${{ matrix.os }}
-#    timeout-minutes: 10
-#    strategy:
-#      max-parallel: 8
-#      fail-fast: false
-#      matrix:
-#        os: [ ubuntu-latest ]
-#        python-version: [ '3.12', '3.11', '3.10', '3.9' ]
-#        objectory-version: [ 0.1.2, 0.1.0 ]
-#
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v4
-#
-#      - name: Set up Python
-#        uses: actions/setup-python@v5
-#        with:
-#          python-version: ${{ matrix.python-version }}
-#
-#      - name: Install Poetry
-#        uses: snok/install-poetry@v1
-#
-#      - name: Install packages
-#        run: |
-#          poetry run make config-poetry
-#          poetry run make install
-#
-#      - name: Install valid package version
-#        uses: durandtibo/pip-install-package-action@v0.2.3
-#        with:
-#          package-name: 'objectory'
-#          package-version: ${{ matrix.objectory-version }}
-#          python-version: ${{ matrix.python-version }}
-#
-#      - name: Show installed packages
-#        run: |
-#          poetry run poetry show
-#          poetry run poetry show --tree
-#
-#      - name: Run unit tests
-#        run: |
-#          poetry run make unit-test-cov
-#
-#
-#  torch:
-#    runs-on: ${{ matrix.os }}
-#    timeout-minutes: 10
-#    strategy:
-#      max-parallel: 8
-#      fail-fast: false
-#      matrix:
-#        os: [ ubuntu-latest ]
-#        python-version: [ '3.12', '3.11', '3.10', '3.9' ]
-#        torch-version: [ 2.4.1, 2.3.1, 2.2.2, 2.1.2, 2.0.1 ]
-#
-#    steps:
-#      - name: Free Disk Space (Ubuntu)
-#        if: runner.os == 'Linux'
-#        uses: jlumbroso/free-disk-space@main
-#
-#      - name: Checkout
-#        uses: actions/checkout@v4
-#
-#      - name: Set up Python
-#        uses: actions/setup-python@v5
-#        with:
-#          python-version: ${{ matrix.python-version }}
-#
-#      - name: Install Poetry
-#        uses: snok/install-poetry@v1
-#
-#      - name: Install packages
-#        run: |
-#          poetry run make config-poetry
-#          poetry run make install
-#
-#      - name: Install valid package version
-#        uses: durandtibo/pip-install-package-action@v0.2.3
-#        with:
-#          package-name: 'torch'
-#          package-version: ${{ matrix.torch-version }}
-#          python-version: ${{ matrix.python-version }}
-#
-#      - name: Show installed packages
-#        run: |
-#          poetry run poetry show
-#          poetry run poetry show --tree
-#
-#      - name: Run unit tests
-#        run: |
-#          poetry run make unit-test-cov
-#
-#
-#  #################################
-#  #     Optional dependencies     #
-#  #################################
-#
-#
-#  iden:
-#    runs-on: ${{ matrix.os }}
-#    timeout-minutes: 10
-#    strategy:
-#      max-parallel: 8
-#      fail-fast: false
-#      matrix:
-#        os: [ ubuntu-latest ]
-#        python-version: [ '3.12', '3.11', '3.10', '3.9' ]
-#        iden-version: [ 0.0.4, 0.0.3, 0.0.2 ]
-#
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v4
-#
-#      - name: Set up Python
-#        uses: actions/setup-python@v5
-#        with:
-#          python-version: ${{ matrix.python-version }}
-#
-#      - name: Install Poetry
-#        uses: snok/install-poetry@v1
-#
-#      - name: Install packages
-#        run: |
-#          poetry run make config-poetry
-#          poetry run make install
-#
-#      - name: Install valid package version
-#        uses: durandtibo/pip-install-package-action@v0.2.3
-#        with:
-#          package-name: 'iden'
-#          package-version: ${{ matrix.iden-version }}
-#          python-version: ${{ matrix.python-version }}
-#
-#      - name: Show installed packages
-#        run: |
-#          poetry run poetry show
-#          poetry run poetry show --tree
-#
-#      - name: Run unit tests
-#        run: |
-#          poetry run make unit-test-cov
-#
-#
-#  matplotlib:
-#    runs-on: ${{ matrix.os }}
-#    timeout-minutes: 10
-#    strategy:
-#      max-parallel: 8
-#      fail-fast: false
-#      matrix:
-#        os: [ ubuntu-latest ]
-#        python-version: [ '3.12', '3.11', '3.10', '3.9' ]
-#        matplotlib-version: [ 3.9.2, 3.8.3, 3.7.3, 3.6.3 ]
-#
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v4
-#
-#      - name: Set up Python
-#        uses: actions/setup-python@v5
-#        with:
-#          python-version: ${{ matrix.python-version }}
-#
-#      - name: Install Poetry
-#        uses: snok/install-poetry@v1
-#
-#      - name: Install packages
-#        run: |
-#          poetry run make config-poetry
-#          poetry run make install
-#
-#      - name: Install valid package version
-#        uses: durandtibo/pip-install-package-action@v0.2.3
-#        with:
-#          package-name: 'matplotlib'
-#          package-version: ${{ matrix.matplotlib-version }}
-#          python-version: ${{ matrix.python-version }}
-#
-#      - name: Show installed packages
-#        run: |
-#          poetry run poetry show
-#          poetry run poetry show --tree
-#
-#      - name: Run unit tests
-#        run: |
-#          poetry run make unit-test-cov
-#
-#
-#  plotly:
-#    runs-on: ${{ matrix.os }}
-#    timeout-minutes: 10
-#    strategy:
-#      max-parallel: 8
-#      fail-fast: false
-#      matrix:
-#        os: [ ubuntu-latest ]
-#        python-version: [ '3.12', '3.11', '3.10', '3.9' ]
-#        plotly-version: [ 5.24.1, 5.0.0 ]
-#
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v4
-#
-#      - name: Set up Python
-#        uses: actions/setup-python@v5
-#        with:
-#          python-version: ${{ matrix.python-version }}
-#
-#      - name: Install Poetry
-#        uses: snok/install-poetry@v1
-#
-#      - name: Install packages
-#        run: |
-#          poetry run make config-poetry
-#          poetry run make install
-#
-#      - name: Install valid package version
-#        uses: durandtibo/pip-install-package-action@v0.2.3
-#        with:
-#          package-name: 'plotly'
-#          package-version: ${{ matrix.plotly-version }}
-#          python-version: ${{ matrix.python-version }}
-#
-#      - name: Show installed packages
-#        run: |
-#          poetry run poetry show
-#          poetry run poetry show --tree
-#
-#      - name: Run unit tests
-#        run: |
-#          poetry run make unit-test-cov
+  objectory:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      max-parallel: 8
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest ]
+        python-version: [ '3.12', '3.11', '3.10', '3.9' ]
+        objectory-version: [ 0.1.2, 0.1.0 ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Set environment variable
+        run: |
+          echo $(poetry run poetry env info --path)/bin >> $GITHUB_PATH
+
+      - name: Install packages
+        run: |
+          poetry run make config-poetry
+          poetry run make install
+
+      - name: Install valid package version
+        uses: durandtibo/pip-install-package-action@v0.3.0
+        with:
+          package-name: 'objectory'
+          package-version: ${{ matrix.objectory-version }}
+          python-version: ${{ matrix.python-version }}
+
+      - name: Show installed packages
+        run: |
+          poetry run poetry show
+          poetry run poetry show --tree
+
+      - name: Run unit tests
+        run: |
+          poetry run make unit-test-cov
+
+
+  torch:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      max-parallel: 8
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest ]
+        python-version: [ '3.12', '3.11', '3.10', '3.9' ]
+        torch-version: [ 2.4.1, 2.3.1, 2.2.2, 2.1.2, 2.0.1 ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Set environment variable
+        run: |
+          echo $(poetry run poetry env info --path)/bin >> $GITHUB_PATH
+
+      - name: Install packages
+        run: |
+          poetry run make config-poetry
+          poetry run make install
+
+      - name: Install valid package version
+        uses: durandtibo/pip-install-package-action@v0.3.0
+        with:
+          package-name: 'torch'
+          package-version: ${{ matrix.torch-version }}
+          python-version: ${{ matrix.python-version }}
+
+      - name: Show installed packages
+        run: |
+          poetry run poetry show
+          poetry run poetry show --tree
+
+      - name: Run unit tests
+        run: |
+          poetry run make unit-test-cov
+
+
+  #################################
+  #     Optional dependencies     #
+  #################################
+
+
+  iden:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      max-parallel: 8
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest ]
+        python-version: [ '3.12', '3.11', '3.10', '3.9' ]
+        iden-version: [ 0.0.4, 0.0.3, 0.0.2 ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Set environment variable
+        run: |
+          echo $(poetry run poetry env info --path)/bin >> $GITHUB_PATH
+
+      - name: Install packages
+        run: |
+          poetry run make config-poetry
+          poetry run make install
+
+      - name: Install valid package version
+        uses: durandtibo/pip-install-package-action@v0.3.0
+        with:
+          package-name: 'iden'
+          package-version: ${{ matrix.iden-version }}
+          python-version: ${{ matrix.python-version }}
+
+      - name: Show installed packages
+        run: |
+          poetry run poetry show
+          poetry run poetry show --tree
+
+      - name: Run unit tests
+        run: |
+          poetry run make unit-test-cov
+
+
+  matplotlib:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      max-parallel: 8
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest ]
+        python-version: [ '3.12', '3.11', '3.10', '3.9' ]
+        matplotlib-version: [ 3.9.2, 3.8.3, 3.7.3, 3.6.3 ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Set environment variable
+        run: |
+          echo $(poetry run poetry env info --path)/bin >> $GITHUB_PATH
+
+      - name: Install packages
+        run: |
+          poetry run make config-poetry
+          poetry run make install
+
+      - name: Install valid package version
+        uses: durandtibo/pip-install-package-action@v0.3.0
+        with:
+          package-name: 'matplotlib'
+          package-version: ${{ matrix.matplotlib-version }}
+          python-version: ${{ matrix.python-version }}
+
+      - name: Show installed packages
+        run: |
+          poetry run poetry show
+          poetry run poetry show --tree
+
+      - name: Run unit tests
+        run: |
+          poetry run make unit-test-cov
+
+
+  plotly:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      max-parallel: 8
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest ]
+        python-version: [ '3.12', '3.11', '3.10', '3.9' ]
+        plotly-version: [ 5.24.1, 5.0.0 ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Set environment variable
+        run: |
+          echo $(poetry run poetry env info --path)/bin >> $GITHUB_PATH
+
+      - name: Install packages
+        run: |
+          poetry run make config-poetry
+          poetry run make install
+
+      - name: Install valid package version
+        uses: durandtibo/pip-install-package-action@v0.3.0
+        with:
+          package-name: 'plotly'
+          package-version: ${{ matrix.plotly-version }}
+          python-version: ${{ matrix.python-version }}
+
+      - name: Show installed packages
+        run: |
+          poetry run poetry show
+          poetry run poetry show --tree
+
+      - name: Run unit tests
+        run: |
+          poetry run make unit-test-cov
