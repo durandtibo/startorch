@@ -2516,13 +2516,13 @@ files = [
 
 [[package]]
 name = "objectory"
-version = "0.1.2"
+version = "0.2.0"
 description = "A light library for general purpose object factories"
 optional = false
-python-versions = ">=3.9,<3.13"
+python-versions = "<3.14,>=3.9"
 files = [
-    {file = "objectory-0.1.2-py3-none-any.whl", hash = "sha256:b7ead22aa40b93193238b8642fac9ec8c1293e6bedf9cc86e799bd9afd7c887a"},
-    {file = "objectory-0.1.2.tar.gz", hash = "sha256:1903db68b486e5efefa0b412bcac058fe6624a4ed27f42334c625937692fc6d4"},
+    {file = "objectory-0.2.0-py3-none-any.whl", hash = "sha256:4da872ccc9768fe61bd14d37189a850a2524b19ebc3d33b71aa0c7b3423481e8"},
+    {file = "objectory-0.2.0.tar.gz", hash = "sha256:c47d447cc4b34d292ce4dd967bdad94554e5cac12940dfd808713f0f41a9fb6e"},
 ]
 
 [package.dependencies]
