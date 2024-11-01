@@ -1082,21 +1082,21 @@ zstd = ["zstandard (>=0.18.0)"]
 
 [[package]]
 name = "iden"
-version = "0.0.4"
+version = "0.1.0"
 description = "simple library to manage a dataset of shards to train machine learning models"
 optional = true
-python-versions = "<3.13,>=3.9"
+python-versions = "<3.14,>=3.9"
 files = [
-    {file = "iden-0.0.4-py3-none-any.whl", hash = "sha256:ae4f8e7166a475a8c3592234e091c7e197e60a0b40957046f84da42e5165b92a"},
-    {file = "iden-0.0.4.tar.gz", hash = "sha256:d95907e30ccb41593ca4b33b88cc213b9e9340c90ef39dad5d4ec066cd7b4630"},
+    {file = "iden-0.1.0-py3-none-any.whl", hash = "sha256:6d73a774b381f08cf50c72982d10dd30ba20fc4146cb40f7894e23fef47b4192"},
+    {file = "iden-0.1.0.tar.gz", hash = "sha256:bddbd2ea82e983937e87837c33adcb848355ab999609e6c1f0d8750e0589f0fe"},
 ]
 
 [package.dependencies]
-coola = ">=0.3,<1.0"
-objectory = ">=0.1,<1.0"
+coola = ">=0.8.4,<1.0"
+objectory = ">=0.2,<1.0"
 
 [package.extras]
-all = ["numpy (>=1.22,<2.0)", "pyyaml (>=6.0,<7.0)", "safetensors (>=0.4,<1.0)", "torch (>=1.11,<2.3)", "torch (>=1.11,<3.0)"]
+all = ["numpy (>=1.22,<3.0)", "pyyaml (>=6.0,<7.0)", "safetensors (>=0.4,<1.0)", "torch (>=1.11,<2.3)", "torch (>=1.11,<3.0)"]
 
 [[package]]
 name = "identify"
