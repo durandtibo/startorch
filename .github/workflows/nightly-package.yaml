@@ -139,7 +139,7 @@ jobs:
           pip install startorch
 
       - name: Install valid package version
-        uses: durandtibo/pip-install-package-action@v0.3.0
+        uses: durandtibo/pip-install-package-action@v0.3.1
         with:
           package-name: 'batchtensor'
           package-version: ${{ matrix.batchtensor-version }}
@@ -175,7 +175,7 @@ jobs:
           pip install startorch
 
       - name: Install valid package version
-        uses: durandtibo/pip-install-package-action@v0.3.0
+        uses: durandtibo/pip-install-package-action@v0.3.1
         with:
           package-name: 'coola'
           package-version: ${{ matrix.coola-version }}
@@ -211,7 +211,7 @@ jobs:
           pip install startorch
 
       - name: Install valid package version
-        uses: durandtibo/pip-install-package-action@v0.3.0
+        uses: durandtibo/pip-install-package-action@v0.3.1
         with:
           package-name: 'numpy'
           package-version: ${{ matrix.numpy-version }}
@@ -247,7 +247,7 @@ jobs:
           pip install startorch
 
       - name: Install valid package version
-        uses: durandtibo/pip-install-package-action@v0.3.0
+        uses: durandtibo/pip-install-package-action@v0.3.1
         with:
           package-name: 'objectory'
           package-version: ${{ matrix.objectory-version }}
@@ -283,7 +283,7 @@ jobs:
           pip install startorch
 
       - name: Install valid package version
-        uses: durandtibo/pip-install-package-action@v0.3.0
+        uses: durandtibo/pip-install-package-action@v0.3.1
         with:
           package-name: 'torch'
           package-version: ${{ matrix.torch-version }}
@@ -324,7 +324,7 @@ jobs:
           pip install startorch
 
       - name: Install valid package version
-        uses: durandtibo/pip-install-package-action@v0.3.0
+        uses: durandtibo/pip-install-package-action@v0.3.1
         with:
           package-name: 'iden'
           package-version: ${{ matrix.iden-version }}
@@ -360,7 +360,7 @@ jobs:
           pip install startorch
 
       - name: Install valid package version
-        uses: durandtibo/pip-install-package-action@v0.3.0
+        uses: durandtibo/pip-install-package-action@v0.3.1
         with:
           package-name: 'matplotlib'
           package-version: ${{ matrix.matplotlib-version }}
@@ -396,7 +396,7 @@ jobs:
           pip install startorch
 
       - name: Install valid package version
-        uses: durandtibo/pip-install-package-action@v0.3.0
+        uses: durandtibo/pip-install-package-action@v0.3.1
         with:
           package-name: 'plotly'
           package-version: ${{ matrix.plotly-version }}
