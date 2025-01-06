@@ -25,7 +25,6 @@ jobs:
 
       - name: Install packages
         run: |
-          make config-poetry
           make install
 
       - name: Show installed packages
