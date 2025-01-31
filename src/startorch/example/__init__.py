@@ -53,14 +53,18 @@ from startorch.example.blobs import BlobsClassificationExampleGenerator
 from startorch.example.blobs import (
     BlobsClassificationExampleGenerator as BlobsClassification,
 )
-from startorch.example.blobs import make_blobs_classification
+from startorch.example.blobs import (
+    make_blobs_classification,
+)
 from startorch.example.cache import CacheExampleGenerator
 from startorch.example.cache import CacheExampleGenerator as Cache
 from startorch.example.circles import CirclesClassificationExampleGenerator
 from startorch.example.circles import (
     CirclesClassificationExampleGenerator as CirclesClassification,
 )
-from startorch.example.circles import make_circles_classification
+from startorch.example.circles import (
+    make_circles_classification,
+)
 from startorch.example.concatenate import ConcatenateExampleGenerator
 from startorch.example.concatenate import ConcatenateExampleGenerator as Concatenate
 from startorch.example.friedman import Friedman1RegressionExampleGenerator
@@ -84,17 +88,23 @@ from startorch.example.hypercube import HypercubeClassificationExampleGenerator
 from startorch.example.hypercube import (
     HypercubeClassificationExampleGenerator as HypercubeClassification,
 )
-from startorch.example.hypercube import make_hypercube_classification
+from startorch.example.hypercube import (
+    make_hypercube_classification,
+)
 from startorch.example.moons import MoonsClassificationExampleGenerator
 from startorch.example.moons import (
     MoonsClassificationExampleGenerator as MoonsClassification,
 )
-from startorch.example.moons import make_moons_classification
+from startorch.example.moons import (
+    make_moons_classification,
+)
 from startorch.example.regression import LinearRegressionExampleGenerator
 from startorch.example.regression import (
     LinearRegressionExampleGenerator as LinearRegression,
 )
-from startorch.example.regression import make_linear_regression
+from startorch.example.regression import (
+    make_linear_regression,
+)
 from startorch.example.sparse_uncorrelated import make_sparse_uncorrelated_regression
 from startorch.example.swissroll import SwissRollExampleGenerator
 from startorch.example.swissroll import SwissRollExampleGenerator as SwissRoll
