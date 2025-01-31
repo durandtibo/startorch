@@ -1,3 +1,4 @@
+# noqa: A005
 r"""Contain the implementation of tensor generators that computes
 arithmetic functions on tensors."""
 
