@@ -622,17 +622,17 @@ test-no-images = ["pytest", "pytest-cov", "pytest-rerunfailures", "pytest-xdist"
 
 [[package]]
 name = "coola"
-version = "0.8.5"
+version = "0.8.6"
 description = "Library to check equality between two complex/nested objects"
 optional = false
 python-versions = "<3.14,>=3.9"
 files = [
-    {file = "coola-0.8.5-py3-none-any.whl", hash = "sha256:d4f218fbb052f5352977e7a6d7ba805de1d41e388ad5236c617dfa0d4144ca99"},
-    {file = "coola-0.8.5.tar.gz", hash = "sha256:63dfb9fa1f8fc2c6ed7de817d660352c16db7bd84dda1d4f9e98aa535c3199d6"},
+    {file = "coola-0.8.6-py3-none-any.whl", hash = "sha256:f0f77cc76e09524990ea3f5f3db608a925080fefb55645da5c58736e3dac46cd"},
+    {file = "coola-0.8.6.tar.gz", hash = "sha256:42968e5bcb8781a6cf6a628265882e2972d7a38db0c9fe4f37850fc8e284173e"},
 ]
 
 [package.extras]
-all = ["jax (>=0.4.17,<1.0)", "jax (>=0.4.34,<1.0)", "jax (>=0.4.6,<0.4.31)", "jax (>=0.4.6,<1.0)", "jaxlib (>=0.4.17,<1.0)", "jaxlib (>=0.4.34,<1.0)", "jaxlib (>=0.4.6,<0.4.31)", "jaxlib (>=0.4.6,<1.0)", "numpy (>=1.21,<3.0)", "packaging (>=21.0,<25.0)", "pandas (>=1.3,<3.0)", "polars (>=0.18.3,<2.0)", "pyarrow (>=10.0,<19.0)", "torch (>=1.11,<2.3)", "torch (>=1.11,<3.0)", "xarray (>=2023.1)"]
+all = ["jax (>=0.4.17,<0.5)", "jax (>=0.4.17,<1.0)", "jax (>=0.4.34,<0.5)", "jax (>=0.4.34,<1.0)", "jax (>=0.4.6,<0.4.31)", "jax (>=0.4.6,<0.5)", "jax (>=0.4.6,<1.0)", "jaxlib (>=0.4.17,<0.5)", "jaxlib (>=0.4.17,<1.0)", "jaxlib (>=0.4.34,<0.5)", "jaxlib (>=0.4.34,<1.0)", "jaxlib (>=0.4.6,<0.4.31)", "jaxlib (>=0.4.6,<0.5)", "jaxlib (>=0.4.6,<1.0)", "numpy (>=1.21,<3.0)", "packaging (>=21.0,<25.0)", "pandas (>=1.3,<3.0)", "polars (>=0.18.3,<2.0)", "pyarrow (>=10.0,<20.0)", "torch (>=1.11,<2.3)", "torch (>=1.11,<3.0)", "xarray (>=2023.1)"]
 
 [[package]]
 name = "coverage"
@@ -2125,6 +2125,32 @@ files = [
 ]
 
 [[package]]
+name = "narwhals"
+version = "1.24.1"
+description = "Extremely lightweight compatibility layer between dataframe libraries"
+optional = true
+python-versions = ">=3.8"
+files = [
+    {file = "narwhals-1.24.1-py3-none-any.whl", hash = "sha256:d8983fe14851c95d60576ddca37c094bd4ed24ab9ea98396844fb20ad9aaf184"},
+    {file = "narwhals-1.24.1.tar.gz", hash = "sha256:b09b8253d945f23cdb683a84685abf3afb9f96114d89e9f35dc876e143f65007"},
+]
+
+[package.extras]
+core = ["duckdb", "pandas", "polars", "pyarrow", "pyarrow-stubs"]
+cudf = ["cudf (>=24.10.0)"]
+dask = ["dask[dataframe] (>=2024.8)"]
+dev = ["covdefaults", "hypothesis", "pre-commit", "pytest", "pytest-cov", "pytest-env", "pytest-randomly", "typing-extensions"]
+docs = ["black", "duckdb", "jinja2", "markdown-exec[ansi]", "mkdocs", "mkdocs-autorefs", "mkdocs-material", "mkdocstrings[python]", "pandas", "polars (>=1.0.0)", "pyarrow"]
+duckdb = ["duckdb (>=1.0)"]
+extra = ["scikit-learn"]
+ibis = ["ibis-framework (>=6.0.0)", "packaging", "pyarrow-hotfix", "rich"]
+modin = ["modin"]
+pandas = ["pandas (>=0.25.3)"]
+polars = ["polars (>=0.20.3)"]
+pyarrow = ["pyarrow (>=11.0.0)"]
+pyspark = ["pyspark (>=3.5.0)"]
+
+[[package]]
 name = "nbclient"
 version = "0.10.0"
 description = "A client library for executing notebooks. Formerly nbconvert's ExecutePreprocessor."
@@ -2956,18 +2982,21 @@ type = ["mypy (>=1.11.2)"]
 
 [[package]]
 name = "plotly"
-version = "5.24.1"
+version = "6.0.0"
 description = "An open-source, interactive data visualization library for Python"
 optional = true
 python-versions = ">=3.8"
 files = [
-    {file = "plotly-5.24.1-py3-none-any.whl", hash = "sha256:f67073a1e637eb0dc3e46324d9d51e2fe76e9727c892dde64ddf1e1b51f29089"},
-    {file = "plotly-5.24.1.tar.gz", hash = "sha256:dbc8ac8339d248a4bcc36e08a5659bacfe1b079390b8953533f4eb22169b4bae"},
+    {file = "plotly-6.0.0-py3-none-any.whl", hash = "sha256:f708871c3a9349a68791ff943a5781b1ec04de7769ea69068adcd9202e57653a"},
+    {file = "plotly-6.0.0.tar.gz", hash = "sha256:c4aad38b8c3d65e4a5e7dd308b084143b9025c2cc9d5317fc1f1d30958db87d3"},
 ]
 
 [package.dependencies]
+narwhals = ">=1.15.1"
 packaging = "*"
-tenacity = ">=6.2.0"
+
+[package.extras]
+express = ["numpy"]
 
 [[package]]
 name = "pluggy"
@@ -4038,21 +4067,6 @@ mpmath = ">=1.1.0,<1.4"
 dev = ["hypothesis (>=6.70.0)", "pytest (>=7.1.0)"]
 
 [[package]]
-name = "tenacity"
-version = "9.0.0"
-description = "Retry code until it succeeds"
-optional = true
-python-versions = ">=3.8"
-files = [
-    {file = "tenacity-9.0.0-py3-none-any.whl", hash = "sha256:93de0c98785b27fcf659856aa9f54bfbd399e29969b0621bc7f762bd441b4539"},
-    {file = "tenacity-9.0.0.tar.gz", hash = "sha256:807f37ca97d62aa361264d497b0e31e92b8027044942bfa756160d908320d73b"},
-]
-
-[package.extras]
-doc = ["reno", "sphinx"]
-test = ["pytest", "tornado (>=4.5)", "typeguard"]
-
-[[package]]
 name = "terminado"
 version = "0.18.1"
 description = "Tornado websocket backend for the Xterm.js Javascript terminal emulator library."
@@ -4584,4 +4598,4 @@ all = ["iden", "matplotlib", "plotly"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.13"
-content-hash = "a6b0c3f15ffa037dab580f023d4a47c9ed0e1e2e8e4a91c7780304fdd55a96b9"
+content-hash = "270ddc3637371b9d527b2158042b06ee14a5b599bcd6ab8da652876982ae08bb"
