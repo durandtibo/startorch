@@ -30,8 +30,8 @@ packages = [
 
 [tool.poetry.dependencies]
 # Core dependencies
-batchtensor = ">=0.0.2,<1.0"
-coola = ">=0.2,<1.0"
+batchtensor = ">=0.0.5,<1.0"
+coola = ">=0.8.6,<1.0"
 numpy = [
     # numpy 2.0 is supported starting torch 2.3.0 but there is no binaries for mac intel
     { version = ">=1.23,<2.0", markers="sys_platform == 'darwin' and platform_machine != 'arm64'" },
