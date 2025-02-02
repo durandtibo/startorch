@@ -5008,4 +5008,4 @@ all = ["iden", "matplotlib", "plotly"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.9,<3.14"
-content-hash = "9bdafa17e748b8bcb7b8188f99a2df7118b62f5ef2ba5d355ef50d06629fd21d"
+content-hash = "cd4aec0fa72f218eccbd377c2779144e79cadb2370d5d56fce124258c43ed9bf"
