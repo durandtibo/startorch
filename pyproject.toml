@@ -38,7 +38,7 @@ numpy = [
     { version = ">=1.23,<2.0", markers="sys_platform == 'darwin' and platform_machine != 'arm64'" },
     { version = ">=1.23,<3.0" }
 ]
-objectory = ">=0.1,<1.0"
+objectory = ">=0.2,<1.0"
 python = ">=3.9,<3.14"
 torch = [
     { version = ">=2.0,<2.3", markers="sys_platform == 'darwin' and platform_machine != 'arm64'" },

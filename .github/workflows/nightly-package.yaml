@@ -7,7 +7,7 @@ on:
 jobs:
   stable-all:
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 10
+    timeout-minutes: 20
     strategy:
       max-parallel: 8
       fail-fast: false
@@ -34,7 +34,7 @@ jobs:
 
   stable-min:
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 10
+    timeout-minutes: 20
     strategy:
       max-parallel: 8
       fail-fast: false
@@ -61,7 +61,7 @@ jobs:
 
   latest-all:
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 10
+    timeout-minutes: 20
     strategy:
       max-parallel: 8
       fail-fast: false
@@ -88,7 +88,7 @@ jobs:
 
   latest-min:
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 10
+    timeout-minutes: 20
     strategy:
       max-parallel: 8
       fail-fast: false
@@ -116,7 +116,7 @@ jobs:
 
   batchtensor:
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 10
+    timeout-minutes: 20
     strategy:
       max-parallel: 8
       fail-fast: false
@@ -152,7 +152,7 @@ jobs:
 
   coola:
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 10
+    timeout-minutes: 20
     strategy:
       max-parallel: 8
       fail-fast: false
@@ -188,7 +188,7 @@ jobs:
 
   numpy:
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 10
+    timeout-minutes: 20
     strategy:
       max-parallel: 8
       fail-fast: false
@@ -232,7 +232,7 @@ jobs:
 
   objectory:
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 10
+    timeout-minutes: 20
     strategy:
       max-parallel: 8
       fail-fast: false
@@ -268,7 +268,7 @@ jobs:
 
   torch:
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 10
+    timeout-minutes: 20
     strategy:
       max-parallel: 8
       fail-fast: false
@@ -317,7 +317,7 @@ jobs:
 
   iden:
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 10
+    timeout-minutes: 20
     strategy:
       max-parallel: 8
       fail-fast: false
@@ -353,7 +353,7 @@ jobs:
 
   matplotlib:
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 10
+    timeout-minutes: 20
     strategy:
       max-parallel: 8
       fail-fast: false
@@ -389,7 +389,7 @@ jobs:
 
   plotly:
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 10
+    timeout-minutes: 20
     strategy:
       max-parallel: 8
       fail-fast: false
