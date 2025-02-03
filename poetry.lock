@@ -857,13 +857,13 @@ devel = ["colorama", "json-spec", "jsonschema", "pylint", "pytest", "pytest-benc
 
 [[package]]
 name = "feu"
-version = "0.3.1"
+version = "0.3.2"
 description = "A light library to help to manage packages"
 optional = false
 python-versions = "<3.14,>=3.9"
 files = [
-    {file = "feu-0.3.1-py3-none-any.whl", hash = "sha256:ed425fc594d38a1e33af2d770ab353f1a2670e5d7a421b16b82e3293c745d27e"},
-    {file = "feu-0.3.1.tar.gz", hash = "sha256:4fba5cbf8ba8081d29ac4e9ecae05aae6001a55245f52b8b1c378f3098a6c716"},
+    {file = "feu-0.3.2-py3-none-any.whl", hash = "sha256:19d723dc4fe76448405148a5ef1120425355bb04df24cdb0ce29d0c4651c11ed"},
+    {file = "feu-0.3.2.tar.gz", hash = "sha256:695f5c6087c214a099ff304d79cfb6d8a85dc8e1d58880c6ab8dbd5b658031af"},
 ]
 
 [package.dependencies]
