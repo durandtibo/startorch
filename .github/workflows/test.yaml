@@ -6,13 +6,13 @@ on:
 jobs:
   all:
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 10
+    timeout-minutes: 20
     strategy:
       max-parallel: 8
       fail-fast: false
       matrix:
         os: [ ubuntu-latest, ubuntu-24.04, ubuntu-22.04, ubuntu-20.04, macos-latest, macos-15, macos-14, macos-13 ]
-        python-version: [ '3.12', '3.11', '3.10', '3.9' ]
+        python-version: [ '3.13', '3.12', '3.11', '3.10', '3.9' ]
 
     steps:
       - name: Checkout
@@ -46,13 +46,13 @@ jobs:
 
   min:
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 10
+    timeout-minutes: 20
     strategy:
       max-parallel: 8
       fail-fast: false
       matrix:
         os: [ ubuntu-latest, ubuntu-24.04, ubuntu-22.04, ubuntu-20.04, macos-latest, macos-15, macos-14, macos-13 ]
-        python-version: [ '3.12', '3.11', '3.10', '3.9' ]
+        python-version: [ '3.13', '3.12', '3.11', '3.10', '3.9' ]
 
     steps:
       - name: Checkout

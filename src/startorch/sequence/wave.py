@@ -1,3 +1,4 @@
+# noqa: A005
 r"""Contain the implementation of sequence generators where the values
 are sampled with a sine-wave pattern."""
 
