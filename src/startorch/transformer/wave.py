@@ -1,4 +1,3 @@
-# noqa: A005
 r"""Contain transformers that compute wave-like transformations."""
 
 from __future__ import annotations

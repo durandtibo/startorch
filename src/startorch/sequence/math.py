@@ -1,4 +1,3 @@
-# noqa: A005
 r"""Contain the implementation of sequence generators that computes
 mathematical functions on sequences/tensors."""
 
