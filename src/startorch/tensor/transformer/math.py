@@ -1,4 +1,3 @@
-# noqa: A005
 r"""Contain the implementation of tensor transformers that computes
 arithmetic functions on a tensor."""
 

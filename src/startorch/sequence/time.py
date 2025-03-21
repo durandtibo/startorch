@@ -1,4 +1,3 @@
-# noqa: A005
 r"""Contain the implementations of sequence generators to generate time
 sequences."""
 

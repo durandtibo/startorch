@@ -1,4 +1,3 @@
-# noqa: A005
 r"""Contain a periodic sequence generator that generates periodic
 sequence by sampling values with a sine wave pattern."""
 
