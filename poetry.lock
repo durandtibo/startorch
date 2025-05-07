@@ -978,22 +978,23 @@ devel = ["colorama", "json-spec", "jsonschema", "pylint", "pytest", "pytest-benc
 
 [[package]]
 name = "feu"
-version = "0.3.2"
+version = "0.3.3"
 description = "A light library to help to manage packages"
 optional = false
 python-versions = "<3.14,>=3.9"
 groups = ["dev"]
 files = [
-    {file = "feu-0.3.2-py3-none-any.whl", hash = "sha256:19d723dc4fe76448405148a5ef1120425355bb04df24cdb0ce29d0c4651c11ed"},
-    {file = "feu-0.3.2.tar.gz", hash = "sha256:695f5c6087c214a099ff304d79cfb6d8a85dc8e1d58880c6ab8dbd5b658031af"},
+    {file = "feu-0.3.3-py3-none-any.whl", hash = "sha256:c2cf3e2fbebced3b7232f1dd594b5349ff44c3735b2ab95f90f5038a1f9ce0d3"},
+    {file = "feu-0.3.3.tar.gz", hash = "sha256:7f34612ad39548615547ea6cbcda9919cf2b09a0d5180873a45eaacd56d97c19"},
 ]
 
 [package.dependencies]
-packaging = ">=21.0,<25.0"
+packaging = ">=21.0,<26.0"
 
 [package.extras]
 all = ["click (>=8.1,<9.0)"]
 cli = ["click (>=8.1,<9.0)"]
+git = ["gitpython (>=3.1.41,<4.0)"]
 
 [[package]]
 name = "filelock"
