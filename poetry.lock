@@ -1003,14 +1003,14 @@ devel = ["colorama", "json-spec", "jsonschema", "pylint", "pytest", "pytest-benc
 
 [[package]]
 name = "feu"
-version = "0.3.3"
+version = "0.3.4"
 description = "A light library to help to manage packages"
 optional = false
 python-versions = "<3.14,>=3.9"
 groups = ["dev"]
 files = [
-    {file = "feu-0.3.3-py3-none-any.whl", hash = "sha256:c2cf3e2fbebced3b7232f1dd594b5349ff44c3735b2ab95f90f5038a1f9ce0d3"},
-    {file = "feu-0.3.3.tar.gz", hash = "sha256:7f34612ad39548615547ea6cbcda9919cf2b09a0d5180873a45eaacd56d97c19"},
+    {file = "feu-0.3.4-py3-none-any.whl", hash = "sha256:2b475ad1ab2826d5aece14cbc1581b22d387822e31dd38ca609736bd00ce6c81"},
+    {file = "feu-0.3.4.tar.gz", hash = "sha256:6c044cf32c4a75d94f384ee88fe38a58b5ef56f9e7428fb266edae567c8a7410"},
 ]
 
 [package.dependencies]
