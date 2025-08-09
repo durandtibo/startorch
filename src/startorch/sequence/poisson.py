@@ -80,7 +80,9 @@ class PoissonSequenceGenerator(BaseSequenceGenerator):
                 (``UniformConstantSequenceGenerator``).
         """
         # The import is here to do not generate circular dependencies
-        from startorch.sequence.uniform import RandUniformSequenceGenerator
+        from startorch.sequence.uniform import (  # noqa: PLC0415
+            RandUniformSequenceGenerator,
+        )
 
         return cls(
             rate=ConstantSequenceGenerator(
