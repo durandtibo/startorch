@@ -59,7 +59,9 @@ class VanillaExampleGenerator(BaseExampleGenerator):
         return f"{self.__class__.__qualname__}(batch_size={self._batch_size})"
 
     def generate(
-        self, batch_size: int = 1, rng: torch.Generator | None = None  # noqa: ARG002
+        self,
+        batch_size: int = 1,
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> dict[Hashable, torch.Tensor]:
         if batch_size > self._batch_size:
             msg = (

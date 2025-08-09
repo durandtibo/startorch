@@ -10,7 +10,6 @@ from typing import TYPE_CHECKING
 from startorch.tensor.transformer.base import BaseTensorTransformer
 
 if TYPE_CHECKING:
-
     import torch
 
 logger = logging.getLogger(__name__)

@@ -212,8 +212,7 @@ def test_trunc_cauchy_incorrect_min_max() -> None:
     with pytest.raises(
         ValueError,
         match=(
-            "Found at least one value in `min_value` that is higher than "
-            "its associated `max_value`"
+            "Found at least one value in `min_value` that is higher than its associated `max_value`"
         ),
     ):
         trunc_cauchy(
@@ -1084,8 +1083,7 @@ def test_trunc_log_normal_incorrect_min_max() -> None:
     with pytest.raises(
         ValueError,
         match=(
-            "Found at least one value in `min_value` that is higher than its associated "
-            "`max_value`"
+            "Found at least one value in `min_value` that is higher than its associated `max_value`"
         ),
     ):
         trunc_log_normal(
@@ -1391,8 +1389,7 @@ def test_trunc_normal_incorrect_min_max() -> None:
     with pytest.raises(
         ValueError,
         match=(
-            "Found at least one value in `min_value` that is higher than its associated "
-            "`max_value`"
+            "Found at least one value in `min_value` that is higher than its associated `max_value`"
         ),
     ):
         trunc_normal(
@@ -1626,8 +1623,7 @@ def test_uniform_incorrect_low_high() -> None:
     with pytest.raises(
         ValueError,
         match=(
-            "Found at least one value in `low` that is higher than its associated "
-            "value in `high`"
+            "Found at least one value in `low` that is higher than its associated value in `high`"
         ),
     ):
         uniform(torch.full((1000,), 1.0), torch.full((1000,), 0.5))
@@ -1803,8 +1799,7 @@ def test_log_uniform_incorrect_low_high() -> None:
     with pytest.raises(
         ValueError,
         match=(
-            "Found at least one value in `low` that is higher than its associated "
-            "value in `high`"
+            "Found at least one value in `low` that is higher than its associated value in `high`"
         ),
     ):
         log_uniform(torch.full((1000,), 2.0), torch.full((1000,), 0.5))
@@ -1988,8 +1983,7 @@ def test_asinh_uniform_incorrect_low_high() -> None:
     with pytest.raises(
         ValueError,
         match=(
-            "Found at least one value in `low` that is higher than its associated "
-            "value in `high`"
+            "Found at least one value in `low` that is higher than its associated value in `high`"
         ),
     ):
         asinh_uniform(torch.full((1000,), 2.0), torch.full((1000,), 0.5))
