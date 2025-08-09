@@ -146,8 +146,7 @@ def trunc_cauchy(
         raise ValueError(msg)
     if torch.any(max_value.lt(min_value)):
         msg = (
-            "Found at least one value in `min_value` that is higher than its associated "
-            "`max_value`"
+            "Found at least one value in `min_value` that is higher than its associated `max_value`"
         )
         raise ValueError(msg)
     distribution = Cauchy(loc=loc, scale=scale)
@@ -584,8 +583,7 @@ def trunc_log_normal(
         raise ValueError(msg)
     if torch.any(max_value.lt(min_value)):
         msg = (
-            "Found at least one value in `min_value` that is higher than its associated "
-            "`max_value`"
+            "Found at least one value in `min_value` that is higher than its associated `max_value`"
         )
         raise ValueError(msg)
     distribution = LogNormal(loc=mean, scale=std)
@@ -708,8 +706,7 @@ def trunc_normal(
         raise ValueError(msg)
     if torch.any(max_value.lt(min_value)):
         msg = (
-            "Found at least one value in `min_value` that is higher than its associated "
-            "`max_value`"
+            "Found at least one value in `min_value` that is higher than its associated `max_value`"
         )
         raise ValueError(msg)
     distribution = Normal(loc=mean, scale=std)

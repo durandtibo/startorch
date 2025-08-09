@@ -61,7 +61,10 @@ class VanillaTimeSeriesGenerator(BaseTimeSeriesGenerator):
         return f"{self.__class__.__qualname__}(batch_size={self._batch_size:,}, seq_len={self._seq_len:,})"
 
     def generate(
-        self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None  # noqa: ARG002
+        self,
+        seq_len: int,
+        batch_size: int = 1,
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> dict[Hashable, torch.Tensor]:
         if batch_size > self._batch_size:
             msg = (
@@ -71,8 +74,7 @@ class VanillaTimeSeriesGenerator(BaseTimeSeriesGenerator):
             raise RuntimeError(msg)
         if seq_len > self._seq_len:
             msg = (
-                f"Incorrect seq_len: {seq_len:,}. "
-                f"seq_len cannot be greater than {self._seq_len:,}"
+                f"Incorrect seq_len: {seq_len:,}. seq_len cannot be greater than {self._seq_len:,}"
             )
             raise RuntimeError(msg)
         data = slice_along_batch(self._data, stop=batch_size)
