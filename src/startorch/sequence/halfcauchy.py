@@ -107,8 +107,7 @@ class RandHalfCauchySequenceGenerator(BaseSequenceGenerator):
 
     def __repr__(self) -> str:
         return (
-            f"{self.__class__.__qualname__}(scale={self._scale}, "
-            f"feature_size={self._feature_size})"
+            f"{self.__class__.__qualname__}(scale={self._scale}, feature_size={self._feature_size})"
         )
 
     def generate(

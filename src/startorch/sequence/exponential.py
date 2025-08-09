@@ -194,8 +194,7 @@ class RandExponentialSequenceGenerator(BaseSequenceGenerator):
 
     def __repr__(self) -> str:
         return (
-            f"{self.__class__.__qualname__}(rate={self._rate}, "
-            f"feature_size={self._feature_size})"
+            f"{self.__class__.__qualname__}(rate={self._rate}, feature_size={self._feature_size})"
         )
 
     def generate(
