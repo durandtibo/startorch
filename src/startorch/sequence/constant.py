@@ -95,8 +95,7 @@ class FullSequenceGenerator(BaseSequenceGenerator):
 
     def __repr__(self) -> str:
         return (
-            f"{self.__class__.__qualname__}(value={self._value}, "
-            f"feature_size={self._feature_size})"
+            f"{self.__class__.__qualname__}(value={self._value}, feature_size={self._feature_size})"
         )
 
     def generate(
