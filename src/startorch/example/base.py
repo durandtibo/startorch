@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 T = TypeVar("T")
 
 
-class BaseExampleGenerator(Generic[T], ABC, metaclass=AbstractFactory):
+class BaseExampleGenerator(ABC, Generic[T], metaclass=AbstractFactory):
     r"""Define the base class to generate examples.
 
     Example usage:
