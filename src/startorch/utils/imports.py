@@ -5,10 +5,16 @@ from __future__ import annotations
 __all__ = [
     "check_iden",
     "check_matplotlib",
+    "check_objectory",
     "check_plotly",
+    "iden_available",
     "is_iden_available",
     "is_matplotlib_available",
+    "is_objectory_available",
     "is_plotly_available",
+    "matplotlib_available",
+    "objectory_available",
+    "plotly_available",
 ]
 
 from typing import TYPE_CHECKING, Any
@@ -63,6 +69,33 @@ def is_iden_available() -> bool:
     return package_available("iden")
 
 
+def iden_available(fn: Callable[..., Any]) -> Callable[..., Any]:
+    r"""Implement a decorator to execute a function only if ``iden``
+    package is installed.
+
+    Args:
+        fn: Specifies the function to execute.
+
+    Returns:
+        A wrapper around ``fn`` if ``iden`` package is installed,
+            otherwise ``None``.
+
+    Example usage:
+
+    ```pycon
+
+    >>> from startorch.utils.imports import iden_available
+    >>> @iden_available
+    ... def my_function(n: int = 0) -> int:
+    ...     return 42 + n
+    ...
+    >>> my_function()
+
+    ```
+    """
+    return decorator_package_available(fn, is_iden_available)
+
+
 ######################
 #     matplotlib     #
 ######################
@@ -105,6 +138,33 @@ def is_matplotlib_available() -> bool:
     ```
     """
     return package_available("matplotlib")
+
+
+def matplotlib_available(fn: Callable[..., Any]) -> Callable[..., Any]:
+    r"""Implement a decorator to execute a function only if
+    ``matplotlib`` package is installed.
+
+    Args:
+        fn: Specifies the function to execute.
+
+    Returns:
+        A wrapper around ``fn`` if ``matplotlib`` package is installed,
+            otherwise ``None``.
+
+    Example usage:
+
+    ```pycon
+
+    >>> from startorch.utils.imports import matplotlib_available
+    >>> @matplotlib_available
+    ... def my_function(n: int = 0) -> int:
+    ...     return 42 + n
+    ...
+    >>> my_function()
+
+    ```
+    """
+    return decorator_package_available(fn, is_matplotlib_available)
 
 
 #####################
@@ -223,3 +283,30 @@ def is_plotly_available() -> bool:
     ```
     """
     return package_available("plotly")
+
+
+def plotly_available(fn: Callable[..., Any]) -> Callable[..., Any]:
+    r"""Implement a decorator to execute a function only if ``plotly``
+    package is installed.
+
+    Args:
+        fn: Specifies the function to execute.
+
+    Returns:
+        A wrapper around ``fn`` if ``plotly`` package is installed,
+            otherwise ``None``.
+
+    Example usage:
+
+    ```pycon
+
+    >>> from startorch.utils.imports import plotly_available
+    >>> @plotly_available
+    ... def my_function(n: int = 0) -> int:
+    ...     return 42 + n
+    ...
+    >>> my_function()
+
+    ```
+    """
+    return decorator_package_available(fn, is_plotly_available)
