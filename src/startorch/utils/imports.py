@@ -11,7 +11,13 @@ __all__ = [
     "is_plotly_available",
 ]
 
-from importlib.util import find_spec
+from typing import TYPE_CHECKING, Any
+
+from coola.utils import package_available
+from coola.utils.imports import decorator_package_available
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 ################
 #     iden     #
@@ -35,8 +41,8 @@ def check_iden() -> None:
     """
     if not is_iden_available():
         msg = (
-            "`iden` package is required but not installed. "
-            "You can install `iden` package with the command:\n\n"
+            "'iden' package is required but not installed. "
+            "You can install 'iden' package with the command:\n\n"
             "pip install iden\n"
         )
         raise RuntimeError(msg)
@@ -54,7 +60,7 @@ def is_iden_available() -> bool:
 
     ```
     """
-    return find_spec("iden") is not None
+    return package_available("iden")
 
 
 ######################
@@ -79,8 +85,8 @@ def check_matplotlib() -> None:
     """
     if not is_matplotlib_available():
         msg = (
-            "`matplotlib` package is required but not installed. "
-            "You can install `matplotlib` package with the command:\n\n"
+            "'matplotlib' package is required but not installed. "
+            "You can install 'matplotlib' package with the command:\n\n"
             "pip install matplotlib\n"
         )
         raise RuntimeError(msg)
@@ -98,7 +104,81 @@ def is_matplotlib_available() -> bool:
 
     ```
     """
-    return find_spec("matplotlib") is not None
+    return package_available("matplotlib")
+
+
+#####################
+#     objectory     #
+#####################
+
+
+def check_objectory() -> None:
+    r"""Check if the ``objectory`` package is installed.
+
+    Raises:
+        RuntimeError: if the ``objectory`` package is not installed.
+
+    Example usage:
+
+    ```pycon
+
+    >>> from startorch.utils.imports import check_objectory
+    >>> check_objectory()
+
+    ```
+    """
+    if not is_objectory_available():
+        msg = (
+            "'objectory' package is required but not installed. "
+            "You can install 'objectory' package with the command:\n\n"
+            "pip install objectory\n"
+        )
+        raise RuntimeError(msg)
+
+
+def is_objectory_available() -> bool:
+    r"""Indicate if the ``objectory`` package is installed or not.
+
+    Returns:
+        ``True`` if ``objectory`` is available otherwise ``False``.
+
+    Example usage:
+
+    ```pycon
+
+    >>> from startorch.utils.imports import is_objectory_available
+    >>> is_objectory_available()
+
+    ```
+    """
+    return package_available("objectory")
+
+
+def objectory_available(fn: Callable[..., Any]) -> Callable[..., Any]:
+    r"""Implement a decorator to execute a function only if ``objectory``
+    package is installed.
+
+    Args:
+        fn: Specifies the function to execute.
+
+    Returns:
+        A wrapper around ``fn`` if ``objectory`` package is installed,
+            otherwise ``None``.
+
+    Example usage:
+
+    ```pycon
+
+    >>> from startorch.utils.imports import objectory_available
+    >>> @objectory_available
+    ... def my_function(n: int = 0) -> int:
+    ...     return 42 + n
+    ...
+    >>> my_function()
+
+    ```
+    """
+    return decorator_package_available(fn, is_objectory_available)
 
 
 ##################
@@ -123,8 +203,8 @@ def check_plotly() -> None:
     """
     if not is_plotly_available():
         msg = (
-            "`plotly` package is required but not installed. "
-            "You can install `plotly` package with the command:\n\n"
+            "'plotly' package is required but not installed. "
+            "You can install 'plotly' package with the command:\n\n"
             "pip install plotly\n"
         )
         raise RuntimeError(msg)
@@ -142,4 +222,4 @@ def is_plotly_available() -> bool:
 
     ```
     """
-    return find_spec("plotly") is not None
+    return package_available("plotly")

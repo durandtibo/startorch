@@ -9,7 +9,7 @@ only-include = ["src"]
 
 [project]
 name = "startorch"
-version = "0.2.1a0"
+version = "0.2.1a1"
 description = "synthetic time-series generator in PyTorch"
 readme = "README.md"
 authors = [

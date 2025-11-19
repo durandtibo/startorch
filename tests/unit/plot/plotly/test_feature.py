@@ -74,5 +74,5 @@ def test_hist_feature_incorrect_too_many_feature_names() -> None:
 
 @patch("startorch.utils.imports.is_plotly_available", lambda: False)
 def test_hist_feature_no_plotly() -> None:
-    with pytest.raises(RuntimeError, match=r"`plotly` package is required but not installed."):
+    with pytest.raises(RuntimeError, match=r"'plotly' package is required but not installed."):
         hist_feature(np.ones((2, 3)))
