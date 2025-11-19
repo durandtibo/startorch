@@ -73,7 +73,7 @@ def test_rand_half_cauchy_scale(scale: float) -> None:
 
 @pytest.mark.parametrize("scale", [0.0, -1.0])
 def test_rand_half_cauchy_incorrect_scale(scale: float) -> None:
-    with pytest.raises(ValueError, match="scale has to be greater than 0"):
+    with pytest.raises(ValueError, match=r"scale has to be greater than 0"):
         RandHalfCauchy(scale=scale)
 
 
@@ -128,7 +128,7 @@ def test_rand_trunc_half_cauchy_scale_default() -> None:
 
 @pytest.mark.parametrize("scale", [0.0, -1.0])
 def test_rand_trunc_half_cauchy_incorrect_scale(scale: float) -> None:
-    with pytest.raises(ValueError, match="scale has to be greater than 0"):
+    with pytest.raises(ValueError, match=r"scale has to be greater than 0"):
         RandTruncHalfCauchy(scale=scale)
 
 
@@ -142,7 +142,7 @@ def test_rand_trunc_half_cauchy_max_value_default() -> None:
 
 
 def test_rand_trunc_half_cauchy_incorrect_max_value() -> None:
-    with pytest.raises(ValueError, match="max_value has to be greater than 0"):
+    with pytest.raises(ValueError, match=r"max_value has to be greater than 0"):
         RandTruncHalfCauchy(max_value=0.0)
 
 

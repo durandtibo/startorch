@@ -25,5 +25,5 @@ def test_mix2sequences_seq_dim_1() -> None:
 
 
 def test_mix2sequences_incorrect_shape() -> None:
-    with pytest.raises(RuntimeError, match="x and y shapes do not match:"):
+    with pytest.raises(RuntimeError, match=r"x and y shapes do not match:"):
         mix2sequences(torch.ones(1, 5), torch.ones(1, 5, 1))

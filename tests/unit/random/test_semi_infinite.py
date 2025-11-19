@@ -56,7 +56,7 @@ def test_rand_exponential_rate(rate: float) -> None:
 
 
 def test_rand_exponential_incorrect_rate() -> None:
-    with pytest.raises(ValueError, match="rate has to be greater than 0"):
+    with pytest.raises(ValueError, match=r"rate has to be greater than 0"):
         rand_exponential((1000,), rate=0, generator=get_torch_generator(1))
 
 
@@ -109,7 +109,7 @@ def test_exponential_rate(rate: float) -> None:
 
 
 def test_exponential_incorrect_rate() -> None:
-    with pytest.raises(ValueError, match="rate values have to be greater than 0"):
+    with pytest.raises(ValueError, match=r"rate values have to be greater than 0"):
         exponential(torch.zeros(1000), generator=get_torch_generator(1))
 
 
@@ -160,7 +160,7 @@ def test_rand_half_cauchy_scale() -> None:
 
 @pytest.mark.parametrize("scale", [0.0, -1.0])
 def test_rand_half_cauchy_scale_incorrect(scale: float) -> None:
-    with pytest.raises(ValueError, match="scale has to be greater than 0"):
+    with pytest.raises(ValueError, match=r"scale has to be greater than 0"):
         rand_half_cauchy((1000,), scale=scale, generator=get_torch_generator(1))
 
 
@@ -209,7 +209,7 @@ def test_half_cauchy_scale() -> None:
 
 @pytest.mark.parametrize("scale", [0.0, -1.0])
 def test_half_cauchy_scale_incorrect(scale: float) -> None:
-    with pytest.raises(ValueError, match="scale has to be greater than 0"):
+    with pytest.raises(ValueError, match=r"scale has to be greater than 0"):
         half_cauchy(torch.full((1000,), scale), generator=get_torch_generator(1))
 
 
@@ -257,7 +257,7 @@ def test_rand_half_normal_rate(std: float) -> None:
 
 @pytest.mark.parametrize("std", [0.0, -1.0])
 def test_rand_half_normal_std_incorrect(std: float) -> None:
-    with pytest.raises(ValueError, match="std has to be greater than 0"):
+    with pytest.raises(ValueError, match=r"std has to be greater than 0"):
         rand_half_normal((1000,), std=std, generator=get_torch_generator(1))
 
 
@@ -305,7 +305,7 @@ def test_half_normal_std(std: float) -> None:
 
 @pytest.mark.parametrize("std", [0.0, -1.0])
 def test_half_normal_std_incorrect(std: float) -> None:
-    with pytest.raises(ValueError, match="std has to be greater than 0"):
+    with pytest.raises(ValueError, match=r"std has to be greater than 0"):
         half_normal(torch.full((1000,), std), generator=get_torch_generator(1))
 
 
@@ -380,7 +380,7 @@ def test_rand_log_normal_std(std: float) -> None:
 
 @pytest.mark.parametrize("std", [0.0, -1.0])
 def test_rand_log_normal_std_incorrect(std: float) -> None:
-    with pytest.raises(ValueError, match="std has to be greater than 0"):
+    with pytest.raises(ValueError, match=r"std has to be greater than 0"):
         rand_log_normal((1000,), std=std, generator=get_torch_generator(1))
 
 
@@ -438,7 +438,7 @@ def test_log_normal_mean_std(mean: float, std: float) -> None:
 
 @pytest.mark.parametrize("std", [0.0, -1.0])
 def test_log_normal_std_incorrect(std: float) -> None:
-    with pytest.raises(ValueError, match="std has to be greater than 0"):
+    with pytest.raises(ValueError, match=r"std has to be greater than 0"):
         log_normal(torch.ones(1000), torch.full((1000,), std), generator=get_torch_generator(1))
 
 

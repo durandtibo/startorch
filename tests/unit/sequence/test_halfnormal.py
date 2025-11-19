@@ -80,7 +80,7 @@ def test_rand_half_normal_std_default() -> None:
 
 @pytest.mark.parametrize("std", [0, -1])
 def test_rand_half_normal_incorrect_std(std: float) -> None:
-    with pytest.raises(ValueError, match="std has to be greater than 0"):
+    with pytest.raises(ValueError, match=r"std has to be greater than 0"):
         RandHalfNormal(std=std)
 
 
@@ -166,7 +166,7 @@ def test_rand_trunc_normal_std_default() -> None:
 
 @pytest.mark.parametrize("std", [0.0, -1.0])
 def test_rand_trunc_normal_incorrect_std(std: float) -> None:
-    with pytest.raises(ValueError, match="std has to be greater than 0"):
+    with pytest.raises(ValueError, match=r"std has to be greater than 0"):
         RandTruncHalfNormal(std=std)
 
 
@@ -181,7 +181,7 @@ def test_rand_trunc_normal_max_value_default() -> None:
 
 @pytest.mark.parametrize("max_value", [0.0, -1.0])
 def test_rand_trunc_normal_incorrect_max_value(max_value: float) -> None:
-    with pytest.raises(ValueError, match="max_value has to be greater than 0"):
+    with pytest.raises(ValueError, match=r"max_value has to be greater than 0"):
         RandTruncHalfNormal(max_value=max_value)
 
 

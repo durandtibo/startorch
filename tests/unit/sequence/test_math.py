@@ -103,7 +103,7 @@ def test_add_3_sequences() -> None:
 
 
 def test_add_sequences_empty() -> None:
-    with pytest.raises(ValueError, match="No sequence generator."):
+    with pytest.raises(ValueError, match=r"No sequence generator."):
         Add(sequences=[])
 
 
@@ -211,7 +211,7 @@ def test_clamp_max(max_value: float) -> None:
 
 
 def test_clamp_incorrect_min_max() -> None:
-    with pytest.raises(ValueError, match="`min` and `max` cannot be both None"):
+    with pytest.raises(ValueError, match=r"`min` and `max` cannot be both None"):
         Clamp(RandNormal(), min=None, max=None)
 
 
@@ -537,7 +537,7 @@ def test_mul_3_sequences() -> None:
 
 
 def test_mul_sequences_empty() -> None:
-    with pytest.raises(ValueError, match="No sequence generator."):
+    with pytest.raises(ValueError, match=r"No sequence generator."):
         Mul(sequences=[])
 
 

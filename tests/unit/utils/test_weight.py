@@ -47,17 +47,17 @@ def test_prepare_probabilities(weights: Tensor | Sequence, probabilities: Tensor
 
 
 def test_prepare_probabilities_incorrect_weights_dimensions() -> None:
-    with pytest.raises(ValueError, match="weights has to be a 1D tensor"):
+    with pytest.raises(ValueError, match=r"weights has to be a 1D tensor"):
         prepare_probabilities(torch.ones(4, 5))
 
 
 def test_prepare_probabilities_incorrect_weights_not_positive() -> None:
-    with pytest.raises(ValueError, match="The values in weights have to be positive"):
+    with pytest.raises(ValueError, match=r"The values in weights have to be positive"):
         prepare_probabilities(torch.tensor([-1, 2, 4, 7], dtype=torch.float))
 
 
 def test_prepare_probabilities_incorrect_weights_sum_zero() -> None:
-    with pytest.raises(ValueError, match="The sum of the weights has to be greater than 0"):
+    with pytest.raises(ValueError, match=r"The sum of the weights has to be greater than 0"):
         prepare_probabilities(torch.zeros(5))
 
 

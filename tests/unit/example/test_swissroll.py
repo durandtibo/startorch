@@ -30,7 +30,7 @@ def test_swiss_roll_noise_std(noise_std: float) -> None:
 def test_swiss_roll_incorrect_noise_std() -> None:
     with pytest.raises(
         RuntimeError,
-        match="Incorrect value for noise_std. Expected a value greater than 0",
+        match=r"Incorrect value for noise_std. Expected a value greater than 0",
     ):
         SwissRoll(noise_std=-1)
 
@@ -43,7 +43,7 @@ def test_swiss_roll_spin(spin: float) -> None:
 @pytest.mark.parametrize("spin", [0, -0.1, -1.0])
 def test_swiss_roll_incorrect_spin(spin: float) -> None:
     with pytest.raises(
-        RuntimeError, match="Incorrect value for spin. Expected a value in interval"
+        RuntimeError, match=r"Incorrect value for spin. Expected a value in interval"
     ):
         SwissRoll(spin=spin)
 
@@ -119,7 +119,7 @@ def test_swiss_roll_generate_mock(
 def test_make_swiss_roll_incorrect_num_examples(num_examples: int) -> None:
     with pytest.raises(
         RuntimeError,
-        match="Incorrect value for num_examples. Expected a value greater or equal to 1",
+        match=r"Incorrect value for num_examples. Expected a value greater or equal to 1",
     ):
         make_swiss_roll(num_examples=num_examples)
 
@@ -127,7 +127,7 @@ def test_make_swiss_roll_incorrect_num_examples(num_examples: int) -> None:
 def test_make_swiss_roll_incorrect_noise_std() -> None:
     with pytest.raises(
         RuntimeError,
-        match="Incorrect value for noise_std. Expected a value greater than 0",
+        match=r"Incorrect value for noise_std. Expected a value greater than 0",
     ):
         make_swiss_roll(noise_std=-1)
 
@@ -135,7 +135,7 @@ def test_make_swiss_roll_incorrect_noise_std() -> None:
 @pytest.mark.parametrize("spin", [0, -1])
 def test_make_swiss_roll_incorrect_spin(spin: int) -> None:
     with pytest.raises(
-        RuntimeError, match="Incorrect value for spin. Expected a value in interval"
+        RuntimeError, match=r"Incorrect value for spin. Expected a value in interval"
     ):
         make_swiss_roll(num_examples=10, spin=spin)
 

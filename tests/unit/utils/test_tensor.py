@@ -73,5 +73,5 @@ def test_circulant_float() -> None:
 
 
 def test_circulant_incorrect_shape() -> None:
-    with pytest.raises(ValueError, match="Expected a vector but received a 2-d tensor"):
+    with pytest.raises(ValueError, match=r"Expected a vector but received a 2-d tensor"):
         circulant(torch.tensor([[1, 2]]))

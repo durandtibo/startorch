@@ -48,7 +48,7 @@ def test_linear_transformer_transform_exist_ok_false() -> None:
     transformer = LinearTransformer(
         value="value", slope="slope", intercept="intercept", output="output", exist_ok=False
     )
-    with pytest.raises(KeyError, match="Key output already exists."):
+    with pytest.raises(KeyError, match=r"Key output already exists."):
         transformer.transform(data)
 
 
@@ -77,7 +77,7 @@ def test_linear_transformer_transform_missing_key() -> None:
     transformer = LinearTransformer(
         value="value", slope="slope", intercept="intercept", output="output"
     )
-    with pytest.raises(KeyError, match="Missing key: value."):
+    with pytest.raises(KeyError, match=r"Missing key: value."):
         transformer.transform({})
 
 

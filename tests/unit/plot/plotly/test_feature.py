@@ -35,13 +35,17 @@ def test_hist_feature(features: torch.Tensor | np.ndarray) -> None:
 
 @plotly_available
 def test_hist_feature_incorrect_feature_dims_1() -> None:
-    with pytest.raises(RuntimeError, match="Expected a 2D array/tensor but received .* dimensions"):
+    with pytest.raises(
+        RuntimeError, match=r"Expected a 2D array/tensor but received .* dimensions"
+    ):
         hist_feature(np.ones((2,)))
 
 
 @plotly_available
 def test_hist_feature_incorrect_feature_dims_3() -> None:
-    with pytest.raises(RuntimeError, match="Expected a 2D array/tensor but received .* dimensions"):
+    with pytest.raises(
+        RuntimeError, match=r"Expected a 2D array/tensor but received .* dimensions"
+    ):
         hist_feature(np.ones((2, 3, 4)))
 
 
@@ -54,7 +58,7 @@ def test_hist_feature_feature_names() -> None:
 def test_hist_feature_incorrect_not_enough_feature_names() -> None:
     with pytest.raises(
         RuntimeError,
-        match="The number of features .* does not match with the number of feature names",
+        match=r"The number of features .* does not match with the number of feature names",
     ):
         hist_feature(np.ones((2, 3)), feature_names=["a", "b"])
 
@@ -63,12 +67,12 @@ def test_hist_feature_incorrect_not_enough_feature_names() -> None:
 def test_hist_feature_incorrect_too_many_feature_names() -> None:
     with pytest.raises(
         RuntimeError,
-        match="The number of features .* does not match with the number of feature names",
+        match=r"The number of features .* does not match with the number of feature names",
     ):
         hist_feature(np.ones((2, 3)), feature_names=["a", "b", "c", "d"])
 
 
 @patch("startorch.utils.imports.is_plotly_available", lambda: False)
 def test_hist_feature_no_plotly() -> None:
-    with pytest.raises(RuntimeError, match="`plotly` package is required but not installed."):
+    with pytest.raises(RuntimeError, match=r"`plotly` package is required but not installed."):
         hist_feature(np.ones((2, 3)))

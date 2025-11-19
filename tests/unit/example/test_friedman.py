@@ -39,7 +39,7 @@ def test_friedman1_regression_feature_size(feature_size: int) -> None:
 def test_friedman1_regression_incorrect_feature_size(feature_size: int) -> None:
     with pytest.raises(
         RuntimeError,
-        match="Incorrect value for feature_size. Expected a value greater or equal to 5",
+        match=r"Incorrect value for feature_size. Expected a value greater or equal to 5",
     ):
         Friedman1Regression(feature_size=feature_size)
 
@@ -53,7 +53,7 @@ def test_friedman1_regression_noise_std(noise_std: float) -> None:
 def test_friedman1_regression_incorrect_noise_std(noise_std: float) -> None:
     with pytest.raises(
         RuntimeError,
-        match="Incorrect value for noise_std. Expected a value greater than 0",
+        match=r"Incorrect value for noise_std. Expected a value greater than 0",
     ):
         Friedman1Regression(noise_std=noise_std)
 
@@ -129,7 +129,7 @@ def test_friedman2_regression_feature_size(feature_size: int) -> None:
 def test_friedman2_regression_incorrect_feature_size(feature_size: int) -> None:
     with pytest.raises(
         RuntimeError,
-        match="Incorrect value for feature_size. Expected a value greater or equal to 4",
+        match=r"Incorrect value for feature_size. Expected a value greater or equal to 4",
     ):
         Friedman2Regression(feature_size=feature_size)
 
@@ -143,7 +143,7 @@ def test_friedman2_regression_noise_std(noise_std: float) -> None:
 def test_friedman2_regression_incorrect_noise_std(noise_std: float) -> None:
     with pytest.raises(
         RuntimeError,
-        match="Incorrect value for noise_std. Expected a value greater than 0",
+        match=r"Incorrect value for noise_std. Expected a value greater than 0",
     ):
         Friedman2Regression(noise_std=noise_std)
 
@@ -219,7 +219,7 @@ def test_friedman3_regression_feature_size(feature_size: int) -> None:
 def test_friedman3_regression_incorrect_feature_size(feature_size: int) -> None:
     with pytest.raises(
         RuntimeError,
-        match="Incorrect value for feature_size. Expected a value greater or equal to 4",
+        match=r"Incorrect value for feature_size. Expected a value greater or equal to 4",
     ):
         Friedman3Regression(feature_size=feature_size)
 
@@ -233,7 +233,7 @@ def test_friedman3_regression_noise_std(noise_std: float) -> None:
 def test_friedman3_regression_incorrect_noise_std(noise_std: float) -> None:
     with pytest.raises(
         RuntimeError,
-        match="Incorrect value for noise_std. Expected a value greater than 0",
+        match=r"Incorrect value for noise_std. Expected a value greater than 0",
     ):
         Friedman3Regression(noise_std=noise_std)
 
@@ -300,7 +300,7 @@ def test_friedman3_regression_generate_mock(
 def test_make_friedman1_regression_incorrect_num_examples(num_examples: int) -> None:
     with pytest.raises(
         RuntimeError,
-        match="Incorrect value for num_examples. Expected a value greater or equal to 1",
+        match=r"Incorrect value for num_examples. Expected a value greater or equal to 1",
     ):
         make_friedman1_regression(num_examples=num_examples)
 
@@ -309,7 +309,7 @@ def test_make_friedman1_regression_incorrect_num_examples(num_examples: int) -> 
 def test_make_friedman1_regression_incorrect_feature_size(feature_size: int) -> None:
     with pytest.raises(
         RuntimeError,
-        match="Incorrect value for feature_size. Expected a value greater or equal to 5",
+        match=r"Incorrect value for feature_size. Expected a value greater or equal to 5",
     ):
         make_friedman1_regression(feature_size=feature_size)
 
@@ -318,7 +318,7 @@ def test_make_friedman1_regression_incorrect_feature_size(feature_size: int) -> 
 def test_make_friedman1_regression_incorrect_noise_std(noise_std: float) -> None:
     with pytest.raises(
         RuntimeError,
-        match="Incorrect value for noise_std. Expected a value greater than 0",
+        match=r"Incorrect value for noise_std. Expected a value greater than 0",
     ):
         make_friedman1_regression(noise_std=noise_std)
 
@@ -394,7 +394,7 @@ def test_make_friedman1_regression_different_random_seeds(noise_std: float) -> N
 def test_make_friedman2_regression_incorrect_num_examples(num_examples: int) -> None:
     with pytest.raises(
         RuntimeError,
-        match="Incorrect value for num_examples. Expected a value greater or equal to 1",
+        match=r"Incorrect value for num_examples. Expected a value greater or equal to 1",
     ):
         make_friedman2_regression(num_examples=num_examples)
 
@@ -403,7 +403,7 @@ def test_make_friedman2_regression_incorrect_num_examples(num_examples: int) -> 
 def test_make_friedman2_regression_incorrect_feature_size(feature_size: int) -> None:
     with pytest.raises(
         RuntimeError,
-        match="Incorrect value for feature_size. Expected a value greater or equal to 4",
+        match=r"Incorrect value for feature_size. Expected a value greater or equal to 4",
     ):
         make_friedman2_regression(feature_size=feature_size)
 
@@ -412,7 +412,7 @@ def test_make_friedman2_regression_incorrect_feature_size(feature_size: int) -> 
 def test_make_friedman2_regression_incorrect_noise_std(noise_std: float) -> None:
     with pytest.raises(
         RuntimeError,
-        match="Incorrect value for noise_std. Expected a value greater than 0",
+        match=r"Incorrect value for noise_std. Expected a value greater than 0",
     ):
         make_friedman2_regression(noise_std=noise_std)
 
@@ -522,7 +522,7 @@ def test_make_friedman2_regression_different_random_seeds(noise_std: float) -> N
 def test_make_friedman3_regression_incorrect_num_examples(num_examples: int) -> None:
     with pytest.raises(
         RuntimeError,
-        match="Incorrect value for num_examples. Expected a value greater or equal to 1",
+        match=r"Incorrect value for num_examples. Expected a value greater or equal to 1",
     ):
         make_friedman3_regression(num_examples=num_examples)
 
@@ -531,7 +531,7 @@ def test_make_friedman3_regression_incorrect_num_examples(num_examples: int) -> 
 def test_make_friedman3_regression_incorrect_feature_size(feature_size: int) -> None:
     with pytest.raises(
         RuntimeError,
-        match="Incorrect value for feature_size. Expected a value greater or equal to 4",
+        match=r"Incorrect value for feature_size. Expected a value greater or equal to 4",
     ):
         make_friedman3_regression(feature_size=feature_size)
 
@@ -540,7 +540,7 @@ def test_make_friedman3_regression_incorrect_feature_size(feature_size: int) -> 
 def test_make_friedman3_regression_incorrect_noise_std(noise_std: float) -> None:
     with pytest.raises(
         RuntimeError,
-        match="Incorrect value for noise_std. Expected a value greater than 0",
+        match=r"Incorrect value for noise_std. Expected a value greater than 0",
     ):
         make_friedman3_regression(noise_std=noise_std)
 

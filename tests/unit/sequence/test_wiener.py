@@ -29,7 +29,7 @@ def test_rand_wiener_process_step_size(step_size: float) -> None:
 
 @pytest.mark.parametrize("step_size", [-0.01, -1.0])
 def test_rand_wiener_process_incorrect_min_max_value(step_size: float) -> None:
-    with pytest.raises(ValueError, match="step_size has to be greater than 0"):
+    with pytest.raises(ValueError, match=r"step_size has to be greater than 0"):
         RandWienerProcess(step_size=step_size)
 
 
@@ -100,5 +100,5 @@ def test_wiener_process_step_size_4() -> None:
 
 
 def test_wiener_process_step_size_incorrect() -> None:
-    with pytest.raises(ValueError, match="step_size has to be greater than 0"):
+    with pytest.raises(ValueError, match=r"step_size has to be greater than 0"):
         assert wiener_process(step_size=-1, batch_size=2, seq_len=4)

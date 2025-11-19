@@ -24,7 +24,7 @@ def test_vanilla_str() -> None:
 
 
 def test_vanilla_incorrect_data() -> None:
-    with pytest.raises(ValueError, match="data cannot be empty"):
+    with pytest.raises(ValueError, match=r"data cannot be empty"):
         VanillaTimeSeriesGenerator({})
 
 
@@ -65,7 +65,7 @@ def test_vanilla_larger_batch_size() -> None:
     generator = VanillaTimeSeriesGenerator(
         {"value": torch.ones(4, 10), "time": torch.arange(40).view(4, 10)}
     )
-    with pytest.raises(RuntimeError, match="Incorrect batch_size: 11."):
+    with pytest.raises(RuntimeError, match=r"Incorrect batch_size: 11."):
         generator.generate(batch_size=11, seq_len=10)
 
 
@@ -83,7 +83,7 @@ def test_vanilla_larger_seq_len() -> None:
     generator = VanillaTimeSeriesGenerator(
         {"value": torch.ones(4, 10), "time": torch.arange(40).view(4, 10)}
     )
-    with pytest.raises(RuntimeError, match="Incorrect seq_len: 11."):
+    with pytest.raises(RuntimeError, match=r"Incorrect seq_len: 11."):
         generator.generate(batch_size=4, seq_len=11)
 
 

@@ -51,7 +51,7 @@ def test_linear_regression_noise_std(noise_std: float) -> None:
 def test_linear_regression_incorrect_noise_std(noise_std: float) -> None:
     with pytest.raises(
         RuntimeError,
-        match="Incorrect value for noise_std. Expected a value greater than 0",
+        match=r"Incorrect value for noise_std. Expected a value greater than 0",
     ):
         LinearRegression.create_uniform_weights(noise_std=noise_std)
 
@@ -123,7 +123,7 @@ def test_linear_regression_generate_mock(
 def test_make_linear_regression_incorrect_num_examples(num_examples: int) -> None:
     with pytest.raises(
         RuntimeError,
-        match="Incorrect value for num_examples. Expected a value greater or equal to 1",
+        match=r"Incorrect value for num_examples. Expected a value greater or equal to 1",
     ):
         make_linear_regression(weights=torch.ones(8), num_examples=num_examples)
 
@@ -132,7 +132,7 @@ def test_make_linear_regression_incorrect_num_examples(num_examples: int) -> Non
 def test_make_linear_regression_incorrect_noise_std(noise_std: float) -> None:
     with pytest.raises(
         RuntimeError,
-        match="Incorrect value for noise_std. Expected a value greater than 0",
+        match=r"Incorrect value for noise_std. Expected a value greater than 0",
     ):
         make_linear_regression(weights=torch.ones(8), noise_std=noise_std)
 
