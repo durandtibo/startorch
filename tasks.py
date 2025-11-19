@@ -9,7 +9,7 @@ from invoke import task
 if TYPE_CHECKING:
     from invoke.context import Context
 
-NAME = "objectory"
+NAME = "startorch"
 SOURCE = f"src/{NAME}"
 TESTS = "tests"
 UNIT_TESTS = f"{TESTS}/unit"

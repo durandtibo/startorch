@@ -8,10 +8,15 @@ from collections.abc import Hashable
 
 import torch
 from coola.utils import repr_indent, repr_mapping, str_indent, str_mapping
-from iden.data.generator import BaseDataGenerator
 
 from startorch.example import BaseExampleGenerator, setup_example_generator
+from startorch.utils.imports import is_iden_available
 from startorch.utils.seed import get_torch_generator
+
+if is_iden_available():
+    from iden.data.generator import BaseDataGenerator
+else:
+    from startorch.integration.iden.fallback_types import BaseDataGenerator
 
 
 class ExampleDataGenerator(BaseDataGenerator[dict[Hashable, torch.Tensor]]):
@@ -22,11 +27,28 @@ class ExampleDataGenerator(BaseDataGenerator[dict[Hashable, torch.Tensor]]):
         example: The example generator or its configuration.
         batch_size: The batch size.
         random_seed: The random seed.
+
+    ```pycon
+
+    >>> from startorch.example import SwissRoll
+    >>> from startorch.integration.iden.data.generator import ExampleDataGenerator
+    >>> generator = ExampleDataGenerator(example=SwissRoll(), batch_size=16, random_seed=1)
+    >>> generator
+    ExampleDataGenerator(
+      (example): SwissRollExampleGenerator(noise_std=0.0, spin=1.5, hole=False)
+      (batch_size): 16
+      (random_seed): 1
+    )
+    >>> generator.generate()
+    {'target': tensor([...]), 'feature': tensor([[...]])}
+
+    ```
     """
 
     def __init__(
         self, example: BaseExampleGenerator | dict, batch_size: int, random_seed: int
     ) -> None:
+        super().__init__()
         self._example = setup_example_generator(example)
         self._batch_size = int(batch_size)
         self._rng = get_torch_generator(random_seed)
