@@ -99,7 +99,7 @@ def test_sine_wave_transformer_transform_exist_ok_false() -> None:
         output="output",
         exist_ok=False,
     )
-    with pytest.raises(KeyError, match="Key output already exists."):
+    with pytest.raises(KeyError, match=r"Key output already exists."):
         transformer.transform(data)
 
 
@@ -156,7 +156,7 @@ def test_sine_wave_transformer_transform_missing_key() -> None:
     transformer = SineWaveTransformer(
         value="value", frequency="frequency", phase="phase", amplitude="amplitude", output="output"
     )
-    with pytest.raises(KeyError, match="Missing key: value."):
+    with pytest.raises(KeyError, match=r"Missing key: value."):
         transformer.transform({})
 
 

@@ -67,25 +67,25 @@ def test_mask_by_row_mask_value() -> None:
 
 def test_mask_by_row_float_incorrect_shape_1d() -> None:
     with pytest.raises(
-        ValueError, match="Expected a 2D tensor but received a tensor with 1 dimensions"
+        ValueError, match=r"Expected a 2D tensor but received a tensor with 1 dimensions"
     ):
         mask_by_row(tensor=torch.ones(5), n=2)
 
 
 def test_mask_by_row_float_incorrect_shape_3d() -> None:
     with pytest.raises(
-        ValueError, match="Expected a 2D tensor but received a tensor with 3 dimensions"
+        ValueError, match=r"Expected a 2D tensor but received a tensor with 3 dimensions"
     ):
         mask_by_row(tensor=torch.ones(2, 5, 2), n=2)
 
 
 def test_mask_by_row_float_incorrect_n_low() -> None:
-    with pytest.raises(ValueError, match="Incorrect number of values to mask: -1"):
+    with pytest.raises(ValueError, match=r"Incorrect number of values to mask: -1"):
         mask_by_row(tensor=torch.ones(2, 5), n=-1)
 
 
 def test_mask_by_row_float_incorrect_n_high() -> None:
-    with pytest.raises(ValueError, match="Incorrect number of values to mask: 6"):
+    with pytest.raises(ValueError, match=r"Incorrect number of values to mask: 6"):
         mask_by_row(tensor=torch.ones(2, 5), n=6)
 
 
@@ -148,19 +148,19 @@ def test_mask_square_matrix_mask_value() -> None:
 
 def test_mask_square_matrix_incorrect_dims() -> None:
     with pytest.raises(
-        ValueError, match="Expected a 2D tensor but received a tensor with 1 dimensions"
+        ValueError, match=r"Expected a 2D tensor but received a tensor with 1 dimensions"
     ):
         mask_square_matrix(torch.ones(5), n=1)
 
 
 def test_mask_square_matrix_incorrect_shape() -> None:
-    with pytest.raises(ValueError, match="Expected a square matrix but received"):
+    with pytest.raises(ValueError, match=r"Expected a square matrix but received"):
         mask_square_matrix(torch.ones(5, 4), n=1)
 
 
 @pytest.mark.parametrize("n", [-1, 6])
 def test_mask_square_matrix_incorrect_n(n: int) -> None:
-    with pytest.raises(ValueError, match="Incorrect number of values to mask:"):
+    with pytest.raises(ValueError, match=r"Incorrect number of values to mask:"):
         mask_square_matrix(torch.ones(5, 5), n=n)
 
 

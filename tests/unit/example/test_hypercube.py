@@ -30,7 +30,7 @@ def test_hypercube_classification_num_classes(num_classes: int) -> None:
 def test_hypercube_classification_incorrect_num_classes(num_classes: int) -> None:
     with pytest.raises(
         RuntimeError,
-        match="Incorrect value for num_classes. Expected a value greater or equal to 1",
+        match=r"Incorrect value for num_classes. Expected a value greater or equal to 1",
     ):
         HypercubeClassification(num_classes=num_classes)
 
@@ -46,7 +46,7 @@ def test_hypercube_classification_feature_size(feature_size: int) -> None:
 def test_hypercube_classification_incorrect_feature_size() -> None:
     with pytest.raises(
         RuntimeError,
-        match="Incorrect value for feature_size. Expected a value greater or equal to 50",
+        match=r"Incorrect value for feature_size. Expected a value greater or equal to 50",
     ):
         HypercubeClassification(num_classes=50, feature_size=32)
 
@@ -60,7 +60,7 @@ def test_hypercube_classification_noise_std(noise_std: float) -> None:
 def test_hypercube_classification_incorrect_noise_std(noise_std: float) -> None:
     with pytest.raises(
         RuntimeError,
-        match="Incorrect value for noise_std. Expected a value greater than 0",
+        match=r"Incorrect value for noise_std. Expected a value greater than 0",
     ):
         HypercubeClassification(noise_std=noise_std)
 
@@ -132,7 +132,7 @@ def test_hypercube_classification_generate_mock(
 def test_make_hypercube_classification_incorrect_num_examples(num_examples: int) -> None:
     with pytest.raises(
         RuntimeError,
-        match="Incorrect value for num_examples. Expected a value greater or equal to 1",
+        match=r"Incorrect value for num_examples. Expected a value greater or equal to 1",
     ):
         make_hypercube_classification(num_examples=num_examples)
 
@@ -141,7 +141,7 @@ def test_make_hypercube_classification_incorrect_num_examples(num_examples: int)
 def test_make_hypercube_classification_incorrect_num_classes(num_classes: int) -> None:
     with pytest.raises(
         RuntimeError,
-        match="Incorrect value for num_classes. Expected a value greater or equal to 1",
+        match=r"Incorrect value for num_classes. Expected a value greater or equal to 1",
     ):
         make_hypercube_classification(num_classes=num_classes)
 
@@ -149,7 +149,7 @@ def test_make_hypercube_classification_incorrect_num_classes(num_classes: int) -
 def test_make_hypercube_classification_incorrect_feature_size() -> None:
     with pytest.raises(
         RuntimeError,
-        match="Incorrect value for feature_size. Expected a value greater or equal to 50",
+        match=r"Incorrect value for feature_size. Expected a value greater or equal to 50",
     ):
         make_hypercube_classification(num_classes=50, feature_size=32)
 
@@ -158,7 +158,7 @@ def test_make_hypercube_classification_incorrect_feature_size() -> None:
 def test_make_hypercube_classification_incorrect_noise_std(noise_std: float) -> None:
     with pytest.raises(
         RuntimeError,
-        match="Incorrect value for noise_std. Expected a value greater than 0",
+        match=r"Incorrect value for noise_std. Expected a value greater than 0",
     ):
         make_hypercube_classification(noise_std=noise_std)
 

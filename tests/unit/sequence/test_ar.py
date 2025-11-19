@@ -47,7 +47,7 @@ def test_auto_regressive_max_abs_value(max_abs_value: float) -> None:
 
 @pytest.mark.parametrize("max_abs_value", [-1, 0])
 def test_auto_regressive_max_abs_value_incorrect(max_abs_value: float) -> None:
-    with pytest.raises(ValueError, match="`max_abs_value` has to be positive"):
+    with pytest.raises(ValueError, match=r"`max_abs_value` has to be positive"):
         AutoRegressive(
             value=RandNormal(),
             coefficient=RandUniform(
@@ -96,7 +96,7 @@ def test_auto_regressive_warmup_default() -> None:
 
 @pytest.mark.parametrize("warmup", [-10, -1])
 def test_auto_regressive_warmup_incorrect(warmup: int) -> None:
-    with pytest.raises(ValueError, match="warmup has to be positive or zero"):
+    with pytest.raises(ValueError, match=r"warmup has to be positive or zero"):
         AutoRegressive(
             value=RandNormal(),
             coefficient=RandUniform(
@@ -136,7 +136,7 @@ def test_auto_regressive_generate_incorrect_order() -> None:
         order=RandInt(low=-6, high=1),
         max_abs_value=100.0,
     )
-    with pytest.raises(RuntimeError, match="Order must be a positive integer"):
+    with pytest.raises(RuntimeError, match=r"Order must be a positive integer"):
         generator.generate(batch_size=4, seq_len=12)
 
 

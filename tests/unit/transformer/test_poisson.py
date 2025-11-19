@@ -30,7 +30,7 @@ def test_poisson_transform() -> None:
 def test_poisson_transform_exist_ok_false() -> None:
     data = {"rate": torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]]), "output": 1}
     transformer = Poisson(rate="rate", output="output", exist_ok=False)
-    with pytest.raises(KeyError, match="Key output already exists."):
+    with pytest.raises(KeyError, match=r"Key output already exists."):
         transformer.transform(data)
 
 
@@ -47,7 +47,7 @@ def test_poisson_transform_exist_ok_true() -> None:
 
 def test_poisson_transform_missing_key() -> None:
     transformer = Poisson(rate="rate", output="output")
-    with pytest.raises(KeyError, match="Missing key: rate."):
+    with pytest.raises(KeyError, match=r"Missing key: rate."):
         transformer.transform({})
 
 

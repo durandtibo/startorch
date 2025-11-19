@@ -36,7 +36,7 @@ def test_tensor_transformer_transform_exist_ok_false() -> None:
     transformer = TensorTransformer(
         transformer=Abs(), input="input", output="output", exist_ok=False
     )
-    with pytest.raises(KeyError, match="Key output already exists."):
+    with pytest.raises(KeyError, match=r"Key output already exists."):
         transformer.transform(data)
 
 
@@ -56,7 +56,7 @@ def test_tensor_transformer_transform_exist_ok_true() -> None:
 
 def test_tensor_transformer_transform_missing_key() -> None:
     transformer = TensorTransformer(transformer=Abs(), input="input", output="output")
-    with pytest.raises(KeyError, match="Missing key: input."):
+    with pytest.raises(KeyError, match=r"Missing key: input."):
         transformer.transform({})
 
 

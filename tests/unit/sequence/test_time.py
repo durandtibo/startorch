@@ -39,7 +39,7 @@ def test_time_generate(generator: Time, batch_size: int, seq_len: int) -> None:
 
 @pytest.mark.parametrize("min_time_diff", [-0.1, -1])
 def test_time_generate_uniform_time_diff_incorrect_min_time_diff(min_time_diff: float) -> None:
-    with pytest.raises(ValueError, match="min_time_diff has to be greater or equal to 0"):
+    with pytest.raises(ValueError, match=r"min_time_diff has to be greater or equal to 0"):
         Time.create_uniform_time_diff(min_time_diff=min_time_diff, max_time_diff=1)
 
 
@@ -47,11 +47,11 @@ def test_time_generate_uniform_time_diff_incorrect_min_time_diff(min_time_diff: 
 def test_time_generate_uniform_constant_time_diff_incorrect_min_time_diff(
     min_time_diff: float,
 ) -> None:
-    with pytest.raises(ValueError, match="min_time_diff has to be greater or equal to 0"):
+    with pytest.raises(ValueError, match=r"min_time_diff has to be greater or equal to 0"):
         Time.create_uniform_constant_time_diff(min_time_diff=min_time_diff, max_time_diff=1)
 
 
 @pytest.mark.parametrize("min_time", [-0.1, -1])
 def test_time_generate_uniform_time_incorrect_min_time(min_time: float) -> None:
-    with pytest.raises(ValueError, match="min_time has to be greater or equal to 0"):
+    with pytest.raises(ValueError, match=r"min_time has to be greater or equal to 0"):
         Time.create_uniform_time(min_time=min_time)

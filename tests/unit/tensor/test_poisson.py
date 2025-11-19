@@ -59,7 +59,7 @@ def test_rand_poisson_rate_default() -> None:
 
 @pytest.mark.parametrize("rate", [0.0, -1.0])
 def test_rand_poisson_rate_incorrect(rate: float) -> None:
-    with pytest.raises(ValueError, match="rate has to be greater than 0"):
+    with pytest.raises(ValueError, match=r"rate has to be greater than 0"):
         RandPoisson(rate=rate)
 
 

@@ -144,7 +144,7 @@ def test_rand_asinh_uniform_high(high: float) -> None:
 
 
 def test_rand_asinh_uniform_incorrect_min_high() -> None:
-    with pytest.raises(ValueError, match="high (.*) has to be greater or equal to low (.*)"):
+    with pytest.raises(ValueError, match=r"high (.*) has to be greater or equal to low (.*)"):
         RandAsinhUniform(low=2, high=1)
 
 
@@ -201,7 +201,7 @@ def test_rand_int_high(high: int) -> None:
 
 
 def test_rand_int_incorrect_low_high() -> None:
-    with pytest.raises(ValueError, match="high (.*) has to be greater than low (.*)"):
+    with pytest.raises(ValueError, match=r"high (.*) has to be greater than low (.*)"):
         RandInt(low=1, high=1)
 
 
@@ -262,7 +262,7 @@ def test_rand_log_uniform_high(high: float) -> None:
 
 
 def test_rand_log_uniform_incorrect_min_high() -> None:
-    with pytest.raises(ValueError, match="high (.*) has to be greater or equal to low"):
+    with pytest.raises(ValueError, match=r"high (.*) has to be greater or equal to low"):
         RandLogUniform(low=2.0, high=1.0)
 
 
@@ -323,7 +323,7 @@ def test_rand_uniform_high(high: float) -> None:
 
 
 def test_rand_uniform_incorrect_low_high() -> None:
-    with pytest.raises(ValueError, match="high (.*) has to be greater or equal to low (.*)"):
+    with pytest.raises(ValueError, match=r"high (.*) has to be greater or equal to low (.*)"):
         RandUniform(low=2, high=1)
 
 

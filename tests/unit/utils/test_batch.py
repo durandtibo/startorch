@@ -126,5 +126,5 @@ def test_scale_batch_asinh() -> None:
 
 
 def test_scale_batch_incorrect_scale() -> None:
-    with pytest.raises(RuntimeError, match="Incorrect scale: "):
+    with pytest.raises(RuntimeError, match=r"Incorrect scale: "):
         scale_batch(torch.arange(10).view(2, 5), scale="incorrect")

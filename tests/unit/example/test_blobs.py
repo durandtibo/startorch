@@ -48,7 +48,7 @@ def test_blobs_classification_cluster_std_tensor(centers: torch.Tensor) -> None:
 
 
 def test_blobs_classification_cluster_std_incorrect_shape(centers: torch.Tensor) -> None:
-    with pytest.raises(RuntimeError, match="centers and cluster_std do not match:"):
+    with pytest.raises(RuntimeError, match=r"centers and cluster_std do not match:"):
         BlobsClassification(centers=centers, cluster_std=torch.ones(5, 4))
 
 
@@ -144,13 +144,13 @@ def test_make_blobs_classification_incorrect_num_examples(
 ) -> None:
     with pytest.raises(
         RuntimeError,
-        match="Incorrect value for num_examples. Expected a value greater or equal to 1",
+        match=r"Incorrect value for num_examples. Expected a value greater or equal to 1",
     ):
         make_blobs_classification(num_examples=num_examples, centers=centers)
 
 
 def test_make_blobs_classification_incorrect_centers_cluster_std(centers: torch.Tensor) -> None:
-    with pytest.raises(RuntimeError, match="centers and cluster_std do not match:"):
+    with pytest.raises(RuntimeError, match=r"centers and cluster_std do not match:"):
         make_blobs_classification(num_examples=4, centers=centers, cluster_std=torch.ones(2, 2))
 
 

@@ -18,7 +18,7 @@ def test_add_item() -> None:
 
 def test_add_item_key_exist_ok_false() -> None:
     data = {"key": 0}
-    with pytest.raises(KeyError, match="Key key already exists."):
+    with pytest.raises(KeyError, match=r"Key key already exists."):
         add_item(data, "key", 1)
 
 
@@ -38,7 +38,7 @@ def test_check_input_keys_exist() -> None:
 
 
 def test_check_input_keys_missing() -> None:
-    with pytest.raises(KeyError, match="Missing key: key4"):
+    with pytest.raises(KeyError, match=r"Missing key: key4"):
         check_input_keys(data={"key1": 1, "key2": 2, "key3": 3}, keys=["key1", "key4"])
 
 

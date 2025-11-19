@@ -144,7 +144,7 @@ def test_add_3_tensors() -> None:
 
 
 def test_add_tensors_empty() -> None:
-    with pytest.raises(ValueError, match="No tensor generator."):
+    with pytest.raises(ValueError, match=r"No tensor generator."):
         Add(generators=[])
 
 
@@ -201,7 +201,7 @@ def test_clamp_max_value(max_value: float) -> None:
 
 
 def test_clamp_incorrect_min_max() -> None:
-    with pytest.raises(ValueError, match="`min_value` and `max_value` cannot be both None"):
+    with pytest.raises(ValueError, match=r"`min_value` and `max_value` cannot be both None"):
         Clamp(RandNormal(), min_value=None, max_value=None)
 
 
@@ -456,7 +456,7 @@ def test_mul_3_tensors() -> None:
 
 
 def test_mul_tensors_empty() -> None:
-    with pytest.raises(ValueError, match="No tensor generator."):
+    with pytest.raises(ValueError, match=r"No tensor generator."):
         Mul(generators=[])
 
 

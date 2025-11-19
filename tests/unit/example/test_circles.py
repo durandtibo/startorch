@@ -30,7 +30,7 @@ def test_circles_classification_noise_std(noise_std: float) -> None:
 def test_circles_classification_incorrect_noise_std() -> None:
     with pytest.raises(
         RuntimeError,
-        match="Incorrect value for noise_std. Expected a value greater than 0",
+        match=r"Incorrect value for noise_std. Expected a value greater than 0",
     ):
         CirclesClassification(noise_std=-1)
 
@@ -43,7 +43,7 @@ def test_circles_classification_factor(factor: float) -> None:
 @pytest.mark.parametrize("factor", [-0.1, 1.0])
 def test_circles_classification_incorrect_factor(factor: float) -> None:
     with pytest.raises(
-        RuntimeError, match="Incorrect value for factor. Expected a value in interval"
+        RuntimeError, match=r"Incorrect value for factor. Expected a value in interval"
     ):
         CirclesClassification(factor=factor)
 
@@ -56,7 +56,7 @@ def test_circles_classification_ratio(ratio: float) -> None:
 @pytest.mark.parametrize("ratio", [-0.1, 1.0])
 def test_circles_classification_incorrect_ratio(ratio: float) -> None:
     with pytest.raises(
-        RuntimeError, match="Incorrect value for ratio. Expected a value in interval"
+        RuntimeError, match=r"Incorrect value for ratio. Expected a value in interval"
     ):
         CirclesClassification(ratio=ratio)
 
@@ -132,7 +132,7 @@ def test_circles_classification_generate_mock(
 def test_make_circles_classification_incorrect_num_examples(num_examples: int) -> None:
     with pytest.raises(
         RuntimeError,
-        match="Incorrect value for num_examples. Expected a value greater or equal to 1",
+        match=r"Incorrect value for num_examples. Expected a value greater or equal to 1",
     ):
         make_circles_classification(num_examples=num_examples)
 
@@ -141,7 +141,7 @@ def test_make_circles_classification_incorrect_num_examples(num_examples: int) -
 def test_make_circles_classification_incorrect_noise_std(noise_std: float) -> None:
     with pytest.raises(
         RuntimeError,
-        match="Incorrect value for noise_std. Expected a value greater than 0",
+        match=r"Incorrect value for noise_std. Expected a value greater than 0",
     ):
         make_circles_classification(noise_std=noise_std)
 

@@ -66,7 +66,7 @@ def test_remove_keys_transformer_transform_2_keys() -> None:
 
 def test_remove_keys_transformer_transform_missing_ok_false() -> None:
     transformer = RemoveKeysTransformer(keys=["input3", "missing"])
-    with pytest.raises(KeyError, match="missing is missing."):
+    with pytest.raises(KeyError, match=r"missing is missing."):
         transformer.transform(
             {
                 "input1": torch.tensor([[0.0, -1.0, 2.0], [-4.0, 5.0, -6.0]]),
@@ -166,7 +166,7 @@ def test_select_keys_transformer_transform_2_keys() -> None:
 
 def test_select_keys_transformer_transform_missing_ok_false() -> None:
     transformer = SelectKeysTransformer(keys=["input1", "input2", "missing"])
-    with pytest.raises(KeyError, match="missing is missing."):
+    with pytest.raises(KeyError, match=r"missing is missing."):
         transformer.transform(
             {
                 "input1": torch.tensor([[0.0, -1.0, 2.0], [-4.0, 5.0, -6.0]]),

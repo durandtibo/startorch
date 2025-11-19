@@ -25,7 +25,7 @@ def test_add_transformer_str() -> None:
 
 
 def test_add_transformer_inputs_empty() -> None:
-    with pytest.raises(ValueError, match="inputs cannot be empty"):
+    with pytest.raises(ValueError, match=r"inputs cannot be empty"):
         AddTransformer(inputs=[], output="output")
 
 
@@ -86,7 +86,7 @@ def test_add_transformer_transform_exist_ok_false() -> None:
         "output": 1,
     }
     transformer = AddTransformer(inputs=["input1", "input2"], output="output", exist_ok=False)
-    with pytest.raises(KeyError, match="Key output already exists."):
+    with pytest.raises(KeyError, match=r"Key output already exists."):
         transformer.transform(data)
 
 
@@ -111,7 +111,7 @@ def test_add_transformer_transform_exist_ok_true() -> None:
 
 def test_add_transformer_transform_missing_key() -> None:
     transformer = AddTransformer(inputs=["input1", "input2"], output="output")
-    with pytest.raises(KeyError, match="Missing key: input1."):
+    with pytest.raises(KeyError, match=r"Missing key: input1."):
         transformer.transform({})
 
 
@@ -206,7 +206,7 @@ def test_div_transformer_transform_exist_ok_false() -> None:
     transformer = DivTransformer(
         dividend="input1", divisor="input2", output="output", exist_ok=False
     )
-    with pytest.raises(KeyError, match="Key output already exists."):
+    with pytest.raises(KeyError, match=r"Key output already exists."):
         transformer.transform(data)
 
 
@@ -231,7 +231,7 @@ def test_div_transformer_transform_exist_ok_true() -> None:
 
 def test_div_transformer_transform_missing_key() -> None:
     transformer = DivTransformer(dividend="input1", divisor="input2", output="output")
-    with pytest.raises(KeyError, match="Missing key: input1."):
+    with pytest.raises(KeyError, match=r"Missing key: input1."):
         transformer.transform({})
 
 
@@ -290,7 +290,7 @@ def test_fmod_transformer_transform_exist_ok_false() -> None:
     transformer = FmodTransformer(
         dividend="input1", divisor="input2", output="output", exist_ok=False
     )
-    with pytest.raises(KeyError, match="Key output already exists."):
+    with pytest.raises(KeyError, match=r"Key output already exists."):
         transformer.transform(data)
 
 
@@ -315,7 +315,7 @@ def test_fmod_transformer_transform_exist_ok_true() -> None:
 
 def test_fmod_transformer_transform_missing_key() -> None:
     transformer = FmodTransformer(dividend="input1", divisor="input2", output="output")
-    with pytest.raises(KeyError, match="Missing key: input1."):
+    with pytest.raises(KeyError, match=r"Missing key: input1."):
         transformer.transform({})
 
 
@@ -350,7 +350,7 @@ def test_mul_transformer_str() -> None:
 
 
 def test_mul_transformer_inputs_empty() -> None:
-    with pytest.raises(ValueError, match="inputs cannot be empty"):
+    with pytest.raises(ValueError, match=r"inputs cannot be empty"):
         MulTransformer(inputs=[], output="output")
 
 
@@ -411,7 +411,7 @@ def test_mul_transformer_transform_exist_ok_false() -> None:
         "output": 1,
     }
     transformer = MulTransformer(inputs=["input1", "input2"], output="output", exist_ok=False)
-    with pytest.raises(KeyError, match="Key output already exists."):
+    with pytest.raises(KeyError, match=r"Key output already exists."):
         transformer.transform(data)
 
 
@@ -436,7 +436,7 @@ def test_mul_transformer_transform_exist_ok_true() -> None:
 
 def test_mul_transformer_transform_missing_key() -> None:
     transformer = MulTransformer(inputs=["input1", "input2"], output="output")
-    with pytest.raises(KeyError, match="Missing key: input1."):
+    with pytest.raises(KeyError, match=r"Missing key: input1."):
         transformer.transform({})
 
 
@@ -495,7 +495,7 @@ def test_sub_transformer_transform_exist_ok_false() -> None:
     transformer = SubTransformer(
         minuend="input1", subtrahend="input2", output="output", exist_ok=False
     )
-    with pytest.raises(KeyError, match="Key output already exists."):
+    with pytest.raises(KeyError, match=r"Key output already exists."):
         transformer.transform(data)
 
 
@@ -520,7 +520,7 @@ def test_sub_transformer_transform_exist_ok_true() -> None:
 
 def test_sub_transformer_transform_missing_key() -> None:
     transformer = SubTransformer(minuend="input1", subtrahend="input2", output="output")
-    with pytest.raises(KeyError, match="Missing key: input1."):
+    with pytest.raises(KeyError, match=r"Missing key: input1."):
         transformer.transform({})
 
 

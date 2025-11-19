@@ -86,7 +86,7 @@ def test_hist_sequence_rng(seed: int) -> None:
 
 @patch("startorch.utils.imports.is_matplotlib_available", lambda: False)
 def test_hist_sequence_no_matplotlib() -> None:
-    with pytest.raises(RuntimeError, match="`matplotlib` package is required but not installed."):
+    with pytest.raises(RuntimeError, match=r"`matplotlib` package is required but not installed."):
         hist_sequence(RandUniform())
 
 
@@ -154,5 +154,5 @@ def test_plot_sequence_rng(seed: int) -> None:
 
 @patch("startorch.utils.imports.is_matplotlib_available", lambda: False)
 def test_plot_sequence_no_matplotlib() -> None:
-    with pytest.raises(RuntimeError, match="`matplotlib` package is required but not installed."):
+    with pytest.raises(RuntimeError, match=r"`matplotlib` package is required but not installed."):
         plot_sequence(RandUniform())

@@ -21,7 +21,7 @@ def test_vanilla_str() -> None:
 
 
 def test_vanilla_incorrect_data() -> None:
-    with pytest.raises(ValueError, match="data cannot be empty"):
+    with pytest.raises(ValueError, match=r"data cannot be empty"):
         VanillaExampleGenerator({})
 
 
@@ -47,5 +47,5 @@ def test_vanilla_lower_batch_size(batch_size: int) -> None:
 
 def test_vanilla_larger_batch_size() -> None:
     generator = VanillaExampleGenerator({"value": torch.ones(10, 3), "time": torch.arange(10)})
-    with pytest.raises(RuntimeError, match="Incorrect batch_size: 11."):
+    with pytest.raises(RuntimeError, match=r"Incorrect batch_size: 11."):
         generator.generate(batch_size=11)

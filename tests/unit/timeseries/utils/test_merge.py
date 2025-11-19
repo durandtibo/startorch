@@ -134,12 +134,12 @@ def test_merge_by_time_only_time_feature() -> None:
 
 
 def test_merge_by_time_empty() -> None:
-    with pytest.raises(RuntimeError, match="No time series is provided so it is not possible"):
+    with pytest.raises(RuntimeError, match=r"No time series is provided so it is not possible"):
         merge_by_time([])
 
 
 def test_merge_by_time_missing_time_key() -> None:
-    with pytest.raises(KeyError, match="The key time is not in batch. Available keys are:"):
+    with pytest.raises(KeyError, match=r"The key time is not in batch. Available keys are:"):
         merge_by_time(
             [
                 {

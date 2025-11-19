@@ -48,7 +48,7 @@ def test_rand_cauchy_scale() -> None:
 
 @pytest.mark.parametrize("scale", [0.0, -1.0])
 def test_rand_cauchy_scale_incorrect(scale: float) -> None:
-    with pytest.raises(ValueError, match="scale has to be greater than 0"):
+    with pytest.raises(ValueError, match=r"scale has to be greater than 0"):
         rand_cauchy((1000,), scale=scale, generator=get_torch_generator(1))
 
 
@@ -107,12 +107,12 @@ def test_cauchy_scale() -> None:
 
 @pytest.mark.parametrize("scale", [0.0, -1.0])
 def test_cauchy_scale_incorrect(scale: float) -> None:
-    with pytest.raises(ValueError, match="scale has to be greater than 0"):
+    with pytest.raises(ValueError, match=r"scale has to be greater than 0"):
         cauchy(torch.zeros(100000), torch.full((100000,), scale), generator=get_torch_generator(1))
 
 
 def test_cauchy_shape_mismatch() -> None:
-    with pytest.raises(ValueError, match="The shapes of loc and scale do not match"):
+    with pytest.raises(ValueError, match=r"The shapes of loc and scale do not match"):
         cauchy(torch.zeros(5), torch.ones(6), generator=get_torch_generator(1))
 
 
@@ -169,7 +169,7 @@ def test_rand_normal_std(std: float) -> None:
 
 @pytest.mark.parametrize("std", [0.0, -1.0])
 def test_rand_normal_std_incorrect(std: float) -> None:
-    with pytest.raises(ValueError, match="std has to be greater than 0"):
+    with pytest.raises(ValueError, match=r"std has to be greater than 0"):
         rand_normal((1000,), std=std, generator=get_torch_generator(1))
 
 
@@ -250,12 +250,12 @@ def test_normal_mock() -> None:
 
 @pytest.mark.parametrize("std", [0.0, -1.0])
 def test_normal_std_incorrect(std: float) -> None:
-    with pytest.raises(ValueError, match="std has to be greater than 0"):
+    with pytest.raises(ValueError, match=r"std has to be greater than 0"):
         normal(torch.zeros(1000), torch.full((1000,), std))
 
 
 def test_normal_shape_mismatch() -> None:
-    with pytest.raises(ValueError, match="The shapes of mean and std do not match"):
+    with pytest.raises(ValueError, match=r"The shapes of mean and std do not match"):
         normal(torch.zeros(5), torch.ones(6), generator=get_torch_generator(1))
 
 

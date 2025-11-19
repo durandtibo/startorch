@@ -41,5 +41,5 @@ def test_str_weighted_modules_2() -> None:
 
 
 def test_str_weighted_modules_different_lengths() -> None:
-    with pytest.raises(RuntimeError, match="`modules` and `weights` must have the same length"):
+    with pytest.raises(RuntimeError, match=r"`modules` and `weights` must have the same length"):
         str_weighted_modules(["abc"], [2, 3])

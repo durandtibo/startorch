@@ -132,7 +132,7 @@ def test_uniform_categorical_num_categories(num_categories: int) -> None:
 
 @pytest.mark.parametrize("num_categories", [0, -1])
 def test_uniform_categorical_incorrect_num_categories(num_categories: int) -> None:
-    with pytest.raises(ValueError, match="num_categories has to be greater than 0"):
+    with pytest.raises(ValueError, match=r"num_categories has to be greater than 0"):
         UniformCategorical(num_categories)
 
 

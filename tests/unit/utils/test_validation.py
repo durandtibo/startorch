@@ -26,7 +26,7 @@ def test_check_feature_size_valid(value: int) -> None:
 @pytest.mark.parametrize("value", [1.2, "abc", None])
 def test_check_feature_size_incorrect_type(value: Any) -> None:
     with pytest.raises(
-        TypeError, match="Incorrect type for feature_size. Expected an integer but received"
+        TypeError, match=r"Incorrect type for feature_size. Expected an integer but received"
     ):
         check_feature_size(value)
 
@@ -64,7 +64,8 @@ def test_check_interval_valid_negative(value: int) -> None:
 @pytest.mark.parametrize("value", ["abc", None])
 def test_check_interval_incorrect_type(value: Any) -> None:
     with pytest.raises(
-        TypeError, match="Incorrect type for my_variable. Expected an integer or float but received"
+        TypeError,
+        match=r"Incorrect type for my_variable. Expected an integer or float but received",
     ):
         check_interval(value, low=0.0, high=3.0, name="my_variable")
 
@@ -72,7 +73,7 @@ def test_check_interval_incorrect_type(value: Any) -> None:
 @pytest.mark.parametrize("value", [-1, -0.01, 3, 4.2])
 def test_check_interval_incorrect_value(value: int) -> None:
     with pytest.raises(
-        RuntimeError, match="Incorrect value for my_variable. Expected a value in interval"
+        RuntimeError, match=r"Incorrect value for my_variable. Expected a value in interval"
     ):
         check_interval(value, low=0.0, high=3.0, name="my_variable")
 
@@ -90,7 +91,7 @@ def test_check_num_examples_valid(value: int) -> None:
 @pytest.mark.parametrize("value", [1.2, "abc", None])
 def test_check_num_examples_incorrect_type(value: Any) -> None:
     with pytest.raises(
-        TypeError, match="Incorrect type for num_examples. Expected an integer but received"
+        TypeError, match=r"Incorrect type for num_examples. Expected an integer but received"
     ):
         check_num_examples(value)
 
@@ -99,7 +100,7 @@ def test_check_num_examples_incorrect_type(value: Any) -> None:
 def test_check_num_examples_incorrect_value(value: int) -> None:
     with pytest.raises(
         RuntimeError,
-        match="Incorrect value for num_examples. Expected a value greater or equal to 1",
+        match=r"Incorrect value for num_examples. Expected a value greater or equal to 1",
     ):
         check_num_examples(value)
 
@@ -117,7 +118,7 @@ def test_check_integer_ge_valid(value: int) -> None:
 @pytest.mark.parametrize("value", [1.2, "abc", None])
 def test_check_integer_ge_incorrect_type(value: Any) -> None:
     with pytest.raises(
-        TypeError, match="Incorrect type for feature_size. Expected an integer but received"
+        TypeError, match=r"Incorrect type for feature_size. Expected an integer but received"
     ):
         check_integer_ge(value, low=0, name="feature_size")
 
@@ -145,7 +146,7 @@ def test_check_std_valid(value: int) -> None:
 @pytest.mark.parametrize("value", ["abc", None])
 def test_check_std_incorrect_type(value: Any) -> None:
     with pytest.raises(
-        TypeError, match="Incorrect type for std. Expected an integer or float but received"
+        TypeError, match=r"Incorrect type for std. Expected an integer or float but received"
     ):
         check_std(value)
 
@@ -153,7 +154,7 @@ def test_check_std_incorrect_type(value: Any) -> None:
 def test_check_std_incorrect_type_custom_name() -> None:
     with pytest.raises(
         TypeError,
-        match="Incorrect type for noise_std. Expected an integer or float but received",
+        match=r"Incorrect type for noise_std. Expected an integer or float but received",
     ):
         check_std("-1", name="noise_std")
 
@@ -161,13 +162,13 @@ def test_check_std_incorrect_type_custom_name() -> None:
 @pytest.mark.parametrize("value", [-1, -4.2])
 def test_check_std_incorrect_value(value: int) -> None:
     with pytest.raises(
-        RuntimeError, match="Incorrect value for std. Expected a value greater than 0"
+        RuntimeError, match=r"Incorrect value for std. Expected a value greater than 0"
     ):
         check_std(value)
 
 
 def test_check_std_incorrect_value_custom_name() -> None:
     with pytest.raises(
-        RuntimeError, match="Incorrect value for noise_std. Expected a value greater than 0"
+        RuntimeError, match=r"Incorrect value for noise_std. Expected a value greater than 0"
     ):
         check_std(-1, name="noise_std")

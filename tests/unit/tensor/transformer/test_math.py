@@ -113,7 +113,7 @@ def test_clamp_max(max_value: float) -> None:
 
 
 def test_clamp_incorrect_min_max() -> None:
-    with pytest.raises(ValueError, match="`min` and `max` cannot be both None"):
+    with pytest.raises(ValueError, match=r"`min` and `max` cannot be both None"):
         ClampTensorTransformer(min=None, max=None)
 
 
