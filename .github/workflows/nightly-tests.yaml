@@ -8,6 +8,8 @@ permissions:
   contents: read
 
 jobs:
+  build:
+    uses: ./.github/workflows/build.yaml
   cyclic-imports:
     uses: ./.github/workflows/cyclic-imports.yaml
   doctest:
