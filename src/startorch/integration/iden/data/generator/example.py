@@ -8,10 +8,15 @@ from collections.abc import Hashable
 
 import torch
 from coola.utils import repr_indent, repr_mapping, str_indent, str_mapping
-from iden.data.generator import BaseDataGenerator
 
 from startorch.example import BaseExampleGenerator, setup_example_generator
+from startorch.utils.imports import is_iden_available
 from startorch.utils.seed import get_torch_generator
+
+if is_iden_available():
+    from iden.data.generator import BaseDataGenerator
+else:
+    from startorch.integration.iden.fallback_types import BaseDataGenerator
 
 
 class ExampleDataGenerator(BaseDataGenerator[dict[Hashable, torch.Tensor]]):
@@ -27,6 +32,7 @@ class ExampleDataGenerator(BaseDataGenerator[dict[Hashable, torch.Tensor]]):
     def __init__(
         self, example: BaseExampleGenerator | dict, batch_size: int, random_seed: int
     ) -> None:
+        super().__init__()
         self._example = setup_example_generator(example)
         self._batch_size = int(batch_size)
         self._rng = get_torch_generator(random_seed)
