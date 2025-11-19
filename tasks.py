@@ -56,7 +56,11 @@ def docformat(c: Context) -> None:
 
 @task
 def install(
-    c: Context, optional_deps: bool = True, dev_deps: bool = True, docs_deps: bool = False
+    c: Context,
+    optional_deps: bool = True,
+    dev_deps: bool = True,
+    docs_deps: bool = False,
+    exp_deps: bool = False,
 ) -> None:
     r"""Install packages."""
     cmd = ["uv sync --frozen"]
@@ -66,6 +70,8 @@ def install(
         cmd.append("--group dev")
     if docs_deps:
         cmd.append("--group docs")
+    if exp_deps:
+        cmd.append("--group exp")
     c.run(" ".join(cmd), pty=True)
 
 
