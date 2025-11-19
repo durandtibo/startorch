@@ -4,7 +4,9 @@ from __future__ import annotations
 
 __all__ = ["BaseDataGenerator"]
 
-from typing import Any, Generic, TypeVar
+from typing import Generic, TypeVar
+
+from startorch.utils.imports import check_iden
 
 T = TypeVar("T")
 
@@ -18,9 +20,5 @@ class BaseDataGenerator(Generic[T]):
     raise an error.
     """
 
-    def __init__(self, *args: Any, **kwargs: Any) -> None:  # noqa: ARG002
-        msg = (
-            "BaseDataGenerator requires the optional dependency 'iden'. "
-            "Install with:\n\npip install startorch[iden]\n\nor:\n\npip install iden"
-        )
-        raise RuntimeError(msg)
+    def __init__(self) -> None:
+        check_iden()

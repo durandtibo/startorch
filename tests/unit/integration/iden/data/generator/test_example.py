@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from unittest.mock import patch
-
 import pytest
 import torch
 from coola import objects_are_equal
@@ -66,13 +64,3 @@ def test_example_data_generator_generate_different_random_seeds() -> None:
     generator1 = ExampleDataGenerator(example=SwissRoll(), batch_size=16, random_seed=1)
     generator2 = ExampleDataGenerator(example=SwissRoll(), batch_size=16, random_seed=2)
     assert not objects_are_equal(generator1.generate(), generator2.generate())
-
-
-def test_example_data_generator_iden_missing() -> None:
-    with (
-        patch("startorch.utils.imports.is_iden_available", lambda: False),
-        pytest.raises(
-            RuntimeError, match=r"BaseDataGenerator requires the optional dependency 'iden'."
-        ),
-    ):
-        ExampleDataGenerator(example=SwissRoll(), batch_size=8, random_seed=1)

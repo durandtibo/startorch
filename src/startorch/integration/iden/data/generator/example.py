@@ -27,6 +27,22 @@ class ExampleDataGenerator(BaseDataGenerator[dict[Hashable, torch.Tensor]]):
         example: The example generator or its configuration.
         batch_size: The batch size.
         random_seed: The random seed.
+
+    ```pycon
+
+    >>> from startorch.example import SwissRoll
+    >>> from startorch.integration.iden.data.generator import ExampleDataGenerator
+    >>> generator = ExampleDataGenerator(example=SwissRoll(), batch_size=16, random_seed=1)
+    >>> generator
+    ExampleDataGenerator(
+      (example): SwissRollExampleGenerator(noise_std=0.0, spin=1.5, hole=False)
+      (batch_size): 16
+      (random_seed): 1
+    )
+    >>> generator.generate()
+    {'target': tensor([...]), 'feature': tensor([[...]])}
+
+    ```
     """
 
     def __init__(
