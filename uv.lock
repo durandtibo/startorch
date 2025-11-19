@@ -3284,7 +3284,7 @@ exp = [
 requires-dist = [
     { name = "batchtensor", specifier = ">=0.1.2a1,<1.0" },
     { name = "coola", specifier = ">=0.9.1,<1.0" },
-    { name = "iden", marker = "extra == 'iden'", specifier = ">=0.1.1a0,<1.0" },
+    { name = "iden", marker = "extra == 'iden'", specifier = ">=0.2.1a1,<1.0" },
     { name = "matplotlib", marker = "extra == 'matplotlib'", specifier = ">=3.7,<4.0" },
     { name = "numpy", specifier = ">=1.24,<3.0" },
     { name = "objectory", specifier = ">=0.2.1,<1.0" },
