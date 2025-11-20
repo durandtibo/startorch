@@ -15,7 +15,7 @@ from startorch.utils.seed import get_torch_generator
 
 if is_iden_available():
     from iden.data.generator import BaseDataGenerator
-else:
+else:  # pragma: no cover
     from startorch.integration.iden.fallback_types import BaseDataGenerator
 
 
