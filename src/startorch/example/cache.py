@@ -49,6 +49,7 @@ class CacheExampleGenerator(BaseExampleGenerator):
     """
 
     def __init__(self, generator: BaseExampleGenerator | dict, deepcopy: bool = False) -> None:
+        super().__init__()
         self._generator = setup_example_generator(generator)
         self._deepcopy = bool(deepcopy)
 

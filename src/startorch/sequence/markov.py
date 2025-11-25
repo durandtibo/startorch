@@ -42,6 +42,7 @@ class MarkovChainSequenceGenerator(BaseSequenceGenerator):
         transition: torch.Tensor,
         init: torch.Tensor | None = None,
     ) -> None:
+        super().__init__()
         self._transition = transition
         self._init = init
 

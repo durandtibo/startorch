@@ -21,4 +21,5 @@ class BaseDataGenerator(Generic[T]):
     """
 
     def __init__(self) -> None:
+        super().__init__()
         check_iden()

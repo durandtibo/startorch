@@ -71,6 +71,7 @@ class SineWaveTransformer(BaseTransformer):
         output: str,
         exist_ok: bool = False,
     ) -> None:
+        super().__init__()
         self._value = value
         self._frequency = frequency
         self._phase = phase
