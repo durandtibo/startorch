@@ -51,6 +51,7 @@ class SwissRollExampleGenerator(BaseExampleGenerator):
         spin: float = 1.5,
         hole: bool = False,
     ) -> None:
+        super().__init__()
         check_std(noise_std, "noise_std")
         self._noise_std = float(noise_std)
 

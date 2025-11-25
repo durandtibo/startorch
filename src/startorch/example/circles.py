@@ -60,6 +60,7 @@ class CirclesClassificationExampleGenerator(BaseExampleGenerator):
         factor: float = 0.8,
         ratio: float = 0.5,
     ) -> None:
+        super().__init__()
         self._shuffle = bool(shuffle)
         check_std(noise_std, "noise_std")
         self._noise_std = float(noise_std)

@@ -63,6 +63,7 @@ class LinearRegressionExampleGenerator(BaseExampleGenerator):
         bias: float = 0.0,
         noise_std: float = 0.0,
     ) -> None:
+        super().__init__()
         self._weights = to_tensor(weights)
         self._bias = bias
 

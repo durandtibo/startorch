@@ -42,6 +42,7 @@ class TensorTransitionGenerator(BaseTransitionGenerator):
     """
 
     def __init__(self, generator: BaseTensorGenerator | dict) -> None:
+        super().__init__()
         self._generator = setup_tensor_generator(generator)
 
     def __repr__(self) -> str:

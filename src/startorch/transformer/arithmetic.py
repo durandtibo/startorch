@@ -65,6 +65,7 @@ class AddTransformer(BaseTransformer):
         output: str,
         exist_ok: bool = False,
     ) -> None:
+        super().__init__()
         if not inputs:
             msg = r"inputs cannot be empty"
             raise ValueError(msg)
@@ -150,6 +151,7 @@ class DivTransformer(BaseTransformer):
         rounding_mode: str | None = None,
         exist_ok: bool = False,
     ) -> None:
+        super().__init__()
         self._dividend = dividend
         self._divisor = divisor
         self._output = output
@@ -224,6 +226,7 @@ class FmodTransformer(BaseTransformer):
         output: str,
         exist_ok: bool = False,
     ) -> None:
+        super().__init__()
         self._dividend = dividend
         self._divisor = divisor
         self._output = output
@@ -298,6 +301,7 @@ class MulTransformer(BaseTransformer):
         output: str,
         exist_ok: bool = False,
     ) -> None:
+        super().__init__()
         if not inputs:
             msg = r"inputs cannot be empty"
             raise ValueError(msg)
@@ -376,6 +380,7 @@ class SubTransformer(BaseTransformer):
         output: str,
         exist_ok: bool = False,
     ) -> None:
+        super().__init__()
         self._minuend = minuend
         self._subtrahend = subtrahend
         self._output = output

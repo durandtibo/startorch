@@ -68,6 +68,7 @@ class TensorTransformer(BaseTransformer):
         output: str,
         exist_ok: bool = False,
     ) -> None:
+        super().__init__()
         self._transformer = setup_tensor_transformer(transformer)
         self._input = input
         self._output = output
