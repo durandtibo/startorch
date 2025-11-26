@@ -74,7 +74,7 @@ def iden_available(fn: Callable[..., Any]) -> Callable[..., Any]:
     package is installed.
 
     Args:
-        fn: Specifies the function to execute.
+        fn: The function to execute.
 
     Returns:
         A wrapper around ``fn`` if ``iden`` package is installed,
@@ -145,7 +145,7 @@ def matplotlib_available(fn: Callable[..., Any]) -> Callable[..., Any]:
     ``matplotlib`` package is installed.
 
     Args:
-        fn: Specifies the function to execute.
+        fn: The function to execute.
 
     Returns:
         A wrapper around ``fn`` if ``matplotlib`` package is installed,
@@ -219,7 +219,7 @@ def objectory_available(fn: Callable[..., Any]) -> Callable[..., Any]:
     package is installed.
 
     Args:
-        fn: Specifies the function to execute.
+        fn: The function to execute.
 
     Returns:
         A wrapper around ``fn`` if ``objectory`` package is installed,
@@ -290,7 +290,7 @@ def plotly_available(fn: Callable[..., Any]) -> Callable[..., Any]:
     package is installed.
 
     Args:
-        fn: Specifies the function to execute.
+        fn: The function to execute.
 
     Returns:
         A wrapper around ``fn`` if ``plotly`` package is installed,
