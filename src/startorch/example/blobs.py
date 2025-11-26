@@ -54,6 +54,7 @@ class BlobsClassificationExampleGenerator(BaseExampleGenerator):
     """
 
     def __init__(self, centers: torch.Tensor, cluster_std: torch.Tensor | float = 1.0) -> None:
+        super().__init__()
         self._centers = centers
         if not torch.is_tensor(cluster_std):
             cluster_std = torch.full_like(centers, cluster_std)

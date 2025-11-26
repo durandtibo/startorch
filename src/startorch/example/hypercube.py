@@ -57,6 +57,7 @@ class HypercubeClassificationExampleGenerator(BaseExampleGenerator):
         feature_size: int = 64,
         noise_std: float = 0.2,
     ) -> None:
+        super().__init__()
         check_integer_ge(num_classes, low=1, name="num_classes")
         self._num_classes = int(num_classes)
 

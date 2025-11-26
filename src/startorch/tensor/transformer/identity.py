@@ -41,6 +41,7 @@ class IdentityTensorTransformer(BaseTensorTransformer):
     """
 
     def __init__(self, copy: bool = True) -> None:
+        super().__init__()
         self._copy = copy
 
     def __repr__(self) -> str:

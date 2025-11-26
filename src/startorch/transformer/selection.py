@@ -55,6 +55,7 @@ class RemoveKeysTransformer(BaseTransformer):
     """
 
     def __init__(self, keys: Sequence[str], missing_ok: bool = False) -> None:
+        super().__init__()
         self._keys = tuple(keys)
         self._missing_ok = missing_ok
 
@@ -112,6 +113,7 @@ class SelectKeysTransformer(BaseTransformer):
     """
 
     def __init__(self, keys: Sequence[str], missing_ok: bool = False) -> None:
+        super().__init__()
         self._keys = tuple(keys)
         self._missing_ok = missing_ok
 

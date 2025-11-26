@@ -55,6 +55,7 @@ class Friedman1RegressionExampleGenerator(BaseExampleGenerator):
     """
 
     def __init__(self, feature_size: int = 10, noise_std: float = 0.0) -> None:
+        super().__init__()
         check_feature_size(feature_size, low=5)
         self._feature_size = int(feature_size)
 
@@ -123,6 +124,7 @@ class Friedman2RegressionExampleGenerator(BaseExampleGenerator):
     """
 
     def __init__(self, feature_size: int = 4, noise_std: float = 0.0) -> None:
+        super().__init__()
         check_feature_size(feature_size, low=4)
         self._feature_size = int(feature_size)
 
@@ -191,6 +193,7 @@ class Friedman3RegressionExampleGenerator(BaseExampleGenerator):
     """
 
     def __init__(self, feature_size: int = 4, noise_std: float = 0.0) -> None:
+        super().__init__()
         check_feature_size(feature_size, low=4)
         self._feature_size = int(feature_size)
 

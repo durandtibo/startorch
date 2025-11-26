@@ -72,6 +72,7 @@ class SequentialTransformer(BaseTransformer):
     """
 
     def __init__(self, transformers: Sequence[BaseTransformer | dict]) -> None:
+        super().__init__()
         self._transformers = [setup_transformer(transformer) for transformer in transformers]
 
     def __repr__(self) -> str:

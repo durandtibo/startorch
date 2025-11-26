@@ -45,6 +45,7 @@ class AddTensorTransformer(BaseTensorTransformer):
     """
 
     def __init__(self, value: float) -> None:
+        super().__init__()
         self._value = value
 
     def __repr__(self) -> str:
@@ -96,6 +97,7 @@ class DivTensorTransformer(BaseTensorTransformer):
         divisor: float,
         rounding_mode: str | None = None,
     ) -> None:
+        super().__init__()
         self._divisor = divisor
         self._rounding_mode = rounding_mode
 
@@ -141,6 +143,7 @@ class FmodTensorTransformer(BaseTensorTransformer):
     """
 
     def __init__(self, divisor: float) -> None:
+        super().__init__()
         self._divisor = divisor
 
     def __repr__(self) -> str:
@@ -182,6 +185,7 @@ class MulTensorTransformer(BaseTensorTransformer):
     """
 
     def __init__(self, value: float) -> None:
+        super().__init__()
         self._value = value
 
     def __repr__(self) -> str:
