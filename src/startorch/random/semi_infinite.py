@@ -218,8 +218,7 @@ def half_normal(std: torch.Tensor, generator: torch.Generator | None = None) -> 
         std: The standard deviation of the half-Normal
             distribution. It must be a float tensor of shape
             ``(d0, d1, ..., dn)``.
-        generator: Specifies
-            an optional random generator.
+        generator: An optional random generator.
 
     Returns:
         A tensor of shape ``(d0, d1, ..., dn)`` filled with values
