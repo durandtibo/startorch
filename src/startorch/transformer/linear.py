@@ -58,6 +58,7 @@ class LinearTransformer(BaseTransformer):
     def __init__(
         self, value: str, slope: str, intercept: str, output: str, exist_ok: bool = False
     ) -> None:
+        super().__init__()
         self._value = value
         self._slope = slope
         self._intercept = intercept

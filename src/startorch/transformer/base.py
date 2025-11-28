@@ -105,6 +105,7 @@ class BaseTensorTransformer(BaseTransformer):
     """
 
     def __init__(self, input: str, output: str, exist_ok: bool = False) -> None:  # noqa: A002
+        super().__init__()
         self._input = input
         self._output = output
         self._exist_ok = exist_ok

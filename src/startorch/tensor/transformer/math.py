@@ -132,6 +132,7 @@ class ClampTensorTransformer(BaseTensorTransformer):
         min: float | None,  # noqa: A002
         max: float | None,  # noqa: A002
     ) -> None:
+        super().__init__()
         if min is None and max is None:
             msg = "`min` and `max` cannot be both None"
             raise ValueError(msg)
@@ -378,6 +379,7 @@ class LogitTensorTransformer(BaseTensorTransformer):
     """
 
     def __init__(self, eps: float | None = None) -> None:
+        super().__init__()
         self._eps = eps
 
     def __repr__(self) -> str:
@@ -419,6 +421,7 @@ class PowTensorTransformer(BaseTensorTransformer):
     """
 
     def __init__(self, exponent: float) -> None:
+        super().__init__()
         self._exponent = exponent
 
     def __repr__(self) -> str:
@@ -459,6 +462,7 @@ class RoundTensorTransformer(BaseTensorTransformer):
     """
 
     def __init__(self, decimals: int = 0) -> None:
+        super().__init__()
         self._decimals = decimals
 
     def __repr__(self) -> str:

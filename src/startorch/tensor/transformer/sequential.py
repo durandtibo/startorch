@@ -51,6 +51,7 @@ class SequentialTensorTransformer(BaseTensorTransformer):
     """
 
     def __init__(self, transformers: Sequence[BaseTensorTransformer | dict]) -> None:
+        super().__init__()
         self._transformers = [setup_tensor_transformer(transformer) for transformer in transformers]
 
     def __repr__(self) -> str:
