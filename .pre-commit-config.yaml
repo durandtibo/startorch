@@ -4,6 +4,11 @@ default_language_version:
 default_stages: [ pre-commit ]
 
 repos:
+  - repo: https://github.com/srstevenson/nb-clean
+    rev: 4.0.1
+    hooks:
+      - id: nb-clean
+        args: [ "--remove-empty-cells", "--remove-all-notebook-metadata" ]
   - repo: local
     hooks:
       - id: docformatter

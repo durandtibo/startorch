@@ -54,7 +54,7 @@ plotly = [ "plotly >=6.0,<7.0" ]
 
 [dependency-groups]
 dev = [
-    "black >=25.11",
+    "black[jupyter] >=25.11",
     "coverage[toml] >=7.11,<8.0",
     "docformatter[tomli] >=1.7,<2.0 ; python_version < '3.14'",
     "feu[all] >=0.5.0,<1.0",
@@ -114,7 +114,7 @@ addopts = ["--color", "yes", "--durations", "10", "-rf"]
 [tool.black]
 line-length = 100
 target-version = ["py310", "py311", "py312", "py313", "py314"]
-include = '\.pyi?$'
+include = '\.pyi?$|\.ipynb$'
 
 [tool.pylint.FORMAT]
 max-line-length = 100
