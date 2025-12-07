@@ -57,6 +57,7 @@ runs:
 
     - name: Show installed packages
       shell: bash
+      continue-on-error: true
       run: |
         inv show-installed-packages
 
