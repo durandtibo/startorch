@@ -35,6 +35,12 @@ runs:
     - name: Install invoke
       shell: bash
       run: |
+        which uv
+        which python
+
+    - name: Install invoke
+      shell: bash
+      run: |
         make install-invoke
 
     - name: Install dependencies
@@ -57,7 +63,6 @@ runs:
 
     - name: Show installed packages
       shell: bash
-      continue-on-error: true
       run: |
         inv show-installed-packages
 
@@ -65,3 +70,9 @@ runs:
       shell: bash
       run: |
         uv pip tree --show-version-specifiers
+
+    - name: Verify the current environment
+      shell: bash
+      continue-on-error: true
+      run: |
+        uv pip check
