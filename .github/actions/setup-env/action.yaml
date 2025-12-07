@@ -43,6 +43,7 @@ runs:
         inv install ${{ inputs.install-args }}
 
     - name: Uninstall package
+      shell: bash
       if: ${{ inputs.package-name != '' }}
       run: |
         uv pip uninstall ${{ inputs.package-name }}
