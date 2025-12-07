@@ -42,12 +42,6 @@ runs:
       run: |
         inv install ${{ inputs.install-args }}
 
-    - name: Uninstall package
-      shell: bash
-      if: ${{ inputs.package-name != '' }}
-      run: |
-        uv pip uninstall ${{ inputs.package-name }}
-
     - name: Install valid package version
       if: ${{ inputs.package-name != '' }}
       uses: durandtibo/uv-install-package-action@v0.1.1
@@ -63,6 +57,7 @@ runs:
 
     - name: Show installed packages
       shell: bash
+      continue-on-error: true
       run: |
         inv show-installed-packages
 
