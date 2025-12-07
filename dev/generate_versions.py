@@ -22,12 +22,12 @@ def get_package_versions() -> dict[str, list[str]]:
         A dictionary with the versions for each package.
     """
     return {
-        "batchtensor": list(get_latest_minor_versions("batchtensor", lower="1.2.1")),
+        "batchtensor": [*list(get_latest_minor_versions("batchtensor", lower="1.2.1")), "0.1.2a1"],
         "coola": list(get_versions("coola", lower="0.9.1")),
         "numpy": list(get_latest_minor_versions("numpy", lower="1.24")),
         "objectory": list(get_latest_minor_versions("objectory", lower="0.2.1")),
         "torch": list(get_latest_minor_versions("torch", lower="2.4")),
-        "iden": list(get_latest_minor_versions("iden", lower="0.2.1")),
+        "iden": [*list(get_latest_minor_versions("iden", lower="0.2.1")), "0.2.1a1"],
         "matplotlib": list(get_latest_minor_versions("matplotlib", lower="3.7")),
         "plotly": list(get_latest_minor_versions("plotly", lower="6.0")),
     }
