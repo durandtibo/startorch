@@ -14,12 +14,12 @@ jobs:
   stable:
     uses: ./.github/workflows/test-package.yaml
     with:
-      install-cmd: 'uv pip install minrecord'
+      install-cmd: 'uv pip install startorch'
 
   stable-all:
     uses: ./.github/workflows/test-package.yaml
     with:
-      install-cmd: 'uv pip install "minrecord[all]"'
+      install-cmd: 'uv pip install "startorch[all]"'
 
   stable-extras:
     uses: ./.github/workflows/test-package-extras.yaml
@@ -27,12 +27,12 @@ jobs:
   latest:
     uses: ./.github/workflows/test-package.yaml
     with:
-      install-cmd: 'uv pip install --pre minrecord'
+      install-cmd: 'uv pip install --pre startorch'
 
   latest-all:
     uses: ./.github/workflows/test-package.yaml
     with:
-      install-cmd: 'uv pip install --pre "minrecord[all]"'
+      install-cmd: 'uv pip install --pre "startorch[all]"'
 
   latest-extras:
     uses: ./.github/workflows/test-package-extras.yaml
