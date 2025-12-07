@@ -34,7 +34,6 @@ jobs:
           package-name: ${{ inputs.package-name }}
           package-version: ${{ matrix.package-version }}
           python-version: ${{ matrix.python-version }}
-          install-args: "--upgrade --upgrade-strategy eager"
 
       - name: Run unit tests
         run: |

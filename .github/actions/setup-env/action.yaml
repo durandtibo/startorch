@@ -42,6 +42,11 @@ runs:
       run: |
         inv install ${{ inputs.install-args }}
 
+    - name: Uninstall package
+      if: ${{ inputs.package-name != '' }}
+      run: |
+        uv pip uninstall ${{ inputs.package-name }}
+
     - name: Install valid package version
       if: ${{ inputs.package-name != '' }}
       uses: durandtibo/uv-install-package-action@v0.1.1
