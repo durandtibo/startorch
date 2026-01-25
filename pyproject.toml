@@ -40,7 +40,7 @@ requires-python = ">=3.10"
 
 dependencies = [
     "batchtensor >=0.1.2a1,<1.0",
-    "coola >=0.9.1,<1.0",
+    "coola >=0.9.1,<2.0",
     "numpy>=1.24,<3.0",
     "objectory >=0.2.1,<1.0",
     "torch>=2.4,<3.0",
