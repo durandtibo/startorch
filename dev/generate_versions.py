@@ -22,7 +22,10 @@ def fetch_package_versions() -> dict[str, list[str]]:
         A dictionary with the versions for each package.
     """
     return {
-        "batchtensor": [*list(fetch_latest_minor_versions("batchtensor", lower="1.2.1")), "0.1.2a1"],
+        "batchtensor": [
+            *list(fetch_latest_minor_versions("batchtensor", lower="1.2.1")),
+            "0.1.2a1",
+        ],
         "coola": list(fetch_versions("coola", lower="0.9.1")),
         "numpy": list(fetch_latest_minor_versions("numpy", lower="1.24")),
         "objectory": list(fetch_latest_minor_versions("objectory", lower="0.2.1")),
