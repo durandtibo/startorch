@@ -83,7 +83,7 @@ class SequentialTransformer(BaseTransformer):
         self,
         data: dict[Hashable, torch.Tensor],
         *,
-        rng: torch.Transformer | None = None,
+        rng: torch.Generator | None = None,
     ) -> dict[Hashable, torch.Tensor]:
         for transformer in self._transformers:
             data = transformer.transform(data, rng=rng)

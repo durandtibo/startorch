@@ -51,7 +51,7 @@ class MaskTransitionGenerator(BaseTransitionGenerator):
     ```
     """
 
-    def __init__(self, generator: BaseTransitionGenerator | dict, num_mask: int) -> None:
+    def __init__(self, generator: BaseTransitionGenerator | dict, *, num_mask: int) -> None:
         super().__init__()
         self._generator = setup_transition_generator(generator)
         self._num_mask = num_mask

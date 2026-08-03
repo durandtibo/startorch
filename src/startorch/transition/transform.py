@@ -52,6 +52,7 @@ class TransformTransitionGenerator(BaseTransitionGenerator):
 
     def __init__(
         self,
+        *,
         generator: BaseTransitionGenerator | dict,
         transformer: BaseTensorTransformer | dict,
     ) -> None:
