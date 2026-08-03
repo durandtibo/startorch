@@ -42,7 +42,7 @@ class BaseTensorTransformer(ABC, metaclass=AbstractFactory):
 
     @abstractmethod
     def transform(
-        self, tensor: torch.Tensor, *, rng: torch.Transformer | None = None
+        self, tensor: torch.Tensor, *, rng: torch.Generator | None = None
     ) -> torch.Tensor:
         r"""Transform the input tensor.
 

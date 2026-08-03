@@ -62,7 +62,7 @@ class SequentialTensorTransformer(BaseTensorTransformer):
         self,
         tensor: torch.Tensor,
         *,
-        rng: torch.Transformer | None = None,
+        rng: torch.Generator | None = None,
     ) -> torch.Tensor:
         for transformer in self._transformers:
             tensor = transformer.transform(tensor, rng=rng)

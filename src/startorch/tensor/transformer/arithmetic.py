@@ -55,7 +55,7 @@ class AddTensorTransformer(BaseTensorTransformer):
         self,
         tensor: torch.Tensor,
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.add(self._value)
 
@@ -111,7 +111,7 @@ class DivTensorTransformer(BaseTensorTransformer):
         self,
         tensor: torch.Tensor,
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.div(self._divisor, rounding_mode=self._rounding_mode)
 
@@ -153,7 +153,7 @@ class FmodTensorTransformer(BaseTensorTransformer):
         self,
         tensor: torch.Tensor,
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.fmod(self._divisor)
 
@@ -195,7 +195,7 @@ class MulTensorTransformer(BaseTensorTransformer):
         self,
         tensor: torch.Tensor,
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.mul(self._value)
 
@@ -229,6 +229,6 @@ class NegTensorTransformer(BaseTensorTransformer):
         self,
         tensor: torch.Tensor,
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.neg()

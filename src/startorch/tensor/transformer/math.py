@@ -57,7 +57,7 @@ class AbsTensorTransformer(BaseTensorTransformer):
         self,
         tensor: torch.Tensor,
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.abs()
 
@@ -91,7 +91,7 @@ class CeilTensorTransformer(BaseTensorTransformer):
         self,
         tensor: torch.Tensor,
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.ceil()
 
@@ -146,7 +146,7 @@ class ClampTensorTransformer(BaseTensorTransformer):
         self,
         tensor: torch.Tensor,
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.clamp(self._min, self._max)
 
@@ -180,7 +180,7 @@ class ExpTensorTransformer(BaseTensorTransformer):
         self,
         tensor: torch.Tensor,
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.exp()
 
@@ -214,7 +214,7 @@ class Expm1TensorTransformer(BaseTensorTransformer):
         self,
         tensor: torch.Tensor,
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.expm1()
 
@@ -248,7 +248,7 @@ class FloorTensorTransformer(BaseTensorTransformer):
         self,
         tensor: torch.Tensor,
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.floor()
 
@@ -282,7 +282,7 @@ class FracTensorTransformer(BaseTensorTransformer):
         self,
         tensor: torch.Tensor,
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.frac()
 
@@ -316,7 +316,7 @@ class LogTensorTransformer(BaseTensorTransformer):
         self,
         tensor: torch.Tensor,
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.log()
 
@@ -350,7 +350,7 @@ class Log1pTensorTransformer(BaseTensorTransformer):
         self,
         tensor: torch.Tensor,
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.log1p()
 
@@ -389,7 +389,7 @@ class LogitTensorTransformer(BaseTensorTransformer):
         self,
         tensor: torch.Tensor,
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.logit(self._eps)
 
@@ -431,7 +431,7 @@ class PowTensorTransformer(BaseTensorTransformer):
         self,
         tensor: torch.Tensor,
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.pow(self._exponent)
 
@@ -472,7 +472,7 @@ class RoundTensorTransformer(BaseTensorTransformer):
         self,
         tensor: torch.Tensor,
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.round(decimals=self._decimals)
 
@@ -507,7 +507,7 @@ class RsqrtTensorTransformer(BaseTensorTransformer):
         self,
         tensor: torch.Tensor,
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.rsqrt()
 
@@ -541,7 +541,7 @@ class SigmoidTensorTransformer(BaseTensorTransformer):
         self,
         tensor: torch.Tensor,
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.sigmoid()
 
@@ -575,6 +575,6 @@ class SqrtTensorTransformer(BaseTensorTransformer):
         self,
         tensor: torch.Tensor,
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.sqrt()
