@@ -52,7 +52,7 @@ class ExponentialTransformer(BaseTensorTransformer):
     ```
     """
 
-    def __init__(self, rate: str, output: str, exist_ok: bool = False) -> None:
+    def __init__(self, *, rate: str, output: str, exist_ok: bool = False) -> None:
         super().__init__(input=rate, output=output, exist_ok=exist_ok)
 
     def __repr__(self) -> str:
@@ -65,6 +65,6 @@ class ExponentialTransformer(BaseTensorTransformer):
         self,
         tensor: torch.Tensor,
         *,
-        rng: torch.Transformer | None = None,
+        rng: torch.Generator | None = None,
     ) -> torch.Tensor:
         return exponential(tensor, generator=rng)

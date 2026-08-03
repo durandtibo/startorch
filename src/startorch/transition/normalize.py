@@ -47,7 +47,7 @@ class NormalizeTransitionGenerator(BaseTransitionGenerator):
     ```
     """
 
-    def __init__(self, generator: BaseTransitionGenerator | dict, p: float = 2.0) -> None:
+    def __init__(self, generator: BaseTransitionGenerator | dict, *, p: float = 2.0) -> None:
         super().__init__()
         self._generator = setup_transition_generator(generator)
         self._p = p

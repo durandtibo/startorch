@@ -56,7 +56,7 @@ class LinearTransformer(BaseTransformer):
     """
 
     def __init__(
-        self, value: str, slope: str, intercept: str, output: str, exist_ok: bool = False
+        self, *, value: str, slope: str, intercept: str, output: str, exist_ok: bool = False
     ) -> None:
         super().__init__()
         self._value = value
@@ -75,12 +75,12 @@ class LinearTransformer(BaseTransformer):
         self,
         data: dict[Hashable, torch.Tensor],
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> dict[Hashable, torch.Tensor]:
-        check_input_keys(data, keys=[self._value, self._slope, self._intercept])
+        check_input_keys(data=data, keys=[self._value, self._slope, self._intercept])
         data = data.copy()
         add_item(
-            data,
+            data=data,
             key=self._output,
             value=linear(
                 value=data[self._value], slope=data[self._slope], intercept=data[self._intercept]
@@ -90,7 +90,7 @@ class LinearTransformer(BaseTransformer):
         return data
 
 
-def linear(value: torch.Tensor, slope: torch.Tensor, intercept: torch.Tensor) -> torch.Tensor:
+def linear(*, value: torch.Tensor, slope: torch.Tensor, intercept: torch.Tensor) -> torch.Tensor:
     r"""Return the output of the linear transformation.
 
     This function computes the following transformation:

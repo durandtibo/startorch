@@ -63,6 +63,7 @@ class TensorTransformer(BaseTransformer):
 
     def __init__(
         self,
+        *,
         transformer: BaseTensorTransformer | dict,
         input: str,  # noqa: A002
         output: str,
@@ -91,12 +92,12 @@ class TensorTransformer(BaseTransformer):
         self,
         data: dict[Hashable, torch.Tensor],
         *,
-        rng: torch.Transformer | None = None,
+        rng: torch.Generator | None = None,
     ) -> dict[Hashable, torch.Tensor]:
-        check_input_keys(data, keys=[self._input])
+        check_input_keys(data=data, keys=[self._input])
         data = data.copy()
         add_item(
-            data,
+            data=data,
             key=self._output,
             value=self._transformer.transform(data[self._input], rng=rng),
             exist_ok=self._exist_ok,

@@ -48,7 +48,7 @@ class LookupTableTransformer(BaseTensorTransformer):
     """
 
     def __init__(
-        self, weights: torch.Tensor, index: str, output: str, exist_ok: bool = False
+        self, *, weights: torch.Tensor, index: str, output: str, exist_ok: bool = False
     ) -> None:
         super().__init__(input=index, output=output, exist_ok=exist_ok)
         self._weights = weights
@@ -63,6 +63,6 @@ class LookupTableTransformer(BaseTensorTransformer):
         self,
         tensor: torch.Tensor,
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return self._weights[tensor]

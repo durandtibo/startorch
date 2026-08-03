@@ -54,7 +54,7 @@ class IdentityTransformer(BaseTransformer):
         self,
         data: dict[Hashable, torch.Tensor],
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> dict[Hashable, torch.Tensor]:
         if self._copy:
             return copy.deepcopy(data)

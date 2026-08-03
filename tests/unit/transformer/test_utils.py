@@ -12,19 +12,19 @@ from startorch.transformer.utils import add_item, check_input_keys
 
 def test_add_item() -> None:
     data = {}
-    add_item(data, "key", 1)
+    add_item(data=data, key="key", value=1)
     assert objects_are_equal(data, {"key": 1})
 
 
 def test_add_item_key_exist_ok_false() -> None:
     data = {"key": 0}
     with pytest.raises(KeyError, match=r"Key key already exists."):
-        add_item(data, "key", 1)
+        add_item(data=data, key="key", value=1)
 
 
 def test_add_item_key_exist_ok_true() -> None:
     data = {"key": 0}
-    add_item(data, "key", 1, exist_ok=True)
+    add_item(data=data, key="key", value=1, exist_ok=True)
     assert objects_are_equal(data, {"key": 1})
 
 

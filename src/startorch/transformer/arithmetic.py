@@ -61,6 +61,7 @@ class AddTransformer(BaseTransformer):
 
     def __init__(
         self,
+        *,
         inputs: Sequence[str],
         output: str,
         exist_ok: bool = False,
@@ -89,14 +90,14 @@ class AddTransformer(BaseTransformer):
         self,
         data: dict[Hashable, torch.Tensor],
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> dict[Hashable, torch.Tensor]:
-        check_input_keys(data, keys=self._inputs)
+        check_input_keys(data=data, keys=self._inputs)
         data = data.copy()
         value = data[self._inputs[0]].clone()
         for key in self._inputs[1:]:
             value += data[key]
-        add_item(data, key=self._output, value=value, exist_ok=self._exist_ok)
+        add_item(data=data, key=self._output, value=value, exist_ok=self._exist_ok)
         return data
 
 
@@ -145,6 +146,7 @@ class DivTransformer(BaseTransformer):
 
     def __init__(
         self,
+        *,
         dividend: str,
         divisor: str,
         output: str,
@@ -169,12 +171,12 @@ class DivTransformer(BaseTransformer):
         self,
         data: dict[Hashable, torch.Tensor],
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> dict[Hashable, torch.Tensor]:
-        check_input_keys(data, keys=[self._dividend, self._divisor])
+        check_input_keys(data=data, keys=[self._dividend, self._divisor])
         data = data.copy()
         add_item(
-            data,
+            data=data,
             key=self._output,
             value=data[self._dividend].div(data[self._divisor], rounding_mode=self._rounding_mode),
             exist_ok=self._exist_ok,
@@ -221,6 +223,7 @@ class FmodTransformer(BaseTransformer):
 
     def __init__(
         self,
+        *,
         dividend: str,
         divisor: str,
         output: str,
@@ -243,12 +246,12 @@ class FmodTransformer(BaseTransformer):
         self,
         data: dict[Hashable, torch.Tensor],
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> dict[Hashable, torch.Tensor]:
-        check_input_keys(data, keys=[self._dividend, self._divisor])
+        check_input_keys(data=data, keys=[self._dividend, self._divisor])
         data = data.copy()
         add_item(
-            data,
+            data=data,
             key=self._output,
             value=data[self._dividend].fmod(data[self._divisor]),
             exist_ok=self._exist_ok,
@@ -297,6 +300,7 @@ class MulTransformer(BaseTransformer):
 
     def __init__(
         self,
+        *,
         inputs: Sequence[str],
         output: str,
         exist_ok: bool = False,
@@ -325,14 +329,14 @@ class MulTransformer(BaseTransformer):
         self,
         data: dict[Hashable, torch.Tensor],
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> dict[Hashable, torch.Tensor]:
-        check_input_keys(data, keys=self._inputs)
+        check_input_keys(data=data, keys=self._inputs)
         data = data.copy()
         value = data[self._inputs[0]].clone()
         for key in self._inputs[1:]:
             value *= data[key]
-        add_item(data, key=self._output, value=value, exist_ok=self._exist_ok)
+        add_item(data=data, key=self._output, value=value, exist_ok=self._exist_ok)
         return data
 
 
@@ -375,6 +379,7 @@ class SubTransformer(BaseTransformer):
 
     def __init__(
         self,
+        *,
         minuend: str,
         subtrahend: str,
         output: str,
@@ -396,12 +401,12 @@ class SubTransformer(BaseTransformer):
         self,
         data: dict[Hashable, torch.Tensor],
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> dict[Hashable, torch.Tensor]:
-        check_input_keys(data, keys=[self._minuend, self._subtrahend])
+        check_input_keys(data=data, keys=[self._minuend, self._subtrahend])
         data = data.copy()
         add_item(
-            data,
+            data=data,
             key=self._output,
             value=data[self._minuend].sub(data[self._subtrahend]),
             exist_ok=self._exist_ok,

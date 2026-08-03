@@ -14,14 +14,14 @@ from startorch.utils.seed import get_torch_generator
 
 
 def test_transform_str() -> None:
-    assert str(Transform(Diagonal(), Clamp(min=0.0, max=0.5))).startswith(
+    assert str(Transform(generator=Diagonal(), transformer=Clamp(min=0.0, max=0.5))).startswith(
         "TransformTransitionGenerator("
     )
 
 
 def test_transform_generate() -> None:
     assert objects_are_equal(
-        Transform(Diagonal(), Clamp(min=0.0, max=0.5)).generate(n=6),
+        Transform(generator=Diagonal(), transformer=Clamp(min=0.0, max=0.5)).generate(n=6),
         torch.tensor(
             [
                 [0.5, 0.0, 0.0, 0.0, 0.0, 0.0],
@@ -37,7 +37,8 @@ def test_transform_generate() -> None:
 
 def test_transform_generate_same_random_seed() -> None:
     generator = Transform(
-        TensorTransitionGenerator(generator=RandUniform()), Clamp(min=0.0, max=0.5)
+        generator=TensorTransitionGenerator(generator=RandUniform()),
+        transformer=Clamp(min=0.0, max=0.5),
     )
     assert objects_are_equal(
         generator.generate(n=9, rng=get_torch_generator(1)),
@@ -47,7 +48,8 @@ def test_transform_generate_same_random_seed() -> None:
 
 def test_transform_generate_different_random_seeds() -> None:
     generator = Transform(
-        TensorTransitionGenerator(generator=RandUniform()), Clamp(min=0.0, max=0.5)
+        generator=TensorTransitionGenerator(generator=RandUniform()),
+        transformer=Clamp(min=0.0, max=0.5),
     )
     assert not objects_are_equal(
         generator.generate(n=9, rng=get_torch_generator(1)),

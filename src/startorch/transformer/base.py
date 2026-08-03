@@ -47,7 +47,7 @@ class BaseTransformer(ABC, metaclass=AbstractFactory):
 
     @abstractmethod
     def transform(
-        self, data: dict[Hashable, torch.Tensor], *, rng: torch.Transformer | None = None
+        self, data: dict[Hashable, torch.Tensor], *, rng: torch.Generator | None = None
     ) -> dict[Hashable, torch.Tensor]:
         r"""Transform the input data.
 
@@ -120,12 +120,12 @@ class BaseTensorTransformer(BaseTransformer):
         self,
         data: dict[Hashable, torch.Tensor],
         *,
-        rng: torch.Transformer | None = None,
+        rng: torch.Generator | None = None,
     ) -> dict[Hashable, torch.Tensor]:
-        check_input_keys(data, keys=[self._input])
+        check_input_keys(data=data, keys=[self._input])
         data = data.copy()
         add_item(
-            data,
+            data=data,
             key=self._output,
             value=self._transform(tensor=data[self._input], rng=rng),
             exist_ok=self._exist_ok,
@@ -137,7 +137,7 @@ class BaseTensorTransformer(BaseTransformer):
         self,
         tensor: torch.Tensor,
         *,
-        rng: torch.Transformer | None = None,
+        rng: torch.Generator | None = None,
     ) -> torch.Tensor:
         r"""Transform a tensor.
 

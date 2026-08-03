@@ -91,12 +91,14 @@ class SineWaveTransformer(BaseTransformer):
         self,
         data: dict[Hashable, torch.Tensor],
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> dict[Hashable, torch.Tensor]:
-        check_input_keys(data, keys=[self._value, self._frequency, self._phase, self._amplitude])
+        check_input_keys(
+            data=data, keys=[self._value, self._frequency, self._phase, self._amplitude]
+        )
         data = data.copy()
         add_item(
-            data,
+            data=data,
             key=self._output,
             value=sine_wave(
                 value=data[self._value],
@@ -110,6 +112,7 @@ class SineWaveTransformer(BaseTransformer):
 
 
 def sine_wave(
+    *,
     value: torch.Tensor,
     frequency: torch.Tensor,
     phase: torch.Tensor,

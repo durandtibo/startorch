@@ -54,7 +54,7 @@ class RemoveKeysTransformer(BaseTransformer):
     ```
     """
 
-    def __init__(self, keys: Sequence[str], missing_ok: bool = False) -> None:
+    def __init__(self, *, keys: Sequence[str], missing_ok: bool = False) -> None:
         super().__init__()
         self._keys = tuple(keys)
         self._missing_ok = missing_ok
@@ -67,7 +67,7 @@ class RemoveKeysTransformer(BaseTransformer):
         self,
         data: dict[Hashable, torch.Tensor],
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> dict[Hashable, torch.Tensor]:
         data = data.copy()
         for key in self._keys:
@@ -125,7 +125,7 @@ class SelectKeysTransformer(BaseTransformer):
         self,
         data: dict[Hashable, torch.Tensor],
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> dict[Hashable, torch.Tensor]:
         out = {}
         for key in self._keys:
