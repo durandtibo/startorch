@@ -47,6 +47,7 @@ class SwissRollExampleGenerator(BaseExampleGenerator):
 
     def __init__(
         self,
+        *,
         noise_std: float = 0.0,
         spin: float = 1.5,
         hole: bool = False,
@@ -88,6 +89,7 @@ class SwissRollExampleGenerator(BaseExampleGenerator):
 
 
 def make_swiss_roll(
+    *,
     num_examples: int = 100,
     noise_std: float = 0.0,
     spin: float = 1.5,

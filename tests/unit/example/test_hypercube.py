@@ -177,7 +177,7 @@ def test_make_hypercube_classification() -> None:
 
 @pytest.mark.parametrize("num_examples", SIZES)
 def test_make_hypercube_classification_num_examples(num_examples: int) -> None:
-    data = make_hypercube_classification(num_examples)
+    data = make_hypercube_classification(num_examples=num_examples)
     assert len(data) == 2
     assert data[ct.TARGET].shape[0] == num_examples
     assert data[ct.FEATURE].shape[0] == num_examples

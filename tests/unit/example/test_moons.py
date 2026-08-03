@@ -197,7 +197,7 @@ def test_make_moons_classification_ratio_0_2() -> None:
 
 @pytest.mark.parametrize("num_examples", SIZES)
 def test_make_moons_classification_num_examples(num_examples: int) -> None:
-    data = make_moons_classification(num_examples)
+    data = make_moons_classification(num_examples=num_examples)
     assert len(data) == 2
     assert data[ct.TARGET].shape[0] == num_examples
     assert data[ct.FEATURE].shape[0] == num_examples

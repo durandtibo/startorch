@@ -98,7 +98,7 @@ def test_linear_regression_generate_different_random_seeds(noise_std: float, bia
 def test_linear_regression_generate_mock(
     batch_size: int,
     noise_std: float,
-    weights: int,
+    weights: torch.Tensor,
     bias: float,
     rng: torch.Generator | None,
 ) -> None:

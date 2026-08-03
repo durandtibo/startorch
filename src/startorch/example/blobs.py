@@ -151,6 +151,7 @@ class BlobsClassificationExampleGenerator(BaseExampleGenerator):
 def make_blobs_classification(
     num_examples: int,
     centers: torch.Tensor,
+    *,
     cluster_std: torch.Tensor | float = 1.0,
     generator: torch.Generator | None = None,
 ) -> dict[str, torch.Tensor]:
