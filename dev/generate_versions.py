@@ -7,40 +7,48 @@ import logging
 from pathlib import Path
 
 from feu.utils.io import save_json
+from feu.utils.mapping import sort_by_keys
 from feu.version import (
-    fetch_latest_minor_versions,
-    fetch_versions,
+    fetch_latest_major_versions_map,
+    fetch_latest_minor_versions_map,
+    fetch_sampled_latest_minor_versions,
+    get_package_bounds,
+    partition_package_bounds,
+    read_pyproject_dependencies,
+    read_pyproject_optional_dependencies,
 )
 
-logger = logging.getLogger(__name__)
+logger: logging.Logger = logging.getLogger(__name__)
 
 
-def fetch_package_versions() -> dict[str, list[str]]:
+def fetch_package_versions(base_dir: Path) -> dict[str, list[str]]:
     r"""Get the versions for each package.
+
+    Args:
+        base_dir: Path to the base directory.
 
     Returns:
         A dictionary with the versions for each package.
     """
-    return {
-        "batchtensor": [
-            *list(fetch_latest_minor_versions("batchtensor", lower="1.2.1")),
-            "0.1.2a1",
-        ],
-        "coola": list(fetch_versions("coola", lower="0.9.1")),
-        "numpy": list(fetch_latest_minor_versions("numpy", lower="1.24")),
-        "objectory": list(fetch_latest_minor_versions("objectory", lower="0.2.1")),
-        "torch": list(fetch_latest_minor_versions("torch", lower="2.4")),
-        "iden": [*list(fetch_latest_minor_versions("iden", lower="0.2.1")), "0.2.1a1"],
-        "matplotlib": list(fetch_latest_minor_versions("matplotlib", lower="3.7")),
-        "plotly": list(fetch_latest_minor_versions("plotly", lower="6.0")),
-    }
+    pyproject_path = base_dir.joinpath("pyproject.toml")
+
+    deps = read_pyproject_dependencies(pyproject_path) + read_pyproject_optional_dependencies(
+        pyproject_path
+    )
+    major_deps, minor_deps = partition_package_bounds(deps, [])
+
+    return sort_by_keys(
+        fetch_latest_major_versions_map(major_deps, include_lower_bound=True)
+        | fetch_latest_minor_versions_map(minor_deps, include_lower_bound=True)
+    )
 
 
 def main() -> None:
     r"""Generate the package versions and save them in a JSON file."""
-    versions = fetch_package_versions()
+    base_dir = Path(__file__).parent.parent
+    versions = fetch_package_versions(base_dir)
     logger.info(f"{versions=}")
-    path = Path(__file__).parent.parent.joinpath("dev/config").joinpath("package_versions.json")
+    path = base_dir.joinpath("dev/config").joinpath("package_versions.json")
     logger.info(f"Saving package versions to {path}")
     save_json(versions, path, exist_ok=True)
 
