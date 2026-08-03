@@ -71,6 +71,7 @@ class AutoRegressiveSequenceGenerator(BaseSequenceGenerator):
 
     def __init__(
         self,
+        *,
         value: BaseSequenceGenerator | dict,
         coefficient: BaseSequenceGenerator | dict,
         noise: BaseSequenceGenerator | dict,

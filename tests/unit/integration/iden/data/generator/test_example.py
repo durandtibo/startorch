@@ -5,11 +5,17 @@ import torch
 from coola import objects_are_equal
 
 from startorch import constants as ct
-from startorch.example import SwissRoll
+from startorch.example import BaseExampleGenerator, MoonsClassification, SwissRoll
 from startorch.integration.iden.data.generator import ExampleDataGenerator
 from startorch.testing import iden_available
 
 SIZES = [1, 2, 4]
+
+
+@pytest.fixture
+def example() -> BaseExampleGenerator:
+    return SwissRoll()
+
 
 ##########################################
 #     Tests for ExampleDataGenerator     #
@@ -17,23 +23,55 @@ SIZES = [1, 2, 4]
 
 
 @iden_available
-def test_example_data_generator_repr() -> None:
-    assert repr(ExampleDataGenerator(example=SwissRoll(), batch_size=8, random_seed=1)).startswith(
+def test_example_data_generator_repr(example: BaseExampleGenerator) -> None:
+    assert repr(ExampleDataGenerator(example=example, batch_size=8, random_seed=1)).startswith(
         "ExampleDataGenerator("
     )
 
 
 @iden_available
-def test_example_data_generator_str() -> None:
-    assert str(ExampleDataGenerator(example=SwissRoll(), batch_size=8, random_seed=1)).startswith(
+def test_example_data_generator_str(example: BaseExampleGenerator) -> None:
+    assert str(ExampleDataGenerator(example=example, batch_size=8, random_seed=1)).startswith(
         "ExampleDataGenerator("
+    )
+
+
+@iden_available
+def test_example_data_generator_equal_true(example: BaseExampleGenerator) -> None:
+    assert ExampleDataGenerator(example=example, batch_size=8, random_seed=1).equal(
+        ExampleDataGenerator(example=example, batch_size=8, random_seed=1)
+    )
+
+
+@iden_available
+def test_example_data_generator_equal_false_different_example() -> None:
+    assert not ExampleDataGenerator(example=SwissRoll(), batch_size=8, random_seed=1).equal(
+        ExampleDataGenerator(example=MoonsClassification(), batch_size=8, random_seed=1)
+    )
+
+
+@iden_available
+def test_example_data_generator_equal_false_different_batch_size(
+    example: BaseExampleGenerator,
+) -> None:
+    assert not ExampleDataGenerator(example=example, batch_size=8, random_seed=1).equal(
+        ExampleDataGenerator(example=example, batch_size=4, random_seed=1)
+    )
+
+
+@iden_available
+def test_example_data_generator_equal_false_different_random_seed(
+    example: BaseExampleGenerator,
+) -> None:
+    assert not ExampleDataGenerator(example=example, batch_size=8, random_seed=1).equal(
+        ExampleDataGenerator(example=example, batch_size=8, random_seed=2)
     )
 
 
 @iden_available
 @pytest.mark.parametrize("batch_size", SIZES)
-def test_example_data_generator_generate(batch_size: int) -> None:
-    generator = ExampleDataGenerator(example=SwissRoll(), batch_size=batch_size, random_seed=1)
+def test_example_data_generator_generate(example: BaseExampleGenerator, batch_size: int) -> None:
+    generator = ExampleDataGenerator(example=example, batch_size=batch_size, random_seed=1)
     data = generator.generate()
 
     assert isinstance(data, dict)
@@ -47,8 +85,8 @@ def test_example_data_generator_generate(batch_size: int) -> None:
 
 
 @iden_available
-def test_example_data_generator_generate_multiple_calls() -> None:
-    generator = ExampleDataGenerator(example=SwissRoll(), batch_size=16, random_seed=1)
+def test_example_data_generator_generate_multiple_calls(example: BaseExampleGenerator) -> None:
+    generator = ExampleDataGenerator(example=example, batch_size=16, random_seed=1)
     assert not objects_are_equal(generator.generate(), generator.generate())
 
 
