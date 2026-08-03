@@ -55,6 +55,7 @@ class CirclesClassificationExampleGenerator(BaseExampleGenerator):
 
     def __init__(
         self,
+        *,
         shuffle: bool = True,
         noise_std: float = 0.0,
         factor: float = 0.8,
@@ -107,6 +108,7 @@ class CirclesClassificationExampleGenerator(BaseExampleGenerator):
 
 
 def make_circles_classification(
+    *,
     num_examples: int = 100,
     shuffle: bool = True,
     noise_std: float = 0.0,

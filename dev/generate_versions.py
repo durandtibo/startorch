@@ -11,8 +11,6 @@ from feu.utils.mapping import sort_by_keys
 from feu.version import (
     fetch_latest_major_versions_map,
     fetch_latest_minor_versions_map,
-    fetch_sampled_latest_minor_versions,
-    get_package_bounds,
     partition_package_bounds,
     read_pyproject_dependencies,
     read_pyproject_optional_dependencies,

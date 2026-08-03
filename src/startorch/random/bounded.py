@@ -41,6 +41,7 @@ from startorch.utils.tensor import shapes_are_equal
 
 def rand_trunc_cauchy(
     size: list[int] | tuple[int, ...],
+    *,
     loc: float = 0.0,
     scale: float = 1.0,
     min_value: float = -2.0,
@@ -91,6 +92,7 @@ def rand_trunc_cauchy(
 
 
 def trunc_cauchy(
+    *,
     loc: torch.Tensor,
     scale: torch.Tensor,
     min_value: torch.Tensor,
@@ -161,6 +163,7 @@ def trunc_cauchy(
 
 def rand_trunc_exponential(
     size: list[int] | tuple[int, ...],
+    *,
     rate: float = 1.0,
     max_value: float = 5.0,
     generator: torch.Generator | None = None,
@@ -266,6 +269,7 @@ def trunc_exponential(
 
 def rand_trunc_half_cauchy(
     size: list[int] | tuple[int, ...],
+    *,
     scale: float = 1.0,
     max_value: float = 4.0,
     generator: torch.Generator | None = None,
@@ -371,6 +375,7 @@ def trunc_half_cauchy(
 
 def rand_trunc_half_normal(
     size: list[int] | tuple[int, ...],
+    *,
     std: float = 1.0,
     max_value: float = 5.0,
     generator: torch.Generator | None = None,
@@ -475,6 +480,7 @@ def trunc_half_normal(
 
 def rand_trunc_log_normal(
     size: list[int] | tuple[int, ...],
+    *,
     mean: float = 0.0,
     std: float = 1.0,
     min_value: float = 0.0,
@@ -526,6 +532,7 @@ def rand_trunc_log_normal(
 
 
 def trunc_log_normal(
+    *,
     mean: torch.Tensor,
     std: torch.Tensor,
     min_value: torch.Tensor,
@@ -598,6 +605,7 @@ def trunc_log_normal(
 
 def rand_trunc_normal(
     size: list[int] | tuple[int, ...],
+    *,
     mean: float = 0.0,
     std: float = 1.0,
     min_value: float = -3.0,
@@ -649,6 +657,7 @@ def rand_trunc_normal(
 
 
 def trunc_normal(
+    *,
     mean: torch.Tensor,
     std: torch.Tensor,
     min_value: torch.Tensor,
@@ -721,6 +730,7 @@ def trunc_normal(
 
 def rand_uniform(
     size: list[int] | tuple[int, ...],
+    *,
     low: float = 0.0,
     high: float = 1.0,
     generator: torch.Generator | None = None,
@@ -822,6 +832,7 @@ def uniform(
 
 def rand_log_uniform(
     size: list[int] | tuple[int, ...],
+    *,
     low: float,
     high: float,
     generator: torch.Generator | None = None,
@@ -923,6 +934,7 @@ def log_uniform(
 
 def rand_asinh_uniform(
     size: list[int] | tuple[int, ...],
+    *,
     low: float,
     high: float,
     generator: torch.Generator | None = None,

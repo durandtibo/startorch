@@ -64,6 +64,7 @@ class SineWaveTransformer(BaseTransformer):
 
     def __init__(
         self,
+        *,
         value: str,
         frequency: str,
         phase: str,

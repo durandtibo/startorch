@@ -5,8 +5,10 @@ from __future__ import annotations
 __all__ = ["ExampleDataGenerator"]
 
 from collections.abc import Hashable
+from typing import Any
 
 import torch
+from coola import objects_are_equal
 from coola.utils import repr_indent, repr_mapping, str_indent, str_mapping
 
 from startorch.example import BaseExampleGenerator, setup_example_generator
@@ -76,6 +78,15 @@ class ExampleDataGenerator(BaseDataGenerator[dict[Hashable, torch.Tensor]]):
             )
         )
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
+
+    def equal(self, other: Any, equal_nan: bool = False) -> bool:
+        if type(other) is not type(self):
+            return False
+        return (
+            objects_are_equal(self._example, other._example, equal_nan=equal_nan)
+            and self._batch_size == other._batch_size
+            and self._rng.initial_seed() == other._rng.initial_seed()
+        )
 
     def generate(self) -> dict[Hashable, torch.Tensor]:
         return self._example.generate(batch_size=self._batch_size, rng=self._rng)

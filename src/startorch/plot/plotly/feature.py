@@ -27,6 +27,7 @@ if TYPE_CHECKING:
 
 def hist_feature(
     features: torch.Tensor | np.ndarray,
+    *,
     feature_names: Sequence[str] | None = None,
     ncols: int = 2,
     figsize: tuple[int, int] = (250, 200),

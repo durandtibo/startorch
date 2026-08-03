@@ -31,6 +31,7 @@ if TYPE_CHECKING:
 
 def hist_sequence(
     sequence: BaseSequenceGenerator,
+    *,
     bins: int = 500,
     seq_len: int = 1000,
     batch_size: int = 10000,
@@ -84,6 +85,7 @@ def hist_sequence(
 
 def plot_sequence(
     sequence: BaseSequenceGenerator,
+    *,
     seq_len: int = 128,
     batch_size: int = 1,
     num_batches: int = 1,
