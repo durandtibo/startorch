@@ -48,7 +48,7 @@ class AcoshTensorTransformer(BaseTensorTransformer):
         self,
         tensor: torch.Tensor,
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.acosh()
 
@@ -80,7 +80,7 @@ class AsinhTensorTransformer(BaseTensorTransformer):
         self,
         tensor: torch.Tensor,
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.asinh()
 
@@ -112,7 +112,7 @@ class AtanhTensorTransformer(BaseTensorTransformer):
         self,
         tensor: torch.Tensor,
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.atanh()
 
@@ -144,7 +144,7 @@ class CoshTensorTransformer(BaseTensorTransformer):
         self,
         tensor: torch.Tensor,
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.cosh()
 
@@ -177,7 +177,7 @@ class SincTensorTransformer(BaseTensorTransformer):
         self,
         tensor: torch.Tensor,
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.sinc()
 
@@ -210,7 +210,7 @@ class SinhTensorTransformer(BaseTensorTransformer):
         self,
         tensor: torch.Tensor,
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.sinh()
 
@@ -242,6 +242,6 @@ class TanhTensorTransformer(BaseTensorTransformer):
         self,
         tensor: torch.Tensor,
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         return tensor.tanh()

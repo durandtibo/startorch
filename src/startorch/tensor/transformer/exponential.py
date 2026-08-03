@@ -46,6 +46,6 @@ class ExponentialTensorTransformer(BaseTensorTransformer):
         self,
         tensor: torch.Tensor,
         *,
-        rng: torch.Transformer | None = None,
+        rng: torch.Generator | None = None,
     ) -> torch.Tensor:
         return exponential(tensor, generator=rng)

@@ -51,7 +51,7 @@ class IdentityTensorTransformer(BaseTensorTransformer):
         self,
         tensor: torch.Tensor,
         *,
-        rng: torch.Transformer | None = None,  # noqa: ARG002
+        rng: torch.Generator | None = None,  # noqa: ARG002
     ) -> torch.Tensor:
         if self._copy:
             return tensor.clone()
