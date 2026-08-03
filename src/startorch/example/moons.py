@@ -51,7 +51,7 @@ class MoonsClassificationExampleGenerator(BaseExampleGenerator):
     ```
     """
 
-    def __init__(self, shuffle: bool = True, noise_std: float = 0.0, ratio: float = 0.5) -> None:
+    def __init__(self, *, shuffle: bool = True, noise_std: float = 0.0, ratio: float = 0.5) -> None:
         super().__init__()
         self._shuffle = bool(shuffle)
         check_std(noise_std, "noise_std")
@@ -90,6 +90,7 @@ class MoonsClassificationExampleGenerator(BaseExampleGenerator):
 
 
 def make_moons_classification(
+    *,
     num_examples: int = 100,
     shuffle: bool = True,
     noise_std: float = 0.0,

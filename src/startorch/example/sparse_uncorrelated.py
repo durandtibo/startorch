@@ -14,6 +14,7 @@ from startorch.utils.validation import check_feature_size, check_num_examples, c
 
 
 def make_sparse_uncorrelated_regression(
+    *,
     num_examples: int = 100,
     feature_size: int = 4,
     noise_std: float = 0.0,

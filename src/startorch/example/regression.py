@@ -59,6 +59,7 @@ class LinearRegressionExampleGenerator(BaseExampleGenerator):
 
     def __init__(
         self,
+        *,
         weights: torch.Tensor | Sequence[float],
         bias: float = 0.0,
         noise_std: float = 0.0,
@@ -111,6 +112,7 @@ class LinearRegressionExampleGenerator(BaseExampleGenerator):
     @classmethod
     def create_uniform_weights(
         cls,
+        *,
         feature_size: int = 100,
         informative_feature_size: int = 10,
         bias: float = 0.0,
@@ -131,6 +133,7 @@ class LinearRegressionExampleGenerator(BaseExampleGenerator):
 
 def make_linear_regression(
     weights: torch.Tensor,
+    *,
     bias: float = 0.0,
     num_examples: int = 100,
     noise_std: float = 0.0,
@@ -191,6 +194,7 @@ def make_linear_regression(
 def get_uniform_weights(
     feature_size: int,
     informative_feature_size: int,
+    *,
     generator: torch.Generator | None = None,
 ) -> torch.Tensor:
     """Generate the weights of the linear combination used to generate

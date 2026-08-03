@@ -53,6 +53,7 @@ class HypercubeClassificationExampleGenerator(BaseExampleGenerator):
 
     def __init__(
         self,
+        *,
         num_classes: int = 50,
         feature_size: int = 64,
         noise_std: float = 0.2,
@@ -103,6 +104,7 @@ class HypercubeClassificationExampleGenerator(BaseExampleGenerator):
 
 
 def make_hypercube_classification(
+    *,
     num_examples: int = 1000,
     num_classes: int = 50,
     feature_size: int = 64,

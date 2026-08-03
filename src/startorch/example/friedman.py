@@ -229,6 +229,7 @@ class Friedman3RegressionExampleGenerator(BaseExampleGenerator):
 
 
 def make_friedman1_regression(
+    *,
     num_examples: int = 100,
     feature_size: int = 10,
     noise_std: float = 0.0,
@@ -289,6 +290,7 @@ def make_friedman1_regression(
 
 
 def make_friedman2_regression(
+    *,
     num_examples: int = 100,
     feature_size: int = 4,
     noise_std: float = 0.0,
@@ -354,6 +356,7 @@ def make_friedman2_regression(
 
 
 def make_friedman3_regression(
+    *,
     num_examples: int = 100,
     feature_size: int = 4,
     noise_std: float = 0.0,

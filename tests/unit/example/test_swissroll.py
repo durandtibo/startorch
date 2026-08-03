@@ -169,7 +169,7 @@ def test_make_swiss_roll_params(spin: float, noise_std: float, hole: bool) -> No
 
 @pytest.mark.parametrize("num_examples", SIZES)
 def test_make_swiss_roll_num_examples(num_examples: int) -> None:
-    data = make_swiss_roll(num_examples)
+    data = make_swiss_roll(num_examples=num_examples)
     assert len(data) == 2
     assert data[ct.TARGET].shape[0] == num_examples
     assert data[ct.FEATURE].shape[0] == num_examples
