@@ -49,7 +49,7 @@ dependencies = [
 [project.optional-dependencies]
 iden = [ "iden >=0.2.1a1,<1.0" ]
 matplotlib = [ "matplotlib >=3.7,<4.0" ]
-plotly = [ "plotly >=6.0,<7.0" ]
+plotly = [ "plotly >=6.0,<8.0" ]
 
 
 [dependency-groups]
