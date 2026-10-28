@@ -5,7 +5,7 @@ default_stages: [ pre-commit ]
 
 repos:
   - repo: https://github.com/srstevenson/nb-clean
-    rev: 4.0.1
+    rev: v5.0.0
     hooks:
       - id: nb-clean
         args: [ "--remove-empty-cells", "--remove-all-notebook-metadata" ]
@@ -57,7 +57,7 @@ repos:
         additional_dependencies:
           - black>=26.5
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.17.2
+    rev: v0.17.3
     hooks:
       - id: ruff-check
         types_or: [ python, pyi, jupyter ]
