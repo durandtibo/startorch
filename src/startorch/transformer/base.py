@@ -203,10 +203,10 @@ def setup_transformer(transformer: BaseTransformer | dict) -> BaseTransformer:
     """
     if isinstance(transformer, dict):
         logger.info(
-            "Initializing a tensor transformer from its configuration... "
-            f"{str_target_object(transformer)}"
+            "Initializing a tensor transformer from its configuration... %s",
+            str_target_object(transformer),
         )
         transformer = BaseTransformer.factory(**transformer)
     if not isinstance(transformer, BaseTransformer):
-        logger.warning(f"transformer is not a `BaseTransformer` (received: {type(transformer)})")
+        logger.warning("transformer is not a `BaseTransformer` (received: %s)", type(transformer))
     return transformer

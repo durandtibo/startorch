@@ -124,10 +124,10 @@ def setup_sequence_generator(generator: BaseSequenceGenerator | dict) -> BaseSeq
     """
     if isinstance(generator, dict):
         logger.info(
-            "Initializing a sequence generator from its configuration... "
-            f"{str_target_object(generator)}"
+            "Initializing a sequence generator from its configuration... %s",
+            str_target_object(generator),
         )
         generator = BaseSequenceGenerator.factory(**generator)
     if not isinstance(generator, BaseSequenceGenerator):
-        logger.warning(f"generator is not a `BaseSequenceGenerator` (received: {type(generator)})")
+        logger.warning("generator is not a `BaseSequenceGenerator` (received: %s)", type(generator))
     return generator

@@ -134,12 +134,12 @@ def setup_transition_generator(
     """
     if isinstance(generator, dict):
         logger.info(
-            "Initializing a transition matrix generator from its configuration... "
-            f"{str_target_object(generator)}"
+            "Initializing a transition matrix generator from its configuration... %s",
+            str_target_object(generator),
         )
         generator = BaseTransitionGenerator.factory(**generator)
     if not isinstance(generator, BaseTransitionGenerator):
         logger.warning(
-            f"generator is not a `BaseTransitionGenerator` (received: {type(generator)})"
+            "generator is not a `BaseTransitionGenerator` (received: %s)", type(generator)
         )
     return generator
