@@ -77,7 +77,7 @@ class RandNormalTensorGenerator(BaseTensorGenerator):
             distribution.
 
     Raises:
-        ValueError: if ``std`` is not a postive number.
+        ValueError: if ``std`` is not a positive number.
 
     Example usage:
 
@@ -125,7 +125,7 @@ class RandTruncNormalTensorGenerator(BaseTensorGenerator):
         max_value: The maximum value.
 
     Raises:
-        ValueError: if ``std`` is not a postive number.
+        ValueError: if ``std`` is not a positive number.
         ValueError: if ``max_value`` is lower than ``min_value``.
 
     Example usage:

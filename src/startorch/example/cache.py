@@ -1,5 +1,5 @@
 r"""Contain a cache example generator that caches the last batch and
-returns it everytime a batch is generated."""
+returns it every time a batch is generated."""
 
 from __future__ import annotations
 
@@ -20,7 +20,7 @@ if TYPE_CHECKING:
 
 class CacheExampleGenerator(BaseExampleGenerator):
     r"""Implement an example generator that caches the last batch and
-    returns it everytime a batch is generated.
+    returns it every time a batch is generated.
 
     A new batch is generated only if the batch size changes.
 

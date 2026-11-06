@@ -21,7 +21,7 @@ class Cat2SequenceGenerator(BaseSequenceGenerator):
     r"""Implement a sequence generator that concatenate two sequences
     along the sequence dimension.
 
-    ``ouput = [sequence1, sequence2]``
+    ``output = [sequence1, sequence2]``
 
     Args:
         generator1: The first sequence generator or its
