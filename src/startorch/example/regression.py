@@ -21,7 +21,7 @@ from startorch.utils.seed import get_torch_generator
 from startorch.utils.validation import check_num_examples, check_std
 
 if TYPE_CHECKING:
-    from collections.abc import Sequence
+    from collections.abc import Hashable, Sequence
 
 
 class LinearRegressionExampleGenerator(BaseExampleGenerator):
@@ -100,7 +100,7 @@ class LinearRegressionExampleGenerator(BaseExampleGenerator):
 
     def generate(
         self, batch_size: int = 1, rng: torch.Generator | None = None
-    ) -> dict[str, torch.Tensor]:
+    ) -> dict[Hashable, torch.Tensor]:
         return make_linear_regression(
             num_examples=batch_size,
             weights=self._weights,
@@ -138,7 +138,7 @@ def make_linear_regression(
     num_examples: int = 100,
     noise_std: float = 0.0,
     generator: torch.Generator | None = None,
-) -> dict[str, torch.Tensor]:
+) -> dict[Hashable, torch.Tensor]:
     r"""Generate a regression dataset where the data are generated with
     an underlying linear model.
 

@@ -7,6 +7,7 @@ from __future__ import annotations
 __all__ = ["BlobsClassificationExampleGenerator", "make_blobs_classification"]
 
 import math
+from typing import TYPE_CHECKING
 
 import torch
 from batchtensor.nested import shuffle_along_batch, slice_along_batch
@@ -16,6 +17,9 @@ from startorch.example.base import BaseExampleGenerator
 from startorch.random import normal
 from startorch.utils.seed import get_torch_generator
 from startorch.utils.validation import check_num_examples
+
+if TYPE_CHECKING:
+    from collections.abc import Hashable
 
 
 class BlobsClassificationExampleGenerator(BaseExampleGenerator):
@@ -97,7 +101,7 @@ class BlobsClassificationExampleGenerator(BaseExampleGenerator):
 
     def generate(
         self, batch_size: int = 1, rng: torch.Generator | None = None
-    ) -> dict[str, torch.Tensor]:
+    ) -> dict[Hashable, torch.Tensor]:
         return make_blobs_classification(
             num_examples=batch_size,
             centers=self._centers,
@@ -154,7 +158,7 @@ def make_blobs_classification(
     *,
     cluster_std: torch.Tensor | float = 1.0,
     generator: torch.Generator | None = None,
-) -> dict[str, torch.Tensor]:
+) -> dict[Hashable, torch.Tensor]:
     r"""Generate a classification dataset where the data are gnerated
     from isotropic Gaussian blobs for clustering.
 

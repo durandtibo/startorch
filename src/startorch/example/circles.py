@@ -7,6 +7,7 @@ from __future__ import annotations
 __all__ = ["CirclesClassificationExampleGenerator", "make_circles_classification"]
 
 import math
+from typing import TYPE_CHECKING
 
 import torch
 from batchtensor.nested import shuffle_along_batch
@@ -15,6 +16,9 @@ from startorch import constants as ct
 from startorch.example.base import BaseExampleGenerator
 from startorch.random import rand_normal
 from startorch.utils.validation import check_interval, check_num_examples, check_std
+
+if TYPE_CHECKING:
+    from collections.abc import Hashable
 
 
 class CirclesClassificationExampleGenerator(BaseExampleGenerator):
@@ -96,7 +100,7 @@ class CirclesClassificationExampleGenerator(BaseExampleGenerator):
 
     def generate(
         self, batch_size: int = 1, rng: torch.Generator | None = None
-    ) -> dict[str, torch.Tensor]:
+    ) -> dict[Hashable, torch.Tensor]:
         return make_circles_classification(
             num_examples=batch_size,
             shuffle=self._shuffle,
@@ -115,7 +119,7 @@ def make_circles_classification(
     factor: float = 0.8,
     ratio: float = 0.5,
     generator: torch.Generator | None = None,
-) -> dict[str, torch.Tensor]:
+) -> dict[Hashable, torch.Tensor]:
     r"""Generate a binary classification dataset where the data are
     generated with a large circle containing a smaller circle in 2d.
 

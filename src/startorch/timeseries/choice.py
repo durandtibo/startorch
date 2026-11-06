@@ -90,11 +90,13 @@ class MultinomialChoiceTimeSeriesGenerator(BaseTimeSeriesGenerator):
         self._weights = torch.as_tensor(weights, dtype=torch.float)
 
     def __repr__(self) -> str:
-        args = str_indent(str_weighted_modules(modules=self._generators, weights=self._weights))
+        args = str_indent(
+            str_weighted_modules(modules=self._generators, weights=self._weights.tolist())
+        )
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
     ) -> dict[Hashable, torch.Tensor]:
-        index = torch.multinomial(self._weights, num_samples=1, generator=rng).item()
+        index = int(torch.multinomial(self._weights, num_samples=1, generator=rng).item())
         return self._generators[index].generate(seq_len=seq_len, batch_size=batch_size, rng=rng)

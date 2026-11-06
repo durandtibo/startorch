@@ -16,6 +16,8 @@ from startorch.periodic.timeseries import BasePeriodicTimeSeriesGenerator
 from startorch.timeseries import BaseTimeSeriesGenerator, setup_timeseries_generator
 
 if TYPE_CHECKING:
+    from collections.abc import Hashable
+
     import torch
 
 
@@ -60,7 +62,7 @@ class RepeatPeriodicTimeSeriesGenerator(BasePeriodicTimeSeriesGenerator):
 
     def generate(
         self, seq_len: int, period: int, batch_size: int = 1, rng: torch.Generator | None = None
-    ) -> torch.Tensor:
+    ) -> dict[Hashable, torch.Tensor]:
         data = self._generator.generate(seq_len=period, batch_size=batch_size, rng=rng)
         data = repeat_along_seq(data, math.ceil(seq_len / period))
         return slice_along_seq(data, stop=seq_len)

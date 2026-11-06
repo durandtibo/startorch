@@ -67,7 +67,11 @@ class PeriodicTimeSeriesGenerator(BaseTimeSeriesGenerator):
         period: BaseTensorGenerator | dict,
     ) -> None:
         super().__init__()
-        self._timeseries = setup_timeseries_generator(timeseries)
+        self._timeseries = (
+            timeseries
+            if isinstance(timeseries, BasePeriodicTimeSeriesGenerator)
+            else setup_timeseries_generator(timeseries)
+        )
         self._period = setup_tensor_generator(period)
 
     def __repr__(self) -> str:

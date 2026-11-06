@@ -82,7 +82,9 @@ def merge_by_time(
     ts = cat_along_seq(timeseries)
     batch_time = ts.get(time_key, None)
     if batch_time is None:
-        msg = f"The key {time_key} is not in batch. Available keys are: {sorted(ts.keys())}"
+        msg = (
+            f"The key {time_key} is not in batch. Available keys are: {sorted(ts.keys(), key=str)}"
+        )
         raise KeyError(msg)
     indices = argsort_along_seq(batch_time, descending=False, stable=True)
     return index_select_along_seq(ts, indices)

@@ -6,11 +6,16 @@ from __future__ import annotations
 __all__ = ["make_sparse_uncorrelated_regression"]
 
 
+from typing import TYPE_CHECKING
+
 import torch
 
 from startorch import constants as ct
 from startorch.random import normal, rand_normal
 from startorch.utils.validation import check_feature_size, check_num_examples, check_std
+
+if TYPE_CHECKING:
+    from collections.abc import Hashable
 
 
 def make_sparse_uncorrelated_regression(
@@ -19,7 +24,7 @@ def make_sparse_uncorrelated_regression(
     feature_size: int = 4,
     noise_std: float = 0.0,
     generator: torch.Generator | None = None,
-) -> dict[str, torch.Tensor]:
+) -> dict[Hashable, torch.Tensor]:
     r"""Generate a random regression problem with sparse uncorrelated
     design.
 
