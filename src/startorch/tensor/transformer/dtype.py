@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 
 
 class FloatTensorTransformer(BaseTensorTransformer):
-    r"""Implement a tensor transfomer that converts tensor values to
+    r"""Implement a tensor transformer that converts tensor values to
     float.
 
     Example usage:
@@ -45,7 +45,7 @@ class FloatTensorTransformer(BaseTensorTransformer):
 
 
 class LongTensorTransformer(BaseTensorTransformer):
-    r"""Implement a tensor transfomer that converts a tensor values to
+    r"""Implement a tensor transformer that converts a tensor values to
     long.
 
     Example usage:

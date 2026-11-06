@@ -159,7 +159,7 @@ def make_blobs_classification(
     cluster_std: torch.Tensor | float = 1.0,
     generator: torch.Generator | None = None,
 ) -> dict[Hashable, torch.Tensor]:
-    r"""Generate a classification dataset where the data are gnerated
+    r"""Generate a classification dataset where the data are generated
     from isotropic Gaussian blobs for clustering.
 
     The implementation is based on

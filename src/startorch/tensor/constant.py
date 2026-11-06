@@ -18,7 +18,7 @@ class FullTensorGenerator(BaseTensorGenerator):
     Args:
         value: The fill value.
         dtype: The target dtype. ``None`` means the data type
-            is infered from the value type.
+            is inferred from the value type.
 
     Example usage:
 
