@@ -24,16 +24,19 @@ from startorch.transition.base import (
     is_transition_generator_config,
     setup_transition_generator,
 )
-from startorch.transition.diag import DiagonalTransitionGenerator
-from startorch.transition.diag import DiagonalTransitionGenerator as Diagonal
-from startorch.transition.diag import PermuteDiagonalTransitionGenerator
 from startorch.transition.diag import (
+    DiagonalTransitionGenerator,
+    DiagonalTransitionGenerator as Diagonal,
+    PermuteDiagonalTransitionGenerator,
     PermuteDiagonalTransitionGenerator as PermuteDiagonal,
 )
-from startorch.transition.mask import MaskTransitionGenerator
-from startorch.transition.mask import MaskTransitionGenerator as Mask
-from startorch.transition.normalize import NormalizeTransitionGenerator
-from startorch.transition.normalize import NormalizeTransitionGenerator as Normalize
+from startorch.transition.mask import MaskTransitionGenerator, MaskTransitionGenerator as Mask
+from startorch.transition.normalize import (
+    NormalizeTransitionGenerator,
+    NormalizeTransitionGenerator as Normalize,
+)
 from startorch.transition.tensor import TensorTransitionGenerator
-from startorch.transition.transform import TransformTransitionGenerator
-from startorch.transition.transform import TransformTransitionGenerator as Transform
+from startorch.transition.transform import (
+    TransformTransitionGenerator,
+    TransformTransitionGenerator as Transform,
+)

@@ -29,25 +29,30 @@ from startorch.timeseries.base import (
     is_timeseries_generator_config,
     setup_timeseries_generator,
 )
-from startorch.timeseries.choice import MultinomialChoiceTimeSeriesGenerator
 from startorch.timeseries.choice import (
+    MultinomialChoiceTimeSeriesGenerator,
     MultinomialChoiceTimeSeriesGenerator as MultinomialChoice,
 )
-from startorch.timeseries.concatenate import ConcatenateTimeSeriesGenerator
 from startorch.timeseries.concatenate import (
+    ConcatenateTimeSeriesGenerator,
     ConcatenateTimeSeriesGenerator as Concatenate,
 )
-from startorch.timeseries.merge import MergeTimeSeriesGenerator
-from startorch.timeseries.merge import MergeTimeSeriesGenerator as Merge
-from startorch.timeseries.mixed import MixedTimeSeriesGenerator
-from startorch.timeseries.mixed import MixedTimeSeriesGenerator as MixedTimeSeries
-from startorch.timeseries.periodic import PeriodicTimeSeriesGenerator
-from startorch.timeseries.periodic import PeriodicTimeSeriesGenerator as Periodic
-from startorch.timeseries.sequence import SequenceTimeSeriesGenerator
+from startorch.timeseries.merge import MergeTimeSeriesGenerator, MergeTimeSeriesGenerator as Merge
+from startorch.timeseries.mixed import (
+    MixedTimeSeriesGenerator,
+    MixedTimeSeriesGenerator as MixedTimeSeries,
+)
+from startorch.timeseries.periodic import (
+    PeriodicTimeSeriesGenerator,
+    PeriodicTimeSeriesGenerator as Periodic,
+)
 from startorch.timeseries.sequence import (
+    SequenceTimeSeriesGenerator,
     SequenceTimeSeriesGenerator as SequenceTimeSeries,
 )
-from startorch.timeseries.tensor import TensorTimeSeriesGenerator
-from startorch.timeseries.tensor import TensorTimeSeriesGenerator as TensorTimeSeries
+from startorch.timeseries.tensor import (
+    TensorTimeSeriesGenerator,
+    TensorTimeSeriesGenerator as TensorTimeSeries,
+)
 from startorch.timeseries.transform import TransformTimeSeriesGenerator
 from startorch.timeseries.vanilla import VanillaTimeSeriesGenerator
