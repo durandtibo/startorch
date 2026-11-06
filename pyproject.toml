@@ -12,7 +12,7 @@ only-include = ["src", "tests"]
 
 [project]
 name = "startorch"
-version = "0.2.1a1"
+version = "0.3.0a0"
 description = "synthetic time-series generator in PyTorch"
 readme = "README.md"
 authors = [{ name = "Thibaut Durand", email = "durand.tibo+gh@gmail.com" }]
@@ -131,11 +131,7 @@ addopts = [
 ]
 xfail_strict = true
 timeout = 300
-filterwarnings = [
-  "error",
-  # torch 2.4 and later warn at import if NumPy is not installed, which is a supported setup.
-  "ignore:Failed to initialize NumPy:UserWarning",
-]
+filterwarnings = ["error"]
 # Configuration of the short test summary info
 # https://docs.pytest.org/en/stable/usage.html#detailed-summary-report
 
