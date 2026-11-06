@@ -20,7 +20,7 @@ jobs:
 
       - name: Run doctest on source code
         run: |
-          inv doctest-src
+          inv test.doctest
 
   build:
     runs-on: ubuntu-latest

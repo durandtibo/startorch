@@ -1,0 +1,6 @@
+tasklib:
+  package:
+    name: startorch
+  groups:
+    install: dev,docs
+    update: dev,docs,exp

@@ -21,8 +21,8 @@
         <img alt="Documentation" src="https://github.com/durandtibo/startorch/workflows/Documentation%20(unstable)/badge.svg">
     </a>
     <br/>
-    <a href="https://github.com/psf/black">
-        <img  alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg">
+    <a href="https://github.com/astral-sh/ruff">
+        <img  alt="Ruff" src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json">
     </a>
     <a href="https://google.github.io/styleguide/pyguide.html#s3.8-comments-and-docstrings">
         <img  alt="Doc style: google" src="https://img.shields.io/badge/%20style-google-3666d6.svg">
