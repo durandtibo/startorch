@@ -171,12 +171,12 @@ def setup_periodic_timeseries_generator(
     """
     if isinstance(generator, dict):
         logger.info(
-            "Initializing a periodic time series generator from its configuration... "
-            f"{str_target_object(generator)}"
+            "Initializing a periodic time series generator from its configuration... %s",
+            str_target_object(generator),
         )
         generator = BasePeriodicTimeSeriesGenerator.factory(**generator)
     if not isinstance(generator, BasePeriodicTimeSeriesGenerator):
         logger.warning(
-            f"generator is not a `BasePeriodicTimeSeriesGenerator` (received: {type(generator)})"
+            "generator is not a `BasePeriodicTimeSeriesGenerator` (received: %s)", type(generator)
         )
     return generator

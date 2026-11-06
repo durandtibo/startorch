@@ -123,12 +123,12 @@ def setup_tensor_transformer(transformer: BaseTensorTransformer | dict) -> BaseT
     """
     if isinstance(transformer, dict):
         logger.info(
-            "Initializing a tensor transformer from its configuration... "
-            f"{str_target_object(transformer)}"
+            "Initializing a tensor transformer from its configuration... %s",
+            str_target_object(transformer),
         )
         transformer = BaseTensorTransformer.factory(**transformer)
     if not isinstance(transformer, BaseTensorTransformer):
         logger.warning(
-            f"tensor transformer is not a `BaseTensorTransformer` (received: {type(transformer)})"
+            "tensor transformer is not a `BaseTensorTransformer` (received: %s)", type(transformer)
         )
     return transformer

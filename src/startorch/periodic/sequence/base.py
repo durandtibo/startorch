@@ -148,12 +148,12 @@ def setup_periodic_sequence_generator(
     """
     if isinstance(generator, dict):
         logger.info(
-            "Initializing a periodic sequence generator from its configuration... "
-            f"{str_target_object(generator)}"
+            "Initializing a periodic sequence generator from its configuration... %s",
+            str_target_object(generator),
         )
         generator = BasePeriodicSequenceGenerator.factory(**generator)
     if not isinstance(generator, BasePeriodicSequenceGenerator):
         logger.warning(
-            f"generator is not a `BasePeriodicSequenceGenerator` (received: {type(generator)})"
+            "generator is not a `BasePeriodicSequenceGenerator` (received: %s)", type(generator)
         )
     return generator

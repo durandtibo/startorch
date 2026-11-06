@@ -129,10 +129,10 @@ def setup_example_generator(
     """
     if isinstance(generator, dict):
         logger.info(
-            "Initializing an example generator from its configuration... "
-            f"{str_target_object(generator)}"
+            "Initializing an example generator from its configuration... %s",
+            str_target_object(generator),
         )
         generator = BaseExampleGenerator.factory(**generator)
     if not isinstance(generator, BaseExampleGenerator):
-        logger.warning(f"generator is not a `BaseExampleGenerator` (received: {type(generator)})")
+        logger.warning("generator is not a `BaseExampleGenerator` (received: %s)", type(generator))
     return generator
