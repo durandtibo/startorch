@@ -73,6 +73,6 @@ def str_weighted_modules(modules: Sequence, weights: Sequence, num_spaces: int =
         raise RuntimeError(msg)
 
     lines = []
-    for i, (item, weight) in enumerate(zip(modules, weights)):
+    for i, (item, weight) in enumerate(zip(modules, weights, strict=True)):
         lines.append(f"({i}) [weight={weight}] {str_indent(str(item), num_spaces=num_spaces)}")
     return "\n".join(lines)
