@@ -61,7 +61,7 @@ class HalfCauchySequenceGenerator(BaseSequenceGenerator):
 
     def generate(
         self, seq_len: int, batch_size: int = 1, rng: torch.Generator | None = None
-    ) -> torch.tensor:
+    ) -> torch.Tensor:
         return half_cauchy(
             scale=self._scale.generate(seq_len=seq_len, batch_size=batch_size, rng=rng),
             generator=rng,

@@ -54,7 +54,11 @@ class PeriodicSequenceGenerator(BaseSequenceGenerator):
         period: BaseTensorGenerator | dict,
     ) -> None:
         super().__init__()
-        self._sequence = setup_sequence_generator(sequence)
+        self._sequence = (
+            sequence
+            if isinstance(sequence, BasePeriodicSequenceGenerator)
+            else setup_sequence_generator(sequence)
+        )
         self._period = setup_tensor_generator(period)
 
     def __repr__(self) -> str:

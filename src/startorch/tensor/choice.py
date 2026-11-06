@@ -69,9 +69,11 @@ class MultinomialChoiceTensorGenerator(BaseTensorGenerator):
         self._weights = torch.as_tensor(weights, dtype=torch.float)
 
     def __repr__(self) -> str:
-        args = str_indent(str_weighted_modules(modules=self._generators, weights=self._weights))
+        args = str_indent(
+            str_weighted_modules(modules=self._generators, weights=self._weights.tolist())
+        )
         return f"{self.__class__.__qualname__}(\n  {args}\n)"
 
     def generate(self, size: tuple[int, ...], rng: torch.Generator | None = None) -> torch.Tensor:
-        index = torch.multinomial(self._weights, num_samples=1, generator=rng).item()
+        index = int(torch.multinomial(self._weights, num_samples=1, generator=rng).item())
         return self._generators[index].generate(size=size, rng=rng)

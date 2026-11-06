@@ -102,9 +102,10 @@ class MarkovChainSequenceGenerator(BaseSequenceGenerator):
         ```
         """
         transition = setup_transition_generator(transition)
-        if init is not None:
-            init = setup_tensor_generator(init).generate(size=(n,), rng=rng)
-        return cls(transition=transition.generate(n=n, rng=rng), init=init)
+        init_tensor = (
+            None if init is None else setup_tensor_generator(init).generate(size=(n,), rng=rng)
+        )
+        return cls(transition=transition.generate(n=n, rng=rng), init=init_tensor)
 
 
 def make_markov_chain(

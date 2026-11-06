@@ -5,7 +5,7 @@ from __future__ import annotations
 __all__ = ["ExampleDataGenerator"]
 
 from collections.abc import Hashable
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 import torch
 from coola import objects_are_equal
@@ -15,7 +15,7 @@ from startorch.example import BaseExampleGenerator, setup_example_generator
 from startorch.utils.imports import is_iden_available
 from startorch.utils.seed import get_torch_generator
 
-if is_iden_available():
+if TYPE_CHECKING or is_iden_available():
     from iden.data.generator import BaseDataGenerator
 else:  # pragma: no cover
     from startorch.integration.iden.fallback_types import BaseDataGenerator
