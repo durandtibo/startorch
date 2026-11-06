@@ -277,7 +277,6 @@ generator.generate(seq_len=128, batch_size=4)
 
 <div align="center"><img src="https://durandtibo.github.io/startorch/assets/figures/uniform_1.png" width="640" align="center"></div>
 
-
 `TruncXXX` indicates the sequence generator sampled value from a truncated distribution.
 For example, `RandTruncCauchy` samples values from a truncated Cauchy distribution
 whereas `RandCauchy` samples values from a Cauchy distribution.

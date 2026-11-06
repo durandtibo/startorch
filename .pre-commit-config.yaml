@@ -1,14 +1,14 @@
 default_language_version:
   python: python3
 
-default_stages: [ pre-commit ]
+default_stages: [pre-commit]
 
 repos:
   - repo: https://github.com/srstevenson/nb-clean
     rev: v6.0.0
     hooks:
       - id: nb-clean
-        args: [ "--remove-empty-cells", "--remove-all-notebook-metadata" ]
+        args: ["--remove-empty-cells", "--remove-all-notebook-metadata"]
   - repo: local
     hooks:
       - id: docformatter
@@ -16,7 +16,7 @@ repos:
         entry: python -Im docformatter
         additional_dependencies:
           - docformatter >= 1.7.5
-        args: [ "--in-place", "--config", "./pyproject.toml" ]
+        args: ["--in-place", "--config", "./pyproject.toml"]
         language: python
         types:
           - python
@@ -27,10 +27,10 @@ repos:
         name: isort (python)
       - id: isort
         name: isort (cython)
-        types: [ cython ]
+        types: [cython]
       - id: isort
         name: isort (pyi)
-        types: [ pyi ]
+        types: [pyi]
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
@@ -39,9 +39,9 @@ repos:
       - id: check-toml
       - id: sort-simple-yaml
       - id: check-yaml
-        args: [ --unsafe ]
+        args: [--unsafe]
   - repo: https://github.com/pre-commit/pygrep-hooks
-    rev: v1.10.0  # Use the ref you want to point at
+    rev: v1.10.0 # Use the ref you want to point at
     hooks:
       - id: python-check-blanket-noqa
       - id: python-use-type-annotations
@@ -60,7 +60,7 @@ repos:
     rev: v0.17.4
     hooks:
       - id: ruff-check
-        types_or: [ python, pyi, jupyter ]
-        args: [ --fix, --unsafe-fixes ]
+        types_or: [python, pyi, jupyter]
+        args: [--fix, --unsafe-fixes]
       - id: ruff-format
-        types_or: [ python, pyi, jupyter ]
+        types_or: [python, pyi, jupyter]
