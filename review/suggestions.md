@@ -89,7 +89,8 @@ the docstring and the argument name (`feature_noise_std`). If not, add the noise
 ### 1.6 Smaller correctness issues
 
 - **`bool` accepted as `int`.** `check_integer_ge(True, ...)` passes (verified). `isinstance(True, int)`
-  is true. Exclude `bool` explicitly in `check_integer_ge`, `check_interval` and `check_std`.
+  is true. coola 2's `validate_int` rejects booleans, so this is solved by step 7.2 (or exclude `bool`
+  explicitly in `check_integer_ge`, `check_interval` and `check_std` if the local helpers stay).
 - **`check_std` message is wrong.** It says "greater than 0" but accepts 0 (`utils/validation.py:156`).
   The same inconsistency exists in `RandWienerProcessSequenceGenerator` and `wiener_process`
   (`step_size < 0` with the message "greater than 0"). Meanwhile every `rand_*` function rejects
@@ -424,20 +425,81 @@ test (build from config, `repr`) would have caught the missing fields in 1.6.
 
 ## 7. Suggested order of work
 
-1. **Bug-fix PRs** (small, independent, each with a regression test): 1.1 Markov `init`;
+1. **Upgrade coola to `>=2.0.0a2,<3.0`** (first step; it is a prerequisite for several items below).
+   See section 7.1 for what the upgrade requires and what it makes possible.
+2. **Reduce duplication by relying on coola** (second step; see section 7.2). Do it right after the
+   upgrade, because it changes imports in nearly every file and later PRs would otherwise conflict.
+3. **Bug-fix PRs** (small, independent, each with a regression test): 1.1 Markov `init`;
    1.2 `noise_std` in sparse-uncorrelated; 1.6 repr omissions; 1.6 `period == 0` and `low <= 0`
-   validation; `bool` in `check_integer_ge`.
-2. **Aliasing** (1.3): switch combinators to out-of-place ops; clone in `Vanilla`/`Cache` (or
+   validation. (The `bool` accepted as `int` bug in `check_integer_ge` disappears with 7.2, because
+   coola's `validate_int` rejects booleans.)
+4. **Aliasing** (1.3): switch combinators to out-of-place ops; clone in `Vanilla`/`Cache` (or
    document); add tests.
-3. **Truncated tails** (1.4): fix, then add the statistical tests (5.1).
-4. **Cheap, mechanical:** `py.typed`, `__version__`, `DEFAULT_SEED`, `TypeError` in the `resolve_*` functions,
-   `ValueError` instead of `RuntimeError`, a shared `resolve_object` helper (2.1, 3.2).
-5. **Integration/golden tests** (5.2, 5.3), before any large refactor.
-6. **Structural refactors** (2.2-2.5): generic elementwise and distribution adapters, auto `__repr__`,
+5. **Truncated tails** (1.4): fix, then add the statistical tests (5.1).
+6. **Cheap, mechanical:** `py.typed`, `__version__`, `DEFAULT_SEED`, `TypeError` in the `resolve_*`
+   functions, `ValueError` instead of `RuntimeError` (2.1, 3.2).
+7. **Integration/golden tests** (5.2, 5.3), before any large refactor.
+8. **Structural refactors** (2.2-2.5): generic elementwise and distribution adapters, auto `__repr__`,
    renaming the colliding classes, merging `periodic` into `sequence`/`timeseries`. These are
    breaking, so do them in one release (`0.3.0` is still an alpha) with deprecation aliases for the
    old names.
-7. **Features and docs** (3.1 dtype/device, 3.6, section 6): after the structure is simplified.
+9. **Features and docs** (3.1 dtype/device, 3.6, section 6): after the structure is simplified.
+
+### 7.1 Upgrade to `coola>=2.0.0a2,<3.0`
+
+`pyproject.toml` currently pins `coola >=0.9.1,<2.0`. I unpacked the `2.0.0a2` wheel (read only, not
+executed) to check what changes. It is a reorganisation, so this is **not** only a version bump:
+
+- `coola.utils` no longer exports anything (`__all__` is empty). Every
+  `from coola.utils import str_indent, str_mapping, ...` and `from coola.utils.format import ...`
+  in `src` (about 60 import lines in 5 spellings) must change to `coola.formatting.structure`
+  (`str_indent`, `str_mapping`, `str_sequence`, `repr_indent`, `repr_mapping`, `repr_sequence`; there
+  are also `*_line` variants). `num_spaces` is keyword-only in 2.0, which `startorch` already uses.
+- `objectory` is re-implemented as `coola.factory` (`factory`, `resolve_object`, `instantiate_object`,
+  `is_object_config`, `OBJECT_TARGET`). See 7.2: it can replace the `objectory` dependency too.
+- `coola.utils.imports` is now a package. `package_available` is in
+  `coola.utils.imports.package`; `decorator_package_available` is not found under that name in 2.0.0a2,
+  so `startorch.utils.imports` needs a small adaptation or a move to coola's own `is_*_available` /
+  `check_*` helpers.
+- `objects_are_equal` is still in `coola.equality` (check the import path used by the iden
+  integration).
+- The packages `iden`, `batchtensor` and `objectory` pin `coola` themselves. Check that
+  `batchtensor >=0.1.2a1` and `iden >=0.2.1a1` resolve with coola 2 (an alpha of those may be needed),
+  and refresh `uv.lock`.
+- Docs and tests: run the doctests (`inv test.doctest`) because `repr` / `str` output of nested
+  structures could differ.
+- Several items in this review become simpler or disappear after the upgrade (see 7.2). The PR should
+  contain only the upgrade, the import changes and the lock file, with no behaviour change.
+
+### 7.2 Reduce duplication: use coola instead of re-implementing it
+
+coola 2 provides many of the helpers that `startorch` re-implements. Replace them and delete the local
+copies and their tests. Each row is one PR-sized change.
+
+| startorch code | coola 2.0 replacement | Notes |
+| --- | --- | --- |
+| `utils/validation.py`: `check_integer_ge`, `check_interval`, `check_std`, `check_feature_size`, `check_num_examples` | `coola.validation`: `validate_int`, `validate_number`, `validate_ge`, `validate_gt`, `validate_range`, `validate_finite`, `validate_isinstance`, `validate_in`, `validate_not_empty` | Fixes the `bool`-as-`int` bug (1.6) and the wrong "greater than 0" message. Keep thin domain wrappers (`check_feature_size`, `check_num_examples`) only if they add meaning. Exception types change: check the tests that match messages. |
+| `setup_*` / `is_*_config` (10 copies, see 2.1) | `coola.factory.resolve_object` and `coola.factory.is_object_config` | One helper replaces the 10 copies and can raise instead of warning on a wrong type. Check it accepts an abstract base class as target. |
+| `objectory` dependency (`AbstractFactory`, `OBJECT_TARGET`) | `coola.factory` (`factory`, `OBJECT_TARGET`, `instantiate_object`) | Would remove one required dependency. The `metaclass=AbstractFactory` registration of subclasses needs an equivalent; verify before committing to it. Treat as a separate PR after the helper above. |
+| `utils/seed.py`: `get_torch_generator`, `get_random_seed` (and `setup_torch_generator`) | `coola.random.make_torch_generator(seed, device=...)`, `coola.random.sample_torch_seed(seed)`, `validate_seed` | Gives `device` support (3.1) for free and removes the local magic-number handling. Keep `setup_torch_generator` (accepts a seed or a generator) as the only local helper, or resolve it with a coola helper if one exists. |
+| `utils/conversion.py`: `to_array`, `to_tensor` | `coola.utils.array.to_array`, `coola.utils.tensor.to_tensor` | Also addresses the `.numpy()`-on-grad-tensor problem (3.5) if coola handles it; check. Keep `to_tuple` (or replace by a typed alias, 3.4). |
+| `utils/format.py`: `str_weighted_modules` | `coola.formatting.structure` (`str_sequence`, `str_mapping`) | The weighted variant is small; implement it with `str_mapping` over `{"(0)": ..}` or keep as one-liner on top of coola. |
+| `utils/imports.py` (312 lines: 5 packages x `is_*_available`, `check_*`, decorator) | `coola.utils.imports` (`package_available`, optional `is_*_available` / `check_*` for torch, numpy, scipy, ...) | coola has the helpers for its own optional packages, not for `iden`, `matplotlib`, `plotly`. Generate the 3 remaining families from one small factory function instead of 5 copies of 40 lines (`objectory` goes away if the row above is done). |
+| `testing.py`: `iden_available`, ... markers | Same pattern, or `coola.testing` | Check what `coola.testing` provides before keeping a local copy. |
+| `utils/tensor.py`: `shapes_are_equal` and the loops in `random/bounded.py` that check same shapes | `coola.equality` / `coola.validation` helpers | Only if one exists for shapes. Otherwise add one `check_same_shape` in `utils.validation` (3.5). |
+| `ExampleDataGenerator.equal` and the `objects_are_equal` use | `coola.equality` | Already used; check that the new tester registry removes the need for the hand-written `equal`. |
+| `utils/mask.py`, `utils/weight.py` | none | No coola equivalent found. Keep them. |
+
+Process for each row: add the coola call, delete the local function and its unit tests (do not keep a
+wrapper that only forwards), run `inv test.doctest`, `lint-imports` and the unit tests of the packages
+that import it. Keep `startorch.utils` free of imports from other `startorch` packages. Mention
+behaviour changes (exception type, message) in the PR description.
+
+Also look for these before writing any new helper: coola has `coola.nested` and `coola.recursion`
+(`apply`-style traversal of nested dicts of tensors, used by `batchtensor`), `coola.reducer`,
+`coola.registry`, `coola.rounding`, `coola.hashing` and `coola.iterator`. The "dict of tensors" code in
+`transformer/*`, `example/*` and `timeseries/*` (copy, key checks, slicing) may be replaceable by them
+or by `batchtensor.nested`.
 
 ## 8. What I did not do
 
