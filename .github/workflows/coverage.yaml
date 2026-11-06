@@ -20,11 +20,11 @@ jobs:
 
       - name: Run unit tests
         run: |
-          inv unit-test --cov
+          inv test.unit --cov
 
       - name: Run integration tests
         run: |
-          inv integration-test --cov
+          inv test.integration --cov
 
       - name: Upload coverage to Codecov
         if: github.repository == 'durandtibo/startorch' && (github.event_name == 'push' || github.event_name == 'pull_request')

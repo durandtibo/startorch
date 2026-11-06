@@ -59,7 +59,6 @@ plotly = [ "plotly >=6.0,<8.0" ]
 
 [dependency-groups]
 dev = [
-    "black>=26.5.1",
     "coverage[toml]>=7.15,<8.0",
     "codespell>=2.4,<3.0",
     "docformatter[tomli]>=1.7.8,<2.0",
@@ -129,17 +128,6 @@ xfail_strict = true
 timeout = 300
 # Configuration of the short test summary info
 # https://docs.pytest.org/en/stable/usage.html#detailed-summary-report
-
-[tool.black]
-line-length = 100
-target-version = ["py311", "py312", "py313", "py314"]
-include = '\.pyi?$|\.ipynb$'
-
-[tool.pylint.FORMAT]
-max-line-length = 100
-
-[tool.isort]
-profile = "black"
 
 [tool.docformatter]
 recursive = true
@@ -275,3 +263,43 @@ include = ["src", "tests", "dev"]
 
 [tool.ty.environment]
 python-version = "3.11"
+
+[tool.importlinter]
+root_package = "startorch"
+include_external_packages = false
+
+[[tool.importlinter.contracts]]
+name = "Library code must not import the testing helpers"
+type = "forbidden"
+source_modules = [
+  "startorch.example",
+  "startorch.integration",
+  "startorch.periodic",
+  "startorch.plot",
+  "startorch.random",
+  "startorch.sequence",
+  "startorch.tensor",
+  "startorch.timeseries",
+  "startorch.transformer",
+  "startorch.transition",
+  "startorch.utils",
+]
+forbidden_modules = ["startorch.testing"]
+
+[[tool.importlinter.contracts]]
+name = "Utils must not import other startorch packages"
+type = "forbidden"
+source_modules = ["startorch.utils"]
+forbidden_modules = [
+  "startorch.example",
+  "startorch.integration",
+  "startorch.periodic",
+  "startorch.plot",
+  "startorch.random",
+  "startorch.sequence",
+  "startorch.tensor",
+  "startorch.timeseries",
+  "startorch.transformer",
+  "startorch.transition",
+  "startorch.testing",
+]
