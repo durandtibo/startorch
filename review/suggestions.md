@@ -146,7 +146,7 @@ the docstring and the argument name (`feature_noise_std`). If not, add the noise
 
 ## 2. Structure and duplication (the largest maintenance cost)
 
-### 2.1 One `setup_*` / `is_*_config` function pair copied 10 times
+### 2.1 One `setup_*` / `is_*_config` function pair copied 10 times (rename `setup_*` to `resolve_*`)
 
 There are 10 `setup_*` functions (tensor, tensor transformer, sequence, transformer, example,
 timeseries, periodic sequence, periodic timeseries, transition, ...) that differ only in the base
@@ -154,8 +154,8 @@ class and the log message. Each has the same flaw: if the object is not an insta
 class, it only logs a **warning** and returns it, so a wrong type fails much later with an unrelated
 `AttributeError`.
 
-- Suggestion: add one generic helper, for example `startorch.utils.factory.setup_object(obj, base, name)`,
-  and make each `setup_*` a one-line wrapper (or drop them in favour of the helper).
+- Suggestion: add one generic helper, for example `startorch.utils.factory.resolve_object(obj, base, name)`,
+  and make each function a one-line wrapper (or drop them in favour of the helper). Rename the `setup_*` functions to `resolve_*` (`resolve_tensor_generator`, `resolve_sequence_generator`, ...), since they return an existing instance or build one from a config. This is breaking: keep `setup_*` as deprecated aliases for one release.
 - Raise `TypeError` for a wrong type instead of logging a warning. This is a (small) breaking change
   that moves the error to construction time.
 - The `info` log "Initializing a ... from its configuration" is noisy for large configs. Use `debug`.
@@ -430,8 +430,8 @@ test (build from config, `repr`) would have caught the missing fields in 1.6.
 2. **Aliasing** (1.3): switch combinators to out-of-place ops; clone in `Vanilla`/`Cache` (or
    document); add tests.
 3. **Truncated tails** (1.4): fix, then add the statistical tests (5.1).
-4. **Cheap, mechanical:** `py.typed`, `__version__`, `DEFAULT_SEED`, `TypeError` in `setup_*`,
-   `ValueError` instead of `RuntimeError`, a shared `setup_object` helper (2.1, 3.2).
+4. **Cheap, mechanical:** `py.typed`, `__version__`, `DEFAULT_SEED`, `TypeError` in the `resolve_*` functions,
+   `ValueError` instead of `RuntimeError`, a shared `resolve_object` helper (2.1, 3.2).
 5. **Integration/golden tests** (5.2, 5.3), before any large refactor.
 6. **Structural refactors** (2.2-2.5): generic elementwise and distribution adapters, auto `__repr__`,
    renaming the colliding classes, merging `periodic` into `sequence`/`timeseries`. These are
