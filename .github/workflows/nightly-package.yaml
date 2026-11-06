@@ -1,105 +1,84 @@
 name: Nightly Package Tests
 on:
   schedule:
-    - cron: '10 11 * * *' # run at 11:10 AM UTC
-  workflow_dispatch:  # to trigger manually
+    - cron: "30 10 * * *" # run at 10:30 AM UTC
+  workflow_dispatch: # to trigger manually
 
 permissions:
   contents: read
 
 jobs:
-  get-versions:
-    uses: ./.github/workflows/get-versions.yaml
+  # Get the extra names from pyproject.toml, and their version bounds from
+  # dev/config/package_versions.json.
+  # The required dependencies are not extras, so they are added explicitly.
+  get-deps:
+    uses: ./.github/workflows/lib-get-package-deps.yaml
+    with:
+      extra-values: '["batchtensor", "coola", "numpy", "objectory", "torch"]'
+  # Load the shared python-version/OS matrix from the default config of
+  # durandtibo/workflow-config-action
+  # once, and pass it down to every job below that needs it.
+  get-matrix:
+    uses: ./.github/workflows/lib-get-test-matrix.yaml
 
   stable:
-    uses: ./.github/workflows/test-package.yaml
+    needs: [get-deps, get-matrix]
+    uses: ./.github/workflows/nightly-test-package.yaml
     with:
-      install-cmd: 'uv pip install startorch'
+      install-cmd: "uv pip install ${{ needs.get-deps.outputs.name }}"
+      test-matrix: ${{ needs.get-matrix.outputs.test_matrix }}
 
   stable-all:
-    uses: ./.github/workflows/test-package.yaml
+    needs: [get-deps, get-matrix]
+    uses: ./.github/workflows/nightly-test-package.yaml
     with:
-      install-cmd: 'uv pip install "startorch[all]"'
+      install-cmd: 'uv pip install "${{ needs.get-deps.outputs.name }}[all]"' # "all" installs everything
+      test-matrix: ${{ needs.get-matrix.outputs.test_matrix }}
 
   stable-extras:
-    uses: ./.github/workflows/test-package-extras.yaml
+    needs: get-matrix
+    uses: ./.github/workflows/nightly-test-package-extras.yaml
+    with:
+      test-matrix: ${{ needs.get-matrix.outputs.test_matrix }}
 
   latest:
-    uses: ./.github/workflows/test-package.yaml
+    needs: [get-deps, get-matrix]
+    uses: ./.github/workflows/nightly-test-package.yaml
     with:
-      install-cmd: 'uv pip install --pre startorch'
+      install-cmd: "uv pip install --pre ${{ needs.get-deps.outputs.name }}"
+      test-matrix: ${{ needs.get-matrix.outputs.test_matrix }}
 
   latest-all:
-    uses: ./.github/workflows/test-package.yaml
+    needs: [get-deps, get-matrix]
+    uses: ./.github/workflows/nightly-test-package.yaml
     with:
-      install-cmd: 'uv pip install --pre "startorch[all]"'
+      install-cmd: 'uv pip install --pre "${{ needs.get-deps.outputs.name }}[all]"' # "all" installs everything
+      test-matrix: ${{ needs.get-matrix.outputs.test_matrix }}
 
   latest-extras:
-    uses: ./.github/workflows/test-package-extras.yaml
+    needs: get-matrix
+    uses: ./.github/workflows/nightly-test-package-extras.yaml
     with:
-      install-args: '--pre'
-
-  ########################
-  #     Dependencies     #
-  ########################
-
-  batchtensor:
-    needs: get-versions
-    uses: ./.github/workflows/test-package-dep.yaml
-    with:
-      package-name: batchtensor
-      package-versions: ${{ toJson(fromJson(needs.get-versions.outputs.package_versions).batchtensor) }}
-
-  coola:
-    needs: get-versions
-    uses: ./.github/workflows/test-package-dep.yaml
-    with:
-      package-name: coola
-      package-versions: ${{ toJson(fromJson(needs.get-versions.outputs.package_versions).coola) }}
-
-  numpy:
-    needs: get-versions
-    uses: ./.github/workflows/test-package-dep.yaml
-    with:
-      package-name: numpy
-      package-versions: ${{ toJson(fromJson(needs.get-versions.outputs.package_versions).numpy) }}
-
-  objectory:
-    needs: get-versions
-    uses: ./.github/workflows/test-package-dep.yaml
-    with:
-      package-name: objectory
-      package-versions: ${{ toJson(fromJson(needs.get-versions.outputs.package_versions).objectory) }}
-
-  torch:
-    needs: get-versions
-    uses: ./.github/workflows/test-package-dep.yaml
-    with:
-      package-name: torch
-      package-versions: ${{ toJson(fromJson(needs.get-versions.outputs.package_versions).torch) }}
-
+      install-args: "--pre"
+      test-matrix: ${{ needs.get-matrix.outputs.test_matrix }}
 
   #################################
   #     Optional dependencies     #
   #################################
 
-  iden:
-    needs: get-versions
-    uses: ./.github/workflows/test-package-dep.yaml
+  # One job per optional dependency, driven by get-deps instead of a
+  # hardcoded list, so a new optional dependency only needs to be added to
+  # pyproject.toml (and dev/config/package_versions.json, kept up to date by
+  # bot-generate-package-versions.yaml).
+  test-dep:
+    needs: [get-deps, get-matrix]
+    strategy:
+      fail-fast: false
+      matrix:
+        package-name: ${{ fromJson(needs.get-deps.outputs.extras) }}
+    uses: ./.github/workflows/nightly-test-package-dep.yaml
     with:
-      package-name: iden
-      package-versions: ${{ toJson(fromJson(needs.get-versions.outputs.package_versions).iden) }}
-
-  matplotlib:
-    needs: get-versions
-    uses: ./.github/workflows/test-package-dep.yaml
-    with:
-      package-name: matplotlib
-      package-versions: ${{ toJson(fromJson(needs.get-versions.outputs.package_versions).matplotlib) }}
-
-  plotly:
-    needs: get-versions
-    uses: ./.github/workflows/test-package-dep.yaml
-    with:
-      package-name: plotly
-      package-versions: ${{ toJson(fromJson(needs.get-versions.outputs.package_versions).plotly) }}
+      project-name: ${{ needs.get-deps.outputs.name }}
+      package-name: ${{ matrix.package-name }}
+      package-versions: ${{ toJson(fromJson(needs.get-deps.outputs.package_versions)[matrix.package-name]) }}
+      test-matrix: ${{ needs.get-matrix.outputs.test_matrix }}
