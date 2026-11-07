@@ -447,7 +447,7 @@ test (build from config, `repr`) would have caught the missing fields in 1.6.
    renaming the colliding classes, merging `periodic` into `sequence`/`timeseries`. These are
    breaking, so do them in one release (`0.3.0` is still an alpha) with deprecation aliases for the
    old names.
-10. **Features and docs** (3.1 dtype/device, 3.6, section 6): after the structure is simplified.
+11. **Features and docs** (3.1 dtype/device, 3.6, section 6): after the structure is simplified.
 
 ### 7.0 Remove `startorch.integration` and `iden`
 
@@ -540,7 +540,7 @@ How to find candidates:
   code) and check `RUF100` (unused `noqa`) to find the leftovers.
 - Cross-check each candidate with `grep` in `src`, `tests`, `docs`, `notebooks` and the README before deleting.
   Because `startorch` is a library, an unused public name is a breaking change: remove it in the same
-  release as the other breaking changes (section 7, step 9) and list it in the changelog.
+  release as the other breaking changes (section 7, step 10) and list it in the changelog.
 
 Candidates already seen during this review (to confirm):
 
