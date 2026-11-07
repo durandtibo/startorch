@@ -431,17 +431,19 @@ test (build from config, `repr`) would have caught the missing fields in 1.6.
    See section 7.1 for what the upgrade requires and what it makes possible.
 3. **Reduce duplication by relying on coola** (see section 7.2). Do it right after the
    upgrade, because it changes imports in nearly every file and later PRs would otherwise conflict.
-4. **Bug-fix PRs** (small, independent, each with a regression test): 1.1 Markov `init`;
+4. **Clean the codebase of unused code** (see 7.3). Do it once the coola de-duplication has removed
+   the local helpers, so the dead-code report only lists what is really left.
+5. **Bug-fix PRs** (small, independent, each with a regression test): 1.1 Markov `init`;
    1.2 `noise_std` in sparse-uncorrelated; 1.6 repr omissions; 1.6 `period == 0` and `low <= 0`
    validation. (The `bool` accepted as `int` bug in `check_integer_ge` disappears with 7.2, because
    coola's `validate_int` rejects booleans.)
-5. **Aliasing** (1.3): switch combinators to out-of-place ops; clone in `Vanilla`/`Cache` (or
+6. **Aliasing** (1.3): switch combinators to out-of-place ops; clone in `Vanilla`/`Cache` (or
    document); add tests.
-6. **Truncated tails** (1.4): fix, then add the statistical tests (5.1).
-7. **Cheap, mechanical:** `py.typed`, `__version__`, `DEFAULT_SEED`, `TypeError` in the `resolve_*`
+7. **Truncated tails** (1.4): fix, then add the statistical tests (5.1).
+8. **Cheap, mechanical:** `py.typed`, `__version__`, `DEFAULT_SEED`, `TypeError` in the `resolve_*`
    functions, `ValueError` instead of `RuntimeError` (2.1, 3.2).
-8. **Integration/golden tests** (5.2, 5.3), before any large refactor.
-9. **Structural refactors** (2.2-2.5): generic elementwise and distribution adapters, auto `__repr__`,
+9. **Integration/golden tests** (5.2, 5.3), before any large refactor.
+10. **Structural refactors** (2.2-2.5): generic elementwise and distribution adapters, auto `__repr__`,
    renaming the colliding classes, merging `periodic` into `sequence`/`timeseries`. These are
    breaking, so do them in one release (`0.3.0` is still an alpha) with deprecation aliases for the
    old names.
@@ -522,6 +524,43 @@ Also look for these before writing any new helper: coola has `coola.nested` and 
 `coola.registry`, `coola.rounding`, `coola.hashing` and `coola.iterator`. The "dict of tensors" code in
 `transformer/*`, `example/*` and `timeseries/*` (copy, key checks, slicing) may be replaceable by them
 or by `batchtensor.nested`.
+
+### 7.3 Clean the codebase of unused code
+
+Goal: delete code that nothing uses, so the later refactors (section 2) have less to move. One PR per
+area, no behaviour change, each deletion also removes its tests.
+
+How to find candidates:
+
+- Run a dead-code detector on `src` and review the output by hand (it has false positives for classes
+  built from `_target_` strings, for the `__init__` aliases and for public API): `vulture src --min-confidence 80`
+  (add `vulture` to the `dev` group, or run it once with `uvx vulture`). Add a whitelist file for the
+  intended public names instead of ignoring the tool.
+- Ruff already covers unused imports and variables (`F401`, `F841`, `ARG`). Add the `ERA` rule (commented-out
+  code) and check `RUF100` (unused `noqa`) to find the leftovers.
+- Cross-check each candidate with `grep` in `src`, `tests`, `docs`, `notebooks` and the README before deleting.
+  Because `startorch` is a library, an unused public name is a breaking change: remove it in the same
+  release as the other breaking changes (section 7, step 9) and list it in the changelog.
+
+Candidates already seen during this review (to confirm):
+
+- `startorch/constants.py`: `SEQUENCE`, `SEQ_LEN` and `BATCH_SIZE` are not used anywhere in `src`
+  (`VALUE` and `TIME` are used only 2 and 4 times).
+- `transformer/base.py`: commented-out `__repr__` in `BaseTensorTransformer` (dead code, delete it).
+- `utils/weight.py`: module constants `GENERATOR` and `WEIGHT`, check whether anything else needs them.
+- The duplicate short aliases in the `__init__.py` files (`Abs` next to `AbsSequenceGenerator`, ...), see
+  2.5: keep one name per class and delete the other.
+- `startorch.utils.imports`: `objectory` helpers (`check_objectory`, `is_objectory_available`,
+  `objectory_available`) when `objectory` is a required dependency and cannot be missing; the
+  `Mock()` fallbacks in `plot/*` modules.
+- Helpers replaced by coola (7.2) and the `iden` code (7.0) are removed in their own steps, not here.
+- Stray files in the tree (`benchmarks/tmp`, the two untracked notebooks `notebooks/loss.ipynb` and
+  `notebooks/plot_plotly.ipynb` if they are scratch work), and unused CI workflows/bot files if any.
+- Docs: stale README dependency tables (very old version ranges such as `python >=3.9`), the
+  commented `quickstart.md` nav entry.
+
+Check after each PR: `ruff check`, `ty check`, `lint-imports`, unit tests, `inv test.doctest`, and that
+coverage stays at 100% (removing dead code should not lower it).
 
 ## 8. What I did not do
 
