@@ -8,7 +8,7 @@ Breaking changes are allowed, so some suggestions are breaking.
 ## Current state
 
 - `ruff check`, `ty check` and `lint-imports` are clean. 5,800 tests pass in about 7 s.
-  Line coverage is 99.9%. The one uncovered line is `integration/iden/data/generator/example.py:84`.
+  Line coverage is 99.9%. The one uncovered line is `integration/iden/data/generator/example.py:84`, which is removed by step 1 of section 7.
 - The code is consistent. Every generator has the same shape (`__init__` validation, `__repr__`,
   `generate`) and the docstrings and tests are thorough.
 - Most of the weaknesses are structural: repetition, an API that is not uniform, and a few real bugs.
@@ -375,7 +375,7 @@ test (build from config, `repr`) would have caught the missing fields in 1.6.
 
 ### 5.5 Smaller points
 
-- One uncovered line: `integration/iden/data/generator/example.py:84` (`equal` with a different type).
+- One uncovered line: `integration/iden/data/generator/example.py:84`. It goes away when the integration package is removed (7.0).
 - Add property-based tests (Hypothesis is already in `.gitignore`/`clean`) for the validation helpers
   and shape invariants: output shape equals `(batch_size, seq_len, *feature_size)` for every sequence
   generator, `seq_len=0` and `batch_size=0` do not crash where documented, etc.
@@ -390,7 +390,7 @@ test (build from config, `repr`) would have caught the missing fields in 1.6.
 - **`py.typed`** is missing (3.4).
 - **`startorch.__init__`** is empty. There is no `__version__` and no top-level API. Adding
   `__version__ = importlib.metadata.version("startorch")` is cheap and standard.
-- **Version.** `0.3.0a0` with `iden >=0.2.1a1` and `batchtensor >=0.1.2a1` as alpha pins. Check that a
+- **Version.** `0.3.0a0` with `batchtensor >=0.1.2a1` (and `iden >=0.2.1a1`, removed in 7.0) as alpha pins. Check that a
   release can be installed from PyPI without `--pre` for the optional extras.
 - **Python versions.** Classifiers list 3.15 while the lock/CI environment runs 3.14. Verify CI covers
   all listed versions or trim the list.
@@ -398,7 +398,7 @@ test (build from config, `repr`) would have caught the missing fields in 1.6.
   only `ty`. Drop the unused one, or run both.
 - **Stray directories** in the working tree: `benchmark/` (tracked) and `benchmarks/tmp` (untracked),
   `coverage.xml`, `htmlcov/` and `dist/` (ignored). Merge to a single `benchmarks/` or remove the
-  untracked one. `benchmark/shard_loading.py` imports `iden` and is not covered by any CI check.
+  untracked one. `benchmark/shard_loading.py` imports `iden`; both are removed in 7.0.
 - **Notebooks.** `notebooks/loss.ipynb` and `notebooks/plot_plotly.ipynb` are untracked. Four tracked
   notebooks (`sequence_core`, `sequence_advanced`, `example`, `async_time_series`) are not executed in
   CI, so they can silently break after an API change. Run them with `nbmake` or `jupyter nbconvert
@@ -425,25 +425,48 @@ test (build from config, `repr`) would have caught the missing fields in 1.6.
 
 ## 7. Suggested order of work
 
-1. **Upgrade coola to `>=2.0.0a2,<3.0`** (first step; it is a prerequisite for several items below).
+1. **Remove `startorch.integration` and the `iden` dependency** (planned, not done yet; see 7.0).
+   Do it first: it deletes code and a dependency that the later steps would otherwise have to migrate.
+2. **Upgrade coola to `>=2.0.0a2,<3.0`** (a prerequisite for several items below).
    See section 7.1 for what the upgrade requires and what it makes possible.
-2. **Reduce duplication by relying on coola** (second step; see section 7.2). Do it right after the
+3. **Reduce duplication by relying on coola** (see section 7.2). Do it right after the
    upgrade, because it changes imports in nearly every file and later PRs would otherwise conflict.
-3. **Bug-fix PRs** (small, independent, each with a regression test): 1.1 Markov `init`;
+4. **Bug-fix PRs** (small, independent, each with a regression test): 1.1 Markov `init`;
    1.2 `noise_std` in sparse-uncorrelated; 1.6 repr omissions; 1.6 `period == 0` and `low <= 0`
    validation. (The `bool` accepted as `int` bug in `check_integer_ge` disappears with 7.2, because
    coola's `validate_int` rejects booleans.)
-4. **Aliasing** (1.3): switch combinators to out-of-place ops; clone in `Vanilla`/`Cache` (or
+5. **Aliasing** (1.3): switch combinators to out-of-place ops; clone in `Vanilla`/`Cache` (or
    document); add tests.
-5. **Truncated tails** (1.4): fix, then add the statistical tests (5.1).
-6. **Cheap, mechanical:** `py.typed`, `__version__`, `DEFAULT_SEED`, `TypeError` in the `resolve_*`
+6. **Truncated tails** (1.4): fix, then add the statistical tests (5.1).
+7. **Cheap, mechanical:** `py.typed`, `__version__`, `DEFAULT_SEED`, `TypeError` in the `resolve_*`
    functions, `ValueError` instead of `RuntimeError` (2.1, 3.2).
-7. **Integration/golden tests** (5.2, 5.3), before any large refactor.
-8. **Structural refactors** (2.2-2.5): generic elementwise and distribution adapters, auto `__repr__`,
+8. **Integration/golden tests** (5.2, 5.3), before any large refactor.
+9. **Structural refactors** (2.2-2.5): generic elementwise and distribution adapters, auto `__repr__`,
    renaming the colliding classes, merging `periodic` into `sequence`/`timeseries`. These are
    breaking, so do them in one release (`0.3.0` is still an alpha) with deprecation aliases for the
    old names.
-9. **Features and docs** (3.1 dtype/device, 3.6, section 6): after the structure is simplified.
+10. **Features and docs** (3.1 dtype/device, 3.6, section 6): after the structure is simplified.
+
+### 7.0 Remove `startorch.integration` and `iden`
+
+Decision: drop the optional `iden` integration. Nothing is removed by this review; this is the plan for
+a dedicated PR (a breaking change, mentioned in the PR description):
+
+- Delete `src/startorch/integration/` (`ExampleDataGenerator`, `fallback_types.py`) and
+  `tests/unit/integration/`.
+- Delete the `iden` helpers in `startorch/utils/imports.py` (`check_iden`, `is_iden_available`,
+  `iden_available`) and `iden_available` in `startorch/testing.py`, with their tests in
+  `tests/unit/utils/test_imports.py`.
+- Delete `benchmark/` (`shard_loading.py` is the only file; it needs `iden` and the integration package).
+- `pyproject.toml`: remove the `iden` extra and `"startorch.integration"` from both import-linter
+  contracts. Refresh `uv.lock`, and remove `iden` from `dev/config/package_versions.json`.
+- Docs: remove `iden` from the README dependency table and from `CLAUDE.md` (optional libraries and the
+  `iden_available` marker).
+- Keep `tests/integration/` and the CI integration-test jobs: they are unrelated.
+- Verify with `ruff`, `ty`, `lint-imports`, the unit tests and `inv test.doctest`. The earlier uncovered
+  line (see "Current state") disappears with this change.
+- Side effects on this review: items that mention `iden` (the `batchtensor`/`iden` pin check in 7.1,
+  the `iden_available` row in 7.2, the stray `benchmark/` directory, the alpha pins) become moot.
 
 ### 7.1 Upgrade to `coola>=2.0.0a2,<3.0`
 
@@ -461,10 +484,9 @@ executed) to check what changes. It is a reorganisation, so this is **not** only
   `coola.utils.imports.package`; `decorator_package_available` is not found under that name in 2.0.0a2,
   so `startorch.utils.imports` needs a small adaptation or a move to coola's own `is_*_available` /
   `check_*` helpers.
-- `objects_are_equal` is still in `coola.equality` (check the import path used by the iden
-  integration).
-- The packages `iden`, `batchtensor` and `objectory` pin `coola` themselves. Check that
-  `batchtensor >=0.1.2a1` and `iden >=0.2.1a1` resolve with coola 2 (an alpha of those may be needed),
+- `objects_are_equal` is still in `coola.equality` (check the import path in the code that uses it).
+- The packages `batchtensor` and `objectory` (and `iden` if it is still there) pin `coola` themselves. Check that
+  `batchtensor >=0.1.2a1` resolves with coola 2 (an alpha of those may be needed),
   and refresh `uv.lock`.
 - Docs and tests: run the doctests (`inv test.doctest`) because `repr` / `str` output of nested
   structures could differ.
@@ -484,10 +506,10 @@ copies and their tests. Each row is one PR-sized change.
 | `utils/seed.py`: `get_torch_generator`, `get_random_seed` (and `setup_torch_generator`) | `coola.random.make_torch_generator(seed, device=...)`, `coola.random.sample_torch_seed(seed)`, `validate_seed` | Gives `device` support (3.1) for free and removes the local magic-number handling. Keep `setup_torch_generator` (accepts a seed or a generator) as the only local helper, or resolve it with a coola helper if one exists. |
 | `utils/conversion.py`: `to_array`, `to_tensor` | `coola.utils.array.to_array`, `coola.utils.tensor.to_tensor` | Also addresses the `.numpy()`-on-grad-tensor problem (3.5) if coola handles it; check. Keep `to_tuple` (or replace by a typed alias, 3.4). |
 | `utils/format.py`: `str_weighted_modules` | `coola.formatting.structure` (`str_sequence`, `str_mapping`) | The weighted variant is small; implement it with `str_mapping` over `{"(0)": ..}` or keep as one-liner on top of coola. |
-| `utils/imports.py` (312 lines: 5 packages x `is_*_available`, `check_*`, decorator) | `coola.utils.imports` (`package_available`, optional `is_*_available` / `check_*` for torch, numpy, scipy, ...) | coola has the helpers for its own optional packages, not for `iden`, `matplotlib`, `plotly`. Generate the 3 remaining families from one small factory function instead of 5 copies of 40 lines (`objectory` goes away if the row above is done). |
-| `testing.py`: `iden_available`, ... markers | Same pattern, or `coola.testing` | Check what `coola.testing` provides before keeping a local copy. |
+| `utils/imports.py` (312 lines: 5 packages x `is_*_available`, `check_*`, decorator) | `coola.utils.imports` (`package_available`, optional `is_*_available` / `check_*` for torch, numpy, scipy, ...) | coola has the helpers for its own optional packages, not for `matplotlib`, `plotly` (`iden` is removed in 7.0). Generate the 2 remaining families from one small factory function instead of 5 copies of 40 lines (`objectory` goes away if the row above is done). |
+| `testing.py`: `matplotlib_available`, ... markers | Same pattern, or `coola.testing` | Check what `coola.testing` provides before keeping a local copy. |
 | `utils/tensor.py`: `shapes_are_equal` and the loops in `random/bounded.py` that check same shapes | `coola.equality` / `coola.validation` helpers | Only if one exists for shapes. Otherwise add one `check_same_shape` in `utils.validation` (3.5). |
-| `ExampleDataGenerator.equal` and the `objects_are_equal` use | `coola.equality` | Already used; check that the new tester registry removes the need for the hand-written `equal`. |
+| `ExampleDataGenerator.equal` and the `objects_are_equal` use (moot after 7.0) | `coola.equality` | Already used; check that the new tester registry removes the need for the hand-written `equal`. |
 | `utils/mask.py`, `utils/weight.py` | none | No coola equivalent found. Keep them. |
 
 Process for each row: add the coola call, delete the local function and its unit tests (do not keep a
