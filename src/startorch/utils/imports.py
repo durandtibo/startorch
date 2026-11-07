@@ -3,12 +3,9 @@ r"""Implement some utility functions to manage optional dependencies."""
 from __future__ import annotations
 
 __all__ = [
-    "check_iden",
     "check_matplotlib",
     "check_objectory",
     "check_plotly",
-    "iden_available",
-    "is_iden_available",
     "is_matplotlib_available",
     "is_objectory_available",
     "is_plotly_available",
@@ -24,77 +21,6 @@ from coola.utils.imports import decorator_package_available
 
 if TYPE_CHECKING:
     from collections.abc import Callable
-
-################
-#     iden     #
-################
-
-
-def check_iden() -> None:
-    r"""Check if the ``iden`` package is installed.
-
-    Raises:
-        RuntimeError: if the ``iden`` package is not installed.
-
-    Example usage:
-
-    ```pycon
-
-    >>> from startorch.utils.imports import check_iden
-    >>> check_iden()
-
-    ```
-    """
-    if not is_iden_available():
-        msg = (
-            "'iden' package is required but not installed. "
-            "You can install 'iden' package with the command:\n\n"
-            "pip install iden\n"
-        )
-        raise RuntimeError(msg)
-
-
-def is_iden_available() -> bool:
-    r"""Indicate if the ``iden`` package is installed or not.
-
-    Example usage:
-
-    ```pycon
-
-    >>> from startorch.utils.imports import is_iden_available
-    >>> is_iden_available()
-
-    ```
-    """
-    return package_available("iden")
-
-
-def iden_available(fn: Callable[..., Any]) -> Callable[..., Any]:
-    r"""Implement a decorator to execute a function only if ``iden``
-    package is installed.
-
-    Args:
-        fn: The function to execute.
-
-    Returns:
-        A wrapper around ``fn`` if ``iden`` package is installed,
-            otherwise ``None``.
-
-    Example usage:
-
-    ```pycon
-
-    >>> from startorch.utils.imports import iden_available
-    >>> @iden_available
-    ... def my_function(n: int = 0) -> int:
-    ...     return 42 + n
-    ...
-    >>> my_function()
-
-    ```
-    """
-    return decorator_package_available(fn, is_iden_available)
-
 
 ######################
 #     matplotlib     #
