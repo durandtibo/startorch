@@ -51,7 +51,7 @@
   `isinstance` or one comparison.
 - Keep new options keyword-only (`*`) when the surrounding API does so.
 - `torch`, `numpy`, `coola`, `batchtensor` and `objectory` are required dependencies and can be
-  imported at module level. Optional libraries (`iden`, `matplotlib`, `plotly`) are imported
+  imported at module level. Optional libraries (`matplotlib`, `plotly`) are imported
   lazily or guarded with `startorch.utils.imports` (`check_*`, `is_*_available`); do not import
   them at module level in `src`.
 - Every function, public or private (leading underscore), needs a docstring and its own unit
@@ -72,7 +72,7 @@
   that exercise the real collaborators without patching go in `tests/integration/`.
 - Do not use local imports inside tests (for example `import plotly` in a test body). Import
   at the top of the module; use the `*_available` markers from `startorch.testing`
-  (`iden_available`, `matplotlib_available`, `plotly_available`) for optional libraries.
+  (`matplotlib_available`, `plotly_available`) for optional libraries.
 - One behaviour per test: a test has one `assert` or one `pytest.raises`. Split a test that checks
   several things (equal, different, negative, ...) into several tests. Thread-safety tests may
   assert the count and the uniqueness together, as the existing ones do.
