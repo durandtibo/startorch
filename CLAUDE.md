@@ -27,8 +27,14 @@
   branch each PR from the branch of the previous one (not from `main`) and open it with the
   previous branch as its base. Keep each PR small and reviewable on its own. Once a PR of the stack
   is merged, retarget the next PR to `main` and merge `origin/main` into it.
+- Write commit messages and PR titles as a short imperative sentence starting with a verb such as
+  `Add`, `Fix`, `Update`, `Remove` or `Improve`. Do not use conventional-commit prefixes like
+  `docs:` or `feat:` (the type prefix is only for branch names). The squash-merge appends the PR
+  number, so do not add one.
 - In the PR description, say what was changed, what was deliberately not changed, and any
   behaviour change (for example a changed output, or a breaking change of the signature).
+- Do not escape special characters such as the backtick (`` ` ``) in the PR title or description
+  (no `\``): the backslash is not rendered well. Write the characters as is.
 - When a PR conflicts with `main`, merge `origin/main` into the branch and resolve the conflicts
   (do not rebase and force-push). Most conflicts are two PRs appending tests at the end of the
   same test file: keep both. Check what `main` already contains before choosing a side.
@@ -139,6 +145,39 @@ check. Cover, where applicable:
 
 Prefer many small, precisely named tests (one behavior per test) over a few broad ones, so a
 failure points at the specific behavior that broke.
+
+## GitHub Actions workflows
+
+The workflows are in `.github/workflows/`; the composite actions are in `.github/actions/`.
+`.github/GUIDELINES.md` has the full table of workflows, triggers and conventions: read it
+and keep it up to date when you add, rename or remove a workflow.
+
+- The file name starts with a prefix that gives the role of the workflow:
+  - `ci-`: quality and test checks of the repository source. Most are reusable workflows
+    (`workflow_call`, plus `workflow_dispatch` to run one alone) called from `ci.yaml`.
+    `ci-verify-workflows.yaml` (every PR) is standalone and not called from `ci.yaml`.
+  - `lib-`: reusable helpers that compute an output for other workflows (test matrix, package
+    dependencies, extras, versions).
+  - `nightly-`: scheduled tests of the _published_ PyPI package, not of the source.
+    `nightly-package.yaml` is the entry point; the other `nightly-test-*` are called by it.
+  - `bot-`: scheduled automation that opens pull requests (dependency updates, pinning
+    actions, formatting, ...).
+  - `release-`: publishing to PyPI and the documentation, triggered by version tags
+    (`v*.*.*`) or manually.
+  - `security-`: dependency review of PRs, scheduled dependency audit and scorecard.
+- `ci.yaml` is the single entry point of the checks. To add a check, create a `ci-<name>.yaml`
+  reusable workflow and add a job in `ci.yaml`.
+- Conventions: a header comment that says what the workflow does and when it runs; the minimum
+  `permissions` per job (set them on every job, including jobs that call a reusable workflow);
+  `timeout-minutes` on every job; actions pinned to a commit SHA with a `# ratchet:` comment
+  (`bot-pin-action.yaml` maintains them).
+- `ci-verify-workflows.yaml` lints the workflows: check your changes with `actionlint` when
+  available.
+
+## Releases
+
+- Releases are immutable exact version tags (`v0.2.0`, ...). Do not create or move floating tags
+  (`v0`, `latest`) and do not document them as an option.
 
 ## Reporting
 
