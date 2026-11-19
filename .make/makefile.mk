@@ -1,12 +1,16 @@
 ifndef MAKEFILE_MK_INCLUDED
 MAKEFILE_MK_INCLUDED := 1
 
+include $(dir $(lastword $(MAKEFILE_LIST)))tool-info.mk
+include $(dir $(lastword $(MAKEFILE_LIST)))files.mk
+
 # Targets for formatting and linting Makefiles and *.mk files.
 #
 # Optional variables (set before including this file):
 #   MAKEFILE_FORMAT_FILES ?= Makefile *.mk   # files passed to mbake format
 #   MAKEFILE_LINT_FILES   ?= Makefile *.mk   # files passed to checkmake
 #   MBAKE_CONFIG          ?= <this dir>/bake.toml   # config passed to mbake format
+#   USE_GITIGNORE ?= 1   # 1: skip the files ignored by .gitignore (see files.mk)
 
 MAKEFILE_FORMAT_FILES ?= Makefile *.mk
 MAKEFILE_LINT_FILES ?= Makefile *.mk
@@ -28,6 +32,7 @@ install-mbake:
 			pip3 install --user --break-system-packages mbake; \
 		fi; \
 	fi
+	$(call show-tool,mbake)
 
 .PHONY: install-checkmake
 install-checkmake:
@@ -51,6 +56,7 @@ install-checkmake:
 				;; \
 		esac; \
 	fi
+	$(call show-tool,checkmake)
 
 .PHONY: format-makefile
 format-makefile: install-mbake ## Format Makefiles and .mk files with mbake
@@ -58,7 +64,7 @@ format-makefile: install-mbake ## Format Makefiles and .mk files with mbake
 	@files=""; \
 	for pattern in $(MAKEFILE_FORMAT_FILES); do \
 		for f in $$pattern; do \
-			[ -e "$$f" ] && files="$$files $$f"; \
+			[ -e "$$f" ] && ! $(call is-ignored,$$f) && files="$$files $$f"; \
 		done; \
 	done; \
 	if [ -n "$$files" ]; then \
@@ -71,7 +77,17 @@ format-makefile: install-mbake ## Format Makefiles and .mk files with mbake
 .PHONY: lint-makefile
 lint-makefile: install-checkmake ## Lint Makefiles and .mk files with checkmake
 	@echo "🔍 Running checkmake on Makefiles..."
-	checkmake $(MAKEFILE_LINT_FILES)
+	@files=""; \
+	for pattern in $(MAKEFILE_LINT_FILES); do \
+		for f in $$pattern; do \
+			[ -e "$$f" ] && ! $(call is-ignored,$$f) && files="$$files $$f"; \
+		done; \
+	done; \
+	if [ -n "$$files" ]; then \
+		checkmake $$files; \
+	else \
+		echo "No files found matching: $(MAKEFILE_LINT_FILES)"; \
+	fi
 	@echo "✅ Checkmake passed"
 
 endif
