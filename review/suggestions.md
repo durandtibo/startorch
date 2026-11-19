@@ -425,7 +425,7 @@ test (build from config, `repr`) would have caught the missing fields in 1.6.
 
 ## 7. Suggested order of work
 
-1. **Remove `startorch.integration` and the `iden` dependency** (planned, not done yet; see 7.0).
+1. **Remove `startorch.integration` and the `iden` dependency** (done in the PR that removes it; see 7.0).
    Do it first: it deletes code and a dependency that the later steps would otherwise have to migrate.
 2. **Upgrade coola to `>=2.0.0a2,<3.0`** (a prerequisite for several items below).
    See section 7.1 for what the upgrade requires and what it makes possible.

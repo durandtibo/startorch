@@ -1327,19 +1327,6 @@ wheels = [
 ]
 
 [[package]]
-name = "iden"
-version = "0.3.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "coola" },
-    { name = "objectory" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/7f/80/6f059023a9942c72fee3daea7e0ef327a31c704ec52ffe5cb3117bd11645/iden-0.3.0.tar.gz", hash = "sha256:acdf2aec42f97d25edac540dbd8469eae6f4f7d947b82c331884fc33974724bd", size = 41765, upload-time = "2026-01-04T22:09:45.748Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/ec/98/a229a8d921ff4ab58b83e0c9785a29158a9782cd40a5d5cf244b4a5060a3/iden-0.3.0-py3-none-any.whl", hash = "sha256:a25872a8850bddcaf3804ae5045bdb6c14c259e83ec87ea173672bd6655b0b0b", size = 93118, upload-time = "2026-01-04T22:09:44.499Z" },
-]
-
-[[package]]
 name = "identify"
 version = "2.6.20"
 source = { registry = "https://pypi.org/simple" }
@@ -3724,9 +3711,6 @@ dependencies = [
 ]
 
 [package.optional-dependencies]
-iden = [
-    { name = "iden" },
-]
 matplotlib = [
     { name = "matplotlib" },
 ]
@@ -3770,14 +3754,13 @@ exp = [
 requires-dist = [
     { name = "batchtensor", specifier = ">=0.1.2a1,<1.0" },
     { name = "coola", specifier = ">=0.9.1,<2.0" },
-    { name = "iden", marker = "extra == 'iden'", specifier = ">=0.2.1a1,<1.0" },
     { name = "matplotlib", marker = "extra == 'matplotlib'", specifier = ">=3.7,<4.0" },
     { name = "numpy", specifier = ">=1.24,<3.0" },
     { name = "objectory", specifier = ">=0.2.1,<1.0" },
     { name = "plotly", marker = "extra == 'plotly'", specifier = ">=6.0,<8.0" },
     { name = "torch", specifier = ">=2.4,<3.0" },
 ]
-provides-extras = ["iden", "matplotlib", "plotly"]
+provides-extras = ["matplotlib", "plotly"]
 
 [package.metadata.requires-dev]
 dev = [

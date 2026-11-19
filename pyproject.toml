@@ -50,7 +50,6 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-iden = ["iden >=0.2.1a1,<1.0"]
 matplotlib = ["matplotlib >=3.7,<4.0"]
 plotly = ["plotly >=6.0,<8.0"]
 
@@ -259,7 +258,6 @@ name = "Library code must not import the testing helpers"
 type = "forbidden"
 source_modules = [
   "startorch.example",
-  "startorch.integration",
   "startorch.periodic",
   "startorch.plot",
   "startorch.random",
@@ -278,7 +276,6 @@ type = "forbidden"
 source_modules = ["startorch.utils"]
 forbidden_modules = [
   "startorch.example",
-  "startorch.integration",
   "startorch.periodic",
   "startorch.plot",
   "startorch.random",
