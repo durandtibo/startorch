@@ -17,7 +17,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
     
     
       
@@ -1040,17 +1040,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#startorch.utils.imports.check_iden" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        check_iden
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#startorch.utils.imports.check_matplotlib" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1077,28 +1066,6 @@
     <span class="md-ellipsis">
       
         check_plotly
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#startorch.utils.imports.iden_available" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        iden_available
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#startorch.utils.imports.is_iden_available" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        is_iden_available
       
     </span>
   </a>
@@ -1573,17 +1540,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#startorch.utils.imports.check_iden" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        check_iden
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#startorch.utils.imports.check_matplotlib" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1610,28 +1566,6 @@
     <span class="md-ellipsis">
       
         check_plotly
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#startorch.utils.imports.iden_available" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        iden_available
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#startorch.utils.imports.is_iden_available" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        is_iden_available
       
     </span>
   </a>
@@ -2670,53 +2604,6 @@ indentation.</p>
 <div class="doc doc-object doc-function">
 
 
-<h3 id="startorch.utils.imports.check_iden" class="doc doc-heading">
-            <span class="doc doc-object-name doc-function-name">startorch.utils.imports.check_iden</span>
-
-
-<a href="#startorch.utils.imports.check_iden" class="headerlink" title="Permanent link">&para;</a></h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">check_iden</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span>
-</code></pre></div>
-
-    <div class="doc doc-contents ">
-
-        <p>Check if the <code>iden</code> package is installed.</p>
-
-
-<p><span class="doc-section-title">Raises:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="RuntimeError">RuntimeError</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>if the <code>iden</code> package is not installed.</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-        <p>Example usage:</p>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">startorch.utils.imports</span><span class="w"> </span><span class="kn">import</span> <span class="n">check_iden</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">check_iden</span><span class="p">()</span>
-</code></pre></div>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
 <h3 id="startorch.utils.imports.check_matplotlib" class="doc doc-heading">
             <span class="doc doc-object-name doc-function-name">startorch.utils.imports.check_matplotlib</span>
 
@@ -2848,116 +2735,6 @@ indentation.</p>
         <p>Example usage:</p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">startorch.utils.imports</span><span class="w"> </span><span class="kn">import</span> <span class="n">check_plotly</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">check_plotly</span><span class="p">()</span>
-</code></pre></div>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h3 id="startorch.utils.imports.iden_available" class="doc doc-heading">
-            <span class="doc doc-object-name doc-function-name">startorch.utils.imports.iden_available</span>
-
-
-<a href="#startorch.utils.imports.iden_available" class="headerlink" title="Permanent link">&para;</a></h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">iden_available</span><span class="p">(</span>
-    <span class="n">fn</span><span class="p">:</span> <span class="n"><span title="collections.abc.Callable">Callable</span></span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n"><span title="typing.Any">Any</span></span><span class="p">],</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="collections.abc.Callable">Callable</span></span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n"><span title="typing.Any">Any</span></span><span class="p">]</span>
-</code></pre></div>
-
-    <div class="doc doc-contents ">
-
-        <p>Implement a decorator to execute a function only if <code>iden</code>
-package is installed.</p>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>fn</code>
-            </td>
-            <td>
-                  <code><span title="collections.abc.Callable">Callable</span>[..., <span title="typing.Any">Any</span>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The function to execute.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    <p><span class="doc-section-title">Returns:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="collections.abc.Callable">Callable</span>[..., <span title="typing.Any">Any</span>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>A wrapper around <code>fn</code> if <code>iden</code> package is installed,
-otherwise <code>None</code>.</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-        <p>Example usage:</p>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">startorch.utils.imports</span><span class="w"> </span><span class="kn">import</span> <span class="n">iden_available</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nd">@iden_available</span>
-<span class="gp">... </span><span class="k">def</span><span class="w"> </span><span class="nf">my_function</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="k">return</span> <span class="mi">42</span> <span class="o">+</span> <span class="n">n</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">my_function</span><span class="p">()</span>
-</code></pre></div>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h3 id="startorch.utils.imports.is_iden_available" class="doc doc-heading">
-            <span class="doc doc-object-name doc-function-name">startorch.utils.imports.is_iden_available</span>
-
-
-<a href="#startorch.utils.imports.is_iden_available" class="headerlink" title="Permanent link">&para;</a></h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">is_iden_available</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n"><span title="bool">bool</span></span>
-</code></pre></div>
-
-    <div class="doc doc-contents ">
-
-        <p>Indicate if the <code>iden</code> package is installed or not.</p>
-<p>Example usage:</p>
-<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">startorch.utils.imports</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_iden_available</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">is_iden_available</span><span class="p">()</span>
 </code></pre></div>
 
 
@@ -4858,7 +4635,7 @@ See above to learn about the expected format.</p>
       <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.expand"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"method": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
     
   </body>
