@@ -119,10 +119,11 @@ One small base class (about 80 lines) replaces 186 `__repr__`, 10 `setup_*`, 10 
 
 ```python
 class Configurable(ABC, metaclass=AbstractFactory):
-    def __repr__(self) -> str: ...        # from inspect.signature(type(self).__init__)
+    def __repr__(self) -> str: ...  # from inspect.signature(type(self).__init__)
     @classmethod
-    def resolve(cls, value): ...          # instance -> itself, dict -> cls.factory(**value),
-                                          # else TypeError; checks isinstance(result, cls)
+    def resolve(cls, value):
+        ...  # instance -> itself, dict -> cls.factory(**value),
+        # else TypeError; checks isinstance(result, cls)
 ```
 
 - **Repr by convention.** The constructor argument `x` is stored as `self._x` (this is already the
@@ -150,9 +151,9 @@ Today a parameter is either a float (`RandX`) or a generator (`X`). The target h
 every parameter accepts a number, a configuration or a generator:
 
 ```python
-Normal(mean=0.0, std=1.0)                                  # was RandNormal
-Normal(mean=Uniform(-1.0, 1.0), std=Uniform(0.5, 1.5))     # was Normal(RandUniform, RandUniform)
-Normal(mean=0.0, std=1.0, min_value=-2.0, max_value=2.0)   # was RandTruncNormal
+Normal(mean=0.0, std=1.0)  # was RandNormal
+Normal(mean=Uniform(-1.0, 1.0), std=Uniform(0.5, 1.5))  # was Normal(RandUniform, RandUniform)
+Normal(mean=0.0, std=1.0, min_value=-2.0, max_value=2.0)  # was RandTruncNormal
 ```
 
 - **Resolution at construction.** `Full(c)` is a constant generator. It draws no random number, so a
